@@ -6,7 +6,7 @@ class App extends Component {
   render() {
 
       let title = "Welcome to Anahita React"
-      let description = "This project is a front-end for Anahita. We've just started this repository. Give us some time to finish this app"
+      let description = "This project is a front-end for Anahita. We've just started this repository. Give us some time to finish this app."
 
     return (
       <div className="App">
