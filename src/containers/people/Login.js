@@ -1,9 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import withStyles from 'material-ui/styles/withStyles';
+import Paper from 'material-ui/Paper'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/LoginForm';
 import { auth } from '../../actions';
+
+const styles = theme => ({
+    'loginContainer': {
+        'width': '100%',
+        height: '100%',
+    },
+    'loginPaper': {
+        'padding': '20px',
+        'max-width': '360px',
+        'margin': 'auto'
+    }
+});
 
 export class Login extends React.Component {
 
@@ -55,17 +69,19 @@ export class Login extends React.Component {
           hasPassword
       } = this.state;
 
-      const { auth } = this.props;
+      const { auth, classes } = this.props;
 
       return (
-          <div>
-          <LoginForm
-            handleFormSubmit={this.handleFormSubmit}
-            handleFieldChange={this.handleFieldChange}
-            hasUsername={hasUsername}
-            hasPassword={hasPassword}
-            error={auth.error}
-          />
+          <div className={classes.loginContainer}>
+              <Paper className={classes.loginPaper} elevation={2}>
+                  <LoginForm
+                    handleFormSubmit={this.handleFormSubmit}
+                    handleFieldChange={this.handleFieldChange}
+                    hasUsername={hasUsername}
+                    hasPassword={hasPassword}
+                    error={auth.error}
+                  />
+              </Paper>
           </div>
       );
     }
@@ -102,4 +118,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login);
+)(withStyles(styles)(Login));

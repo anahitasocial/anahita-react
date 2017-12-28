@@ -14,9 +14,12 @@ const styles = theme => ({
         color: theme.palette.error.A400
     },
     textField: {
-        margin: "0 0 15px 0"
+        margin: "15px 0"
     },
-    button: {}
+    button: {
+        marginTop: "30px",
+        width: "100%"
+    }
 });
 
 const LoginForm = (props) => {
@@ -41,34 +44,31 @@ const LoginForm = (props) => {
                         {error}
                     </Typography>
                 }
-                <div>
-                    <TextField
-                        name="username"
-                        onChange={handleFieldChange("username")}
-                        className={classes.textField}
-                        label="Email or username"
-                        error={ !hasUsername}
-                        helperText={ !hasUsername ? "Please enter your email or username." : ""}
-                        autoFocus
-                        fullWidth
-                    />
-                </div>
-                <div>
-                    <TextField
-                        type="password"
-                        name="password"
-                        onChange={handleFieldChange("password")}
-                        className={classes.textField}
-                        label="Password"
-                        error={ !hasPassword}
-                        helperText={ !hasPassword ? "Please enter your password." : ""}
-                        fullWidth
-                    />
-                </div>
+                <TextField
+                    name="username"
+                    onChange={handleFieldChange("username")}
+                    className={classes.textField}
+                    label="Email or username"
+                    error={ !hasUsername}
+                    helperText={ !hasUsername ? "Please enter your email or username." : ""}
+                    autoFocus
+                    fullWidth
+                />
+                <TextField
+                    type="password"
+                    name="password"
+                    onChange={handleFieldChange("password")}
+                    className={classes.textField}
+                    label="Password"
+                    error={ !hasPassword}
+                    helperText={ !hasPassword ? "Please enter your password." : ""}
+                    fullWidth
+                />
                 <Button
                     raised
                     dense
                     type="submit"
+                    color="primary"
                     className={classes.button}>
                     Login
                 </Button>

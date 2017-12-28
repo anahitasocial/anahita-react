@@ -142,9 +142,10 @@ class App extends React.Component {
             <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
                 <MuiThemeProvider theme={context.theme} sheetsManager={context.sheetsManager}>
                     <div className={classes.appFrame}>
+
+                        {auth.isAuthenticated &&
                         <AppBar className={classNames(classes.appBar, auth.isAuthenticated && this.state.leftDrawerOpen && classes.appBarShift)}>
                             <Toolbar className={classNames(classes.toolbar)}>
-                                {auth.isAuthenticated &&
                                 <IconButton
                                   className={classNames(classes.menuButton, this.state.leftDrawerOpen && classes.hide)}
                                   color="contrast"
@@ -153,12 +154,13 @@ class App extends React.Component {
                                   >
                                     <MenuIcon/>
                                 </IconButton>
-                                }
                                 <Typography type="title" color="inherit" className={classes.appBarTitle}>
                                     Dashboard
                                 </Typography>
                             </Toolbar>
                         </AppBar>
+                        }
+
                         { auth.isAuthenticated &&
                         <Drawer
                           type="permanent"
