@@ -38,8 +38,7 @@ const LoginForm = (props) => {
             <form className={classes.container} onSubmit={handleFormSubmit}>
                 { error &&
                     <Typography type="body1" classes={classes} color="error" paragraph={true}>
-                        We couldn't find an account associated with your username and password.
-                        Please try again!
+                        {error}
                     </Typography>
                 }
                 <div>
