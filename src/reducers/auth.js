@@ -1,41 +1,47 @@
-import _ from 'lodash';
-import { Actions } from '../constants';
+//import _ from 'lodash';
+import {
+  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
+  LOGOUT_REQUEST, LOGOUT_SUCCESS
+} from '../constants/actions';
 
-const initialState = {
-  isLoggedIn: false,
-  name: null,
-  email: null,
-  redirectTo: null,
-  showRecoverPasswordForm: false,
-  isLoaded: true,
+export default function(state = {
+    isFetching: false,
+    isAuthenticated: localStorage.getItem('viewer') ? true : false,
+    viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
+    errorMessage: ''
+}, action) {
+    switch (action.type) {
+        case LOGIN_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: false,
+                viewer: {}
+            });
+        case LOGIN_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: true,
+                errorMessage: '',
+                viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
+            });
+        case LOGIN_FAILURE:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: false,
+                error: action.error
+            });
+        case LOGOUT_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: true
+            });
+        case LOGOUT_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: false,
+                error: ''
+            });
+        default:
+            return state;
+    }
 };
-
-export default function (state = initialState, action) {
-  switch (action.type) {
-
-    case Actions.LOGIN_REQUIRED:
-      return Object.assign({}, state, { redirectTo: action.payload });
-
-    case Actions.LOGIN_SUCCESS:
-    case Actions.SIGNUP_SUCCESS:
-      return Object.assign({}, state, action.payload, { isLoggedIn: true });
-
-    case Actions.CURRENT_USER:
-      return Object.assign({}, state, action.payload, { isLoggedIn: !_.isEmpty(action.payload) });
-
-    case Actions.CHANGE_EMAIL_SUCCESS:
-      return Object.assign({}, state, { email: action.payload });
-
-    case Actions.OPEN_RECOVER_PASSWORD_FORM:
-    case Actions.CLOSE_RECOVER_PASSWORD_FORM:
-      return Object.assign({}, state,
-      { showRecoverPasswordForm: action.type === Actions.OPEN_RECOVER_PASSWORD_FORM });
-
-    case Actions.SESSION_TIMEOUT:
-    case Actions.DELETE_ACCOUNT_SUCCESS:
-    case Actions.LOGOUT:
-      return initialState;
-    default:
-      return state;
-  }
-}

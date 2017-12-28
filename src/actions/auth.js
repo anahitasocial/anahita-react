@@ -1,59 +1,97 @@
 import { routeActions } from 'redux-simple-router';
+import { auth } from '../api';
+//import * as alerts from './alerts';
 
-import * as api from '../api';
-import { Actions } from '../constants';
-import { createAction } from './utils';
-import * as alerts from './alerts';
+import {
+  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
+  LOGOUT_REQUEST, LOGOUT_SUCCESS,
+} from '../constants/actions';
 
-export const loginRequired = redirectTo => createAction(Actions.LOGIN_REQUIRED, redirectTo);
-export const setCurrentUser = user => createAction(Actions.CURRENT_USER, user);
+// - Login Action -
+
+function requestLogin(credentials) {
+    return {
+        type: LOGIN_REQUEST,
+        isFetching: true,
+        isAuthenticated: false,
+        credentials: credentials
+    };
+}
+
+function receiveLogin(result) {
+    return {
+        type: LOGIN_SUCCESS,
+        isFetching: false,
+        isAuthenticated: true,
+        result: result
+    };
+}
+
+function loginError(error) {
+    return {
+        type: LOGIN_FAILURE,
+        isFetching: false,
+        isAuthenticated: false,
+        error: error
+    };
+}
+
+export function login(credentials) {
+    return dispatch => {
+        dispatch(requestLogin(credentials));
+        return new Promise((resolve, reject) => {
+            return auth.addSession(credentials)
+            .then(result => {
+                localStorage.setItem('viewer', JSON.stringify(result.data));
+                dispatch(receiveLogin(result));
+                dispatch(routeActions.replace('/dashboard/'));
+                resolve();
+            }, (response) => {
+                dispatch(loginError("Sorry, unable to log  you in!"));
+                reject(response);
+            });
+        }).catch(error => console.log(error));
+    };
+}
+
+// - Logout Action
+
+function requestLogout() {
+    return {
+        type: LOGOUT_REQUEST,
+        isFetching: true,
+        isAuthenticated: true
+    }
+}
+
+function receiveLogout() {
+    return {
+        type: LOGOUT_SUCCESS,
+        isFetching: false,
+        isAuthenticated: false
+    }
+}
 
 export function logout() {
-  return dispatch => {
-    api.logout();
-    dispatch(createAction(Actions.LOGOUT));
-    dispatch(routeActions.push('/'));
-  };
-}
-
-export function openRecoverPasswordForm() {
-  return createAction(Actions.OPEN_RECOVER_PASSWORD_FORM);
-}
-
-export function closeRecoverPasswordForm() {
-  return createAction(Actions.CLOSE_RECOVER_PASSWORD_FORM);
-}
-
-export function recoverPasswordComplete() {
-  return dispatch => {
-    dispatch(closeRecoverPasswordForm());
-    dispatch(createAction(Actions.RECOVER_PASSWORD_SUCCESS));
-    dispatch(alerts.success('Please check your email inbox to recover your password'));
-  };
+    return dispatch => {
+        dispatch(requestLogout());
+        return new Promise((resolve, reject) => {
+            return auth.deleteSession()
+            .then(result => {
+                dispatch(receiveLogout());
+                localStorage.removeItem('viewer');
+                dispatch(routeActions.push('/people/login/'));
+                resolve();
+            }, (response) => {
+                reject(response);
+            }).catch(error => console.log(error));
+        });
+    };
 }
 
 export function unauthorized() {
   return dispatch => {
-    dispatch(createAction(Actions.SESSION_TIMEOUT));
-    dispatch(alerts.warning('You must be logged in to continue'));
-    dispatch(routeActions.push('/login/'));
-  };
-}
-
-export function loginComplete(loginInfo) {
-  return (dispatch, getState) => {
-    const { auth } = getState();
-    const nextPath = auth.redirectTo || '/dashboard/';
-    dispatch(createAction(Actions.LOGIN_SUCCESS, loginInfo));
-    dispatch(routeActions.push(nextPath));
-    dispatch(alerts.success(`Welcome back, ${loginInfo.name}`));
-  };
-}
-
-export function signupComplete(signupInfo) {
-  return dispatch => {
-    dispatch(createAction(Actions.SIGNUP_SUCCESS, signupInfo));
-    dispatch(alerts.success(`Welcome, ${signupInfo.name}`));
-    dispatch(routeActions.push('/dashboard/'));
+    dispatch(logout());
+    dispatch(routeActions.push('/people/login/'));
   };
 }

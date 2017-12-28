@@ -8,9 +8,11 @@ import {
   //IndexRedirect,
 } from 'react-router';
 
-import App from '../containers/App'
-import Welcome from '../components/Welcome'
-import Dashboard from '../components/Dashboard'
+import App from '../containers/App';
+import Login from '../containers/people/Login';
+import Welcome from '../containers/Welcome';
+import Dashboard from '../containers/Dashboard';
+import PageNotFound from '../containers/PageNotFound';
 
 import * as actionCreators from '../actions';
 import { bindAllActionCreators } from '../actions/utils';
@@ -21,20 +23,17 @@ export default function (store) {
     const scrollUp = () => window.scrollTo(0, 0);
 
     const requireAuth = (nextState, replace) => {
-
       const { auth } = store.getState();
-
-      if (!auth.isLoggedIn) {
+      if (!auth.isAuthenticated) {
         actions.alerts.warning('You have to be signed in first');
         actions.auth.loginRequired(nextState.location.pathname);
-        replace('/login/');
+        replace('/people/login/');
       }
     };
 
     const redirectIfLoggedIn = (_, replace) => {
       const { auth } = store.getState();
-
-      if (auth.isLoggedIn) {
+      if (auth.isAuthenticated) {
         replace('/dashboard/');
       }
     };
@@ -51,6 +50,12 @@ export default function (store) {
                   component={Dashboard}
                   onEnter={requireAuth}
                 />
+                <Route
+                  path="/people/login/"
+                  component={Login}
+                  onEnter={redirectIfLoggedIn}
+                />
+                <Route path="*" component={PageNotFound} />
             </Route>
         </Router>
     )

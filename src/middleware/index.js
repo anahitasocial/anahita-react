@@ -1,6 +1,5 @@
 import { syncHistory } from 'redux-simple-router';
 import { hashHistory } from 'react-router';
-import { alerts } from '../actions';
 import { unauthorized } from '../actions/auth';
 
 // should catch any API errors and act accordingly
@@ -14,7 +13,7 @@ export const apiErrorMiddleware = store => next => action => {
 
       case 400:
 
-        store.dispatch(alerts.warning('There was an error in your submission: ' + error.data));
+        //store.dispatch(alerts.warning('There was an error in your submission: ' + error.data));
         break;
 
       case 401:
@@ -24,13 +23,13 @@ export const apiErrorMiddleware = store => next => action => {
 
       case 404:
 
-        store.dispatch(alerts.warning(
-          'Sorry, an error has occurred: this action is not available'));
+        //store.dispatch(alerts.warning(
+        //  'Sorry, an error has occurred: this action is not available'));
         break;
 
       default:
 
-        store.dispatch(alerts.warning('Sorry, an error has occurred'));
+        //store.dispatch(alerts.warning('Sorry, an error has occurred'));
         break;
     }
   }

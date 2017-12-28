@@ -3,11 +3,12 @@ import preset from 'jss-preset-default'
 import { SheetsRegistry } from 'react-jss/lib/jss'
 import { createMuiTheme } from 'material-ui/styles'
 import createGenerateClassName from 'material-ui/styles/createGenerateClassName'
-import { blue } from 'material-ui/colors'
+import { blue, red } from 'material-ui/colors'
 
 const theme = createMuiTheme({
     palette: {
-        primary: blue
+        primary: blue,
+        error: red
     }
 })
 

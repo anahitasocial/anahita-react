@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography'
 
 const styles = theme => ({
     root: {}
-})
+});
 
 class Welcome extends Component {
     render() {
