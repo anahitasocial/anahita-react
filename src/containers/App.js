@@ -89,7 +89,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    padding: 8,
     ...theme.mixins.toolbar,
   },
   viewer : {
