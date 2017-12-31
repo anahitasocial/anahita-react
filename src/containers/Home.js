@@ -7,7 +7,7 @@ const styles = theme => ({
     root: {}
 });
 
-class Welcome extends Component {
+class Home extends Component {
     render() {
         const classes = this.props.classes;
         return (
@@ -21,8 +21,8 @@ class Welcome extends Component {
     }
 }
 
-Welcome.propTypes = {
+Home.propTypes = {
     classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Welcome);
+export default withStyles(styles)(Home);

@@ -1,4 +1,3 @@
-import { routeActions } from 'redux-simple-router';
 import { auth } from '../api';
 //import * as alerts from './alerts';
 
@@ -44,7 +43,6 @@ export function login(credentials) {
             .then(result => {
                 localStorage.setItem('viewer', JSON.stringify(result.data));
                 dispatch(receiveLogin(result));
-                dispatch(routeActions.replace('/dashboard/'));
                 resolve();
             }, (response) => {
                 dispatch(loginError("Sorry, unable to log  you in!"));
@@ -80,7 +78,6 @@ export function logout() {
             .then(result => {
                 dispatch(receiveLogout());
                 localStorage.removeItem('viewer');
-                dispatch(routeActions.push('/people/login/'));
                 resolve();
             }, (response) => {
                 reject(response);
@@ -92,6 +89,5 @@ export function logout() {
 export function unauthorized() {
   return dispatch => {
     dispatch(logout());
-    dispatch(routeActions.push('/people/login/'));
   };
 }

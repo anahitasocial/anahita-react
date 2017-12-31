@@ -1,14 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Root from './containers/Root';
-
 import configureStore from './store';
-import configureRoutes from './routes';
 
 const store = configureStore();
-const routes = configureRoutes(store);
 
 render(
-  <Root store={store} routes={routes} />,
+  <BrowserRouter>
+    <Root store={store} />
+  </BrowserRouter>,
   document.getElementById('root')
 )

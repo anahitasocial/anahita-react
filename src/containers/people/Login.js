@@ -1,23 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'material-ui/styles/withStyles';
-import Paper from 'material-ui/Paper'
+import { Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm';
 import { auth } from '../../actions';
-
-const styles = theme => ({
-    'loginContainer': {
-        'width': '100%',
-        height: '100%',
-    },
-    'loginPaper': {
-        'padding': '20px',
-        'max-width': '360px',
-        'margin': 'auto'
-    }
-});
 
 export class Login extends React.Component {
 
@@ -69,19 +57,20 @@ export class Login extends React.Component {
           hasPassword
       } = this.state;
 
-      const { auth, classes } = this.props;
+      const { auth } = this.props;
 
       return (
-          <div className={classes.loginContainer}>
-              <Paper className={classes.loginPaper} elevation={2}>
-                  <LoginForm
-                    handleFormSubmit={this.handleFormSubmit}
-                    handleFieldChange={this.handleFieldChange}
-                    hasUsername={hasUsername}
-                    hasPassword={hasPassword}
-                    error={auth.error}
-                  />
-              </Paper>
+          <div>
+              <LoginForm
+                handleFormSubmit={this.handleFormSubmit}
+                handleFieldChange={this.handleFieldChange}
+                hasUsername={hasUsername}
+                hasPassword={hasPassword}
+                error={auth.error}
+              />
+              { auth.isAuthenticated &&
+                  <Redirect push to="/dashboard" />
+              }
           </div>
       );
     }
@@ -115,7 +104,6 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles)(Login));
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(Login)
+);

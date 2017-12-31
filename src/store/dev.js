@@ -2,19 +2,22 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
-import { reduxRouterMiddleware, apiErrorMiddleware } from '../middleware';
+import { apiErrorMiddleware } from '../middleware';
 import reducer from '../reducers';
+import DevTools from '../containers/DevTools'
 
 const loggerMiddleware = createLogger();
 
 const middleware = applyMiddleware(
-  reduxRouterMiddleware,
   thunkMiddleware,
   apiErrorMiddleware,
   loggerMiddleware
 );
 
-const createFinalStore = compose(middleware)(createStore);
+const createFinalStore = compose(
+    middleware,
+    DevTools.instrument()
+)(createStore);
 
 export default function configureStore(initialState) {
   return createFinalStore(reducer, initialState);

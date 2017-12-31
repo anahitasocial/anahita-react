@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import JssProvider from 'react-jss/lib/JssProvider';
 import { withStyles, MuiThemeProvider } from 'material-ui/styles';
@@ -108,7 +109,13 @@ const styles = theme => ({
   }
 });
 
-let AppWrapper = props => props.children;
+let AppWrapper = ({ children }) => {
+    return(
+        <div>
+            {children}
+        </div>
+    )
+};
 AppWrapper = withStyles(styles)(AppWrapper);
 
 class App extends React.Component {
@@ -118,11 +125,15 @@ class App extends React.Component {
     };
 
     handleDrawerOpen = () => {
-      this.setState({ leftDrawerOpen: true });
+      this.setState({
+          leftDrawerOpen: true
+      });
     };
 
     handleDrawerClose = () => {
-      this.setState({ leftDrawerOpen: false });
+      this.setState({
+          leftDrawerOpen: false
+      });
     };
 
     render() {
@@ -207,20 +218,23 @@ App.propTypes = {
     children: PropTypes.node
 }
 
-App.contextTypes = {
-  router: PropTypes.object,
-};
+//App.contextTypes = {
+//  router: PropTypes.object,
+//};
 
 const mapStateToProps = state => {
   const {
     auth,
-    routing
+    //routing
   } = state;
 
   return {
     auth,
-    routing
+    //routing
   };
 };
 
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(App));
+
+export default withRouter(
+    connect(mapStateToProps)(withStyles(styles, { withTheme: true })(App))
+);

@@ -1,5 +1,3 @@
-import { syncHistory } from 'redux-simple-router';
-import { hashHistory } from 'react-router';
 import { unauthorized } from '../actions/auth';
 
 // should catch any API errors and act accordingly
@@ -35,5 +33,3 @@ export const apiErrorMiddleware = store => next => action => {
   }
   return result;
 };
-
-export const reduxRouterMiddleware = syncHistory(hashHistory);

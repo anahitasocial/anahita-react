@@ -1,20 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'material-ui/styles/withStyles';
+import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
 const styles = theme => ({
-    container: {
-        margin: "10px 0"
+    'loginContainer': {
+        'width': '100%',
+        height: '100%',
+    },
+    'loginPaper': {
+        'padding': '20px',
+        'max-width': '360px',
+        'margin': 'auto'
     },
     colorError: {
         color: theme.palette.error.A400
-    },
-    textField: {
-        margin: "15px 0"
     },
     button: {
         marginTop: "30px",
@@ -34,45 +37,47 @@ const LoginForm = (props) => {
     } = props;
 
     return (
-        <div className={classes.root}>
-            <Typography type="headline" color="primary">
-                Please login
-            </Typography>
-            <form className={classes.container} onSubmit={handleFormSubmit}>
-                { error &&
-                    <Typography type="body1" classes={classes} color="error" paragraph={true}>
-                        {error}
-                    </Typography>
-                }
-                <TextField
-                    name="username"
-                    onChange={handleFieldChange("username")}
-                    className={classes.textField}
-                    label="Email or username"
-                    error={ !hasUsername}
-                    helperText={ !hasUsername ? "Please enter your email or username." : ""}
-                    autoFocus
-                    fullWidth
-                />
-                <TextField
-                    type="password"
-                    name="password"
-                    onChange={handleFieldChange("password")}
-                    className={classes.textField}
-                    label="Password"
-                    error={ !hasPassword}
-                    helperText={ !hasPassword ? "Please enter your password." : ""}
-                    fullWidth
-                />
-                <Button
-                    raised
-                    dense
-                    type="submit"
-                    color="primary"
-                    className={classes.button}>
-                    Login
-                </Button>
-            </form>
+        <div className={classes.loginContainer}>
+            <Paper className={classes.loginPaper} elevation={2}>
+                <Typography type="headline" color="primary">
+                    Please login
+                </Typography>
+                <form className={classes.container} onSubmit={handleFormSubmit}>
+                    { error &&
+                        <Typography type="body1" classes={classes} color="error" paragraph={true}>
+                            {error}
+                        </Typography>
+                    }
+                    <TextField
+                        name="username"
+                        onChange={handleFieldChange("username")}
+                        label="Email or username"
+                        error={ !hasUsername}
+                        helperText={ !hasUsername ? "Please enter your email or username." : ""}
+                        margin="normal"
+                        autoFocus
+                        fullWidth
+                    />
+                    <TextField
+                        type="password"
+                        name="password"
+                        onChange={handleFieldChange("password")}
+                        label="Password"
+                        error={ !hasPassword}
+                        helperText={ !hasPassword ? "Please enter your password." : ""}
+                        margin="normal"
+                        fullWidth
+                    />
+                    <Button
+                        raised
+                        dense
+                        type="submit"
+                        color="primary"
+                        className={classes.button}>
+                        Login
+                    </Button>
+                </form>
+            </Paper>
         </div>
     );
 }
