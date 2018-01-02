@@ -4,7 +4,7 @@ import { createLogger } from 'redux-logger';
 
 import { apiErrorMiddleware } from '../middleware';
 import reducer from '../reducers';
-import DevTools from '../containers/DevTools'
+import DevTools from '../containers/DevTools';
 
 const loggerMiddleware = createLogger();
 
