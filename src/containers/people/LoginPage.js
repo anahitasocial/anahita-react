@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/LoginForm';
 import { auth } from '../../actions';
 
-export class Login extends React.Component {
-
+class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -25,19 +24,17 @@ export class Login extends React.Component {
 
   validate() {
     const { username, password } = this.state;
-
     this.setState({
         hasUsername: Boolean(username),
         hasPassword: Boolean(password)
     });
-
     return Boolean(username) && Boolean(password);
   }
 
-  handleFieldChange = name => e => {
+  handleFieldChange = name => event => {
     this.setState({
-        [name]: e.target.value,
-        [`has ${name.charAt(0).toUpperCase()}!`]: Boolean(e.target.value)
+      [name]: event.target.value,
+      [`has_${name.charAt(0).toUpperCase()}!`]: Boolean(event.target.value),
     });
   }
 
@@ -75,7 +72,7 @@ export class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
+LoginPage.propTypes = {
   actions: PropTypes.object.isRequired
 };
 
@@ -103,6 +100,7 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(Login)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginPage);

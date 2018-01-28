@@ -6,14 +6,14 @@ import createGenerateClassName from 'material-ui/styles/createGenerateClassName'
 import { blue, red } from 'material-ui/colors'
 
 const theme = createMuiTheme({
-    palette: {
-        primary: blue,
-        error: red
-    }
+  palette: {
+    primary: blue,
+    error: red,
+  }
 })
 
-const jss = create(preset())
-jss.options.createGenerateClassName = createGenerateClassName
+const jss = create(preset());
+jss.options.createGenerateClassName = createGenerateClassName;
 
 export const sheetsManager: Map<*, *> = new Map()
 
