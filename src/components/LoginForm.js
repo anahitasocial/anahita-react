@@ -14,15 +14,15 @@ const styles = theme => ({
   loginPaper: {
     padding: '20px',
     maxWidth: '360px',
-    margin: 'auto'
+    margin: '64px auto',
   },
   colorError: {
     color: theme.palette.error.A400
   },
   button: {
-    marginTop: '30px',
-    width: '100%'
-  }
+    marginTop: 10,
+    width: '100%',
+  },
 });
 
 const LoginForm = (props) => {

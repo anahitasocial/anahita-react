@@ -8,6 +8,7 @@ import {
 import App from '../containers/App';
 import LoginPage from '../containers/people/LoginPage';
 import HomePage from '../containers/HomePage';
+import PeoplePage from '../containers/people/PeoplePage';
 import DashboardPage from '../containers/DashboardPage';
 import PageNotFound from '../containers/PageNotFound';
 
@@ -18,12 +19,13 @@ const PrivateRoute = ({
   store,
   ...rest
 }) => {
-  const { auth } = store.getState();
+  const { authReducer } = store.getState();
+  const { isAuthenticated } = authReducer;
   return (
     <Route
       {...rest}
       render={props => (
-      auth.isAuthenticated ? (
+      isAuthenticated ? (
         <Component {...props} />
       ) : (
         <Route component={LoginPage} />
@@ -39,8 +41,8 @@ PrivateRoute.propTypes = {
 
 const Routes = (props) => {
   const { store } = props;
-  const { auth } = store.getState();
-  const homeRedirect = auth.isAuthenticated ? DashboardPage : HomePage;
+  const { authReducer } = store.getState();
+  const homeRedirect = authReducer.isAuthenticated ? DashboardPage : HomePage;
 
   scrollUp();
 
@@ -60,6 +62,11 @@ const Routes = (props) => {
           path="/dashboard/"
           store={store}
           component={DashboardPage}
+        />
+        <Route
+          path="/people/"
+        //  store={store}
+          component={PeoplePage}
         />
         <Route component={PageNotFound} />
       </Switch>

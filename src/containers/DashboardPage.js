@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import withStyles from 'material-ui/styles/withStyles';
 import Typography from 'material-ui/Typography';
 
-const styles = ({
-  root: {},
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+  },
 });
 
 const DashboardPage = (props) => {

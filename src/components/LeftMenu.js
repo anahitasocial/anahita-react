@@ -11,6 +11,7 @@ import People from 'material-ui-icons/People';
 import GroupWork from 'material-ui-icons/GroupWork';
 import Photo from 'material-ui-icons/Photo';
 import LockOpen from 'material-ui-icons/LockOpen';
+import { Link } from 'react-router-dom';
 
 const styles = ({});
 
@@ -18,31 +19,51 @@ const LeftMenu = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <ListItem button>
+      <ListItem
+        button
+        component={Link}
+        to="/"
+      >
         <ListItemIcon>
           <Home />
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
-      <ListItem button>
+      <ListItem
+        button
+        component={Link}
+        to="/people/"
+      >
         <ListItemIcon>
           <People />
         </ListItemIcon>
-        <ListItemText primary="Social Graph" />
+        <ListItemText primary="People" />
       </ListItem>
-      <ListItem button>
+      <ListItem
+        button
+        component={Link}
+        to="/photos/"
+      >
         <ListItemIcon>
           <Photo />
         </ListItemIcon>
         <ListItemText primary="Photos" />
       </ListItem>
-      <ListItem button>
+      <ListItem
+        button
+        component={Link}
+        to="/groups/"
+      >
         <ListItemIcon>
           <GroupWork />
         </ListItemIcon>
         <ListItemText primary="Groups" />
       </ListItem>
-      <ListItem button component="a" onClick={props.onLogoutClick}>
+      <ListItem
+        button
+        component="a"
+        onClick={props.onLogoutClick}
+      >
         <ListItemIcon>
           <LockOpen />
         </ListItemIcon>

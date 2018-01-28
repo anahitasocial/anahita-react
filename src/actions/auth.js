@@ -1,5 +1,4 @@
 import { auth } from '../api';
-//import * as alerts from './alerts';
 
 import {
   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
@@ -13,7 +12,7 @@ function requestLogin(credentials) {
     type: LOGIN_REQUEST,
     isFetching: true,
     isAuthenticated: false,
-    credentials
+    credentials,
   };
 }
 
@@ -22,7 +21,7 @@ function receiveLogin(result) {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    result
+    result,
   };
 }
 
@@ -31,26 +30,27 @@ function loginError(error) {
     type: LOGIN_FAILURE,
     isFetching: false,
     isAuthenticated: false,
-    error
+    error,
   };
 }
 
 export function login(credentials) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(requestLogin(credentials));
     return new Promise((resolve, reject) => {
       return auth.addSession(credentials)
-      .then(result => {
+        .then((result) => {
           localStorage.setItem('viewer', JSON.stringify(result.data));
           dispatch(receiveLogin(result));
           resolve();
           return result;
-      }, (response) => {
-          dispatch(loginError("Sorry, unable to log  you in!"));
-          reject(response);
-          return response;
-      });
-    }).catch(error => console.log(error));
+        }, (response) => {
+          dispatch(loginError('Sorry, unable to log  you in!'));
+          return reject(response);
+        });
+    }).catch((error) => {
+      console.log(error);
+    });
   };
 }
 
@@ -60,7 +60,7 @@ function requestLogout() {
   return {
     type: LOGOUT_REQUEST,
     isFetching: true,
-    isAuthenticated: true
+    isAuthenticated: true,
   };
 }
 
@@ -68,30 +68,32 @@ function receiveLogout() {
   return {
     type: LOGOUT_SUCCESS,
     isFetching: false,
-    isAuthenticated: false
+    isAuthenticated: false,
   };
 }
 
 export function logout() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(requestLogout());
     return new Promise((resolve, reject) => {
-      return auth.deleteSession()
-      .then(result => {
-        dispatch(receiveLogout());
-        localStorage.removeItem('viewer');
-        resolve();
-        return result;
-      }, (response) => {
-        reject(response);
-        return response;
-      }).catch(error => console.log(error));
+      auth.deleteSession()
+        .then((result) => {
+          dispatch(receiveLogout());
+          localStorage.removeItem('viewer');
+          resolve();
+          return result;
+        }, (response) => {
+          reject(response);
+          return response;
+        }).catch((error) => {
+          console.log(error)
+        });
     });
   };
 }
 
 export function unauthorized() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(logout());
   };
 }

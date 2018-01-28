@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
         hasPassword
     } = this.state;
 
-    const { auth } = this.props;
+    const { isAuthenticated, errorMessage } = this.props;
 
     return (
       <div>
@@ -62,9 +62,9 @@ class LoginPage extends React.Component {
           handleFieldChange={this.handleFieldChange}
           hasUsername={hasUsername}
           hasPassword={hasPassword}
-          error={auth.error}
+          error={errorMessage}
         />
-        { auth.isAuthenticated &&
+        { isAuthenticated &&
             <Redirect push to="/dashboard" />
         }
       </div>
@@ -82,15 +82,17 @@ const mapStateToProps = state => {
     hasUsername,
     password,
     hasPassword,
-    auth
-  } = state;
+    isAuthenticated,
+    errorMessage
+  } = state.authReducer;
 
   return {
     username,
     hasUsername,
     password,
     hasPassword,
-    auth
+    isAuthenticated,
+    errorMessage
   };
 };
 

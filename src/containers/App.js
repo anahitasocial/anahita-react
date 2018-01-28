@@ -161,35 +161,29 @@ class App extends React.Component {
       <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
         <MuiThemeProvider theme={context.theme} sheetsManager={context.sheetsManager}>
           <div className={classes.appFrame}>
-            {isAuthenticated &&
-              <AppBar
-                className={classNames(
-                  classes.appBar,
-                  isAuthenticated && leftDrawerOpen && classes.appBarShift,
-                )}
+            <AppBar
+              className={classNames(
+                classes.appBar,
+                isAuthenticated && leftDrawerOpen && classes.appBarShift,
+              )}
+            >
+              <Toolbar
+                className={classNames(classes.toolbar)}
+                disableGutters={!leftDrawerOpen}
               >
-                <Toolbar
-                  className={classNames(classes.toolbar)}
-                  disableGutters={!leftDrawerOpen}
+                <IconButton
+                  className={classNames(
+                    classes.menuButton,
+                    leftDrawerOpen && classes.hide,
+                  )}
+                  color="contrast"
+                  aria-label="open drawer"
+                  onClick={this.handleDrawerOpen}
                 >
-                  <IconButton
-                    className={classNames(
-                      classes.menuButton,
-                      leftDrawerOpen && classes.hide,
-                    )}
-                    color="contrast"
-                    aria-label="open drawer"
-                    onClick={this.handleDrawerOpen}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                  <Typography type="title" color="inherit" className={classes.appBarTitle}>
-                      Dashboard
-                  </Typography>
-                </Toolbar>
-              </AppBar>
-            }
-
+                  <MenuIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
             {isAuthenticated &&
               <Drawer
                 type="permanent"
@@ -247,8 +241,11 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const { auth } = state;
-  const { isAuthenticated, viewer } = auth;
+  const {
+    isAuthenticated,
+    viewer,
+  } = state.authReducer;
+
   return {
     isAuthenticated,
     viewer,
