@@ -10,13 +10,15 @@ export function browsePeople(params) {
     limit,
   } = params;
 
-  return axios.get('/people.json', constructURLSearchParams({
-    q: keywordFilter,
-    usertype: usertypeFliter,
-    disabled: disabledFilter,
-    start: offset,
-    limit,
-  }));
+  return axios.get('/people.json', {
+    params: {
+      q: keywordFilter,
+      usertype: usertypeFliter,
+      disabled: disabledFilter,
+      start: offset,
+      limit,
+    },
+  });
 }
 
 export function readPerson(id) {

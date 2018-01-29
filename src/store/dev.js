@@ -11,12 +11,12 @@ const loggerMiddleware = createLogger();
 const middleware = applyMiddleware(
   thunkMiddleware,
   apiErrorMiddleware,
-  loggerMiddleware
+  loggerMiddleware,
 );
 
 const createFinalStore = compose(
-    middleware,
-    DevTools.instrument()
+  middleware,
+  DevTools.instrument(),
 )(createStore);
 
 export default function configureStore(initialState) {

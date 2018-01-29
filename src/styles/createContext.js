@@ -18,12 +18,12 @@ jss.options.createGenerateClassName = createGenerateClassName;
 export const sheetsManager: Map<*, *> = new Map()
 
 export default function createContext() {
-    return {
-        jss,
-        theme,
-        // This is needed in order to deduplicate the injection of CSS in the page.
-        sheetsManager,
-        // This is needed in order to inject the critical CSS.
-        sheetsRegistry: new SheetsRegistry()
-    }
+  return {
+    jss,
+    theme,
+    // This is needed in order to deduplicate the injection of CSS in the page.
+    sheetsManager,
+    // This is needed in order to inject the critical CSS.
+    sheetsRegistry: new SheetsRegistry()
+  }
 }

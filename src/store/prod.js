@@ -6,7 +6,7 @@ import reducer from '../reducers';
 
 const middleware = applyMiddleware(
   thunkMiddleware,
-  apiErrorMiddleware
+  apiErrorMiddleware,
 );
 
 const createFinalStore = compose(middleware)(createStore);

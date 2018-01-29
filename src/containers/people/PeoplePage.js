@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
+import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-// import Button from 'material-ui/Button';
-// import Toolbar from 'material-ui/Toolbar';
 
 import { browsePeople } from '../../actions/people';
+import ActorCard from '../../components/cards/ActorCard';
 
 const styles = theme => ({
   root: {
@@ -21,8 +20,8 @@ class PeoplePage extends React.Component {
     super(props, context);
 
     this.state = {
-      keywordFilter: '*',
-      usertypeFiter: '*',
+      keywordFilter: '',
+      usertypeFiter: '',
       disabledFilter: false,
     };
   }
@@ -51,13 +50,24 @@ class PeoplePage extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Typography type="title" color="inherit" className={classes.flex}>
-            People
-        </Typography>
+        <Toolbar>
+          <Typography type="title" color="inherit" className={classes.flex}>
+              People
+          </Typography>
+        </Toolbar>
         {people.map((person) => {
           const key = `person_${person.id}`;
+          const avatarSrc = person.imageURL.medium && person.imageURL.medium.url;
+          const coverSrc = person.coverURL.medium && person.coverURL.medium.url;
           return (
-            <p key={key}>{person.name}</p>
+            <ActorCard
+              key={key}
+              name={person.name}
+              alias={person.username}
+              description={person.body}
+              avatar={avatarSrc}
+              cover={coverSrc}
+            />
           );
         })
         }
@@ -70,10 +80,14 @@ PeoplePage.propTypes = {
   classes: PropTypes.object.isRequired,
   browsePeople: PropTypes.func.isRequired,
   people: PropTypes.array,
+  offset: PropTypes.number,
+  limit: PropTypes.number,
 };
 
 PeoplePage.defaultProps = {
   people: [],
+  offset: 0,
+  limit: 60,
 };
 
 const mapStateToProps = (state) => {
@@ -89,7 +103,7 @@ const mapStateToProps = (state) => {
 
   const {
     isAuthenticated,
-    viewer
+    viewer,
   } = state.authReducer;
 
   return {
@@ -107,7 +121,9 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    browsePeople: (params) => dispatch(browsePeople(params)),
+    browsePeople: (params) => {
+      dispatch(browsePeople(params));
+    },
   };
 }
 
