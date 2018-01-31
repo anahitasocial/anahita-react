@@ -11,7 +11,7 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
-// import Button from 'material-ui/Button';
+import Button from 'material-ui/Button';
 
 const styles = theme => ({
   root: {},
@@ -31,6 +31,10 @@ const ActorCard = (props) => {
     description,
     avatar,
     cover,
+    canFollow,
+    isLeader,
+    handleFollowActor,
+    handleUnfollowActor,
   } = props;
 
   const nameInitial = name.charAt(0).toUpperCase();
@@ -67,6 +71,28 @@ const ActorCard = (props) => {
           </Typography>
         </CardContent>
         }
+        {canFollow &&
+        <CardActions>
+          {isLeader &&
+          <Button
+            dense
+            color="primary"
+            onClick={handleUnfollowActor}
+          >
+            Unfollow
+          </Button>
+          }
+          {!isLeader &&
+          <Button
+            dense
+            color="primary"
+            onClick={handleFollowActor}
+          >
+            Follow
+          </Button>
+          }
+        </CardActions>
+        }
       </Card>
     </div>
   );
@@ -79,6 +105,10 @@ ActorCard.propTypes = {
   description: PropTypes.string,
   avatar: PropTypes.string,
   cover: PropTypes.string,
+  canFollow: PropTypes.bool.isRequired,
+  isLeader: PropTypes.bool.isRequired,
+  handleFollowActor: PropTypes.func.isRequired,
+  handleUnfollowActor: PropTypes.func.isRequired,
 };
 
 ActorCard.defaultProps = {

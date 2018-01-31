@@ -5,7 +5,11 @@ import { withStyles } from 'material-ui/styles';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
-import { browsePeople } from '../../actions/people';
+import {
+  browsePeople,
+  followPerson,
+  unfollowPerson,
+} from '../../actions/people';
 import ActorCard from '../../components/cards/ActorCard';
 
 const styles = theme => ({
@@ -42,6 +46,21 @@ class PeoplePage extends React.Component {
     });
   }
 
+  canFollow(person) {
+    const { viewer } = this.props;
+    return viewer.id !== person.id;
+  }
+
+  handleFollowPerson = (person) => {
+    const { viewer } = this.props;
+    this.props.followPerson(viewer, person);
+  }
+
+  handleUnfollowPerson = (person) => {
+    const { viewer } = this.props;
+    this.props.unfollowPerson(viewer, person);
+  }
+
   render() {
     const {
       classes,
@@ -59,6 +78,7 @@ class PeoplePage extends React.Component {
           const key = `person_${person.id}`;
           const avatarSrc = person.imageURL.medium && person.imageURL.medium.url;
           const coverSrc = person.coverURL.medium && person.coverURL.medium.url;
+          const canFollow = this.canFollow(person);
           return (
             <ActorCard
               key={key}
@@ -67,6 +87,10 @@ class PeoplePage extends React.Component {
               description={person.body}
               avatar={avatarSrc}
               cover={coverSrc}
+              canFollow={canFollow}
+              isLeader={Boolean(person.isLeader)}
+              handleFollowActor={() => this.handleFollowPerson(person)}
+              handleUnfollowActor={() => this.handleUnfollowPerson(person)}
             />
           );
         })
@@ -82,6 +106,7 @@ PeoplePage.propTypes = {
   people: PropTypes.array,
   offset: PropTypes.number,
   limit: PropTypes.number,
+  viewer: PropTypes.object.isRequired,
 };
 
 PeoplePage.defaultProps = {
@@ -123,6 +148,12 @@ function mapDispatchToProps(dispatch) {
   return {
     browsePeople: (params) => {
       dispatch(browsePeople(params));
+    },
+    followPerson: (viewer, person) => {
+      dispatch(followPerson(viewer, person));
+    },
+    unfollowPerson: (viewer, person) => {
+      dispatch(unfollowPerson(viewer, person));
     },
   };
 }
