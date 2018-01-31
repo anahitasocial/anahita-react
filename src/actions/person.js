@@ -96,17 +96,16 @@ export function deletePerson(person) {
 
 // -- Follow
 
-function followRequest(person) {
+function followRequest() {
   return {
     type: PERSON_FOLLOW_REQUEST,
-    person,
   };
 }
 
 function followSuccess(response) {
   return {
     type: PERSON_FOLLOW_SUCCESS,
-    person: response,
+    person: response.data,
   };
 }
 
@@ -119,7 +118,7 @@ function followFailure(error) {
 
 export function followPerson(viewer, person) {
   return (dispatch) => {
-    dispatch(followRequest(person));
+    dispatch(followRequest());
     return new Promise((resolve, reject) => {
       api.followPerson(viewer, person)
         .then((result) => {
@@ -137,17 +136,16 @@ export function followPerson(viewer, person) {
 
 // -- Unfollow
 
-function unfollowRequest(person) {
+function unfollowRequest() {
   return {
     type: PERSON_UNFOLLOW_REQUEST,
-    person,
   };
 }
 
 function unfollowSuccess(response) {
   return {
     type: PERSON_UNFOLLOW_SUCCESS,
-    person: response,
+    person: response.data,
   };
 }
 
@@ -160,7 +158,7 @@ function unfollowFailure(error) {
 
 export function unfollowPerson(viewer, person) {
   return (dispatch) => {
-    dispatch(unfollowRequest(person));
+    dispatch(unfollowRequest());
     return new Promise((resolve, reject) => {
       api.unfollowPerson(viewer, person)
         .then((result) => {
