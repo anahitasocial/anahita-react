@@ -140,7 +140,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     browsePeople: (params) => {
       dispatch(browsePeople(params));

@@ -3,7 +3,7 @@ import { auth } from '../api';
 import {
   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
   LOGOUT_REQUEST, LOGOUT_SUCCESS,
-} from '../constants/actions';
+} from '../constants/auth';
 
 // - Login Action -
 

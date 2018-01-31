@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/LoginForm';
-import { auth } from '../../actions';
+import { login } from '../../actions/auth';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -41,9 +40,8 @@ class LoginPage extends React.Component {
   handleFormSubmit(event) {
     event.preventDefault();
     const { username, password } = this.state;
-    const { actions } = this.props;
     if (this.validate()) {
-      actions.login({ username, password });
+      this.props.login({ username, password });
     }
   }
 
@@ -73,7 +71,7 @@ class LoginPage extends React.Component {
 }
 
 LoginPage.propTypes = {
-  actions: PropTypes.object.isRequired
+  login: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -96,10 +94,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(auth, dispatch)
-  }
+    login: (credentials) => {
+      dispatch(login(credentials));
+    }
+  };
 };
 
 export default connect(

@@ -1,10 +1,10 @@
-import Actions from './actions';
+import Auth from './auth';
 import Storage from './storage';
 import People from './people';
 import Person from './person';
 
 export {
-  Actions,
+  Auth,
   Storage,
   People,
   Person,
