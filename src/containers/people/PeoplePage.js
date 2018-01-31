@@ -118,8 +118,6 @@ PeoplePage.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     people,
-    person,
-    deleteSuccess,
     errorMessage,
     offset,
     limit,
@@ -133,8 +131,6 @@ const mapStateToProps = (state) => {
 
   return {
     people,
-    person,
-    deleteSuccess,
     errorMessage,
     offset,
     limit,

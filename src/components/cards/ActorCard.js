@@ -75,8 +75,7 @@ const ActorCard = (props) => {
         <CardActions>
           {isLeader &&
           <Button
-            dense
-            color="primary"
+            color="inherit"
             onClick={handleUnfollowActor}
           >
             Unfollow

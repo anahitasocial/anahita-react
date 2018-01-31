@@ -1,7 +1,9 @@
-import * as auth from './auth';
-import * as people from './people';
+import auth from './auth';
+import people from './people';
+import person from './person';
 
 export {
   auth,
   people,
+  person,
 };

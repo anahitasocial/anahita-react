@@ -1,25 +1,21 @@
 import { people as api } from '../api';
 import {
-  PERSON_BROWSE_REQUEST, PERSON_BROWSE_SUCCESS, PERSON_BROWSE_FAILURE,
-  PERSON_READ_REQUEST, PERSON_READ_SUCCESS, PERSON_READ_FAILURE,
-  // PERSON_EDIT_REQUEST, PERSON_EDIT_SUCCESS, PERSON_EDIT_FAILURE,
-  // PERSON_ADD_REQUEST, PERSON_ADD_SUCCESS, PERSON_ADD_FAILURE,
-  PERSON_DELETE_REQUEST, PERSON_DELETE_SUCCESS, PERSON_DELETE_FAILURE,
-  PERSON_FOLLOW_REQUEST, PERSON_FOLLOW_SUCCESS, PERSON_FOLLOW_FAILURE,
-  PERSON_UNFOLLOW_REQUEST, PERSON_UNFOLLOW_SUCCESS, PERSON_UNFOLLOW_FAILURE,
+  PEOPLE_BROWSE_REQUEST, PEOPLE_BROWSE_SUCCESS, PEOPLE_BROWSE_FAILURE,
+  PEOPLE_FOLLOW_REQUEST, PEOPLE_FOLLOW_SUCCESS, PEOPLE_FOLLOW_FAILURE,
+  PEOPLE_UNFOLLOW_REQUEST, PEOPLE_UNFOLLOW_SUCCESS, PEOPLE_UNFOLLOW_FAILURE,
 } from '../constants/people';
 
 // -- Browse
 
-function browsePersonRequest() {
+function browseRequest() {
   return {
-    type: PERSON_BROWSE_REQUEST,
+    type: PEOPLE_BROWSE_REQUEST,
   };
 }
 
-function browsePersonSuccess(results) {
+function browseSuccess(results) {
   return {
-    type: PERSON_BROWSE_SUCCESS,
+    type: PEOPLE_BROWSE_SUCCESS,
     people: results.data.data,
     offset: results.data.pagination.offset,
     limit: results.data.pagination.limit,
@@ -27,109 +23,23 @@ function browsePersonSuccess(results) {
   };
 }
 
-function browsePersonFailure(error) {
+function browseFailure(error) {
   return {
-    type: PERSON_BROWSE_FAILURE,
+    type: PEOPLE_BROWSE_FAILURE,
     errorMessage: error.message,
   };
 }
 
 export function browsePeople(params) {
   return (dispatch) => {
-    dispatch(browsePersonRequest());
+    dispatch(browseRequest());
     return new Promise((resolve, reject) => {
       api.browsePeople(params)
         .then((result) => {
-          dispatch(browsePersonSuccess(result));
+          dispatch(browseSuccess(result));
           return resolve();
         }, (response) => {
-          dispatch(browsePersonFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
-// -- Read
-
-function readPersonRequest(id) {
-  return {
-    type: PERSON_READ_REQUEST,
-    id,
-  };
-}
-
-function readPersonSuccess(person) {
-  return {
-    type: PERSON_READ_SUCCESS,
-    person,
-  };
-}
-
-function readPersonFailure(error) {
-  return {
-    type: PERSON_READ_FAILURE,
-    errorMessage: error.message,
-  };
-}
-
-export function readPerson(id) {
-  return (dispatch) => {
-    dispatch(readPersonRequest(id));
-    return new Promise((resolve, reject) => {
-      api.readPerson()
-        .then((result) => {
-          dispatch(readPersonSuccess(result));
-          return resolve();
-        }, (response) => {
-          dispatch(readPersonFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
-// -- Edit
-
-// -- Add
-
-// -- Delete
-
-function deletePersonRequest(person) {
-  return {
-    type: PERSON_DELETE_REQUEST,
-    person,
-  };
-}
-
-function deletePersonSuccess(response) {
-  return {
-    type: PERSON_DELETE_SUCCESS,
-    response,
-  };
-}
-
-function deletePersonFailure(error) {
-  return {
-    type: PERSON_DELETE_FAILURE,
-    errorMessage: error.message,
-  };
-}
-
-export function deletePerson(person) {
-  return (dispatch) => {
-    dispatch(deletePersonRequest(person));
-    return new Promise((resolve, reject) => {
-      api.readPerson()
-        .then((result) => {
-          dispatch(deletePersonSuccess(result));
-          return resolve();
-        }, (response) => {
-          dispatch(deletePersonFailure(response));
+          dispatch(browseFailure(response));
           return reject(response);
         }).catch((error) => {
           throw new Error(error);
@@ -140,37 +50,36 @@ export function deletePerson(person) {
 
 // -- Follow
 
-function followPersonRequest(person) {
+function followRequest() {
   return {
-    type: PERSON_FOLLOW_REQUEST,
-    person,
+    type: PEOPLE_FOLLOW_REQUEST,
   };
 }
 
-function followPersonSuccess(response) {
+function followSuccess(response) {
   return {
-    type: PERSON_FOLLOW_SUCCESS,
-    response,
+    type: PEOPLE_FOLLOW_SUCCESS,
+    person: response.data,
   };
 }
 
-function followPersonFailure(error) {
+function followFailure(error) {
   return {
-    type: PERSON_FOLLOW_FAILURE,
+    type: PEOPLE_FOLLOW_FAILURE,
     errorMessage: error.message,
   };
 }
 
 export function followPerson(viewer, person) {
   return (dispatch) => {
-    dispatch(followPersonRequest(person));
+    dispatch(followRequest());
     return new Promise((resolve, reject) => {
       api.followPerson(viewer, person)
         .then((result) => {
-          dispatch(followPersonSuccess(result));
+          dispatch(followSuccess(result));
           return resolve();
         }, (response) => {
-          dispatch(followPersonFailure(response));
+          dispatch(followFailure(response));
           return reject(response);
         }).catch((error) => {
           throw new Error(error);
@@ -181,37 +90,36 @@ export function followPerson(viewer, person) {
 
 // -- Unfollow
 
-function unfollowPersonRequest(person) {
+function unfollowRequest() {
   return {
-    type: PERSON_UNFOLLOW_REQUEST,
-    person,
+    type: PEOPLE_UNFOLLOW_REQUEST,
   };
 }
 
-function unfollowPersonSuccess(response) {
+function unfollowSuccess(response) {
   return {
-    type: PERSON_UNFOLLOW_SUCCESS,
-    response,
+    type: PEOPLE_UNFOLLOW_SUCCESS,
+    person: response.data,
   };
 }
 
-function unfollowPersonFailure(error) {
+function unfollowFailure(error) {
   return {
-    type: PERSON_UNFOLLOW_FAILURE,
+    type: PEOPLE_UNFOLLOW_FAILURE,
     errorMessage: error.message,
   };
 }
 
 export function unfollowPerson(viewer, person) {
   return (dispatch) => {
-    dispatch(unfollowPersonRequest(person));
+    dispatch(unfollowRequest());
     return new Promise((resolve, reject) => {
       api.unfollowPerson(viewer, person)
         .then((result) => {
-          dispatch(unfollowPersonSuccess(result));
+          dispatch(unfollowSuccess(result));
           return resolve();
         }, (response) => {
-          dispatch(unfollowPersonFailure(response));
+          dispatch(unfollowFailure(response));
           return reject(response);
         }).catch((error) => {
           throw new Error(error);
