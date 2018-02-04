@@ -65,6 +65,7 @@ class PeoplePage extends React.Component {
     const {
       classes,
       people,
+      isAuthenticated
     } = this.props;
 
     return (
@@ -89,8 +90,10 @@ class PeoplePage extends React.Component {
               cover={coverSrc}
               canFollow={canFollow}
               isLeader={Boolean(person.isLeader)}
+              isAuthenticated={isAuthenticated}
               handleFollowActor={() => this.handleFollowPerson(person)}
               handleUnfollowActor={() => this.handleUnfollowPerson(person)}
+              profile={`/people/${person.username}/`}
             />
           );
         })

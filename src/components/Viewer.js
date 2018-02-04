@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 import withStyles from 'material-ui/styles/withStyles';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
+import { Link } from 'react-router-dom';
 
 const styles = {
   row: {
     display: 'flex',
   },
   avatar: {
-    margin: '10px',
+    margin: 10,
   },
   name: {
-    marginLeft: '10px',
-    marginTop: '10px',
+    marginLeft: 10,
+    marginTop: 10,
+  },
+  nameLink: {
+    textDecoration: 'none',
   },
 };
 
@@ -22,17 +26,21 @@ const Viewer = (props) => {
     classes,
     viewer,
   } = props;
-
+  const profile = `/people/${viewer.username}/`;
   return (
     <div className={classes.row}>
       <Avatar
         alt={viewer.name.charAt(0)}
         src={viewer.imageURL.medium.url}
         className={classes.avatar}
+        component={Link}
+        to={profile}
       />
       <div className={classes.name}>
         <Typography type="title" color="inherit">
-          {viewer.name}
+          <Link replace to={profile} href={profile} className={classes.nameLink}>
+            {viewer.name}
+          </Link>
         </Typography>
         <Typography type="caption" color="inherit">
           @{viewer.alias}

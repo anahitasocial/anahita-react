@@ -12,16 +12,40 @@ import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Button from 'material-ui/Button';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
-  root: {},
-  card: {
-    marginBottom: 20,
+  root: {
+    marginBottom: theme.spacing.unit * 3,
   },
   media: {
-    height: 150,
+    height: theme.spacing.unit * 20,
+  },
+  title: {
+    fontSize: 16,
+  },
+  titleLink: {
+    textDecoration: 'none',
+    color: theme.palette.primary,
   },
 });
+
+let ActorTitle = (props) => {
+  const { to, name, classes } = props;
+  return (
+    <Link to={to} href={to} className={classes.titleLink}>
+      {name}
+    </Link>
+  );
+};
+
+ActorTitle = withStyles(styles)(ActorTitle);
+
+ActorTitle.propTypes = {
+  classes: PropTypes.object.isRequired,
+  to: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 const ActorCard = (props) => {
   const {
@@ -31,8 +55,10 @@ const ActorCard = (props) => {
     description,
     avatar,
     cover,
+    profile,
     canFollow,
     isLeader,
+    isAuthenticated,
     handleFollowActor,
     handleUnfollowActor,
   } = props;
@@ -41,7 +67,7 @@ const ActorCard = (props) => {
 
   return (
     <div className={classes.root}>
-      <Card className={classes.card}>
+      <Card>
         <CardHeader
           avatar={
             <Avatar
@@ -49,6 +75,8 @@ const ActorCard = (props) => {
               className={classes.avatar}
               alt={name}
               src={avatar}
+              component={Link}
+              to={profile}
             >
               {!avatar && nameInitial}
             </Avatar>
@@ -58,11 +86,19 @@ const ActorCard = (props) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={name}
+          title={<ActorTitle
+            classes={classes}
+            to={profile}
+            name={name}
+          />}
           subheader={`@${alias}`}
         />
         {cover &&
-        <CardMedia className={classes.media} image={cover} title={name} />
+        <CardMedia
+          className={classes.media}
+          image={cover}
+          title={name}
+        />
         }
         {description &&
         <CardContent>
@@ -71,7 +107,7 @@ const ActorCard = (props) => {
           </Typography>
         </CardContent>
         }
-        {canFollow &&
+        {isAuthenticated && canFollow &&
         <CardActions>
           {isLeader &&
           <Button
@@ -106,8 +142,10 @@ ActorCard.propTypes = {
   cover: PropTypes.string,
   canFollow: PropTypes.bool.isRequired,
   isLeader: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   handleFollowActor: PropTypes.func.isRequired,
   handleUnfollowActor: PropTypes.func.isRequired,
+  profile: PropTypes.string.isRequired,
 };
 
 ActorCard.defaultProps = {

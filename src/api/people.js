@@ -22,7 +22,7 @@ export function browsePeople(params) {
 }
 
 export function readPerson(id) {
-  return axios.get(`/people/${id}`);
+  return axios.get(`/people/${id}.json`);
 }
 
 export function followPerson(viewer, person) {

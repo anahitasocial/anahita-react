@@ -9,6 +9,7 @@ import App from '../containers/App';
 import LoginPage from '../containers/people/LoginPage';
 import HomePage from '../containers/HomePage';
 import PeoplePage from '../containers/people/PeoplePage';
+import PersonPage from '../containers/people/PersonPage';
 import DashboardPage from '../containers/DashboardPage';
 import PageNotFound from '../containers/PageNotFound';
 
@@ -64,9 +65,14 @@ const Routes = (props) => {
           component={DashboardPage}
         />
         <Route
+          exact
           path="/people/"
-        //  store={store}
           component={PeoplePage}
+        />
+        <Route
+          exact
+          path="/people/:id/"
+          component={PersonPage}
         />
         <Route component={PageNotFound} />
       </Switch>

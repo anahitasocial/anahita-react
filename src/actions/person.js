@@ -10,17 +10,16 @@ import {
 
 // -- Read
 
-function readRequest(id) {
+function readRequest() {
   return {
     type: PERSON_READ_REQUEST,
-    id,
   };
 }
 
-function readSuccess(person) {
+function readSuccess(result) {
   return {
     type: PERSON_READ_SUCCESS,
-    person,
+    person: result.data,
   };
 }
 
@@ -33,9 +32,9 @@ function readFailure(error) {
 
 export function readPerson(id) {
   return (dispatch) => {
-    dispatch(readRequest(id));
+    dispatch(readRequest());
     return new Promise((resolve, reject) => {
-      api.readPerson()
+      api.readPerson(id)
         .then((result) => {
           dispatch(readSuccess(result));
           return resolve();
