@@ -18,18 +18,15 @@ const styles = theme => ({
 });
 
 class PersonPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      person: props.person,
-      isModified: false
-    };
-  }
-
   componentWillMount() {
       const { id } = this.props.match.params;
       this.props.readPerson(id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.props.readPerson(nextProps.match.params.id);
+    }
   }
 
   canFollow() {
