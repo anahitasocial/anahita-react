@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import StackGrid from "react-stack-grid";
 
 import {
   browsePeople,
@@ -15,7 +16,7 @@ import ActorCard from '../../components/cards/ActorCard';
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    // marginTop: theme.spacing.unit * 3,
   },
 });
 
@@ -75,6 +76,11 @@ class PeoplePage extends React.Component {
               People
           </Typography>
         </Toolbar>
+        <StackGrid
+          columnWidth={410}
+          gutterWidth={20}
+          gutterHeight={20}
+        >
         {people.map((person) => {
           const key = `person_${person.id}`;
           const avatarSrc = person.imageURL.medium && person.imageURL.medium.url;
@@ -98,6 +104,7 @@ class PeoplePage extends React.Component {
           );
         })
         }
+        </StackGrid>
       </div>
     );
   }

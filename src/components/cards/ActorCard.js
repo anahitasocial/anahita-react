@@ -15,11 +15,12 @@ import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
-  root: {
-    marginBottom: theme.spacing.unit * 3,
-  },
+  root: {},
   media: {
     height: theme.spacing.unit * 20,
+  },
+  avatar: {
+    textDecoration: 'none',
   },
   title: {
     fontSize: 16,

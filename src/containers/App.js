@@ -30,6 +30,7 @@ const styles = theme => ({
   '@global': {
     body: {
       margin: 0,
+      backgroundColor: theme.palette.background.default,
     },
   },
   appFrame: {
@@ -40,7 +41,7 @@ const styles = theme => ({
   },
   appBar: {
     position: 'absolute',
-    zIndex: theme.zIndex.navDrawer + 1,
+    zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -55,9 +56,6 @@ const styles = theme => ({
     }),
   },
   menuButton: {
-    marginRight: 15,
-  },
-  appBarTitle: {
     marginLeft: 12,
     marginRight: 36,
   },
@@ -74,7 +72,7 @@ const styles = theme => ({
     }),
   },
   drawerPaperClose: {
-    width: 0,
+    width: 60,
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -89,17 +87,18 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    padding: '0 8px',
     ...theme.mixins.toolbar,
   },
   viewer: {
     display: 'flex',
   },
-  mainContent: {
+  content: {
     width: '100%',
     flexGrow: 1,
-    // backgroundColor: theme.palette.background.default,
-    padding: '0 20px 0 20px',
+    padding: 24,
     height: 'calc(100% - 56px)',
+    marginTop: 56,
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
       marginTop: 64,
@@ -126,7 +125,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      leftDrawerOpen: true,
+      open: false,
     };
 
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
@@ -135,13 +134,13 @@ class App extends React.Component {
 
   handleDrawerOpen() {
     this.setState({
-      leftDrawerOpen: true,
+      open: true,
     });
   }
 
   handleDrawerClose() {
     this.setState({
-      leftDrawerOpen: false,
+      open: false,
     });
   }
 
@@ -154,7 +153,7 @@ class App extends React.Component {
       viewer,
     } = this.props;
 
-    const { leftDrawerOpen } = this.state;
+    const { open } = this.state;
     const context = createContext();
 
     return (
@@ -164,17 +163,14 @@ class App extends React.Component {
             <AppBar
               className={classNames(
                 classes.appBar,
-                isAuthenticated && leftDrawerOpen && classes.appBarShift,
+                isAuthenticated && open && classes.appBarShift,
               )}
             >
-              <Toolbar
-                className={classNames(classes.toolbar)}
-                disableGutters={!leftDrawerOpen}
-              >
+              <Toolbar disableGutters={!open}>
                 <IconButton
                   className={classNames(
                     classes.menuButton,
-                    leftDrawerOpen && classes.hide,
+                    open && classes.hide,
                   )}
                   color="contrast"
                   aria-label="open drawer"
@@ -190,10 +186,10 @@ class App extends React.Component {
                 classes={{
                   paper: classNames(
                     classes.drawerPaper,
-                    !leftDrawerOpen && classes.drawerPaperClose,
+                    !open && classes.drawerPaperClose,
                   ),
                 }}
-                open={leftDrawerOpen}
+                open={open}
               >
                 <div className={classes.drawerInner}>
                   <div className={classes.drawerHeader}>
@@ -219,7 +215,7 @@ class App extends React.Component {
                 </div>
               </Drawer>
               }
-            <main className={classes.mainContent}>
+            <main className={classes.content}>
               <AppWrapper>
                 {children}
               </AppWrapper>
