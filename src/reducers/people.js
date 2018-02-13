@@ -24,7 +24,6 @@ export default function (state = {
       return {
         ...state,
         isFetching: true,
-        // people: [],
       };
     case PEOPLE_BROWSE_SUCCESS:
       return {
