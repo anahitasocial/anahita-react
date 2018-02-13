@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import { LinearProgress, CircularProgress } from 'material-ui/Progress';
+import { CircularProgress } from 'material-ui/Progress';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -20,9 +20,9 @@ const styles = theme => ({
     width: '100%',
   },
   progress: {
-    marginLeft: '50%',
-    marginTop: 10,
-    marginBottom: 10,
+    marginLeft: '48%',
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
 });
 
@@ -34,9 +34,18 @@ class PeoplePage extends React.Component {
       keywordFilter: '',
       usertypeFiter: '',
       disabledFilter: false,
+      hasMore: true,
     };
 
     this.fetchPeople = this.fetchPeople.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.people.length === this.props.total) {
+      this.setState({
+        hasMore: false,
+      });
+    }
   }
 
   canFollow(person) {
@@ -70,16 +79,14 @@ class PeoplePage extends React.Component {
     });
   }
 
-  handleLoadMore() {
-    this.fetchPeople();
-  }
-
   render() {
     const {
       classes,
       isAuthenticated,
       people,
     } = this.props;
+
+    const { hasMore } = this.state;
 
     return (
       <div className={classes.root}>
@@ -89,10 +96,9 @@ class PeoplePage extends React.Component {
           </Typography>
         </Toolbar>
         <InfiniteScroll
-          pageStart={0}
           loadMore={this.fetchPeople}
-          hasMore={true || false}
-          loader={<CircularProgress className={classes.progress} />}
+          hasMore={hasMore}
+          loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
             columnWidth={410}
@@ -138,6 +144,7 @@ PeoplePage.propTypes = {
   people: PropTypes.array.isRequired,
   offset: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
   viewer: PropTypes.object.isRequired,
 };
 
