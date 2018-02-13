@@ -120,7 +120,6 @@ const ActorCard = (props) => {
           }
           {!isLeader &&
           <Button
-            dense
             color="primary"
             onClick={handleFollowActor}
           >

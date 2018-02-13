@@ -3,19 +3,18 @@ import { constructURLSearchParams } from './utils';
 
 export function deleteSession() {
   return axios.delete('/people/session.json', constructURLSearchParams({
-      action: 'delete'
+    action: 'delete',
   }));
-};
+}
 
 export function addSession(credentials) {
   const { username, password } = credentials;
   return axios.post('/people/session.json', constructURLSearchParams({
-      username,
-      password,
-      remember: 1
+    username,
+    password,
   }));
-};
+}
 
 export function readSession() {
-    return axios.get('/people/session.json');
+  return axios.get('/people/session.json');
 }

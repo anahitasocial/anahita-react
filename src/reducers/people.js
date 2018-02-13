@@ -16,7 +16,7 @@ export default function (state = {
   usertypeFilter: '',
   disabledFilter: false,
   offset: 0,
-  limit: 60,
+  limit: 20,
   total: 0,
 }, action) {
   switch (action.type) {
@@ -24,13 +24,13 @@ export default function (state = {
       return {
         ...state,
         isFetching: true,
-        people: [],
+        // people: [],
       };
     case PEOPLE_BROWSE_SUCCESS:
       return {
         ...state,
-        people: action.people,
-        offset: action.offset,
+        people: state.people.concat(...action.people),
+        offset: action.offset + action.limit,
         limit: action.limit,
         total: action.total,
         isFetching: false,

@@ -37,12 +37,12 @@ const Viewer = (props) => {
         to={profile}
       />
       <div className={classes.name}>
-        <Typography type="title" color="inherit">
+        <Typography variant="title" color="inherit">
           <Link replace to={profile} href={profile} className={classes.nameLink}>
             {viewer.name}
           </Link>
         </Typography>
-        <Typography type="caption" color="inherit">
+        <Typography variant="caption" color="inherit">
           @{viewer.alias}
         </Typography>
       </div>
