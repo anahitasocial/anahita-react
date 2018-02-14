@@ -1,9 +1,18 @@
 import { people as api } from '../api';
 import {
+  PEOPLE_RESET,
   PEOPLE_BROWSE_REQUEST, PEOPLE_BROWSE_SUCCESS, PEOPLE_BROWSE_FAILURE,
   PEOPLE_FOLLOW_REQUEST, PEOPLE_FOLLOW_SUCCESS, PEOPLE_FOLLOW_FAILURE,
   PEOPLE_UNFOLLOW_REQUEST, PEOPLE_UNFOLLOW_SUCCESS, PEOPLE_UNFOLLOW_FAILURE,
 } from '../constants/people';
+
+// -- reset
+
+export function resetPeople() {
+  return {
+    type: PEOPLE_RESET,
+  };
+}
 
 // -- Browse
 

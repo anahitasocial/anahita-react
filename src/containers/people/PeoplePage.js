@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 import {
   browsePeople,
+  resetPeople,
   followPerson,
   unfollowPerson,
 } from '../../actions/people';
@@ -40,12 +41,8 @@ class PeoplePage extends React.Component {
     this.fetchPeople = this.fetchPeople.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.people.length === this.props.total) {
-      this.setState({
-        hasMore: false,
-      });
-    }
+  componentWillUnmount() {
+    this.props.resetPeople();
   }
 
   canFollow(person) {
@@ -138,13 +135,13 @@ class PeoplePage extends React.Component {
 PeoplePage.propTypes = {
   classes: PropTypes.object.isRequired,
   browsePeople: PropTypes.func.isRequired,
+  resetPeople: PropTypes.func.isRequired,
   followPerson: PropTypes.func.isRequired,
   unfollowPerson: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   people: PropTypes.array.isRequired,
   offset: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
-  total: PropTypes.number.isRequired,
   viewer: PropTypes.object.isRequired,
 };
 
@@ -154,7 +151,6 @@ const mapStateToProps = (state) => {
     errorMessage,
     offset,
     limit,
-    total,
   } = state.peopleReducer;
 
   const {
@@ -167,7 +163,6 @@ const mapStateToProps = (state) => {
     errorMessage,
     offset,
     limit,
-    total,
     isAuthenticated,
     viewer,
   };
@@ -178,6 +173,9 @@ const mapDispatchToProps = (dispatch) => {
     browsePeople: (params) => {
       dispatch(browsePeople(params));
     },
+    resetPeople: () => {
+      dispatch(resetPeople());
+    },
     followPerson: (viewer, person) => {
       dispatch(followPerson(viewer, person));
     },
@@ -185,7 +183,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(unfollowPerson(viewer, person));
     },
   };
-}
+};
 
 export default withStyles(styles)(connect(
   mapStateToProps,

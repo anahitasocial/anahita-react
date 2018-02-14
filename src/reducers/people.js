@@ -1,4 +1,5 @@
 import {
+  PEOPLE_RESET,
   PEOPLE_BROWSE_REQUEST, PEOPLE_BROWSE_SUCCESS, PEOPLE_BROWSE_FAILURE,
   PEOPLE_FOLLOW_REQUEST, PEOPLE_FOLLOW_SUCCESS, PEOPLE_FOLLOW_FAILURE,
   PEOPLE_UNFOLLOW_REQUEST, PEOPLE_UNFOLLOW_SUCCESS, PEOPLE_UNFOLLOW_FAILURE,
@@ -20,6 +21,13 @@ export default function (state = {
   total: 0,
 }, action) {
   switch (action.type) {
+    case PEOPLE_RESET:
+      return {
+        ...state,
+        people: [],
+        offset: 0,
+        total: 0,
+      };
     case PEOPLE_BROWSE_REQUEST:
       return {
         ...state,
