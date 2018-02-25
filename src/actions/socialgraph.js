@@ -30,7 +30,7 @@ export function followPerson(viewer, person) {
   return (dispatch) => {
     dispatch(followRequest());
     return new Promise((resolve, reject) => {
-      api.followPerson(viewer, person)
+      api.followActor(viewer, person)
         .then((result) => {
           dispatch(followSuccess(result));
           return resolve();
@@ -70,7 +70,7 @@ export function unfollowPerson(viewer, person) {
   return (dispatch) => {
     dispatch(unfollowRequest());
     return new Promise((resolve, reject) => {
-      api.unfollowPerson(viewer, person)
+      api.unfollowActor(viewer, person)
         .then((result) => {
           dispatch(unfollowSuccess(result));
           return resolve();

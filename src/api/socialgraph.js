@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { constructURLSearchParams } from './utils';
 
-export function followPerson(viewer, actor) {
-  return axios.post(`/people/${actor.id}.json`, constructURLSearchParams({
+export function followActor(viewer, actor) {
+  const component = actor.objectType.split('.')[1];
+  return axios.post(`/${component}/${actor.id}.json`, constructURLSearchParams({
     actor: viewer.id,
     action: 'follow',
   }));
 }
 
-export function unfollowPerson(viewer, actor) {
-  return axios.post(`/people/${actor.id}.json`, constructURLSearchParams({
+export function unfollowActor(viewer, actor) {
+  const component = actor.objectType.split('.')[1];
+  return axios.post(`/${component}/${actor.id}.json`, constructURLSearchParams({
     actor: viewer.id,
     action: 'unfollow',
   }));
