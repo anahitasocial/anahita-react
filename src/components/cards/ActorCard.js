@@ -5,13 +5,9 @@ import Card, {
   CardHeader,
   CardMedia,
   CardContent,
-  CardActions,
 } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
-import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
-import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -57,11 +53,7 @@ const ActorCard = (props) => {
     avatar,
     cover,
     profile,
-    canFollow,
-    isLeader,
-    isAuthenticated,
-    handleFollowActor,
-    handleUnfollowActor,
+    action,
   } = props;
 
   const nameInitial = name.charAt(0).toUpperCase();
@@ -69,6 +61,15 @@ const ActorCard = (props) => {
   return (
     <div className={classes.root}>
       <Card>
+        {cover &&
+          <Link to={profile} href={profile}>
+            <CardMedia
+              className={classes.media}
+              image={cover}
+              title={name}
+            />
+          </Link>
+        }
         <CardHeader
           avatar={
             <Avatar
@@ -82,11 +83,7 @@ const ActorCard = (props) => {
               {!avatar && nameInitial}
             </Avatar>
           }
-          action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          }
+          action={action}
           title={<ActorTitle
             classes={classes}
             to={profile}
@@ -94,39 +91,12 @@ const ActorCard = (props) => {
           />}
           subheader={`@${alias}`}
         />
-        {cover &&
-        <CardMedia
-          className={classes.media}
-          image={cover}
-          title={name}
-        />
-        }
         {description &&
         <CardContent>
           <Typography component="p">
             {description}
           </Typography>
         </CardContent>
-        }
-        {isAuthenticated && canFollow &&
-        <CardActions>
-          {isLeader &&
-          <Button
-            color="inherit"
-            onClick={handleUnfollowActor}
-          >
-            Unfollow
-          </Button>
-          }
-          {!isLeader &&
-          <Button
-            color="primary"
-            onClick={handleFollowActor}
-          >
-            Follow
-          </Button>
-          }
-        </CardActions>
         }
       </Card>
     </div>
@@ -140,12 +110,8 @@ ActorCard.propTypes = {
   description: PropTypes.string,
   avatar: PropTypes.string,
   cover: PropTypes.string,
-  canFollow: PropTypes.bool.isRequired,
-  isLeader: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  handleFollowActor: PropTypes.func.isRequired,
-  handleUnfollowActor: PropTypes.func.isRequired,
   profile: PropTypes.string.isRequired,
+  action: PropTypes.node,
 };
 
 ActorCard.defaultProps = {
@@ -153,6 +119,7 @@ ActorCard.defaultProps = {
   description: '',
   avatar: '',
   cover: '',
+  action: null,
 };
 
 export default withStyles(styles)(ActorCard);

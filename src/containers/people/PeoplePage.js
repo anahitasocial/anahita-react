@@ -7,13 +7,13 @@ import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
+import FollowAction from '../actions/FollowAction';
 
 import {
   browsePeople,
   resetPeople,
-  followPerson,
-  unfollowPerson,
 } from '../../actions/people';
+
 import ActorCard from '../../components/cards/ActorCard';
 
 const styles = theme => ({
@@ -46,18 +46,8 @@ class PeoplePage extends React.Component {
   }
 
   canFollow(person) {
-    const { viewer } = this.props;
-    return viewer.id !== person.id;
-  }
-
-  handleFollowPerson(person) {
-    const { viewer } = this.props;
-    this.props.followPerson(viewer, person);
-  }
-
-  handleUnfollowPerson(person) {
-    const { viewer } = this.props;
-    this.props.unfollowPerson(viewer, person);
+    const { viewer, isAuthenticated } = this.props;
+    return isAuthenticated && (viewer.id !== person.id);
   }
 
   fetchPeople() {
@@ -79,7 +69,6 @@ class PeoplePage extends React.Component {
   render() {
     const {
       classes,
-      isAuthenticated,
       people,
     } = this.props;
 
@@ -115,12 +104,10 @@ class PeoplePage extends React.Component {
                   description={person.body}
                   avatar={avatarSrc}
                   cover={coverSrc}
-                  canFollow={canFollow}
-                  isLeader={Boolean(person.isLeader)}
-                  isAuthenticated={isAuthenticated}
-                  handleFollowActor={() => this.handleFollowPerson(person)}
-                  handleUnfollowActor={() => this.handleUnfollowPerson(person)}
                   profile={`/people/${person.username}/`}
+                  action={canFollow &&
+                    <FollowAction person={person} />
+                  }
                 />
               );
             })
@@ -136,8 +123,6 @@ PeoplePage.propTypes = {
   classes: PropTypes.object.isRequired,
   browsePeople: PropTypes.func.isRequired,
   resetPeople: PropTypes.func.isRequired,
-  followPerson: PropTypes.func.isRequired,
-  unfollowPerson: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   people: PropTypes.array.isRequired,
   offset: PropTypes.number.isRequired,
@@ -175,12 +160,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetPeople: () => {
       dispatch(resetPeople());
-    },
-    followPerson: (viewer, person) => {
-      dispatch(followPerson(viewer, person));
-    },
-    unfollowPerson: (viewer, person) => {
-      dispatch(unfollowPerson(viewer, person));
     },
   };
 };

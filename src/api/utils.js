@@ -1,7 +1,8 @@
 export const constructURLSearchParams = (urlParams) => {
-    var params = new URLSearchParams()
-    for (var prop in urlParams) {
-        params.append(prop, urlParams[prop])
-    }
-    return params;
+  const params = new URLSearchParams();
+  const keys = Object.keys(urlParams);
+  keys.map(key => params.append(key, urlParams[key]));
+  return params;
 };
+
+export default constructURLSearchParams;

@@ -1,100 +1,137 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
-import Fade from 'material-ui/transitions/Fade';
 import withStyles from 'material-ui/styles/withStyles';
+import Card, {
+  CardHeader,
+  CardMedia,
+  CardContent,
+//  CardActions,
+} from 'material-ui/Card';
+import { LinearProgress } from 'material-ui/Progress';
+import Fade from 'material-ui/transitions/Fade';
 
 const styles = theme => ({
   root: {
     width: '100%',
   },
   cover: {
-    position: 'absolute',
-    top: theme.spacing.unit * 8,
-    left: 0,
-    width: '100%',
-    height: theme.spacing.unit * 40,
-    zIndex: 0,
+    minHeight: 300,
   },
-  informationContainer: {
-    maxWidth: theme.spacing.unit * 40,
-    margin: `${theme.spacing.unit * 20}px auto 20px auto`,
+  coverLoader: {
+    minHeight: 300,
+    backgroundColor: theme.palette.background.default,
   },
   avatar: {
-    width: theme.spacing.unit * 30,
-    height: theme.spacing.unit * 30,
-    border: `5px solid ${theme.palette.background.default}`,
-    textDecoration: 'none',
-    margin: 10,
+    width: theme.spacing.unit * 15,
+    height: theme.spacing.unit * 15,
   },
-  title: {
-    margin: 10,
-  },
-  description: {
-    margin: 10,
-  },
+  header: {},
 });
 
-const ActorProfile = (props) => {
-  const {
-    classes,
-    cover,
-    avatar,
-    name,
-    description,
-  } = props;
-  const timeout = {
-    enter: 1000,
-    exit: 0,
-  };
-  return (
-    <div className={classes.root}>
-      <Fade
-        in
-        appear
-        timeout={timeout}
-      >
-        <Paper
-          className={classes.cover}
-          style={{
-            backgroundImage: `url(${cover})`,
-          }}
-          elevation={0}
-        />
-      </Fade>
-      <div className={classes.informationContainer}>
-        <Avatar
-          alt={name.charAt(0)}
-          src={avatar}
-          className={classes.avatar}
-        >
-          {!avatar && name.charAt(0)}
-        </Avatar>
-        <Typography variant="display1" className={classes.title}>
-          {name}
-        </Typography>
-        <Typography component="p" className={classes.description}>
-          {description}
-        </Typography>
+class ActorProfile extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      coverLoaded: false,
+    };
+
+    this.cover = new Image();
+  }
+
+  componentDidMount() {
+    this.cover.onload = () => {
+      this.setState({
+        coverLoaded: true,
+      });
+    };
+    this.cover.onError = () => {
+      this.setState({
+        coverLoaded: false,
+      });
+    };
+    this.cover.src = this.props.cover;
+  }
+
+  componentWillUnmount() {
+    this.cover.onload = null;
+    this.cover.onerror = null;
+  }
+
+  render() {
+    const {
+      classes,
+      avatar,
+      name,
+      alias,
+      description,
+      followAction,
+    } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <Card>
+          {this.state.coverLoaded &&
+            <Fade in>
+              <CardMedia
+                className={classes.cover}
+                title={name}
+                image={this.cover.src}
+              />
+            </Fade>
+          }
+          {!this.state.coverLoaded &&
+            <div className={classes.coverLoader}>
+              <LinearProgress className={classes.loader} />
+            </div>
+          }
+          <CardHeader
+            avatar={
+              <Avatar
+                aria-label={name}
+                className={classes.avatar}
+                alt={name}
+                src={avatar}
+              >
+                {!avatar && name.charAt(0)}
+              </Avatar>
+            }
+            action={followAction}
+            title={name}
+            subheader={`@${alias}`}
+            className={classes.header}
+          />
+          {description &&
+          <CardContent>
+            <Typography component="p">
+              {description}
+            </Typography>
+          </CardContent>
+          }
+        </Card>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 ActorProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   cover: PropTypes.string,
   avatar: PropTypes.string,
   name: PropTypes.string.isRequired,
+  alias: PropTypes.string,
   description: PropTypes.string,
+  followAction: PropTypes.node,
 };
 
 ActorProfile.defaultProps = {
   cover: '',
   avatar: '',
   description: '',
+  alias: '',
+  followAction: null,
 };
 
 export default withStyles(styles)(ActorProfile);

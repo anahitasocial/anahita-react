@@ -36,6 +36,7 @@
     "lodash": "^4.16.1",
     "material-ui": "next",
     "material-ui-icons": "^1.0.0-beta.5",
+    "material-ui-image": "^3.0.0-pre.5",
     "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

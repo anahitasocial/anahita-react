@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as auth from './auth';
 import * as people from './people';
+import * as socialgraph from './socialgraph';
 
 // @todo move this to webpack.config.prod and webpack.config.dev files
 // axios.defaults.baseURL = "https://www.GetAnahita.com"
@@ -15,4 +16,5 @@ axios.interceptors.request.use((config) => {
 export {
   auth,
   people,
+  socialgraph,
 };

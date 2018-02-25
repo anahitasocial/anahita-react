@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { constructURLSearchParams } from './utils';
 
 export function browsePeople(params) {
   const {
@@ -23,18 +22,4 @@ export function browsePeople(params) {
 
 export function readPerson(id) {
   return axios.get(`/people/${id}.json`);
-}
-
-export function followPerson(viewer, person) {
-  return axios.post(`/people/${person.id}.json`, constructURLSearchParams({
-    actor: viewer.id,
-    action: 'follow',
-  }));
-}
-
-export function unfollowPerson(viewer, person) {
-  return axios.post(`/people/${person.id}.json`, constructURLSearchParams({
-    actor: viewer.id,
-    action: 'unfollow',
-  }));
 }

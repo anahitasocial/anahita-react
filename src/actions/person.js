@@ -4,8 +4,6 @@ import {
   // PERSON_EDIT_REQUEST, PERSON_EDIT_SUCCESS, PERSON_EDIT_FAILURE,
   // PERSON_ADD_REQUEST, PERSON_ADD_SUCCESS, PERSON_ADD_FAILURE,
   PERSON_DELETE_REQUEST, PERSON_DELETE_SUCCESS, PERSON_DELETE_FAILURE,
-  PERSON_FOLLOW_REQUEST, PERSON_FOLLOW_SUCCESS, PERSON_FOLLOW_FAILURE,
-  PERSON_UNFOLLOW_REQUEST, PERSON_UNFOLLOW_SUCCESS, PERSON_UNFOLLOW_FAILURE,
 } from '../constants/person';
 
 // -- Read
@@ -85,86 +83,6 @@ export function deletePerson(person) {
           return resolve();
         }, (response) => {
           dispatch(deleteFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
-// -- Follow
-
-function followRequest() {
-  return {
-    type: PERSON_FOLLOW_REQUEST,
-  };
-}
-
-function followSuccess(response) {
-  return {
-    type: PERSON_FOLLOW_SUCCESS,
-    person: response.data,
-  };
-}
-
-function followFailure(error) {
-  return {
-    type: PERSON_FOLLOW_FAILURE,
-    errorMessage: error.message,
-  };
-}
-
-export function followPerson(viewer, person) {
-  return (dispatch) => {
-    dispatch(followRequest());
-    return new Promise((resolve, reject) => {
-      api.followPerson(viewer, person)
-        .then((result) => {
-          dispatch(followSuccess(result));
-          return resolve();
-        }, (response) => {
-          dispatch(followFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
-// -- Unfollow
-
-function unfollowRequest() {
-  return {
-    type: PERSON_UNFOLLOW_REQUEST,
-  };
-}
-
-function unfollowSuccess(response) {
-  return {
-    type: PERSON_UNFOLLOW_SUCCESS,
-    person: response.data,
-  };
-}
-
-function unfollowFailure(error) {
-  return {
-    type: PERSON_UNFOLLOW_FAILURE,
-    errorMessage: error.message,
-  };
-}
-
-export function unfollowPerson(viewer, person) {
-  return (dispatch) => {
-    dispatch(unfollowRequest());
-    return new Promise((resolve, reject) => {
-      api.unfollowPerson(viewer, person)
-        .then((result) => {
-          dispatch(unfollowSuccess(result));
-          return resolve();
-        }, (response) => {
-          dispatch(unfollowFailure(response));
           return reject(response);
         }).catch((error) => {
           throw new Error(error);
