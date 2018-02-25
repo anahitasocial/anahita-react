@@ -63,6 +63,7 @@ class ActorProfile extends React.Component {
   render() {
     const {
       classes,
+      cover,
       avatar,
       name,
       alias,
@@ -82,7 +83,7 @@ class ActorProfile extends React.Component {
               />
             </Fade>
           }
-          {!this.state.coverLoaded &&
+          {!this.state.coverLoaded && cover &&
             <div className={classes.coverLoader}>
               <LinearProgress className={classes.loader} />
             </div>
