@@ -5,8 +5,8 @@ import { withStyles } from 'material-ui/styles';
 import ActorProfile from '../../components/ActorProfile';
 import FollowAction from '../actions/FollowAction';
 import {
-  readPerson,
-} from '../../actions/person';
+  readActor,
+} from '../../actions/actor';
 
 const styles = theme => ({
   root: {
@@ -14,40 +14,35 @@ const styles = theme => ({
   },
 });
 
-class PersonPage extends React.Component {
+class ActorPage extends React.Component {
   componentWillMount() {
     const { id } = this.props.match.params;
-    this.props.readPerson(id);
+    this.props.readActor(id, this.props.namespace);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.id !== this.props.match.params.id) {
-      this.props.readPerson(nextProps.match.params.id);
+      this.props.readActor(nextProps.match.params.id, nextProps.namespace);
     }
   }
 
   canFollow() {
-    const {
-      viewer,
-      person,
-      isAuthenticated,
-    } = this.props;
-
-    return (isAuthenticated && !person.isLeader && viewer.id !== person.id);
+    const { actor, isAuthenticated } = this.props;
+    return (isAuthenticated && !actor.isLeader);
   }
 
-  renderProfile(person) {
-    const cover = person.coverURL.large && person.coverURL.large.url;
-    const avatar = person.imageURL.large && person.imageURL.large.url;
+  renderProfile(actor) {
+    const cover = actor.coverURL.large && actor.coverURL.large.url;
+    const avatar = actor.imageURL.large && actor.imageURL.large.url;
     const canFollow = this.canFollow();
     return (
       <ActorProfile
         cover={cover}
         avatar={avatar}
-        name={person.name}
-        description={person.body}
-        alias={person.alias}
-        followAction={canFollow && <FollowAction actor={person} />}
+        name={actor.name}
+        description={actor.body}
+        alias={actor.alias}
+        followAction={canFollow && <FollowAction actor={actor} />}
       />
     );
   }
@@ -55,58 +50,55 @@ class PersonPage extends React.Component {
   render() {
     const {
       classes,
-      person,
+      actor,
     } = this.props;
 
     return (
       <div className={classes.root}>
-        {person && person.id &&
-          this.renderProfile(person)
+        {actor && actor.id &&
+          this.renderProfile(actor)
         }
       </div>
     );
   }
 }
 
-PersonPage.propTypes = {
+ActorPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  readPerson: PropTypes.func.isRequired,
-  person: PropTypes.object,
-  viewer: PropTypes.object,
+  readActor: PropTypes.func.isRequired,
+  actor: PropTypes.object,
   isAuthenticated: PropTypes.bool,
+  namespace: PropTypes.string.isRequired,
 };
 
-PersonPage.defaultProps = {
-  person: null,
-  viewer: null,
+ActorPage.defaultProps = {
+  actor: null,
   isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {
   const {
-    person,
+    actor,
     errorMessage,
     isLeader,
-  } = state.personReducer;
+  } = state.actorReducer;
 
   const {
     isAuthenticated,
-    viewer,
   } = state.authReducer;
 
   return {
-    person,
+    actor,
     isLeader,
     errorMessage,
     isAuthenticated,
-    viewer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readPerson: (id) => {
-      dispatch(readPerson(id));
+    readActor: (id, namespace) => {
+      dispatch(readActor(id, namespace));
     },
   };
 };
@@ -114,4 +106,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PersonPage));
+)(ActorPage));

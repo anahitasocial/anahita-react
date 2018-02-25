@@ -42,22 +42,22 @@ const LeftMenu = (props) => {
       <ListItem
         button
         component={Link}
-        to="/photos/"
-      >
-        <ListItemIcon>
-          <Photo />
-        </ListItemIcon>
-        <ListItemText primary="Photos" />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
         to="/groups/"
       >
         <ListItemIcon>
           <GroupWork />
         </ListItemIcon>
         <ListItemText primary="Groups" />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/photos/"
+      >
+        <ListItemIcon>
+          <Photo />
+        </ListItemIcon>
+        <ListItemText primary="Photos" />
       </ListItem>
       <ListItem
         button

@@ -10,6 +10,8 @@ import LoginPage from '../containers/people/LoginPage';
 import HomePage from '../containers/HomePage';
 import PeoplePage from '../containers/people/PeoplePage';
 import PersonPage from '../containers/people/PersonPage';
+import GroupsPage from '../containers/groups/GroupsPage';
+import GroupPage from '../containers/groups/GroupPage';
 import DashboardPage from '../containers/DashboardPage';
 import PageNotFound from '../containers/PageNotFound';
 
@@ -73,6 +75,16 @@ const Routes = (props) => {
           exact
           path="/people/:id/"
           component={PersonPage}
+        />
+        <Route
+          exact
+          path="/groups/"
+          component={GroupsPage}
+        />
+        <Route
+          exact
+          path="/groups/:id/"
+          component={GroupPage}
         />
         <Route component={PageNotFound} />
       </Switch>

@@ -20,7 +20,7 @@ class FollowAction extends React.Component {
     super(props);
 
     this.state = {
-      isLeader: props.person.isLeader || false,
+      isLeader: props.actor.isLeader || false,
     };
 
     this.handleFollowActor = this.handleFollowActor.bind(this);
@@ -29,8 +29,8 @@ class FollowAction extends React.Component {
 
   handleFollowActor(event) {
     event.preventDefault();
-    const { viewer, person } = this.props;
-    this.props.followPerson(viewer, person);
+    const { viewer, actor } = this.props;
+    this.props.followPerson(viewer, actor);
     this.setState({
       isLeader: true,
     });
@@ -38,8 +38,8 @@ class FollowAction extends React.Component {
 
   handleUnfollowActor(event) {
     event.preventDefault();
-    const { viewer, person } = this.props;
-    this.props.unfollowPerson(viewer, person);
+    const { viewer, actor } = this.props;
+    this.props.unfollowPerson(viewer, actor);
     this.setState({
       isLeader: false,
     });
@@ -77,7 +77,7 @@ FollowAction.propTypes = {
   classes: PropTypes.object.isRequired,
   followPerson: PropTypes.func.isRequired,
   unfollowPerson: PropTypes.func.isRequired,
-  person: PropTypes.object.isRequired,
+  actor: PropTypes.object.isRequired,
   viewer: PropTypes.object.isRequired,
 };
 
@@ -93,11 +93,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    followPerson: (viewer, person) => {
-      dispatch(followPerson(viewer, person));
+    followPerson: (viewer, actor) => {
+      dispatch(followPerson(viewer, actor));
     },
-    unfollowPerson: (viewer, person) => {
-      dispatch(unfollowPerson(viewer, person));
+    unfollowPerson: (viewer, actor) => {
+      dispatch(unfollowPerson(viewer, actor));
     },
   };
 };

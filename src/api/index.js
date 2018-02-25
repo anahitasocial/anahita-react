@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as auth from './auth';
 import * as people from './people';
+import * as actors from './actors';
 import * as socialgraph from './socialgraph';
 
 // @todo move this to webpack.config.prod and webpack.config.dev files
@@ -16,5 +17,6 @@ axios.interceptors.request.use((config) => {
 export {
   auth,
   people,
+  actors,
   socialgraph,
 };

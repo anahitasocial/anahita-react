@@ -10,15 +10,18 @@ import InfiniteScroll from 'react-infinite-scroller';
 import FollowAction from '../actions/FollowAction';
 
 import {
-  browsePeople,
-  resetPeople,
-} from '../../actions/people';
+  browseActors,
+  resetActors,
+} from '../../actions/actors';
 
 import ActorCard from '../../components/cards/ActorCard';
 
 const styles = theme => ({
   root: {
     width: '100%',
+  },
+  title: {
+    textTransform: 'capitalize',
   },
   progress: {
     marginLeft: '48%',
@@ -27,58 +30,51 @@ const styles = theme => ({
   },
 });
 
-class PeoplePage extends React.Component {
+class ActorsPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      keywordFilter: '',
-      usertypeFiter: '',
       disabledFilter: false,
     };
 
-    this.fetchPeople = this.fetchPeople.bind(this);
+    this.fetchActors = this.fetchActors.bind(this);
   }
 
   componentWillUnmount() {
-    this.props.resetPeople();
+    this.props.resetActors();
   }
 
-  canFollow(person) {
-    const { viewer, isAuthenticated } = this.props;
-    return isAuthenticated && !person.isLeader && (viewer.id !== person.id);
+  canFollow(actor) {
+    const { isAuthenticated } = this.props;
+    return isAuthenticated && !actor.isLeader;
   }
 
-  fetchPeople() {
-    const {
-      keywordFilter,
-      usertypeFiter,
-      disabledFilter,
-    } = this.state;
-    const { offset, limit } = this.props;
-    this.props.browsePeople({
-      keywordFilter,
-      usertypeFiter,
+  fetchActors() {
+    const { disabledFilter } = this.state;
+    const { offset, limit, namespace } = this.props;
+    this.props.browseActors({
       disabledFilter,
       offset,
       limit,
-    });
+    }, namespace);
   }
 
   hasMore() {
     const {
       offset,
       total,
-      people,
+      actors,
     } = this.props;
 
-    return (offset === 0 || (people.length < total));
+    return offset === 0 || (actors.length < total);
   }
 
   render() {
     const {
       classes,
-      people,
+      actors,
+      namespace,
     } = this.props;
 
     const hasMore = this.hasMore();
@@ -86,12 +82,12 @@ class PeoplePage extends React.Component {
     return (
       <div className={classes.root}>
         <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.flex}>
-              People
+          <Typography variant="title" color="inherit" className={classes.title}>
+            {namespace}
           </Typography>
         </Toolbar>
         <InfiniteScroll
-          loadMore={this.fetchPeople}
+          loadMore={this.fetchActors}
           hasMore={hasMore}
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
@@ -100,22 +96,22 @@ class PeoplePage extends React.Component {
             gutterWidth={20}
             gutterHeight={20}
           >
-            {people.map((person) => {
-              const key = `person_${person.id}`;
-              const avatarSrc = person.imageURL.medium && person.imageURL.medium.url;
-              const coverSrc = person.coverURL.medium && person.coverURL.medium.url;
-              const canFollow = this.canFollow(person);
+            {actors.map((actor) => {
+              const key = `actor_${actor.id}`;
+              const avatarSrc = actor.imageURL.medium && actor.imageURL.medium.url;
+              const coverSrc = actor.coverURL.medium && actor.coverURL.medium.url;
+              const canFollow = this.canFollow(actor);
               return (
                 <ActorCard
                   key={key}
-                  name={person.name}
-                  alias={person.alias}
-                  description={person.body}
+                  name={actor.name}
+                  alias={actor.alias}
+                  description={actor.body}
                   avatar={avatarSrc}
                   cover={coverSrc}
-                  profile={`/people/${person.alias}/`}
+                  profile={`/${namespace}/${actor.id}/`}
                   action={canFollow &&
-                    <FollowAction actor={person} />
+                    <FollowAction actor={actor} />
                   }
                 />
               );
@@ -128,12 +124,13 @@ class PeoplePage extends React.Component {
   }
 }
 
-PeoplePage.propTypes = {
+ActorsPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  browsePeople: PropTypes.func.isRequired,
-  resetPeople: PropTypes.func.isRequired,
+  browseActors: PropTypes.func.isRequired,
+  resetActors: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  people: PropTypes.array.isRequired,
+  actors: PropTypes.array.isRequired,
+  namespace: PropTypes.string.isRequired,
   offset: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
@@ -142,12 +139,12 @@ PeoplePage.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    people,
+    actors,
     errorMessage,
     offset,
     limit,
     total,
-  } = state.peopleReducer;
+  } = state.actorsReducer;
 
   const {
     isAuthenticated,
@@ -155,11 +152,11 @@ const mapStateToProps = (state) => {
   } = state.authReducer;
 
   return {
-    people,
+    actors,
+    errorMessage,
     offset,
     limit,
     total,
-    errorMessage,
     isAuthenticated,
     viewer,
   };
@@ -167,11 +164,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browsePeople: (params) => {
-      dispatch(browsePeople(params));
+    browseActors: (params, namespace) => {
+      dispatch(browseActors(params, namespace));
     },
-    resetPeople: () => {
-      dispatch(resetPeople());
+    resetActors: () => {
+      dispatch(resetActors());
     },
   };
 };
@@ -179,4 +176,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PeoplePage));
+)(ActorsPage));
