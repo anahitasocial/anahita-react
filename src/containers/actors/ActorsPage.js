@@ -46,8 +46,8 @@ class ActorsPage extends React.Component {
   }
 
   canFollow(actor) {
-    const { isAuthenticated } = this.props;
-    return isAuthenticated && !actor.isLeader;
+    const { viewer, isAuthenticated } = this.props;
+    return isAuthenticated && (viewer.id !== actor.id);
   }
 
   fetchActors() {

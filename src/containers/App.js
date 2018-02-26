@@ -163,6 +163,7 @@ class App extends React.Component {
 
     const { open } = this.state;
     const context = createContext();
+    const title = '';
 
     return (
       <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
@@ -186,6 +187,11 @@ class App extends React.Component {
                 >
                   <MenuIcon />
                 </IconButton>
+                {title !== null && (
+                  <Typography className={classes.title} variant="title" color="inherit" noWrap>
+                    {title}
+                  </Typography>
+                )}
               </Toolbar>
             </AppBar>
             {isAuthenticated &&
