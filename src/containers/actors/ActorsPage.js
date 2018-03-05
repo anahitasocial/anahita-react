@@ -92,7 +92,7 @@ class ActorsPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={410}
+            columnWidth={320}
             gutterWidth={20}
             gutterHeight={20}
           >
