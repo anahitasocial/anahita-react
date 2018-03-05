@@ -5,15 +5,13 @@ import withStyles from 'material-ui/styles/withStyles';
 import Button from 'material-ui/Button';
 
 import {
-  followPerson,
-  unfollowPerson,
-} from '../../actions/socialgraph';
+  followActor,
+  unfollowActor,
+} from '../../actions/follow';
 
-const styles = theme => ({
+const styles = {
   root: {},
-  followButton: {},
-  unfollowButton: {},
-});
+};
 
 class FollowAction extends React.Component {
   constructor(props) {
@@ -30,7 +28,7 @@ class FollowAction extends React.Component {
   handleFollowActor(event) {
     event.preventDefault();
     const { viewer, actor } = this.props;
-    this.props.followPerson(viewer, actor);
+    this.props.followActor(viewer, actor);
     this.setState({
       isLeader: true,
     });
@@ -39,7 +37,7 @@ class FollowAction extends React.Component {
   handleUnfollowActor(event) {
     event.preventDefault();
     const { viewer, actor } = this.props;
-    this.props.unfollowPerson(viewer, actor);
+    this.props.unfollowActor(viewer, actor);
     this.setState({
       isLeader: false,
     });
@@ -54,18 +52,16 @@ class FollowAction extends React.Component {
           <Button
             color="inherit"
             onClick={this.handleUnfollowActor}
-            className={classes.unfollowButton}
           >
-            Unfollow
+            {'Unfollow'}
           </Button>
         }
         {!isLeader &&
           <Button
             color="primary"
-            className={classes.followButton}
             onClick={this.handleFollowActor}
           >
-            Follow
+            {'Follow'}
           </Button>
         }
       </div>
@@ -75,11 +71,12 @@ class FollowAction extends React.Component {
 
 FollowAction.propTypes = {
   classes: PropTypes.object.isRequired,
-  followPerson: PropTypes.func.isRequired,
-  unfollowPerson: PropTypes.func.isRequired,
+  followActor: PropTypes.func.isRequired,
+  unfollowActor: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
   viewer: PropTypes.object.isRequired,
 };
+
 
 const mapStateToProps = (state) => {
   const {
@@ -93,11 +90,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    followPerson: (viewer, actor) => {
-      dispatch(followPerson(viewer, actor));
+    followActor: (viewer, actor) => {
+      dispatch(followActor(viewer, actor));
     },
-    unfollowPerson: (viewer, actor) => {
-      dispatch(unfollowPerson(viewer, actor));
+    unfollowActor: (viewer, actor) => {
+      dispatch(unfollowActor(viewer, actor));
     },
   };
 };

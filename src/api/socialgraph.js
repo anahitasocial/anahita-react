@@ -16,3 +16,19 @@ export function unfollowActor(viewer, actor) {
     action: 'unfollow',
   }));
 }
+
+export function blockActor(viewer, actor) {
+  const component = actor.objectType.split('.')[1];
+  return axios.post(`/${component}/${actor.id}.json`, constructURLSearchParams({
+    actor: viewer.id,
+    action: 'block',
+  }));
+}
+
+export function unblockActor(viewer, actor) {
+  const component = actor.objectType.split('.')[1];
+  return axios.post(`/${component}/${actor.id}.json`, constructURLSearchParams({
+    actor: viewer.id,
+    action: 'unblock',
+  }));
+}

@@ -15,7 +15,7 @@ function followRequest() {
 function followSuccess(response) {
   return {
     type: ACTOR_FOLLOW_SUCCESS,
-    person: response.data,
+    actor: response.data,
   };
 }
 
@@ -26,11 +26,11 @@ function followFailure(error) {
   };
 }
 
-export function followPerson(viewer, person) {
+export function followActor(viewer, actor) {
   return (dispatch) => {
     dispatch(followRequest());
     return new Promise((resolve, reject) => {
-      api.followActor(viewer, person)
+      api.followActor(viewer, actor)
         .then((result) => {
           dispatch(followSuccess(result));
           return resolve();
@@ -55,7 +55,7 @@ function unfollowRequest() {
 function unfollowSuccess(response) {
   return {
     type: ACTOR_UNFOLLOW_SUCCESS,
-    person: response.data,
+    actor: response.data,
   };
 }
 
@@ -66,11 +66,11 @@ function unfollowFailure(error) {
   };
 }
 
-export function unfollowPerson(viewer, person) {
+export function unfollowActor(viewer, actor) {
   return (dispatch) => {
     dispatch(unfollowRequest());
     return new Promise((resolve, reject) => {
-      api.unfollowActor(viewer, person)
+      api.unfollowActor(viewer, actor)
         .then((result) => {
           dispatch(unfollowSuccess(result));
           return resolve();

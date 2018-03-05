@@ -6,8 +6,8 @@ import withStyles from 'material-ui/styles/withStyles';
 import Card, {
   CardHeader,
   CardMedia,
-  CardContent,
-//  CardActions,
+  // CardContent,
+  CardActions,
 } from 'material-ui/Card';
 import { LinearProgress } from 'material-ui/Progress';
 import Fade from 'material-ui/transitions/Fade';
@@ -28,6 +28,15 @@ const styles = theme => ({
     height: theme.spacing.unit * 15,
   },
   header: {},
+  titleContainer: {
+    marginBottom: 20,
+  },
+  title: {
+    marginBottom: 5,
+  },
+  alias: {
+    fontSize: 16,
+  },
 });
 
 class ActorProfile extends React.Component {
@@ -69,6 +78,7 @@ class ActorProfile extends React.Component {
       alias,
       description,
       followAction,
+      headerAction,
     } = this.props;
 
     return (
@@ -99,18 +109,30 @@ class ActorProfile extends React.Component {
                 {!avatar && name.charAt(0)}
               </Avatar>
             }
-            action={followAction}
-            title={name}
-            subheader={`@${alias}`}
+            title={
+              <div className={classes.titleContainer}>
+                <Typography variant="title" className={classes.title}>
+                  {name}
+                </Typography>
+                <Typography
+                  component="p"
+                  className={classes.alias}
+                >
+                  {`@${alias}`}
+                </Typography>
+              </div>
+            }
+            subheader={description &&
+              <Typography component="p">
+                {description}
+              </Typography>
+            }
             className={classes.header}
+            action={headerAction}
           />
-          {description &&
-          <CardContent>
-            <Typography component="p">
-              {description}
-            </Typography>
-          </CardContent>
-          }
+          <CardActions>
+            {followAction}
+          </CardActions>
         </Card>
       </div>
     );
@@ -125,6 +147,7 @@ ActorProfile.propTypes = {
   alias: PropTypes.string,
   description: PropTypes.string,
   followAction: PropTypes.node,
+  headerAction: PropTypes.node,
 };
 
 ActorProfile.defaultProps = {
@@ -133,6 +156,7 @@ ActorProfile.defaultProps = {
   description: '',
   alias: '',
   followAction: null,
+  headerAction: null,
 };
 
 export default withStyles(styles)(ActorProfile);

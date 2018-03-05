@@ -10,6 +10,7 @@ import LoginPage from '../containers/people/LoginPage';
 import HomePage from '../containers/HomePage';
 import PeoplePage from '../containers/people/PeoplePage';
 import PersonPage from '../containers/people/PersonPage';
+import PersonSettingsPage from '../containers/people/PersonSettingsPage';
 import GroupsPage from '../containers/groups/GroupsPage';
 import GroupPage from '../containers/groups/GroupPage';
 import DashboardPage from '../containers/DashboardPage';
@@ -65,6 +66,11 @@ const Routes = (props) => {
           path="/dashboard/"
           store={store}
           component={DashboardPage}
+        />
+        <PrivateRoute
+          path="/people/:id/settings/"
+          store={store}
+          component={PersonSettingsPage}
         />
         <Route
           exact

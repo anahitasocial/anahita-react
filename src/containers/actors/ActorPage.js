@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import ActorProfile from '../../components/ActorProfile';
+import ActorCommands from './ActorCommands';
 import FollowAction from '../actions/FollowAction';
 import {
   readActor,
@@ -26,15 +27,15 @@ class ActorPage extends React.Component {
     }
   }
 
-  canFollow() {
-    const { actor, isAuthenticated } = this.props;
-    return (isAuthenticated && !actor.isLeader);
+  canFollow(actor) {
+    const { viewer, isAuthenticated } = this.props;
+    return isAuthenticated && (viewer.id !== actor.id) && !actor.isBlocked;
   }
 
   renderProfile(actor) {
     const cover = actor.coverURL.large && actor.coverURL.large.url;
     const avatar = actor.imageURL.large && actor.imageURL.large.url;
-    const canFollow = this.canFollow();
+    const canFollow = this.canFollow(actor);
     return (
       <ActorProfile
         cover={cover}
@@ -43,6 +44,7 @@ class ActorPage extends React.Component {
         description={actor.body}
         alias={actor.alias}
         followAction={canFollow && <FollowAction actor={actor} />}
+        headerAction={<ActorCommands actor={actor} />}
       />
     );
   }
@@ -67,6 +69,7 @@ ActorPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   actor: PropTypes.object,
+  viewer: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool,
   namespace: PropTypes.string.isRequired,
 };
@@ -85,6 +88,7 @@ const mapStateToProps = (state) => {
 
   const {
     isAuthenticated,
+    viewer,
   } = state.authReducer;
 
   return {
@@ -92,6 +96,7 @@ const mapStateToProps = (state) => {
     isLeader,
     errorMessage,
     isAuthenticated,
+    viewer,
   };
 };
 

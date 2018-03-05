@@ -46,7 +46,7 @@ class PeoplePage extends React.Component {
 
   canFollow(person) {
     const { viewer, isAuthenticated } = this.props;
-    return isAuthenticated && (viewer.id !== person.id);
+    return isAuthenticated && (viewer.id !== person.id) && !person.isBlocked;
   }
 
   fetchPeople() {

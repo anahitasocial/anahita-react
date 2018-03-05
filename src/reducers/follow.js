@@ -4,47 +4,48 @@ import {
 } from '../constants/socialgraph';
 
 export default function (state = {
+  actor: {},
+  isFollower: undefined,
   isFetching: false,
-  followSuccess: false,
-  unfollowSuccess: false,
+  isSuccess: false,
   errorMessage: '',
 }, action) {
   switch (action.type) {
     case ACTOR_FOLLOW_REQUEST:
       return {
         ...state,
-        followSuccess: false,
         isFetching: true,
       };
     case ACTOR_FOLLOW_SUCCESS:
       return {
         ...state,
-        followSuccess: true,
+        isLeader: action.actor.isLeader,
+        isSuccess: true,
         isFetching: false,
       };
     case ACTOR_FOLLOW_FAILURE:
       return {
         ...state,
-        followSuccess: false,
+        isSuccess: false,
         errorMessage: action.errorMessage,
         isFetching: false,
       };
     case ACTOR_UNFOLLOW_REQUEST:
       return {
         ...state,
-        unfollowSuccess: false,
         isFetching: true,
       };
     case ACTOR_UNFOLLOW_SUCCESS:
       return {
         ...state,
-        unfollowSuccess: true,
+        isLeader: action.actor.isLeader,
+        isSuccess: true,
         isFetching: false,
       };
     case ACTOR_UNFOLLOW_FAILURE:
       return {
         ...state,
-        unfollowSuccess: false,
+        isSuccess: false,
         isFetching: false,
         errorMessage: action.errorMessage,
       };
