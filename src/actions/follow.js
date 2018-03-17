@@ -1,28 +1,25 @@
 import { socialgraph as api } from '../api';
-import {
-  ACTOR_FOLLOW_REQUEST, ACTOR_FOLLOW_SUCCESS, ACTOR_FOLLOW_FAILURE,
-  ACTOR_UNFOLLOW_REQUEST, ACTOR_UNFOLLOW_SUCCESS, ACTOR_UNFOLLOW_FAILURE,
-} from '../constants/socialgraph';
+import { Actor as ACTOR } from '../constants';
 
 // -- Follow
 
 function followRequest() {
   return {
-    type: ACTOR_FOLLOW_REQUEST,
+    type: ACTOR.FOLLOW.REQUEST,
   };
 }
 
 function followSuccess(response) {
   return {
-    type: ACTOR_FOLLOW_SUCCESS,
+    type: ACTOR.FOLLOW.SUCCESS,
     actor: response.data,
   };
 }
 
 function followFailure(error) {
   return {
-    type: ACTOR_FOLLOW_FAILURE,
-    errorMessage: error.message,
+    type: ACTOR.FOLLOW.FAILURE,
+    error: error.message,
   };
 }
 
@@ -48,20 +45,20 @@ export function followActor(viewer, actor) {
 
 function unfollowRequest() {
   return {
-    type: ACTOR_UNFOLLOW_REQUEST,
+    type: ACTOR.UNFOLLOW.REQUEST,
   };
 }
 
 function unfollowSuccess(response) {
   return {
-    type: ACTOR_UNFOLLOW_SUCCESS,
+    type: ACTOR.UNFOLLOW.SUCCESS,
     actor: response.data,
   };
 }
 
 function unfollowFailure(error) {
   return {
-    type: ACTOR_UNFOLLOW_FAILURE,
+    type: ACTOR.UNFOLLOW.FAILURE,
     errorMessage: error.message,
   };
 }

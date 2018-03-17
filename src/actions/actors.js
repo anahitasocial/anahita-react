@@ -1,14 +1,11 @@
 import { actors as api } from '../api';
-import {
-  ACTORS_RESET,
-  ACTORS_BROWSE_REQUEST, ACTORS_BROWSE_SUCCESS, ACTORS_BROWSE_FAILURE,
-} from '../constants/actors';
+import { Actors as ACTORS } from '../constants';
 
 // -- reset
 
 export function resetActors() {
   return {
-    type: ACTORS_RESET,
+    type: ACTORS.RESET,
   };
 }
 
@@ -16,13 +13,13 @@ export function resetActors() {
 
 function browseRequest() {
   return {
-    type: ACTORS_BROWSE_REQUEST,
+    type: ACTORS.BROWSE.REQUEST,
   };
 }
 
 function browseSuccess(results) {
   return {
-    type: ACTORS_BROWSE_SUCCESS,
+    type: ACTORS.BROWSE.SUCCESS,
     actors: results.data.data,
     offset: results.data.pagination.offset,
     limit: results.data.pagination.limit,
@@ -32,8 +29,8 @@ function browseSuccess(results) {
 
 function browseFailure(error) {
   return {
-    type: ACTORS_BROWSE_FAILURE,
-    errorMessage: error.message,
+    type: ACTORS.BROWSE.FAILURE,
+    error: error.message,
   };
 }
 

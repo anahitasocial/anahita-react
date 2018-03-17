@@ -4,7 +4,6 @@ import Actors from './actors';
 import Actor from './actor';
 import People from './people';
 import Person from './person';
-import SocialGraph from './socialgraph';
 
 export {
   Auth,
@@ -13,5 +12,4 @@ export {
   Actor,
   People,
   Person,
-  SocialGraph,
 };

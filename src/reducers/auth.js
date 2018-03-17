@@ -1,40 +1,37 @@
-import {
-  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
-  LOGOUT_REQUEST, LOGOUT_SUCCESS,
-} from '../constants/auth';
+import { Auth as AUTH } from '../constants';
 
 export default function(state = {
   isFetching: false,
   isAuthenticated: localStorage.getItem('viewer') ? true : false,
   viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
-  errorMessage: '',
+  error: '',
 }, action) {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case AUTH.LOGIN.REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
         isAuthenticated: false,
         viewer: {},
       });
-    case LOGIN_SUCCESS:
+    case AUTH.LOGIN.SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        errorMessage: '',
+        error: '',
         viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
       });
-    case LOGIN_FAILURE:
+    case AUTH.LOGIN.FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: false,
         error: action.error,
       });
-    case LOGOUT_REQUEST:
+    case AUTH.LOGOUT.REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
         isAuthenticated: true,
       });
-    case LOGOUT_SUCCESS:
+    case AUTH.LOGOUT.SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: false,

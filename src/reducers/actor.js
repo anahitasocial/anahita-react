@@ -1,53 +1,52 @@
-import {
-  ACTOR_READ_REQUEST, ACTOR_READ_SUCCESS, ACTOR_READ_FAILURE,
-  // ACTOR_EDIT_REQUEST, ACTOR_EDIT_SUCCESS, ACTOR_EDIT_FAILURE,
-  // ACTOR_ADD_REQUEST, ACTOR_ADD_SUCCESS, ACTOR_ADD_FAILURE,
-  ACTOR_DELETE_REQUEST, ACTOR_DELETE_SUCCESS, ACTOR_DELETE_FAILURE,
-} from '../constants/actor';
+import { Actor as ACTOR } from '../constants';
 
 export default function (state = {
   isFetching: false,
+  success: false,
   actor: {},
-  errorMessage: '',
+  error: '',
 }, action) {
   switch (action.type) {
-    case ACTOR_READ_REQUEST:
+    case ACTOR.READ.REQUEST:
       return {
         ...state,
         isFetching: true,
         actor: {},
       };
-    case ACTOR_READ_SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        actor: action.actor,
-        errorMessage: '',
-      };
-    case ACTOR_READ_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        actor: {},
-        errorMessage: action.errorMessage,
-      };
-    case ACTOR_DELETE_REQUEST:
+    case ACTOR.EDIT.REQUEST:
+    case ACTOR.ADD.REQUEST:
+    case ACTOR.DELETE.REQUEST:
       return {
         ...state,
         actor: action.actor,
-        deleteSuccess: false,
+        isFetching: true,
+        success: false,
       };
-    case ACTOR_DELETE_SUCCESS:
+    case ACTOR.READ.SUCCESS:
+    case ACTOR.EDIT.SUCCESS:
+    case ACTOR.ADD.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        success: true,
+        actor: action.actor,
+        error: '',
+      };
+    case ACTOR.READ.FAILURE:
+    case ACTOR.EDIT.FAILURE:
+    case ACTOR.ADD.FAILURE:
+    case ACTOR.DELETE.FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        success: false,
+        error: action.error,
+      };
+    case ACTOR.DELETE.SUCCESS:
       return {
         ...state,
         actor: {},
-        deleteSuccess: true,
-      };
-    case ACTOR_DELETE_FAILURE:
-      return {
-        ...state,
-        deleteSuccess: false,
-        errorMessage: action.errorMessage,
+        success: true,
       };
     default:
       return state;

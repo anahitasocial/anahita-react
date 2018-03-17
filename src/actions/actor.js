@@ -1,30 +1,25 @@
 import { actors as api } from '../api';
-import {
-  ACTOR_READ_REQUEST, ACTOR_READ_SUCCESS, ACTOR_READ_FAILURE,
-  // ACTOR_EDIT_REQUEST, ACTOR_EDIT_SUCCESS, ACTOR_EDIT_FAILURE,
-  // ACTOR_ADD_REQUEST, ACTOR_ADD_SUCCESS, ACTOR_ADD_FAILURE,
-  ACTOR_DELETE_REQUEST, ACTOR_DELETE_SUCCESS, ACTOR_DELETE_FAILURE,
-} from '../constants/actor';
+import { Actor as ACTOR } from '../constants';
 
 // -- Read
 
 function readRequest() {
   return {
-    type: ACTOR_READ_REQUEST,
+    type: ACTOR.READ.REQUEST,
   };
 }
 
 function readSuccess(result) {
   return {
-    type: ACTOR_READ_SUCCESS,
+    type: ACTOR.READ.SUCCESS,
     actor: result.data,
   };
 }
 
 function readFailure(error) {
   return {
-    type: ACTOR_READ_FAILURE,
-    errorMessage: error.message,
+    type: ACTOR.READ.FAILURE,
+    error: error.message,
   };
 }
 
@@ -54,22 +49,22 @@ export function readActor(id, namespace) {
 
 function deleteRequest(actor) {
   return {
-    type: ACTOR_DELETE_REQUEST,
+    type: ACTOR.DELETE.REQUEST,
     actor,
   };
 }
 
 function deleteSuccess(response) {
   return {
-    type: ACTOR_DELETE_SUCCESS,
+    type: ACTOR.DELETE.SUCCESS,
     response,
   };
 }
 
 function deleteFailure(error) {
   return {
-    type: ACTOR_DELETE_FAILURE,
-    errorMessage: error.message,
+    type: ACTOR.DELETE.FAILURE,
+    error: error.message,
   };
 }
 

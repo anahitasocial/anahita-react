@@ -1,14 +1,11 @@
 import { people as api } from '../api';
-import {
-  PEOPLE_RESET,
-  PEOPLE_BROWSE_REQUEST, PEOPLE_BROWSE_SUCCESS, PEOPLE_BROWSE_FAILURE,
-} from '../constants/people';
+import { People as PEOPLE } from '../constants';
 
 // -- reset
 
 export function resetPeople() {
   return {
-    type: PEOPLE_RESET,
+    type: PEOPLE.RESET,
   };
 }
 
@@ -16,13 +13,13 @@ export function resetPeople() {
 
 function browseRequest() {
   return {
-    type: PEOPLE_BROWSE_REQUEST,
+    type: PEOPLE.BROWSE.REQUEST,
   };
 }
 
 function browseSuccess(results) {
   return {
-    type: PEOPLE_BROWSE_SUCCESS,
+    type: PEOPLE.BROWSE.SUCCESS,
     people: results.data.data,
     offset: results.data.pagination.offset,
     limit: results.data.pagination.limit,
@@ -32,7 +29,7 @@ function browseSuccess(results) {
 
 function browseFailure(error) {
   return {
-    type: PEOPLE_BROWSE_FAILURE,
+    type: PEOPLE.BROWSE.FAILURE,
     errorMessage: error.message,
   };
 }

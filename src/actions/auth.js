@@ -1,15 +1,11 @@
 import { auth } from '../api';
-
-import {
-  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
-  LOGOUT_REQUEST, LOGOUT_SUCCESS,
-} from '../constants/auth';
+import { Auth as AUTH } from '../constants';
 
 // - Login Action -
 
 function requestLogin(credentials) {
   return {
-    type: LOGIN_REQUEST,
+    type: AUTH.LOGIN.REQUEST,
     isFetching: true,
     isAuthenticated: false,
     credentials,
@@ -18,7 +14,7 @@ function requestLogin(credentials) {
 
 function receiveLogin(result) {
   return {
-    type: LOGIN_SUCCESS,
+    type: AUTH.LOGIN.SUCCESS,
     isFetching: false,
     isAuthenticated: true,
     result,
@@ -27,7 +23,7 @@ function receiveLogin(result) {
 
 function loginError(error) {
   return {
-    type: LOGIN_FAILURE,
+    type: AUTH.LOGIN.FAILURE,
     isFetching: false,
     isAuthenticated: false,
     error,
@@ -58,7 +54,7 @@ export function login(credentials) {
 
 function requestLogout() {
   return {
-    type: LOGOUT_REQUEST,
+    type: AUTH.LOGOUT.REQUEST,
     isFetching: true,
     isAuthenticated: true,
   };
@@ -66,7 +62,7 @@ function requestLogout() {
 
 function receiveLogout() {
   return {
-    type: LOGOUT_SUCCESS,
+    type: AUTH.LOGOUT.SUCCESS,
     isFetching: false,
     isAuthenticated: false,
   };

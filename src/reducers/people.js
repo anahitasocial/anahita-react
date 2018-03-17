@@ -1,12 +1,9 @@
-import {
-  PEOPLE_RESET,
-  PEOPLE_BROWSE_REQUEST, PEOPLE_BROWSE_SUCCESS, PEOPLE_BROWSE_FAILURE,
-} from '../constants/people';
+import { People as PEOPLE } from '../constants';
 
 export default function (state = {
   isFetching: false,
   people: [],
-  errorMessage: '',
+  error: '',
   keywordFilter: '',
   usertypeFilter: '',
   disabledFilter: false,
@@ -15,19 +12,19 @@ export default function (state = {
   total: 0,
 }, action) {
   switch (action.type) {
-    case PEOPLE_RESET:
+    case PEOPLE.RESET:
       return {
         ...state,
         people: [],
         offset: 0,
         total: 0,
       };
-    case PEOPLE_BROWSE_REQUEST:
+    case PEOPLE.BROWSE.REQUEST:
       return {
         ...state,
         isFetching: true,
       };
-    case PEOPLE_BROWSE_SUCCESS:
+    case PEOPLE.BROWSE.SUCCESS:
       return {
         ...state,
         people: state.people.concat(...action.people),
@@ -36,11 +33,11 @@ export default function (state = {
         total: action.total,
         isFetching: false,
       };
-    case PEOPLE_BROWSE_FAILURE:
+    case PEOPLE.BROWSE.FAILURE:
       return {
         ...state,
         isFetching: false,
-        errorMessage: action.errorMessage,
+        error: action.error,
       };
     default:
       return state;
