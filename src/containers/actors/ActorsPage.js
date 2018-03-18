@@ -36,6 +36,7 @@ class ActorsPage extends React.Component {
 
     this.state = {
       disabledFilter: false,
+      keywordFilter: '',
     };
 
     this.fetchActors = this.fetchActors.bind(this);
@@ -47,16 +48,24 @@ class ActorsPage extends React.Component {
 
   canFollow(actor) {
     const { viewer, isAuthenticated } = this.props;
-    return isAuthenticated && (viewer.id !== actor.id);
+    return isAuthenticated && (viewer.id !== actor.id) && !actor.isBlocked;
   }
 
   fetchActors() {
-    const { disabledFilter } = this.state;
-    const { offset, limit, namespace } = this.props;
-    this.props.browseActors({
-      disabledFilter,
+    const { disabledFilter, keywordFilter } = this.state;
+    const {
       offset,
       limit,
+      queryFilters,
+      namespace,
+    } = this.props;
+
+    this.props.browseActors({
+      q: keywordFilter,
+      disabled: disabledFilter,
+      start: offset,
+      limit,
+      ...queryFilters,
     }, namespace);
   }
 
@@ -67,7 +76,7 @@ class ActorsPage extends React.Component {
       actors,
     } = this.props;
 
-    return offset === 0 || (actors.length < total);
+    return offset === 0 || (Object.keys(actors).length < total);
   }
 
   render() {
@@ -131,10 +140,18 @@ ActorsPage.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   actors: PropTypes.array.isRequired,
   namespace: PropTypes.string.isRequired,
-  offset: PropTypes.number.isRequired,
-  limit: PropTypes.number.isRequired,
-  total: PropTypes.number.isRequired,
+  offset: PropTypes.number,
+  limit: PropTypes.number,
+  total: PropTypes.number,
   viewer: PropTypes.object.isRequired,
+  queryFilters: PropTypes.object,
+};
+
+ActorsPage.defaultProps = {
+  queryFilters: {},
+  total: 0,
+  limit: 20,
+  offset: 0,
 };
 
 const mapStateToProps = (state) => {

@@ -1,17 +1,11 @@
 import axios from 'axios';
 
 export function browseActors(params, namespace) {
-  const {
-    disabledFilter,
-    offset,
-    limit,
-  } = params;
-
   return axios.get(`/${namespace}.json`, {
     params: {
-      disabled: disabledFilter,
-      start: offset,
-      limit,
+      start: params.offset,
+      q: params.keywordFilter,
+      ...params,
     },
   });
 }

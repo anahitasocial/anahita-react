@@ -9,14 +9,15 @@ import App from '../containers/App';
 import LoginPage from '../containers/people/LoginPage';
 import HomePage from '../containers/HomePage';
 import PeoplePage from '../containers/people/PeoplePage';
-import PersonPage from '../containers/people/PersonPage';
 import PersonSettingsPage from '../containers/people/PersonSettingsPage';
-import GroupsPage from '../containers/groups/GroupsPage';
-import GroupPage from '../containers/groups/GroupPage';
+import ActorsPage from '../containers/actors/ActorsPage';
+import ActorPage from '../containers/actors/ActorPage';
 import DashboardPage from '../containers/DashboardPage';
 import PageNotFound from '../containers/PageNotFound';
 
-const scrollUp = () => window.scrollTo(0, 0);
+const scrollUp = () => {
+  window.scrollTo(0, 0);
+};
 
 const PrivateRoute = ({
   component: Component,
@@ -80,17 +81,23 @@ const Routes = (props) => {
         <Route
           exact
           path="/people/:id/"
-          component={PersonPage}
+          component={(params) => {
+            return <ActorPage namespace="people" {...params} />;
+          }}
         />
         <Route
           exact
           path="/groups/"
-          component={GroupsPage}
+          component={(params) => {
+            return <ActorsPage namespace="groups" {...params} />;
+          }}
         />
         <Route
           exact
           path="/groups/:id/"
-          component={GroupPage}
+          component={(params) => {
+            return <ActorPage namespace="groups" {...params} />;
+          }}
         />
         <Route component={PageNotFound} />
       </Switch>

@@ -1,23 +1,16 @@
 import { Actors as ACTORS } from '../constants';
 
-const arrayToObject = (array) => {
-  const objects = [];
-  array.map((item) => {
-    objects[item.id] = item;
-    return objects;
-  });
-  return objects;
-};
+export default function (higherOrderState, action) {
+  const state = {
+    isFetching: false,
+    actors: [],
+    error: '',
+    offset: 0,
+    limit: 20,
+    total: 0,
+    ...higherOrderState,
+  };
 
-export default function (state = {
-  isFetching: false,
-  actors: [],
-  error: '',
-  disabledFilter: false,
-  offset: 0,
-  limit: 20,
-  total: 0,
-}, action) {
   switch (action.type) {
     case ACTORS.RESET:
       return {
@@ -34,7 +27,7 @@ export default function (state = {
     case ACTORS.BROWSE.SUCCESS:
       return {
         ...state,
-        actors: state.actors.concat(arrayToObject(action.actors)),
+        actors: state.actors.concat(action.actors),
         offset: action.offset + action.limit,
         limit: action.limit,
         total: action.total,
