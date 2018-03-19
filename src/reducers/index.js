@@ -11,16 +11,10 @@ import actorReducer from './actor';
 // People
 import peopleReducer from './people';
 
-// Social Graph
-import followReducer from './follow';
-import blockReducer from './block';
-
 export default combineReducers({
   formReducer,
   authReducer,
   actorsReducer,
   actorReducer,
   peopleReducer,
-  followReducer,
-  blockReducer,
 });

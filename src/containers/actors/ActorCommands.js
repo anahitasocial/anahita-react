@@ -49,8 +49,8 @@ class ActorCommands extends React.Component {
   render() {
     const { classes, actor } = this.props;
     const { anchorEl } = this.state;
-    const namespace = actor.objectType.split('.')[1];
-    console.log(actor.commands);
+    // const namespace = actor.objectType.split('.')[1];
+    // console.log(actor.commands);
     return (
       <div className={classes.root}>
         <IconButton

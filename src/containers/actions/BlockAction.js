@@ -73,7 +73,6 @@ BlockAction.propTypes = {
   unblockPerson: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
   viewer: PropTypes.object.isRequired,
-  isBlocked: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
@@ -81,18 +80,9 @@ const mapStateToProps = (state) => {
     viewer,
   } = state.authReducer;
 
-  const {
-    isBlocked,
-  } = state.blockReducer;
-
   return {
     viewer,
-    isBlocked,
   };
-};
-
-BlockAction.defaultProps = {
-  isBlocked: false,
 };
 
 const mapDispatchToProps = (dispatch) => {
