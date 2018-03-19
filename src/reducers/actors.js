@@ -9,7 +9,6 @@ export default function (higherOrderState, action) {
     actors: [],
     error: '',
     offset: 0,
-    limit: 20,
     total: 0,
     ...higherOrderState,
   };
@@ -34,7 +33,6 @@ export default function (higherOrderState, action) {
         ...state,
         actors: state.actors.concat(action.actors),
         offset: action.offset + action.limit,
-        limit: action.limit,
         total: action.total,
         isFetching: false,
       };
