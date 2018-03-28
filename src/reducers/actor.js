@@ -3,7 +3,7 @@ import { Actor as ACTOR } from '../constants';
 export default function (state = {
   isFetching: false,
   success: false,
-  actor: {},
+  actor: null,
   error: '',
 }, action) {
   switch (action.type) {
@@ -11,7 +11,7 @@ export default function (state = {
       return {
         ...state,
         isFetching: true,
-        actor: {},
+        actor: null,
       };
     case ACTOR.EDIT.REQUEST:
     case ACTOR.ADD.REQUEST:
@@ -56,7 +56,7 @@ export default function (state = {
     case ACTOR.DELETE.SUCCESS:
       return {
         ...state,
-        actor: {},
+        actor: null,
         success: true,
       };
     default:

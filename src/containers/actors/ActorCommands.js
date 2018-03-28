@@ -85,7 +85,7 @@ class ActorCommands extends React.Component {
                 return (
                   <MenuItem key={command}>
                     <NavLink to="settings/" className={classes.navlink}>
-                      {'Edit'}
+                      {'Settings'}
                     </NavLink>
                   </MenuItem>
                 );

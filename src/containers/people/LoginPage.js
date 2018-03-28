@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
   handleFieldChange = name => event => {
     this.setState({
       [name]: event.target.value,
-      [`has_${name.charAt(0).toUpperCase()}!`]: Boolean(event.target.value),
+      [`has${name.charAt(0).toUpperCase()}!`]: Boolean(event.target.value),
     });
   }
 

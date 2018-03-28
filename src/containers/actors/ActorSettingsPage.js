@@ -2,33 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
+import ActorSettingsList from '../../components/lists/ActorSettings';
 import {
   readActor,
 } from '../../actions/actor';
 
-const styles = theme => ({
-  root: {},
-});
+const styles = {
+  root: {
+    width: '100%',
+  },
+};
 
 class ActorSettingsPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
-    const { id } = this.props.match.params;
-    this.props.readActor(id, this.props.namespace);
+    const { actor } = this.props;
+    if (!actor) {
+      const { id } = this.props.match.params;
+      this.props.readActor(id, this.props.namespace);
+    }
   }
 
   render() {
     const {
       classes,
-      actor
+      actor,
+      viewer,
+      namespace,
     } = this.props;
 
-    return(
+    return (
       <div className={classes.root}>
-        Actor Settings Page: @{actor.alias}
+        {actor &&
+          <ActorSettingsList
+            actor={actor}
+            viewer={viewer}
+            namespace={namespace}
+          />
+        }
       </div>
     );
   }
@@ -38,7 +48,6 @@ ActorSettingsPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   actor: PropTypes.object,
-  isAuthenticated: PropTypes.bool.isRequired,
   viewer: PropTypes.object.isRequired,
   namespace: PropTypes.string.isRequired,
 };
@@ -50,18 +59,16 @@ ActorSettingsPage.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     actor,
-    errorMessage,
+    error,
   } = state.actorReducer;
 
   const {
-    isAuthenticated,
     viewer,
   } = state.authReducer;
 
   return {
     actor,
-    errorMessage,
-    isAuthenticated,
+    error,
     viewer,
   };
 };

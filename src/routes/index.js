@@ -9,7 +9,9 @@ import App from '../containers/App';
 import LoginPage from '../containers/people/LoginPage';
 import HomePage from '../containers/HomePage';
 import PeoplePage from '../containers/people/PeoplePage';
-import PersonSettingsPage from '../containers/people/PersonSettingsPage';
+import ActorSettingsPage from '../containers/actors/ActorSettingsPage';
+import ActorSettingsInfoPage from '../containers/actors/ActorSettingsInfoPage';
+import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccountPage';
 import ActorsPage from '../containers/actors/ActorsPage';
 import ActorPage from '../containers/actors/ActorPage';
 import DashboardPage from '../containers/DashboardPage';
@@ -60,6 +62,7 @@ const Routes = (props) => {
           component={homeRedirect}
         />
         <Route
+          exact
           path="/login/"
           component={LoginPage}
         />
@@ -70,8 +73,27 @@ const Routes = (props) => {
         />
         <PrivateRoute
           path="/people/:id/settings/"
+          exact
           store={store}
-          component={PersonSettingsPage}
+          component={(params) => {
+            return <ActorSettingsPage namespace="people" {...params} />;
+          }}
+        />
+        <PrivateRoute
+          path="/people/:id/settings/info/"
+          exact
+          store={store}
+          component={(params) => {
+            return <ActorSettingsInfoPage namespace="people" {...params} />;
+          }}
+        />
+        <PrivateRoute
+          exact
+          path="/people/:id/settings/account/"
+          store={store}
+          component={(params) => {
+            return <PersonSettingsAccountPage {...params} />;
+          }}
         />
         <Route
           exact
@@ -97,6 +119,22 @@ const Routes = (props) => {
           path="/groups/:id/"
           component={(params) => {
             return <ActorPage namespace="groups" {...params} />;
+          }}
+        />
+        <PrivateRoute
+          exact
+          path="/groups/:id/settings/"
+          store={store}
+          component={(params) => {
+            return <ActorSettingsPage namespace="groups" {...params} />;
+          }}
+        />
+        <PrivateRoute
+          exact
+          path="/groups/:id/settings/info/"
+          store={store}
+          component={(params) => {
+            return <ActorSettingsInfoPage namespace="groups" {...params} />;
           }}
         />
         <Route component={PageNotFound} />

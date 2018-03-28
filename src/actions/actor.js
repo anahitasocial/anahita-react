@@ -43,6 +43,44 @@ export function readActor(id, namespace) {
 
 // -- Edit
 
+function editRequest() {
+  return {
+    type: ACTOR.EDIT.REQUEST,
+  };
+}
+
+function editSuccess(response) {
+  return {
+    type: ACTOR.EDIT.SUCCESS,
+    actor: response.data,
+  };
+}
+
+function editFailure(error) {
+  return {
+    type: ACTOR.EDIT.FAILURE,
+    error: error.message,
+  };
+}
+
+export function editActor(actor, namespace) {
+  return (dispatch) => {
+    dispatch(editRequest(actor));
+    return new Promise((resolve, reject) => {
+      api.editActor(actor, namespace)
+        .then((result) => {
+          dispatch(editSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(editFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
 // -- Add
 
 // -- Delete
