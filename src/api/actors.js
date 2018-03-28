@@ -31,7 +31,5 @@ export function editActor(actor, namespace) {
     };
   }
 
-  console.log(params);
-
   return axios.post(`/${namespace}/${actor.id}.json`, constructURLSearchParams(params));
 }

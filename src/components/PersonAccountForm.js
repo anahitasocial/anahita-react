@@ -69,7 +69,7 @@ const ActorInfoForm = (props) => {
             name="email"
             value={email || ''}
             onChange={handleFieldChange}
-            label="Last Name"
+            label="Email"
             error={!hasEmail}
             helperText={!hasEmail ? 'Email is required!' : ''}
             margin="normal"
