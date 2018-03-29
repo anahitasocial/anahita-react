@@ -57,7 +57,7 @@ class ActorPage extends React.Component {
 
     return (
       <div className={classes.root}>
-        {actor && actor.id &&
+        {actor.id &&
           this.renderProfile(actor)
         }
       </div>
@@ -68,14 +68,13 @@ class ActorPage extends React.Component {
 ActorPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
-  actor: PropTypes.object,
+  actor: PropTypes.object.isRequired,
   viewer: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool,
   namespace: PropTypes.string.isRequired,
 };
 
 ActorPage.defaultProps = {
-  actor: null,
   isAuthenticated: false,
 };
 

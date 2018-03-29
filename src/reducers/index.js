@@ -10,6 +10,7 @@ import actorReducer from './actor';
 
 // People
 import peopleReducer from './people';
+import personReducer from './person';
 
 export default combineReducers({
   formReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   actorsReducer,
   actorReducer,
   peopleReducer,
+  personReducer,
 });

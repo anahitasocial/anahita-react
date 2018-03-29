@@ -1,9 +1,18 @@
-import { Auth as AUTH } from '../constants';
+import {
+  Auth as AUTH,
+  Person as PERSON,
+} from '../constants';
 
-export default function(state = {
+const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {};
+
+export default function (state = {
   isFetching: false,
-  isAuthenticated: localStorage.getItem('viewer') ? true : false,
-  viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
+  isAuthenticated: viewer.id && (
+    viewer.usertype === PERSON.TYPES.REGISTERED ||
+    viewer.usertype === PERSON.TYPES.ADMIN ||
+    viewer.usertype === PERSON.TYPES.SUPER_ADMIN
+  ),
+  viewer,
   error: '',
 }, action) {
   switch (action.type) {
@@ -18,7 +27,7 @@ export default function(state = {
         isFetching: false,
         isAuthenticated: true,
         error: '',
-        viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
+        viewer,
       });
     case AUTH.LOGIN.FAILURE:
       return Object.assign({}, state, {

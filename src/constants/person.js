@@ -1,8 +1,15 @@
-const personTypes = {
-  PERSON_TYPE_GUEST: 'guest',
-  PERSON_TYPE_REGISTERED: 'registered',
-  PERSON_TYPE_ADMIN: 'admin',
-  PERSON_TYPE_SUPER_ADMIN: 'super-admin',
-};
+import async from './async';
 
-export default personTypes;
+const person = async('person');
+
+export default {
+  EDIT: person('edit'),
+  EDIT_ACCOUNT: person('account'),
+  ADD: person('add'),
+  TYPES: {
+    GUEST: 'guest',
+    REGISTERED: 'registered',
+    ADMIN: 'administrator',
+    SUPER_ADMIN: 'super-administrator',
+  },
+};

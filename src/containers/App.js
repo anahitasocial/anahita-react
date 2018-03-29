@@ -172,7 +172,7 @@ class App extends React.Component {
             <AppBar
               className={classNames(
                 classes.appBar,
-                isAuthenticated && open && classes.appBarShift,
+                open && classes.appBarShift,
               )}
             >
               <Toolbar disableGutters={!open}>
@@ -194,38 +194,40 @@ class App extends React.Component {
                 )}
               </Toolbar>
             </AppBar>
-            {isAuthenticated &&
-              <Drawer
-                variant="permanent"
-                classes={{
-                  paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-              >
-                <div className={classes.drawerInner}>
-                  <div className={classes.drawerHeader}>
-                    <Typography variant="title" color="inherit" noWrap>
-                      Anahita
-                    </Typography>
-                    <IconButton onClick={this.handleDrawerClose}>
-                      {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
-                  </div>
-                  <Divider />
+            <Drawer
+              variant="permanent"
+              classes={{
+                paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
+              }}
+              open={open}
+            >
+              <div className={classes.drawerInner}>
+                <div className={classes.drawerHeader}>
+                  <Typography variant="title" color="inherit" noWrap>
+                    Anahita
+                  </Typography>
+                  <IconButton onClick={this.handleDrawerClose}>
+                    {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                  </IconButton>
+                </div>
+                <Divider />
+                {isAuthenticated &&
+                <div>
                   <div className={classes.viewer}>
                     <Viewer viewer={viewer} />
                   </div>
                   <Divider />
-                  <List className={classes.list}>
-                    <LeftMenu
-                      onLogoutClick={this.props.logout}
-                      classNames={classes}
-                    />
-                  </List>
-                  <Divider />
                 </div>
-              </Drawer>
-              }
+                }
+                <List className={classes.list}>
+                  <LeftMenu
+                    onLogoutClick={this.props.logout}
+                    classNames={classes}
+                  />
+                </List>
+                <Divider />
+              </div>
+            </Drawer>
             <main className={classes.content}>
               <AppWrapper>
                 {children}

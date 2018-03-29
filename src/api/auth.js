@@ -18,3 +18,18 @@ export function addSession(credentials) {
 export function readSession() {
   return axios.get('/people/session.json');
 }
+
+export function signup(params) {
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+  } = params;
+  return axios.post('/person.json', constructURLSearchParams({
+    firstName,
+    lastName,
+    email,
+    password,
+  }));
+}

@@ -16,20 +16,12 @@ export function readActor(id, namespace) {
 }
 
 export function editActor(actor, namespace) {
-  let params = {};
-  if (namespace === 'people') {
-    params = {
-      givenName: actor.givenName,
-      familyName: actor.familyName,
-      body: actor.body,
-      gender: actor.gender,
-    };
-  } else {
-    params = {
-      name: actor.name,
-      body: actor.body,
-    };
-  }
-
-  return axios.post(`/${namespace}/${actor.id}.json`, constructURLSearchParams(params));
+  const {
+    name,
+    body,
+  } = actor;
+  return axios.post(`/${namespace}/${actor.id}.json`, constructURLSearchParams({
+    name,
+    body,
+  }));
 }

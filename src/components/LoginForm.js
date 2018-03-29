@@ -73,8 +73,7 @@ const LoginForm = (props) => {
             fullWidth
           />
           <Button
-            raised
-            dense
+            variant="raised"
             type="submit"
             color="primary"
             className={classes.button}
