@@ -18,7 +18,12 @@ const styles = ({
 });
 
 const LeftMenu = (props) => {
-  const { classes } = props;
+  const {
+    classes,
+    isAuthenticated,
+    onLogoutClick,
+  } = props;
+
   return (
     <div className={classes.root}>
       <List>
@@ -62,16 +67,18 @@ const LeftMenu = (props) => {
           </ListItemIcon>
           <ListItemText primary="Photos" />
         </ListItem>
-        <ListItem
-          button
-          component="a"
-          onClick={props.onLogoutClick}
-        >
-          <ListItemIcon>
-            <LockOpen />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
-        </ListItem>
+        {isAuthenticated &&
+          <ListItem
+            button
+            component="a"
+            onClick={onLogoutClick}
+          >
+            <ListItemIcon>
+              <LockOpen />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        }
       </List>
     </div>
   );
@@ -80,6 +87,11 @@ const LeftMenu = (props) => {
 LeftMenu.propTypes = {
   classes: PropTypes.object.isRequired,
   onLogoutClick: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+LeftMenu.defaultProps = {
+  isAuthenticated: false,
 };
 
 export default withStyles(styles)(LeftMenu);

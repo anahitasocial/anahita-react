@@ -137,7 +137,7 @@ ActorsPage.propTypes = {
   classes: PropTypes.object.isRequired,
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   actors: PropTypes.array.isRequired,
   namespace: PropTypes.string.isRequired,
   offset: PropTypes.number,
@@ -152,6 +152,7 @@ ActorsPage.defaultProps = {
   total: 0,
   limit: 20,
   offset: 0,
+  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {

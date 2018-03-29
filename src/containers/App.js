@@ -211,7 +211,7 @@ class App extends React.Component {
                   </IconButton>
                 </div>
                 <Divider />
-                {isAuthenticated &&
+                {viewer.id &&
                 <div>
                   <div className={classes.viewer}>
                     <Viewer viewer={viewer} />
@@ -222,6 +222,7 @@ class App extends React.Component {
                 <List className={classes.list}>
                   <LeftMenu
                     onLogoutClick={this.props.logout}
+                    isAuthenticated={isAuthenticated}
                     classNames={classes}
                   />
                 </List>
@@ -245,8 +246,12 @@ App.propTypes = {
   theme: PropTypes.object.isRequired,
   viewer: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   logout: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {

@@ -27,7 +27,7 @@ export default function (state = {
         isFetching: false,
         isAuthenticated: true,
         error: '',
-        viewer,
+        viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
       });
     case AUTH.LOGIN.FAILURE:
       return Object.assign({}, state, {

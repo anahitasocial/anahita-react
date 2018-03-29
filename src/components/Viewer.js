@@ -30,7 +30,7 @@ const Viewer = (props) => {
   return (
     <div className={classes.row}>
       <Avatar
-        alt={viewer.name.charAt(0)}
+        alt={`${viewer.givenName.charAt(0)}${viewer.familyName.charAt(0)}`}
         src={viewer.imageURL.medium.url}
         className={classes.avatar}
         component={Link}
@@ -39,7 +39,7 @@ const Viewer = (props) => {
       <div className={classes.name}>
         <Typography variant="title" color="inherit">
           <Link replace to={profile} href={profile} className={classes.nameLink}>
-            {viewer.name}
+            {viewer.givenName} {viewer.familyName}
           </Link>
         </Typography>
         <Typography variant="caption" color="inherit">
