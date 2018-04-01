@@ -5,13 +5,14 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import { LinearProgress } from 'material-ui/Progress';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
     width: '100%',
   },
-  loginPaper: {
+  formPaper: {
     padding: '20px',
   },
   colorError: {
@@ -20,6 +21,9 @@ const styles = theme => ({
   button: {
     marginTop: 10,
     marginRight: 10,
+  },
+  title: {
+    marginBottom: 10,
   },
 });
 
@@ -31,15 +35,23 @@ const ActorInfoForm = (props) => {
     hasAlias,
     alias,
     error,
+    isFetching,
     dismissPath,
   } = props;
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.loginPaper} elevation={0}>
-        <Typography variant="title" color="primary">
-          {`Delete @${alias} forever!`}
+      <Paper className={classes.formPaper} elevation={0}>
+        <Typography
+          variant="title"
+          color="primary"
+          className={classes.title}
+        >
+          {'Delete Forever!'}
         </Typography>
+        {isFetching &&
+          <LinearProgress className={classes.progress} />
+        }
         <form className={classes.container} onSubmit={handleFormSubmit}>
           { error &&
             <Typography
@@ -54,9 +66,9 @@ const ActorInfoForm = (props) => {
           <TextField
             name="alias"
             onChange={handleFieldChange}
-            label="Type alias here"
+            label={`Type the exact alias: ${alias}`}
             error={!hasAlias}
-            helperText={!hasAlias ? 'An alias is required!' : ''}
+            helperText={!hasAlias ? 'You must type the exact alias to delete this profile!' : 'This is the correct alias!'}
             margin="normal"
             fullWidth
           />
@@ -74,6 +86,7 @@ const ActorInfoForm = (props) => {
             variant="raised"
             color="secondary"
             className={classes.button}
+            disabled={isFetching}
           >
             {'Delete'}
           </Button>
@@ -89,12 +102,14 @@ ActorInfoForm.propTypes = {
   handleFormSubmit: PropTypes.func.isRequired,
   alias: PropTypes.string,
   hasAlias: PropTypes.bool,
+  isFetching: PropTypes.bool,
   error: PropTypes.string,
   dismissPath: PropTypes.string,
 };
 
 ActorInfoForm.defaultProps = {
   hasAlias: true,
+  isFetching: false,
   alias: '',
   error: '',
   dismissPath: '',

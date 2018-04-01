@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
-import { Redirect } from 'react-router-dom';
+import Typography from 'material-ui/Typography';
 import ActorDeleteForm from '../../components/ActorDeleteForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import {
@@ -51,13 +51,15 @@ class ActorSettingsDeletePage extends React.Component {
     const { value } = event.target;
     this.setState({
       alias: value,
-      hasAlias: Boolean(value),
+      hasAlias: value === this.state.actor.alias,
     });
   }
 
   validate() {
     const { alias, actor } = this.state;
-    return alias === actor.alias;
+    const hasAlias = alias === actor.alias;
+    this.setState({ alias, hasAlias });
+    return hasAlias;
   }
 
   deleteActor() {
@@ -76,6 +78,9 @@ class ActorSettingsDeletePage extends React.Component {
     const {
       classes,
       namespace,
+      success,
+      isFetching,
+      error,
     } = this.props;
 
     const {
@@ -83,8 +88,19 @@ class ActorSettingsDeletePage extends React.Component {
       actor,
     } = this.state;
 
+    const isDeleted = !actor.id && success;
+
     return (
       <div className={classes.root}>
+        {isDeleted &&
+          <Typography
+            variant="body1"
+            color="primary"
+            paragraph
+          >
+              {'Deleted successfully!'}
+          </Typography>
+        }
         {actor.id &&
           <ActorSettingCard
             namespace={namespace}
@@ -93,14 +109,13 @@ class ActorSettingsDeletePage extends React.Component {
             <ActorDeleteForm
               hasAlias={hasAlias}
               alias={actor.alias}
+              isFetching={isFetching}
+              error={error}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
               dismissPath={`/${namespace}/${actor.id}/settings/`}
             />
           </ActorSettingCard>
-        }
-        {!actor.id &&
-          <Redirect to={`/${namespace}/`} />
         }
       </div>
     );
@@ -113,21 +128,31 @@ ActorSettingsDeletePage.propTypes = {
   deleteActor: PropTypes.func.isRequired,
   actor: PropTypes.object,
   namespace: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  success: PropTypes.bool,
+  isFetching: PropTypes.bool,
 };
 
 ActorSettingsDeletePage.defaultProps = {
   actor: {},
+  success: false,
+  isFetching: false,
+  error: '',
 };
 
 const mapStateToProps = (state) => {
   const {
     actor,
     error,
+    success,
+    isFetching,
   } = state.actorReducer;
 
   return {
     actor,
     error,
+    success,
+    isFetching,
   };
 };
 

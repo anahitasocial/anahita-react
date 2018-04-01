@@ -11,7 +11,7 @@ const styles = theme => ({
     width: '100%',
     height: '100%',
   },
-  loginPaper: {
+  formPaper: {
     padding: '20px',
     maxWidth: '360px',
     margin: '64px auto',
@@ -37,7 +37,7 @@ const LoginForm = (props) => {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.loginPaper} elevation={2}>
+      <Paper className={classes.formPaper} elevation={2}>
         <Typography type="headline" color="primary">
             Please login
         </Typography>

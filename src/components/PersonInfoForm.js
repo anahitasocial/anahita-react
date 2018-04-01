@@ -11,7 +11,7 @@ const styles = theme => ({
   root: {
     width: '100%',
   },
-  loginPaper: {
+  formPaper: {
     padding: '20px',
   },
   colorError: {
@@ -40,7 +40,7 @@ const PersonInfoForm = (props) => {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.loginPaper} elevation={0}>
+      <Paper className={classes.formPaper} elevation={0}>
         <Typography variant="title" color="primary">
             Information
         </Typography>
