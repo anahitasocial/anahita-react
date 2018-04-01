@@ -83,6 +83,44 @@ export function editActor(actor) {
 
 // -- Add
 
+function addRequest() {
+  return {
+    type: ACTOR.ADD.REQUEST,
+  };
+}
+
+function addSuccess(response) {
+  return {
+    type: ACTOR.ADD.SUCCESS,
+    actor: response.data,
+  };
+}
+
+function addFailure(error) {
+  return {
+    type: ACTOR.ADD.FAILURE,
+    error: error.message,
+  };
+}
+
+export function addActor(actor, namespace) {
+  return (dispatch) => {
+    dispatch(addRequest());
+    return new Promise((resolve, reject) => {
+      api.addActor(actor, namespace)
+        .then((result) => {
+          dispatch(addSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(addFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
 // -- Delete
 
 function deleteRequest(actor) {

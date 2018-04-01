@@ -32,7 +32,6 @@ const ActorSettingsList = (props) => {
     classes,
     actor,
     namespace,
-    canDelete,
   } = props;
 
   return (

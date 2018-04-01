@@ -9,6 +9,7 @@ import App from '../containers/App';
 import LoginPage from '../containers/people/LoginPage';
 import HomePage from '../containers/HomePage';
 import PeoplePage from '../containers/people/PeoplePage';
+import ActorAddPage from '../containers/actors/ActorAddPage';
 import ActorSettingsPage from '../containers/actors/ActorSettingsPage';
 import ActorSettingsInfoPage from '../containers/actors/ActorSettingsInfoPage';
 import ActorSettingsDeletePage from '../containers/actors/ActorSettingsDeletePage';
@@ -122,6 +123,14 @@ const Routes = (props) => {
           path="/groups/"
           component={(params) => {
             return <ActorsPage namespace="groups" {...params} />;
+          }}
+        />
+        <PrivateRoute
+          exact
+          path="/groups/add/"
+          store={store}
+          component={(params) => {
+            return <ActorAddPage namespace="groups" {...params} />;
           }}
         />
         <Route

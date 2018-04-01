@@ -29,9 +29,11 @@ const ActorInfoForm = (props) => {
     handleFieldChange,
     handleFormSubmit,
     hasName,
+    hasBody,
     name,
     body,
     error,
+    isFetching,
     dismissPath,
   } = props;
 
@@ -66,6 +68,8 @@ const ActorInfoForm = (props) => {
             name="body"
             value={body || ''}
             onChange={handleFieldChange}
+            error={!hasBody}
+            helperText={!hasBody ? 'Description is required!' : ''}
             label="Description"
             margin="normal"
             fullWidth
@@ -85,6 +89,7 @@ const ActorInfoForm = (props) => {
             variant="raised"
             color="primary"
             className={classes.button}
+            disabled={isFetching}
           >
             {'Save'}
           </Button>
@@ -100,13 +105,14 @@ ActorInfoForm.propTypes = {
   handleFormSubmit: PropTypes.func.isRequired,
   name: PropTypes.string,
   body: PropTypes.string,
-  hasName: PropTypes.bool,
+  hasName: PropTypes.bool.isRequired,
+  hasBody: PropTypes.bool.isRequired,
   error: PropTypes.string,
+  isFetching: PropTypes.bool.isRequired,
   dismissPath: PropTypes.string,
 };
 
 ActorInfoForm.defaultProps = {
-  hasName: true,
   name: '',
   body: '',
   error: '',

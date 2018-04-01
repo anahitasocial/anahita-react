@@ -8,9 +8,9 @@ const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem(
 export default function (state = {
   isFetching: false,
   isAuthenticated: viewer.id && (
-    viewer.usertype === PERSON.TYPES.REGISTERED ||
-    viewer.usertype === PERSON.TYPES.ADMIN ||
-    viewer.usertype === PERSON.TYPES.SUPER_ADMIN
+    viewer.usertype === PERSON.TYPE.REGISTERED ||
+    viewer.usertype === PERSON.TYPE.ADMIN ||
+    viewer.usertype === PERSON.TYPE.SUPER_ADMIN
   ),
   viewer,
   error: '',

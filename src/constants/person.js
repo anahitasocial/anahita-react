@@ -6,7 +6,7 @@ export default {
   EDIT: person('edit'),
   EDIT_ACCOUNT: person('account'),
   ADD: person('add'),
-  TYPES: {
+  TYPE: {
     GUEST: 'guest',
     REGISTERED: 'registered',
     ADMIN: 'administrator',
