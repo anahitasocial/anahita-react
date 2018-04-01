@@ -47,7 +47,6 @@ const Viewer = (props) => {
         component={Link}
         to="/login/"
         color="inherit"
-        variant="raised"
       >
         {'Login'}
       </Button>
