@@ -2,9 +2,7 @@ import axios from 'axios';
 import { constructURLSearchParams } from './utils';
 
 export function deleteSession() {
-  return axios.delete('/people/session.json', constructURLSearchParams({
-    action: 'delete',
-  }));
+  return axios.delete('/people/session.json');
 }
 
 export function addSession(credentials) {

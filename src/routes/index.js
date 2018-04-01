@@ -11,6 +11,7 @@ import HomePage from '../containers/HomePage';
 import PeoplePage from '../containers/people/PeoplePage';
 import ActorSettingsPage from '../containers/actors/ActorSettingsPage';
 import ActorSettingsInfoPage from '../containers/actors/ActorSettingsInfoPage';
+import ActorSettingsDeletePage from '../containers/actors/ActorSettingsDeletePage';
 import PersonSettingsInfoPage from '../containers/people/PersonSettingsInfoPage';
 import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccountPage';
 import ActorsPage from '../containers/actors/ActorsPage';
@@ -96,6 +97,14 @@ const Routes = (props) => {
             return <PersonSettingsAccountPage {...params} />;
           }}
         />
+        <PrivateRoute
+          path="/people/:id/settings/deleteforever"
+          exact
+          store={store}
+          component={(params) => {
+            return <ActorSettingsDeletePage namespace="people" {...params} />;
+          }}
+        />
         <Route
           exact
           path="/people/"
@@ -136,6 +145,14 @@ const Routes = (props) => {
           store={store}
           component={(params) => {
             return <ActorSettingsInfoPage namespace="groups" {...params} />;
+          }}
+        />
+        <PrivateRoute
+          exact
+          path="/groups/:id/settings/deleteforever"
+          store={store}
+          component={(params) => {
+            return <ActorSettingsDeletePage namespace="groups" {...params} />;
           }}
         />
         <Route component={PageNotFound} />

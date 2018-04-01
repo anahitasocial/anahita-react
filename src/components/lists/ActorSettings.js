@@ -13,6 +13,7 @@ import CoverIcon from 'material-ui-icons/Panorama';
 import PermissionsIcon from 'material-ui-icons/Settings';
 import AppsIcon from 'material-ui-icons/Apps';
 import ConnectIcon from 'material-ui-icons/Share';
+import DeleteForeverIcon from 'material-ui-icons/DeleteForever';
 import { Link } from 'react-router-dom';
 import ActorSettingCard from '../cards/ActorSettingCard';
 
@@ -31,6 +32,7 @@ const ActorSettingsList = (props) => {
     classes,
     actor,
     namespace,
+    canDelete,
   } = props;
 
   return (
@@ -111,6 +113,16 @@ const ActorSettingsList = (props) => {
               <ConnectIcon />
             </ListItemIcon>
             <ListItemText primary="Connect" />
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to={`/${namespace}/${actor.id}/settings/deleteforever/`}
+          >
+            <ListItemIcon>
+              <DeleteForeverIcon />
+            </ListItemIcon>
+            <ListItemText primary="Delete Forever" />
           </ListItem>
         </List>
       </ActorSettingCard>

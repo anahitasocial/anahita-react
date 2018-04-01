@@ -16,7 +16,7 @@ const styles = {
 class ActorSettingsPage extends React.Component {
   componentWillMount() {
     const { actor } = this.props;
-    if (!actor) {
+    if (!actor.id) {
       const { id } = this.props.match.params;
       this.props.readActor(id, this.props.namespace);
     }
@@ -32,7 +32,7 @@ class ActorSettingsPage extends React.Component {
 
     return (
       <div className={classes.root}>
-        {actor &&
+        {actor.id &&
           <ActorSettingsList
             actor={actor}
             viewer={viewer}
@@ -53,7 +53,7 @@ ActorSettingsPage.propTypes = {
 };
 
 ActorSettingsPage.defaultProps = {
-  actor: null,
+  actor: {},
 };
 
 const mapStateToProps = (state) => {

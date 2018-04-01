@@ -63,11 +63,11 @@ function editFailure(error) {
   };
 }
 
-export function editActor(actor, namespace) {
+export function editActor(actor) {
   return (dispatch) => {
     dispatch(editRequest(actor));
     return new Promise((resolve, reject) => {
-      api.editActor(actor, namespace)
+      api.editActor(actor)
         .then((result) => {
           dispatch(editSuccess(result));
           return resolve();
@@ -95,7 +95,7 @@ function deleteRequest(actor) {
 function deleteSuccess(response) {
   return {
     type: ACTOR.DELETE.SUCCESS,
-    response,
+    status: response.status,
   };
 }
 
@@ -110,7 +110,7 @@ export function deleteActor(actor) {
   return (dispatch) => {
     dispatch(deleteRequest(actor));
     return new Promise((resolve, reject) => {
-      api.readActor()
+      api.deleteActor(actor)
         .then((result) => {
           dispatch(deleteSuccess(result));
           return resolve();

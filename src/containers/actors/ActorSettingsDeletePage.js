@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
-import ActorInfoForm from '../../components/ActorInfoForm';
+import { Redirect } from 'react-router-dom';
+import ActorDeleteForm from '../../components/ActorDeleteForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import {
   readActor,
-  editActor,
+  deleteActor,
 } from '../../actions/actor';
 
 const styles = {
@@ -15,12 +16,14 @@ const styles = {
   },
 };
 
-class ActorSettingsInfoPage extends React.Component {
+class ActorSettingsDeletePage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       actor: props.actor,
+      alias: '',
+      hasAlias: true,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -29,6 +32,7 @@ class ActorSettingsInfoPage extends React.Component {
 
   componentWillMount() {
     const { actor, namespace } = this.props;
+
     if (!actor.id) {
       const { id } = this.props.match.params;
       this.props.readActor(id, namespace);
@@ -36,40 +40,35 @@ class ActorSettingsInfoPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.actor.id) {
+    if (!nextProps.actor) {
       this.setState({
-        actor: Object.assign({}, nextProps.actor),
+        actor: {},
       });
     }
   }
 
   handleFieldChange(event) {
-    const { actor } = this.state;
-    const { name, value } = event.target;
-    actor[name] = value;
+    const { value } = event.target;
     this.setState({
-      actor,
-      [`has${name.toUpperCase()}`]: Boolean(value),
+      alias: value,
+      hasAlias: Boolean(value),
     });
   }
 
   validate() {
-    const { name } = this.state.actor;
-    this.setState({
-      hasName: Boolean(name),
-    });
-    return Boolean(name);
+    const { alias, actor } = this.state;
+    return alias === actor.alias;
   }
 
-  saveActor() {
+  deleteActor() {
     const { actor } = this.state;
-    this.props.editActor(actor);
+    this.props.deleteActor(actor);
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
     if (this.validate()) {
-      this.saveActor();
+      this.deleteActor();
     }
   }
 
@@ -80,7 +79,7 @@ class ActorSettingsInfoPage extends React.Component {
     } = this.props;
 
     const {
-      hasName,
+      hasAlias,
       actor,
     } = this.state;
 
@@ -91,46 +90,44 @@ class ActorSettingsInfoPage extends React.Component {
             namespace={namespace}
             actor={actor}
           >
-            <ActorInfoForm
-              hasName={hasName}
-              name={actor.name}
-              body={actor.body}
+            <ActorDeleteForm
+              hasAlias={hasAlias}
+              alias={actor.alias}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
               dismissPath={`/${namespace}/${actor.id}/settings/`}
             />
           </ActorSettingCard>
         }
+        {!actor.id &&
+          <Redirect to={`/${namespace}/`} />
+        }
       </div>
     );
   }
 }
 
-ActorSettingsInfoPage.propTypes = {
+ActorSettingsDeletePage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
-  editActor: PropTypes.func.isRequired,
+  deleteActor: PropTypes.func.isRequired,
   actor: PropTypes.object,
   namespace: PropTypes.string.isRequired,
-  success: PropTypes.bool,
 };
 
-ActorSettingsInfoPage.defaultProps = {
+ActorSettingsDeletePage.defaultProps = {
   actor: {},
-  success: false,
 };
 
 const mapStateToProps = (state) => {
   const {
     actor,
-    success,
     error,
   } = state.actorReducer;
 
   return {
     actor,
     error,
-    success,
   };
 };
 
@@ -139,8 +136,8 @@ const mapDispatchToProps = (dispatch) => {
     readActor: (id, namespace) => {
       dispatch(readActor(id, namespace));
     },
-    editActor: (actor) => {
-      dispatch(editActor(actor));
+    deleteActor: (actor) => {
+      dispatch(deleteActor(actor));
     },
   };
 };
@@ -148,4 +145,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorSettingsInfoPage));
+)(ActorSettingsDeletePage));
