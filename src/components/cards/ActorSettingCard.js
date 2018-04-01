@@ -12,6 +12,9 @@ const styles = {
   root: {
     width: '100%',
   },
+  avatar: {
+    textDecoration: 'none',
+  },
 };
 
 const ActorSettingCard = (props) => {
