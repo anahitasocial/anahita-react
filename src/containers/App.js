@@ -54,6 +54,12 @@ const styles = theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
+  appToolbar: {
+    paddingRight: 0,
+  },
+  grow: {
+    flex: '1 1 auto',
+  },
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -175,7 +181,10 @@ class App extends React.Component {
                 open && classes.appBarShift,
               )}
             >
-              <Toolbar disableGutters={!open}>
+              <Toolbar
+                disableGutters={!open}
+                className={classes.appToolbar}
+              >
                 <IconButton
                   className={classNames(
                     classes.menuButton,
@@ -192,6 +201,11 @@ class App extends React.Component {
                     {title}
                   </Typography>
                 )}
+                <div className={classes.grow} />
+                <Viewer
+                  viewer={viewer}
+                  isAuthenticated={isAuthenticated}
+                />
               </Toolbar>
             </AppBar>
             <Drawer
@@ -211,14 +225,6 @@ class App extends React.Component {
                   </IconButton>
                 </div>
                 <Divider />
-                {viewer.id &&
-                <div>
-                  <div className={classes.viewer}>
-                    <Viewer viewer={viewer} />
-                  </div>
-                  <Divider />
-                </div>
-                }
                 <List className={classes.list}>
                   <LeftMenu
                     onLogoutClick={this.props.logout}

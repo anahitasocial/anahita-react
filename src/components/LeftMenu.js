@@ -35,7 +35,7 @@ const LeftMenu = (props) => {
           <ListItemIcon>
             <Home />
           </ListItemIcon>
-          <ListItemText primary="Dashboard" />
+          <ListItemText primary="Home" />
         </ListItem>
         <ListItem
           button

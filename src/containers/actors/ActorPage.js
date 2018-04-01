@@ -36,6 +36,7 @@ class ActorPage extends React.Component {
     const cover = actor.coverURL.large && actor.coverURL.large.url;
     const avatar = actor.imageURL.large && actor.imageURL.large.url;
     const canFollow = this.canFollow(actor);
+    const { isAuthenticated } = this.props;
     return (
       <ActorProfile
         cover={cover}
@@ -44,7 +45,7 @@ class ActorPage extends React.Component {
         description={actor.body}
         alias={actor.alias}
         followAction={canFollow && <FollowAction actor={actor} />}
-        headerAction={<ActorCommands actor={actor} />}
+        headerAction={isAuthenticated && <ActorCommands actor={actor} />}
       />
     );
   }
