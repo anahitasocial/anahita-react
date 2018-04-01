@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
-import ActorInfoForm from '../../components/ActorInfoForm';
+import PersonInfoForm from '../../components/PersonInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
-import {
-  readActor,
-  editActor,
-} from '../../actions/actor';
+import { readActor } from '../../actions/actor';
+import { editPerson } from '../../actions/person';
 
 const styles = {
   root: {
@@ -15,7 +13,7 @@ const styles = {
   },
 };
 
-class ActorSettingsInfoPage extends React.Component {
+class PersonSettingsInfoPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,10 +26,10 @@ class ActorSettingsInfoPage extends React.Component {
   }
 
   componentWillMount() {
-    const { actor, namespace } = this.props;
+    const { actor } = this.props;
     if (!actor.id) {
       const { id } = this.props.match.params;
-      this.props.readActor(id, namespace);
+      this.props.readPerson(id);
     }
   }
 
@@ -54,19 +52,19 @@ class ActorSettingsInfoPage extends React.Component {
   }
 
   validate() {
-    const { name } = this.state.actor;
+    const { givenName, familyName } = this.state.actor;
 
     this.setState({
-      hasName: Boolean(name),
+      hasGivenName: Boolean(givenName),
+      hasFamilyName: Boolean(familyName),
     });
 
-    return Boolean(name);
+    return Boolean(givenName) && Boolean(familyName);
   }
 
   saveActor() {
-    const { namespace } = this.props;
     const { actor } = this.state;
-    this.props.editActor(actor, namespace);
+    this.props.editPerson(actor);
   }
 
   handleFormSubmit(event) {
@@ -77,16 +75,11 @@ class ActorSettingsInfoPage extends React.Component {
   }
 
   render() {
-    const {
-      classes,
-      namespace,
-    } = this.props;
-
+    const { classes } = this.props;
     const {
       hasGivenName,
       hasFamilyName,
       hasGender,
-      hasName,
       actor,
     } = this.state;
 
@@ -94,16 +87,20 @@ class ActorSettingsInfoPage extends React.Component {
       <div className={classes.root}>
         {actor.id &&
           <ActorSettingCard
-            namespace={namespace}
+            namespace="people"
             actor={actor}
           >
-            <ActorInfoForm
-              hasName={hasName}
-              name={actor.name}
+            <PersonInfoForm
+              hasGivenName={hasGivenName}
+              hasFamilyName={hasFamilyName}
+              hasGender={hasGender}
+              givenName={actor.givenName}
+              familyName={actor.familyName}
               body={actor.body}
+              gender={actor.gender}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
-              dismissPath={`/${namespace}/${actor.id}/settings/`}
+              dismissPath={`/people/${actor.id}/settings/`}
             />
           </ActorSettingCard>
         }
@@ -112,18 +109,17 @@ class ActorSettingsInfoPage extends React.Component {
   }
 }
 
-ActorSettingsInfoPage.propTypes = {
+PersonSettingsInfoPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  readActor: PropTypes.func.isRequired,
-  editActor: PropTypes.func.isRequired,
+  readPerson: PropTypes.func.isRequired,
+  editPerson: PropTypes.func.isRequired,
   actor: PropTypes.object,
   viewer: PropTypes.object.isRequired,
-  namespace: PropTypes.string.isRequired,
   success: PropTypes.bool,
 };
 
-ActorSettingsInfoPage.defaultProps = {
-  actor: null,
+PersonSettingsInfoPage.defaultProps = {
+  actor: {},
   success: false,
 };
 
@@ -148,11 +144,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readActor: (id, namespace) => {
-      dispatch(readActor(id, namespace));
+    readPerson: (id) => {
+      dispatch(readActor(id, 'people'));
     },
-    editActor: (params, namespace) => {
-      dispatch(editActor(params, namespace));
+    editPerson: (person) => {
+      dispatch(editPerson(person));
     },
   };
 };
@@ -160,4 +156,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorSettingsInfoPage));
+)(PersonSettingsInfoPage));

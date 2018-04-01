@@ -23,14 +23,17 @@ const styles = theme => ({
   },
 });
 
-const ActorInfoForm = (props) => {
+const PersonInfoForm = (props) => {
   const {
     classes,
     handleFieldChange,
     handleFormSubmit,
-    hasName,
-    name,
+    hasGivenName,
+    hasFamilyName,
+    givenName,
+    familyName,
     body,
+    gender,
     error,
     dismissPath,
   } = props;
@@ -53,12 +56,23 @@ const ActorInfoForm = (props) => {
             </Typography>
           }
           <TextField
-            name="name"
-            value={name || ''}
+            name="givenName"
+            value={givenName || ''}
             onChange={handleFieldChange}
-            label="Name"
-            error={!hasName}
-            helperText={!hasName ? 'A name is required!' : ''}
+            label="First Name"
+            error={!hasGivenName}
+            helperText={!hasGivenName ? 'First name is required!' : ''}
+            margin="normal"
+            autoFocus
+            fullWidth
+          />
+          <TextField
+            name="familyName"
+            value={familyName || ''}
+            onChange={handleFieldChange}
+            label="Last Name"
+            error={!hasFamilyName}
+            helperText={!hasFamilyName ? 'Last name is required!' : ''}
             margin="normal"
             fullWidth
           />
@@ -94,23 +108,29 @@ const ActorInfoForm = (props) => {
   );
 };
 
-ActorInfoForm.propTypes = {
+PersonInfoForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
-  name: PropTypes.string,
   body: PropTypes.string,
-  hasName: PropTypes.bool,
+  givenName: PropTypes.string,
+  familyName: PropTypes.string,
+  gender: PropTypes.string,
+  hasGivenName: PropTypes.bool,
+  hasFamilyName: PropTypes.bool,
   error: PropTypes.string,
   dismissPath: PropTypes.string,
 };
 
-ActorInfoForm.defaultProps = {
-  hasName: true,
-  name: '',
+PersonInfoForm.defaultProps = {
+  hasGivenName: true,
+  hasFamilyName: true,
+  givenName: '',
+  familyName: '',
   body: '',
+  gender: '',
   error: '',
   dismissPath: '',
 };
 
-export default withStyles(styles)(ActorInfoForm);
+export default withStyles(styles)(PersonInfoForm);

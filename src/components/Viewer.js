@@ -81,8 +81,6 @@ const Viewer = (props) => {
               alt={`${viewer.givenName.charAt(0)}${viewer.familyName.charAt(0)}`}
               src={viewer.imageURL.medium.url}
               className={classes.avatar}
-              component={Link}
-              to={profile}
             />
           </div>
         </Button>

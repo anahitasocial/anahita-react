@@ -16,9 +16,9 @@ export function editPerson(person) {
   }));
 }
 
-export function editPersonAccount(actor, password) {
-  const { username, email } = actor;
-  return axios.post(`/person/${actor.id}.json`, constructURLSearchParams({
+export function editPersonAccount(actor) {
+  const { username, email, password } = actor;
+  return axios.post(`/people/${actor.id}.json`, constructURLSearchParams({
     username,
     email,
     password,
@@ -31,7 +31,7 @@ export function addPerson(actor) {
     lastName,
     email,
   } = actor;
-  return axios.post('/person.json', constructURLSearchParams({
+  return axios.post('/people.json', constructURLSearchParams({
     firstName,
     lastName,
     email,

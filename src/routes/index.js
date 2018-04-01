@@ -11,6 +11,7 @@ import HomePage from '../containers/HomePage';
 import PeoplePage from '../containers/people/PeoplePage';
 import ActorSettingsPage from '../containers/actors/ActorSettingsPage';
 import ActorSettingsInfoPage from '../containers/actors/ActorSettingsInfoPage';
+import PersonSettingsInfoPage from '../containers/people/PersonSettingsInfoPage';
 import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccountPage';
 import ActorsPage from '../containers/actors/ActorsPage';
 import ActorPage from '../containers/actors/ActorPage';
@@ -84,7 +85,7 @@ const Routes = (props) => {
           exact
           store={store}
           component={(params) => {
-            return <ActorSettingsInfoPage namespace="people" {...params} />;
+            return <PersonSettingsInfoPage {...params} />;
           }}
         />
         <PrivateRoute

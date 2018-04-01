@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import PersonAccountForm from '../../components/PersonAccountForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
-import {
-  readActor,
-  editActor,
-} from '../../actions/actor';
+import { readActor } from '../../actions/actor';
+import { editPersonAccount } from '../../actions/person';
 
 const styles = {
   root: {
@@ -29,7 +27,7 @@ class PersonSettingsInfoPage extends React.Component {
 
   componentWillMount() {
     const { actor } = this.props;
-    if (!actor) {
+    if (!actor.id) {
       const { id } = this.props.match.params;
       this.props.readActor(id, 'people');
     }
@@ -71,7 +69,7 @@ class PersonSettingsInfoPage extends React.Component {
 
   saveActor() {
     const { actor } = this.state;
-    this.props.editActor(actor, 'people');
+    this.props.editPersonAccount(actor);
   }
 
   handleFormSubmit(event) {
@@ -95,7 +93,7 @@ class PersonSettingsInfoPage extends React.Component {
 
     return (
       <div className={classes.root}>
-        {actor &&
+        {actor.id &&
           <ActorSettingCard
             namespace="people"
             actor={actor}
@@ -120,12 +118,12 @@ class PersonSettingsInfoPage extends React.Component {
 PersonSettingsInfoPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
-  editActor: PropTypes.func.isRequired,
+  editPersonAccount: PropTypes.func.isRequired,
   actor: PropTypes.object,
 };
 
 PersonSettingsInfoPage.defaultProps = {
-  actor: null,
+  actor: {},
 };
 
 const mapStateToProps = (state) => {
@@ -152,8 +150,8 @@ const mapDispatchToProps = (dispatch) => {
     readActor: (id, namespace) => {
       dispatch(readActor(id, namespace));
     },
-    editActor: (params, namespace) => {
-      dispatch(editActor(params, namespace));
+    editPersonAccount: (person) => {
+      dispatch(editPersonAccount(person));
     },
   };
 };

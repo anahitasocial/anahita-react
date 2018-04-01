@@ -63,11 +63,11 @@ function editAccountFailure(error) {
   };
 }
 
-export function editPersonAccount(actor, password) {
+export function editPersonAccount(person) {
   return (dispatch) => {
     dispatch(editAccountRequest());
     return new Promise((resolve, reject) => {
-      api.editPersonAccount(actor, password)
+      api.editPersonAccount(person)
         .then((result) => {
           dispatch(editAccountSuccess(result));
           return resolve();
@@ -103,11 +103,11 @@ function addFailure(error) {
   };
 }
 
-export function addPerson(actor) {
+export function addPerson(person) {
   return (dispatch) => {
     dispatch(addRequest());
     return new Promise((resolve, reject) => {
-      api.addPerson(actor)
+      api.addPerson(person)
         .then((result) => {
           dispatch(addSuccess(result));
           return resolve();
