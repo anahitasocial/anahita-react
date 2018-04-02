@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
+import { singularize } from 'inflected';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import {
@@ -20,6 +21,8 @@ class ActorSettingsInfoPage extends React.Component {
     super(props);
 
     this.state = {
+      hasName: true,
+      hasBody: true,
       actor: props.actor,
     };
 
@@ -81,6 +84,7 @@ class ActorSettingsInfoPage extends React.Component {
 
     const {
       hasName,
+      hasBody,
       actor,
     } = this.state;
 
@@ -92,7 +96,9 @@ class ActorSettingsInfoPage extends React.Component {
             actor={actor}
           >
             <ActorInfoForm
+              formTitle={`${singularize(namespace)} Information`}
               hasName={hasName}
+              hasBody={hasBody}
               name={actor.name}
               body={actor.body}
               handleFieldChange={this.handleFieldChange}

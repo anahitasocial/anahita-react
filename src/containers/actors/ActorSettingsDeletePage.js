@@ -40,7 +40,7 @@ class ActorSettingsDeletePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.actor) {
+    if (!nextProps.actor.id) {
       this.setState({
         actor: {},
       });

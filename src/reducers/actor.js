@@ -56,7 +56,8 @@ export default function (state = {
     case ACTOR.DELETE.SUCCESS:
       return {
         ...state,
-        actor: null,
+        isFetching: false,
+        actor: {},
         success: true,
       };
     default:

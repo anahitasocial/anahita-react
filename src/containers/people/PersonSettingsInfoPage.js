@@ -18,6 +18,8 @@ class PersonSettingsInfoPage extends React.Component {
     super(props);
 
     this.state = {
+      hasGivenName: true,
+      hasFamilyName: true,
       actor: props.actor,
     };
 

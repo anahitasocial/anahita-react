@@ -14,6 +14,9 @@ const styles = theme => ({
   formPaper: {
     padding: '20px',
   },
+  formTitle: {
+    textTransform: 'capitalize',
+  },
   colorError: {
     color: theme.palette.error.A400,
   },
@@ -28,6 +31,7 @@ const ActorInfoForm = (props) => {
     classes,
     handleFieldChange,
     handleFormSubmit,
+    formTitle,
     hasName,
     hasBody,
     name,
@@ -40,9 +44,15 @@ const ActorInfoForm = (props) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.formPaper} elevation={0}>
-        <Typography variant="title" color="primary">
-            Information
-        </Typography>
+        {formTitle &&
+          <Typography
+            variant="title"
+            color="primary"
+            className={classes.formTitle}
+          >
+            {formTitle}
+          </Typography>
+        }
         <form className={classes.container} onSubmit={handleFormSubmit}>
           { error &&
             <Typography
@@ -103,6 +113,7 @@ ActorInfoForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
+  formTitle: PropTypes.string,
   name: PropTypes.string,
   body: PropTypes.string,
   hasName: PropTypes.bool.isRequired,
@@ -113,6 +124,7 @@ ActorInfoForm.propTypes = {
 };
 
 ActorInfoForm.defaultProps = {
+  formTitle: '',
   name: '',
   body: '',
   error: '',

@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import { singularize } from 'inflected';
 import { Redirect } from 'react-router-dom';
+import Card, {
+  CardHeader,
+} from 'material-ui/Card';
+import Avatar from 'material-ui/Avatar';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import { addActor } from '../../actions/actor';
 
@@ -84,17 +88,32 @@ class ActorAddPage extends React.Component {
 
     return (
       <div className={classes.root}>
-        <ActorInfoForm
-          hasName={hasName}
-          hasBody={hasBody}
-          error={error}
-          name={actor.name}
-          body={actor.body}
-          handleFieldChange={this.handleFieldChange}
-          handleFormSubmit={this.handleFormSubmit}
-          isFetching={isFetching}
-          dismissPath={`/${namespace}/`}
-        />
+        <Card>
+          <CardHeader
+            title={actor.name}
+            avatar={
+              <Avatar
+                aria-label={actor.name || ''}
+                className={classes.avatar}
+                alt={actor.name || ''}
+              >
+                {actor.name && actor.name.charAt(0).toUpperCase()}
+              </Avatar>
+            }
+          />
+          <ActorInfoForm
+            hasName={hasName}
+            hasBody={hasBody}
+            error={error}
+            formTitle={`Add new ${singularize(namespace)}`}
+            name={actor.name}
+            body={actor.body}
+            handleFieldChange={this.handleFieldChange}
+            handleFormSubmit={this.handleFormSubmit}
+            isFetching={isFetching}
+            dismissPath={`/${namespace}/`}
+          />
+        </Card>
         {success && actor.id &&
           <Redirect to={`/${namespace}/${actor.id}/`} />
         }
