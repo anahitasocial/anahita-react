@@ -27,13 +27,17 @@ export function editPersonAccount(person) {
 
 export function addPerson(person) {
   const {
-    firstName,
-    lastName,
+    givenName,
+    familyName,
+    username,
     email,
+    usertype,
   } = person;
   return axios.post('/people.json', constructURLSearchParams({
-    firstName,
-    lastName,
+    givenName,
+    familyName,
+    username,
     email,
+    usertype,
   }));
 }

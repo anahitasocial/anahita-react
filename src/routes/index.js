@@ -8,15 +8,19 @@ import {
 import App from '../containers/App';
 import LoginPage from '../containers/people/LoginPage';
 import HomePage from '../containers/HomePage';
-import PeoplePage from '../containers/people/PeoplePage';
+
+import ActorsPage from '../containers/actors/ActorsPage';
+import ActorPage from '../containers/actors/ActorPage';
 import ActorAddPage from '../containers/actors/ActorAddPage';
 import ActorSettingsPage from '../containers/actors/ActorSettingsPage';
 import ActorSettingsInfoPage from '../containers/actors/ActorSettingsInfoPage';
 import ActorSettingsDeletePage from '../containers/actors/ActorSettingsDeletePage';
+
+import PeoplePage from '../containers/people/PeoplePage';
+import PersonAddPage from '../containers/people/PersonAddPage';
 import PersonSettingsInfoPage from '../containers/people/PersonSettingsInfoPage';
 import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccountPage';
-import ActorsPage from '../containers/actors/ActorsPage';
-import ActorPage from '../containers/actors/ActorPage';
+
 import DashboardPage from '../containers/DashboardPage';
 import PageNotFound from '../containers/PageNotFound';
 
@@ -46,7 +50,7 @@ const PrivateRoute = ({
 
 PrivateRoute.propTypes = {
   component: PropTypes.func.isRequired,
-  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  store: PropTypes.object.isRequired,
 };
 
 const Routes = (props) => {
@@ -110,6 +114,14 @@ const Routes = (props) => {
           exact
           path="/people/"
           component={PeoplePage}
+        />
+        <PrivateRoute
+          exact
+          path="/people/add/"
+          store={store}
+          component={(params) => {
+            return <PersonAddPage {...params} />;
+          }}
         />
         <Route
           exact

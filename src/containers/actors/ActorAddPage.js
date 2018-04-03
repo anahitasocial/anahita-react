@@ -8,6 +8,7 @@ import Card, {
   CardHeader,
 } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
+import GroupAddIcon from 'material-ui-icons/GroupAdd';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import { addActor } from '../../actions/actor';
 
@@ -22,7 +23,7 @@ class ActorAddPage extends React.Component {
     super(props);
 
     this.state = {
-      actor: {},
+      actor: props.actor,
       hasName: true,
       hasBody: true,
     };
@@ -97,7 +98,7 @@ class ActorAddPage extends React.Component {
                 className={classes.avatar}
                 alt={actor.name || ''}
               >
-                {actor.name && actor.name.charAt(0).toUpperCase()}
+                {actor.name ? actor.name.charAt(0).toUpperCase() : <GroupAddIcon />}
               </Avatar>
             }
           />
@@ -133,7 +134,10 @@ ActorAddPage.propTypes = {
 };
 
 ActorAddPage.defaultProps = {
-  actor: {},
+  actor: {
+    name: '',
+    body: '',
+  },
   error: '',
 };
 
