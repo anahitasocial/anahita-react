@@ -166,7 +166,7 @@ const PersonAddForm = (props) => {
 PersonAddForm.propTypes = {
   classes: PropTypes.object.isRequired,
   formTitle: PropTypes.string,
-  isSuperAdmin: PropTypes.bool,
+  isSuperAdmin: PropTypes.bool.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
   givenName: PropTypes.string,
@@ -184,12 +184,11 @@ PersonAddForm.propTypes = {
 
 PersonAddForm.defaultProps = {
   formTitle: '',
-  isSuperAdmin: false,
   givenName: '',
   familyName: '',
   username: '',
   email: '',
-  usertype: '',
+  usertype: PERSON.TYPE.REGISTERED,
   hasGivenName: true,
   hasFamilyName: true,
   hasUsername: true,

@@ -52,6 +52,7 @@ class LoginPage extends React.Component {
     } = this.state;
 
     const { isAuthenticated, errorMessage } = this.props;
+    const canSignup = true;
 
     return (
       <div>
@@ -60,10 +61,11 @@ class LoginPage extends React.Component {
           handleFieldChange={this.handleFieldChange}
           hasUsername={hasUsername}
           hasPassword={hasPassword}
+          canSignup={canSignup}
           error={errorMessage}
         />
-        { isAuthenticated &&
-            <Redirect push to="/dashboard" />
+        {isAuthenticated &&
+          <Redirect push to="/dashboard/" />
         }
       </div>
     );

@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -16,8 +17,8 @@ const styles = theme => ({
     maxWidth: '360px',
     margin: '64px auto',
   },
-  colorError: {
-    color: theme.palette.error.A400,
+  title: {
+    marginBottom: theme.spacing.unit,
   },
   button: {
     marginTop: 10,
@@ -32,24 +33,29 @@ const LoginForm = (props) => {
     handleFormSubmit,
     hasUsername,
     hasPassword,
+    canSignup,
     error,
   } = props;
 
   return (
     <div className={classes.root}>
       <Paper className={classes.formPaper} elevation={2}>
-        <Typography type="headline" color="primary">
-            Please login
+        <Typography
+          variant="title"
+          color="primary"
+          className={classes.title}
+        >
+          {'Please Log In'}
         </Typography>
         <form className={classes.container} onSubmit={handleFormSubmit}>
-          { error &&
+          {error &&
             <Typography
               type="body1"
               classes={classes.colorError}
               color="error"
               paragraph
             >
-                {error}
+              {error}
             </Typography>
           }
           <TextField
@@ -58,9 +64,9 @@ const LoginForm = (props) => {
             label="Email or username"
             error={!hasUsername}
             helperText={!hasUsername ? 'Please enter your email or username.' : ''}
-            margin="normal"
             autoFocus
             fullWidth
+            margin="normal"
           />
           <TextField
             type="password"
@@ -69,8 +75,8 @@ const LoginForm = (props) => {
             label="Password"
             error={!hasPassword}
             helperText={!hasPassword ? 'Please enter your password.' : ''}
-            margin="normal"
             fullWidth
+            margin="normal"
           />
           <Button
             variant="raised"
@@ -78,8 +84,17 @@ const LoginForm = (props) => {
             color="primary"
             className={classes.button}
           >
-            Login
+            {'Login'}
           </Button>
+          {canSignup &&
+            <Button
+              component={Link}
+              to="/signup/"
+              className={classes.button}
+            >
+              {'Signup'}
+            </Button>
+          }
         </form>
       </Paper>
     </div>
@@ -92,12 +107,14 @@ LoginForm.propTypes = {
   handleFormSubmit: PropTypes.func.isRequired,
   hasUsername: PropTypes.bool,
   hasPassword: PropTypes.bool,
+  canSignup: PropTypes.bool,
   error: PropTypes.string,
 };
 
 LoginForm.defaultProps = {
   hasUsername: false,
   hasPassword: false,
+  canSignup: false,
   error: '',
 };
 

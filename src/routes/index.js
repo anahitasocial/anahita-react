@@ -6,7 +6,9 @@ import {
 } from 'react-router-dom';
 
 import App from '../containers/App';
+
 import LoginPage from '../containers/people/LoginPage';
+import SignupPage from '../containers/people/SignupPage';
 import HomePage from '../containers/HomePage';
 
 import ActorsPage from '../containers/actors/ActorsPage';
@@ -72,6 +74,11 @@ const Routes = (props) => {
           exact
           path="/login/"
           component={LoginPage}
+        />
+        <Route
+          exact
+          path="/signup/"
+          component={SignupPage}
         />
         <PrivateRoute
           path="/dashboard/"

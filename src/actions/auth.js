@@ -3,12 +3,9 @@ import { Auth as AUTH } from '../constants';
 
 // - Login Action -
 
-function requestLogin(credentials) {
+function requestLogin() {
   return {
     type: AUTH.LOGIN.REQUEST,
-    isFetching: true,
-    isAuthenticated: false,
-    credentials,
   };
 }
 
@@ -32,20 +29,19 @@ function loginError(error) {
 
 export function login(credentials) {
   return (dispatch) => {
-    dispatch(requestLogin(credentials));
+    dispatch(requestLogin());
     return new Promise((resolve, reject) => {
       return auth.addSession(credentials)
-        .then((result) => {
-          localStorage.setItem('viewer', JSON.stringify(result.data));
-          dispatch(receiveLogin(result));
-          resolve();
-          return result;
+        .then((response) => {
+          localStorage.setItem('viewer', JSON.stringify(response.data));
+          dispatch(receiveLogin(response));
+          return resolve();
         }, (response) => {
           dispatch(loginError('Sorry, unable to log  you in!'));
           return reject(response);
         });
     }).catch((error) => {
-      console.log(error);
+      throw new Error(error);
     });
   };
 }
@@ -73,16 +69,14 @@ export function logout() {
     dispatch(requestLogout());
     return new Promise((resolve, reject) => {
       auth.deleteSession()
-        .then((result) => {
+        .then(() => {
           dispatch(receiveLogout());
           localStorage.removeItem('viewer');
-          resolve();
-          return result;
+          return resolve();
         }, (response) => {
-          reject(response);
-          return response;
+          return reject(response);
         }).catch((error) => {
-          console.log(error)
+          throw new Error(error);
         });
     });
   };
@@ -91,5 +85,49 @@ export function logout() {
 export function unauthorized() {
   return (dispatch) => {
     dispatch(logout());
+  };
+}
+
+// - Signup Action -
+
+function signupRequest() {
+  return {
+    type: AUTH.SIGNUP.REQUEST,
+  };
+}
+
+function signupSuccess(response) {
+  return {
+    type: AUTH.SIGNUP.SUCCESS,
+    isFetching: false,
+    isAuthenticated: true,
+    result: response.data,
+  };
+}
+
+function signupFailure(error) {
+  return {
+    type: AUTH.SIGNUP.FAILURE,
+    isFetching: false,
+    isAuthenticated: false,
+    error,
+  };
+}
+
+export function signup(person) {
+  return (dispatch) => {
+    dispatch(signupRequest());
+    return new Promise((resolve, reject) => {
+      return auth.signup(person)
+        .then((response) => {
+          dispatch(signupSuccess(response));
+          return resolve();
+        }, (response) => {
+          dispatch(signupFailure('Sorry, unable to log  you in!'));
+          return reject(response);
+        });
+    }).catch((error) => {
+      throw new Error(error);
+    });
   };
 }

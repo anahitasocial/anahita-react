@@ -6,6 +6,7 @@ import PersonInfoForm from '../../components/PersonInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import { readActor } from '../../actions/actor';
 import { editPerson } from '../../actions/person';
+import { Person as PERSON } from '../../constants';
 
 const styles = {
   root: {
@@ -77,7 +78,7 @@ class PersonSettingsInfoPage extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, viewer } = this.props;
     const {
       hasGivenName,
       hasFamilyName,
@@ -93,6 +94,7 @@ class PersonSettingsInfoPage extends React.Component {
             actor={actor}
           >
             <PersonInfoForm
+              isSuperAdmin={viewer.usertype === PERSON.TYPE.SUPER_ADMIN}
               hasGivenName={hasGivenName}
               hasFamilyName={hasFamilyName}
               hasGender={hasGender}
@@ -100,6 +102,7 @@ class PersonSettingsInfoPage extends React.Component {
               familyName={actor.familyName}
               body={actor.body}
               gender={actor.gender}
+              usertype={actor.usertype}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
               dismissPath={`/people/${actor.id}/settings/`}

@@ -17,35 +17,61 @@ export default function (state = {
 }, action) {
   switch (action.type) {
     case AUTH.LOGIN.REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true,
         isAuthenticated: false,
         viewer: {},
-      });
+      };
     case AUTH.LOGIN.SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         isAuthenticated: true,
         error: '',
         viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
-      });
+      };
     case AUTH.LOGIN.FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         isAuthenticated: false,
         error: action.error,
-      });
+      };
     case AUTH.LOGOUT.REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true,
         isAuthenticated: true,
-      });
+      };
     case AUTH.LOGOUT.SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         isAuthenticated: false,
         error: '',
-      });
+      };
+    case AUTH.SIGNUP.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        success: false,
+        error: '',
+      };
+    case AUTH.SIGNUP.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        success: true,
+        error: '',
+      };
+    case AUTH.SIGNUP.FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        success: false,
+        error: action.error,
+      };
     default:
       return state;
   }

@@ -19,14 +19,16 @@ export function readSession() {
 
 export function signup(params) {
   const {
-    firstName,
-    lastName,
+    givenName,
+    familyName,
+    username,
     email,
     password,
   } = params;
-  return axios.post('/person.json', constructURLSearchParams({
-    firstName,
-    lastName,
+  return axios.post('/people/person.json', constructURLSearchParams({
+    givenName,
+    familyName,
+    username,
     email,
     password,
   }));
