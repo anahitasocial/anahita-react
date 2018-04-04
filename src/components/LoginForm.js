@@ -60,7 +60,7 @@ const LoginForm = (props) => {
           }
           <TextField
             name="username"
-            onChange={handleFieldChange('username')}
+            onChange={handleFieldChange}
             label="Email or username"
             error={!hasUsername}
             helperText={!hasUsername ? 'Please enter your email or username.' : ''}
@@ -71,7 +71,7 @@ const LoginForm = (props) => {
           <TextField
             type="password"
             name="password"
-            onChange={handleFieldChange('password')}
+            onChange={handleFieldChange}
             label="Password"
             error={!hasPassword}
             helperText={!hasPassword ? 'Please enter your password.' : ''}

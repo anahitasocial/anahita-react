@@ -10,11 +10,12 @@ class LoginPage extends React.Component {
     super(props);
 
     this.state = {
+      person: {
         username: '',
-        hasUsername: true,
         password: '',
-        hasPassword: true,
-        error: ''
+      },
+      hasUsername: true,
+      hasPassword: true,
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -22,36 +23,43 @@ class LoginPage extends React.Component {
   }
 
   validate() {
-    const { username, password } = this.state;
+    const { username, password } = this.state.person;
     this.setState({
-        hasUsername: Boolean(username),
-        hasPassword: Boolean(password)
+      hasUsername: Boolean(username),
+      hasPassword: Boolean(password),
     });
     return Boolean(username) && Boolean(password);
   }
 
-  handleFieldChange = name => event => {
+  handleFieldChange(event) {
+    const { person } = this.state;
+    const { name, value } = event.target;
+    person[name] = value;
     this.setState({
-      [name]: event.target.value,
-      [`has${name.charAt(0).toUpperCase()}!`]: Boolean(event.target.value),
+      person,
+      [`has${name.toUpperCase()}`]: Boolean(value),
     });
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
-    const { username, password } = this.state;
+    const { person } = this.state;
     if (this.validate()) {
-      this.props.login({ username, password });
+      this.props.login(person);
     }
   }
 
   render() {
-    let {
-        hasUsername,
-        hasPassword
+    const {
+      hasUsername,
+      hasPassword,
     } = this.state;
 
-    const { isAuthenticated, errorMessage } = this.props;
+    const {
+      isAuthenticated,
+      error,
+    } = this.props;
+
     const canSignup = true;
 
     return (
@@ -62,7 +70,7 @@ class LoginPage extends React.Component {
           hasUsername={hasUsername}
           hasPassword={hasPassword}
           canSignup={canSignup}
-          error={errorMessage}
+          error={error}
         />
         {isAuthenticated &&
           <Redirect push to="/dashboard/" />
@@ -73,17 +81,24 @@ class LoginPage extends React.Component {
 }
 
 LoginPage.propTypes = {
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  error: PropTypes.string,
 };
 
-const mapStateToProps = state => {
+LoginPage.defaultProps = {
+  error: '',
+  isAuthenticated: false,
+};
+
+const mapStateToProps = (state) => {
   const {
     username,
     hasUsername,
     password,
     hasPassword,
     isAuthenticated,
-    errorMessage
+    error,
   } = state.authReducer;
 
   return {
@@ -92,7 +107,7 @@ const mapStateToProps = state => {
     password,
     hasPassword,
     isAuthenticated,
-    errorMessage
+    error,
   };
 };
 
@@ -100,7 +115,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     login: (credentials) => {
       dispatch(login(credentials));
-    }
+    },
   };
 };
 
