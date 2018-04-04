@@ -51,7 +51,6 @@ const LoginForm = (props) => {
           {error &&
             <Typography
               type="body1"
-              classes={classes.colorError}
               color="error"
               paragraph
             >
