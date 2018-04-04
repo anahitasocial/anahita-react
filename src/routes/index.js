@@ -9,6 +9,7 @@ import App from '../containers/App';
 
 import LoginPage from '../containers/people/LoginPage';
 import SignupPage from '../containers/people/SignupPage';
+import PasswordResetPage from '../containers/people/PasswordResetPage';
 import HomePage from '../containers/HomePage';
 
 import ActorsPage from '../containers/actors/ActorsPage';
@@ -79,6 +80,11 @@ const Routes = (props) => {
           exact
           path="/signup/"
           component={SignupPage}
+        />
+        <Route
+          exact
+          path="/passwordreset/"
+          component={PasswordResetPage}
         />
         <PrivateRoute
           path="/dashboard/"

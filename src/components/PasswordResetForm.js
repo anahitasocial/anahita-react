@@ -26,14 +26,13 @@ const styles = theme => ({
   },
 });
 
-const LoginForm = (props) => {
+const PasswordResetForm = (props) => {
   const {
     classes,
     handleFieldChange,
     handleFormSubmit,
-    hasUsername,
-    hasPassword,
-    canSignup,
+    hasEmail,
+    success,
     error,
   } = props;
 
@@ -45,9 +44,18 @@ const LoginForm = (props) => {
           color="primary"
           className={classes.title}
         >
-          {'Please Log In'}
+          {'Forgot Password?'}
         </Typography>
         <form className={classes.container} onSubmit={handleFormSubmit}>
+          {success &&
+            <Typography
+              type="body1"
+              color="primary"
+              paragraph
+            >
+              {'We emailed you a link. Please click on that link and follow the instructions!'}
+            </Typography>
+          }
           {error &&
             <Typography
               type="body1"
@@ -58,22 +66,12 @@ const LoginForm = (props) => {
             </Typography>
           }
           <TextField
-            name="username"
+            name="email"
             onChange={handleFieldChange}
-            label="Email or username"
-            error={!hasUsername}
-            helperText={!hasUsername ? 'Please enter your email or username.' : ''}
+            label="What is your email?"
+            error={!hasEmail}
+            helperText={!hasEmail ? 'Your email is required!' : ''}
             autoFocus
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            type="password"
-            name="password"
-            onChange={handleFieldChange}
-            label="Password"
-            error={!hasPassword}
-            helperText={!hasPassword ? 'Please enter your password.' : ''}
             fullWidth
             margin="normal"
           />
@@ -83,23 +81,7 @@ const LoginForm = (props) => {
             color="primary"
             className={classes.button}
           >
-            {'Login'}
-          </Button>
-          {canSignup &&
-            <Button
-              component={Link}
-              to="/signup/"
-              className={classes.button}
-            >
-              {'Signup'}
-            </Button>
-          }
-          <Button
-            component={Link}
-            to="/passwordreset/"
-            className={classes.button}
-          >
-            {'Forgot Password?'}
+            {'Reset Password'}
           </Button>
         </form>
       </Paper>
@@ -107,21 +89,19 @@ const LoginForm = (props) => {
   );
 };
 
-LoginForm.propTypes = {
+PasswordResetForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
-  hasUsername: PropTypes.bool,
-  hasPassword: PropTypes.bool,
-  canSignup: PropTypes.bool,
+  hasEmail: PropTypes.bool,
+  success: PropTypes.bool,
   error: PropTypes.string,
 };
 
-LoginForm.defaultProps = {
-  hasUsername: false,
-  hasPassword: false,
-  canSignup: false,
+PasswordResetForm.defaultProps = {
+  hasEmail: true,
+  success: false,
   error: '',
 };
 
-export default withStyles(styles)(LoginForm);
+export default withStyles(styles)(PasswordResetForm);

@@ -17,19 +17,26 @@ export function readSession() {
   return axios.get('/people/session.json');
 }
 
-export function signup(params) {
+export function signup(person) {
   const {
     givenName,
     familyName,
     username,
     email,
     password,
-  } = params;
+  } = person;
   return axios.post('/people/person.json', constructURLSearchParams({
     givenName,
     familyName,
     username,
     email,
     password,
+  }));
+}
+
+export function resetPassword(person) {
+  const { email } = person;
+  return axios.post('/people/token.json', constructURLSearchParams({
+    email,
   }));
 }

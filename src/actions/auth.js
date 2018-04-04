@@ -131,3 +131,43 @@ export function signup(person) {
     });
   };
 }
+
+// -- Reset Password
+
+function resetPasswordRequest() {
+  return {
+    type: AUTH.PASSWORD_RESET.REQUEST,
+  };
+}
+
+function resetPasswordSuccess(response) {
+  return {
+    type: AUTH.PASSWORD_RESET.SUCCESS,
+    status: response.status,
+  };
+}
+
+function resetPasswordFailure(error) {
+  return {
+    type: AUTH.PASSWORD_RESET.FAILURE,
+    error: error.message,
+  };
+}
+
+export function resetPassword(person) {
+  return (dispatch) => {
+    dispatch(resetPasswordRequest());
+    return new Promise((resolve, reject) => {
+      return auth.resetPassword(person)
+        .then((response) => {
+          dispatch(resetPasswordSuccess(response));
+          return resolve();
+        }, (response) => {
+          dispatch(resetPasswordFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
