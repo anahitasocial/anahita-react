@@ -52,6 +52,7 @@ export default function (state = {
         error: '',
       };
     case AUTH.SIGNUP.REQUEST:
+    case AUTH.PASSWORD_RESET.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -59,6 +60,7 @@ export default function (state = {
         error: '',
       };
     case AUTH.SIGNUP.SUCCESS:
+    case AUTH.PASSWORD_RESET.SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -66,6 +68,7 @@ export default function (state = {
         error: '',
       };
     case AUTH.SIGNUP.FAILURE:
+    case AUTH.PASSWORD_RESET.FAILURE:
       return {
         ...state,
         isFetching: false,

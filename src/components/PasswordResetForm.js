@@ -32,6 +32,7 @@ const PasswordResetForm = (props) => {
     handleFieldChange,
     handleFormSubmit,
     hasEmail,
+    isFetching,
     success,
     error,
   } = props;
@@ -80,6 +81,7 @@ const PasswordResetForm = (props) => {
             type="submit"
             color="primary"
             className={classes.button}
+            disabled={isFetching}
           >
             {'Reset Password'}
           </Button>
@@ -95,11 +97,13 @@ PasswordResetForm.propTypes = {
   handleFormSubmit: PropTypes.func.isRequired,
   hasEmail: PropTypes.bool,
   success: PropTypes.bool,
+  isFetching: PropTypes.bool,
   error: PropTypes.string,
 };
 
 PasswordResetForm.defaultProps = {
   hasEmail: true,
+  isFetching: false,
   success: false,
   error: '',
 };
