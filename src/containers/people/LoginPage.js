@@ -93,19 +93,11 @@ LoginPage.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    username,
-    hasUsername,
-    password,
-    hasPassword,
     isAuthenticated,
     error,
   } = state.authReducer;
 
   return {
-    username,
-    hasUsername,
-    password,
-    hasPassword,
     isAuthenticated,
     error,
   };
