@@ -14,9 +14,6 @@ const styles = theme => ({
   formPaper: {
     padding: '20px',
   },
-  colorError: {
-    color: theme.palette.error.A400,
-  },
   button: {
     marginTop: 10,
     marginRight: 10,
@@ -41,13 +38,12 @@ const ActorInfoForm = (props) => {
     <div className={classes.root}>
       <Paper className={classes.formPaper} elevation={0}>
         <Typography variant="title" color="primary">
-            Account
+          {'Account Information'}
         </Typography>
-        <form className={classes.container} onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit}>
           { error &&
             <Typography
               variant="caption"
-              classes={classes.colorError}
               color="error"
               paragraph
             >

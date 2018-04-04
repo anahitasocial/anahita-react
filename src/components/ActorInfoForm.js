@@ -17,9 +17,6 @@ const styles = theme => ({
   formTitle: {
     textTransform: 'capitalize',
   },
-  colorError: {
-    color: theme.palette.error.A400,
-  },
   button: {
     marginTop: 10,
     marginRight: 10,
@@ -53,11 +50,10 @@ const ActorInfoForm = (props) => {
             {formTitle}
           </Typography>
         }
-        <form className={classes.container} onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit}>
           { error &&
             <Typography
               variant="caption"
-              classes={classes.colorError}
               color="error"
               paragraph
             >

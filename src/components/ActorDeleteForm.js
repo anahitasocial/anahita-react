@@ -15,9 +15,6 @@ const styles = theme => ({
   formPaper: {
     padding: '20px',
   },
-  colorError: {
-    color: theme.palette.error.A400,
-  },
   button: {
     marginTop: 10,
     marginRight: 10,
@@ -55,8 +52,7 @@ const ActorInfoForm = (props) => {
         <form className={classes.container} onSubmit={handleFormSubmit}>
           { error &&
             <Typography
-              variant="caption"
-              classes={classes.colorError}
+              variant="display1"
               color="error"
               paragraph
             >

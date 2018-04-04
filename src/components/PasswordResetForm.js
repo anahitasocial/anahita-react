@@ -47,7 +47,7 @@ const PasswordResetForm = (props) => {
         >
           {'Forgot Password?'}
         </Typography>
-        <form className={classes.container} onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit}>
           {success &&
             <Typography
               type="body1"

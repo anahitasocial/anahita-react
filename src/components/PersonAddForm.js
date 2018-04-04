@@ -22,9 +22,6 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     display: 'block',
   },
-  colorError: {
-    color: theme.palette.error.A400,
-  },
   button: {
     marginTop: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit,
@@ -63,11 +60,10 @@ const PersonAddForm = (props) => {
             {formTitle}
           </Typography>
         }
-        <form className={classes.container} onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit}>
           { error &&
             <Typography
               variant="caption"
-              classes={classes.colorError}
               color="error"
               paragraph
             >

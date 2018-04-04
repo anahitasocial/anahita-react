@@ -23,7 +23,7 @@ class ActorSettingsDeletePage extends React.Component {
     this.state = {
       actor: props.actor,
       alias: '',
-      hasAlias: false,
+      hasAlias: true,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
