@@ -34,6 +34,7 @@ const LoginForm = (props) => {
     hasUsername,
     hasPassword,
     canSignup,
+    isFetching,
     error,
   } = props;
 
@@ -82,6 +83,7 @@ const LoginForm = (props) => {
             type="submit"
             color="primary"
             className={classes.button}
+            disabled={isFetching}
           >
             {'Login'}
           </Button>
@@ -114,6 +116,7 @@ LoginForm.propTypes = {
   hasUsername: PropTypes.bool,
   hasPassword: PropTypes.bool,
   canSignup: PropTypes.bool,
+  isFetching: PropTypes.bool,
   error: PropTypes.string,
 };
 
@@ -121,6 +124,7 @@ LoginForm.defaultProps = {
   hasUsername: false,
   hasPassword: false,
   canSignup: false,
+  isFetching: false,
   error: '',
 };
 

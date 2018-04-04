@@ -57,6 +57,7 @@ class LoginPage extends React.Component {
 
     const {
       isAuthenticated,
+      isFetching,
       error,
     } = this.props;
 
@@ -71,6 +72,7 @@ class LoginPage extends React.Component {
           hasPassword={hasPassword}
           canSignup={canSignup}
           error={error}
+          isFetching={isFetching}
         />
         {isAuthenticated &&
           <Redirect push to="/dashboard/" />
@@ -83,11 +85,13 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  isFetching: PropTypes.bool,
   error: PropTypes.string,
 };
 
 LoginPage.defaultProps = {
   error: '',
+  isFetching: false,
   isAuthenticated: false,
 };
 
@@ -95,11 +99,13 @@ const mapStateToProps = (state) => {
   const {
     isAuthenticated,
     error,
+    isFetching,
   } = state.authReducer;
 
   return {
     isAuthenticated,
     error,
+    isFetching,
   };
 };
 

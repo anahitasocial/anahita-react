@@ -31,7 +31,7 @@ export function login(credentials) {
   return (dispatch) => {
     dispatch(requestLogin());
     return new Promise((resolve, reject) => {
-      return auth.addSession(credentials)
+      auth.addSession(credentials)
         .then((response) => {
           localStorage.setItem('viewer', JSON.stringify(response.data));
           dispatch(receiveLogin(response));
@@ -118,7 +118,7 @@ export function signup(person) {
   return (dispatch) => {
     dispatch(signupRequest());
     return new Promise((resolve, reject) => {
-      return auth.signup(person)
+      auth.signup(person)
         .then((response) => {
           dispatch(signupSuccess(response));
           return resolve();
@@ -158,7 +158,7 @@ export function resetPassword(person) {
   return (dispatch) => {
     dispatch(resetPasswordRequest());
     return new Promise((resolve, reject) => {
-      return auth.resetPassword(person)
+      auth.resetPassword(person)
         .then((response) => {
           dispatch(resetPasswordSuccess(response));
           return resolve();
