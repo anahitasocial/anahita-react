@@ -80,6 +80,8 @@ class ActorSettingsInfoPage extends React.Component {
     const {
       classes,
       namespace,
+      isFetching,
+      success,
     } = this.props;
 
     const {
@@ -104,6 +106,8 @@ class ActorSettingsInfoPage extends React.Component {
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
               dismissPath={`/${namespace}/${actor.id}/settings/`}
+              isFetching={isFetching}
+              success={success}
             />
           </ActorSettingCard>
         }
@@ -118,12 +122,12 @@ ActorSettingsInfoPage.propTypes = {
   editActor: PropTypes.func.isRequired,
   actor: PropTypes.object,
   namespace: PropTypes.string.isRequired,
-  success: PropTypes.bool,
+  success: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 ActorSettingsInfoPage.defaultProps = {
   actor: {},
-  success: false,
 };
 
 const mapStateToProps = (state) => {
@@ -131,12 +135,14 @@ const mapStateToProps = (state) => {
     actor,
     success,
     error,
+    isFetching,
   } = state.actorReducer;
 
   return {
     actor,
     error,
     success,
+    isFetching,
   };
 };
 
