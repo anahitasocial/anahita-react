@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import { Redirect } from 'react-router-dom';
-import Card, {
-  CardHeader,
-} from 'material-ui/Card';
+import Card, { CardHeader } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import PersonAddIcon from 'material-ui-icons/PersonAdd';
 import PersonAddForm from '../../components/PersonAddForm';
@@ -23,7 +21,7 @@ class PersonAddPage extends React.Component {
     super(props);
 
     this.state = {
-      person: props.person,
+      person: {},
       hasGivenName: true,
       hasFamilyName: true,
       hasUsername: true,

@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import { singularize } from 'inflected';
 import { Redirect } from 'react-router-dom';
-import Card, {
-  CardHeader,
-} from 'material-ui/Card';
+import Card, { CardHeader } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import GroupAddIcon from 'material-ui-icons/GroupAdd';
 import ActorInfoForm from '../../components/ActorInfoForm';
@@ -23,7 +21,7 @@ class ActorAddPage extends React.Component {
     super(props);
 
     this.state = {
-      actor: props.actor,
+      actor: {},
       hasName: true,
       hasBody: true,
     };
