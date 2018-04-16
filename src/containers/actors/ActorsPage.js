@@ -197,7 +197,7 @@ ActorsPage.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     actors,
-    errorMessage,
+    error,
     offset,
     limit,
     total,
@@ -210,7 +210,7 @@ const mapStateToProps = (state) => {
 
   return {
     actors,
-    errorMessage,
+    error,
     offset,
     limit,
     total,

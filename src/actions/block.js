@@ -19,7 +19,7 @@ function blockSuccess(response) {
 function blockFailure(error) {
   return {
     type: ACTOR.BLOCK.FAILURE,
-    errorMessage: error.message,
+    error: error.message,
   };
 }
 
@@ -59,7 +59,7 @@ function unblockSuccess(response) {
 function unblockFailure(error) {
   return {
     type: ACTOR.UNBLOCK.FAILURE,
-    errorMessage: error.message,
+    error: error.message,
   };
 }
 

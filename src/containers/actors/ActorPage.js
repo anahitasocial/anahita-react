@@ -82,7 +82,7 @@ ActorPage.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     actor,
-    errorMessage,
+    error,
     isLeader,
   } = state.actorReducer;
 
@@ -94,7 +94,7 @@ const mapStateToProps = (state) => {
   return {
     actor,
     isLeader,
-    errorMessage,
+    error,
     isAuthenticated,
     viewer,
   };

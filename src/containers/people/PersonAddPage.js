@@ -142,8 +142,8 @@ class PersonAddPage extends React.Component {
           <PersonAddForm
             formTitle="Add New Person"
             isSuperAdmin={viewer.usertype === PERSON.TYPE.SUPER_ADMIN}
-            hasGivenname={hasGivenName}
-            hasFamilyname={hasFamilyName}
+            hasGivenName={hasGivenName}
+            hasFamilyName={hasFamilyName}
             hasUsername={hasUsername}
             hasEmail={hasEmail}
             hasUsertype={hasUsertype}

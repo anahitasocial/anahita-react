@@ -59,7 +59,7 @@ function unfollowSuccess(response) {
 function unfollowFailure(error) {
   return {
     type: ACTOR.UNFOLLOW.FAILURE,
-    errorMessage: error.message,
+    error: error.message,
   };
 }
 
