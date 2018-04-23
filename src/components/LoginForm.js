@@ -31,8 +31,8 @@ const LoginForm = (props) => {
     classes,
     handleFieldChange,
     handleFormSubmit,
-    hasUsername,
-    hasPassword,
+    usernameError,
+    passwordError,
     canSignup,
     isFetching,
     error,
@@ -48,22 +48,25 @@ const LoginForm = (props) => {
         >
           {'Please Log In'}
         </Typography>
-        <form className={classes.container} onSubmit={handleFormSubmit}>
+        <form
+          className={classes.container}
+          onSubmit={handleFormSubmit}
+        >
           {error &&
             <Typography
               type="body1"
               color="error"
               paragraph
             >
-              {error}
+              {'Authentication failed! Please check your username and password!'}
             </Typography>
           }
           <TextField
             name="username"
             onChange={handleFieldChange}
             label="Email or username"
-            error={!hasUsername}
-            helperText={!hasUsername ? 'Please enter your email or username.' : ''}
+            error={usernameError}
+            helperText={usernameError && 'Please enter your email or username.'}
             autoFocus
             fullWidth
             margin="normal"
@@ -73,8 +76,8 @@ const LoginForm = (props) => {
             name="password"
             onChange={handleFieldChange}
             label="Password"
-            error={!hasPassword}
-            helperText={!hasPassword ? 'Please enter your password.' : ''}
+            error={passwordError}
+            helperText={passwordError && 'Please enter your password.'}
             fullWidth
             margin="normal"
           />
@@ -113,16 +116,14 @@ LoginForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
-  hasUsername: PropTypes.bool,
-  hasPassword: PropTypes.bool,
+  usernameError: PropTypes.bool.isRequired,
+  passwordError: PropTypes.bool.isRequired,
   canSignup: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
 };
 
 LoginForm.defaultProps = {
-  hasUsername: false,
-  hasPassword: false,
   canSignup: false,
   isFetching: false,
   error: '',

@@ -97,7 +97,7 @@ Viewer.propTypes = {
 };
 
 Viewer.defaultProps = {
-  viewer: null,
+  viewer: {},
   isAuthenticated: false,
 };
 

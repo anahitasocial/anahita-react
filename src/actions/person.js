@@ -1,6 +1,86 @@
 import { person as api } from '../api';
 import { Person as PERSON } from '../constants';
 
+// -- Validate Username Existence
+
+function validateUsernameRequest() {
+  return {
+    type: PERSON.VALIDATE_USERNAME.REQUEST,
+  };
+}
+
+function validateUsernameSuccess() {
+  return {
+    type: PERSON.VALIDATE_USERNAME.SUCCESS,
+    isAvailable: true,
+  };
+}
+
+function validateUsernameFailure(error) {
+  return {
+    type: PERSON.VALIDATE_USERNAME.FAILURE,
+    error: error.message,
+  };
+}
+
+export function validateUsername(username) {
+  return (dispatch) => {
+    dispatch(validateUsernameRequest());
+    return new Promise((resolve, reject) => {
+      api.validateField('username', username)
+        .then(() => {
+          dispatch(validateUsernameSuccess());
+          return resolve();
+        }, (response) => {
+          dispatch(validateUsernameFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
+// -- Validate Email Existence
+
+function validateEmailRequest() {
+  return {
+    type: PERSON.VALIDATE_EMAIL.REQUEST,
+  };
+}
+
+function validateEmailSucess() {
+  return {
+    type: PERSON.VALIDATE_EMAIL.SUCCESS,
+    isAvailable: true,
+  };
+}
+
+function validateEmailFailure(error) {
+  return {
+    type: PERSON.VALIDATE_EMAIL.FAILURE,
+    error: error.message,
+  };
+}
+
+export function validateEmail(email) {
+  return (dispatch) => {
+    dispatch(validateEmailRequest());
+    return new Promise((resolve, reject) => {
+      api.validateField('email', email)
+        .then(() => {
+          dispatch(validateEmailSucess());
+          return resolve();
+        }, (response) => {
+          dispatch(validateEmailFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
 // -- Edit Person
 
 function editRequest() {

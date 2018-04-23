@@ -12,8 +12,6 @@ function requestLogin() {
 function receiveLogin(result) {
   return {
     type: AUTH.LOGIN.SUCCESS,
-    isFetching: false,
-    isAuthenticated: true,
     result,
   };
 }
@@ -21,9 +19,7 @@ function receiveLogin(result) {
 function loginError(error) {
   return {
     type: AUTH.LOGIN.FAILURE,
-    isFetching: false,
-    isAuthenticated: false,
-    error,
+    error: error.message,
   };
 }
 
@@ -37,11 +33,12 @@ export function login(credentials) {
           dispatch(receiveLogin(response));
           return resolve();
         }, (response) => {
-          dispatch(loginError('Sorry, unable to log  you in!'));
+          dispatch(loginError(response));
           return reject(response);
         });
     }).catch((error) => {
-      throw new Error(error);
+      console.log(error);
+      // throw new Error(error);
     });
   };
 }
@@ -51,16 +48,12 @@ export function login(credentials) {
 function requestLogout() {
   return {
     type: AUTH.LOGOUT.REQUEST,
-    isFetching: true,
-    isAuthenticated: true,
   };
 }
 
 function receiveLogout() {
   return {
     type: AUTH.LOGOUT.SUCCESS,
-    isFetching: false,
-    isAuthenticated: false,
   };
 }
 
@@ -99,8 +92,6 @@ function signupRequest() {
 function signupSuccess(response) {
   return {
     type: AUTH.SIGNUP.SUCCESS,
-    isFetching: false,
-    isAuthenticated: true,
     result: response.data,
   };
 }
@@ -108,9 +99,7 @@ function signupSuccess(response) {
 function signupFailure(error) {
   return {
     type: AUTH.SIGNUP.FAILURE,
-    isFetching: false,
-    isAuthenticated: false,
-    error,
+    error: error.message,
   };
 }
 
@@ -123,11 +112,12 @@ export function signup(person) {
           dispatch(signupSuccess(response));
           return resolve();
         }, (response) => {
-          dispatch(signupFailure('Sorry, unable to log  you in!'));
+          dispatch(signupFailure(response));
           return reject(response);
         });
     }).catch((error) => {
-      throw new Error(error);
+      console.log(error);
+      // throw new Error(error);
     });
   };
 }

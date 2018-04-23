@@ -31,11 +31,14 @@ const SignupForm = (props) => {
     classes,
     handleFieldChange,
     handleFormSubmit,
-    hasGivenName,
-    hasFamilyName,
-    hasUsername,
-    hasEmail,
-    hasPassword,
+    givenNameError,
+    familyNameError,
+    usernameHelperText,
+    usernameError,
+    emailHelperText,
+    emailError,
+    passwordError,
+    isFetching,
     success,
     error,
   } = props;
@@ -56,7 +59,7 @@ const SignupForm = (props) => {
             color="error"
             paragraph
           >
-            {error}
+            {'Something went wrong!'}
           </Typography>
         }
         {success &&
@@ -73,65 +76,71 @@ const SignupForm = (props) => {
             name="givenName"
             onChange={handleFieldChange}
             label="First Name"
-            error={!hasGivenName}
-            helperText={!hasGivenName ? 'First name is required!' : ''}
+            error={givenNameError}
+            helperText={givenNameError && 'First name of at least 3 characters is required!'}
             autoFocus
             fullWidth
             margin="normal"
+            disabled={success}
           />
           <TextField
             name="familyName"
             onChange={handleFieldChange}
             label="Last Name"
-            error={!hasFamilyName}
-            helperText={!hasFamilyName ? 'Last name is required!' : ''}
+            error={familyNameError}
+            helperText={familyNameError && 'Last name of at least 3 characters is required!'}
             fullWidth
             margin="normal"
+            disabled={success}
           />
           <TextField
             name="username"
             onChange={handleFieldChange}
             label="Username"
-            error={!hasUsername}
-            helperText={!hasUsername ? 'Username is required!' : ''}
+            error={usernameError}
+            helperText={usernameHelperText}
             autoFocus
             fullWidth
             margin="normal"
+            disabled={success}
           />
           <TextField
             name="email"
             onChange={handleFieldChange}
             label="Email"
-            error={!hasEmail}
-            helperText={!hasEmail ? 'Email is required!' : ''}
+            error={emailError}
+            helperText={emailHelperText}
             autoFocus
             fullWidth
             margin="normal"
+            disabled={success}
           />
           <TextField
             type="password"
             name="password"
             onChange={handleFieldChange}
             label="Password"
-            error={!hasPassword}
-            helperText={!hasPassword ? 'Please enter your password.' : ''}
+            error={passwordError}
+            helperText={passwordError && 'A secure password of at least 6 characters is required!'}
             fullWidth
             margin="normal"
+            disabled={success}
           />
           <Button
             variant="raised"
             type="submit"
             color="primary"
             className={classes.button}
+            disabled={isFetching || success}
           >
-            Signup
+            {'Signup'}
           </Button>
           <Button
             component={Link}
             to="/login/"
             className={classes.button}
           >
-            Login
+            {'Login'}
           </Button>
         </form>
       </Paper>
@@ -143,21 +152,22 @@ SignupForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
-  hasGivenName: PropTypes.bool,
-  hasFamilyName: PropTypes.bool,
-  hasUsername: PropTypes.bool,
-  hasEmail: PropTypes.bool,
-  hasPassword: PropTypes.bool,
+  givenNameError: PropTypes.bool.isRequired,
+  familyNameError: PropTypes.bool.isRequired,
+  usernameHelperText: PropTypes.string,
+  usernameError: PropTypes.bool.isRequired,
+  emailHelperText: PropTypes.string,
+  emailError: PropTypes.bool.isRequired,
+  passwordError: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool,
   success: PropTypes.bool,
   error: PropTypes.string,
 };
 
 SignupForm.defaultProps = {
-  hasGivenName: true,
-  hasFamilyName: true,
-  hasUsername: true,
-  hasEmail: true,
-  hasPassword: true,
+  emailHelperText: '',
+  usernameHelperText: '',
+  isFetching: false,
   success: false,
   error: '',
 };

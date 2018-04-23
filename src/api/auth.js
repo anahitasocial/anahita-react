@@ -26,6 +26,7 @@ export function signup(person) {
     password,
   } = person;
   return axios.post('/people/person.json', constructURLSearchParams({
+    action: 'signup',
     givenName,
     familyName,
     username,

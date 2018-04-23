@@ -1,13 +1,13 @@
-import Auth from './auth';
-import Storage from './storage';
-import Actors from './actors';
 import Actor from './actor';
+import Actors from './actors';
+import Auth from './auth';
 import Person from './person';
+import Storage from './storage';
 
 export {
-  Auth,
-  Storage,
-  Actors,
   Actor,
+  Actors,
+  Auth,
   Person,
+  Storage,
 };

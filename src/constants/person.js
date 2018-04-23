@@ -3,6 +3,8 @@ import async from './async';
 const person = async('person');
 
 export default {
+  VALIDATE_EMAIL: person('validate_email'),
+  VALIDATE_USERNAME: person('validate_USERNAME'),
   EDIT: person('edit'),
   EDIT_ACCOUNT: person('account'),
   ADD: person('add'),

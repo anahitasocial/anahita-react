@@ -13,6 +13,7 @@ export default function (state = {
     viewer.usertype === PERSON.TYPE.SUPER_ADMIN
   ),
   viewer,
+  success: false,
   error: '',
 }, action) {
   switch (action.type) {
@@ -21,6 +22,7 @@ export default function (state = {
         ...state,
         isFetching: true,
         isAuthenticated: false,
+        success: false,
         viewer: {},
       };
     case AUTH.LOGIN.SUCCESS:
@@ -28,6 +30,7 @@ export default function (state = {
         ...state,
         isFetching: false,
         isAuthenticated: true,
+        success: true,
         error: '',
         viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
       };
@@ -36,6 +39,7 @@ export default function (state = {
         ...state,
         isFetching: false,
         isAuthenticated: false,
+        success: false,
         error: action.error,
       };
     case AUTH.LOGOUT.REQUEST:

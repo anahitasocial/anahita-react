@@ -1,6 +1,14 @@
 import axios from 'axios';
 import { constructURLSearchParams } from './utils';
 
+export function validateField(key, value) {
+  return axios.post('/people/person.json', constructURLSearchParams({
+    action: 'validate',
+    key,
+    value,
+  }));
+}
+
 export function editPerson(person) {
   const {
     givenName,

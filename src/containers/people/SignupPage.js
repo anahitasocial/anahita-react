@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
 import { Redirect } from 'react-router-dom';
+import { withStyles } from 'material-ui/styles';
 import SignupForm from '../../components/SignupForm';
 import { signup } from '../../actions/auth';
+import {
+  validateUsername,
+  validateEmail,
+} from '../../actions/person';
+import validate from './validate';
 
 const styles = {
   root: {
@@ -18,11 +23,13 @@ class SignupPage extends React.Component {
 
     this.state = {
       person: props.person,
-      hasGivenName: true,
-      hasFamilyName: true,
-      hasUsername: true,
-      hasEmail: true,
-      hasPassword: true,
+      givenNameError: false,
+      familyNameError: false,
+      usernameError: false,
+      usernameHelperText: '',
+      emailError: false,
+      emailHelperText: '',
+      passwordError: false,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -41,27 +48,78 @@ class SignupPage extends React.Component {
     const { person } = this.state;
     const { name, value } = event.target;
     person[name] = value;
-    this.setState({
-      person,
-      [`has${name.toUpperCase()}`]: Boolean(value),
-    });
+    this.setState({ person });
+
+    switch (name) {
+      case 'username':
+        if (validate.username(value)) {
+          this.props.isUsernameTaken(value);
+          this.setState({
+            usernameError: false,
+          });
+        } else {
+          this.setState({
+            usernameHelperText: 'A valid username is required!',
+            usernameError: true,
+          });
+        }
+        break;
+      case 'email':
+        if (validate.username(value)) {
+          this.props.isEmailTaken(value);
+          this.setState({
+            emailError: false,
+          });
+        } else {
+          this.setState({
+            emailHelperText: 'A valid email address is required!',
+            emailError: true,
+          });
+        }
+        break;
+      case 'password':
+        this.setState({
+          passwordError: !validate.password(value),
+        });
+        break;
+      default:
+        this.setState({
+          [`${name}Error`]: value === '',
+        });
+    }
   }
 
   validate() {
-    const { person } = this.state;
+    const {
+      givenName,
+      familyName,
+      username,
+      email,
+      password,
+    } = this.state.person;
+
+    const givenNameError = givenName.length < 3;
+    const familyNameError = familyName.length < 3;
+
+    const usernameError = !validate.username(username);
+    const usernameHelperText = usernameError ? 'A valid username is required!' : '';
+
+    const emailError = !validate.email(email);
+    const emailHelperText = emailError ? 'A valid email address is required!' : '';
+
+    const passwordError = !validate.password(password);
+
     this.setState({
-      hasGivenName: Boolean(person.givenName),
-      hasFamilyName: Boolean(person.familyName),
-      hasUsername: Boolean(person.username),
-      hasEmail: Boolean(person.email),
-      hasPassword: Boolean(person.password),
+      givenNameError,
+      familyNameError,
+      usernameError,
+      usernameHelperText,
+      emailError,
+      emailHelperText,
+      passwordError,
     });
 
-    return Boolean(person.givenName) &&
-    Boolean(person.familyName) &&
-    Boolean(person.username) &&
-    Boolean(person.email) &&
-    Boolean(person.password);
+    return !givenNameError && !familyNameError && !usernameError && !emailError && !passwordError;
   }
 
   signup() {
@@ -82,25 +140,30 @@ class SignupPage extends React.Component {
       success,
       error,
       isFetching,
+      isAuthenticated,
     } = this.props;
 
     const {
       person,
-      hasGivenName,
-      hasFamilyName,
-      hasUsername,
-      hasEmail,
-      hasPassword,
+      givenNameError,
+      familyNameError,
+      usernameHelperText,
+      usernameError,
+      emailHelperText,
+      emailError,
+      passwordError,
     } = this.state;
 
     return (
       <div className={classes.root}>
         <SignupForm
-          hasGivenName={hasGivenName}
-          hasFamilyName={hasFamilyName}
-          hasUsername={hasUsername}
-          hasEmail={hasEmail}
-          hasPassword={hasPassword}
+          givenNameError={givenNameError}
+          familyNameError={familyNameError}
+          usernameError={usernameError}
+          usernameHelperText={usernameHelperText}
+          emailError={emailError}
+          emailHelperText={emailHelperText}
+          passwordError={passwordError}
           givenName={person.givenName}
           familyName={person.familyName}
           username={person.username}
@@ -112,8 +175,8 @@ class SignupPage extends React.Component {
           success={success}
           error={error}
         />
-        {success && person.id &&
-          <Redirect to={`/people/${person.id}/`} />
+        {isAuthenticated &&
+          <Redirect push to="/dashboard/" />
         }
       </div>
     );
@@ -123,10 +186,15 @@ class SignupPage extends React.Component {
 SignupPage.propTypes = {
   classes: PropTypes.object.isRequired,
   signup: PropTypes.func.isRequired,
+  isUsernameTaken: PropTypes.func.isRequired,
+  isEmailTaken: PropTypes.func.isRequired,
   person: PropTypes.object,
   success: PropTypes.bool,
-  isFetching: PropTypes.bool.isRequired,
+  usernameIsAvailable: PropTypes.bool,
+  emailIsAvailable: PropTypes.bool,
+  isFetching: PropTypes.bool,
   error: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
 };
 
 SignupPage.defaultProps = {
@@ -137,8 +205,12 @@ SignupPage.defaultProps = {
     username: '',
     password: '',
   },
+  isFetching: false,
   success: false,
+  usernameIsAvailable: true,
+  emailIsAvailable: true,
   error: '',
+  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {
@@ -146,12 +218,18 @@ const mapStateToProps = (state) => {
     error,
     success,
     isFetching,
+    isAuthenticated,
+    usernameIsAvailable,
+    emailIsAvailable,
   } = state.authReducer;
 
   return {
     error,
     success,
     isFetching,
+    isAuthenticated,
+    usernameIsAvailable,
+    emailIsAvailable,
   };
 };
 
@@ -159,6 +237,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     signup: (person) => {
       dispatch(signup(person));
+    },
+    isUsernameTaken: (username) => {
+      dispatch(validateUsername(username));
+    },
+    isEmailTaken: (email) => {
+      dispatch(validateEmail(email));
     },
   };
 };

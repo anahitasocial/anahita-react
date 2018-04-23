@@ -10,12 +10,12 @@ class LoginPage extends React.Component {
     super(props);
 
     this.state = {
-      person: {
+      credentials: {
         username: '',
         password: '',
       },
-      hasUsername: true,
-      hasPassword: true,
+      usernameError: false,
+      passwordError: false,
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -23,41 +23,46 @@ class LoginPage extends React.Component {
   }
 
   validate() {
-    const { username, password } = this.state.person;
+    const { username, password } = this.state.credentials;
+    const usernameError = username === '';
+    const passwordError = password === '';
+
     this.setState({
-      hasUsername: Boolean(username),
-      hasPassword: Boolean(password),
+      usernameError,
+      passwordError,
     });
-    return Boolean(username) && Boolean(password);
+
+    return !usernameError && !passwordError;
   }
 
   handleFieldChange(event) {
-    const { person } = this.state;
+    const { credentials } = this.state;
     const { name, value } = event.target;
-    person[name] = value;
+    credentials[name] = value;
     this.setState({
-      person,
-      [`has${name.toUpperCase()}`]: Boolean(value),
+      credentials,
+      [`${name}Error`]: value === '',
     });
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
-    const { person } = this.state;
+    const { credentials } = this.state;
     if (this.validate()) {
-      this.props.login(person);
+      this.props.login(credentials);
     }
   }
 
   render() {
     const {
-      hasUsername,
-      hasPassword,
+      usernameError,
+      passwordError,
     } = this.state;
 
     const {
       isAuthenticated,
       isFetching,
+      success,
       error,
     } = this.props;
 
@@ -68,13 +73,13 @@ class LoginPage extends React.Component {
         <LoginForm
           handleFormSubmit={this.handleFormSubmit}
           handleFieldChange={this.handleFieldChange}
-          hasUsername={hasUsername}
-          hasPassword={hasPassword}
+          usernameError={usernameError}
+          passwordError={passwordError}
           canSignup={canSignup}
           error={error}
           isFetching={isFetching}
         />
-        {isAuthenticated &&
+        {success && isAuthenticated &&
           <Redirect push to="/dashboard/" />
         }
       </div>
@@ -86,11 +91,13 @@ LoginPage.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   isFetching: PropTypes.bool,
+  success: PropTypes.bool,
   error: PropTypes.string,
 };
 
 LoginPage.defaultProps = {
   error: '',
+  success: false,
   isFetching: false,
   isAuthenticated: false,
 };
@@ -98,12 +105,14 @@ LoginPage.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     isAuthenticated,
+    success,
     error,
     isFetching,
   } = state.authReducer;
 
   return {
     isAuthenticated,
+    success,
     error,
     isFetching,
   };
