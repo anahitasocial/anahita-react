@@ -1,5 +1,85 @@
-import { auth } from '../api';
+import { auth as api } from '../api';
 import { Auth as AUTH } from '../constants';
+
+// -- Validate Username Existence
+
+function validateUsernameRequest() {
+  return {
+    type: AUTH.VALIDATE_USERNAME.REQUEST,
+  };
+}
+
+function validateUsernameSuccess() {
+  return {
+    type: AUTH.VALIDATE_USERNAME.SUCCESS,
+    isAvailable: true,
+  };
+}
+
+function validateUsernameFailure(error) {
+  return {
+    type: AUTH.VALIDATE_USERNAME.FAILURE,
+    error: error.message,
+  };
+}
+
+export function validateUsername(username) {
+  return (dispatch) => {
+    dispatch(validateUsernameRequest());
+    return new Promise((resolve, reject) => {
+      api.validateField('username', username)
+        .then(() => {
+          dispatch(validateUsernameSuccess());
+          return resolve();
+        }, (response) => {
+          dispatch(validateUsernameFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
+// -- Validate Email Existence
+
+function validateEmailRequest() {
+  return {
+    type: AUTH.VALIDATE_EMAIL.REQUEST,
+  };
+}
+
+function validateEmailSucess() {
+  return {
+    type: AUTH.VALIDATE_EMAIL.SUCCESS,
+    isAvailable: true,
+  };
+}
+
+function validateEmailFailure(error) {
+  return {
+    type: AUTH.VALIDATE_EMAIL.FAILURE,
+    error: error.message,
+  };
+}
+
+export function validateEmail(email) {
+  return (dispatch) => {
+    dispatch(validateEmailRequest());
+    return new Promise((resolve, reject) => {
+      api.validateField('email', email)
+        .then(() => {
+          dispatch(validateEmailSucess());
+          return resolve();
+        }, (response) => {
+          dispatch(validateEmailFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
 
 // - Login Action -
 
@@ -27,7 +107,7 @@ export function login(credentials) {
   return (dispatch) => {
     dispatch(requestLogin());
     return new Promise((resolve, reject) => {
-      auth.addSession(credentials)
+      api.addSession(credentials)
         .then((response) => {
           localStorage.setItem('viewer', JSON.stringify(response.data));
           dispatch(receiveLogin(response));
@@ -61,7 +141,7 @@ export function logout() {
   return (dispatch) => {
     dispatch(requestLogout());
     return new Promise((resolve, reject) => {
-      auth.deleteSession()
+      api.deleteSession()
         .then(() => {
           dispatch(receiveLogout());
           localStorage.removeItem('viewer');
@@ -107,7 +187,7 @@ export function signup(person) {
   return (dispatch) => {
     dispatch(signupRequest());
     return new Promise((resolve, reject) => {
-      auth.signup(person)
+      api.signup(person)
         .then((response) => {
           dispatch(signupSuccess(response));
           return resolve();
@@ -148,7 +228,7 @@ export function resetPassword(person) {
   return (dispatch) => {
     dispatch(resetPasswordRequest());
     return new Promise((resolve, reject) => {
-      auth.resetPassword(person)
+      api.resetPassword(person)
         .then((response) => {
           dispatch(resetPasswordSuccess(response));
           return resolve();

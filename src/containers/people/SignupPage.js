@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import SignupForm from '../../components/SignupForm';
-import { signup } from '../../actions/auth';
 import {
+  signup,
   validateUsername,
   validateEmail,
-} from '../../actions/person';
+} from '../../actions/auth';
 import validate from './validate';
 
 const styles = {
@@ -37,26 +37,29 @@ class SignupPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.person.id) {
-      this.setState({
-        person: Object.assign({}, nextProps.person),
-      });
-    }
+    const {
+      usernameAvailable,
+      emailAvailable,
+    } = nextProps;
+
+    this.setState({
+      usernameError: !usernameAvailable,
+      usernameHelperText: usernameAvailable ? 'Good username!' : 'Username already taken!',
+      emailError: !emailAvailable,
+      emailHelperText: emailAvailable ? 'Good email!' : 'Email already taken!',
+    });
   }
 
   handleFieldChange(event) {
     const { person } = this.state;
     const { name, value } = event.target;
-    person[name] = value;
+    person[name] = value.trim();
     this.setState({ person });
 
     switch (name) {
       case 'username':
-        if (validate.username(value)) {
-          this.props.isUsernameTaken(value);
-          this.setState({
-            usernameError: false,
-          });
+        if (validate.username(person[name])) {
+          this.props.isUsernameTaken(person[name]);
         } else {
           this.setState({
             usernameHelperText: 'A valid username is required!',
@@ -65,11 +68,8 @@ class SignupPage extends React.Component {
         }
         break;
       case 'email':
-        if (validate.username(value)) {
-          this.props.isEmailTaken(value);
-          this.setState({
-            emailError: false,
-          });
+        if (validate.email(person[name])) {
+          this.props.isEmailTaken(person[name]);
         } else {
           this.setState({
             emailHelperText: 'A valid email address is required!',
@@ -79,7 +79,7 @@ class SignupPage extends React.Component {
         break;
       case 'password':
         this.setState({
-          passwordError: !validate.password(value),
+          passwordError: !validate.password(person[name]),
         });
         break;
       default:
@@ -119,7 +119,13 @@ class SignupPage extends React.Component {
       passwordError,
     });
 
-    return !givenNameError && !familyNameError && !usernameError && !emailError && !passwordError;
+    return !(
+      givenNameError ||
+      familyNameError ||
+      usernameError ||
+      emailError ||
+      passwordError
+    );
   }
 
   signup() {
@@ -190,8 +196,8 @@ SignupPage.propTypes = {
   isEmailTaken: PropTypes.func.isRequired,
   person: PropTypes.object,
   success: PropTypes.bool,
-  usernameIsAvailable: PropTypes.bool,
-  emailIsAvailable: PropTypes.bool,
+  usernameAvailable: PropTypes.bool.isRequired,
+  emailAvailable: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
   isAuthenticated: PropTypes.bool,
@@ -207,8 +213,6 @@ SignupPage.defaultProps = {
   },
   isFetching: false,
   success: false,
-  usernameIsAvailable: true,
-  emailIsAvailable: true,
   error: '',
   isAuthenticated: false,
 };
@@ -219,8 +223,8 @@ const mapStateToProps = (state) => {
     success,
     isFetching,
     isAuthenticated,
-    usernameIsAvailable,
-    emailIsAvailable,
+    usernameAvailable,
+    emailAvailable,
   } = state.authReducer;
 
   return {
@@ -228,8 +232,8 @@ const mapStateToProps = (state) => {
     success,
     isFetching,
     isAuthenticated,
-    usernameIsAvailable,
-    emailIsAvailable,
+    usernameAvailable,
+    emailAvailable,
   };
 };
 

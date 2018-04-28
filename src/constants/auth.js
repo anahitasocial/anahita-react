@@ -7,4 +7,6 @@ export default {
   LOGOUT: auth('logout'),
   SIGNUP: auth('signup'),
   PASSWORD_RESET: auth('password_reset'),
+  VALIDATE_EMAIL: auth('validate_email'),
+  VALIDATE_USERNAME: auth('validate_username'),
 };

@@ -31,12 +31,17 @@ const SignupForm = (props) => {
     classes,
     handleFieldChange,
     handleFormSubmit,
+    givenName,
     givenNameError,
+    familyName,
     familyNameError,
+    username,
     usernameHelperText,
     usernameError,
+    email,
     emailHelperText,
     emailError,
+    password,
     passwordError,
     isFetching,
     success,
@@ -74,6 +79,7 @@ const SignupForm = (props) => {
         <form onSubmit={handleFormSubmit}>
           <TextField
             name="givenName"
+            value={givenName}
             onChange={handleFieldChange}
             label="First Name"
             error={givenNameError}
@@ -85,6 +91,7 @@ const SignupForm = (props) => {
           />
           <TextField
             name="familyName"
+            value={familyName}
             onChange={handleFieldChange}
             label="Last Name"
             error={familyNameError}
@@ -95,6 +102,7 @@ const SignupForm = (props) => {
           />
           <TextField
             name="username"
+            value={username}
             onChange={handleFieldChange}
             label="Username"
             error={usernameError}
@@ -106,6 +114,7 @@ const SignupForm = (props) => {
           />
           <TextField
             name="email"
+            value={email}
             onChange={handleFieldChange}
             label="Email"
             error={emailError}
@@ -118,6 +127,7 @@ const SignupForm = (props) => {
           <TextField
             type="password"
             name="password"
+            value={password}
             onChange={handleFieldChange}
             label="Password"
             error={passwordError}
@@ -152,12 +162,17 @@ SignupForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
+  givenName: PropTypes.string,
   givenNameError: PropTypes.bool.isRequired,
+  familyName: PropTypes.string,
   familyNameError: PropTypes.bool.isRequired,
+  username: PropTypes.string,
   usernameHelperText: PropTypes.string,
   usernameError: PropTypes.bool.isRequired,
+  email: PropTypes.string,
   emailHelperText: PropTypes.string,
   emailError: PropTypes.bool.isRequired,
+  password: PropTypes.string,
   passwordError: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool,
   success: PropTypes.bool,
@@ -165,6 +180,11 @@ SignupForm.propTypes = {
 };
 
 SignupForm.defaultProps = {
+  givenName: '',
+  familyName: '',
+  username: '',
+  email: '',
+  password: '',
   emailHelperText: '',
   usernameHelperText: '',
   isFetching: false,

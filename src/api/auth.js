@@ -41,3 +41,11 @@ export function resetPassword(person) {
     email,
   }));
 }
+
+export function validateField(key, value) {
+  return axios.post('/people/person.json', constructURLSearchParams({
+    action: 'validate',
+    key,
+    value,
+  }));
+}

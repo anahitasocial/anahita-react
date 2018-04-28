@@ -6,6 +6,8 @@ import {
 const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {};
 
 export default function (state = {
+  emailAvailable: false,
+  usernameAvailable: false,
   isFetching: false,
   isAuthenticated: viewer.id && (
     viewer.usertype === PERSON.TYPE.REGISTERED ||
@@ -17,6 +19,18 @@ export default function (state = {
   error: '',
 }, action) {
   switch (action.type) {
+    case AUTH.VALIDATE_USERNAME.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        usernameAvailable: false,
+      };
+    case AUTH.VALIDATE_EMAIL.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        emailAvailable: false,
+      };
     case AUTH.LOGIN.REQUEST:
       return {
         ...state,
@@ -24,6 +38,18 @@ export default function (state = {
         isAuthenticated: false,
         success: false,
         viewer: {},
+      };
+    case AUTH.VALIDATE_USERNAME.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        usernameAvailable: action.isAvailable,
+      };
+    case AUTH.VALIDATE_EMAIL.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        emailAvailable: action.isAvailable,
       };
     case AUTH.LOGIN.SUCCESS:
       return {
@@ -33,6 +59,18 @@ export default function (state = {
         success: true,
         error: '',
         viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
+      };
+    case AUTH.VALIDATE_USERNAME.FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        usernameAvailable: false,
+      };
+    case AUTH.VALIDATE_EMAIL.FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        emailAvailable: false,
       };
     case AUTH.LOGIN.FAILURE:
       return {
