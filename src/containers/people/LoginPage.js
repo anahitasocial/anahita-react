@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
   handleFieldChange(event) {
     const { credentials } = this.state;
     const { name, value } = event.target;
-    credentials[name] = value;
+    credentials[name] = value.trim();
     this.setState({
       credentials,
       [`${name}Error`]: value === '',
@@ -57,6 +57,10 @@ class LoginPage extends React.Component {
     const {
       usernameError,
       passwordError,
+      credentials: {
+        username,
+        password,
+      },
     } = this.state;
 
     const {
@@ -73,7 +77,9 @@ class LoginPage extends React.Component {
         <LoginForm
           handleFormSubmit={this.handleFormSubmit}
           handleFieldChange={this.handleFieldChange}
+          username={username}
           usernameError={usernameError}
+          password={password}
           passwordError={passwordError}
           canSignup={canSignup}
           error={error}

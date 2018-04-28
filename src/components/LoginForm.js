@@ -31,7 +31,9 @@ const LoginForm = (props) => {
     classes,
     handleFieldChange,
     handleFormSubmit,
+    username,
     usernameError,
+    password,
     passwordError,
     canSignup,
     isFetching,
@@ -63,6 +65,7 @@ const LoginForm = (props) => {
           }
           <TextField
             name="username"
+            value={username}
             onChange={handleFieldChange}
             label="Email or username"
             error={usernameError}
@@ -74,6 +77,7 @@ const LoginForm = (props) => {
           <TextField
             type="password"
             name="password"
+            value={password}
             onChange={handleFieldChange}
             label="Password"
             error={passwordError}
@@ -116,7 +120,9 @@ LoginForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
+  username: PropTypes.string,
   usernameError: PropTypes.bool.isRequired,
+  password: PropTypes.string,
   passwordError: PropTypes.bool.isRequired,
   canSignup: PropTypes.bool,
   isFetching: PropTypes.bool,
@@ -124,6 +130,8 @@ LoginForm.propTypes = {
 };
 
 LoginForm.defaultProps = {
+  username: '',
+  password: '',
   canSignup: false,
   isFetching: false,
   error: '',
