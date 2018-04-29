@@ -6,6 +6,11 @@ import PersonAccountForm from '../../components/PersonAccountForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import { readActor } from '../../actions/actor';
 import { editPersonAccount } from '../../actions/person';
+import {
+  validateUsername,
+  validateEmail,
+} from '../../actions/auth';
+import validate from './validate';
 
 const styles = {
   root: {
@@ -19,6 +24,12 @@ class PersonSettingsInfoPage extends React.Component {
 
     this.state = {
       actor: props.actor,
+      usernameError: false,
+      usernameHelperText: '',
+      emailError: false,
+      emailHelperText: '',
+      passwordError: false,
+      passwordHelperText: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -34,6 +45,18 @@ class PersonSettingsInfoPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const {
+      usernameAvailable,
+      emailAvailable,
+    } = nextProps;
+
+    this.setState({
+      usernameError: !usernameAvailable,
+      usernameHelperText: usernameAvailable ? 'Good username!' : 'Username already taken!',
+      emailError: !emailAvailable,
+      emailHelperText: emailAvailable ? 'Good email!' : 'Email already taken!',
+    });
+
     if (nextProps.actor.id) {
       this.setState({
         actor: Object.assign({}, nextProps.actor),
@@ -44,11 +67,35 @@ class PersonSettingsInfoPage extends React.Component {
   handleFieldChange(event) {
     const { actor } = this.state;
     const { name, value } = event.target;
-    actor[name] = value;
-    this.setState({
-      actor,
-      [`has${name.toUpperCase()}`]: Boolean(value),
-    });
+    actor[name] = value.trim();
+    this.setState({ actor });
+
+    switch (name) {
+      case 'username':
+        if (validate.username(actor[name])) {
+          this.props.isUsernameTaken(actor[name]);
+        } else {
+          this.setState({
+            usernameHelperText: 'A valid username is required!',
+            usernameError: true,
+          });
+        }
+        break;
+      case 'email':
+        if (validate.email(actor[name])) {
+          this.props.isEmailTaken(actor[name]);
+        } else {
+          this.setState({
+            emailHelperText: 'A valid email address is required!',
+            emailError: true,
+          });
+        }
+        break;
+      default:
+        this.setState({
+          [`${name}Error`]: value === '',
+        });
+    }
   }
 
   validate() {
@@ -58,18 +105,35 @@ class PersonSettingsInfoPage extends React.Component {
       password,
     } = this.state.actor;
 
+    const usernameError = !validate.username(username);
+    const usernameHelperText = usernameError ? 'A valid username at least 6 characters is required!' : '';
+
+    const emailError = !validate.email(email);
+    const emailHelperText = emailError ? 'A valid email address is required!' : '';
+
+    const passwordError = !validate.password(password);
+    const passwordHelperText = passwordError ? 'A secure password of at least 6 characters is required!' : '';
+
     this.setState({
-      hasUsername: Boolean(username),
-      hasEmail: Boolean(email),
-      hasPassword: Boolean(password),
+      usernameError,
+      usernameHelperText,
+      emailError,
+      emailHelperText,
+      passwordError,
+      passwordHelperText,
     });
 
-    return Boolean(username) && Boolean(email) && Boolean(password);
+    return !(
+      usernameError ||
+      emailError ||
+      passwordError
+    );
   }
 
   saveActor() {
     const { actor } = this.state;
     this.props.editPersonAccount(actor);
+    delete actor.password;
   }
 
   handleFormSubmit(event) {
@@ -82,13 +146,19 @@ class PersonSettingsInfoPage extends React.Component {
   render() {
     const {
       classes,
+      success,
+      error,
+      isFetching,
     } = this.props;
 
     const {
-      hasUsername,
-      hasEmail,
-      hasPassword,
       actor,
+      usernameHelperText,
+      usernameError,
+      emailHelperText,
+      emailError,
+      passwordError,
+      passwordHelperText,
     } = this.state;
 
     return (
@@ -99,14 +169,21 @@ class PersonSettingsInfoPage extends React.Component {
             actor={actor}
           >
             <PersonAccountForm
-              hasUsername={hasUsername}
-              hasEmail={hasEmail}
-              hasPassword={hasPassword}
+              usernameError={usernameError}
+              usernameHelperText={usernameHelperText}
+              emailError={emailError}
+              emailHelperText={emailHelperText}
+              passwordError={passwordError}
+              passwordHelperText={passwordHelperText}
               username={actor.username}
               email={actor.email}
+              password={actor.password}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
               dismissPath={`/people/${actor.id}/settings/`}
+              isFetching={isFetching}
+              success={success}
+              error={error}
             />
           </ActorSettingCard>
         }
@@ -119,11 +196,25 @@ PersonSettingsInfoPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   editPersonAccount: PropTypes.func.isRequired,
+  isUsernameTaken: PropTypes.func.isRequired,
+  isEmailTaken: PropTypes.func.isRequired,
+  usernameAvailable: PropTypes.bool.isRequired,
+  emailAvailable: PropTypes.bool.isRequired,
   actor: PropTypes.object,
+  success: PropTypes.bool,
+  isFetching: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 PersonSettingsInfoPage.defaultProps = {
-  actor: {},
+  actor: {
+    email: '',
+    username: '',
+    password: '',
+  },
+  isFetching: false,
+  success: false,
+  error: '',
 };
 
 const mapStateToProps = (state) => {
@@ -131,17 +222,23 @@ const mapStateToProps = (state) => {
     actor,
     success,
     error,
+    isFetching,
   } = state.actorReducer;
 
   const {
     viewer,
+    usernameAvailable,
+    emailAvailable,
   } = state.authReducer;
 
   return {
     actor,
     error,
     success,
+    isFetching,
     viewer,
+    usernameAvailable,
+    emailAvailable,
   };
 };
 
@@ -152,6 +249,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     editPersonAccount: (person) => {
       dispatch(editPersonAccount(person));
+    },
+    isUsernameTaken: (username) => {
+      dispatch(validateUsername(username));
+    },
+    isEmailTaken: (email) => {
+      dispatch(validateEmail(email));
     },
   };
 };

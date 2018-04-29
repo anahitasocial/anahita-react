@@ -25,11 +25,16 @@ const ActorInfoForm = (props) => {
     classes,
     handleFieldChange,
     handleFormSubmit,
-    hasUsername,
-    hasEmail,
-    hasPassword,
     username,
+    usernameHelperText,
+    usernameError,
     email,
+    emailHelperText,
+    emailError,
+    password,
+    passwordError,
+    passwordHelperText,
+    isFetching,
     error,
     dismissPath,
   } = props;
@@ -51,35 +56,37 @@ const ActorInfoForm = (props) => {
             </Typography>
           }
           <TextField
-            name="givenName"
-            value={username || ''}
+            name="username"
+            value={username}
             onChange={handleFieldChange}
             label="Username"
-            error={!hasUsername}
-            helperText={!hasUsername ? 'Username is required!' : ''}
-            margin="normal"
+            error={usernameError}
+            helperText={usernameHelperText}
             autoFocus
             fullWidth
+            margin="normal"
           />
           <TextField
             name="email"
-            value={email || ''}
+            value={email}
             onChange={handleFieldChange}
             label="Email"
-            error={!hasEmail}
-            helperText={!hasEmail ? 'Email is required!' : ''}
-            margin="normal"
+            error={emailError}
+            helperText={emailHelperText}
+            autoFocus
             fullWidth
+            margin="normal"
           />
           <TextField
-            name="password"
             type="password"
+            name="password"
+            value={password}
             onChange={handleFieldChange}
             label="Password"
-            error={!hasPassword}
-            helperText={!hasPassword ? 'Password is required!' : ''}
-            margin="normal"
+            error={passwordError}
+            helperText={passwordHelperText}
             fullWidth
+            margin="normal"
           />
           {dismissPath &&
           <Button
@@ -91,10 +98,11 @@ const ActorInfoForm = (props) => {
           </Button>
           }
           <Button
-            type="submit"
             variant="raised"
+            type="submit"
             color="primary"
             className={classes.button}
+            disabled={isFetching}
           >
             {'Save'}
           </Button>
@@ -108,19 +116,28 @@ ActorInfoForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
-  hasEmail: PropTypes.bool,
-  hasUsername: PropTypes.bool,
-  hasPassword: PropTypes.bool,
-  email: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
+  username: PropTypes.string,
+  usernameHelperText: PropTypes.string,
+  usernameError: PropTypes.bool.isRequired,
+  email: PropTypes.string,
+  emailHelperText: PropTypes.string,
+  emailError: PropTypes.bool.isRequired,
+  password: PropTypes.string,
+  passwordHelperText: PropTypes.string,
+  passwordError: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool,
   error: PropTypes.string,
   dismissPath: PropTypes.string,
 };
 
 ActorInfoForm.defaultProps = {
-  hasEmail: true,
-  hasUsername: true,
-  hasPassword: true,
+  username: '',
+  usernameHelperText: '',
+  email: '',
+  emailHelperText: '',
+  password: '',
+  passwordHelperText: '',
+  isFetching: false,
   error: '',
   dismissPath: '',
 };
