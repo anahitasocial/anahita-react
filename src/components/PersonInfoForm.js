@@ -33,11 +33,15 @@ const PersonInfoForm = (props) => {
     classes,
     handleFieldChange,
     handleFormSubmit,
-    hasGivenName,
-    hasFamilyName,
     givenName,
+    givenNameError,
+    givenNameHelperText,
     familyName,
+    familyNameError,
+    familyNameHelperText,
     body,
+    bodyError,
+    bodyHelperText,
     gender,
     usertype,
     isSuperAdmin,
@@ -63,30 +67,32 @@ const PersonInfoForm = (props) => {
           }
           <TextField
             name="givenName"
-            value={givenName || ''}
+            value={givenName}
             onChange={handleFieldChange}
             label="First Name"
-            error={!hasGivenName}
-            helperText={!hasGivenName ? 'First name is required!' : ''}
-            margin="normal"
+            error={givenNameError}
+            helperText={givenNameHelperText}
             autoFocus
             fullWidth
+            margin="normal"
           />
           <TextField
             name="familyName"
-            value={familyName || ''}
+            value={familyName}
             onChange={handleFieldChange}
             label="Last Name"
-            error={!hasFamilyName}
-            helperText={!hasFamilyName ? 'Last name is required!' : ''}
-            margin="normal"
+            error={familyNameError}
+            helperText={familyNameHelperText}
             fullWidth
+            margin="normal"
           />
           <TextField
             name="body"
-            value={body || ''}
+            value={body}
             onChange={handleFieldChange}
             label="Description"
+            error={bodyError}
+            helperText={bodyHelperText}
             margin="normal"
             fullWidth
             multiline
@@ -102,7 +108,6 @@ const PersonInfoForm = (props) => {
               onChange={handleFieldChange}
               input={<Input id="person-usertype" />}
             >
-              <option value="" />
               <option value={PERSON.TYPE.REGISTERED}>
                 {'Registered'}
               </option>
@@ -144,24 +149,28 @@ PersonInfoForm.propTypes = {
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
   body: PropTypes.string,
+  bodyError: PropTypes.bool.isRequired,
+  bodyHelperText: PropTypes.string,
   givenName: PropTypes.string,
+  givenNameError: PropTypes.bool.isRequired,
+  givenNameHelperText: PropTypes.string,
   familyName: PropTypes.string,
+  familyNameError: PropTypes.bool.isRequired,
+  familyNameHelperText: PropTypes.string,
   gender: PropTypes.string,
-  usertype: PropTypes.string,
+  usertype: PropTypes.string.isRequired,
   isSuperAdmin: PropTypes.bool.isRequired,
-  hasGivenName: PropTypes.bool,
-  hasFamilyName: PropTypes.bool,
   error: PropTypes.string,
   dismissPath: PropTypes.string,
 };
 
 PersonInfoForm.defaultProps = {
-  hasGivenName: true,
-  hasFamilyName: true,
   givenName: '',
+  givenNameHelperText: '',
   familyName: '',
+  familyNameHelperText: '',
   body: '',
-  usertype: PERSON.TYPE.REGISTERED,
+  bodyHelperText: '',
   gender: '',
   error: '',
   dismissPath: '',

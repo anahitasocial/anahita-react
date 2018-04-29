@@ -19,9 +19,10 @@ class PersonSettingsInfoPage extends React.Component {
     super(props);
 
     this.state = {
-      hasGivenName: true,
-      hasFamilyName: true,
       actor: props.actor,
+      givenNameError: false,
+      familyNameError: false,
+      bodyError: false,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -50,19 +51,42 @@ class PersonSettingsInfoPage extends React.Component {
     actor[name] = value;
     this.setState({
       actor,
-      [`has${name.toUpperCase()}`]: Boolean(value),
+      [`${name}Error`]: value === '',
+      [`${name}HelperText`]: value === '' ? actor[[`${name}HelperText`]] : '',
     });
   }
 
   validate() {
-    const { givenName, familyName } = this.state.actor;
+    const {
+      givenName,
+      familyName,
+      body,
+    } = this.state.actor;
+
+    const givenNameError = givenName.length < 3;
+    const givenNameHelperText = givenNameError ? 'First name of at least 3 characters is required!' : '';
+
+    const familyNameError = familyName.length < 3;
+    const familyNameHelperText = familyNameError ? 'Last name of at least 3 characters is required!' : '';
+
+    const bodyError = body === '';
+    const bodyHelperText = bodyError ? 'Last name of at least 3 characters is required!' : '';
+
 
     this.setState({
-      hasGivenName: Boolean(givenName),
-      hasFamilyName: Boolean(familyName),
+      givenNameError,
+      givenNameHelperText,
+      familyNameError,
+      familyNameHelperText,
+      bodyError,
+      bodyHelperText,
     });
 
-    return Boolean(givenName) && Boolean(familyName);
+    return !(
+      givenNameError ||
+      familyNameError ||
+      bodyError
+    );
   }
 
   saveActor() {
@@ -78,12 +102,22 @@ class PersonSettingsInfoPage extends React.Component {
   }
 
   render() {
-    const { classes, viewer } = this.props;
     const {
-      hasGivenName,
-      hasFamilyName,
-      hasGender,
+      classes,
+      viewer,
+      error,
+      isFetching,
+    } = this.props;
+
+    const {
       actor,
+      givenNameError,
+      givenNameHelperText,
+      familyNameError,
+      familyNameHelperText,
+      bodyError,
+      bodyHelperText,
+      genderError,
     } = this.state;
 
     return (
@@ -95,9 +129,13 @@ class PersonSettingsInfoPage extends React.Component {
           >
             <PersonInfoForm
               isSuperAdmin={viewer.usertype === PERSON.TYPE.SUPER_ADMIN}
-              hasGivenName={hasGivenName}
-              hasFamilyName={hasFamilyName}
-              hasGender={hasGender}
+              givenNameError={givenNameError}
+              givenNameHelperText={givenNameHelperText}
+              familyNameError={familyNameError}
+              familyNameHelperText={familyNameHelperText}
+              bodyError={bodyError}
+              bodyHelperText={bodyHelperText}
+              genderError={genderError}
               givenName={actor.givenName}
               familyName={actor.familyName}
               body={actor.body}
@@ -105,6 +143,8 @@ class PersonSettingsInfoPage extends React.Component {
               usertype={actor.usertype}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
+              isFetching={isFetching}
+              error={error}
               dismissPath={`/people/${actor.id}/settings/`}
             />
           </ActorSettingCard>
@@ -121,11 +161,20 @@ PersonSettingsInfoPage.propTypes = {
   actor: PropTypes.object,
   viewer: PropTypes.object.isRequired,
   success: PropTypes.bool,
+  isFetching: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 PersonSettingsInfoPage.defaultProps = {
-  actor: {},
+  actor: {
+    givenName: '',
+    familyName: '',
+    gender: '',
+    usertype: PERSON.TYPE.REGISTERED,
+  },
   success: false,
+  isFetching: false,
+  error: '',
 };
 
 const mapStateToProps = (state) => {
