@@ -30,6 +30,7 @@ class SignupPage extends React.Component {
       emailError: false,
       emailHelperText: '',
       passwordError: false,
+      passwordHelperText: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -77,11 +78,6 @@ class SignupPage extends React.Component {
           });
         }
         break;
-      case 'password':
-        this.setState({
-          passwordError: !validate.password(person[name]),
-        });
-        break;
       default:
         this.setState({
           [`${name}Error`]: value === '',
@@ -99,24 +95,31 @@ class SignupPage extends React.Component {
     } = this.state.person;
 
     const givenNameError = givenName.length < 3;
+    const givenNameHelperText = givenNameError ? 'First name of at least 3 characters is required!' : '';
+
     const familyNameError = familyName.length < 3;
+    const familyNameHelperText = familyNameError ? 'Last name of at least 3 characters is required!' : '';
 
     const usernameError = !validate.username(username);
-    const usernameHelperText = usernameError ? 'A valid username is required!' : '';
+    const usernameHelperText = usernameError ? 'A valid username at least 6 characters is required!' : '';
 
     const emailError = !validate.email(email);
     const emailHelperText = emailError ? 'A valid email address is required!' : '';
 
     const passwordError = !validate.password(password);
+    const passwordHelperText = passwordError ? 'A secure password of at least 6 characters is required!' : '';
 
     this.setState({
       givenNameError,
+      givenNameHelperText,
       familyNameError,
+      familyNameHelperText,
       usernameError,
       usernameHelperText,
       emailError,
       emailHelperText,
       passwordError,
+      passwordHelperText,
     });
 
     return !(
@@ -152,19 +155,24 @@ class SignupPage extends React.Component {
     const {
       person,
       givenNameError,
+      givenNameHelperText,
       familyNameError,
+      familyNameHelperText,
       usernameHelperText,
       usernameError,
       emailHelperText,
       emailError,
       passwordError,
+      passwordHelperText,
     } = this.state;
 
     return (
       <div className={classes.root}>
         <SignupForm
           givenNameError={givenNameError}
+          givenNameHelperText={givenNameHelperText}
           familyNameError={familyNameError}
+          familyNameHelperText={familyNameHelperText}
           usernameError={usernameError}
           usernameHelperText={usernameHelperText}
           emailError={emailError}
@@ -175,6 +183,7 @@ class SignupPage extends React.Component {
           username={person.username}
           email={person.email}
           password={person.password}
+          passwordHelperText={passwordHelperText}
           handleFieldChange={this.handleFieldChange}
           handleFormSubmit={this.handleFormSubmit}
           isFetching={isFetching}
