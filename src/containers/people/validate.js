@@ -9,7 +9,7 @@ function email(value) {
 }
 
 function password(value) {
-  return value.length > 5;
+  return value && value.length > 5;
 }
 
 export default {

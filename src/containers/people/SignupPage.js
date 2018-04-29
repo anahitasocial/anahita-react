@@ -177,13 +177,13 @@ class SignupPage extends React.Component {
           usernameHelperText={usernameHelperText}
           emailError={emailError}
           emailHelperText={emailHelperText}
+          passwordHelperText={passwordHelperText}
           passwordError={passwordError}
           givenName={person.givenName}
           familyName={person.familyName}
           username={person.username}
           email={person.email}
           password={person.password}
-          passwordHelperText={passwordHelperText}
           handleFieldChange={this.handleFieldChange}
           handleFormSubmit={this.handleFormSubmit}
           isFetching={isFetching}
