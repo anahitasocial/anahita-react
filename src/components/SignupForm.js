@@ -6,6 +6,9 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
+import TextFieldUsername from './textfields/TextFieldUsername';
+import TextFieldEmail from './textfields/TextFieldEmail';
+
 
 const styles = theme => ({
   root: {
@@ -37,13 +40,18 @@ const SignupForm = (props) => {
     familyName,
     familyNameError,
     familyNameHelperText,
+    username,
+    usernameError,
+    usernameHelperText,
+    email,
+    emailError,
+    emailHelperText,
     password,
     passwordError,
     passwordHelperText,
     isFetching,
     success,
     error,
-    children,
   } = props;
 
   return (
@@ -98,7 +106,20 @@ const SignupForm = (props) => {
             margin="normal"
             disabled={success}
           />
-          {children}
+          <TextFieldUsername
+            value={username}
+            onChange={handleFieldChange}
+            error={usernameError}
+            helperText={usernameHelperText}
+            disabled={success}
+          />
+          <TextFieldEmail
+            value={email}
+            onChange={handleFieldChange}
+            disabled={success}
+            error={emailError}
+            helperText={emailHelperText}
+          />
           <TextField
             type="password"
             name="password"
@@ -143,13 +164,18 @@ SignupForm.propTypes = {
   familyName: PropTypes.string,
   familyNameError: PropTypes.bool.isRequired,
   familyNameHelperText: PropTypes.string,
+  username: PropTypes.string,
+  usernameError: PropTypes.bool.isRequired,
+  usernameHelperText: PropTypes.string,
+  email: PropTypes.string,
+  emailError: PropTypes.bool.isRequired,
+  emailHelperText: PropTypes.string,
   password: PropTypes.string,
-  passwordHelperText: PropTypes.string,
   passwordError: PropTypes.bool.isRequired,
+  passwordHelperText: PropTypes.string,
   isFetching: PropTypes.bool,
   success: PropTypes.bool,
   error: PropTypes.string,
-  children: PropTypes.node.isRequired,
 };
 
 SignupForm.defaultProps = {
@@ -157,6 +183,10 @@ SignupForm.defaultProps = {
   givenNameHelperText: '',
   familyName: '',
   familyNameHelperText: '',
+  username: '',
+  usernameHelperText: '',
+  email: '',
+  emailHelperText: '',
   password: '',
   passwordHelperText: '',
   isFetching: false,

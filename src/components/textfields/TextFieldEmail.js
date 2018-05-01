@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import { validateEmail } from '../../actions/auth';
 import validate from '../../containers/people/validate';
 
-class TextfieldEmail extends React.Component {
+class TextFieldEmail extends React.Component {
   constructor(props) {
     super(props);
 
@@ -63,7 +63,7 @@ class TextfieldEmail extends React.Component {
   }
 }
 
-TextfieldEmail.propTypes = {
+TextFieldEmail.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
@@ -73,7 +73,7 @@ TextfieldEmail.propTypes = {
   helperText: PropTypes.string,
 };
 
-TextfieldEmail.defaultProps = {
+TextFieldEmail.defaultProps = {
   value: '',
   disabled: false,
   emailAvailable: false,
@@ -102,4 +102,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TextfieldEmail);
+)(TextFieldEmail);

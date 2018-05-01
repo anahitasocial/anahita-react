@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import { validateUsername } from '../../actions/auth';
 import validate from '../../containers/people/validate';
 
-class TextfieldUsername extends React.Component {
+class TextFieldUsername extends React.Component {
   constructor(props) {
     super(props);
 
@@ -63,7 +63,7 @@ class TextfieldUsername extends React.Component {
   }
 }
 
-TextfieldUsername.propTypes = {
+TextFieldUsername.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
@@ -73,7 +73,7 @@ TextfieldUsername.propTypes = {
   helperText: PropTypes.string,
 };
 
-TextfieldUsername.defaultProps = {
+TextFieldUsername.defaultProps = {
   value: '',
   disabled: false,
   usernameAvailable: false,
@@ -102,4 +102,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TextfieldUsername);
+)(TextFieldUsername);

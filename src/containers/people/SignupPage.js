@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import SignupForm from '../../components/SignupForm';
-import TextFieldUsername from '../../components/textfields/TextfieldUsername';
-import TextFieldEmail from '../../components/textfields/TextFieldEmail';
 import { signup } from '../../actions/auth';
 import validate from './validate';
 
@@ -165,30 +163,21 @@ class SignupPage extends React.Component {
           familyName={person.familyName}
           familyNameError={familyNameError}
           familyNameHelperText={familyNameHelperText}
-          passwordHelperText={passwordHelperText}
-          passwordError={passwordError}
+          username={person.username}
+          usernameError={usernameError}
+          usernameHelperText={usernameHelperText}
+          email={person.email}
+          emailError={emailError}
+          emailHelperText={emailHelperText}
           password={person.password}
+          passwordError={passwordError}
+          passwordHelperText={passwordHelperText}
           handleFieldChange={this.handleFieldChange}
           handleFormSubmit={this.handleFormSubmit}
           isFetching={isFetching}
           success={success}
           error={error}
-        >
-          <TextFieldUsername
-            value={person.username}
-            onChange={this.handleFieldChange}
-            disabled={success}
-            error={usernameError}
-            helperText={usernameHelperText}
-          />
-          <TextFieldEmail
-            value={person.email}
-            onChange={this.handleFieldChange}
-            disabled={success}
-            error={emailError}
-            helperText={emailHelperText}
-          />
-        </SignupForm>
+        />
         {isAuthenticated &&
           <Redirect push to="/dashboard/" />
         }
