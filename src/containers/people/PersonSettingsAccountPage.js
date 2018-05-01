@@ -67,35 +67,54 @@ class PersonSettingsInfoPage extends React.Component {
   handleFieldChange(event) {
     const { actor } = this.state;
     const { name, value } = event.target;
-    actor[name] = value.trim();
+
+    if (name === 'username' || name === 'email') {
+      this.validateField(name, value.toLowerCase().trim());
+      actor[name] = value.toLowerCase().trim();
+    } else {
+      this.validateField(name, value.trim());
+      actor[name] = value.trim();
+    }
+
     this.setState({ actor });
+  }
+
+  validateField(name, value) {
+    const fieldError = {
+      status: false,
+      helperText: '',
+    };
 
     switch (name) {
       case 'username':
-        if (validate.username(actor[name])) {
-          this.props.isUsernameTaken(actor[name]);
-        } else {
-          this.setState({
-            usernameHelperText: 'A valid username is required!',
-            usernameError: true,
-          });
+        if (!validate.username(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'A username of at least 6 characters is required!';
         }
         break;
       case 'email':
-        if (validate.email(actor[name])) {
-          this.props.isEmailTaken(actor[name]);
-        } else {
-          this.setState({
-            emailHelperText: 'A valid email address is required!',
-            emailError: true,
-          });
+        if (!validate.email(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'A valid email address is required!';
+        }
+        break;
+      case 'password':
+        if (!validate.password(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'A secure password is reuqired!';
         }
         break;
       default:
-        this.setState({
-          [`${name}Error`]: value === '',
-        });
+        fieldError.status = false;
+        fieldError.helperText = '';
     }
+
+    this.setState({
+      [`${name}Error`]: fieldError.status,
+      [`${name}HelperText`]: fieldError.helperText,
+    });
+
+    return fieldError.status;
   }
 
   validate() {
@@ -105,23 +124,9 @@ class PersonSettingsInfoPage extends React.Component {
       password,
     } = this.state.actor;
 
-    const usernameError = !validate.username(username);
-    const usernameHelperText = usernameError ? 'A valid username at least 6 characters is required!' : '';
-
-    const emailError = !validate.email(email);
-    const emailHelperText = emailError ? 'A valid email address is required!' : '';
-
-    const passwordError = !validate.password(password);
-    const passwordHelperText = passwordError ? 'A secure password of at least 6 characters is required!' : '';
-
-    this.setState({
-      usernameError,
-      usernameHelperText,
-      emailError,
-      emailHelperText,
-      passwordError,
-      passwordHelperText,
-    });
+    const usernameError = this.validateField('username', username);
+    const emailError = this.validateField('email', email);
+    const passwordError = this.validateField('password', password);
 
     return !(
       usernameError ||
@@ -196,8 +201,6 @@ PersonSettingsInfoPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   editPersonAccount: PropTypes.func.isRequired,
-  isUsernameTaken: PropTypes.func.isRequired,
-  isEmailTaken: PropTypes.func.isRequired,
   usernameAvailable: PropTypes.bool.isRequired,
   emailAvailable: PropTypes.bool.isRequired,
   actor: PropTypes.object,

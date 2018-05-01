@@ -6,6 +6,8 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
+import TextFieldUsername from './textfields/TextFieldUsername';
+import TextFieldEmail from './textfields/TextFieldEmail';
 
 const styles = theme => ({
   root: {
@@ -14,9 +16,13 @@ const styles = theme => ({
   formPaper: {
     padding: '20px',
   },
+  formControl: {
+    marginTop: theme.spacing.unit * 3,
+    display: 'block',
+  },
   button: {
-    marginTop: 10,
-    marginRight: 10,
+    marginTop: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit,
   },
 });
 
@@ -55,27 +61,17 @@ const ActorInfoForm = (props) => {
                 {error}
             </Typography>
           }
-          <TextField
-            name="username"
+          <TextFieldUsername
             value={username}
             onChange={handleFieldChange}
-            label="Username"
             error={usernameError}
             helperText={usernameHelperText}
-            autoFocus
-            fullWidth
-            margin="normal"
           />
-          <TextField
-            name="email"
+          <TextFieldEmail
             value={email}
             onChange={handleFieldChange}
-            label="Email"
             error={emailError}
             helperText={emailHelperText}
-            autoFocus
-            fullWidth
-            margin="normal"
           />
           <TextField
             type="password"
