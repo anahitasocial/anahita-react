@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import withStyles from 'material-ui/styles/withStyles';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl } from 'material-ui/Form';
+import {
+  FormLabel,
+  FormControl,
+  FormControlLabel,
+} from 'material-ui/Form';
+import Radio, { RadioGroup } from 'material-ui/Radio';
 import TextField from 'material-ui/TextField';
-import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
 import { Person as PERSON } from '../constants';
@@ -44,9 +47,11 @@ const PersonInfoForm = (props) => {
     bodyHelperText,
     gender,
     usertype,
-    isSuperAdmin,
     error,
     dismissPath,
+    isFetching,
+    canChangeUsertype,
+    isSuperAdmin,
   } = props;
 
   return (
@@ -90,7 +95,7 @@ const PersonInfoForm = (props) => {
             name="body"
             value={body}
             onChange={handleFieldChange}
-            label="Description"
+            label="Bio"
             error={bodyError}
             helperText={bodyHelperText}
             margin="normal"
@@ -98,29 +103,65 @@ const PersonInfoForm = (props) => {
             multiline
           />
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="person-usertype">
+            <FormLabel component="legend">
+              {'What pronoun do you use?'}
+            </FormLabel>
+            <RadioGroup
+              aria-label="gender"
+              name="gender"
+              className={classes.group}
+              value={gender}
+              onChange={handleFieldChange}
+            >
+              <FormControlLabel
+                value={PERSON.GENDER.FEMALE}
+                control={<Radio />}
+                label="Female"
+              />
+              <FormControlLabel
+                value={PERSON.GENDER.MALE}
+                control={<Radio />}
+                label="Male"
+              />
+              <FormControlLabel
+                value={PERSON.GENDER.NEUTRAL}
+                control={<Radio />}
+                label="Neutral"
+              />
+            </RadioGroup>
+          </FormControl>
+          {canChangeUsertype &&
+          <FormControl className={classes.formControl}>
+            <FormLabel component="legend">
               {'User Type'}
-            </InputLabel>
-            <Select
-              native
+            </FormLabel>
+            <RadioGroup
+              aria-label="usertype"
               name="usertype"
+              className={classes.group}
               value={usertype}
               onChange={handleFieldChange}
-              input={<Input id="person-usertype" />}
             >
-              <option value={PERSON.TYPE.REGISTERED}>
-                {'Registered'}
-              </option>
-              <option value={PERSON.TYPE.ADMIN}>
-                {'Administrator'}
-              </option>
+              <FormControlLabel
+                value={PERSON.TYPE.REGISTERED}
+                control={<Radio />}
+                label="Registered"
+              />
+              <FormControlLabel
+                value={PERSON.TYPE.ADMIN}
+                control={<Radio />}
+                label="Administrator"
+              />
               {isSuperAdmin &&
-                <option value={PERSON.TYPE.SUPER_ADMIN}>
-                  {'Super Administrator'}
-                </option>
+              <FormControlLabel
+                value={PERSON.TYPE.SUPER_ADMIN}
+                control={<Radio />}
+                label="Super Administrator"
+              />
               }
-            </Select>
+            </RadioGroup>
           </FormControl>
+          }
           {dismissPath &&
           <Button
             className={classes.button}
@@ -135,6 +176,7 @@ const PersonInfoForm = (props) => {
             variant="raised"
             color="primary"
             className={classes.button}
+            disabled={isFetching}
           >
             {'Save'}
           </Button>
@@ -148,32 +190,45 @@ PersonInfoForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
-  body: PropTypes.string,
-  bodyError: PropTypes.bool.isRequired,
-  bodyHelperText: PropTypes.string,
   givenName: PropTypes.string,
-  givenNameError: PropTypes.bool.isRequired,
+  givenNameError: PropTypes.bool,
   givenNameHelperText: PropTypes.string,
   familyName: PropTypes.string,
-  familyNameError: PropTypes.bool.isRequired,
+  familyNameError: PropTypes.bool,
   familyNameHelperText: PropTypes.string,
-  gender: PropTypes.string,
-  usertype: PropTypes.string.isRequired,
+  body: PropTypes.string,
+  bodyError: PropTypes.bool,
+  bodyHelperText: PropTypes.string,
+  gender: PropTypes.oneOf([
+    PERSON.GENDER.FEMALE,
+    PERSON.GENDER.MALE,
+    PERSON.GENDER.NEUTRAL,
+  ]).isRequired,
+  usertype: PropTypes.oneOf([
+    PERSON.TYPE.REGISTERED,
+    PERSON.TYPE.ADMIN,
+    PERSON.TYPE.SUPER_ADMIN,
+  ]).isRequired,
+  canChangeUsertype: PropTypes.bool.isRequired,
   isSuperAdmin: PropTypes.bool.isRequired,
   error: PropTypes.string,
   dismissPath: PropTypes.string,
+  isFetching: PropTypes.bool,
 };
 
 PersonInfoForm.defaultProps = {
   givenName: '',
+  givenNameError: false,
   givenNameHelperText: '',
   familyName: '',
+  familyNameError: false,
   familyNameHelperText: '',
   body: '',
+  bodyError: false,
   bodyHelperText: '',
-  gender: '',
   error: '',
   dismissPath: '',
+  isFetching: false,
 };
 
 export default withStyles(styles)(PersonInfoForm);

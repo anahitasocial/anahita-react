@@ -14,4 +14,9 @@ export default {
     ADMIN: 'administrator',
     SUPER_ADMIN: 'super-administrator',
   },
+  GENDER: {
+    FEMALE: 'female',
+    MALE: 'male',
+    NEUTRAL: 'neutral',
+  },
 };

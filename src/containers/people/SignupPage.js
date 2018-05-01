@@ -22,7 +22,9 @@ class SignupPage extends React.Component {
     this.state = {
       person: props.person,
       givenNameError: false,
+      givenNameHelperText: '',
       familyNameError: false,
+      familyNameHelperText: '',
       usernameError: false,
       usernameHelperText: '',
       emailError: false,
@@ -83,7 +85,7 @@ class SignupPage extends React.Component {
         }
         break;
       default:
-        fieldError.status = true;
+        fieldError.status = false;
         fieldError.helperText = '';
     }
 

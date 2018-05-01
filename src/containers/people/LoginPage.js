@@ -54,7 +54,7 @@ class LoginPage extends React.Component {
         }
         break;
       default:
-        fieldError.status = true;
+        fieldError.status = false;
         fieldError.helperText = '';
     }
 

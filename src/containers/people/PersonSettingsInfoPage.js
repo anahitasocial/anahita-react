@@ -14,6 +14,8 @@ const styles = {
   },
 };
 
+const BODY_CHARACTER_LIMIT = 350;
+
 class PersonSettingsInfoPage extends React.Component {
   constructor(props) {
     super(props);
@@ -21,8 +23,11 @@ class PersonSettingsInfoPage extends React.Component {
     this.state = {
       actor: props.actor,
       givenNameError: false,
+      givenNameHelperText: '',
       familyNameError: false,
+      familyNameHelperText: '',
       bodyError: false,
+      bodyHelperText: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -48,12 +53,50 @@ class PersonSettingsInfoPage extends React.Component {
   handleFieldChange(event) {
     const { actor } = this.state;
     const { name, value } = event.target;
+
+    this.validateField(name, value.trim());
     actor[name] = value;
+
+    this.setState({ actor });
+  }
+
+  validateField(name, value) {
+    const fieldError = {
+      status: false,
+      helperText: '',
+    };
+
+    switch (name) {
+      case 'givenName':
+      case 'familyName':
+        if (value.length < 3) {
+          fieldError.status = true;
+          fieldError.helperText = 'At least 3 characters are required!';
+        }
+        break;
+      case 'body':
+        if (value.length > BODY_CHARACTER_LIMIT) {
+          fieldError.status = true;
+          fieldError.helperText = `You have exceeded the ${BODY_CHARACTER_LIMIT} character limit!`;
+        }
+        break;
+      case 'gender':
+        if (![PERSON.GENDER.FEMALE, PERSON.GENDER.MALE, PERSON.GENDER.NEUTRAL].includes(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'You must select a pronoun!';
+        }
+        break;
+      default:
+        fieldError.status = false;
+        fieldError.helperText = '';
+    }
+
     this.setState({
-      actor,
-      [`${name}Error`]: value === '',
-      [`${name}HelperText`]: value === '' ? actor[[`${name}HelperText`]] : '',
+      [`${name}Error`]: fieldError.status,
+      [`${name}HelperText`]: fieldError.helperText,
     });
+
+    return fieldError.status;
   }
 
   validate() {
@@ -63,24 +106,9 @@ class PersonSettingsInfoPage extends React.Component {
       body,
     } = this.state.actor;
 
-    const givenNameError = givenName.length < 3;
-    const givenNameHelperText = givenNameError ? 'First name of at least 3 characters is required!' : '';
-
-    const familyNameError = familyName.length < 3;
-    const familyNameHelperText = familyNameError ? 'Last name of at least 3 characters is required!' : '';
-
-    const bodyError = body === '';
-    const bodyHelperText = bodyError ? 'Last name of at least 3 characters is required!' : '';
-
-
-    this.setState({
-      givenNameError,
-      givenNameHelperText,
-      familyNameError,
-      familyNameHelperText,
-      bodyError,
-      bodyHelperText,
-    });
+    const givenNameError = this.validateField('givenName', givenName);
+    const familyNameError = this.validateField('familyName', familyName);
+    const bodyError = this.validateField('body', body);
 
     return !(
       givenNameError ||
@@ -101,6 +129,18 @@ class PersonSettingsInfoPage extends React.Component {
     }
   }
 
+  canChangeUsertype() {
+    const { actor, viewer } = this.props;
+
+    if (viewer.id !== actor.id) {
+      if ([PERSON.TYPE.ADMIN, PERSON.TYPE.SUPER_ADMIN].includes(viewer.usertype)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   render() {
     const {
       classes,
@@ -117,7 +157,6 @@ class PersonSettingsInfoPage extends React.Component {
       familyNameHelperText,
       bodyError,
       bodyHelperText,
-      genderError,
     } = this.state;
 
     return (
@@ -128,22 +167,24 @@ class PersonSettingsInfoPage extends React.Component {
             actor={actor}
           >
             <PersonInfoForm
-              isSuperAdmin={viewer.usertype === PERSON.TYPE.SUPER_ADMIN}
+              givenName={actor.givenName}
               givenNameError={givenNameError}
               givenNameHelperText={givenNameHelperText}
+              familyName={actor.familyName}
               familyNameError={familyNameError}
               familyNameHelperText={familyNameHelperText}
+              body={actor.body}
               bodyError={bodyError}
               bodyHelperText={bodyHelperText}
-              genderError={genderError}
-              givenName={actor.givenName}
-              familyName={actor.familyName}
-              body={actor.body}
               gender={actor.gender}
               usertype={actor.usertype}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
               isFetching={isFetching}
+              canChangeUsertype={this.canChangeUsertype()}
+              isSuperAdmin={
+                viewer.usertype === PERSON.TYPE.SUPER_ADMIN
+              }
               error={error}
               dismissPath={`/people/${actor.id}/settings/`}
             />
@@ -169,7 +210,8 @@ PersonSettingsInfoPage.defaultProps = {
   actor: {
     givenName: '',
     familyName: '',
-    gender: '',
+    body: '',
+    gender: PERSON.GENDER.NEUTRAL,
     usertype: PERSON.TYPE.REGISTERED,
   },
   success: false,
