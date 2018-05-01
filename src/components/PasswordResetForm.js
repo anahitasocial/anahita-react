@@ -31,7 +31,9 @@ const PasswordResetForm = (props) => {
     classes,
     handleFieldChange,
     handleFormSubmit,
-    hasEmail,
+    email,
+    emailError,
+    emailHelperText,
     isFetching,
     success,
     error,
@@ -70,8 +72,8 @@ const PasswordResetForm = (props) => {
             name="email"
             onChange={handleFieldChange}
             label="What is your email?"
-            error={!hasEmail}
-            helperText={!hasEmail ? 'Your email is required!' : ''}
+            error={emailError}
+            helperText={emailHelperText}
             autoFocus
             fullWidth
             margin="normal"
@@ -85,6 +87,13 @@ const PasswordResetForm = (props) => {
           >
             {'Reset Password'}
           </Button>
+          <Button
+            component={Link}
+            to="/login/"
+            className={classes.button}
+          >
+            {'Login'}
+          </Button>
         </form>
       </Paper>
     </div>
@@ -95,14 +104,17 @@ PasswordResetForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
-  hasEmail: PropTypes.bool,
+  email: PropTypes.string,
+  emailError: PropTypes.bool,
+  emailHelperText: PropTypes.string,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
 };
 
 PasswordResetForm.defaultProps = {
-  hasEmail: true,
+  emailError: false,
+  emailHelperText: '',
   isFetching: false,
   success: false,
   error: '',

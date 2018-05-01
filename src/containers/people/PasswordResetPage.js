@@ -3,38 +3,57 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PasswordResetForm from '../../components/PasswordResetForm';
 import { resetPassword } from '../../actions/auth';
+import validate from './validate';
 
 class PasswordResetPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      person: {
-        email: '',
-      },
-      hasEmail: true,
+      person: props.person,
+      emailError: false,
+      emailHelperText: '',
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
-  validate() {
-    const { email } = this.state.person;
-    this.setState({
-      hasEmail: Boolean(email),
-    });
-    return Boolean(email);
-  }
-
   handleFieldChange(event) {
     const { person } = this.state;
     const { name, value } = event.target;
-    person[name] = value;
+
+    if (name === 'email') {
+      this.validateField(name, value.toLowerCase().trim());
+      person[name] = value.toLowerCase().trim();
+    }
+
+    this.setState({ person });
+  }
+
+  validateField(name, value) {
+    const fieldError = {
+      status: false,
+      helperText: '',
+    };
+
+    if (!validate.email(value)) {
+      fieldError.status = true;
+      fieldError.helperText = 'A valid email address is required!';
+    }
+
     this.setState({
-      person,
-      [`has${name.toUpperCase()}`]: Boolean(value),
+      [`${name}Error`]: fieldError.status,
+      [`${name}HelperText`]: fieldError.helperText,
     });
+
+    return fieldError.status;
+  }
+
+  validate() {
+    const { email } = this.state.person;
+    const emailError = this.validateField('email', email);
+    return !emailError;
   }
 
   handleFormSubmit(event) {
@@ -47,21 +66,25 @@ class PasswordResetPage extends React.Component {
 
   render() {
     const {
-      hasEmail,
-    } = this.state;
-
-    const {
       isFetching,
       error,
       success,
     } = this.props;
+
+    const {
+      person,
+      emailHelperText,
+      emailError,
+    } = this.state;
 
     return (
       <div>
         <PasswordResetForm
           handleFormSubmit={this.handleFormSubmit}
           handleFieldChange={this.handleFieldChange}
-          hasEmail={hasEmail}
+          email={person.email}
+          emailError={emailError}
+          emailHelperText={emailHelperText}
           error={error}
           success={success}
           isFetching={isFetching}
@@ -72,6 +95,7 @@ class PasswordResetPage extends React.Component {
 }
 
 PasswordResetPage.propTypes = {
+  person: PropTypes.object,
   resetPassword: PropTypes.func.isRequired,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
@@ -79,6 +103,9 @@ PasswordResetPage.propTypes = {
 };
 
 PasswordResetPage.defaultProps = {
+  person: {
+    email: '',
+  },
   isFetching: false,
   success: false,
   error: '',
