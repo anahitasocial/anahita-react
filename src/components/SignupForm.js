@@ -37,18 +37,13 @@ const SignupForm = (props) => {
     familyName,
     familyNameError,
     familyNameHelperText,
-    username,
-    usernameHelperText,
-    usernameError,
-    email,
-    emailHelperText,
-    emailError,
     password,
     passwordError,
     passwordHelperText,
     isFetching,
     success,
     error,
+    children,
   } = props;
 
   return (
@@ -103,30 +98,7 @@ const SignupForm = (props) => {
             margin="normal"
             disabled={success}
           />
-          <TextField
-            name="username"
-            value={username}
-            onChange={handleFieldChange}
-            label="Username"
-            error={usernameError}
-            helperText={usernameHelperText}
-            autoFocus
-            fullWidth
-            margin="normal"
-            disabled={success}
-          />
-          <TextField
-            name="email"
-            value={email}
-            onChange={handleFieldChange}
-            label="Email"
-            error={emailError}
-            helperText={emailHelperText}
-            autoFocus
-            fullWidth
-            margin="normal"
-            disabled={success}
-          />
+          {children}
           <TextField
             type="password"
             name="password"
@@ -171,18 +143,13 @@ SignupForm.propTypes = {
   familyName: PropTypes.string,
   familyNameError: PropTypes.bool.isRequired,
   familyNameHelperText: PropTypes.string,
-  username: PropTypes.string,
-  usernameHelperText: PropTypes.string,
-  usernameError: PropTypes.bool.isRequired,
-  email: PropTypes.string,
-  emailHelperText: PropTypes.string,
-  emailError: PropTypes.bool.isRequired,
   password: PropTypes.string,
   passwordHelperText: PropTypes.string,
   passwordError: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool,
   success: PropTypes.bool,
   error: PropTypes.string,
+  children: PropTypes.node.isRequired,
 };
 
 SignupForm.defaultProps = {
@@ -190,10 +157,6 @@ SignupForm.defaultProps = {
   givenNameHelperText: '',
   familyName: '',
   familyNameHelperText: '',
-  username: '',
-  usernameHelperText: '',
-  email: '',
-  emailHelperText: '',
   password: '',
   passwordHelperText: '',
   isFetching: false,

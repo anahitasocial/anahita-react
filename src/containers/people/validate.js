@@ -9,7 +9,8 @@ function email(value) {
 }
 
 function password(value) {
-  return value && value.length > 5;
+  const regex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+  return regex.test(String(value));
 }
 
 export default {

@@ -9,6 +9,7 @@ export default function (state = {
   emailAvailable: false,
   usernameAvailable: false,
   isFetching: false,
+  isValidating: false,
   isAuthenticated: viewer.id && (
     viewer.usertype === PERSON.TYPE.REGISTERED ||
     viewer.usertype === PERSON.TYPE.ADMIN ||
@@ -22,13 +23,13 @@ export default function (state = {
     case AUTH.VALIDATE_USERNAME.REQUEST:
       return {
         ...state,
-        isFetching: true,
+        isValidating: true,
         usernameAvailable: false,
       };
     case AUTH.VALIDATE_EMAIL.REQUEST:
       return {
         ...state,
-        isFetching: true,
+        isValidating: true,
         emailAvailable: false,
       };
     case AUTH.LOGIN.REQUEST:
@@ -42,13 +43,13 @@ export default function (state = {
     case AUTH.VALIDATE_USERNAME.SUCCESS:
       return {
         ...state,
-        isFetching: false,
+        isValidating: false,
         usernameAvailable: action.isAvailable,
       };
     case AUTH.VALIDATE_EMAIL.SUCCESS:
       return {
         ...state,
-        isFetching: false,
+        isValidating: false,
         emailAvailable: action.isAvailable,
       };
     case AUTH.LOGIN.SUCCESS:
@@ -63,13 +64,13 @@ export default function (state = {
     case AUTH.VALIDATE_USERNAME.FAILURE:
       return {
         ...state,
-        isFetching: false,
+        isValidating: false,
         usernameAvailable: false,
       };
     case AUTH.VALIDATE_EMAIL.FAILURE:
       return {
         ...state,
-        isFetching: false,
+        isValidating: false,
         emailAvailable: false,
       };
     case AUTH.LOGIN.FAILURE:

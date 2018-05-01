@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import SignupForm from '../../components/SignupForm';
-import {
-  signup,
-  validateUsername,
-  validateEmail,
-} from '../../actions/auth';
+import TextFieldUsername from '../../components/textfields/TextfieldUsername';
+import TextFieldEmail from '../../components/textfields/TextFieldEmail';
+import { signup } from '../../actions/auth';
 import validate from './validate';
 
 const styles = {
@@ -20,6 +18,8 @@ const styles = {
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.usernameField = React.createRef();
 
     this.state = {
       person: props.person,
@@ -37,52 +37,64 @@ class SignupPage extends React.Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {
-      usernameAvailable,
-      emailAvailable,
-    } = nextProps;
-
-    this.setState({
-      usernameError: !usernameAvailable,
-      usernameHelperText: usernameAvailable ? 'Good username!' : 'Username already taken!',
-      emailError: !emailAvailable,
-      emailHelperText: emailAvailable ? 'Good email!' : 'Email already taken!',
-    });
-  }
-
   handleFieldChange(event) {
     const { person } = this.state;
     const { name, value } = event.target;
-    person[name] = value.trim();
+
+    if (name === 'username' || name === 'email') {
+      this.validateField(name, value.toLowerCase().trim());
+      person[name] = value.toLowerCase().trim();
+    } else {
+      this.validateField(name, value.trim());
+      person[name] = value.trim();
+    }
+
     this.setState({ person });
+  }
+
+  validateField(name, value) {
+    const fieldError = {
+      status: false,
+      helperText: '',
+    };
 
     switch (name) {
       case 'username':
-        if (validate.username(person[name])) {
-          this.props.isUsernameTaken(person[name]);
-        } else {
-          this.setState({
-            usernameHelperText: 'A valid username is required!',
-            usernameError: true,
-          });
+        if (!validate.username(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'A username of at least 6 characters is required!';
         }
         break;
       case 'email':
-        if (validate.email(person[name])) {
-          this.props.isEmailTaken(person[name]);
-        } else {
-          this.setState({
-            emailHelperText: 'A valid email address is required!',
-            emailError: true,
-          });
+        if (!validate.email(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'A valid email address is required!';
+        }
+        break;
+      case 'givenName':
+      case 'familyName':
+        if (value.length < 3) {
+          fieldError.status = true;
+          fieldError.helperText = 'At least 3 characters are required!';
+        }
+        break;
+      case 'password':
+        if (!validate.password(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'A secure password is reuqired!';
         }
         break;
       default:
-        this.setState({
-          [`${name}Error`]: value === '',
-        });
+        fieldError.status = true;
+        fieldError.helperText = '';
     }
+
+    this.setState({
+      [`${name}Error`]: fieldError.status,
+      [`${name}HelperText`]: fieldError.helperText,
+    });
+
+    return fieldError.status;
   }
 
   validate() {
@@ -94,33 +106,11 @@ class SignupPage extends React.Component {
       password,
     } = this.state.person;
 
-    const givenNameError = givenName.length < 3;
-    const givenNameHelperText = givenNameError ? 'First name of at least 3 characters is required!' : '';
-
-    const familyNameError = familyName.length < 3;
-    const familyNameHelperText = familyNameError ? 'Last name of at least 3 characters is required!' : '';
-
-    const usernameError = !validate.username(username);
-    const usernameHelperText = usernameError ? 'A valid username at least 6 characters is required!' : '';
-
-    const emailError = !validate.email(email);
-    const emailHelperText = emailError ? 'A valid email address is required!' : '';
-
-    const passwordError = !validate.password(password);
-    const passwordHelperText = passwordError ? 'A secure password of at least 6 characters is required!' : '';
-
-    this.setState({
-      givenNameError,
-      givenNameHelperText,
-      familyNameError,
-      familyNameHelperText,
-      usernameError,
-      usernameHelperText,
-      emailError,
-      emailHelperText,
-      passwordError,
-      passwordHelperText,
-    });
+    const givenNameError = this.validateField('givenName', givenName);
+    const familyNameError = this.validateField('familyName', familyName);
+    const usernameError = this.validateField('username', username);
+    const emailError = this.validateField('email', email);
+    const passwordError = this.validateField('password', password);
 
     return !(
       givenNameError ||
@@ -158,8 +148,8 @@ class SignupPage extends React.Component {
       givenNameHelperText,
       familyNameError,
       familyNameHelperText,
-      usernameHelperText,
       usernameError,
+      usernameHelperText,
       emailHelperText,
       emailError,
       passwordError,
@@ -169,27 +159,36 @@ class SignupPage extends React.Component {
     return (
       <div className={classes.root}>
         <SignupForm
+          givenName={person.givenName}
           givenNameError={givenNameError}
           givenNameHelperText={givenNameHelperText}
+          familyName={person.familyName}
           familyNameError={familyNameError}
           familyNameHelperText={familyNameHelperText}
-          usernameError={usernameError}
-          usernameHelperText={usernameHelperText}
-          emailError={emailError}
-          emailHelperText={emailHelperText}
           passwordHelperText={passwordHelperText}
           passwordError={passwordError}
-          givenName={person.givenName}
-          familyName={person.familyName}
-          username={person.username}
-          email={person.email}
           password={person.password}
           handleFieldChange={this.handleFieldChange}
           handleFormSubmit={this.handleFormSubmit}
           isFetching={isFetching}
           success={success}
           error={error}
-        />
+        >
+          <TextFieldUsername
+            value={person.username}
+            onChange={this.handleFieldChange}
+            disabled={success}
+            error={usernameError}
+            helperText={usernameHelperText}
+          />
+          <TextFieldEmail
+            value={person.email}
+            onChange={this.handleFieldChange}
+            disabled={success}
+            error={emailError}
+            helperText={emailHelperText}
+          />
+        </SignupForm>
         {isAuthenticated &&
           <Redirect push to="/dashboard/" />
         }
@@ -201,12 +200,8 @@ class SignupPage extends React.Component {
 SignupPage.propTypes = {
   classes: PropTypes.object.isRequired,
   signup: PropTypes.func.isRequired,
-  isUsernameTaken: PropTypes.func.isRequired,
-  isEmailTaken: PropTypes.func.isRequired,
   person: PropTypes.object,
   success: PropTypes.bool,
-  usernameAvailable: PropTypes.bool.isRequired,
-  emailAvailable: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
   isAuthenticated: PropTypes.bool,
@@ -232,8 +227,6 @@ const mapStateToProps = (state) => {
     success,
     isFetching,
     isAuthenticated,
-    usernameAvailable,
-    emailAvailable,
   } = state.authReducer;
 
   return {
@@ -241,8 +234,6 @@ const mapStateToProps = (state) => {
     success,
     isFetching,
     isAuthenticated,
-    usernameAvailable,
-    emailAvailable,
   };
 };
 
@@ -250,12 +241,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     signup: (person) => {
       dispatch(signup(person));
-    },
-    isUsernameTaken: (username) => {
-      dispatch(validateUsername(username));
-    },
-    isEmailTaken: (email) => {
-      dispatch(validateEmail(email));
     },
   };
 };
