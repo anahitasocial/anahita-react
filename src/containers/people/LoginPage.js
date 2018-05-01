@@ -15,34 +15,67 @@ class LoginPage extends React.Component {
         password: '',
       },
       usernameError: false,
+      usernameHelperText: '',
       passwordError: false,
+      passwordHelperText: '',
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
-  validate() {
-    const { username, password } = this.state.credentials;
-    const usernameError = username === '';
-    const passwordError = password === '';
-
-    this.setState({
-      usernameError,
-      passwordError,
-    });
-
-    return !usernameError && !passwordError;
-  }
-
   handleFieldChange(event) {
     const { credentials } = this.state;
     const { name, value } = event.target;
+
+    this.validateField(name, value.trim());
     credentials[name] = value.trim();
+
+    this.setState({ credentials });
+  }
+
+  validateField(name, value) {
+    const fieldError = {
+      status: false,
+      helperText: '',
+    };
+
+    switch (name) {
+      case 'username':
+        if (value === '') {
+          fieldError.status = true;
+          fieldError.helperText = 'Please enter your email or username.';
+        }
+        break;
+      case 'password':
+        if (value === '') {
+          fieldError.status = true;
+          fieldError.helperText = 'Please enter your password.';
+        }
+        break;
+      default:
+        fieldError.status = true;
+        fieldError.helperText = '';
+    }
+
     this.setState({
-      credentials,
-      [`${name}Error`]: value === '',
+      [`${name}Error`]: fieldError.status,
+      [`${name}HelperText`]: fieldError.helperText,
     });
+
+    return fieldError.status;
+  }
+
+  validate() {
+    const {
+      username,
+      password,
+    } = this.state.credentials;
+
+    const usernameError = this.validateField('username', username);
+    const passwordError = this.validateField('password', password);
+
+    return !(usernameError || passwordError);
   }
 
   handleFormSubmit(event) {
@@ -56,7 +89,9 @@ class LoginPage extends React.Component {
   render() {
     const {
       usernameError,
+      usernameHelperText,
       passwordError,
+      passwordHelperText,
       credentials: {
         username,
         password,
@@ -79,8 +114,10 @@ class LoginPage extends React.Component {
           handleFieldChange={this.handleFieldChange}
           username={username}
           usernameError={usernameError}
+          usernameHelperText={usernameHelperText}
           password={password}
           passwordError={passwordError}
+          passwordHelperText={passwordHelperText}
           canSignup={canSignup}
           error={error}
           isFetching={isFetching}

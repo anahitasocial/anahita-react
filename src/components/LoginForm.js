@@ -33,8 +33,10 @@ const LoginForm = (props) => {
     handleFormSubmit,
     username,
     usernameError,
+    usernameHelperText,
     password,
     passwordError,
+    passwordHelperText,
     canSignup,
     isFetching,
     error,
@@ -69,7 +71,7 @@ const LoginForm = (props) => {
             onChange={handleFieldChange}
             label="Email or username"
             error={usernameError}
-            helperText={usernameError && 'Please enter your email or username.'}
+            helperText={usernameHelperText}
             autoFocus
             fullWidth
             margin="normal"
@@ -81,7 +83,7 @@ const LoginForm = (props) => {
             onChange={handleFieldChange}
             label="Password"
             error={passwordError}
-            helperText={passwordError && 'Please enter your password.'}
+            helperText={passwordHelperText}
             fullWidth
             margin="normal"
           />
@@ -121,9 +123,11 @@ LoginForm.propTypes = {
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
   username: PropTypes.string,
-  usernameError: PropTypes.bool.isRequired,
+  usernameError: PropTypes.bool,
+  usernameHelperText: PropTypes.string,
   password: PropTypes.string,
-  passwordError: PropTypes.bool.isRequired,
+  passwordError: PropTypes.bool,
+  passwordHelperText: PropTypes.string,
   canSignup: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
@@ -131,7 +135,11 @@ LoginForm.propTypes = {
 
 LoginForm.defaultProps = {
   username: '',
+  usernameError: false,
+  usernameHelperText: '',
   password: '',
+  passwordError: false,
+  passwordHelperText: '',
   canSignup: false,
   isFetching: false,
   error: '',
