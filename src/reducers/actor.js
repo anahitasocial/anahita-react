@@ -3,7 +3,10 @@ import { Actor as ACTOR } from '../constants';
 export default function (state = {
   isFetching: false,
   success: false,
-  actor: {},
+  actor: {
+    name: '',
+    body: '',
+  },
   error: '',
 }, action) {
   switch (action.type) {

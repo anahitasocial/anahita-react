@@ -147,9 +147,9 @@ class ActorSettingsInfoPage extends React.Component {
               bodyHelperText={bodyHelperText}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
-              dismissPath={`/${namespace}/${actor.id}/settings/`}
               isFetching={isFetching}
               success={success}
+              dismissPath={`/${namespace}/${actor.id}/settings/`}
             />
           </ActorSettingCard>
         }
@@ -169,7 +169,10 @@ ActorSettingsInfoPage.propTypes = {
 };
 
 ActorSettingsInfoPage.defaultProps = {
-  actor: {},
+  actor: {
+    name: '',
+    body: '',
+  },
   isFetching: false,
 };
 

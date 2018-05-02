@@ -16,14 +16,18 @@ const styles = {
   },
 };
 
+const BODY_CHARACTER_LIMIT = 350;
+
 class ActorAddPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      actor: {},
-      hasName: true,
-      hasBody: true,
+      actor: props.actor,
+      nameError: false,
+      nameHelperText: '',
+      bodyError: false,
+      bodyHelperText: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -41,20 +45,53 @@ class ActorAddPage extends React.Component {
   handleFieldChange(event) {
     const { actor } = this.state;
     const { name, value } = event.target;
+
+    this.validateField(name, value.trim());
     actor[name] = value;
+
+    this.setState({ actor });
+  }
+
+  validateField(name, value) {
+    const fieldError = {
+      error: false,
+      helperText: '',
+    };
+
+    switch (name) {
+      case 'name':
+        if (value.length < 6) {
+          fieldError.error = true;
+          fieldError.helperText = 'At least 6 characters are required!';
+        }
+        break;
+      case 'body':
+        if (value.length > BODY_CHARACTER_LIMIT) {
+          fieldError.error = true;
+          fieldError.helperText = `You have exceeded the ${BODY_CHARACTER_LIMIT} character limit!`;
+        }
+        break;
+      default:
+        if (value === '') {
+          fieldError.error = true;
+          fieldError.helperText = 'This field is required!';
+        }
+    }
+
     this.setState({
-      actor,
-      [`has${name.toUpperCase()}`]: Boolean(value),
+      [`${name}Error`]: fieldError.error,
+      [`${name}HelperText`]: fieldError.helperText,
     });
+
+    return !fieldError.error;
   }
 
   validate() {
     const { name, body } = this.state.actor;
-    this.setState({
-      hasName: Boolean(name),
-      hasBody: Boolean(body),
-    });
-    return Boolean(name) && Boolean(body);
+    const nameValidated = this.validateField('name', name);
+    const bodyValidated = this.validateField('body', body);
+
+    return nameValidated && bodyValidated;
   }
 
   saveActor() {
@@ -80,9 +117,11 @@ class ActorAddPage extends React.Component {
     } = this.props;
 
     const {
-      hasName,
-      hasBody,
       actor,
+      nameError,
+      nameHelperText,
+      bodyError,
+      bodyHelperText,
     } = this.state;
 
     return (
@@ -101,15 +140,17 @@ class ActorAddPage extends React.Component {
             }
           />
           <ActorInfoForm
-            hasName={hasName}
-            hasBody={hasBody}
-            error={error}
             formTitle={`Add new ${singularize(namespace)}`}
             name={actor.name}
+            nameError={nameError}
+            nameHelperText={nameHelperText}
             body={actor.body}
+            bodyError={bodyError}
+            bodyHelperText={bodyHelperText}
             handleFieldChange={this.handleFieldChange}
             handleFormSubmit={this.handleFormSubmit}
             isFetching={isFetching}
+            success={success}
             dismissPath={`/${namespace}/`}
           />
         </Card>
