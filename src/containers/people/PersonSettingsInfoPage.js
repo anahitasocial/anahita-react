@@ -222,9 +222,13 @@ PersonSettingsInfoPage.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     actor,
+  } = state.actorReducer;
+
+  const {
     success,
     error,
-  } = state.actorReducer;
+    isFetching,
+  } = state.personReducer;
 
   const {
     viewer,
@@ -235,6 +239,7 @@ const mapStateToProps = (state) => {
     error,
     success,
     viewer,
+    isFetching,
   };
 };
 

@@ -70,6 +70,7 @@ const PasswordResetForm = (props) => {
           }
           <TextField
             name="email"
+            value={email}
             onChange={handleFieldChange}
             label="What is your email?"
             error={emailError}
@@ -113,6 +114,7 @@ PasswordResetForm.propTypes = {
 };
 
 PasswordResetForm.defaultProps = {
+  email: '',
   emailError: false,
   emailHelperText: '',
   isFetching: false,

@@ -6,10 +6,6 @@ import PersonAccountForm from '../../components/PersonAccountForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import { readActor } from '../../actions/actor';
 import { editPersonAccount } from '../../actions/person';
-import {
-  validateUsername,
-  validateEmail,
-} from '../../actions/auth';
 import validate from './validate';
 
 const styles = {
@@ -41,26 +37,6 @@ class PersonSettingsInfoPage extends React.Component {
     if (!actor.id) {
       const { id } = this.props.match.params;
       this.props.readActor(id, 'people');
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {
-      usernameAvailable,
-      emailAvailable,
-    } = nextProps;
-
-    this.setState({
-      usernameError: !usernameAvailable,
-      usernameHelperText: usernameAvailable ? 'Good username!' : 'Username already taken!',
-      emailError: !emailAvailable,
-      emailHelperText: emailAvailable ? 'Good email!' : 'Email already taken!',
-    });
-
-    if (nextProps.actor.id) {
-      this.setState({
-        actor: Object.assign({}, nextProps.actor),
-      });
     }
   }
 
@@ -201,8 +177,6 @@ PersonSettingsInfoPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   editPersonAccount: PropTypes.func.isRequired,
-  usernameAvailable: PropTypes.bool.isRequired,
-  emailAvailable: PropTypes.bool.isRequired,
   actor: PropTypes.object,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
@@ -223,15 +197,16 @@ PersonSettingsInfoPage.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     actor,
-    success,
-    error,
-    isFetching,
   } = state.actorReducer;
 
   const {
+    isFetching,
+    success,
+    error,
+  } = state.personReducer;
+
+  const {
     viewer,
-    usernameAvailable,
-    emailAvailable,
   } = state.authReducer;
 
   return {
@@ -240,8 +215,6 @@ const mapStateToProps = (state) => {
     success,
     isFetching,
     viewer,
-    usernameAvailable,
-    emailAvailable,
   };
 };
 
@@ -252,12 +225,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     editPersonAccount: (person) => {
       dispatch(editPersonAccount(person));
-    },
-    isUsernameTaken: (username) => {
-      dispatch(validateUsername(username));
-    },
-    isEmailTaken: (email) => {
-      dispatch(validateEmail(email));
     },
   };
 };
