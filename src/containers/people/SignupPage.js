@@ -54,49 +54,49 @@ class SignupPage extends React.Component {
 
   validateField(name, value) {
     const fieldError = {
-      status: false,
+      error: false,
       helperText: '',
     };
 
     switch (name) {
       case 'username':
         if (!validate.username(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'A username of at least 6 characters is required!';
         }
         break;
       case 'email':
         if (!validate.email(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'A valid email address is required!';
         }
         break;
       case 'givenName':
       case 'familyName':
         if (value.length < 3) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'At least 3 characters are required!';
         }
         break;
       case 'password':
         if (!validate.password(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'A secure password is reuqired!';
         }
         break;
       default:
         if (value === '') {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'This field is required!';
         }
     }
 
     this.setState({
-      [`${name}Error`]: fieldError.status,
+      [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
     });
 
-    return fieldError.status;
+    return !fieldError.error;
   }
 
   validate() {
@@ -108,19 +108,17 @@ class SignupPage extends React.Component {
       password,
     } = this.state.person;
 
-    const givenNameError = this.validateField('givenName', givenName);
-    const familyNameError = this.validateField('familyName', familyName);
-    const usernameError = this.validateField('username', username);
-    const emailError = this.validateField('email', email);
-    const passwordError = this.validateField('password', password);
+    const givenNameValidated = this.validateField('givenName', givenName);
+    const familyNameValidated = this.validateField('familyName', familyName);
+    const usernameValidated = this.validateField('username', username);
+    const emailValidated = this.validateField('email', email);
+    const passwordValidated = this.validateField('password', password);
 
-    return !(
-      givenNameError ||
-      familyNameError ||
-      usernameError ||
-      emailError ||
-      passwordError
-    );
+    return givenNameValidated &&
+    familyNameValidated &&
+    usernameValidated &&
+    emailValidated &&
+    passwordValidated;
   }
 
   signup() {

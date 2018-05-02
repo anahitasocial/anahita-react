@@ -36,34 +36,34 @@ class LoginPage extends React.Component {
 
   validateField(name, value) {
     const fieldError = {
-      status: false,
+      error: false,
       helperText: '',
     };
 
     switch (name) {
       case 'username':
         if (value === '') {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'Please enter your email or username.';
         }
         break;
       case 'password':
         if (value === '') {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'Please enter your password.';
         }
         break;
       default:
-        fieldError.status = false;
+        fieldError.error = false;
         fieldError.helperText = '';
     }
 
     this.setState({
-      [`${name}Error`]: fieldError.status,
+      [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
     });
 
-    return fieldError.status;
+    return !fieldError.error;
   }
 
   validate() {
@@ -72,10 +72,10 @@ class LoginPage extends React.Component {
       password,
     } = this.state.credentials;
 
-    const usernameError = this.validateField('username', username);
-    const passwordError = this.validateField('password', password);
+    const usernameValidated = this.validateField('username', username);
+    const passwordValidated = this.validateField('password', password);
 
-    return !(usernameError || passwordError);
+    return usernameValidated && passwordValidated;
   }
 
   handleFormSubmit(event) {

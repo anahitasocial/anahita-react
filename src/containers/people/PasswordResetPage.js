@@ -33,27 +33,28 @@ class PasswordResetPage extends React.Component {
 
   validateField(name, value) {
     const fieldError = {
-      status: false,
+      error: false,
       helperText: '',
     };
 
     if (!validate.email(value)) {
-      fieldError.status = true;
+      fieldError.error = true;
       fieldError.helperText = 'A valid email address is required!';
     }
 
     this.setState({
-      [`${name}Error`]: fieldError.status,
+      [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
     });
 
-    return fieldError.status;
+    return !fieldError.error;
   }
 
   validate() {
     const { email } = this.state.person;
-    const emailError = this.validateField('email', email);
-    return !emailError;
+    const emailValidated = this.validateField('email', email);
+
+    return emailValidated;
   }
 
   handleFormSubmit(event) {

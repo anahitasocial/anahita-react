@@ -62,44 +62,44 @@ class ActorSettingsInfoPage extends React.Component {
 
   validateField(name, value) {
     const fieldError = {
-      status: false,
+      error: false,
       helperText: '',
     };
 
     switch (name) {
       case 'name':
         if (value.length < 6) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'At least 6 characters are required!';
         }
         break;
       case 'body':
         if (value.length > BODY_CHARACTER_LIMIT) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = `You have exceeded the ${BODY_CHARACTER_LIMIT} character limit!`;
         }
         break;
       default:
         if (value === '') {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'This field is required!';
         }
     }
 
     this.setState({
-      [`${name}Error`]: fieldError.status,
+      [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
     });
 
-    return fieldError.status;
+    return !fieldError.error;
   }
 
   validate() {
     const { name, body } = this.state.actor;
-    const nameError = this.validateField('name', name);
-    const bodyError = this.validateField('body', body);
+    const nameValidated = this.validateField('name', name);
+    const bodyValidated = this.validateField('body', body);
 
-    return !(nameError || bodyError);
+    return nameValidated && bodyValidated;
   }
 
   saveActor() {

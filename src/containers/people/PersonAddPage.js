@@ -20,7 +20,7 @@ const styles = {
 class PersonAddPage extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.person);
+
     this.state = {
       person: props.person,
       givenNameError: false,
@@ -81,27 +81,27 @@ class PersonAddPage extends React.Component {
 
   validateField(name, value) {
     const fieldError = {
-      status: false,
+      error: false,
       helperText: '',
     };
 
     switch (name) {
       case 'username':
         if (!validate.username(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'A username of at least 6 characters is required!';
         }
         break;
       case 'email':
         if (!validate.email(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'A valid email address is required!';
         }
         break;
       case 'givenName':
       case 'familyName':
         if (value.length < 3) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'At least 3 characters are required!';
         }
         break;
@@ -111,44 +111,45 @@ class PersonAddPage extends React.Component {
           PERSON.TYPE.ADMIN,
           PERSON.TYPE.SUPER_ADMIN,
         ].includes(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'Invalid user type!';
         }
         break;
       default:
         if (value === '') {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'This field is required!';
         }
     }
 
     this.setState({
-      [`${name}Error`]: fieldError.status,
+      [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
     });
 
-    return fieldError.status;
+    return !fieldError.error;
   }
 
   validate() {
     const {
       givenName,
       familyName,
-      body,
+      username,
+      email,
       usertype,
     } = this.state.person;
 
-    const givenNameError = this.validateField('givenName', givenName);
-    const familyNameError = this.validateField('familyName', familyName);
-    const bodyError = this.validateField('body', body);
-    const usertypeError = this.validateField('usertype', usertype);
+    const givenNameValidated = this.validateField('givenName', givenName);
+    const familyNameValidated = this.validateField('familyName', familyName);
+    const usernameValidated = this.validateField('username', username);
+    const emailValidated = this.validateField('email', email);
+    const usertypeValidated = this.validateField('usertype', usertype);
 
-    return !(
-      givenNameError ||
-      familyNameError ||
-      bodyError ||
-      usertypeError
-    );
+    return givenNameValidated &&
+    familyNameValidated &&
+    usernameValidated &&
+    emailValidated &&
+    usertypeValidated;
   }
 
   savePerson() {

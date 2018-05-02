@@ -49,34 +49,34 @@ class ActorSettingsDeletePage extends React.Component {
 
   validateField(name, value) {
     const fieldError = {
-      status: false,
+      error: false,
       helperText: '',
     };
 
     const { alias } = this.state.actor;
 
     if (value === '' || value !== alias) {
-      fieldError.status = true;
+      fieldError.error = true;
       fieldError.helperText = 'You must type the exact alias to delete this profile!';
     }
 
     if (value === alias) {
-      fieldError.status = false;
+      fieldError.error = false;
       fieldError.helperText = 'This is the correct alias!';
     }
 
     this.setState({
-      [`${name}Error`]: fieldError.status,
+      [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
     });
 
-    return fieldError.status;
+    return !fieldError.error;
   }
 
   validate() {
     const { alias } = this.state;
-    const aliasError = this.validateField('alias', alias);
-    return !aliasError;
+    const aliasValidated = this.validateField('alias', alias);
+    return aliasValidated;
   }
 
   deleteActor() {

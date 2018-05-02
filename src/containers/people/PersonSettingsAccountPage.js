@@ -57,42 +57,42 @@ class PersonSettingsInfoPage extends React.Component {
 
   validateField(name, value) {
     const fieldError = {
-      status: false,
+      error: false,
       helperText: '',
     };
 
     switch (name) {
       case 'username':
         if (!validate.username(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'A username of at least 6 characters is required!';
         }
         break;
       case 'email':
         if (!validate.email(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'A valid email address is required!';
         }
         break;
       case 'password':
         if (!validate.password(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'A secure password is reuqired!';
         }
         break;
       default:
         if (value === '') {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'This field is required!';
         }
     }
 
     this.setState({
-      [`${name}Error`]: fieldError.status,
+      [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
     });
 
-    return fieldError.status;
+    return !fieldError.error;
   }
 
   validate() {
@@ -102,15 +102,13 @@ class PersonSettingsInfoPage extends React.Component {
       password,
     } = this.state.actor;
 
-    const usernameError = this.validateField('username', username);
-    const emailError = this.validateField('email', email);
-    const passwordError = this.validateField('password', password);
+    const usernameValidated = this.validateField('username', username);
+    const emailValidated = this.validateField('email', email);
+    const passwordValidated = this.validateField('password', password);
 
-    return !(
-      usernameError ||
-      emailError ||
-      passwordError
-    );
+    return usernameValidated &&
+    emailValidated &&
+    passwordValidated;
   }
 
   saveActor() {

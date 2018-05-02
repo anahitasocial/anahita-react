@@ -3,7 +3,13 @@ import { Person as PERSON } from '../constants';
 export default function (state = {
   isFetching: false,
   success: false,
-  person: {},
+  person: {
+    givenName: '',
+    familyName: '',
+    email: '',
+    username: '',
+    usertype: PERSON.TYPE.REGISTERED,
+  },
   error: '',
 }, action) {
   switch (action.type) {

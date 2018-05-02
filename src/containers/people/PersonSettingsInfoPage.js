@@ -62,7 +62,7 @@ class PersonSettingsInfoPage extends React.Component {
 
   validateField(name, value) {
     const fieldError = {
-      status: false,
+      error: false,
       helperText: '',
     };
 
@@ -70,13 +70,13 @@ class PersonSettingsInfoPage extends React.Component {
       case 'givenName':
       case 'familyName':
         if (value.length < 3) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'At least 3 characters are required!';
         }
         break;
       case 'body':
         if (value && value.length > BODY_CHARACTER_LIMIT) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = `You have exceeded the ${BODY_CHARACTER_LIMIT} character limit!`;
         }
         break;
@@ -86,7 +86,7 @@ class PersonSettingsInfoPage extends React.Component {
           PERSON.GENDER.MALE,
           PERSON.GENDER.NEUTRAL,
         ].includes(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'You must select a pronoun!';
         }
         break;
@@ -96,23 +96,23 @@ class PersonSettingsInfoPage extends React.Component {
           PERSON.TYPE.ADMIN,
           PERSON.TYPE.SUPER_ADMIN,
         ].includes(value)) {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'Invalid user type!';
         }
         break;
       default:
         if (value === '') {
-          fieldError.status = true;
+          fieldError.error = true;
           fieldError.helperText = 'This field is required!';
         }
     }
 
     this.setState({
-      [`${name}Error`]: fieldError.status,
+      [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
     });
 
-    return fieldError.status;
+    return !fieldError.error;
   }
 
   validate() {
@@ -124,19 +124,17 @@ class PersonSettingsInfoPage extends React.Component {
       usertype,
     } = this.state.actor;
 
-    const givenNameError = this.validateField('givenName', givenName);
-    const familyNameError = this.validateField('familyName', familyName);
-    const bodyError = this.validateField('body', body);
-    const genderError = this.validateField('gender', gender);
-    const usertypeError = this.validateField('usertype', usertype);
+    const givenNameValidated = this.validateField('givenName', givenName);
+    const familyNameValidated = this.validateField('familyName', familyName);
+    const bodyValidated = this.validateField('body', body);
+    const genderValidated = this.validateField('gender', gender);
+    const usertypeValidated = this.validateField('usertype', usertype);
 
-    return !(
-      givenNameError ||
-      familyNameError ||
-      bodyError ||
-      genderError ||
-      usertypeError
-    );
+    return givenNameValidated &&
+    familyNameValidated &&
+    bodyValidated &&
+    genderValidated &&
+    usertypeValidated;
   }
 
   saveActor() {
