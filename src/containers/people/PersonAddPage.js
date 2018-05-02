@@ -9,6 +9,7 @@ import PersonAddIcon from 'material-ui-icons/PersonAdd';
 import PersonAddForm from '../../components/PersonAddForm';
 import { addPerson } from '../../actions/person';
 import { Person as PERSON } from '../../constants';
+import validate from './validate';
 
 const styles = {
   root: {
@@ -19,14 +20,18 @@ const styles = {
 class PersonAddPage extends React.Component {
   constructor(props) {
     super(props);
-
+    console.log(props.person);
     this.state = {
-      person: {},
-      hasGivenName: true,
-      hasFamilyName: true,
-      hasUsername: true,
-      hasEmail: true,
-      hasUsertype: true,
+      person: props.person,
+      givenNameError: false,
+      givenNameHelperText: '',
+      familyNameError: false,
+      familyNameHelperText: '',
+      usernameError: false,
+      usernameHelperText: '',
+      emailError: false,
+      emailHelperText: '',
+      usertypeError: false,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -62,35 +67,88 @@ class PersonAddPage extends React.Component {
   handleFieldChange(event) {
     const { person } = this.state;
     const { name, value } = event.target;
-    person[name] = value;
+
+    if (name === 'username' || name === 'email') {
+      this.validateField(name, value.toLowerCase().trim());
+      person[name] = value.toLowerCase().trim();
+    } else {
+      this.validateField(name, value.trim());
+      person[name] = value.trim();
+    }
+
+    this.setState({ person });
+  }
+
+  validateField(name, value) {
+    const fieldError = {
+      status: false,
+      helperText: '',
+    };
+
+    switch (name) {
+      case 'username':
+        if (!validate.username(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'A username of at least 6 characters is required!';
+        }
+        break;
+      case 'email':
+        if (!validate.email(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'A valid email address is required!';
+        }
+        break;
+      case 'givenName':
+      case 'familyName':
+        if (value.length < 3) {
+          fieldError.status = true;
+          fieldError.helperText = 'At least 3 characters are required!';
+        }
+        break;
+      case 'usertype':
+        if (![
+          PERSON.TYPE.REGISTERED,
+          PERSON.TYPE.ADMIN,
+          PERSON.TYPE.SUPER_ADMIN,
+        ].includes(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'Invalid user type!';
+        }
+        break;
+      default:
+        if (value === '') {
+          fieldError.status = true;
+          fieldError.helperText = 'This field is required!';
+        }
+    }
+
     this.setState({
-      person,
-      [`has${name.toUpperCase()}`]: Boolean(value),
+      [`${name}Error`]: fieldError.status,
+      [`${name}HelperText`]: fieldError.helperText,
     });
+
+    return fieldError.status;
   }
 
   validate() {
     const {
       givenName,
       familyName,
-      username,
-      email,
+      body,
       usertype,
     } = this.state.person;
 
-    this.setState({
-      hasGivenName: Boolean(givenName),
-      hasFamilyName: Boolean(familyName),
-      hasUsername: Boolean(username),
-      hasEmail: Boolean(email),
-      hasUsertype: Boolean(usertype),
-    });
+    const givenNameError = this.validateField('givenName', givenName);
+    const familyNameError = this.validateField('familyName', familyName);
+    const bodyError = this.validateField('body', body);
+    const usertypeError = this.validateField('usertype', usertype);
 
-    return Boolean(givenName) &&
-    Boolean(familyName) &&
-    Boolean(username) &&
-    Boolean(email) &&
-    Boolean(usertype);
+    return !(
+      givenNameError ||
+      familyNameError ||
+      bodyError ||
+      usertypeError
+    );
   }
 
   savePerson() {
@@ -115,12 +173,16 @@ class PersonAddPage extends React.Component {
     } = this.props;
 
     const {
-      hasGivenName,
-      hasFamilyName,
-      hasUsername,
-      hasEmail,
-      hasUsertype,
       person,
+      givenNameError,
+      givenNameHelperText,
+      familyNameError,
+      familyNameHelperText,
+      usernameError,
+      usernameHelperText,
+      emailHelperText,
+      emailError,
+      usertypeError,
     } = this.state;
 
     return (
@@ -142,16 +204,20 @@ class PersonAddPage extends React.Component {
           <PersonAddForm
             formTitle="Add New Person"
             isSuperAdmin={viewer.usertype === PERSON.TYPE.SUPER_ADMIN}
-            hasGivenName={hasGivenName}
-            hasFamilyName={hasFamilyName}
-            hasUsername={hasUsername}
-            hasEmail={hasEmail}
-            hasUsertype={hasUsertype}
             givenName={person.givenName}
+            givenNameError={givenNameError}
+            givenNameHelperText={givenNameHelperText}
             familyName={person.familyName}
+            familyNameError={familyNameError}
+            familyNameHelperText={familyNameHelperText}
             username={person.username}
+            usernameError={usernameError}
+            usernameHelperText={usernameHelperText}
             email={person.email}
-            usertype={person.usertype}
+            emailError={emailError}
+            emailHelperText={emailHelperText}
+            usertype={person.usertype || PERSON.TYPE.REGISTERED}
+            usertypeError={usertypeError}
             handleFieldChange={this.handleFieldChange}
             handleFormSubmit={this.handleFormSubmit}
             isFetching={isFetching}
@@ -172,8 +238,8 @@ PersonAddPage.propTypes = {
   addPerson: PropTypes.func.isRequired,
   viewer: PropTypes.object.isRequired,
   person: PropTypes.object,
-  success: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  success: PropTypes.bool,
+  isFetching: PropTypes.bool,
   error: PropTypes.string,
 };
 
@@ -185,6 +251,8 @@ PersonAddPage.defaultProps = {
     username: '',
     usertype: PERSON.TYPE.REGISTERED,
   },
+  isFetching: false,
+  success: false,
   error: '',
 };
 

@@ -75,20 +75,36 @@ class PersonSettingsInfoPage extends React.Component {
         }
         break;
       case 'body':
-        if (value.length > BODY_CHARACTER_LIMIT) {
+        if (value && value.length > BODY_CHARACTER_LIMIT) {
           fieldError.status = true;
           fieldError.helperText = `You have exceeded the ${BODY_CHARACTER_LIMIT} character limit!`;
         }
         break;
       case 'gender':
-        if (![PERSON.GENDER.FEMALE, PERSON.GENDER.MALE, PERSON.GENDER.NEUTRAL].includes(value)) {
+        if (![
+          PERSON.GENDER.FEMALE,
+          PERSON.GENDER.MALE,
+          PERSON.GENDER.NEUTRAL,
+        ].includes(value)) {
           fieldError.status = true;
           fieldError.helperText = 'You must select a pronoun!';
         }
         break;
+      case 'usertype':
+        if (![
+          PERSON.TYPE.REGISTERED,
+          PERSON.TYPE.ADMIN,
+          PERSON.TYPE.SUPER_ADMIN,
+        ].includes(value)) {
+          fieldError.status = true;
+          fieldError.helperText = 'Invalid user type!';
+        }
+        break;
       default:
-        fieldError.status = false;
-        fieldError.helperText = '';
+        if (value === '') {
+          fieldError.status = true;
+          fieldError.helperText = 'This field is required!';
+        }
     }
 
     this.setState({
@@ -104,16 +120,22 @@ class PersonSettingsInfoPage extends React.Component {
       givenName,
       familyName,
       body,
+      gender,
+      usertype,
     } = this.state.actor;
 
     const givenNameError = this.validateField('givenName', givenName);
     const familyNameError = this.validateField('familyName', familyName);
     const bodyError = this.validateField('body', body);
+    const genderError = this.validateField('gender', gender);
+    const usertypeError = this.validateField('usertype', usertype);
 
     return !(
       givenNameError ||
       familyNameError ||
-      bodyError
+      bodyError ||
+      genderError ||
+      usertypeError
     );
   }
 
@@ -201,7 +223,6 @@ PersonSettingsInfoPage.propTypes = {
   editPerson: PropTypes.func.isRequired,
   actor: PropTypes.object,
   viewer: PropTypes.object.isRequired,
-  success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
 };
@@ -214,17 +235,17 @@ PersonSettingsInfoPage.defaultProps = {
     gender: PERSON.GENDER.NEUTRAL,
     usertype: PERSON.TYPE.REGISTERED,
   },
-  success: false,
   isFetching: false,
   error: '',
 };
 
 const mapStateToProps = (state) => {
-  const {
+  let {
     actor,
   } = state.actorReducer;
 
   const {
+    person,
     success,
     error,
     isFetching,
@@ -233,6 +254,10 @@ const mapStateToProps = (state) => {
   const {
     viewer,
   } = state.authReducer;
+
+  if (person && person.id) {
+    actor = Object.assign({}, person);
+  }
 
   return {
     actor,

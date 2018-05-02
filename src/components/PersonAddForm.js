@@ -9,6 +9,8 @@ import TextField from 'material-ui/TextField';
 import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
+import TextFieldUsername from './textfields/TextFieldUsername';
+import TextFieldEmail from './textfields/TextFieldEmail';
 import { Person as PERSON } from '../constants';
 
 const styles = theme => ({
@@ -35,16 +37,22 @@ const PersonAddForm = (props) => {
     isSuperAdmin,
     handleFieldChange,
     handleFormSubmit,
-    hasGivenName,
-    hasFamilyName,
-    hasUsername,
-    hasEmail,
     givenName,
+    givenNameError,
+    givenNameHelperText,
     familyName,
+    familyNameError,
+    familyNameHelperText,
     username,
+    usernameHelperText,
+    usernameError,
     email,
+    emailHelperText,
+    emailError,
     usertype,
+    usertypeError,
     error,
+    isFetching,
     dismissPath,
   } = props;
 
@@ -72,57 +80,50 @@ const PersonAddForm = (props) => {
           }
           <TextField
             name="givenName"
-            value={givenName || ''}
+            value={givenName}
             onChange={handleFieldChange}
             label="First Name"
-            error={!hasGivenName}
-            helperText={!hasGivenName ? 'First name is required!' : ''}
-            margin="normal"
+            error={givenNameError}
+            helperText={givenNameHelperText}
             autoFocus
             fullWidth
+            margin="normal"
           />
           <TextField
             name="familyName"
-            value={familyName || ''}
+            value={familyName}
             onChange={handleFieldChange}
             label="Last Name"
-            error={!hasFamilyName}
-            helperText={!hasFamilyName ? 'Last name is required!' : ''}
-            margin="normal"
+            error={familyNameError}
+            helperText={familyNameHelperText}
             fullWidth
+            margin="normal"
           />
-          <TextField
-            name="username"
-            value={username || ''}
+          <TextFieldUsername
+            value={username}
             onChange={handleFieldChange}
-            label="Username"
-            error={!hasUsername}
-            helperText={!hasUsername ? 'A Username is required!' : ''}
-            margin="normal"
-            fullWidth
+            error={usernameError}
+            helperText={usernameHelperText}
           />
-          <TextField
-            name="email"
-            value={email || ''}
+          <TextFieldEmail
+            value={email}
             onChange={handleFieldChange}
-            label="Email"
-            error={!hasEmail}
-            helperText={!hasEmail ? 'A valid Email is required!' : ''}
-            margin="normal"
-            fullWidth
+            error={emailError}
+            helperText={emailHelperText}
           />
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="person-usertype">
+            <InputLabel
+              htmlFor="person-usertype"
+            >
               {'User Type'}
             </InputLabel>
             <Select
               native
               name="usertype"
-              value={usertype}
+              error={usertypeError}
               onChange={handleFieldChange}
               input={<Input id="person-usertype" />}
             >
-              <option value="" />
               <option value={PERSON.TYPE.REGISTERED}>
                 {'Registered'}
               </option>
@@ -150,6 +151,7 @@ const PersonAddForm = (props) => {
             variant="raised"
             color="primary"
             className={classes.button}
+            disabled={isFetching}
           >
             {'Save'}
           </Button>
@@ -166,14 +168,24 @@ PersonAddForm.propTypes = {
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
   givenName: PropTypes.string,
+  givenNameError: PropTypes.bool,
+  givenNameHelperText: PropTypes.string,
   familyName: PropTypes.string,
+  familyNameError: PropTypes.bool,
+  familyNameHelperText: PropTypes.string,
   username: PropTypes.string,
+  usernameHelperText: PropTypes.string,
+  usernameError: PropTypes.bool,
   email: PropTypes.string,
-  usertype: PropTypes.string,
-  hasGivenName: PropTypes.bool,
-  hasFamilyName: PropTypes.bool,
-  hasUsername: PropTypes.bool,
-  hasEmail: PropTypes.bool,
+  emailHelperText: PropTypes.string,
+  emailError: PropTypes.bool,
+  usertype: PropTypes.oneOf([
+    PERSON.TYPE.REGISTERED,
+    PERSON.TYPE.ADMIN,
+    PERSON.TYPE.SUPER_ADMIN,
+  ]).isRequired,
+  usertypeError: PropTypes.bool,
+  isFetching: PropTypes.bool,
   error: PropTypes.string,
   dismissPath: PropTypes.string,
 };
@@ -181,15 +193,20 @@ PersonAddForm.propTypes = {
 PersonAddForm.defaultProps = {
   formTitle: '',
   givenName: '',
+  givenNameError: false,
+  givenNameHelperText: '',
   familyName: '',
+  familyNameError: false,
+  familyNameHelperText: '',
   username: '',
+  usernameError: false,
+  usernameHelperText: '',
   email: '',
-  usertype: PERSON.TYPE.REGISTERED,
-  hasGivenName: true,
-  hasFamilyName: true,
-  hasUsername: true,
-  hasEmail: true,
+  emailError: false,
+  emailHelperText: '',
+  usertypeError: false,
   error: '',
+  isFetching: false,
   dismissPath: '',
 };
 

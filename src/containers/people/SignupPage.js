@@ -85,8 +85,10 @@ class SignupPage extends React.Component {
         }
         break;
       default:
-        fieldError.status = false;
-        fieldError.helperText = '';
+        if (value === '') {
+          fieldError.status = true;
+          fieldError.helperText = 'This field is required!';
+        }
     }
 
     this.setState({

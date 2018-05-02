@@ -16,8 +16,8 @@ const styles = theme => ({
     padding: '20px',
   },
   button: {
-    marginTop: 10,
-    marginRight: 10,
+    marginTop: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
   },
   title: {
     marginBottom: 10,
@@ -29,9 +29,12 @@ const ActorInfoForm = (props) => {
     classes,
     handleFieldChange,
     handleFormSubmit,
-    hasAlias,
+    referenceAlias,
     alias,
+    aliasError,
+    aliasHelperText,
     error,
+    canDelete,
     isFetching,
     dismissPath,
   } = props;
@@ -61,10 +64,11 @@ const ActorInfoForm = (props) => {
           }
           <TextField
             name="alias"
+            value={alias}
             onChange={handleFieldChange}
-            label={`Type the exact alias: ${alias}`}
-            error={!hasAlias}
-            helperText={!hasAlias ? 'You must type the exact alias to delete this profile!' : 'This is the correct alias!'}
+            label={`Type the exact alias: ${referenceAlias}`}
+            error={aliasError}
+            helperText={aliasHelperText}
             margin="normal"
             fullWidth
           />
@@ -82,7 +86,7 @@ const ActorInfoForm = (props) => {
             variant="raised"
             color="secondary"
             className={classes.button}
-            disabled={isFetching}
+            disabled={isFetching || !canDelete}
           >
             {'Delete'}
           </Button>
@@ -96,18 +100,23 @@ ActorInfoForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
+  referenceAlias: PropTypes.string.isRequired,
   alias: PropTypes.string,
-  hasAlias: PropTypes.bool,
+  aliasError: PropTypes.bool,
+  aliasHelperText: PropTypes.string,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
+  canDelete: PropTypes.bool,
   dismissPath: PropTypes.string,
 };
 
 ActorInfoForm.defaultProps = {
-  hasAlias: true,
-  isFetching: false,
   alias: '',
+  aliasError: false,
+  aliasHelperText: '',
+  isFetching: false,
   error: '',
+  canDelete: false,
   dismissPath: '',
 };
 

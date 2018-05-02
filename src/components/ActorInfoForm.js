@@ -29,10 +29,12 @@ const ActorInfoForm = (props) => {
     handleFieldChange,
     handleFormSubmit,
     formTitle,
-    hasName,
-    hasBody,
     name,
+    nameError,
+    nameHelperText,
     body,
+    bodyError,
+    bodyHelperText,
     error,
     isFetching,
     dismissPath,
@@ -62,20 +64,20 @@ const ActorInfoForm = (props) => {
           }
           <TextField
             name="name"
-            value={name || ''}
+            value={name}
             onChange={handleFieldChange}
             label="Name"
-            error={!hasName}
-            helperText={!hasName ? 'A name is required!' : ''}
+            error={nameError}
+            helperText={nameHelperText}
             margin="normal"
             fullWidth
           />
           <TextField
             name="body"
-            value={body || ''}
+            value={body}
             onChange={handleFieldChange}
-            error={!hasBody}
-            helperText={!hasBody ? 'Description is required!' : ''}
+            error={bodyError}
+            helperText={bodyHelperText}
             label="Description"
             margin="normal"
             fullWidth
@@ -111,9 +113,11 @@ ActorInfoForm.propTypes = {
   handleFormSubmit: PropTypes.func.isRequired,
   formTitle: PropTypes.string,
   name: PropTypes.string,
+  nameError: PropTypes.bool,
+  nameHelperText: PropTypes.string,
   body: PropTypes.string,
-  hasName: PropTypes.bool.isRequired,
-  hasBody: PropTypes.bool.isRequired,
+  bodyError: PropTypes.bool,
+  bodyHelperText: PropTypes.string,
   error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
   dismissPath: PropTypes.string,
@@ -122,7 +126,11 @@ ActorInfoForm.propTypes = {
 ActorInfoForm.defaultProps = {
   formTitle: '',
   name: '',
+  nameError: false,
+  nameHelperText: '',
   body: '',
+  bodyError: false,
+  bodyHelperText: '',
   error: '',
   dismissPath: '',
 };

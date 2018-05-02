@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 import ActorDeleteForm from '../../components/ActorDeleteForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import {
@@ -23,7 +22,8 @@ class ActorSettingsDeletePage extends React.Component {
     this.state = {
       actor: props.actor,
       alias: '',
-      hasAlias: true,
+      aliasError: false,
+      aliasHelperText: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -39,32 +39,51 @@ class ActorSettingsDeletePage extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.actor.id) {
-      this.setState({
-        actor: {},
-      });
-    }
-  }
-
   handleFieldChange(event) {
-    const { value } = event.target;
+    const { name, value } = event.target;
+    this.validateField(name, value);
     this.setState({
       alias: value,
-      hasAlias: value === this.state.actor.alias,
     });
   }
 
+  validateField(name, value) {
+    const fieldError = {
+      status: false,
+      helperText: '',
+    };
+
+    const { alias } = this.state.actor;
+
+    if (value === '' || value !== alias) {
+      fieldError.status = true;
+      fieldError.helperText = 'You must type the exact alias to delete this profile!';
+    }
+
+    if (value === alias) {
+      fieldError.status = false;
+      fieldError.helperText = 'This is the correct alias!';
+    }
+
+    this.setState({
+      [`${name}Error`]: fieldError.status,
+      [`${name}HelperText`]: fieldError.helperText,
+    });
+
+    return fieldError.status;
+  }
+
   validate() {
-    const { alias, actor } = this.state;
-    const hasAlias = alias === actor.alias;
-    this.setState({ alias, hasAlias });
-    return hasAlias;
+    const { alias } = this.state;
+    const aliasError = this.validateField('alias', alias);
+    return !aliasError;
   }
 
   deleteActor() {
+    const { namespace, history } = this.props;
     const { actor } = this.state;
     this.props.deleteActor(actor);
+    history.push(`/${namespace}/`);
   }
 
   handleFormSubmit(event) {
@@ -74,49 +93,45 @@ class ActorSettingsDeletePage extends React.Component {
     }
   }
 
+  canDelete() {
+    const { alias, actor } = this.state;
+    return alias === actor.alias;
+  }
+
   render() {
     const {
       classes,
       namespace,
-      success,
       isFetching,
       error,
     } = this.props;
 
     const {
-      hasAlias,
       actor,
+      alias,
+      aliasError,
+      aliasHelperText,
     } = this.state;
-
-    const isDeleted = !actor.id && success;
 
     return (
       <div className={classes.root}>
-        {isDeleted &&
-          <Typography
-            variant="body1"
-            color="primary"
-            paragraph
-          >
-              {'Deleted successfully!'}
-          </Typography>
-        }
-        {actor.id &&
-          <ActorSettingCard
-            namespace={namespace}
-            actor={actor}
-          >
-            <ActorDeleteForm
-              hasAlias={hasAlias}
-              alias={actor.alias}
-              isFetching={isFetching}
-              error={error}
-              handleFieldChange={this.handleFieldChange}
-              handleFormSubmit={this.handleFormSubmit}
-              dismissPath={`/${namespace}/${actor.id}/settings/`}
-            />
-          </ActorSettingCard>
-        }
+        <ActorSettingCard
+          namespace={namespace}
+          actor={actor}
+        >
+          <ActorDeleteForm
+            referenceAlias={actor.alias}
+            alias={alias}
+            aliasError={aliasError}
+            aliasHelperText={aliasHelperText}
+            canDelete={this.canDelete()}
+            isFetching={isFetching}
+            error={error}
+            handleFieldChange={this.handleFieldChange}
+            handleFormSubmit={this.handleFormSubmit}
+            dismissPath={`/${namespace}/${actor.id}/settings/`}
+          />
+        </ActorSettingCard>
       </div>
     );
   }
@@ -129,13 +144,14 @@ ActorSettingsDeletePage.propTypes = {
   actor: PropTypes.object,
   namespace: PropTypes.string.isRequired,
   error: PropTypes.string,
-  success: PropTypes.bool,
   isFetching: PropTypes.bool,
+  history: PropTypes.object.isRequired,
 };
 
 ActorSettingsDeletePage.defaultProps = {
-  actor: {},
-  success: false,
+  actor: {
+    alias: '',
+  },
   isFetching: false,
   error: '',
 };
