@@ -17,8 +17,6 @@ class SignupPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.usernameField = React.createRef();
-
     this.state = {
       person: props.person,
       givenNameError: false,
