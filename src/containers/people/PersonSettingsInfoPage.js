@@ -14,7 +14,7 @@ const styles = {
   },
 };
 
-const BODY_CHARACTER_LIMIT = 350;
+const BODY_CHARACTER_LIMIT = 700;
 
 class PersonSettingsInfoPage extends React.Component {
   constructor(props) {

@@ -112,7 +112,6 @@ class ActorAddPage extends React.Component {
       classes,
       namespace,
       success,
-      error,
       isFetching,
     } = this.props;
 
@@ -165,19 +164,10 @@ class ActorAddPage extends React.Component {
 ActorAddPage.propTypes = {
   classes: PropTypes.object.isRequired,
   addActor: PropTypes.func.isRequired,
-  actor: PropTypes.object,
+  actor: PropTypes.object.isRequired,
   namespace: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-};
-
-ActorAddPage.defaultProps = {
-  actor: {
-    name: '',
-    body: '',
-  },
-  error: '',
 };
 
 const mapStateToProps = (state) => {

@@ -4,11 +4,13 @@ export default function (state = {
   isFetching: false,
   success: false,
   person: {
+    id: null,
     givenName: '',
     familyName: '',
     email: '',
     username: '',
     usertype: PERSON.TYPE.REGISTERED,
+    gender: PERSON.GENDER.NEUTRAL,
   },
   error: '',
 }, action) {

@@ -10,6 +10,7 @@ class TextFieldUsername extends React.Component {
     super(props);
 
     this.state = {
+      initValue: props.value,
       error: false,
       helperText: '',
     };
@@ -29,7 +30,7 @@ class TextFieldUsername extends React.Component {
   handleFieldChange(event) {
     const { value } = event.target;
 
-    if (validate.username(value)) {
+    if (validate.username(value) && this.state.initValue !== value) {
       this.props.isUsernameTaken(value);
     }
 

@@ -4,6 +4,7 @@ export default function (state = {
   isFetching: false,
   success: false,
   actor: {
+    id: null,
     name: '',
     body: '',
   },

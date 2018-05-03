@@ -10,6 +10,7 @@ class TextFieldEmail extends React.Component {
     super(props);
 
     this.state = {
+      initValue: props.value,
       error: false,
       helperText: '',
     };
@@ -28,8 +29,7 @@ class TextFieldEmail extends React.Component {
 
   handleFieldChange(event) {
     const { value } = event.target;
-
-    if (validate.email(value)) {
+    if (validate.email(value) && this.state.initValue !== value) {
       this.props.isEmailTaken(value);
     }
 
