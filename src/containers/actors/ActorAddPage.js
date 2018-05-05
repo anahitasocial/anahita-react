@@ -23,7 +23,7 @@ class ActorAddPage extends React.Component {
     super(props);
 
     this.state = {
-      actor: props.actor,
+      actor: {},
       nameError: false,
       nameHelperText: '',
       bodyError: false,
@@ -164,26 +164,34 @@ class ActorAddPage extends React.Component {
 ActorAddPage.propTypes = {
   classes: PropTypes.object.isRequired,
   addActor: PropTypes.func.isRequired,
-  actor: PropTypes.object.isRequired,
+  actor: PropTypes.object,
   namespace: PropTypes.string.isRequired,
-  success: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  success: PropTypes.bool,
+  isFetching: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
   const {
     actor,
     success,
-    error,
     isFetching,
   } = state.actorReducer;
 
   return {
     actor,
-    error,
     success,
     isFetching,
   };
+};
+
+ActorAddPage.defaultProps = {
+  actor: {
+    id: null,
+    name: '',
+    body: '',
+  },
+  isFetching: false,
+  success: false,
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -120,6 +120,7 @@ const PersonAddForm = (props) => {
             <Select
               native
               name="usertype"
+              value={usertype}
               error={usertypeError}
               onChange={handleFieldChange}
               input={<Input id="person-usertype" />}

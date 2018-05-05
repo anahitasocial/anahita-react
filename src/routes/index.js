@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   Route,
   Switch,
+  withRouter,
 } from 'react-router-dom';
-
+import AuthenticatedRoute from './AuthenticatedRoute';
 import App from '../containers/App';
 
 import LoginPage from '../containers/people/LoginPage';
@@ -31,35 +33,8 @@ const scrollUp = () => {
   window.scrollTo(0, 0);
 };
 
-const PrivateRoute = ({
-  component: Component,
-  store,
-  ...rest
-}) => {
-  const { authReducer } = store.getState();
-  const { isAuthenticated } = authReducer;
-  return (
-    <Route
-      {...rest}
-      render={props => (
-      isAuthenticated ? (
-        <Component {...props} />
-      ) : (
-        <Route component={LoginPage} />
-      ))}
-    />
-  );
-};
-
-PrivateRoute.propTypes = {
-  component: PropTypes.func.isRequired,
-  store: PropTypes.object.isRequired,
-};
-
 const Routes = (props) => {
-  const { store } = props;
-  const { authReducer } = store.getState();
-  const homeRedirect = authReducer.isAuthenticated ? DashboardPage : HomePage;
+  const { isAuthenticated } = props;
 
   scrollUp();
 
@@ -69,7 +44,7 @@ const Routes = (props) => {
         <Route
           exact
           path="/"
-          component={homeRedirect}
+          component={isAuthenticated ? DashboardPage : HomePage}
         />
         <Route
           exact
@@ -86,39 +61,34 @@ const Routes = (props) => {
           path="/passwordreset/"
           component={PasswordResetPage}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           path="/dashboard/"
-          store={store}
           component={DashboardPage}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           path="/people/:id/settings/"
           exact
-          store={store}
           component={(params) => {
             return <ActorSettingsPage namespace="people" {...params} />;
           }}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           path="/people/:id/settings/info/"
           exact
-          store={store}
           component={(params) => {
             return <PersonSettingsInfoPage {...params} />;
           }}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           exact
           path="/people/:id/settings/account/"
-          store={store}
           component={(params) => {
             return <PersonSettingsAccountPage {...params} />;
           }}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           path="/people/:id/settings/deleteforever"
           exact
-          store={store}
           component={(params) => {
             return <ActorSettingsDeletePage namespace="people" {...params} />;
           }}
@@ -128,10 +98,9 @@ const Routes = (props) => {
           path="/people/"
           component={PeoplePage}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           exact
           path="/people/add/"
-          store={store}
           component={(params) => {
             return <PersonAddPage {...params} />;
           }}
@@ -150,11 +119,11 @@ const Routes = (props) => {
             return <ActorsPage namespace="groups" {...params} />;
           }}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           exact
           path="/groups/add/"
-          store={store}
           component={(params) => {
+            console.log('/groups/add/');
             return <ActorAddPage namespace="groups" {...params} />;
           }}
         />
@@ -162,29 +131,27 @@ const Routes = (props) => {
           exact
           path="/groups/:id/"
           component={(params) => {
+            console.log('/groups/:id/');
             return <ActorPage namespace="groups" {...params} />;
           }}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           exact
           path="/groups/:id/settings/"
-          store={store}
           component={(params) => {
             return <ActorSettingsPage namespace="groups" {...params} />;
           }}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           exact
           path="/groups/:id/settings/info/"
-          store={store}
           component={(params) => {
             return <ActorSettingsInfoPage namespace="groups" {...params} />;
           }}
         />
-        <PrivateRoute
+        <AuthenticatedRoute
           exact
-          path="/groups/:id/settings/deleteforever"
-          store={store}
+          path="/groups/:id/settings/deleteforever/"
           component={(params) => {
             return <ActorSettingsDeletePage namespace="groups" {...params} />;
           }}
@@ -196,7 +163,17 @@ const Routes = (props) => {
 };
 
 Routes.propTypes = {
-  store: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
-export default Routes;
+function mapStateToProps(state) {
+  const {
+    isAuthenticated,
+  } = state.authReducer;
+
+  return {
+    isAuthenticated,
+  };
+}
+
+export default withRouter(connect(mapStateToProps)(Routes));

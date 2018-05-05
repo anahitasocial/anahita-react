@@ -22,7 +22,7 @@ class PersonAddPage extends React.Component {
     super(props);
 
     this.state = {
-      person: props.person,
+      person: {},
       givenNameError: false,
       givenNameHelperText: '',
       familyNameError: false,
@@ -246,11 +246,13 @@ PersonAddPage.propTypes = {
 
 PersonAddPage.defaultProps = {
   person: {
+    id: null,
     givenName: '',
     familyName: '',
     email: '',
     username: '',
     usertype: PERSON.TYPE.REGISTERED,
+    gender: PERSON.GENDER.NEUTRAL,
   },
   isFetching: false,
   success: false,
