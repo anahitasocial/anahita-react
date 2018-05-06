@@ -39,11 +39,9 @@ class PersonAddPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.person.id) {
-      this.setState({
-        person: Object.assign({}, nextProps.person),
-      });
-    }
+    this.setState({
+      person: Object.assign({}, nextProps.person),
+    });
   }
 
   getInitials() {

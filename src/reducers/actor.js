@@ -14,6 +14,12 @@ export default function (state = {
         actor: {},
       };
     case ACTOR.EDIT.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        success: false,
+        actor: action.actor,
+      };
     case ACTOR.ADD.REQUEST:
     case ACTOR.DELETE.REQUEST:
     case ACTOR.FOLLOW.REQUEST:

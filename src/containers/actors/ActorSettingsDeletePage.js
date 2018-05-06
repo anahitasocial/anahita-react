@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter, Redirect } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import ActorDeleteForm from '../../components/ActorDeleteForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
@@ -34,9 +35,15 @@ class ActorSettingsDeletePage extends React.Component {
     const { actor, namespace } = this.props;
 
     if (!actor.id) {
-      const { id } = this.props.match.params;
+      const { id } = this.props.computedMatch.params;
       this.props.readActor(id, namespace);
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      actor: Object.assign({}, nextProps.actor),
+    });
   }
 
   handleFieldChange(event) {
@@ -80,10 +87,8 @@ class ActorSettingsDeletePage extends React.Component {
   }
 
   deleteActor() {
-    const { namespace, history } = this.props;
     const { actor } = this.state;
     this.props.deleteActor(actor);
-    history.push(`/${namespace}/`);
   }
 
   handleFormSubmit(event) {
@@ -104,6 +109,7 @@ class ActorSettingsDeletePage extends React.Component {
       namespace,
       isFetching,
       error,
+      success,
     } = this.props;
 
     const {
@@ -115,23 +121,28 @@ class ActorSettingsDeletePage extends React.Component {
 
     return (
       <div className={classes.root}>
-        <ActorSettingCard
-          namespace={namespace}
-          actor={actor}
-        >
-          <ActorDeleteForm
-            referenceAlias={actor.alias}
-            alias={alias}
-            aliasError={aliasError}
-            aliasHelperText={aliasHelperText}
-            canDelete={this.canDelete()}
-            isFetching={isFetching}
-            error={error}
-            handleFieldChange={this.handleFieldChange}
-            handleFormSubmit={this.handleFormSubmit}
-            dismissPath={`/${namespace}/${actor.id}/settings/`}
-          />
-        </ActorSettingCard>
+        {actor.id &&
+          <ActorSettingCard
+            namespace={namespace}
+            actor={actor}
+          >
+            <ActorDeleteForm
+              referenceAlias={actor.alias}
+              alias={alias}
+              aliasError={aliasError}
+              aliasHelperText={aliasHelperText}
+              canDelete={this.canDelete()}
+              isFetching={isFetching}
+              error={error}
+              handleFieldChange={this.handleFieldChange}
+              handleFormSubmit={this.handleFormSubmit}
+              dismissPath={`/${namespace}/${actor.id}/settings/`}
+            />
+          </ActorSettingCard>
+        }
+        {success && !actor.id &&
+          <Redirect to={`/${namespace}/`} />
+        }
       </div>
     );
   }
@@ -146,6 +157,7 @@ ActorSettingsDeletePage.propTypes = {
   error: PropTypes.string,
   isFetching: PropTypes.bool,
   history: PropTypes.object.isRequired,
+  success: PropTypes.bool,
 };
 
 ActorSettingsDeletePage.defaultProps = {
@@ -154,6 +166,7 @@ ActorSettingsDeletePage.defaultProps = {
   },
   isFetching: false,
   error: '',
+  success: false,
 };
 
 const mapStateToProps = (state) => {
@@ -183,7 +196,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default withStyles(styles)(withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorSettingsDeletePage));
+)(ActorSettingsDeletePage)));

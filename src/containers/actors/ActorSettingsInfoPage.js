@@ -37,17 +37,15 @@ class ActorSettingsInfoPage extends React.Component {
   componentWillMount() {
     const { actor, namespace } = this.props;
     if (!actor.id) {
-      const { id } = this.props.match.params;
+      const { id } = this.props.computedMatch.params;
       this.props.readActor(id, namespace);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.actor.id) {
-      this.setState({
-        actor: Object.assign({}, nextProps.actor),
-      });
-    }
+    this.setState({
+      actor: Object.assign({}, nextProps.actor),
+    });
   }
 
   handleFieldChange(event) {

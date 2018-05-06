@@ -14,6 +14,7 @@ export default function (state = {
         ...state,
         isFetching: true,
         success: false,
+        person: action.person,
       };
     case PERSON.EDIT.SUCCESS:
     case PERSON.EDIT_ACCOUNT.SUCCESS:

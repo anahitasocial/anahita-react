@@ -43,9 +43,10 @@ export function readActor(id, namespace) {
 
 // -- Edit
 
-function editRequest() {
+function editRequest(actor) {
   return {
     type: ACTOR.EDIT.REQUEST,
+    actor,
   };
 }
 

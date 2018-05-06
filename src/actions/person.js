@@ -3,9 +3,10 @@ import { Person as PERSON } from '../constants';
 
 // -- Edit Person
 
-function editRequest() {
+function editRequest(person) {
   return {
     type: PERSON.EDIT.REQUEST,
+    person,
   };
 }
 
@@ -25,7 +26,7 @@ function editFailure(error) {
 
 export function editPerson(person) {
   return (dispatch) => {
-    dispatch(editRequest());
+    dispatch(editRequest(person));
     return new Promise((resolve, reject) => {
       api.editPerson(person)
         .then((result) => {

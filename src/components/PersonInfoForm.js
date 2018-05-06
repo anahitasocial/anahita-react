@@ -94,7 +94,7 @@ const PersonInfoForm = (props) => {
           />
           <TextField
             name="body"
-            value={body}
+            value={body || ''}
             onChange={handleFieldChange}
             label="Bio"
             error={bodyError}
@@ -204,7 +204,7 @@ PersonInfoForm.propTypes = {
     PERSON.GENDER.FEMALE,
     PERSON.GENDER.MALE,
     PERSON.GENDER.NEUTRAL,
-  ]).isRequired,
+  ]),
   usertype: PropTypes.oneOf([
     PERSON.TYPE.REGISTERED,
     PERSON.TYPE.ADMIN,
@@ -227,6 +227,7 @@ PersonInfoForm.defaultProps = {
   body: '',
   bodyError: false,
   bodyHelperText: '',
+  gender: PERSON.GENDER.NEUTRAL,
   error: '',
   dismissPath: '',
   isFetching: false,

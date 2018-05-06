@@ -14,7 +14,7 @@ const styles = {
   },
 };
 
-class PersonSettingsInfoPage extends React.Component {
+class PersonSettingsAccountPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -35,9 +35,15 @@ class PersonSettingsInfoPage extends React.Component {
   componentWillMount() {
     const { actor } = this.props;
     if (!actor.id) {
-      const { id } = this.props.match.params;
+      const { id } = this.props.computedMatch.params;
       this.props.readActor(id, 'people');
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      actor: Object.assign({}, nextProps.actor),
+    });
   }
 
   handleFieldChange(event) {
@@ -173,7 +179,7 @@ class PersonSettingsInfoPage extends React.Component {
   }
 }
 
-PersonSettingsInfoPage.propTypes = {
+PersonSettingsAccountPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   editPersonAccount: PropTypes.func.isRequired,
@@ -183,7 +189,7 @@ PersonSettingsInfoPage.propTypes = {
   error: PropTypes.string,
 };
 
-PersonSettingsInfoPage.defaultProps = {
+PersonSettingsAccountPage.defaultProps = {
   actor: {
     email: '',
     username: '',
@@ -195,26 +201,26 @@ PersonSettingsInfoPage.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const {
+  let {
     actor,
   } = state.actorReducer;
 
   const {
+    person,
     isFetching,
     success,
     error,
   } = state.personReducer;
 
-  const {
-    viewer,
-  } = state.authReducer;
+  if (person && person.id) {
+    actor = Object.assign({}, person);
+  }
 
   return {
     actor,
     error,
     success,
     isFetching,
-    viewer,
   };
 };
 
@@ -232,4 +238,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PersonSettingsInfoPage));
+)(PersonSettingsAccountPage));

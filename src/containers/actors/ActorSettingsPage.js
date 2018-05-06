@@ -17,7 +17,7 @@ class ActorSettingsPage extends React.Component {
   componentWillMount() {
     const { actor } = this.props;
     if (!actor.id) {
-      const { id } = this.props.match.params;
+      const { id } = this.props.computedMatch.params;
       this.props.readActor(id, this.props.namespace);
     }
   }

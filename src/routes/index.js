@@ -80,8 +80,8 @@ const Routes = (props) => {
           }}
         />
         <AuthenticatedRoute
-          exact
           path="/people/:id/settings/account/"
+          exact
           component={(params) => {
             return <PersonSettingsAccountPage {...params} />;
           }}

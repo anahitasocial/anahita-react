@@ -35,11 +35,9 @@ class ActorAddPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.actor.id) {
-      this.setState({
-        actor: Object.assign({}, nextProps.actor),
-      });
-    }
+    this.setState({
+      actor: Object.assign({}, nextProps.actor),
+    });
   }
 
   handleFieldChange(event) {
