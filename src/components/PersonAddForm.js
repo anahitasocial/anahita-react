@@ -114,6 +114,7 @@ const PersonAddForm = (props) => {
           <FormControl className={classes.formControl}>
             <InputLabel
               htmlFor="person-usertype"
+              shrink
             >
               {'User Type'}
             </InputLabel>
@@ -125,6 +126,9 @@ const PersonAddForm = (props) => {
               onChange={handleFieldChange}
               input={<Input id="person-usertype" />}
             >
+              <option value="">
+                {'Select Type'}
+              </option>
               <option value={PERSON.TYPE.REGISTERED}>
                 {'Registered'}
               </option>
@@ -180,11 +184,7 @@ PersonAddForm.propTypes = {
   email: PropTypes.string,
   emailHelperText: PropTypes.string,
   emailError: PropTypes.bool,
-  usertype: PropTypes.oneOf([
-    PERSON.TYPE.REGISTERED,
-    PERSON.TYPE.ADMIN,
-    PERSON.TYPE.SUPER_ADMIN,
-  ]).isRequired,
+  usertype: PropTypes.string,
   usertypeError: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
@@ -205,6 +205,7 @@ PersonAddForm.defaultProps = {
   email: '',
   emailError: false,
   emailHelperText: '',
+  usertype: '',
   usertypeError: false,
   error: '',
   isFetching: false,

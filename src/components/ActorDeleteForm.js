@@ -71,6 +71,7 @@ const ActorInfoForm = (props) => {
             helperText={aliasHelperText}
             margin="normal"
             fullWidth
+            disabled={!canDelete}
           />
           {dismissPath &&
           <Button

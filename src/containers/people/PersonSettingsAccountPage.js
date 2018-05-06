@@ -36,7 +36,7 @@ class PersonSettingsAccountPage extends React.Component {
     const { actor } = this.props;
     if (!actor.id) {
       const { id } = this.props.computedMatch.params;
-      this.props.readActor(id, 'people');
+      this.props.readPerson(id);
     }
   }
 
@@ -181,7 +181,7 @@ class PersonSettingsAccountPage extends React.Component {
 
 PersonSettingsAccountPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  readActor: PropTypes.func.isRequired,
+  readPerson: PropTypes.func.isRequired,
   editPersonAccount: PropTypes.func.isRequired,
   actor: PropTypes.object,
   success: PropTypes.bool,
@@ -191,6 +191,7 @@ PersonSettingsAccountPage.propTypes = {
 
 PersonSettingsAccountPage.defaultProps = {
   actor: {
+    id: null,
     email: '',
     username: '',
     password: '',
@@ -226,8 +227,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readActor: (id, namespace) => {
-      dispatch(readActor(id, namespace));
+    readPerson: (id) => {
+      dispatch(readActor(id, 'people'));
     },
     editPersonAccount: (person) => {
       dispatch(editPersonAccount(person));

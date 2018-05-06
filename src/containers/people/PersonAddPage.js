@@ -22,7 +22,14 @@ class PersonAddPage extends React.Component {
     super(props);
 
     this.state = {
-      person: {},
+      person: {
+        givenName: '',
+        familyName: '',
+        username: '',
+        email: '',
+        usertype: '',
+        password: '',
+      },
       givenNameError: false,
       givenNameHelperText: '',
       familyNameError: false,
@@ -215,7 +222,7 @@ class PersonAddPage extends React.Component {
             email={person.email}
             emailError={emailError}
             emailHelperText={emailHelperText}
-            usertype={person.usertype || PERSON.TYPE.REGISTERED}
+            usertype={person.usertype}
             usertypeError={usertypeError}
             handleFieldChange={this.handleFieldChange}
             handleFormSubmit={this.handleFormSubmit}

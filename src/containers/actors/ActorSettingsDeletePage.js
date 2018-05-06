@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
+import { Person as PERSON } from '../../constants';
 import ActorDeleteForm from '../../components/ActorDeleteForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import {
@@ -99,8 +100,40 @@ class ActorSettingsDeletePage extends React.Component {
   }
 
   canDelete() {
-    const { alias, actor } = this.state;
-    return alias === actor.alias;
+    const {
+      actor,
+      viewer,
+    } = this.props;
+
+
+    if (viewer.type === PERSON.TYPE.SUPER_ADMIN) {
+      if (viewer.id === actor.id) {
+        return false;
+      }
+    }
+
+    if (viewer.usertype === PERSON.TYPE.ADMIN) {
+      if (actor.objecttype === 'com:people:person') {
+        if (actor.usertype === PERSON.TYPE.SUPER_ADMIN) {
+          return false;
+        }
+      }
+    }
+
+    if ([
+      PERSON.TYPE.ADMIN,
+      PERSON.TYPE.SUPER_ADMIN,
+    ].includes(viewer.usertype)) {
+      return true;
+    }
+
+    if (actor.administratorIds) {
+      if (actor.administratorIds.indexOf(String(viewer.id)) > -1) {
+        return false;
+      }
+    }
+
+    return false;
   }
 
   render() {
@@ -156,12 +189,13 @@ ActorSettingsDeletePage.propTypes = {
   namespace: PropTypes.string.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool,
-  history: PropTypes.object.isRequired,
   success: PropTypes.bool,
+  viewer: PropTypes.object.isRequired,
 };
 
 ActorSettingsDeletePage.defaultProps = {
   actor: {
+    id: null,
     alias: '',
   },
   isFetching: false,
@@ -177,8 +211,13 @@ const mapStateToProps = (state) => {
     isFetching,
   } = state.actorReducer;
 
+  const {
+    viewer,
+  } = state.authReducer;
+
   return {
     actor,
+    viewer,
     error,
     success,
     isFetching,

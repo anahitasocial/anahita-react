@@ -35,10 +35,11 @@ class ActorSettingsInfoPage extends React.Component {
   }
 
   componentWillMount() {
-    const { actor, namespace } = this.props;
+    const { actor } = this.props;
+
     if (!actor.id) {
       const { id } = this.props.computedMatch.params;
-      this.props.readActor(id, namespace);
+      this.props.readActor(id, this.props.namespace);
     }
   }
 
@@ -168,6 +169,7 @@ ActorSettingsInfoPage.propTypes = {
 
 ActorSettingsInfoPage.defaultProps = {
   actor: {
+    id: null,
     name: '',
     body: '',
   },

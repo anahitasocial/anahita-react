@@ -225,6 +225,7 @@ PersonSettingsInfoPage.propTypes = {
 
 PersonSettingsInfoPage.defaultProps = {
   actor: {
+    id: null,
     givenName: '',
     familyName: '',
     body: '',
