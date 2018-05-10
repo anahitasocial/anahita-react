@@ -101,7 +101,13 @@ class ActorCommands extends React.Component {
 
 ActorCommands.propTypes = {
   classes: PropTypes.object.isRequired,
-  actor: PropTypes.object.isRequired,
+  actor: PropTypes.object,
+};
+
+ActorCommands.defaultProps = {
+  actor: {
+    commands: [],
+  },
 };
 
 export default withStyles(styles)(ActorCommands);
