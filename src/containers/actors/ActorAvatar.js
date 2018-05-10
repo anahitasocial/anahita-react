@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
-import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import {
   addAvatar,
@@ -118,7 +118,8 @@ class ActorAvatar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Button
+        <IconButton
+          color="primary"
           component="span"
           className={classes.button}
           disabled={!this.canEdit() || isFetching}
@@ -132,7 +133,7 @@ class ActorAvatar extends React.Component {
           >
             {!src && actor.name.charAt(0)}
           </Avatar>
-        </Button>
+        </IconButton>
 
         <Menu
           id="avatar-add-menu"

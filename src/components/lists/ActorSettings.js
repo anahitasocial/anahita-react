@@ -8,7 +8,6 @@ import List, {
 } from 'material-ui/List';
 import InfoIcon from 'material-ui-icons/Info';
 import AccountIcon from 'material-ui-icons/Lock';
-import CoverIcon from 'material-ui-icons/Panorama';
 import PermissionsIcon from 'material-ui-icons/Settings';
 import AppsIcon from 'material-ui-icons/Apps';
 import ConnectIcon from 'material-ui-icons/Share';
