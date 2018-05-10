@@ -8,7 +8,6 @@ import List, {
 } from 'material-ui/List';
 import InfoIcon from 'material-ui-icons/Info';
 import AccountIcon from 'material-ui-icons/Lock';
-import AvatarIcon from 'material-ui-icons/RecentActors';
 import CoverIcon from 'material-ui-icons/Panorama';
 import PermissionsIcon from 'material-ui-icons/Settings';
 import AppsIcon from 'material-ui-icons/Apps';
@@ -63,26 +62,6 @@ const ActorSettingsList = (props) => {
             <ListItemText primary="Account" />
           </ListItem>
           }
-          <ListItem
-            button
-            component={Link}
-            to={`/${namespace}/${actor.id}/settings/avatar/`}
-          >
-            <ListItemIcon>
-              <AvatarIcon />
-            </ListItemIcon>
-            <ListItemText primary="Avatar" />
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to={`/${namespace}/${actor.id}/settings/cover/`}
-          >
-            <ListItemIcon>
-              <CoverIcon />
-            </ListItemIcon>
-            <ListItemText primary="Cover" />
-          </ListItem>
           <ListItem
             button
             component={Link}
