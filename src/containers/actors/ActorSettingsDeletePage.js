@@ -106,16 +106,16 @@ class ActorSettingsDeletePage extends React.Component {
     } = this.props;
 
 
-    if (viewer.type === PERSON.TYPE.SUPER_ADMIN) {
+    if (viewer.type !== PERSON.TYPE.SUPER_ADMIN) {
       if (viewer.id === actor.id) {
-        return false;
+        return true;
       }
     }
 
     if (viewer.usertype === PERSON.TYPE.ADMIN) {
       if (actor.objecttype === 'com:people:person') {
-        if (actor.usertype === PERSON.TYPE.SUPER_ADMIN) {
-          return false;
+        if (actor.usertype !== PERSON.TYPE.SUPER_ADMIN) {
+          return true;
         }
       }
     }
@@ -129,7 +129,7 @@ class ActorSettingsDeletePage extends React.Component {
 
     if (actor.administratorIds) {
       if (actor.administratorIds.indexOf(String(viewer.id)) > -1) {
-        return false;
+        return true;
       }
     }
 

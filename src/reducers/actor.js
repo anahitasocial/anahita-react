@@ -14,6 +14,8 @@ export default function (state = {
         actor: {},
       };
     case ACTOR.EDIT.REQUEST:
+    case ACTOR.AVATAR.ADD.REQUEST:
+    case ACTOR.AVATAR.DELETE.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -38,6 +40,8 @@ export default function (state = {
     case ACTOR.UNFOLLOW.SUCCESS:
     case ACTOR.BLOCK.SUCCESS:
     case ACTOR.UNBLOCK.SUCCESS:
+    case ACTOR.AVATAR.ADD.SUCCESS:
+    case ACTOR.AVATAR.DELETE.SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -53,6 +57,8 @@ export default function (state = {
     case ACTOR.UNFOLLOW.FAILURE:
     case ACTOR.BLOCK.FAILURE:
     case ACTOR.UNBLOCK.FAILURE:
+    case ACTOR.AVATAR.ADD.FAILURE:
+    case ACTOR.AVATAR.DELETE.FAILURE:
       return {
         ...state,
         isFetching: false,

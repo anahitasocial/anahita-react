@@ -163,7 +163,11 @@ const Routes = (props) => {
 };
 
 Routes.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+Routes.defaultProps = {
+  isAuthenticated: false,
 };
 
 function mapStateToProps(state) {

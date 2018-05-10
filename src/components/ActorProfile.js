@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import Card, {
@@ -22,10 +21,6 @@ const styles = theme => ({
   coverLoader: {
     minHeight: 300,
     backgroundColor: theme.palette.background.default,
-  },
-  avatar: {
-    width: theme.spacing.unit * 15,
-    height: theme.spacing.unit * 15,
   },
   header: {},
   titleContainer: {
@@ -99,16 +94,7 @@ class ActorProfile extends React.Component {
             </div>
           }
           <CardHeader
-            avatar={
-              <Avatar
-                aria-label={name}
-                className={classes.avatar}
-                alt={name}
-                src={avatar}
-              >
-                {!avatar && name.charAt(0)}
-              </Avatar>
-            }
+            avatar={avatar}
             title={
               <div className={classes.titleContainer}>
                 <Typography variant="title" className={classes.title}>
@@ -142,7 +128,7 @@ class ActorProfile extends React.Component {
 ActorProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   cover: PropTypes.string,
-  avatar: PropTypes.string,
+  avatar: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   alias: PropTypes.string,
   description: PropTypes.string,
@@ -152,7 +138,6 @@ ActorProfile.propTypes = {
 
 ActorProfile.defaultProps = {
   cover: '',
-  avatar: '',
   description: '',
   alias: '',
   followAction: null,

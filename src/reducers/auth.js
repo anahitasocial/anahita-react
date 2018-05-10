@@ -20,13 +20,13 @@ export default function (state = {
   error: '',
 }, action) {
   switch (action.type) {
-    case AUTH.VALIDATE_USERNAME.REQUEST:
+    case AUTH.VALIDATE.USERNAME.REQUEST:
       return {
         ...state,
         isValidating: true,
         usernameAvailable: false,
       };
-    case AUTH.VALIDATE_EMAIL.REQUEST:
+    case AUTH.VALIDATE.EMAIL.REQUEST:
       return {
         ...state,
         isValidating: true,
@@ -40,13 +40,13 @@ export default function (state = {
         success: false,
         viewer: {},
       };
-    case AUTH.VALIDATE_USERNAME.SUCCESS:
+    case AUTH.VALIDATE.USERNAME.SUCCESS:
       return {
         ...state,
         isValidating: false,
         usernameAvailable: action.isAvailable,
       };
-    case AUTH.VALIDATE_EMAIL.SUCCESS:
+    case AUTH.VALIDATE.EMAIL.SUCCESS:
       return {
         ...state,
         isValidating: false,
@@ -61,13 +61,13 @@ export default function (state = {
         error: '',
         viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
       };
-    case AUTH.VALIDATE_USERNAME.FAILURE:
+    case AUTH.VALIDATE.USERNAME.FAILURE:
       return {
         ...state,
         isValidating: false,
         usernameAvailable: false,
       };
-    case AUTH.VALIDATE_EMAIL.FAILURE:
+    case AUTH.VALIDATE.EMAIL.FAILURE:
       return {
         ...state,
         isValidating: false,
@@ -95,7 +95,7 @@ export default function (state = {
         error: '',
       };
     case AUTH.SIGNUP.REQUEST:
-    case AUTH.PASSWORD_RESET.REQUEST:
+    case AUTH.PASSWORD.RESET.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -103,7 +103,7 @@ export default function (state = {
         error: '',
       };
     case AUTH.SIGNUP.SUCCESS:
-    case AUTH.PASSWORD_RESET.SUCCESS:
+    case AUTH.PASSWORD.RESET.SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -111,7 +111,7 @@ export default function (state = {
         error: '',
       };
     case AUTH.SIGNUP.FAILURE:
-    case AUTH.PASSWORD_RESET.FAILURE:
+    case AUTH.PASSWORD.RESET.FAILURE:
       return {
         ...state,
         isFetching: false,

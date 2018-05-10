@@ -16,10 +16,10 @@ function readSuccess(result) {
   };
 }
 
-function readFailure(error) {
+function readFailure(response) {
   return {
     type: ACTOR.READ.FAILURE,
-    error: error.message,
+    error: response.message,
   };
 }
 
@@ -50,17 +50,17 @@ function editRequest(actor) {
   };
 }
 
-function editSuccess(response) {
+function editSuccess(result) {
   return {
     type: ACTOR.EDIT.SUCCESS,
-    actor: response.data,
+    actor: result.data,
   };
 }
 
-function editFailure(error) {
+function editFailure(response) {
   return {
     type: ACTOR.EDIT.FAILURE,
-    error: error.message,
+    error: response.message,
   };
 }
 
@@ -84,29 +84,30 @@ export function editActor(actor) {
 
 // -- Add
 
-function addRequest() {
+function addRequest(actor) {
   return {
     type: ACTOR.ADD.REQUEST,
+    actor,
   };
 }
 
-function addSuccess(response) {
+function addSuccess(result) {
   return {
     type: ACTOR.ADD.SUCCESS,
-    actor: response.data,
+    actor: result.data,
   };
 }
 
-function addFailure(error) {
+function addFailure(response) {
   return {
     type: ACTOR.ADD.FAILURE,
-    error: error.message,
+    error: response.message,
   };
 }
 
 export function addActor(actor, namespace) {
   return (dispatch) => {
-    dispatch(addRequest());
+    dispatch(addRequest(actor));
     return new Promise((resolve, reject) => {
       api.addActor(actor, namespace)
         .then((result) => {
@@ -131,17 +132,17 @@ function deleteRequest(actor) {
   };
 }
 
-function deleteSuccess(response) {
+function deleteSuccess(result) {
   return {
     type: ACTOR.DELETE.SUCCESS,
-    status: response.status,
+    status: result.status,
   };
 }
 
-function deleteFailure(error) {
+function deleteFailure(response) {
   return {
     type: ACTOR.DELETE.FAILURE,
-    error: error.message,
+    error: response.message,
   };
 }
 
@@ -155,6 +156,88 @@ export function deleteActor(actor) {
           return resolve();
         }, (response) => {
           dispatch(deleteFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
+// -- Add Avatar
+
+function addAvatarRequest(actor) {
+  return {
+    type: ACTOR.AVATAR.ADD.REQUEST,
+    actor,
+  };
+}
+
+function addAvatarSuccess(result) {
+  return {
+    type: ACTOR.AVATAR.ADD.SUCCESS,
+    actor: result.data,
+  };
+}
+
+function addAvatarFailure(response) {
+  return {
+    type: ACTOR.AVATAR.ADD.FAILURE,
+    error: response.message,
+  };
+}
+
+export function addAvatar(actor, file) {
+  return (dispatch) => {
+    dispatch(addAvatarRequest(actor));
+    return new Promise((resolve, reject) => {
+      api.editAvatar(actor, file)
+        .then((result) => {
+          dispatch(addAvatarSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(addAvatarFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
+// -- Delete Avatar
+
+function deleteAvatarRequest(actor) {
+  return {
+    type: ACTOR.AVATAR.DELETE.REQUEST,
+    actor,
+  };
+}
+
+function deleteAvatarSuccess(result) {
+  return {
+    type: ACTOR.AVATAR.DELETE.SUCCESS,
+    actor: result.data,
+  };
+}
+
+function deleteAvatarFailure(response) {
+  return {
+    type: ACTOR.AVATAR.DELETE.FAILURE,
+    error: response.message,
+  };
+}
+
+export function deleteAvatar(actor) {
+  return (dispatch) => {
+    dispatch(deleteAvatarRequest(actor));
+    return new Promise((resolve, reject) => {
+      api.editAvatar(actor)
+        .then((result) => {
+          dispatch(deleteAvatarSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(deleteAvatarFailure(response));
           return reject(response);
         }).catch((error) => {
           throw new Error(error);

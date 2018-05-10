@@ -5,20 +5,20 @@ import { Auth as AUTH } from '../constants';
 
 function validateUsernameRequest() {
   return {
-    type: AUTH.VALIDATE_USERNAME.REQUEST,
+    type: AUTH.VALIDATE.USERNAME.REQUEST,
   };
 }
 
 function validateUsernameSuccess() {
   return {
-    type: AUTH.VALIDATE_USERNAME.SUCCESS,
+    type: AUTH.VALIDATE.USERNAME.SUCCESS,
     isAvailable: true,
   };
 }
 
 function validateUsernameFailure(error) {
   return {
-    type: AUTH.VALIDATE_USERNAME.FAILURE,
+    type: AUTH.VALIDATE.USERNAME.FAILURE,
     error: error.message,
   };
 }
@@ -45,20 +45,20 @@ export function validateUsername(username) {
 
 function validateEmailRequest() {
   return {
-    type: AUTH.VALIDATE_EMAIL.REQUEST,
+    type: AUTH.VALIDATE.EMAIL.REQUEST,
   };
 }
 
 function validateEmailSucess() {
   return {
-    type: AUTH.VALIDATE_EMAIL.SUCCESS,
+    type: AUTH.VALIDATE.EMAIL.SUCCESS,
     isAvailable: true,
   };
 }
 
 function validateEmailFailure(error) {
   return {
-    type: AUTH.VALIDATE_EMAIL.FAILURE,
+    type: AUTH.VALIDATE.EMAIL.FAILURE,
     error: error.message,
   };
 }
@@ -206,20 +206,20 @@ export function signup(person) {
 
 function resetPasswordRequest() {
   return {
-    type: AUTH.PASSWORD_RESET.REQUEST,
+    type: AUTH.PASSWORD.RESET.REQUEST,
   };
 }
 
 function resetPasswordSuccess(response) {
   return {
-    type: AUTH.PASSWORD_RESET.SUCCESS,
+    type: AUTH.PASSWORD.RESET.SUCCESS,
     status: response.status,
   };
 }
 
 function resetPasswordFailure(error) {
   return {
-    type: AUTH.PASSWORD_RESET.FAILURE,
+    type: AUTH.PASSWORD.RESET.FAILURE,
     error: error.message,
   };
 }
