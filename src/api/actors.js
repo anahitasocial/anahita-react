@@ -48,6 +48,8 @@ export function deleteActor(actor) {
   return axios.delete(`/${namespace}/${actor.id}.json`);
 }
 
+// @todo the editAvatar and editCover code is wet. Make it DRY!
+
 export function editAvatar(actor, file) {
   const namespace = actor.objectType.split('.')[1];
   const { id } = actor;
@@ -67,4 +69,25 @@ export function editAvatar(actor, file) {
   };
 
   return axios.post(`/${namespace}/${id}.json?edit=avatar`, formData, config);
+}
+
+export function editCover(actor, file) {
+  const namespace = actor.objectType.split('.')[1];
+  const { id } = actor;
+  const formData = new FormData();
+
+  if (!file) {
+    const newFile = new File([], '');
+    formData.append('cover', newFile);
+  } else {
+    formData.append('cover', file);
+  }
+
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  };
+
+  return axios.post(`/${namespace}/${id}.json?edit=cover`, formData, config);
 }

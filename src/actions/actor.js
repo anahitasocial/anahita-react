@@ -245,3 +245,85 @@ export function deleteAvatar(actor) {
     });
   };
 }
+
+// -- Add Cover
+
+function addCoverRequest(actor) {
+  return {
+    type: ACTOR.COVER.ADD.REQUEST,
+    actor,
+  };
+}
+
+function addCoverSuccess(result) {
+  return {
+    type: ACTOR.COVER.ADD.SUCCESS,
+    actor: result.data,
+  };
+}
+
+function addCoverFailure(response) {
+  return {
+    type: ACTOR.COVER.ADD.FAILURE,
+    error: response.message,
+  };
+}
+
+export function addCover(actor, file) {
+  return (dispatch) => {
+    dispatch(addCoverRequest(actor));
+    return new Promise((resolve, reject) => {
+      api.editCover(actor, file)
+        .then((result) => {
+          dispatch(addCoverSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(addCoverFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
+// -- Delete Cover
+
+function deleteCoverRequest(actor) {
+  return {
+    type: ACTOR.COVER.DELETE.REQUEST,
+    actor,
+  };
+}
+
+function deleteCoverSuccess(result) {
+  return {
+    type: ACTOR.COVER.DELETE.SUCCESS,
+    actor: result.data,
+  };
+}
+
+function deleteCoverFailure(response) {
+  return {
+    type: ACTOR.COVER.DELETE.FAILURE,
+    error: response.message,
+  };
+}
+
+export function deleteCover(actor) {
+  return (dispatch) => {
+    dispatch(deleteCoverRequest(actor));
+    return new Promise((resolve, reject) => {
+      api.editCover(actor)
+        .then((result) => {
+          dispatch(deleteCoverSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(deleteCoverFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}

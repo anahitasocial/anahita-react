@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
-import IconButton from 'material-ui/IconButton';
+import ButtonBase from 'material-ui/ButtonBase';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import { CircularProgress } from 'material-ui/Progress';
+import { LinearProgress } from 'material-ui/Progress';
+import { CardMedia } from 'material-ui/Card';
+import Fade from 'material-ui/transitions/Fade';
 import {
-  addAvatar,
-  deleteAvatar,
+  addCover,
+  deleteCover,
 } from '../../actions/actor';
 import { Person as PERSON } from '../../constants';
 
@@ -16,31 +17,35 @@ const styles = theme => ({
   root: {
     width: '100%',
   },
-  avatar: {
-    width: theme.spacing.unit * 15,
-    height: theme.spacing.unit * 15,
+  cover: {
+    width: '100%',
+    minHeight: 300,
+  },
+  coverPlaceholder: {
+    width: '100%',
+    minHeight: 300,
+    backgroundColor: theme.palette.background.default,
   },
   button: {
     position: 'relative',
-    width: theme.spacing.unit * 15,
-    height: theme.spacing.unit * 15,
-    zIndex: 1,
+    width: '100%',
+    minHeight: 300,
   },
   input: {
     display: 'none',
   },
 });
 
-class ActorAvatar extends React.Component {
+class ActorCover extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       anchorEl: null,
-      avatarLoaded: false,
+      coverLoaded: false,
     };
 
-    this.avatar = new Image();
+    this.cover = new Image();
 
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -49,56 +54,56 @@ class ActorAvatar extends React.Component {
   }
 
   componentDidMount() {
-    this.loadAvatar(this.props.actor);
+    this.loadCover(this.props.actor);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.loadAvatar(nextProps.actor);
+    this.loadCover(nextProps.actor);
   }
 
   componentWillUnmount() {
-    this.avatar.onload = null;
-    this.avatar.onerror = null;
+    this.cover.onload = null;
+    this.cover.onerror = null;
   }
 
-  loadAvatar(actor) {
-    this.avatar.onload = () => {
+  loadCover(actor) {
+    this.cover.onload = () => {
       this.setState({
-        avatarLoaded: true,
+        coverLoaded: true,
       });
     };
-    this.avatar.onError = () => {
+    this.cover.onError = () => {
       this.setState({
-        avatarLoaded: false,
+        coverLoaded: false,
       });
     };
 
-    this.avatar.src = actor.imageURL &&
-    actor.imageURL.large &&
-    actor.imageURL.large.url;
+    this.cover.src = actor.coverURL &&
+    actor.coverURL.large &&
+    actor.coverURL.large.url;
   }
 
-  addAvatar() {
+  addCover() {
     const { actor } = this.props;
-    this.props.addAvatar(actor, this.file);
+    this.props.addCover(actor, this.file);
   }
 
-  deleteAvatar() {
+  deleteCover() {
     const { actor } = this.props;
-    this.props.deleteAvatar(actor);
+    this.props.deleteCover(actor);
   }
 
   handleFieldChange(event) {
     const file = event.target.files[0];
     this.file = file;
-    this.addAvatar();
+    this.addCover();
     this.setState({
       anchorEl: null,
     });
   }
 
   handleDelete() {
-    this.deleteAvatar();
+    this.deleteCover();
     this.setState({
       anchorEl: null,
     });
@@ -139,13 +144,13 @@ class ActorAvatar extends React.Component {
     return false;
   }
 
-  hasAvatar() {
+  hasCover() {
     const { actor } = this.props;
-    return Boolean(actor.imageURL && actor.imageURL.large);
+    return Boolean(actor.coverURL && actor.coverURL.large);
   }
 
   isWaiting() {
-    return !this.state.avatarLoaded || this.props.isFetching;
+    return this.hasCover() && (!this.state.coverLoaded || this.props.isFetching);
   }
 
   render() {
@@ -155,58 +160,48 @@ class ActorAvatar extends React.Component {
       actor,
     } = this.props;
 
-    const { anchorEl, avatarLoaded } = this.state;
+    const { anchorEl, coverLoaded } = this.state;
 
     return (
       <div className={classes.root}>
-        <IconButton
-          color="primary"
-          component="span"
+        {this.isWaiting() &&
+          <LinearProgress className={classes.loader} />
+        }
+        <ButtonBase
           className={classes.button}
           disabled={!this.canEdit() || isFetching}
           onClick={this.handleOpen}
         >
-          {this.hasAvatar() &&
-            <Avatar
-              aria-label={actor.name}
-              className={classes.avatar}
-              alt={actor.name}
-              src={avatarLoaded ? this.avatar.src : ''}
-            >
-              {this.isWaiting() &&
-                <CircularProgress />
-              }
-            </Avatar>
+          {this.hasCover() && coverLoaded &&
+            <Fade in>
+              <CardMedia
+                className={classes.cover}
+                title={actor.name}
+                image={this.cover.src}
+              />
+            </Fade>
           }
-          {!this.hasAvatar() &&
-            <Avatar
-              aria-label={actor.name}
-              className={classes.avatar}
-              alt={actor.name}
-              src={avatarLoaded ? this.avatar.src : ''}
-            >
-              {actor.name.charAt(0)}
-            </Avatar>
+          {!this.hasCover() &&
+            <div className={classes.coverPlaceholder} />
           }
-        </IconButton>
-
+        </ButtonBase>
         <Menu
-          id="avatar-add-menu"
+          id="cover-add-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
           <MenuItem>
-            <label htmlFor="selectAvatarFile">
+            <label htmlFor="selectCoverFile">
               <input
                 accept="image/*"
                 className={classes.input}
-                id="selectAvatarFile"
+                id="selectCoverFile"
                 type="file"
                 disabled={!this.canEdit() || isFetching}
                 onChange={this.handleFieldChange}
               />
-              {'Upload Avatar'}
+              {'Upload Cover'}
             </label>
           </MenuItem>
           <MenuItem onClick={this.handleDelete}>
@@ -218,16 +213,16 @@ class ActorAvatar extends React.Component {
   }
 }
 
-ActorAvatar.propTypes = {
+ActorCover.propTypes = {
   classes: PropTypes.object.isRequired,
-  addAvatar: PropTypes.func.isRequired,
-  deleteAvatar: PropTypes.func.isRequired,
+  addCover: PropTypes.func.isRequired,
+  deleteCover: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
   viewer: PropTypes.object.isRequired,
   isFetching: PropTypes.bool,
 };
 
-ActorAvatar.defaultProps = {
+ActorCover.defaultProps = {
   isFetching: false,
 };
 
@@ -243,11 +238,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addAvatar: (actor, file) => {
-      dispatch(addAvatar(actor, file));
+    addCover: (actor, file) => {
+      dispatch(addCover(actor, file));
     },
-    deleteAvatar: (actor) => {
-      dispatch(deleteAvatar(actor));
+    deleteCover: (actor) => {
+      dispatch(deleteCover(actor));
     },
   };
 };
@@ -255,4 +250,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorAvatar));
+)(ActorCover));

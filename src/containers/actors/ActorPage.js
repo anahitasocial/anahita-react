@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import ActorProfile from '../../components/ActorProfile';
 import ActorAvatar from './ActorAvatar';
+import ActorCover from './ActorCover';
 import ActorCommands from './ActorCommands';
 import FollowAction from '../actions/FollowAction';
 import { readActor } from '../../actions/actor';
@@ -45,7 +46,6 @@ class ActorPage extends React.Component {
   }
 
   renderProfile(actor) {
-    const cover = actor.coverURL.large && actor.coverURL.large.url;
     const canFollow = this.canFollow(actor);
     const {
       isAuthenticated,
@@ -54,7 +54,13 @@ class ActorPage extends React.Component {
     } = this.props;
     return (
       <ActorProfile
-        cover={cover}
+        cover={
+          <ActorCover
+            actor={actor}
+            viewer={viewer}
+            isFetching={isFetching}
+          />
+        }
         avatar={
           <ActorAvatar
             actor={actor}
