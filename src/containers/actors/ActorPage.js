@@ -47,7 +47,11 @@ class ActorPage extends React.Component {
   renderProfile(actor) {
     const cover = actor.coverURL.large && actor.coverURL.large.url;
     const canFollow = this.canFollow(actor);
-    const { isAuthenticated, viewer } = this.props;
+    const {
+      isAuthenticated,
+      viewer,
+      isFetching,
+    } = this.props;
     return (
       <ActorProfile
         cover={cover}
@@ -55,6 +59,7 @@ class ActorPage extends React.Component {
           <ActorAvatar
             actor={actor}
             viewer={viewer}
+            isFetching={isFetching}
           />
         }
         name={actor.name}
@@ -87,6 +92,7 @@ ActorPage.propTypes = {
   viewer: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool,
   namespace: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool,
 };
 
 ActorPage.defaultProps = {
@@ -96,6 +102,7 @@ ActorPage.defaultProps = {
     body: '',
   },
   isAuthenticated: false,
+  isFetching: false,
 };
 
 const mapStateToProps = (state) => {
@@ -103,6 +110,7 @@ const mapStateToProps = (state) => {
     actor,
     error,
     isLeader,
+    isFetching,
   } = state.actorReducer;
 
   const {
@@ -116,6 +124,7 @@ const mapStateToProps = (state) => {
     error,
     isAuthenticated,
     viewer,
+    isFetching,
   };
 };
 

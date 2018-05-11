@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import { CircularProgress } from 'material-ui/Progress';
 import {
   addAvatar,
   deleteAvatar,
@@ -36,12 +37,45 @@ class ActorAvatar extends React.Component {
 
     this.state = {
       anchorEl: null,
+      avatarLoaded: false,
     };
+
+    this.avatar = new Image();
 
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadAvatar(this.props.actor);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.loadAvatar(nextProps.actor);
+  }
+
+  componentWillUnmount() {
+    this.avatar.onload = null;
+    this.avatar.onerror = null;
+  }
+
+  loadAvatar(actor) {
+    this.avatar.onload = () => {
+      this.setState({
+        avatarLoaded: true,
+      });
+    };
+    this.avatar.onError = () => {
+      this.setState({
+        avatarLoaded: false,
+      });
+    };
+
+    this.avatar.src = actor.imageURL &&
+    actor.imageURL.large &&
+    actor.imageURL.large.url;
   }
 
   addAvatar() {
@@ -105,6 +139,15 @@ class ActorAvatar extends React.Component {
     return false;
   }
 
+  hasAvatar() {
+    const { actor } = this.props;
+    return actor.imageURL && actor.imageURL.large;
+  }
+
+  isWaiting() {
+    return !this.state.avatarLoaded || this.props.isFetching;
+  }
+
   render() {
     const {
       classes,
@@ -112,9 +155,7 @@ class ActorAvatar extends React.Component {
       actor,
     } = this.props;
 
-    const { anchorEl } = this.state;
-
-    const src = actor.imageURL && actor.imageURL.large && actor.imageURL.large.url;
+    const { anchorEl, avatarLoaded } = this.state;
 
     return (
       <div className={classes.root}>
@@ -125,14 +166,28 @@ class ActorAvatar extends React.Component {
           disabled={!this.canEdit() || isFetching}
           onClick={this.handleOpen}
         >
-          <Avatar
-            aria-label={actor.name}
-            className={classes.avatar}
-            alt={actor.name}
-            src={src}
-          >
-            {!src && actor.name.charAt(0)}
-          </Avatar>
+          {this.hasAvatar() &&
+            <Avatar
+              aria-label={actor.name}
+              className={classes.avatar}
+              alt={actor.name}
+              src={avatarLoaded ? this.avatar.src : ''}
+            >
+              {this.isWaiting() &&
+                <CircularProgress />
+              }
+            </Avatar>
+          }
+          {!this.hasAvatar() &&
+            <Avatar
+              aria-label={actor.name}
+              className={classes.avatar}
+              alt={actor.name}
+              src={avatarLoaded ? this.avatar.src : ''}
+            >
+              {actor.name.charAt(0)}
+            </Avatar>
+          }
         </IconButton>
 
         <Menu
