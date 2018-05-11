@@ -11,14 +11,6 @@ const styles = theme => ({
   root: {
     width: '100%',
   },
-  cover: {
-    minHeight: 300,
-  },
-  coverLoader: {
-    minHeight: 300,
-    backgroundColor: theme.palette.background.default,
-  },
-  header: {},
   titleContainer: {
     marginBottom: 20,
   },
