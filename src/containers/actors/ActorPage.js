@@ -50,7 +50,8 @@ class ActorPage extends React.Component {
     const {
       isAuthenticated,
       viewer,
-      isFetching,
+      isFetchingAvatar,
+      isFetchingCover,
     } = this.props;
     return (
       <ActorProfile
@@ -58,14 +59,14 @@ class ActorPage extends React.Component {
           <ActorCover
             actor={actor}
             viewer={viewer}
-            isFetching={isFetching}
+            isFetching={isFetchingCover}
           />
         }
         avatar={
           <ActorAvatar
             actor={actor}
             viewer={viewer}
-            isFetching={isFetching}
+            isFetching={isFetchingAvatar}
           />
         }
         name={actor.name}
@@ -98,7 +99,8 @@ ActorPage.propTypes = {
   viewer: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool,
   namespace: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool,
+  isFetchingAvatar: PropTypes.bool,
+  isFetchingCover: PropTypes.bool,
 };
 
 ActorPage.defaultProps = {
@@ -108,7 +110,8 @@ ActorPage.defaultProps = {
     body: '',
   },
   isAuthenticated: false,
-  isFetching: false,
+  isFetchingAvatar: false,
+  isFetchingCover: false,
 };
 
 const mapStateToProps = (state) => {
@@ -117,6 +120,8 @@ const mapStateToProps = (state) => {
     error,
     isLeader,
     isFetching,
+    isFetchingAvatar,
+    isFetchingCover,
   } = state.actorReducer;
 
   const {
@@ -131,6 +136,8 @@ const mapStateToProps = (state) => {
     isAuthenticated,
     viewer,
     isFetching,
+    isFetchingAvatar,
+    isFetchingCover,
   };
 };
 

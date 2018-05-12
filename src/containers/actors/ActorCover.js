@@ -26,6 +26,9 @@ const styles = theme => ({
     minHeight: 300,
     backgroundColor: theme.palette.background.default,
   },
+  loader: {
+    height: 3,
+  },
   button: {
     position: 'relative',
     width: '100%',
@@ -150,7 +153,7 @@ class ActorCover extends React.Component {
   }
 
   isWaiting() {
-    return this.hasCover() && (!this.state.coverLoaded || this.props.isFetching);
+    return (this.hasCover() && !this.state.coverLoaded) || this.props.isFetching;
   }
 
   render() {
@@ -164,9 +167,6 @@ class ActorCover extends React.Component {
 
     return (
       <div className={classes.root}>
-        {this.isWaiting() &&
-          <LinearProgress className={classes.loader} />
-        }
         <ButtonBase
           className={classes.button}
           disabled={!this.canEdit() || isFetching}
@@ -208,6 +208,11 @@ class ActorCover extends React.Component {
             {'Delete'}
           </MenuItem>
         </Menu>
+        <div className={classes.loader}>
+          {this.isWaiting() &&
+            <LinearProgress className={classes.loader} />
+          }
+        </div>
       </div>
     );
   }
