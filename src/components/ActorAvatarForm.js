@@ -1,0 +1,139 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Avatar from 'material-ui/Avatar';
+import IconButton from 'material-ui/IconButton';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import { CircularProgress } from 'material-ui/Progress';
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+  },
+  avatar: {
+    width: theme.spacing.unit * 15,
+    height: theme.spacing.unit * 15,
+  },
+  button: {
+    position: 'relative',
+    width: theme.spacing.unit * 15,
+    height: theme.spacing.unit * 15,
+    zIndex: 1,
+  },
+  input: {
+    display: 'none',
+  },
+});
+
+const ActorAvatarForm = (props) => {
+  const {
+    classes,
+    name,
+    avatar,
+    anchorEl,
+    isFetching,
+    isAvatarLoaded,
+    isWaiting,
+    canEdit,
+    hasAvatar,
+    handleOpen,
+    handleClose,
+    handleFieldChange,
+    handleDelete,
+  } = props;
+
+  return (
+    <div className={classes.root}>
+      <IconButton
+        color="primary"
+        component="span"
+        className={classes.button}
+        disabled={!canEdit || isFetching}
+        onClick={handleOpen}
+      >
+        {hasAvatar &&
+          <Avatar
+            aria-label={name}
+            className={classes.avatar}
+            alt={name}
+            src={isAvatarLoaded ? avatar.src : ''}
+          >
+            {isWaiting &&
+              <CircularProgress />
+            }
+          </Avatar>
+        }
+        {!hasAvatar &&
+          <Avatar
+            aria-label={name}
+            className={classes.avatar}
+            alt={name}
+            src={isAvatarLoaded ? avatar.src : ''}
+          >
+            {!isWaiting &&
+              name.charAt(0)
+            }
+            {isWaiting &&
+              <CircularProgress />
+            }
+          </Avatar>
+        }
+      </IconButton>
+
+      <Menu
+        id="avatar-add-menu"
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem>
+          <label htmlFor="selectAvatarFile">
+            <input
+              accept="image/*"
+              className={classes.input}
+              id="selectAvatarFile"
+              type="file"
+              disabled={!canEdit || isFetching}
+              onChange={handleFieldChange}
+            />
+            {'Upload Avatar'}
+          </label>
+        </MenuItem>
+        <MenuItem onClick={handleDelete}>
+          {'Delete'}
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};
+
+ActorAvatarForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+  name: PropTypes.string,
+  avatar: PropTypes.object,
+  anchorEl: PropTypes.object,
+  isFetching: PropTypes.bool,
+  isAvatarLoaded: PropTypes.bool,
+  isWaiting: PropTypes.bool,
+  hasAvatar: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  handleOpen: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+};
+
+ActorAvatarForm.defaultProps = {
+  isFetching: false,
+  canEdit: false,
+  hasAvatar: false,
+  name: '',
+  avatar: {
+    src: '',
+  },
+  isAvatarLoaded: false,
+  isWaiting: false,
+  anchorEl: null,
+};
+
+export default withStyles(styles)(ActorAvatarForm);

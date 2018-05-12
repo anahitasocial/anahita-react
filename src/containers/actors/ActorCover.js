@@ -1,43 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import ButtonBase from 'material-ui/ButtonBase';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { LinearProgress } from 'material-ui/Progress';
-import { CardMedia } from 'material-ui/Card';
-import Fade from 'material-ui/transitions/Fade';
 import {
   addCover,
   deleteCover,
 } from '../../actions/actor';
 import { Person as PERSON } from '../../constants';
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-  },
-  cover: {
-    width: '100%',
-    minHeight: 300,
-  },
-  coverPlaceholder: {
-    width: '100%',
-    minHeight: 300,
-    backgroundColor: theme.palette.background.default,
-  },
-  loader: {
-    height: 3,
-  },
-  button: {
-    position: 'relative',
-    width: '100%',
-    minHeight: 300,
-  },
-  input: {
-    display: 'none',
-  },
-});
+import ActorCoverForm from '../../components/ActorCoverForm';
 
 class ActorCover extends React.Component {
   constructor(props) {
@@ -158,7 +127,6 @@ class ActorCover extends React.Component {
 
   render() {
     const {
-      classes,
       isFetching,
       actor,
     } = this.props;
@@ -166,60 +134,25 @@ class ActorCover extends React.Component {
     const { anchorEl, coverLoaded } = this.state;
 
     return (
-      <div className={classes.root}>
-        <ButtonBase
-          className={classes.button}
-          disabled={!this.canEdit() || isFetching}
-          onClick={this.handleOpen}
-        >
-          {this.hasCover() && coverLoaded &&
-            <Fade in>
-              <CardMedia
-                className={classes.cover}
-                title={actor.name}
-                image={this.cover.src}
-              />
-            </Fade>
-          }
-          {!this.hasCover() &&
-            <div className={classes.coverPlaceholder} />
-          }
-        </ButtonBase>
-        <Menu
-          id="cover-add-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-          <MenuItem>
-            <label htmlFor="selectCoverFile">
-              <input
-                accept="image/*"
-                className={classes.input}
-                id="selectCoverFile"
-                type="file"
-                disabled={!this.canEdit() || isFetching}
-                onChange={this.handleFieldChange}
-              />
-              {'Upload Cover'}
-            </label>
-          </MenuItem>
-          <MenuItem onClick={this.handleDelete}>
-            {'Delete'}
-          </MenuItem>
-        </Menu>
-        <div className={classes.loader}>
-          {this.isWaiting() &&
-            <LinearProgress className={classes.loader} />
-          }
-        </div>
-      </div>
+      <ActorCoverForm
+        isFetching={isFetching}
+        name={actor.name}
+        cover={this.cover}
+        anchorEl={anchorEl}
+        canEdit={this.canEdit()}
+        hasCover={this.hasCover()}
+        isWaiting={this.isWaiting()}
+        isCoverLoaded={coverLoaded}
+        handleOpen={this.handleOpen}
+        handleClose={this.handleClose}
+        handleFieldChange={this.handleFieldChange}
+        handleDelete={this.handleDelete}
+      />
     );
   }
 }
 
 ActorCover.propTypes = {
-  classes: PropTypes.object.isRequired,
   addCover: PropTypes.func.isRequired,
   deleteCover: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
@@ -252,7 +185,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorCover));
+)(ActorCover);

@@ -1,35 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
-import IconButton from 'material-ui/IconButton';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { CircularProgress } from 'material-ui/Progress';
 import {
   addAvatar,
   deleteAvatar,
 } from '../../actions/actor';
 import { Person as PERSON } from '../../constants';
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-  },
-  avatar: {
-    width: theme.spacing.unit * 15,
-    height: theme.spacing.unit * 15,
-  },
-  button: {
-    position: 'relative',
-    width: theme.spacing.unit * 15,
-    height: theme.spacing.unit * 15,
-    zIndex: 1,
-  },
-  input: {
-    display: 'none',
-  },
-});
+import ActorAvatarForm from '../../components/ActorAvatarForm';
 
 class ActorAvatar extends React.Component {
   constructor(props) {
@@ -94,6 +71,7 @@ class ActorAvatar extends React.Component {
     this.addAvatar();
     this.setState({
       anchorEl: null,
+      avatarLoaded: false,
     });
   }
 
@@ -101,6 +79,7 @@ class ActorAvatar extends React.Component {
     this.deleteAvatar();
     this.setState({
       anchorEl: null,
+      avatarLoaded: false,
     });
   }
 
@@ -145,81 +124,42 @@ class ActorAvatar extends React.Component {
   }
 
   isWaiting() {
-    return !this.state.avatarLoaded || this.props.isFetching;
+    const { avatarLoaded } = this.state;
+    const { isFetching } = this.props;
+    return (this.hasAvatar() && !avatarLoaded) || isFetching;
   }
 
   render() {
     const {
-      classes,
       isFetching,
       actor,
     } = this.props;
 
-    const { anchorEl, avatarLoaded } = this.state;
+    const {
+      anchorEl,
+      avatarLoaded,
+    } = this.state;
 
     return (
-      <div className={classes.root}>
-        <IconButton
-          color="primary"
-          component="span"
-          className={classes.button}
-          disabled={!this.canEdit() || isFetching}
-          onClick={this.handleOpen}
-        >
-          {this.hasAvatar() &&
-            <Avatar
-              aria-label={actor.name}
-              className={classes.avatar}
-              alt={actor.name}
-              src={avatarLoaded ? this.avatar.src : ''}
-            >
-              {this.isWaiting() &&
-                <CircularProgress />
-              }
-            </Avatar>
-          }
-          {!this.hasAvatar() &&
-            <Avatar
-              aria-label={actor.name}
-              className={classes.avatar}
-              alt={actor.name}
-              src={avatarLoaded ? this.avatar.src : ''}
-            >
-              {actor.name.charAt(0)}
-            </Avatar>
-          }
-        </IconButton>
-
-        <Menu
-          id="avatar-add-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-          <MenuItem>
-            <label htmlFor="selectAvatarFile">
-              <input
-                accept="image/*"
-                className={classes.input}
-                id="selectAvatarFile"
-                type="file"
-                disabled={!this.canEdit() || isFetching}
-                onChange={this.handleFieldChange}
-              />
-              {'Upload Avatar'}
-            </label>
-          </MenuItem>
-          <MenuItem onClick={this.handleDelete}>
-            {'Delete'}
-          </MenuItem>
-        </Menu>
-      </div>
+      <ActorAvatarForm
+        isFetching={isFetching}
+        name={actor.name}
+        avatar={this.avatar}
+        anchorEl={anchorEl}
+        canEdit={this.canEdit()}
+        hasAvatar={this.hasAvatar()}
+        isWaiting={this.isWaiting()}
+        isAvatarLoaded={avatarLoaded}
+        handleOpen={this.handleOpen}
+        handleClose={this.handleClose}
+        handleFieldChange={this.handleFieldChange}
+        handleDelete={this.handleDelete}
+      />
     );
   }
 }
 
 ActorAvatar.propTypes = {
-  classes: PropTypes.object.isRequired,
   addAvatar: PropTypes.func.isRequired,
   deleteAvatar: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
@@ -252,7 +192,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorAvatar));
+)(ActorAvatar);
