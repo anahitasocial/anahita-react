@@ -6,6 +6,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import { LinearProgress } from 'material-ui/Progress';
 import { CardMedia } from 'material-ui/Card';
 import Fade from 'material-ui/transitions/Fade';
+import CoverIcon from 'material-ui-icons/Panorama';
 
 const styles = theme => ({
   root: {
@@ -19,6 +20,11 @@ const styles = theme => ({
     width: '100%',
     minHeight: 300,
     backgroundColor: theme.palette.background.default,
+  },
+  coverIcon: {
+    width: theme.spacing.unit * 10,
+    height: theme.spacing.unit * 10,
+    margin: '10% auto',
   },
   loader: {
     height: 3,
@@ -67,7 +73,12 @@ const ActorCoverForm = (props) => {
           </Fade>
         }
         {!hasCover &&
-          <div className={classes.coverPlaceholder} />
+          <div className={classes.coverPlaceholder}>
+            <CoverIcon
+              className={classes.coverIcon}
+              color="disabled"
+            />
+          </div>
         }
       </ButtonBase>
       <Menu
