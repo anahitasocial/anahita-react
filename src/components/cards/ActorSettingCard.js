@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'material-ui/styles/withStyles';
-import Card, {
-  CardHeader,
-} from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar';
-import Divider from 'material-ui/Divider';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
 
 const styles = {

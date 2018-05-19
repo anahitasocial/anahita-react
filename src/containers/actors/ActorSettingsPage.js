@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import ActorSettingsList from '../../components/lists/ActorSettings';
-import {
-  readActor,
-} from '../../actions/actor';
+import { readActor } from '../../actions/actor';
 
 const styles = {
   root: {

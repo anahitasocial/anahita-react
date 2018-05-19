@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import ButtonBase from 'material-ui/ButtonBase';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { LinearProgress } from 'material-ui/Progress';
-import { CardMedia } from 'material-ui/Card';
-import Fade from 'material-ui/transitions/Fade';
-import CoverIcon from 'material-ui-icons/Panorama';
+import withStyles from '@material-ui/core/styles/withStyles';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import CardMedia from '@material-ui/core/CardMedia';
+import Fade from '@material-ui/core/Fade';
+import CoverIcon from '@material-ui/icons/Panorama';
 
 const styles = theme => ({
   root: {

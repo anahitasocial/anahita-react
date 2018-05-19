@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import Fade from 'material-ui/transitions/Fade';
+import withStyles from '@material-ui/core/styles/withStyles';
+import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import { NavLink } from 'react-router-dom';
 import BlockAction from '../actions/BlockAction';
 
@@ -50,7 +50,7 @@ class ActorCommands extends React.Component {
     const { classes, actor } = this.props;
     const { anchorEl } = this.state;
     // const namespace = actor.objectType.split('.')[1];
-    console.log(actor.commands);
+    // console.log(actor.commands);
     return (
       <div className={classes.root}>
         <IconButton
@@ -72,19 +72,24 @@ class ActorCommands extends React.Component {
               width: 200,
             },
           }}
-          transition={Fade}
         >
           {actor.commands.map((command) => {
             switch (command) {
               case 'block':
               case 'unblock':
                 return (
-                  <BlockAction actor={actor} key={command} />
+                  <BlockAction
+                    actor={actor}
+                    key={command}
+                  />
                 );
               case 'edit-actor':
                 return (
                   <MenuItem key={command}>
-                    <NavLink to="settings/" className={classes.navlink}>
+                    <NavLink
+                      to="settings/"
+                      className={classes.navlink}
+                    >
                       {'Settings'}
                     </NavLink>
                   </MenuItem>

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { Redirect } from 'react-router-dom';
-import Card, { CardHeader } from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar';
-import PersonAddIcon from 'material-ui-icons/PersonAdd';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import Avatar from '@material-ui/core/Avatar';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonAddForm from '../../components/PersonAddForm';
 import { addPerson } from '../../actions/person';
 import { Person as PERSON } from '../../constants';
@@ -27,7 +28,8 @@ class PersonAddPage extends React.Component {
         familyName: '',
         username: '',
         email: '',
-        usertype: '',
+        usertype: PERSON.TYPE.REGISTERED,
+        gender: PERSON.GENDER.NEUTRAL,
         password: '',
       },
       givenNameError: false,

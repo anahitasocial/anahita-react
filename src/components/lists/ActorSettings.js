@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'material-ui/styles/withStyles';
-import List, {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from 'material-ui/List';
-import InfoIcon from 'material-ui-icons/Info';
-import AccountIcon from 'material-ui-icons/Lock';
-import PermissionsIcon from 'material-ui-icons/Settings';
-import AppsIcon from 'material-ui-icons/Apps';
-import ConnectIcon from 'material-ui-icons/Share';
-import DeleteForeverIcon from 'material-ui-icons/DeleteForever';
-import { Link } from 'react-router-dom';
+import withStyles from '@material-ui/core/styles/withStyles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InfoIcon from '@material-ui/icons/Info';
+import AccountIcon from '@material-ui/icons/Lock';
+import PermissionsIcon from '@material-ui/icons/Settings';
+import AppsIcon from '@material-ui/icons/Apps';
+import ConnectIcon from '@material-ui/icons/Share';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import Link from 'react-router-dom/Link';
 import ActorSettingCard from '../cards/ActorSettingCard';
 
 const styles = {

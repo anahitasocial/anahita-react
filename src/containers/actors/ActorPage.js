@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import ActorProfile from '../../components/ActorProfile';
 import ActorAvatar from './ActorAvatar';
 import ActorCover from './ActorCover';
