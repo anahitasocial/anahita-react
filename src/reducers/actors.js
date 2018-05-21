@@ -1,7 +1,4 @@
-import {
-  Actors as ACTORS,
-  Actor as ACTOR,
-} from '../constants';
+import { Actors as ACTORS } from '../constants';
 
 export default function (higherOrderState, action) {
   const state = {
@@ -22,8 +19,8 @@ export default function (higherOrderState, action) {
         total: 0,
       };
     case ACTORS.BROWSE.REQUEST:
-    case ACTOR.FOLLOW.REQUEST:
-    case ACTOR.UNFOLLOW.REQUEST:
+    case ACTORS.FOLLOW.REQUEST:
+    case ACTORS.UNFOLLOW.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -36,8 +33,8 @@ export default function (higherOrderState, action) {
         total: action.total,
         isFetching: false,
       };
-    case ACTOR.FOLLOW.SUCCESS:
-    case ACTOR.UNFOLLOW.SUCCESS:
+    case ACTORS.FOLLOW.SUCCESS:
+    case ACTORS.UNFOLLOW.SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -46,8 +43,8 @@ export default function (higherOrderState, action) {
         }),
       };
     case ACTORS.BROWSE.FAILURE:
-    case ACTOR.FOLLOW.FAILURE:
-    case ACTOR.UNFOLLOW.FAILURE:
+    case ACTORS.FOLLOW.FAILURE:
+    case ACTORS.UNFOLLOW.FAILURE:
       return {
         ...state,
         isFetching: false,

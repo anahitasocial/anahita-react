@@ -5,11 +5,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Home from '@material-ui/icons/Home';
-import People from '@material-ui/icons/People';
-import GroupWork from '@material-ui/icons/GroupWork';
-import Photo from '@material-ui/icons/Photo';
-import LockOpen from '@material-ui/icons/LockOpen';
+import HomeIcon from '@material-ui/icons/Home';
+import PeopleIcon from '@material-ui/icons/People';
+import GroupsIcon from '@material-ui/icons/GroupWork';
+import NotesIcon from '@material-ui/icons/Note';
+import PhotosIcon from '@material-ui/icons/Photo';
+import TopicsIcon from '@material-ui/icons/QuestionAnswer';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { Link } from 'react-router-dom';
 
 const styles = ({
@@ -32,7 +34,7 @@ const LeftMenu = (props) => {
           to="/"
         >
           <ListItemIcon>
-            <Home />
+            <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
@@ -42,7 +44,7 @@ const LeftMenu = (props) => {
           to="/people/"
         >
           <ListItemIcon>
-            <People />
+            <PeopleIcon />
           </ListItemIcon>
           <ListItemText primary="People" />
         </ListItem>
@@ -52,9 +54,19 @@ const LeftMenu = (props) => {
           to="/groups/"
         >
           <ListItemIcon>
-            <GroupWork />
+            <GroupsIcon />
           </ListItemIcon>
           <ListItemText primary="Groups" />
+        </ListItem>
+        <ListItem
+          button
+          component={Link}
+          to="/notes/"
+        >
+          <ListItemIcon>
+            <NotesIcon />
+          </ListItemIcon>
+          <ListItemText primary="Notes" />
         </ListItem>
         <ListItem
           button
@@ -62,9 +74,19 @@ const LeftMenu = (props) => {
           to="/photos/"
         >
           <ListItemIcon>
-            <Photo />
+            <PhotosIcon />
           </ListItemIcon>
           <ListItemText primary="Photos" />
+        </ListItem>
+        <ListItem
+          button
+          component={Link}
+          to="/topics/"
+        >
+          <ListItemIcon>
+            <TopicsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Topics" />
         </ListItem>
         {isAuthenticated &&
           <ListItem
@@ -73,7 +95,7 @@ const LeftMenu = (props) => {
             onClick={onLogoutClick}
           >
             <ListItemIcon>
-              <LockOpen />
+              <LockOpenIcon />
             </ListItemIcon>
             <ListItemText primary="Logout" />
           </ListItem>

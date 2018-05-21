@@ -1,24 +1,24 @@
 import { socialgraph as api } from '../api';
-import { Actor as ACTOR } from '../constants';
+import { Actors as ACTORS } from '../constants';
 
 // -- Block
 
 function blockRequest() {
   return {
-    type: ACTOR.BLOCK.REQUEST,
+    type: ACTORS.BLOCK.REQUEST,
   };
 }
 
 function blockSuccess(response) {
   return {
-    type: ACTOR.BLOCK.SUCCESS,
+    type: ACTORS.BLOCK.SUCCESS,
     actor: response.data,
   };
 }
 
 function blockFailure(error) {
   return {
-    type: ACTOR.BLOCK.FAILURE,
+    type: ACTORS.BLOCK.FAILURE,
     error: error.message,
   };
 }
@@ -45,20 +45,20 @@ export function blockActor(viewer, actor) {
 
 function unblockRequest() {
   return {
-    type: ACTOR.UNBLOCK.REQUEST,
+    type: ACTORS.UNBLOCK.REQUEST,
   };
 }
 
 function unblockSuccess(response) {
   return {
-    type: ACTOR.UNBLOCK.SUCCESS,
+    type: ACTORS.UNBLOCK.SUCCESS,
     actor: response.data,
   };
 }
 
 function unblockFailure(error) {
   return {
-    type: ACTOR.UNBLOCK.FAILURE,
+    type: ACTORS.UNBLOCK.FAILURE,
     error: error.message,
   };
 }

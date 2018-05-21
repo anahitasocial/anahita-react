@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as auth from './auth';
+import * as media from './media';
 import * as person from './person';
 import * as actors from './actors';
 import * as socialgraph from './socialgraph';
@@ -16,6 +17,7 @@ axios.interceptors.request.use((config) => {
 
 export {
   auth,
+  media,
   person,
   actors,
   socialgraph,

@@ -1,4 +1,4 @@
-import { Actor as ACTOR } from '../constants';
+import { Actors as ACTORS } from '../constants';
 
 export default function (state = {
   isFetching: false,
@@ -9,53 +9,53 @@ export default function (state = {
   error: '',
 }, action) {
   switch (action.type) {
-    case ACTOR.READ.REQUEST:
+    case ACTORS.READ.REQUEST:
       return {
         ...state,
         isFetching: true,
         actor: {},
       };
-    case ACTOR.EDIT.REQUEST:
+    case ACTORS.EDIT.REQUEST:
       return {
         ...state,
         isFetching: true,
         success: false,
         actor: action.actor,
       };
-    case ACTOR.AVATAR.ADD.REQUEST:
-    case ACTOR.AVATAR.DELETE.REQUEST:
+    case ACTORS.AVATAR.ADD.REQUEST:
+    case ACTORS.AVATAR.DELETE.REQUEST:
       return {
         ...state,
         isFetchingAvatar: true,
         success: false,
         actor: action.actor,
       };
-    case ACTOR.COVER.ADD.REQUEST:
-    case ACTOR.COVER.DELETE.REQUEST:
+    case ACTORS.COVER.ADD.REQUEST:
+    case ACTORS.COVER.DELETE.REQUEST:
       return {
         ...state,
         isFetchingCover: true,
         success: false,
         actor: action.actor,
       };
-    case ACTOR.ADD.REQUEST:
-    case ACTOR.DELETE.REQUEST:
-    case ACTOR.FOLLOW.REQUEST:
-    case ACTOR.UNFOLLOW.REQUEST:
-    case ACTOR.BLOCK.REQUEST:
-    case ACTOR.UNBLOCK.REQUEST:
+    case ACTORS.ADD.REQUEST:
+    case ACTORS.DELETE.REQUEST:
+    case ACTORS.FOLLOW.REQUEST:
+    case ACTORS.UNFOLLOW.REQUEST:
+    case ACTORS.BLOCK.REQUEST:
+    case ACTORS.UNBLOCK.REQUEST:
       return {
         ...state,
         isFetching: true,
         success: false,
       };
-    case ACTOR.READ.SUCCESS:
-    case ACTOR.EDIT.SUCCESS:
-    case ACTOR.ADD.SUCCESS:
-    case ACTOR.FOLLOW.SUCCESS:
-    case ACTOR.UNFOLLOW.SUCCESS:
-    case ACTOR.BLOCK.SUCCESS:
-    case ACTOR.UNBLOCK.SUCCESS:
+    case ACTORS.READ.SUCCESS:
+    case ACTORS.EDIT.SUCCESS:
+    case ACTORS.ADD.SUCCESS:
+    case ACTORS.FOLLOW.SUCCESS:
+    case ACTORS.UNFOLLOW.SUCCESS:
+    case ACTORS.BLOCK.SUCCESS:
+    case ACTORS.UNBLOCK.SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -63,8 +63,8 @@ export default function (state = {
         actor: action.actor,
         error: '',
       };
-    case ACTOR.AVATAR.ADD.SUCCESS:
-    case ACTOR.AVATAR.DELETE.SUCCESS:
+    case ACTORS.AVATAR.ADD.SUCCESS:
+    case ACTORS.AVATAR.DELETE.SUCCESS:
       return {
         ...state,
         isFetchingAvatar: false,
@@ -72,8 +72,8 @@ export default function (state = {
         actor: action.actor,
         error: '',
       };
-    case ACTOR.COVER.ADD.SUCCESS:
-    case ACTOR.COVER.DELETE.SUCCESS:
+    case ACTORS.COVER.ADD.SUCCESS:
+    case ACTORS.COVER.DELETE.SUCCESS:
       return {
         ...state,
         isFetchingCover: false,
@@ -81,37 +81,37 @@ export default function (state = {
         actor: action.actor,
         error: '',
       };
-    case ACTOR.READ.FAILURE:
-    case ACTOR.EDIT.FAILURE:
-    case ACTOR.ADD.FAILURE:
-    case ACTOR.DELETE.FAILURE:
-    case ACTOR.FOLLOW.FAILURE:
-    case ACTOR.UNFOLLOW.FAILURE:
-    case ACTOR.BLOCK.FAILURE:
-    case ACTOR.UNBLOCK.FAILURE:
+    case ACTORS.READ.FAILURE:
+    case ACTORS.EDIT.FAILURE:
+    case ACTORS.ADD.FAILURE:
+    case ACTORS.DELETE.FAILURE:
+    case ACTORS.FOLLOW.FAILURE:
+    case ACTORS.UNFOLLOW.FAILURE:
+    case ACTORS.BLOCK.FAILURE:
+    case ACTORS.UNBLOCK.FAILURE:
       return {
         ...state,
         isFetching: false,
         success: false,
         error: action.error,
       };
-    case ACTOR.AVATAR.ADD.FAILURE:
-    case ACTOR.AVATAR.DELETE.FAILURE:
+    case ACTORS.AVATAR.ADD.FAILURE:
+    case ACTORS.AVATAR.DELETE.FAILURE:
       return {
         ...state,
         isFetchingAvatar: false,
         success: false,
         error: action.error,
       };
-    case ACTOR.COVER.ADD.FAILURE:
-    case ACTOR.COVER.DELETE.FAILURE:
+    case ACTORS.COVER.ADD.FAILURE:
+    case ACTORS.COVER.DELETE.FAILURE:
       return {
         ...state,
         isFetchingCover: false,
         success: false,
         error: action.error,
       };
-    case ACTOR.DELETE.SUCCESS:
+    case ACTORS.DELETE.SUCCESS:
       return {
         ...state,
         isFetching: false,

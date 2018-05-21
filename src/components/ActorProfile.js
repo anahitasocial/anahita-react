@@ -52,9 +52,9 @@ const ActorProfile = (props) => {
               </Typography>
             </div>
           }
-          subheader={description &&
+          subheader={
             <Typography component="p">
-              {description}
+              {description || ''}
             </Typography>
           }
           className={classes.header}

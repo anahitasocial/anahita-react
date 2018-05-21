@@ -6,7 +6,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
@@ -15,34 +14,7 @@ const styles = theme => ({
   media: {
     height: theme.spacing.unit * 20,
   },
-  avatar: {
-    textDecoration: 'none',
-  },
-  title: {
-    fontSize: 16,
-  },
-  titleLink: {
-    textDecoration: 'none',
-    color: theme.palette.primary,
-  },
 });
-
-let ActorTitle = (props) => {
-  const { to, name, classes } = props;
-  return (
-    <Link to={to} href={to} className={classes.titleLink}>
-      {name}
-    </Link>
-  );
-};
-
-ActorTitle = withStyles(styles)(ActorTitle);
-
-ActorTitle.propTypes = {
-  classes: PropTypes.object.isRequired,
-  to: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-};
 
 const ActorCard = (props) => {
   const {
@@ -50,13 +22,12 @@ const ActorCard = (props) => {
     name,
     alias,
     description,
-    avatar,
+    cardAvatar,
+    cardTitle,
     cover,
     profile,
     action,
   } = props;
-
-  const nameInitial = name.charAt(0).toUpperCase();
 
   return (
     <div className={classes.root}>
@@ -71,28 +42,13 @@ const ActorCard = (props) => {
           </Link>
         }
         <CardHeader
-          avatar={
-            <Avatar
-              aria-label={name}
-              className={classes.avatar}
-              alt={name}
-              src={avatar}
-              component={Link}
-              to={profile}
-            >
-              {!avatar && nameInitial}
-            </Avatar>
-          }
-          title={<ActorTitle
-            classes={classes}
-            to={profile}
-            name={name}
-          />}
+          avatar={cardAvatar}
+          title={cardTitle}
           subheader={`@${alias}`}
         />
         {description &&
         <CardContent>
-          <Typography component="p">
+          <Typography variant="body1">
             {description}
           </Typography>
         </CardContent>
@@ -108,18 +64,17 @@ const ActorCard = (props) => {
 ActorCard.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
-  alias: PropTypes.string,
+  alias: PropTypes.string.isRequired,
   description: PropTypes.string,
-  avatar: PropTypes.string,
+  cardAvatar: PropTypes.node.isRequired,
+  cardTitle: PropTypes.node.isRequired,
   cover: PropTypes.string,
   profile: PropTypes.string.isRequired,
   action: PropTypes.node,
 };
 
 ActorCard.defaultProps = {
-  alias: '',
   description: '',
-  avatar: '',
   cover: '',
   action: null,
 };

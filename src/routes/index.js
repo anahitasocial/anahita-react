@@ -26,6 +26,9 @@ import PersonAddPage from '../containers/people/PersonAddPage';
 import PersonSettingsInfoPage from '../containers/people/PersonSettingsInfoPage';
 import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccountPage';
 
+import NotesPage from '../containers/NotesPage';
+import TopicsPage from '../containers/TopicsPage';
+
 import DashboardPage from '../containers/DashboardPage';
 import PageNotFound from '../containers/PageNotFound';
 
@@ -123,7 +126,6 @@ const Routes = (props) => {
           exact
           path="/groups/add/"
           component={(params) => {
-            console.log('/groups/add/');
             return <ActorAddPage namespace="groups" {...params} />;
           }}
         />
@@ -131,7 +133,6 @@ const Routes = (props) => {
           exact
           path="/groups/:id/"
           component={(params) => {
-            console.log('/groups/:id/');
             return <ActorPage namespace="groups" {...params} />;
           }}
         />
@@ -155,6 +156,16 @@ const Routes = (props) => {
           component={(params) => {
             return <ActorSettingsDeletePage namespace="groups" {...params} />;
           }}
+        />
+        <Route
+          exact
+          path="/notes/"
+          component={NotesPage}
+        />
+        <Route
+          exact
+          path="/topics/"
+          component={TopicsPage}
         />
         <Route component={PageNotFound} />
       </Switch>

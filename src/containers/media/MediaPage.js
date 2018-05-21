@@ -10,16 +10,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import Link from 'react-router-dom/Link';
-import FollowAction from '../actions/FollowAction';
-
 import {
-  browseActors,
-  resetActors,
-} from '../../actions/actors';
-
+  browseMedia,
+  resetMedia,
+} from '../../actions/media';
 import { Person as PERSON } from '../../constants';
-
-import ActorCard from '../../components/cards/ActorCard';
+import MediumCard from '../../components/cards/MediumCard';
 import ActorAvatar from '../../components/ActorAvatar';
 import ActorTitle from '../../components/ActorTitle';
 
@@ -43,46 +39,35 @@ const styles = theme => ({
   },
 });
 
-class ActorsPage extends React.Component {
+class MediaPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      disabledFilter: false,
-      keywordFilter: '',
+      ownerId: 0,
+      filter: '',
     };
 
-    this.fetchActors = this.fetchActors.bind(this);
-  }
-
-  componentWillMount() {
-
+    this.fetchMedia = this.fetchMedia.bind(this);
   }
 
   componentWillUnmount() {
-    this.props.resetActors();
+    this.props.resetMedia();
   }
 
-  canFollow(actor) {
-    const { viewer, isAuthenticated } = this.props;
-    return isAuthenticated && (viewer.id !== actor.id) && !actor.isBlocked;
-  }
-
-  fetchActors() {
-    const { disabledFilter, keywordFilter } = this.state;
+  fetchMedia() {
+    const { ownerId, filter } = this.state;
     const {
       offset,
       limit,
-      queryFilters,
       namespace,
     } = this.props;
 
-    this.props.browseActors({
-      q: keywordFilter,
-      disabled: disabledFilter,
+    this.props.browseMedia({
+      ownerId,
+      filter,
       start: offset,
       limit,
-      ...queryFilters,
     }, namespace);
   }
 
@@ -90,10 +75,10 @@ class ActorsPage extends React.Component {
     const {
       offset,
       total,
-      actors,
+      media,
     } = this.props;
 
-    return offset === 0 || (Object.keys(actors).length < total);
+    return offset === 0 || (Object.keys(media).length < total);
   }
 
   canAdd() {
@@ -113,7 +98,7 @@ class ActorsPage extends React.Component {
   render() {
     const {
       classes,
-      actors,
+      media,
       namespace,
     } = this.props;
 
@@ -136,12 +121,16 @@ class ActorsPage extends React.Component {
           </div>
         }
         <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.title}>
+          <Typography
+            variant="title"
+            color="inherit"
+            className={classes.title}
+          >
             {namespace}
           </Typography>
         </Toolbar>
         <InfiniteScroll
-          loadMore={this.fetchActors}
+          loadMore={this.fetchMedia}
           hasMore={hasMore}
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
@@ -150,24 +139,48 @@ class ActorsPage extends React.Component {
             gutterWidth={20}
             gutterHeight={20}
           >
-            {actors.map((actor) => {
-              const key = `actor_${actor.id}`;
-              const coverSrc = actor.coverURL.medium && actor.coverURL.medium.url;
-              const canFollow = this.canFollow(actor);
+            {media.map((medium) => {
+              const key = `medium_${medium.id}`;
+              // const portrait = medium.imageURL.medium && medium.imageURL.medium.url;
+
               return (
-                <ActorCard
+                <MediumCard
                   key={key}
-                  actor={actor}
-                  name={actor.name}
-                  alias={actor.alias}
-                  description={actor.body}
-                  cardAvatar={<ActorAvatar actor={actor} linked />}
-                  cardTitle={<ActorTitle actor={actor} linked />}
-                  cover={coverSrc}
-                  profile={`/${namespace}/${actor.id}/`}
-                  action={canFollow &&
-                    <FollowAction actor={actor} />
+                  author={
+                    <ActorTitle
+                      actor={medium.author}
+                      typographyProps={{
+                          headlineMapping: {
+                            title: 'h3',
+                          },
+                          variant: 'title',
+                      }}
+                      linked
+                    />
                   }
+                  authorAvatar={
+                    <ActorAvatar
+                      actor={medium.author}
+                      linked
+                    />
+                  }
+                  owner={
+                    <ActorTitle
+                      actor={medium.owner}
+                      typographyProps={{
+                          headlineMapping: {
+                            subheading: 'h4',
+                          },
+                          variant: 'subheading',
+                      }}
+                      linked
+                    />
+                  }
+                  title={medium.title}
+                  alias={medium.alias}
+                  description={medium.body}
+                  // portrait={portrait}
+                  path={`/${namespace}/${medium.id}/`}
                 />
               );
             })
@@ -179,12 +192,11 @@ class ActorsPage extends React.Component {
   }
 }
 
-ActorsPage.propTypes = {
+MediaPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  browseActors: PropTypes.func.isRequired,
-  resetActors: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-  actors: PropTypes.array.isRequired,
+  browseMedia: PropTypes.func.isRequired,
+  resetMedia: PropTypes.func.isRequired,
+  media: PropTypes.array.isRequired,
   namespace: PropTypes.string.isRequired,
   offset: PropTypes.number,
   limit: PropTypes.number,
@@ -193,46 +205,41 @@ ActorsPage.propTypes = {
   queryFilters: PropTypes.object,
 };
 
-ActorsPage.defaultProps = {
+MediaPage.defaultProps = {
   queryFilters: {},
   total: 0,
   limit: 20,
   offset: 0,
-  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {
   const {
-    actors,
+    media,
     error,
     offset,
     limit,
     total,
-  } = state.actorsReducer;
+  } = state.mediaReducer;
 
-  const {
-    isAuthenticated,
-    viewer,
-  } = state.authReducer;
+  const { viewer } = state.authReducer;
 
   return {
-    actors,
+    media,
     error,
     offset,
     limit,
     total,
-    isAuthenticated,
     viewer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseActors: (params, namespace) => {
-      dispatch(browseActors(params, namespace));
+    browseMedia: (params, namespace) => {
+      dispatch(browseMedia(params, namespace));
     },
-    resetActors: () => {
-      dispatch(resetActors());
+    resetMedia: () => {
+      dispatch(resetMedia());
     },
   };
 };
@@ -240,4 +247,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorsPage));
+)(MediaPage));

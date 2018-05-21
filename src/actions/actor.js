@@ -1,24 +1,24 @@
 import { actors as api } from '../api';
-import { Actor as ACTOR } from '../constants';
+import { Actors as ACTORS } from '../constants';
 
 // -- Read
 
 function readRequest() {
   return {
-    type: ACTOR.READ.REQUEST,
+    type: ACTORS.READ.REQUEST,
   };
 }
 
 function readSuccess(result) {
   return {
-    type: ACTOR.READ.SUCCESS,
+    type: ACTORS.READ.SUCCESS,
     actor: result.data,
   };
 }
 
 function readFailure(response) {
   return {
-    type: ACTOR.READ.FAILURE,
+    type: ACTORS.READ.FAILURE,
     error: response.message,
   };
 }
@@ -45,21 +45,21 @@ export function readActor(id, namespace) {
 
 function editRequest(actor) {
   return {
-    type: ACTOR.EDIT.REQUEST,
+    type: ACTORS.EDIT.REQUEST,
     actor,
   };
 }
 
 function editSuccess(result) {
   return {
-    type: ACTOR.EDIT.SUCCESS,
+    type: ACTORS.EDIT.SUCCESS,
     actor: result.data,
   };
 }
 
 function editFailure(response) {
   return {
-    type: ACTOR.EDIT.FAILURE,
+    type: ACTORS.EDIT.FAILURE,
     error: response.message,
   };
 }
@@ -86,21 +86,21 @@ export function editActor(actor) {
 
 function addRequest(actor) {
   return {
-    type: ACTOR.ADD.REQUEST,
+    type: ACTORS.ADD.REQUEST,
     actor,
   };
 }
 
 function addSuccess(result) {
   return {
-    type: ACTOR.ADD.SUCCESS,
+    type: ACTORS.ADD.SUCCESS,
     actor: result.data,
   };
 }
 
 function addFailure(response) {
   return {
-    type: ACTOR.ADD.FAILURE,
+    type: ACTORS.ADD.FAILURE,
     error: response.message,
   };
 }
@@ -127,21 +127,21 @@ export function addActor(actor, namespace) {
 
 function deleteRequest(actor) {
   return {
-    type: ACTOR.DELETE.REQUEST,
+    type: ACTORS.DELETE.REQUEST,
     actor,
   };
 }
 
 function deleteSuccess(result) {
   return {
-    type: ACTOR.DELETE.SUCCESS,
+    type: ACTORS.DELETE.SUCCESS,
     status: result.status,
   };
 }
 
 function deleteFailure(response) {
   return {
-    type: ACTOR.DELETE.FAILURE,
+    type: ACTORS.DELETE.FAILURE,
     error: response.message,
   };
 }
@@ -168,21 +168,21 @@ export function deleteActor(actor) {
 
 function addAvatarRequest(actor) {
   return {
-    type: ACTOR.AVATAR.ADD.REQUEST,
+    type: ACTORS.AVATAR.ADD.REQUEST,
     actor,
   };
 }
 
 function addAvatarSuccess(result) {
   return {
-    type: ACTOR.AVATAR.ADD.SUCCESS,
+    type: ACTORS.AVATAR.ADD.SUCCESS,
     actor: result.data,
   };
 }
 
 function addAvatarFailure(response) {
   return {
-    type: ACTOR.AVATAR.ADD.FAILURE,
+    type: ACTORS.AVATAR.ADD.FAILURE,
     error: response.message,
   };
 }
@@ -209,21 +209,21 @@ export function addAvatar(actor, file) {
 
 function deleteAvatarRequest(actor) {
   return {
-    type: ACTOR.AVATAR.DELETE.REQUEST,
+    type: ACTORS.AVATAR.DELETE.REQUEST,
     actor,
   };
 }
 
 function deleteAvatarSuccess(result) {
   return {
-    type: ACTOR.AVATAR.DELETE.SUCCESS,
+    type: ACTORS.AVATAR.DELETE.SUCCESS,
     actor: result.data,
   };
 }
 
 function deleteAvatarFailure(response) {
   return {
-    type: ACTOR.AVATAR.DELETE.FAILURE,
+    type: ACTORS.AVATAR.DELETE.FAILURE,
     error: response.message,
   };
 }
@@ -250,21 +250,21 @@ export function deleteAvatar(actor) {
 
 function addCoverRequest(actor) {
   return {
-    type: ACTOR.COVER.ADD.REQUEST,
+    type: ACTORS.COVER.ADD.REQUEST,
     actor,
   };
 }
 
 function addCoverSuccess(result) {
   return {
-    type: ACTOR.COVER.ADD.SUCCESS,
+    type: ACTORS.COVER.ADD.SUCCESS,
     actor: result.data,
   };
 }
 
 function addCoverFailure(response) {
   return {
-    type: ACTOR.COVER.ADD.FAILURE,
+    type: ACTORS.COVER.ADD.FAILURE,
     error: response.message,
   };
 }
@@ -291,21 +291,21 @@ export function addCover(actor, file) {
 
 function deleteCoverRequest(actor) {
   return {
-    type: ACTOR.COVER.DELETE.REQUEST,
+    type: ACTORS.COVER.DELETE.REQUEST,
     actor,
   };
 }
 
 function deleteCoverSuccess(result) {
   return {
-    type: ACTOR.COVER.DELETE.SUCCESS,
+    type: ACTORS.COVER.DELETE.SUCCESS,
     actor: result.data,
   };
 }
 
 function deleteCoverFailure(response) {
   return {
-    type: ACTOR.COVER.DELETE.FAILURE,
+    type: ACTORS.COVER.DELETE.FAILURE,
     error: response.message,
   };
 }

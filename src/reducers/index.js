@@ -8,6 +8,9 @@ import authReducer from './auth';
 import actorsReducer from './actors';
 import actorReducer from './actor';
 
+// Media
+import mediaReducer from './media';
+
 // People
 import peopleReducer from './people';
 import personReducer from './person';
@@ -17,6 +20,7 @@ export default combineReducers({
   authReducer,
   actorsReducer,
   actorReducer,
+  mediaReducer,
   peopleReducer,
   personReducer,
 });
