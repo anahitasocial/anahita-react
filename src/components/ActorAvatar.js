@@ -13,14 +13,17 @@ const styles = {
 };
 
 const ActorAvatar = (props) => {
-  const { classes, actor, linked } = props;
-  const namespace = actor.objectType.split('.')[1];
+  const {
+    classes,
+    actor,
+    linked,
+  } = props;
 
+  const namespace = actor.objectType.split('.')[1];
   const actorId = (namespace === 'people') ? actor.alias : actor.id;
   const avatarSrc = actor.imageURL.medium && actor.imageURL.medium.url;
 
   let initials = '';
-
   if (namespace === 'people') {
     initials = `${actor.givenName.charAt(0).toUpperCase()}${actor.familyName.charAt(0).toUpperCase()}`;
   } else {

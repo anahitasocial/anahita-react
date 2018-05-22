@@ -9,41 +9,23 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
+import EntityBody from '../EntityBody';
+
 const styles = theme => ({
   root: {},
   media: {
     height: theme.spacing.unit * 20,
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 500,
+    marginBottom: theme.spacing.unit * 2,
   },
   titleLink: {
     textDecoration: 'none',
-    color: theme.palette.primary,
+    color: theme.palette.text.primary,
   },
 });
-
-let MediumTitle = (props) => {
-  const { to, name, classes } = props;
-  return (
-    <Link
-      to={to}
-      href={to}
-      className={classes.titleLink}
-    >
-      {name}
-    </Link>
-  );
-};
-
-MediumTitle = withStyles(styles)(MediumTitle);
-
-MediumTitle.propTypes = {
-  classes: PropTypes.object.isRequired,
-  to: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-};
-
 
 const MediumCard = (props) => {
   const {
@@ -78,19 +60,24 @@ const MediumCard = (props) => {
         }
         <CardContent>
           {title &&
-            <Typography>
+            <Typography
+              variant="title"
+              headlineMapping={{
+                title: 'h3',
+              }}
+              className={classes.title}
+            >
               <Link
-                path={path}
+                to={path}
                 href={path}
+                className={classes.titleLink}
               >
                 {title}
               </Link>
             </Typography>
           }
           {description &&
-          <Typography variant="body1">
-            {description}
-          </Typography>
+            <EntityBody body={description} />
           }
         </CardContent>
         <CardActions>

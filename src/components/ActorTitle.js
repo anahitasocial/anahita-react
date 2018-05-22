@@ -4,19 +4,18 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 
-const styles = {
-  root: {},
+const styles = theme => ({
   link: {
     textDecoration: 'none',
+    color: theme.palette.text.primary,
   },
-};
+});
 
 const ActorTitle = (props) => {
   const {
     classes,
     actor,
     linked,
-    variant,
     typographyProps,
   } = props;
 
@@ -26,7 +25,6 @@ const ActorTitle = (props) => {
   return (
     <Typography
       {...typographyProps}
-      className={classes.root}
     >
       {!linked && actor.name}
       {linked &&
@@ -45,7 +43,6 @@ const ActorTitle = (props) => {
 ActorTitle.propTypes = {
   classes: PropTypes.object.isRequired,
   actor: PropTypes.object,
-  variant: PropTypes.string,
   linked: PropTypes.bool,
   typographyProps: PropTypes.object,
 };
@@ -58,7 +55,6 @@ ActorTitle.defaultProps = {
     namespace: 'com.people.person',
   },
   linked: false,
-  variant: 'title',
   typographyProps: {},
 };
 

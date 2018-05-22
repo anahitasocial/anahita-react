@@ -9,8 +9,13 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
+import EntityBody from '../EntityBody';
+
 const styles = theme => ({
   root: {},
+  alias: {
+    fontSize: 14,
+  },
   media: {
     height: theme.spacing.unit * 20,
   },
@@ -44,13 +49,18 @@ const ActorCard = (props) => {
         <CardHeader
           avatar={cardAvatar}
           title={cardTitle}
-          subheader={`@${alias}`}
+          subheader={
+            <Typography
+              variant="subheading"
+              className={classes.alias}
+            >
+              {`@${alias}`}
+            </Typography>
+          }
         />
         {description &&
         <CardContent>
-          <Typography variant="body1">
-            {description}
-          </Typography>
+          <EntityBody body={description} />
         </CardContent>
         }
         <CardActions>

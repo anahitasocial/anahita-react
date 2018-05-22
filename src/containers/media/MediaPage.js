@@ -25,6 +25,13 @@ const styles = theme => ({
   },
   title: {
     textTransform: 'capitalize',
+    marginBottom: theme.spacing.unit * 2,
+  },
+  authorName: {
+    fontSize: 16,
+  },
+  ownerName: {
+    fontSize: 14,
   },
   progress: {
     marginLeft: '48%',
@@ -84,11 +91,10 @@ class MediaPage extends React.Component {
   canAdd() {
     const { viewer } = this.props;
 
-    if (viewer.usertype === PERSON.TYPE.SUPER_ADMIN) {
-      return true;
-    }
-
-    if (viewer.usertype === PERSON.TYPE.ADMIN) {
+    if ([
+      PERSON.TYPE.SUPER_ADMIN,
+      PERSON.TYPE.ADMIN,
+    ].includes(viewer.usertype)) {
       return true;
     }
 
@@ -122,7 +128,7 @@ class MediaPage extends React.Component {
         }
         <Toolbar>
           <Typography
-            variant="title"
+            variant="display1"
             color="inherit"
             className={classes.title}
           >
@@ -135,12 +141,20 @@ class MediaPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={320}
+            columnWidth={440}
             gutterWidth={20}
             gutterHeight={20}
           >
             {media.map((medium) => {
               const key = `medium_${medium.id}`;
+              const author = medium.author || {
+                id: null,
+                name: 'unknown',
+                givenName: '?',
+                familyName: '?',
+                objectType: 'com.people.person',
+                imageURL: '',
+              };
               // const portrait = medium.imageURL.medium && medium.imageURL.medium.url;
 
               return (
@@ -148,20 +162,21 @@ class MediaPage extends React.Component {
                   key={key}
                   author={
                     <ActorTitle
-                      actor={medium.author}
+                      actor={author}
                       typographyProps={{
                           headlineMapping: {
                             title: 'h3',
                           },
                           variant: 'title',
+                          className: classes.authorName,
                       }}
-                      linked
+                      linked={Boolean(author.id)}
                     />
                   }
                   authorAvatar={
                     <ActorAvatar
-                      actor={medium.author}
-                      linked
+                      actor={author}
+                      linked={Boolean(author.id)}
                     />
                   }
                   owner={
@@ -169,14 +184,15 @@ class MediaPage extends React.Component {
                       actor={medium.owner}
                       typographyProps={{
                           headlineMapping: {
-                            subheading: 'h4',
+                            subheading: 'h5',
                           },
                           variant: 'subheading',
+                          className: classes.ownerName,
                       }}
                       linked
                     />
                   }
-                  title={medium.title}
+                  title={medium.name}
                   alias={medium.alias}
                   description={medium.body}
                   // portrait={portrait}

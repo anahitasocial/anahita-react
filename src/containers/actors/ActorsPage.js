@@ -29,6 +29,13 @@ const styles = theme => ({
   },
   title: {
     textTransform: 'capitalize',
+    marginBottom: theme.spacing.unit * 2,
+  },
+  actorTitle: {
+    fontSize: 16,
+  },
+  actorAlias: {
+    fontSize: 12,
   },
   progress: {
     marginLeft: '48%',
@@ -99,11 +106,10 @@ class ActorsPage extends React.Component {
   canAdd() {
     const { viewer } = this.props;
 
-    if (viewer.usertype === PERSON.TYPE.SUPER_ADMIN) {
-      return true;
-    }
-
-    if (viewer.usertype === PERSON.TYPE.ADMIN) {
+    if ([
+      PERSON.TYPE.SUPER_ADMIN,
+      PERSON.TYPE.ADMIN,
+    ].includes(viewer.usertype)) {
       return true;
     }
 
@@ -136,7 +142,11 @@ class ActorsPage extends React.Component {
           </div>
         }
         <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.title}>
+          <Typography
+            variant="display1"
+            color="inherit"
+            className={classes.title}
+          >
             {namespace}
           </Typography>
         </Toolbar>
@@ -146,7 +156,7 @@ class ActorsPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={320}
+            columnWidth={440}
             gutterWidth={20}
             gutterHeight={20}
           >
@@ -162,7 +172,18 @@ class ActorsPage extends React.Component {
                   alias={actor.alias}
                   description={actor.body}
                   cardAvatar={<ActorAvatar actor={actor} linked />}
-                  cardTitle={<ActorTitle actor={actor} linked />}
+                  cardTitle={
+                    <ActorTitle
+                      actor={actor}
+                      typographyProps={{
+                          headlineMapping: {
+                            title: 'h3',
+                          },
+                          variant: 'title',
+                          className: classes.actorTitle
+                      }}
+                      linked
+                    />}
                   cover={coverSrc}
                   profile={`/${namespace}/${actor.id}/`}
                   action={canFollow &&
