@@ -141,7 +141,7 @@ class MediaPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={440}
+            columnWidth={430}
             gutterWidth={20}
             gutterHeight={20}
           >
@@ -164,9 +164,7 @@ class MediaPage extends React.Component {
                     <ActorTitle
                       actor={author}
                       typographyProps={{
-                          headlineMapping: {
-                            title: 'h3',
-                          },
+                          component: 'h4',
                           variant: 'title',
                           className: classes.authorName,
                       }}
@@ -183,9 +181,7 @@ class MediaPage extends React.Component {
                     <ActorTitle
                       actor={medium.owner}
                       typographyProps={{
-                          headlineMapping: {
-                            subheading: 'h5',
-                          },
+                          component: 'h5',
                           variant: 'subheading',
                           className: classes.ownerName,
                       }}

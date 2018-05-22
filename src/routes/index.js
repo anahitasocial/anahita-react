@@ -27,6 +27,7 @@ import PersonSettingsInfoPage from '../containers/people/PersonSettingsInfoPage'
 import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccountPage';
 
 import NotesPage from '../containers/NotesPage';
+import PhotosPage from '../containers/PhotosPage';
 import TopicsPage from '../containers/TopicsPage';
 
 import DashboardPage from '../containers/DashboardPage';
@@ -161,6 +162,11 @@ const Routes = (props) => {
           exact
           path="/notes/"
           component={NotesPage}
+        />
+        <Route
+          exact
+          path="/photos/"
+          component={PhotosPage}
         />
         <Route
           exact

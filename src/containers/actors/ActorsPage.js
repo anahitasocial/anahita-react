@@ -156,7 +156,7 @@ class ActorsPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={440}
+            columnWidth={430}
             gutterWidth={20}
             gutterHeight={20}
           >
@@ -176,11 +176,9 @@ class ActorsPage extends React.Component {
                     <ActorTitle
                       actor={actor}
                       typographyProps={{
-                          headlineMapping: {
-                            title: 'h3',
-                          },
+                          component: 'h2',
                           variant: 'title',
-                          className: classes.actorTitle
+                          className: classes.actorTitle,
                       }}
                       linked
                     />}

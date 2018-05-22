@@ -62,9 +62,7 @@ const MediumCard = (props) => {
           {title &&
             <Typography
               variant="title"
-              headlineMapping={{
-                title: 'h3',
-              }}
+              component="h2"
               className={classes.title}
             >
               <Link
