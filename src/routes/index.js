@@ -31,7 +31,7 @@ import PhotosPage from '../containers/PhotosPage';
 import TopicsPage from '../containers/TopicsPage';
 
 import DashboardPage from '../containers/DashboardPage';
-import PageNotFound from '../containers/PageNotFound';
+import NotFoundPage from '../containers/NotFoundPage';
 
 const scrollUp = () => {
   window.scrollTo(0, 0);
@@ -173,7 +173,7 @@ const Routes = (props) => {
           path="/topics/"
           component={TopicsPage}
         />
-        <Route component={PageNotFound} />
+        <Route component={NotFoundPage} />
       </Switch>
     </App>
   );
