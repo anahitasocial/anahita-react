@@ -35,8 +35,8 @@ const ActorCard = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
-      <Card>
+    <React.Fragment>
+      <Card className={classes.root}>
         {cover &&
           <Link to={profile} href={profile}>
             <CardMedia
@@ -67,7 +67,7 @@ const ActorCard = (props) => {
           {action}
         </CardActions>
       </Card>
-    </div>
+    </React.Fragment>
   );
 };
 

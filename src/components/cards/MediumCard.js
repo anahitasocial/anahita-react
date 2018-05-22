@@ -25,6 +25,9 @@ const styles = theme => ({
     textDecoration: 'none',
     color: theme.palette.text.primary,
   },
+  portrait: {
+    minHeight: theme.spacing.unit * 30,
+  },
 });
 
 const MediumCard = (props) => {
@@ -42,21 +45,19 @@ const MediumCard = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
-      <Card>
+    <React.Fragment>
+      <Card className={classes.root}>
         <CardHeader
           avatar={authorAvatar}
           title={author}
           subheader={owner}
         />
         {portrait &&
-          <Link to={path} href={path}>
-            <CardMedia
-              className={classes.media}
-              image={portrait}
-              title={title}
-            />
-          </Link>
+          <CardMedia
+            className={classes.portrait}
+            title={title}
+            image={portrait}
+          />
         }
         <CardContent>
           {title &&
@@ -82,7 +83,7 @@ const MediumCard = (props) => {
           {action}
         </CardActions>
       </Card>
-    </div>
+    </React.Fragment>
   );
 };
 

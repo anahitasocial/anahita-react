@@ -15,7 +15,7 @@ const theme = createMuiTheme({
 const jss = create(preset());
 jss.options.createGenerateClassName = createGenerateClassName;
 
-export const sheetsManager: Map<*, *> = new Map()
+export const sheetsManager: Map<*, *> = new Map();
 
 export default function createContext() {
   return {

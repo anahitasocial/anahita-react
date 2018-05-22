@@ -128,18 +128,16 @@ class ActorsPage extends React.Component {
     return (
       <div className={classes.root}>
         {this.canAdd() &&
-          <div>
-            <Button
-              className={classes.addButton}
-              variant="fab"
-              color="secondary"
-              aria-label="add"
-              component={Link}
-              to={`/${namespace}/add/`}
-            >
-              <AddIcon />
-            </Button>
-          </div>
+          <Button
+            className={classes.addButton}
+            variant="fab"
+            color="secondary"
+            aria-label="add"
+            component={Link}
+            to={`/${namespace}/add/`}
+          >
+            <AddIcon />
+          </Button>
         }
         <Toolbar>
           <Typography
@@ -156,7 +154,7 @@ class ActorsPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={430}
+            columnWidth={440}
             gutterWidth={20}
             gutterHeight={20}
           >

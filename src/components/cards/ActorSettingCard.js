@@ -28,8 +28,8 @@ const ActorSettingCard = (props) => {
   const initials = actor.name.charAt(0);
 
   return (
-    <div className={classes.root}>
-      <Card>
+    <React.Fragment>
+      <Card className={classes.root}>
         <CardHeader
           avatar={
             <Avatar
@@ -49,7 +49,7 @@ const ActorSettingCard = (props) => {
         <Divider />
         {children}
       </Card>
-    </div>
+    </React.Fragment>
   );
 };
 

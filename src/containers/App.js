@@ -110,9 +110,8 @@ const styles = theme => ({
     width: '100%',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: 24,
     height: 'calc(100% - 56px)',
-    marginTop: 56,
+    marginTop: 64,
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
       marginTop: 64,
@@ -139,7 +138,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      open: false,
+      open: window.innerWidth > 375,
     };
 
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);

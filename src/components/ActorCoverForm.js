@@ -15,11 +15,11 @@ const styles = theme => ({
   },
   cover: {
     width: '100%',
-    minHeight: 300,
+    minHeight: theme.spacing.unit * 30,
   },
   coverPlaceholder: {
     width: '100%',
-    minHeight: 300,
+    minHeight: theme.spacing.unit * 30,
     backgroundColor: theme.palette.background.default,
   },
   coverIcon: {

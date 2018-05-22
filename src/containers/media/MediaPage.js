@@ -113,18 +113,16 @@ class MediaPage extends React.Component {
     return (
       <div className={classes.root}>
         {this.canAdd() &&
-          <div>
-            <Button
-              className={classes.addButton}
-              variant="fab"
-              color="secondary"
-              aria-label="add"
-              component={Link}
-              to={`/${namespace}/add/`}
-            >
-              <AddIcon />
-            </Button>
-          </div>
+          <Button
+            className={classes.addButton}
+            variant="fab"
+            color="secondary"
+            aria-label="add"
+            component={Link}
+            to={`/${namespace}/add/`}
+          >
+            <AddIcon />
+          </Button>
         }
         <Toolbar>
           <Typography
@@ -141,7 +139,7 @@ class MediaPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={430}
+            columnWidth={440}
             gutterWidth={20}
             gutterHeight={20}
           >
@@ -155,7 +153,10 @@ class MediaPage extends React.Component {
                 objectType: 'com.people.person',
                 imageURL: '',
               };
-              // const portrait = medium.imageURL.medium && medium.imageURL.medium.url;
+
+              const portrait = medium.imageURL &&
+              medium.imageURL.medium &&
+              medium.imageURL.medium.url;
 
               return (
                 <MediumCard
@@ -191,7 +192,7 @@ class MediaPage extends React.Component {
                   title={medium.name}
                   alias={medium.alias}
                   description={medium.body}
-                  // portrait={portrait}
+                  portrait={portrait}
                   path={`/${namespace}/${medium.id}/`}
                 />
               );
