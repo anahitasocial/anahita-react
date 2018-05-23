@@ -10,16 +10,13 @@ import Fade from '@material-ui/core/Fade';
 import CoverIcon from '@material-ui/icons/Panorama';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   cover: {
     width: '100%',
-    minHeight: theme.spacing.unit * 30,
+    minHeight: theme.spacing.unit * 40,
   },
   coverPlaceholder: {
     width: '100%',
-    minHeight: theme.spacing.unit * 30,
+    minHeight: theme.spacing.unit * 40,
     backgroundColor: theme.palette.background.default,
   },
   coverIcon: {
@@ -58,7 +55,7 @@ const ActorCoverForm = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       <ButtonBase
         className={classes.button}
         disabled={!canEdit || isFetching}
@@ -110,7 +107,7 @@ const ActorCoverForm = (props) => {
           <LinearProgress className={classes.loader} />
         }
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

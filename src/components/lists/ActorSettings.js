@@ -17,7 +17,6 @@ import ActorSettingCard from '../cards/ActorSettingCard';
 const styles = {
   root: {
     width: '100%',
-    height: '100%',
   },
   card: {
     margin: '64px auto',
@@ -32,77 +31,76 @@ const ActorSettingsList = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
-      <ActorSettingCard
-        namespace={namespace}
-        actor={actor}
-      >
-        <List>
-          <ListItem
-            button
-            component={Link}
-            to={`/${namespace}/${actor.id}/settings/info/`}
-          >
-            <ListItemIcon>
-              <InfoIcon />
-            </ListItemIcon>
-            <ListItemText primary="Info" />
-          </ListItem>
-          {namespace === 'people' &&
-          <ListItem
-            button
-            component={Link}
-            to={`/${namespace}/${actor.id}/settings/account/`}
-          >
-            <ListItemIcon>
-              <AccountIcon />
-            </ListItemIcon>
-            <ListItemText primary="Account" />
-          </ListItem>
-          }
-          <ListItem
-            button
-            component={Link}
-            to={`/${namespace}/${actor.id}/settings/permissions/`}
-          >
-            <ListItemIcon>
-              <PermissionsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Permissions" />
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to={`/${namespace}/${actor.id}/settings/apps/`}
-          >
-            <ListItemIcon>
-              <AppsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Apps" />
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to={`/${namespace}/${actor.id}/settings/connect/`}
-          >
-            <ListItemIcon>
-              <ConnectIcon />
-            </ListItemIcon>
-            <ListItemText primary="Connect" />
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to={`/${namespace}/${actor.id}/settings/deleteforever/`}
-          >
-            <ListItemIcon>
-              <DeleteForeverIcon />
-            </ListItemIcon>
-            <ListItemText primary="Delete Forever" />
-          </ListItem>
-        </List>
-      </ActorSettingCard>
-    </div>
+    <ActorSettingCard
+      namespace={namespace}
+      actor={actor}
+      className={classes.root}
+    >
+      <List>
+        <ListItem
+          button
+          component={Link}
+          to={`/${namespace}/${actor.id}/settings/info/`}
+        >
+          <ListItemIcon>
+            <InfoIcon />
+          </ListItemIcon>
+          <ListItemText primary="Info" />
+        </ListItem>
+        {namespace === 'people' &&
+        <ListItem
+          button
+          component={Link}
+          to={`/${namespace}/${actor.id}/settings/account/`}
+        >
+          <ListItemIcon>
+            <AccountIcon />
+          </ListItemIcon>
+          <ListItemText primary="Account" />
+        </ListItem>
+        }
+        <ListItem
+          button
+          component={Link}
+          to={`/${namespace}/${actor.id}/settings/permissions/`}
+        >
+          <ListItemIcon>
+            <PermissionsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Permissions" />
+        </ListItem>
+        <ListItem
+          button
+          component={Link}
+          to={`/${namespace}/${actor.id}/settings/apps/`}
+        >
+          <ListItemIcon>
+            <AppsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Apps" />
+        </ListItem>
+        <ListItem
+          button
+          component={Link}
+          to={`/${namespace}/${actor.id}/settings/connect/`}
+        >
+          <ListItemIcon>
+            <ConnectIcon />
+          </ListItemIcon>
+          <ListItemText primary="Connect" />
+        </ListItem>
+        <ListItem
+          button
+          component={Link}
+          to={`/${namespace}/${actor.id}/settings/deleteforever/`}
+        >
+          <ListItemIcon>
+            <DeleteForeverIcon />
+          </ListItemIcon>
+          <ListItemText primary="Delete Forever" />
+        </ListItem>
+      </List>
+    </ActorSettingCard>
   );
 };
 

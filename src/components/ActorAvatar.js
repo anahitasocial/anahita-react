@@ -5,7 +5,6 @@ import Avatar from '@material-ui/core/Avatar';
 import { Link } from 'react-router-dom';
 
 const styles = {
-  root: {},
   avatar: {},
   avatarLinked: {
     textDecoration: 'none',
@@ -31,7 +30,7 @@ const ActorAvatar = (props) => {
   }
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       {linked &&
         <Avatar
           aria-label={actor.name}
@@ -54,7 +53,7 @@ const ActorAvatar = (props) => {
           {!avatarSrc && initials}
         </Avatar>
       }
-    </div>
+    </React.Fragment>
   );
 };
 

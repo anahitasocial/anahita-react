@@ -9,9 +9,6 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Link from 'react-router-dom/Link';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   formPaper: {
     padding: '20px',
   },
@@ -40,7 +37,7 @@ const ActorInfoForm = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       <Paper className={classes.formPaper} elevation={0}>
         <Typography
           variant="title"
@@ -93,7 +90,7 @@ const ActorInfoForm = (props) => {
           </Button>
         </form>
       </Paper>
-    </div>
+    </React.Fragment>
   );
 };
 

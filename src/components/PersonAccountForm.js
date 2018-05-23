@@ -10,9 +10,6 @@ import TextFieldUsername from './textfields/TextFieldUsername';
 import TextFieldEmail from './textfields/TextFieldEmail';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   formPaper: {
     padding: '20px',
   },
@@ -46,65 +43,63 @@ const ActorInfoForm = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.formPaper} elevation={0}>
-        <Typography variant="title" color="primary">
-          {'Account Information'}
-        </Typography>
-        <form onSubmit={handleFormSubmit}>
-          { error &&
-            <Typography
-              variant="caption"
-              color="error"
-              paragraph
-            >
-                {error}
-            </Typography>
-          }
-          <TextFieldUsername
-            value={username}
-            onChange={handleFieldChange}
-            error={usernameError}
-            helperText={usernameHelperText}
-          />
-          <TextFieldEmail
-            value={email}
-            onChange={handleFieldChange}
-            error={emailError}
-            helperText={emailHelperText}
-          />
-          <TextField
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleFieldChange}
-            label="Password"
-            error={passwordError}
-            helperText={passwordHelperText}
-            fullWidth
-            margin="normal"
-          />
-          {dismissPath &&
-          <Button
-            className={classes.button}
-            component={Link}
-            to={dismissPath}
+    <Paper className={classes.formPaper} elevation={0}>
+      <Typography variant="title" color="primary">
+        {'Account Information'}
+      </Typography>
+      <form onSubmit={handleFormSubmit}>
+        { error &&
+          <Typography
+            variant="caption"
+            color="error"
+            paragraph
           >
-            {'Dismiss'}
-          </Button>
-          }
-          <Button
-            variant="raised"
-            type="submit"
-            color="primary"
-            className={classes.button}
-            disabled={isFetching}
-          >
-            {'Save'}
-          </Button>
-        </form>
-      </Paper>
-    </div>
+              {error}
+          </Typography>
+        }
+        <TextFieldUsername
+          value={username}
+          onChange={handleFieldChange}
+          error={usernameError}
+          helperText={usernameHelperText}
+        />
+        <TextFieldEmail
+          value={email}
+          onChange={handleFieldChange}
+          error={emailError}
+          helperText={emailHelperText}
+        />
+        <TextField
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleFieldChange}
+          label="Password"
+          error={passwordError}
+          helperText={passwordHelperText}
+          fullWidth
+          margin="normal"
+        />
+        {dismissPath &&
+        <Button
+          className={classes.button}
+          component={Link}
+          to={dismissPath}
+        >
+          {'Dismiss'}
+        </Button>
+        }
+        <Button
+          variant="raised"
+          type="submit"
+          color="primary"
+          className={classes.button}
+          disabled={isFetching}
+        >
+          {'Save'}
+        </Button>
+      </form>
+    </Paper>
   );
 };
 

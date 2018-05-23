@@ -11,10 +11,6 @@ import TextFieldEmail from './textfields/TextFieldEmail';
 
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    height: '100%',
-  },
   formPaper: {
     padding: '20px',
     maxWidth: '360px',
@@ -55,102 +51,100 @@ const SignupForm = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.formPaper} elevation={2}>
+    <Paper className={classes.formPaper} elevation={2}>
+      <Typography
+        variant="title"
+        color="primary"
+        className={classes.title}
+      >
+        {'Please Sign Up'}
+      </Typography>
+      {error &&
         <Typography
-          variant="title"
-          color="primary"
-          className={classes.title}
+          variant="body1"
+          color="error"
+          paragraph
         >
-          {'Please Sign Up'}
+          {'Something went wrong!'}
         </Typography>
-        {error &&
-          <Typography
-            variant="body1"
-            color="error"
-            paragraph
-          >
-            {'Something went wrong!'}
-          </Typography>
-        }
-        {success &&
-          <Typography
-            variant="body1"
-            color="primary"
-            paragraph
-          >
-            {'Thank you! We just emailed you an account activation link. Please click on it and log on to your account'}
-          </Typography>
-        }
-        <form onSubmit={handleFormSubmit}>
-          <TextField
-            name="givenName"
-            value={givenName}
-            onChange={handleFieldChange}
-            label="First Name"
-            error={givenNameError}
-            helperText={givenNameHelperText}
-            autoFocus
-            fullWidth
-            margin="normal"
-            disabled={success}
-          />
-          <TextField
-            name="familyName"
-            value={familyName}
-            onChange={handleFieldChange}
-            label="Last Name"
-            error={familyNameError}
-            helperText={familyNameHelperText}
-            fullWidth
-            margin="normal"
-            disabled={success}
-          />
-          <TextFieldUsername
-            value={username}
-            onChange={handleFieldChange}
-            error={usernameError}
-            helperText={usernameHelperText}
-            disabled={success}
-          />
-          <TextFieldEmail
-            value={email}
-            onChange={handleFieldChange}
-            disabled={success}
-            error={emailError}
-            helperText={emailHelperText}
-          />
-          <TextField
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleFieldChange}
-            label="Password"
-            error={passwordError}
-            helperText={passwordHelperText}
-            fullWidth
-            margin="normal"
-            disabled={success}
-          />
-          <Button
-            variant="raised"
-            type="submit"
-            color="primary"
-            className={classes.button}
-            disabled={isFetching || success}
-          >
-            {'Signup'}
-          </Button>
-          <Button
-            component={Link}
-            to="/login/"
-            className={classes.button}
-          >
-            {'Login'}
-          </Button>
-        </form>
-      </Paper>
-    </div>
+      }
+      {success &&
+        <Typography
+          variant="body1"
+          color="primary"
+          paragraph
+        >
+          {'Thank you! We just emailed you an account activation link. Please click on it and log on to your account'}
+        </Typography>
+      }
+      <form onSubmit={handleFormSubmit}>
+        <TextField
+          name="givenName"
+          value={givenName}
+          onChange={handleFieldChange}
+          label="First Name"
+          error={givenNameError}
+          helperText={givenNameHelperText}
+          autoFocus
+          fullWidth
+          margin="normal"
+          disabled={success}
+        />
+        <TextField
+          name="familyName"
+          value={familyName}
+          onChange={handleFieldChange}
+          label="Last Name"
+          error={familyNameError}
+          helperText={familyNameHelperText}
+          fullWidth
+          margin="normal"
+          disabled={success}
+        />
+        <TextFieldUsername
+          value={username}
+          onChange={handleFieldChange}
+          error={usernameError}
+          helperText={usernameHelperText}
+          disabled={success}
+        />
+        <TextFieldEmail
+          value={email}
+          onChange={handleFieldChange}
+          disabled={success}
+          error={emailError}
+          helperText={emailHelperText}
+        />
+        <TextField
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleFieldChange}
+          label="Password"
+          error={passwordError}
+          helperText={passwordHelperText}
+          fullWidth
+          margin="normal"
+          disabled={success}
+        />
+        <Button
+          variant="raised"
+          type="submit"
+          color="primary"
+          className={classes.button}
+          disabled={isFetching || success}
+        >
+          {'Signup'}
+        </Button>
+        <Button
+          component={Link}
+          to="/login/"
+          className={classes.button}
+        >
+          {'Login'}
+        </Button>
+      </form>
+    </Paper>
   );
 };
 

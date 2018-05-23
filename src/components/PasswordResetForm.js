@@ -8,10 +8,6 @@ import Button from '@material-ui/core/Button';
 import Link from 'react-router-dom/Link';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    height: '100%',
-  },
   formPaper: {
     padding: '20px',
     maxWidth: '360px',
@@ -40,64 +36,62 @@ const PasswordResetForm = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.formPaper} elevation={2}>
-        <Typography
-          variant="title"
-          color="primary"
-          className={classes.title}
-        >
-          {'Forgot Password?'}
-        </Typography>
-        <form onSubmit={handleFormSubmit}>
-          {success &&
-            <Typography
-              type="body1"
-              color="primary"
-              paragraph
-            >
-              {'We emailed you a link. Please click on that link and follow the instructions!'}
-            </Typography>
-          }
-          {error &&
-            <Typography
-              type="body1"
-              color="error"
-              paragraph
-            >
-              {error}
-            </Typography>
-          }
-          <TextField
-            name="email"
-            value={email}
-            onChange={handleFieldChange}
-            label="What is your email?"
-            error={emailError}
-            helperText={emailHelperText}
-            autoFocus
-            fullWidth
-            margin="normal"
-          />
-          <Button
-            variant="raised"
-            type="submit"
+    <Paper className={classes.formPaper} elevation={2}>
+      <Typography
+        variant="title"
+        color="primary"
+        className={classes.title}
+      >
+        {'Forgot Password?'}
+      </Typography>
+      <form onSubmit={handleFormSubmit}>
+        {success &&
+          <Typography
+            type="body1"
             color="primary"
-            className={classes.button}
-            disabled={isFetching}
+            paragraph
           >
-            {'Reset Password'}
-          </Button>
-          <Button
-            component={Link}
-            to="/login/"
-            className={classes.button}
+            {'We emailed you a link. Please click on that link and follow the instructions!'}
+          </Typography>
+        }
+        {error &&
+          <Typography
+            type="body1"
+            color="error"
+            paragraph
           >
-            {'Login'}
-          </Button>
-        </form>
-      </Paper>
-    </div>
+            {error}
+          </Typography>
+        }
+        <TextField
+          name="email"
+          value={email}
+          onChange={handleFieldChange}
+          label="What is your email?"
+          error={emailError}
+          helperText={emailHelperText}
+          autoFocus
+          fullWidth
+          margin="normal"
+        />
+        <Button
+          variant="raised"
+          type="submit"
+          color="primary"
+          className={classes.button}
+          disabled={isFetching}
+        >
+          {'Reset Password'}
+        </Button>
+        <Button
+          component={Link}
+          to="/login/"
+          className={classes.button}
+        >
+          {'Login'}
+        </Button>
+      </form>
+    </Paper>
   );
 };
 

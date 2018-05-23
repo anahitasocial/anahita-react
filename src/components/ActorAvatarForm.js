@@ -8,9 +8,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   avatar: {
     width: theme.spacing.unit * 15,
     height: theme.spacing.unit * 15,
@@ -44,7 +41,7 @@ const ActorAvatarForm = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       <IconButton
         color="primary"
         component="span"
@@ -104,7 +101,7 @@ const ActorAvatarForm = (props) => {
           {'Delete'}
         </MenuItem>
       </Menu>
-    </div>
+    </React.Fragment>
   );
 };
 

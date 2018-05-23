@@ -14,9 +14,6 @@ import Link from 'react-router-dom/Link';
 import { Person as PERSON } from '../constants';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   formPaper: {
     padding: '20px',
   },
@@ -55,134 +52,132 @@ const PersonInfoForm = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.formPaper} elevation={0}>
-        <Typography variant="title" color="primary">
-            Information
-        </Typography>
-        <form className={classes.container} onSubmit={handleFormSubmit}>
-          { error &&
-            <Typography
-              variant="caption"
-              color="error"
-              paragraph
-            >
-                {error}
-            </Typography>
-          }
-          <TextField
-            name="givenName"
-            value={givenName}
-            onChange={handleFieldChange}
-            label="First Name"
-            error={givenNameError}
-            helperText={givenNameHelperText}
-            autoFocus
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            name="familyName"
-            value={familyName}
-            onChange={handleFieldChange}
-            label="Last Name"
-            error={familyNameError}
-            helperText={familyNameHelperText}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            name="body"
-            value={body || ''}
-            onChange={handleFieldChange}
-            label="Bio"
-            error={bodyError}
-            helperText={bodyHelperText}
-            margin="normal"
-            fullWidth
-            multiline
-          />
-          <FormControl className={classes.formControl}>
-            <FormLabel component="legend">
-              {'What pronoun do you use?'}
-            </FormLabel>
-            <RadioGroup
-              aria-label="gender"
-              name="gender"
-              className={classes.group}
-              value={gender}
-              onChange={handleFieldChange}
-            >
-              <FormControlLabel
-                value={PERSON.GENDER.FEMALE}
-                control={<Radio />}
-                label="Female"
-              />
-              <FormControlLabel
-                value={PERSON.GENDER.MALE}
-                control={<Radio />}
-                label="Male"
-              />
-              <FormControlLabel
-                value={PERSON.GENDER.NEUTRAL}
-                control={<Radio />}
-                label="Neutral"
-              />
-            </RadioGroup>
-          </FormControl>
-          {canChangeUsertype &&
-          <FormControl className={classes.formControl}>
-            <FormLabel component="legend">
-              {'User Type'}
-            </FormLabel>
-            <RadioGroup
-              aria-label="usertype"
-              name="usertype"
-              className={classes.group}
-              value={usertype}
-              onChange={handleFieldChange}
-            >
-              <FormControlLabel
-                value={PERSON.TYPE.REGISTERED}
-                control={<Radio />}
-                label="Registered"
-              />
-              <FormControlLabel
-                value={PERSON.TYPE.ADMIN}
-                control={<Radio />}
-                label="Administrator"
-              />
-              {isSuperAdmin &&
-              <FormControlLabel
-                value={PERSON.TYPE.SUPER_ADMIN}
-                control={<Radio />}
-                label="Super Administrator"
-              />
-              }
-            </RadioGroup>
-          </FormControl>
-          }
-          {dismissPath &&
-          <Button
-            className={classes.button}
-            component={Link}
-            to={dismissPath}
+    <Paper className={classes.formPaper} elevation={0}>
+      <Typography variant="title" color="primary">
+          Information
+      </Typography>
+      <form className={classes.container} onSubmit={handleFormSubmit}>
+        { error &&
+          <Typography
+            variant="caption"
+            color="error"
+            paragraph
           >
-            {'Dismiss'}
-          </Button>
-          }
-          <Button
-            type="submit"
-            variant="raised"
-            color="primary"
-            className={classes.button}
-            disabled={isFetching}
+              {error}
+          </Typography>
+        }
+        <TextField
+          name="givenName"
+          value={givenName}
+          onChange={handleFieldChange}
+          label="First Name"
+          error={givenNameError}
+          helperText={givenNameHelperText}
+          autoFocus
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          name="familyName"
+          value={familyName}
+          onChange={handleFieldChange}
+          label="Last Name"
+          error={familyNameError}
+          helperText={familyNameHelperText}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          name="body"
+          value={body || ''}
+          onChange={handleFieldChange}
+          label="Bio"
+          error={bodyError}
+          helperText={bodyHelperText}
+          margin="normal"
+          fullWidth
+          multiline
+        />
+        <FormControl className={classes.formControl}>
+          <FormLabel component="legend">
+            {'What pronoun do you use?'}
+          </FormLabel>
+          <RadioGroup
+            aria-label="gender"
+            name="gender"
+            className={classes.group}
+            value={gender}
+            onChange={handleFieldChange}
           >
-            {'Save'}
-          </Button>
-        </form>
-      </Paper>
-    </div>
+            <FormControlLabel
+              value={PERSON.GENDER.FEMALE}
+              control={<Radio />}
+              label="Female"
+            />
+            <FormControlLabel
+              value={PERSON.GENDER.MALE}
+              control={<Radio />}
+              label="Male"
+            />
+            <FormControlLabel
+              value={PERSON.GENDER.NEUTRAL}
+              control={<Radio />}
+              label="Neutral"
+            />
+          </RadioGroup>
+        </FormControl>
+        {canChangeUsertype &&
+        <FormControl className={classes.formControl}>
+          <FormLabel component="legend">
+            {'User Type'}
+          </FormLabel>
+          <RadioGroup
+            aria-label="usertype"
+            name="usertype"
+            className={classes.group}
+            value={usertype}
+            onChange={handleFieldChange}
+          >
+            <FormControlLabel
+              value={PERSON.TYPE.REGISTERED}
+              control={<Radio />}
+              label="Registered"
+            />
+            <FormControlLabel
+              value={PERSON.TYPE.ADMIN}
+              control={<Radio />}
+              label="Administrator"
+            />
+            {isSuperAdmin &&
+            <FormControlLabel
+              value={PERSON.TYPE.SUPER_ADMIN}
+              control={<Radio />}
+              label="Super Administrator"
+            />
+            }
+          </RadioGroup>
+        </FormControl>
+        }
+        {dismissPath &&
+        <Button
+          className={classes.button}
+          component={Link}
+          to={dismissPath}
+        >
+          {'Dismiss'}
+        </Button>
+        }
+        <Button
+          type="submit"
+          variant="raised"
+          color="primary"
+          className={classes.button}
+          disabled={isFetching}
+        >
+          {'Save'}
+        </Button>
+      </form>
+    </Paper>
   );
 };
 

@@ -8,10 +8,6 @@ import Button from '@material-ui/core/Button';
 import Link from 'react-router-dom/Link';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    height: '100%',
-  },
   formPaper: {
     padding: '20px',
     maxWidth: '360px',
@@ -43,78 +39,76 @@ const LoginForm = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.formPaper} elevation={2}>
-        <Typography
-          variant="title"
-          color="primary"
-          className={classes.title}
-        >
-          {'Please Log In'}
-        </Typography>
-        <form
-          className={classes.container}
-          onSubmit={handleFormSubmit}
-        >
-          {error &&
-            <Typography
-              type="body1"
-              color="error"
-              paragraph
-            >
-              {'Authentication failed! Please check your username and password!'}
-            </Typography>
-          }
-          <TextField
-            name="username"
-            value={username}
-            onChange={handleFieldChange}
-            label="Email or username"
-            error={usernameError}
-            helperText={usernameHelperText}
-            autoFocus
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleFieldChange}
-            label="Password"
-            error={passwordError}
-            helperText={passwordHelperText}
-            fullWidth
-            margin="normal"
-          />
-          <Button
-            variant="raised"
-            type="submit"
-            color="primary"
-            className={classes.button}
-            disabled={isFetching}
+    <Paper className={classes.formPaper} elevation={2}>
+      <Typography
+        variant="title"
+        color="primary"
+        className={classes.title}
+      >
+        {'Please Log In'}
+      </Typography>
+      <form
+        className={classes.container}
+        onSubmit={handleFormSubmit}
+      >
+        {error &&
+          <Typography
+            type="body1"
+            color="error"
+            paragraph
           >
-            {'Login'}
-          </Button>
-          {canSignup &&
-            <Button
-              component={Link}
-              to="/signup/"
-              className={classes.button}
-            >
-              {'Signup'}
-            </Button>
-          }
+            {'Authentication failed! Please check your username and password!'}
+          </Typography>
+        }
+        <TextField
+          name="username"
+          value={username}
+          onChange={handleFieldChange}
+          label="Email or username"
+          error={usernameError}
+          helperText={usernameHelperText}
+          autoFocus
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleFieldChange}
+          label="Password"
+          error={passwordError}
+          helperText={passwordHelperText}
+          fullWidth
+          margin="normal"
+        />
+        <Button
+          variant="raised"
+          type="submit"
+          color="primary"
+          className={classes.button}
+          disabled={isFetching}
+        >
+          {'Login'}
+        </Button>
+        {canSignup &&
           <Button
             component={Link}
-            to="/passwordreset/"
+            to="/signup/"
             className={classes.button}
           >
-            {'Forgot Password?'}
+            {'Signup'}
           </Button>
-        </form>
-      </Paper>
-    </div>
+        }
+        <Button
+          component={Link}
+          to="/passwordreset/"
+          className={classes.button}
+        >
+          {'Forgot Password?'}
+        </Button>
+      </form>
+    </Paper>
   );
 };
 

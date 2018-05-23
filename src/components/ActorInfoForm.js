@@ -8,9 +8,6 @@ import Button from '@material-ui/core/Button';
 import Link from 'react-router-dom/Link';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   formPaper: {
     padding: '20px',
   },
@@ -41,7 +38,7 @@ const ActorInfoForm = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       <Paper className={classes.formPaper} elevation={0}>
         {formTitle &&
           <Typography
@@ -103,7 +100,7 @@ const ActorInfoForm = (props) => {
           </Button>
         </form>
       </Paper>
-    </div>
+    </React.Fragment>
   );
 };
 
