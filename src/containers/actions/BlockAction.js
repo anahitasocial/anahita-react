@@ -1,17 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import {
   blockActor,
   unblockActor,
 } from '../../actions/block';
-
-const styles = {
-  root: {},
-};
 
 class BlockAction extends React.Component {
   constructor(props) {
@@ -44,10 +39,10 @@ class BlockAction extends React.Component {
   }
 
   render() {
-    const { classes, actor } = this.props;
+    const { actor } = this.props;
     const { isBlocked } = this.state;
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         {isBlocked &&
           <MenuItem
             onClick={this.handleUnblockActor}
@@ -62,13 +57,12 @@ class BlockAction extends React.Component {
             {`Block @${actor.alias}`}
           </MenuItem>
         }
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 BlockAction.propTypes = {
-  classes: PropTypes.object.isRequired,
   blockPerson: PropTypes.func.isRequired,
   unblockPerson: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
@@ -96,7 +90,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(BlockAction));
+)(BlockAction);

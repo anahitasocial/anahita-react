@@ -9,9 +9,6 @@ import { NavLink } from 'react-router-dom';
 import BlockAction from '../actions/BlockAction';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   navlink: {
     width: '100%',
     padding: '20px 0',
@@ -52,7 +49,7 @@ class ActorCommands extends React.Component {
     // const namespace = actor.objectType.split('.')[1];
     // console.log(actor.commands);
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         <IconButton
           aria-label="More"
           aria-owns={anchorEl ? 'long-menu' : null}
@@ -99,7 +96,7 @@ class ActorCommands extends React.Component {
             }
           })}
         </Menu>
-      </div>
+      </React.Fragment>
     );
   }
 }

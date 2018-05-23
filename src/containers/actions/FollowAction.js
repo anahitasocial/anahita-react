@@ -1,17 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 
 import {
   followActor,
   unfollowActor,
 } from '../../actions/follow';
-
-const styles = {
-  root: {},
-};
 
 class FollowAction extends React.Component {
   constructor(props) {
@@ -44,10 +39,9 @@ class FollowAction extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     const { isLeader } = this.state;
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         {isLeader &&
           <Button
             color="inherit"
@@ -64,13 +58,12 @@ class FollowAction extends React.Component {
             {'Follow'}
           </Button>
         }
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 FollowAction.propTypes = {
-  classes: PropTypes.object.isRequired,
   followActor: PropTypes.func.isRequired,
   unfollowActor: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
@@ -99,7 +92,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(FollowAction));
+)(FollowAction);
