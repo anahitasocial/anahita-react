@@ -9,6 +9,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ActorInfoForm from '../../components/ActorInfoForm';
+import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { addActor } from '../../actions/actor';
 
 const styles = {
@@ -115,6 +116,7 @@ class ActorAddPage extends React.Component {
       classes,
       namespace,
       success,
+      error,
       isFetching,
     } = this.props;
 
@@ -152,10 +154,16 @@ class ActorAddPage extends React.Component {
             handleFieldChange={this.handleFieldChange}
             handleFormSubmit={this.handleFormSubmit}
             isFetching={isFetching}
-            success={success}
             dismissPath={`/${namespace}/`}
           />
         </Card>
+        {error &&
+          <SimpleSnackbar
+            isOpen={Boolean(error)}
+            message="Something went wrong!"
+            type="error"
+          />
+        }
         {success && actor.id &&
           <Redirect to={`/${namespace}/${actor.id}/`} />
         }
@@ -170,6 +178,7 @@ ActorAddPage.propTypes = {
   actor: PropTypes.object,
   namespace: PropTypes.string.isRequired,
   success: PropTypes.bool,
+  error: PropTypes.string,
   isFetching: PropTypes.bool,
 };
 
@@ -177,12 +186,14 @@ const mapStateToProps = (state) => {
   const {
     actor,
     success,
+    error,
     isFetching,
   } = state.actorReducer;
 
   return {
     actor,
     success,
+    error,
     isFetching,
   };
 };
@@ -195,6 +206,7 @@ ActorAddPage.defaultProps = {
   },
   isFetching: false,
   success: false,
+  error: '',
 };
 
 const mapDispatchToProps = (dispatch) => {

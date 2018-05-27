@@ -38,7 +38,6 @@ const ActorInfoForm = (props) => {
     passwordError,
     passwordHelperText,
     isFetching,
-    error,
     dismissPath,
   } = props;
 
@@ -48,15 +47,6 @@ const ActorInfoForm = (props) => {
         {'Account Information'}
       </Typography>
       <form onSubmit={handleFormSubmit}>
-        { error &&
-          <Typography
-            variant="caption"
-            color="error"
-            paragraph
-          >
-              {error}
-          </Typography>
-        }
         <TextFieldUsername
           value={username}
           onChange={handleFieldChange}
@@ -117,7 +107,6 @@ ActorInfoForm.propTypes = {
   passwordHelperText: PropTypes.string,
   passwordError: PropTypes.bool,
   isFetching: PropTypes.bool,
-  error: PropTypes.string,
   dismissPath: PropTypes.string,
 };
 
@@ -132,7 +121,6 @@ ActorInfoForm.defaultProps = {
   passwordError: false,
   passwordHelperText: '',
   isFetching: false,
-  error: '',
   dismissPath: '',
 };
 

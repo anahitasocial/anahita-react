@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PersonInfoForm from '../../components/PersonInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
+import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { readActor } from '../../actions/actor';
 import { editPerson } from '../../actions/person';
 import { Person as PERSON } from '../../constants';
@@ -164,6 +165,7 @@ class PersonSettingsInfoPage extends React.Component {
       classes,
       viewer,
       error,
+      success,
       isFetching,
     } = this.props;
 
@@ -203,10 +205,23 @@ class PersonSettingsInfoPage extends React.Component {
               isSuperAdmin={
                 viewer.usertype === PERSON.TYPE.SUPER_ADMIN
               }
-              error={error}
               dismissPath={`/people/${actor.id}/settings/`}
             />
           </ActorSettingCard>
+        }
+        {error &&
+          <SimpleSnackbar
+            isOpen={Boolean(error)}
+            message="Something went wrong!"
+            type="error"
+          />
+        }
+        {success &&
+          <SimpleSnackbar
+            isOpen={Boolean(success)}
+            message="Information Updated!"
+            type="success"
+          />
         }
       </div>
     );
@@ -221,6 +236,7 @@ PersonSettingsInfoPage.propTypes = {
   viewer: PropTypes.object.isRequired,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
+  success: PropTypes.bool,
 };
 
 PersonSettingsInfoPage.defaultProps = {
@@ -234,6 +250,7 @@ PersonSettingsInfoPage.defaultProps = {
   },
   isFetching: false,
   error: '',
+  success: false,
 };
 
 const mapStateToProps = (state) => {

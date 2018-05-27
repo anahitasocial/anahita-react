@@ -5,6 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { singularize } from 'inflected';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
+import SimpleSnackbar from '../../components/SimpleSnackbar';
 import {
   readActor,
   editActor,
@@ -119,6 +120,7 @@ class ActorSettingsInfoPage extends React.Component {
       namespace,
       isFetching,
       success,
+      error,
     } = this.props;
 
     const {
@@ -147,10 +149,23 @@ class ActorSettingsInfoPage extends React.Component {
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
               isFetching={isFetching}
-              success={success}
               dismissPath={`/${namespace}/${actor.id}/settings/`}
             />
           </ActorSettingCard>
+        }
+        {error &&
+          <SimpleSnackbar
+            isOpen={Boolean(error)}
+            message="Something went wrong!"
+            type="error"
+          />
+        }
+        {success &&
+          <SimpleSnackbar
+            isOpen={Boolean(success)}
+            message="Information Updated!"
+            type="success"
+          />
         }
       </div>
     );
@@ -164,6 +179,7 @@ ActorSettingsInfoPage.propTypes = {
   actor: PropTypes.object,
   namespace: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
+  error: PropTypes.string,
   isFetching: PropTypes.bool,
 };
 
@@ -174,6 +190,7 @@ ActorSettingsInfoPage.defaultProps = {
     body: '',
   },
   isFetching: false,
+  error: '',
 };
 
 const mapStateToProps = (state) => {

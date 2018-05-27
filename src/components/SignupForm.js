@@ -47,7 +47,6 @@ const SignupForm = (props) => {
     passwordHelperText,
     isFetching,
     success,
-    error,
   } = props;
 
   return (
@@ -59,24 +58,6 @@ const SignupForm = (props) => {
       >
         {'Please Sign Up'}
       </Typography>
-      {error &&
-        <Typography
-          variant="body1"
-          color="error"
-          paragraph
-        >
-          {'Something went wrong!'}
-        </Typography>
-      }
-      {success &&
-        <Typography
-          variant="body1"
-          color="primary"
-          paragraph
-        >
-          {'Thank you! We just emailed you an account activation link. Please click on it and log on to your account'}
-        </Typography>
-      }
       <form onSubmit={handleFormSubmit}>
         <TextField
           name="givenName"
@@ -169,7 +150,6 @@ SignupForm.propTypes = {
   passwordHelperText: PropTypes.string,
   isFetching: PropTypes.bool,
   success: PropTypes.bool,
-  error: PropTypes.string,
 };
 
 SignupForm.defaultProps = {
@@ -185,7 +165,6 @@ SignupForm.defaultProps = {
   passwordHelperText: '',
   isFetching: false,
   success: false,
-  error: '',
 };
 
 export default withStyles(styles)(SignupForm);

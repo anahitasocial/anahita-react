@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PasswordResetForm from '../../components/PasswordResetForm';
+import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { resetPassword } from '../../actions/auth';
 import validate from './validate';
 
@@ -90,6 +91,21 @@ class PasswordResetPage extends React.Component {
           success={success}
           isFetching={isFetching}
         />
+        {error &&
+          <SimpleSnackbar
+            isOpen={Boolean(error)}
+            message="Something went wrong!"
+            type="error"
+          />
+        }
+        {success &&
+          <SimpleSnackbar
+            isOpen={Boolean(success)}
+            message="We emailed you a link. Please click on that link and follow the instructions!"
+            type="success"
+            autoHideDuration={null}
+          />
+        }
       </div>
     );
   }

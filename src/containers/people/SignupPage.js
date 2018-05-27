@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import SignupForm from '../../components/SignupForm';
+import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { signup } from '../../actions/auth';
 import validate from './validate';
 
@@ -178,6 +179,21 @@ class SignupPage extends React.Component {
           success={success}
           error={error}
         />
+        {error &&
+          <SimpleSnackbar
+            isOpen={Boolean(error)}
+            message="Something went wrong!"
+            type="error"
+          />
+        }
+        {success &&
+          <SimpleSnackbar
+            isOpen={Boolean(success)}
+            message="Thank you! We just emailed you an account activation link. Please click on it and log on to your account."
+            type="success"
+            autoHideDuration={null}
+          />
+        }
         {isAuthenticated &&
           <Redirect push to="/dashboard/" />
         }

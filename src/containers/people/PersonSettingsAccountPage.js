@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PersonAccountForm from '../../components/PersonAccountForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
+import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { readActor } from '../../actions/actor';
 import { editPersonAccount } from '../../actions/person';
 import validate from './validate';
@@ -173,6 +174,20 @@ class PersonSettingsAccountPage extends React.Component {
               error={error}
             />
           </ActorSettingCard>
+        }
+        {error &&
+          <SimpleSnackbar
+            isOpen={Boolean(error)}
+            message="Something went wrong!"
+            type="error"
+          />
+        }
+        {success &&
+          <SimpleSnackbar
+            isOpen={Boolean(success)}
+            message="Account Updated!"
+            type="success"
+          />
         }
       </div>
     );

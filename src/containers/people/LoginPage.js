@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/LoginForm';
+import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { login } from '../../actions/auth';
 
 class LoginPage extends React.Component {
@@ -119,9 +120,15 @@ class LoginPage extends React.Component {
           passwordError={passwordError}
           passwordHelperText={passwordHelperText}
           canSignup={canSignup}
-          error={error}
           isFetching={isFetching}
         />
+        {error &&
+          <SimpleSnackbar
+            isOpen={Boolean(error)}
+            message="Authentication failed! Please check your username and password!"
+            type="error"
+          />
+        }
         {success && isAuthenticated &&
           <Redirect push to="/dashboard/" />
         }

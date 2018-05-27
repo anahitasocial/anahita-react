@@ -8,6 +8,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonAddForm from '../../components/PersonAddForm';
+import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { addPerson } from '../../actions/person';
 import { Person as PERSON } from '../../constants';
 import validate from './validate';
@@ -230,9 +231,15 @@ class PersonAddPage extends React.Component {
             handleFormSubmit={this.handleFormSubmit}
             isFetching={isFetching}
             dismissPath="/people/"
-            error={error}
           />
         </Card>
+        {error &&
+          <SimpleSnackbar
+            isOpen={Boolean(error)}
+            message="Something went wrong!"
+            type="error"
+          />
+        }
         {success && person.id &&
           <Redirect to={`/people/${person.id}/`} />
         }

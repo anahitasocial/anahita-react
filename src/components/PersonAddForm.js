@@ -49,7 +49,6 @@ const PersonAddForm = (props) => {
     emailError,
     usertype,
     usertypeError,
-    error,
     isFetching,
     dismissPath,
   } = props;
@@ -66,15 +65,6 @@ const PersonAddForm = (props) => {
         </Typography>
       }
       <form onSubmit={handleFormSubmit}>
-        { error &&
-          <Typography
-            variant="caption"
-            color="error"
-            paragraph
-          >
-              {error}
-          </Typography>
-        }
         <TextField
           name="givenName"
           value={givenName}
@@ -183,7 +173,6 @@ PersonAddForm.propTypes = {
   usertype: PropTypes.string,
   usertypeError: PropTypes.bool,
   isFetching: PropTypes.bool,
-  error: PropTypes.string,
   dismissPath: PropTypes.string,
 };
 
@@ -203,7 +192,6 @@ PersonAddForm.defaultProps = {
   emailHelperText: '',
   usertype: '',
   usertypeError: false,
-  error: '',
   isFetching: false,
   dismissPath: '',
 };

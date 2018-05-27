@@ -31,8 +31,6 @@ const PasswordResetForm = (props) => {
     emailError,
     emailHelperText,
     isFetching,
-    success,
-    error,
   } = props;
 
   return (
@@ -45,24 +43,6 @@ const PasswordResetForm = (props) => {
         {'Forgot Password?'}
       </Typography>
       <form onSubmit={handleFormSubmit}>
-        {success &&
-          <Typography
-            type="body1"
-            color="primary"
-            paragraph
-          >
-            {'We emailed you a link. Please click on that link and follow the instructions!'}
-          </Typography>
-        }
-        {error &&
-          <Typography
-            type="body1"
-            color="error"
-            paragraph
-          >
-            {error}
-          </Typography>
-        }
         <TextField
           name="email"
           value={email}
@@ -102,9 +82,7 @@ PasswordResetForm.propTypes = {
   email: PropTypes.string,
   emailError: PropTypes.bool,
   emailHelperText: PropTypes.string,
-  success: PropTypes.bool,
   isFetching: PropTypes.bool,
-  error: PropTypes.string,
 };
 
 PasswordResetForm.defaultProps = {
@@ -112,8 +90,6 @@ PasswordResetForm.defaultProps = {
   emailError: false,
   emailHelperText: '',
   isFetching: false,
-  success: false,
-  error: '',
 };
 
 export default withStyles(styles)(PasswordResetForm);

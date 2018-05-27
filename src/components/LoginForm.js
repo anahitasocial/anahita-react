@@ -35,7 +35,6 @@ const LoginForm = (props) => {
     passwordHelperText,
     canSignup,
     isFetching,
-    error,
   } = props;
 
   return (
@@ -51,15 +50,6 @@ const LoginForm = (props) => {
         className={classes.container}
         onSubmit={handleFormSubmit}
       >
-        {error &&
-          <Typography
-            type="body1"
-            color="error"
-            paragraph
-          >
-            {'Authentication failed! Please check your username and password!'}
-          </Typography>
-        }
         <TextField
           name="username"
           value={username}
@@ -124,7 +114,6 @@ LoginForm.propTypes = {
   passwordHelperText: PropTypes.string,
   canSignup: PropTypes.bool,
   isFetching: PropTypes.bool,
-  error: PropTypes.string,
 };
 
 LoginForm.defaultProps = {
@@ -136,7 +125,6 @@ LoginForm.defaultProps = {
   passwordHelperText: '',
   canSignup: false,
   isFetching: false,
-  error: '',
 };
 
 export default withStyles(styles)(LoginForm);

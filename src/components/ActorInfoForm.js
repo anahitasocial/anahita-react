@@ -32,7 +32,6 @@ const ActorInfoForm = (props) => {
     body,
     bodyError,
     bodyHelperText,
-    error,
     isFetching,
     dismissPath,
   } = props;
@@ -50,15 +49,6 @@ const ActorInfoForm = (props) => {
           </Typography>
         }
         <form onSubmit={handleFormSubmit}>
-          { error &&
-            <Typography
-              variant="caption"
-              color="error"
-              paragraph
-            >
-                {error}
-            </Typography>
-          }
           <TextField
             name="name"
             value={name}
@@ -115,7 +105,6 @@ ActorInfoForm.propTypes = {
   body: PropTypes.string,
   bodyError: PropTypes.bool,
   bodyHelperText: PropTypes.string,
-  error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
   dismissPath: PropTypes.string,
 };
@@ -128,7 +117,6 @@ ActorInfoForm.defaultProps = {
   body: '',
   bodyError: false,
   bodyHelperText: '',
-  error: '',
   dismissPath: '',
 };
 

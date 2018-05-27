@@ -44,7 +44,6 @@ const PersonInfoForm = (props) => {
     bodyHelperText,
     gender,
     usertype,
-    error,
     dismissPath,
     isFetching,
     canChangeUsertype,
@@ -57,15 +56,6 @@ const PersonInfoForm = (props) => {
           Information
       </Typography>
       <form className={classes.container} onSubmit={handleFormSubmit}>
-        { error &&
-          <Typography
-            variant="caption"
-            color="error"
-            paragraph
-          >
-              {error}
-          </Typography>
-        }
         <TextField
           name="givenName"
           value={givenName}
@@ -206,7 +196,6 @@ PersonInfoForm.propTypes = {
   ]).isRequired,
   canChangeUsertype: PropTypes.bool.isRequired,
   isSuperAdmin: PropTypes.bool.isRequired,
-  error: PropTypes.string,
   dismissPath: PropTypes.string,
   isFetching: PropTypes.bool,
 };
@@ -222,7 +211,6 @@ PersonInfoForm.defaultProps = {
   bodyError: false,
   bodyHelperText: '',
   gender: PERSON.GENDER.NEUTRAL,
-  error: '',
   dismissPath: '',
   isFetching: false,
 };

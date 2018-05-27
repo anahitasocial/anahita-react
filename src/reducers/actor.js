@@ -50,6 +50,12 @@ export default function (state = {
         success: false,
       };
     case ACTORS.READ.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        actor: action.actor,
+        error: '',
+      };
     case ACTORS.EDIT.SUCCESS:
     case ACTORS.ADD.SUCCESS:
     case ACTORS.FOLLOW.SUCCESS:
