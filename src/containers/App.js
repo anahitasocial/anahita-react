@@ -139,7 +139,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      open: window.innerWidth > 375,
+      open: false,
     };
 
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);

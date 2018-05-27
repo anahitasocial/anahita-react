@@ -53,6 +53,7 @@ export default function (state = {
       return {
         ...state,
         isFetching: false,
+        success: false,
         actor: action.actor,
         error: '',
       };
