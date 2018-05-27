@@ -206,7 +206,10 @@ MediaPage.propTypes = {
   classes: PropTypes.object.isRequired,
   browseMedia: PropTypes.func.isRequired,
   resetMedia: PropTypes.func.isRequired,
-  media: PropTypes.object.isRequired,
+  media: PropTypes.shape({
+    byId: PropTypes.object,
+    allIds: PropTypes.array,
+  }).isRequired,
   namespace: PropTypes.string.isRequired,
   total: PropTypes.number.isRequired,
   viewer: PropTypes.object.isRequired,

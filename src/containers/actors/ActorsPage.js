@@ -196,10 +196,11 @@ ActorsPage.propTypes = {
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  actors: PropTypes.object.isRequired,
+  actors: PropTypes.shape({
+    byId: PropTypes.object,
+    allIds: PropTypes.array,
+  }).isRequired,
   namespace: PropTypes.string.isRequired,
-  offset: PropTypes.number,
-  limit: PropTypes.number,
   total: PropTypes.number,
   viewer: PropTypes.object.isRequired,
   queryFilters: PropTypes.object,
@@ -208,8 +209,6 @@ ActorsPage.propTypes = {
 ActorsPage.defaultProps = {
   queryFilters: {},
   total: 0,
-  limit: 20,
-  offset: 0,
   isAuthenticated: false,
 };
 
