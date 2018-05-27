@@ -6,8 +6,10 @@ const avatar = async('avatar');
 const cover = async('cover');
 
 export default {
-  RESET: 'ACTORS_RESET',
-  BROWSE: actors('browse'),
+  BROWSE: {
+    ...actors('browse'),
+    RESET: 'ACTORS_BROWSE_RESET',
+  },
   READ: actor('read'),
   EDIT: actor('edit'),
   ADD: actor('add'),

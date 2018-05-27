@@ -3,20 +3,26 @@ import { Media as MEDIA } from '../constants';
 export default function (higherOrderState, action) {
   const state = {
     isFetching: false,
-    media: [],
+    media: {
+      byId: {},
+      allIds: [],
+    },
     error: '',
-    offset: 0,
     total: 0,
     ...higherOrderState,
   };
 
   switch (action.type) {
-    case MEDIA.RESET:
+    case MEDIA.BROWSE.RESET:
       return {
         ...state,
-        media: [],
-        offset: 0,
+        media: {
+          byId: {},
+          allIds: [],
+        },
         total: 0,
+        isFetching: false,
+        error: '',
       };
     case MEDIA.BROWSE.REQUEST:
       return {
@@ -26,8 +32,10 @@ export default function (higherOrderState, action) {
     case MEDIA.BROWSE.SUCCESS:
       return {
         ...state,
-        media: state.media.concat(action.media),
-        offset: action.offset + action.limit,
+        media: {
+          byId: Object.assign({}, state.media.byId, action.media),
+          allIds: state.media.allIds.concat(action.ids),
+        },
         total: action.total,
         isFetching: false,
       };

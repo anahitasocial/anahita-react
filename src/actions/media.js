@@ -1,3 +1,4 @@
+import { normalize, schema } from 'normalizr';
 import { media as api } from '../api';
 import { Media as MEDIA } from '../constants';
 
@@ -5,7 +6,7 @@ import { Media as MEDIA } from '../constants';
 
 export function resetMedia() {
   return {
-    type: MEDIA.RESET,
+    type: MEDIA.BROWSE.RESET,
   };
 }
 
@@ -18,11 +19,14 @@ function browseRequest() {
 }
 
 function browseSuccess(results) {
+  const medium = new schema.Entity('media');
+  const media = [medium];
+  const normalized = normalize(results.data.data, media);
+
   return {
     type: MEDIA.BROWSE.SUCCESS,
-    media: results.data.data,
-    offset: results.data.pagination.offset,
-    limit: results.data.pagination.limit,
+    media: normalized.entities.media,
+    ids: normalized.result,
     total: results.data.pagination.total,
   };
 }

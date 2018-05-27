@@ -46,6 +46,8 @@ const styles = theme => ({
   },
 });
 
+const LIMIT = 20;
+
 class MediaPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -55,6 +57,7 @@ class MediaPage extends React.Component {
       filter: '',
     };
 
+    this.offset = 0;
     this.fetchMedia = this.fetchMedia.bind(this);
   }
 
@@ -64,28 +67,21 @@ class MediaPage extends React.Component {
 
   fetchMedia() {
     const { ownerId, filter } = this.state;
-    const {
-      offset,
-      limit,
-      namespace,
-    } = this.props;
+    const { namespace } = this.props;
 
     this.props.browseMedia({
       ownerId,
       filter,
-      start: offset,
-      limit,
+      start: this.offset,
+      limit: LIMIT,
     }, namespace);
+
+    this.offset += LIMIT;
   }
 
   hasMore() {
-    const {
-      offset,
-      total,
-      media,
-    } = this.props;
-
-    return offset === 0 || (Object.keys(media).length < total);
+    const { total, media } = this.props;
+    return !this.offset || media.allIds.length < total;
   }
 
   canAdd() {
@@ -143,7 +139,8 @@ class MediaPage extends React.Component {
             gutterWidth={20}
             gutterHeight={20}
           >
-            {media.map((medium) => {
+            {media.allIds.map((mediumId) => {
+              const medium = media.byId[mediumId];
               const key = `medium_${medium.id}`;
               const author = medium.author || {
                 id: null,
@@ -209,28 +206,21 @@ MediaPage.propTypes = {
   classes: PropTypes.object.isRequired,
   browseMedia: PropTypes.func.isRequired,
   resetMedia: PropTypes.func.isRequired,
-  media: PropTypes.array.isRequired,
+  media: PropTypes.object.isRequired,
   namespace: PropTypes.string.isRequired,
-  offset: PropTypes.number,
-  limit: PropTypes.number,
-  total: PropTypes.number,
+  total: PropTypes.number.isRequired,
   viewer: PropTypes.object.isRequired,
   queryFilters: PropTypes.object,
 };
 
 MediaPage.defaultProps = {
   queryFilters: {},
-  total: 0,
-  limit: 20,
-  offset: 0,
 };
 
 const mapStateToProps = (state) => {
   const {
     media,
     error,
-    offset,
-    limit,
     total,
   } = state.mediaReducer;
 
@@ -239,8 +229,6 @@ const mapStateToProps = (state) => {
   return {
     media,
     error,
-    offset,
-    limit,
     total,
     viewer,
   };

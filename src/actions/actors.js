@@ -1,3 +1,4 @@
+import { normalize, schema } from 'normalizr';
 import { actors as api } from '../api';
 import { Actors as ACTORS } from '../constants';
 
@@ -5,7 +6,7 @@ import { Actors as ACTORS } from '../constants';
 
 export function resetActors() {
   return {
-    type: ACTORS.RESET,
+    type: ACTORS.BROWSE.RESET,
   };
 }
 
@@ -18,11 +19,14 @@ function browseRequest() {
 }
 
 function browseSuccess(results) {
+  const actor = new schema.Entity('actors');
+  const actors = [actor];
+  const normalized = normalize(results.data.data, actors);
+
   return {
     type: ACTORS.BROWSE.SUCCESS,
-    actors: results.data.data,
-    offset: results.data.pagination.offset,
-    limit: results.data.pagination.limit,
+    actors: normalized.entities.actors,
+    ids: normalized.result,
     total: results.data.pagination.total,
   };
 }

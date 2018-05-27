@@ -38,7 +38,7 @@ const MediumCard = (props) => {
     title,
     description,
     portrait,
-    createdOn,
+    // createdOn,
     path,
     action,
     owner,

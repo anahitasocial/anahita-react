@@ -50,6 +50,8 @@ const styles = theme => ({
   },
 });
 
+const LIMIT = 20;
+
 class ActorsPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -59,11 +61,8 @@ class ActorsPage extends React.Component {
       keywordFilter: '',
     };
 
+    this.offset = 0;
     this.fetchActors = this.fetchActors.bind(this);
-  }
-
-  componentWillMount() {
-
   }
 
   componentWillUnmount() {
@@ -78,8 +77,6 @@ class ActorsPage extends React.Component {
   fetchActors() {
     const { disabledFilter, keywordFilter } = this.state;
     const {
-      offset,
-      limit,
       queryFilters,
       namespace,
     } = this.props;
@@ -87,20 +84,17 @@ class ActorsPage extends React.Component {
     this.props.browseActors({
       q: keywordFilter,
       disabled: disabledFilter,
-      start: offset,
-      limit,
+      start: this.offset,
+      limit: LIMIT,
       ...queryFilters,
     }, namespace);
+
+    this.offset += LIMIT;
   }
 
   hasMore() {
-    const {
-      offset,
-      total,
-      actors,
-    } = this.props;
-
-    return offset === 0 || (Object.keys(actors).length < total);
+    const { total, actors } = this.props;
+    return !this.offset || actors.allIds.length < total;
   }
 
   canAdd() {
@@ -158,7 +152,8 @@ class ActorsPage extends React.Component {
             gutterWidth={20}
             gutterHeight={20}
           >
-            {actors.map((actor) => {
+            {actors.allIds.map((actorId) => {
+              const actor = actors.byId[actorId];
               const key = `actor_${actor.id}`;
               const coverSrc = actor.coverURL.medium && actor.coverURL.medium.url;
               const canFollow = this.canFollow(actor);
@@ -201,7 +196,7 @@ ActorsPage.propTypes = {
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  actors: PropTypes.array.isRequired,
+  actors: PropTypes.object.isRequired,
   namespace: PropTypes.string.isRequired,
   offset: PropTypes.number,
   limit: PropTypes.number,
@@ -221,6 +216,7 @@ ActorsPage.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     actors,
+    actorIds,
     error,
     offset,
     limit,
@@ -234,6 +230,7 @@ const mapStateToProps = (state) => {
 
   return {
     actors,
+    actorIds,
     error,
     offset,
     limit,

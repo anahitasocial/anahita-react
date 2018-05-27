@@ -5,8 +5,10 @@ const medium = async('medium');
 const portrait = async('portrait');
 
 export default {
-  RESET: 'MEDIA_RESET',
-  BROWSE: media('browse'),
+  BROWSE: {
+    ...media('browse'),
+    RESET: 'MEDIA_BROWSE_RESET',
+  },
   READ: medium('read'),
   EDIT: medium('edit'),
   ADD: medium('add'),

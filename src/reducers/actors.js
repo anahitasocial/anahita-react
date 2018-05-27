@@ -1,21 +1,31 @@
 import { Actors as ACTORS } from '../constants';
 
+const updateItem = (state, item) => {
+  const actors = Object.assign({}, state.actors);
+  actors.byId[item.id] = item;
+  return actors;
+};
+
 export default function (higherOrderState, action) {
   const state = {
     isFetching: false,
-    actors: [],
+    actors: {
+      byId: {},
+      allIds: [],
+    },
     error: '',
-    offset: 0,
     total: 0,
     ...higherOrderState,
   };
 
   switch (action.type) {
-    case ACTORS.RESET:
+    case ACTORS.BROWSE.RESET:
       return {
         ...state,
-        actors: [],
-        offset: 0,
+        actors: {
+          byId: {},
+          allIds: [],
+        },
         total: 0,
       };
     case ACTORS.BROWSE.REQUEST:
@@ -28,8 +38,10 @@ export default function (higherOrderState, action) {
     case ACTORS.BROWSE.SUCCESS:
       return {
         ...state,
-        actors: state.actors.concat(action.actors),
-        offset: action.offset + action.limit,
+        actors: {
+          byId: Object.assign({}, state.actors.byId, action.actors),
+          allIds: state.actors.allIds.concat(action.ids),
+        },
         total: action.total,
         isFetching: false,
       };
@@ -38,9 +50,7 @@ export default function (higherOrderState, action) {
       return {
         ...state,
         isFetching: false,
-        actors: state.actors.map((actor) => {
-          return (actor.id === action.actor.id) ? action.actor : actor;
-        }),
+        actors: updateItem(state, action.actor),
       };
     case ACTORS.BROWSE.FAILURE:
     case ACTORS.FOLLOW.FAILURE:
