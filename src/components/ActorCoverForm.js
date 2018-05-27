@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CardMedia from '@material-ui/core/CardMedia';
 import Fade from '@material-ui/core/Fade';
 import CoverIcon from '@material-ui/icons/Panorama';
@@ -24,13 +24,10 @@ const styles = theme => ({
     height: theme.spacing.unit * 10,
     margin: '10% auto',
   },
-  loader: {
-    height: 3,
-  },
   button: {
     position: 'relative',
     width: '100%',
-    minHeight: 300,
+    minHeight: theme.spacing.unit * 40,
   },
   input: {
     display: 'none',
@@ -78,6 +75,9 @@ const ActorCoverForm = (props) => {
             />
           </div>
         }
+        {isWaiting &&
+          <CircularProgress />
+        }
       </ButtonBase>
       <Menu
         id="cover-add-menu"
@@ -102,11 +102,6 @@ const ActorCoverForm = (props) => {
           {'Delete'}
         </MenuItem>
       </Menu>
-      <div className={classes.loader}>
-        {isWaiting &&
-          <LinearProgress className={classes.loader} />
-        }
-      </div>
     </React.Fragment>
   );
 };
