@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ActorProfile from '../../components/ActorProfile';
 import ActorAvatar from './ActorAvatar';
 import ActorCover from './ActorCover';
@@ -12,6 +13,11 @@ import { readActor } from '../../actions/actor';
 const styles = theme => ({
   root: {
     width: '100%',
+  },
+  progress: {
+    marginLeft: '48%',
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
 });
 
@@ -84,6 +90,9 @@ class ActorPage extends React.Component {
 
     return (
       <div className={classes.root}>
+        {!actor.id &&
+          <CircularProgress className={classes.progress} />
+        }
         {actor.id &&
           this.renderProfile(actor)
         }
@@ -101,6 +110,7 @@ ActorPage.propTypes = {
   namespace: PropTypes.string.isRequired,
   isFetchingAvatar: PropTypes.bool,
   isFetchingCover: PropTypes.bool,
+  match: PropTypes.object.isRequired,
 };
 
 ActorPage.defaultProps = {

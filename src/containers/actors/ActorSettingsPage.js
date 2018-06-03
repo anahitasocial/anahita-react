@@ -49,6 +49,7 @@ ActorSettingsPage.propTypes = {
   actor: PropTypes.object,
   viewer: PropTypes.object.isRequired,
   namespace: PropTypes.string.isRequired,
+  computedMatch: PropTypes.object.isRequired,
 };
 
 ActorSettingsPage.defaultProps = {

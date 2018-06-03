@@ -18,7 +18,6 @@ class ActorAvatar extends React.Component {
     };
 
     this.avatar = new Image();
-
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);

@@ -18,7 +18,6 @@ class ActorCover extends React.Component {
     };
 
     this.cover = new Image();
-
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);

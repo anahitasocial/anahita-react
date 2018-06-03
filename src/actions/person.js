@@ -1,6 +1,46 @@
 import { person as api } from '../api';
 import { Person as PERSON } from '../constants';
 
+// -- Read
+
+function readRequest() {
+  return {
+    type: PERSON.READ.REQUEST,
+  };
+}
+
+function readSuccess(result) {
+  return {
+    type: PERSON.READ.SUCCESS,
+    person: result.data,
+  };
+}
+
+function readFailure(response) {
+  return {
+    type: PERSON.READ.FAILURE,
+    error: response.message,
+  };
+}
+
+export function readPerson(id) {
+  return (dispatch) => {
+    dispatch(readRequest());
+    return new Promise((resolve, reject) => {
+      api.readPerson(id)
+        .then((result) => {
+          dispatch(readSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(readFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
 // -- Edit Person
 
 function editRequest(person) {

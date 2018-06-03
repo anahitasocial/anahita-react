@@ -91,7 +91,7 @@ const Routes = (props) => {
           }}
         />
         <AuthenticatedRoute
-          path="/people/:id/settings/deleteforever"
+          path="/people/:id/settings/deleteforever/"
           exact
           component={(params) => {
             return <ActorSettingsDeletePage namespace="people" {...params} />;

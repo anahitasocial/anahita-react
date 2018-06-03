@@ -7,6 +7,14 @@ export default function (state = {
   error: '',
 }, action) {
   switch (action.type) {
+    case PERSON.READ.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        person: {},
+        success: false,
+        error: '',
+      };
     case PERSON.EDIT.REQUEST:
     case PERSON.EDIT_ACCOUNT.REQUEST:
     case PERSON.ADD.REQUEST:
@@ -15,6 +23,14 @@ export default function (state = {
         isFetching: true,
         success: false,
         person: action.person,
+        error: '',
+      };
+    case PERSON.READ.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        person: action.person,
+        error: '',
       };
     case PERSON.EDIT.SUCCESS:
     case PERSON.EDIT_ACCOUNT.SUCCESS:
@@ -26,6 +42,7 @@ export default function (state = {
         person: action.person,
         error: '',
       };
+    case PERSON.READ.FAILURE:
     case PERSON.EDIT.FAILURE:
     case PERSON.EDIT_ACCOUNT.FAILURE:
     case PERSON.ADD.FAILURE:

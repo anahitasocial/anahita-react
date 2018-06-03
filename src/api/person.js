@@ -1,18 +1,24 @@
 import axios from 'axios';
 import { constructURLSearchParams } from './utils';
 
+export function readPerson(id) {
+  return axios.get(`/people/${id}.json`);
+}
+
 export function editPerson(person) {
   const {
     givenName,
     familyName,
     body,
     gender,
+    usertype,
   } = person;
   return axios.post(`/people/${person.id}.json`, constructURLSearchParams({
     givenName,
     familyName,
     body,
     gender,
+    usertype,
   }));
 }
 

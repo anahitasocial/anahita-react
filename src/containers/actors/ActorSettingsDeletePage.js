@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Person as PERSON } from '../../constants';
 import ActorDeleteForm from '../../components/ActorDeleteForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
@@ -11,11 +12,16 @@ import {
   deleteActor,
 } from '../../actions/actor';
 
-const styles = {
+const styles = theme => ({
   root: {
     width: '100%',
   },
-};
+  progress: {
+    marginLeft: '48%',
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+  },
+});
 
 class ActorSettingsDeletePage extends React.Component {
   constructor(props) {
@@ -154,6 +160,9 @@ class ActorSettingsDeletePage extends React.Component {
 
     return (
       <div className={classes.root}>
+        {!actor.id &&
+          <CircularProgress className={classes.progress} />
+        }
         {actor.id &&
           <ActorSettingCard
             namespace={namespace}
@@ -191,6 +200,7 @@ ActorSettingsDeletePage.propTypes = {
   isFetching: PropTypes.bool,
   success: PropTypes.bool,
   viewer: PropTypes.object.isRequired,
+  computedMatch: PropTypes.object.isRequired,
 };
 
 ActorSettingsDeletePage.defaultProps = {

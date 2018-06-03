@@ -2,18 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonInfoForm from '../../components/PersonInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import { readActor } from '../../actions/actor';
-import { editPerson } from '../../actions/person';
+import {
+  readPerson,
+  editPerson,
+} from '../../actions/person';
 import { Person as PERSON } from '../../constants';
 
-const styles = {
+const styles = theme => ({
   root: {
     width: '100%',
   },
-};
+  progress: {
+    marginLeft: '48%',
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+  },
+});
 
 const BODY_CHARACTER_LIMIT = 1000;
 
@@ -22,7 +30,7 @@ class PersonSettingsInfoPage extends React.Component {
     super(props);
 
     this.state = {
-      actor: props.actor,
+      person: {},
       givenNameError: false,
       givenNameHelperText: '',
       familyNameError: false,
@@ -36,27 +44,24 @@ class PersonSettingsInfoPage extends React.Component {
   }
 
   componentWillMount() {
-    const { actor } = this.props;
-    if (!actor.id) {
-      const { id } = this.props.computedMatch.params;
-      this.props.readPerson(id);
-    }
+    const { id } = this.props.computedMatch.params;
+    this.props.readPerson(id);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      actor: Object.assign({}, nextProps.actor),
+      person: Object.assign({}, nextProps.person),
     });
   }
 
   handleFieldChange(event) {
-    const { actor } = this.state;
+    const { person } = this.state;
     const { name, value } = event.target;
 
     this.validateField(name, value.trim());
-    actor[name] = value;
+    person[name] = value;
 
-    this.setState({ actor });
+    this.setState({ person });
   }
 
   validateField(name, value) {
@@ -121,7 +126,7 @@ class PersonSettingsInfoPage extends React.Component {
       body,
       gender,
       usertype,
-    } = this.state.actor;
+    } = this.state.person;
 
     const givenNameValidated = this.validateField('givenName', givenName);
     const familyNameValidated = this.validateField('familyName', familyName);
@@ -136,23 +141,26 @@ class PersonSettingsInfoPage extends React.Component {
     usertypeValidated;
   }
 
-  saveActor() {
-    const { actor } = this.state;
-    this.props.editPerson(actor);
+  editPerson() {
+    const { person } = this.state;
+    this.props.editPerson(person);
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
     if (this.validate()) {
-      this.saveActor();
+      this.editPerson();
     }
   }
 
   canChangeUsertype() {
-    const { actor, viewer } = this.props;
+    const { person, viewer } = this.props;
 
-    if (viewer.id !== actor.id) {
-      if ([PERSON.TYPE.ADMIN, PERSON.TYPE.SUPER_ADMIN].includes(viewer.usertype)) {
+    if (viewer.id !== person.id) {
+      if ([
+        PERSON.TYPE.ADMIN,
+        PERSON.TYPE.SUPER_ADMIN,
+      ].includes(viewer.usertype)) {
         return true;
       }
     }
@@ -164,13 +172,13 @@ class PersonSettingsInfoPage extends React.Component {
     const {
       classes,
       viewer,
-      error,
-      success,
       isFetching,
+      success,
+      error,
     } = this.props;
 
     const {
-      actor,
+      person,
       givenNameError,
       givenNameHelperText,
       familyNameError,
@@ -181,23 +189,26 @@ class PersonSettingsInfoPage extends React.Component {
 
     return (
       <div className={classes.root}>
-        {actor.id &&
+        {!person.id &&
+          <CircularProgress className={classes.progress} />
+        }
+        {person.id &&
           <ActorSettingCard
             namespace="people"
-            actor={actor}
+            actor={person}
           >
             <PersonInfoForm
-              givenName={actor.givenName}
+              givenName={person.givenName}
               givenNameError={givenNameError}
               givenNameHelperText={givenNameHelperText}
-              familyName={actor.familyName}
+              familyName={person.familyName}
               familyNameError={familyNameError}
               familyNameHelperText={familyNameHelperText}
-              body={actor.body}
+              body={person.body}
               bodyError={bodyError}
               bodyHelperText={bodyHelperText}
-              gender={actor.gender}
-              usertype={actor.usertype}
+              gender={person.gender}
+              usertype={person.usertype}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
               isFetching={isFetching}
@@ -205,7 +216,7 @@ class PersonSettingsInfoPage extends React.Component {
               isSuperAdmin={
                 viewer.usertype === PERSON.TYPE.SUPER_ADMIN
               }
-              dismissPath={`/people/${actor.id}/settings/`}
+              dismissPath={`/people/${person.id}/settings/`}
             />
           </ActorSettingCard>
         }
@@ -232,15 +243,16 @@ PersonSettingsInfoPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readPerson: PropTypes.func.isRequired,
   editPerson: PropTypes.func.isRequired,
-  actor: PropTypes.object,
+  person: PropTypes.object,
   viewer: PropTypes.object.isRequired,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
   success: PropTypes.bool,
+  computedMatch: PropTypes.object.isRequired,
 };
 
 PersonSettingsInfoPage.defaultProps = {
-  actor: {
+  person: {
     id: null,
     givenName: '',
     familyName: '',
@@ -254,10 +266,6 @@ PersonSettingsInfoPage.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  let {
-    actor,
-  } = state.actorReducer;
-
   const {
     person,
     success,
@@ -269,12 +277,8 @@ const mapStateToProps = (state) => {
     viewer,
   } = state.authReducer;
 
-  if (person && person.id) {
-    actor = Object.assign({}, person);
-  }
-
   return {
-    actor,
+    person,
     error,
     success,
     viewer,
@@ -285,7 +289,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readPerson: (id) => {
-      dispatch(readActor(id, 'people'));
+      dispatch(readPerson(id));
     },
     editPerson: (person) => {
       dispatch(editPerson(person));

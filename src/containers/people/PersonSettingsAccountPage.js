@@ -2,25 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonAccountForm from '../../components/PersonAccountForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import { readActor } from '../../actions/actor';
-import { editPersonAccount } from '../../actions/person';
+import {
+  readPerson,
+  editPersonAccount,
+} from '../../actions/person';
 import validate from './validate';
 
-const styles = {
+const styles = theme => ({
   root: {
     width: '100%',
   },
-};
+  progress: {
+    marginLeft: '48%',
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+  },
+});
 
 class PersonSettingsAccountPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      actor: props.actor,
+      person: {},
       usernameError: false,
       usernameHelperText: '',
       emailError: false,
@@ -34,32 +42,29 @@ class PersonSettingsAccountPage extends React.Component {
   }
 
   componentWillMount() {
-    const { actor } = this.props;
-    if (!actor.id) {
-      const { id } = this.props.computedMatch.params;
-      this.props.readPerson(id);
-    }
+    const { id } = this.props.computedMatch.params;
+    this.props.readPerson(id);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      actor: Object.assign({}, nextProps.actor),
+      person: Object.assign({}, nextProps.person),
     });
   }
 
   handleFieldChange(event) {
-    const { actor } = this.state;
+    const { person } = this.state;
     const { name, value } = event.target;
 
     if (name === 'username' || name === 'email') {
       this.validateField(name, value.toLowerCase().trim());
-      actor[name] = value.toLowerCase().trim();
+      person[name] = value.toLowerCase().trim();
     } else {
       this.validateField(name, value.trim());
-      actor[name] = value.trim();
+      person[name] = value.trim();
     }
 
-    this.setState({ actor });
+    this.setState({ person });
   }
 
   validateField(name, value) {
@@ -107,7 +112,7 @@ class PersonSettingsAccountPage extends React.Component {
       username,
       email,
       password,
-    } = this.state.actor;
+    } = this.state.person;
 
     const usernameValidated = this.validateField('username', username);
     const emailValidated = this.validateField('email', email);
@@ -118,29 +123,29 @@ class PersonSettingsAccountPage extends React.Component {
     passwordValidated;
   }
 
-  saveActor() {
-    const { actor } = this.state;
-    this.props.editPersonAccount(actor);
-    delete actor.password;
+  editPerson() {
+    const { person } = this.state;
+    this.props.editPersonAccount(person);
+    delete person.password;
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
     if (this.validate()) {
-      this.saveActor();
+      this.editPerson();
     }
   }
 
   render() {
     const {
       classes,
+      isFetching,
       success,
       error,
-      isFetching,
     } = this.props;
 
     const {
-      actor,
+      person,
       usernameHelperText,
       usernameError,
       emailHelperText,
@@ -151,10 +156,13 @@ class PersonSettingsAccountPage extends React.Component {
 
     return (
       <div className={classes.root}>
-        {actor.id &&
+        {!person.id &&
+          <CircularProgress className={classes.progress} />
+        }
+        {person.id &&
           <ActorSettingCard
             namespace="people"
-            actor={actor}
+            actor={person}
           >
             <PersonAccountForm
               usernameError={usernameError}
@@ -163,12 +171,12 @@ class PersonSettingsAccountPage extends React.Component {
               emailHelperText={emailHelperText}
               passwordError={passwordError}
               passwordHelperText={passwordHelperText}
-              username={actor.username}
-              email={actor.email}
-              password={actor.password}
+              username={person.username}
+              email={person.email}
+              password={person.password}
               handleFieldChange={this.handleFieldChange}
               handleFormSubmit={this.handleFormSubmit}
-              dismissPath={`/people/${actor.id}/settings/`}
+              dismissPath={`/people/${person.id}/settings/`}
               isFetching={isFetching}
               success={success}
               error={error}
@@ -198,14 +206,15 @@ PersonSettingsAccountPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readPerson: PropTypes.func.isRequired,
   editPersonAccount: PropTypes.func.isRequired,
-  actor: PropTypes.object,
+  person: PropTypes.object,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
+  computedMatch: PropTypes.object.isRequired,
 };
 
 PersonSettingsAccountPage.defaultProps = {
-  actor: {
+  person: {
     id: null,
     email: '',
     username: '',
@@ -217,10 +226,6 @@ PersonSettingsAccountPage.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  let {
-    actor,
-  } = state.actorReducer;
-
   const {
     person,
     isFetching,
@@ -228,12 +233,8 @@ const mapStateToProps = (state) => {
     error,
   } = state.personReducer;
 
-  if (person && person.id) {
-    actor = Object.assign({}, person);
-  }
-
   return {
-    actor,
+    person,
     error,
     success,
     isFetching,
@@ -243,7 +244,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readPerson: (id) => {
-      dispatch(readActor(id, 'people'));
+      dispatch(readPerson(id));
     },
     editPersonAccount: (person) => {
       dispatch(editPersonAccount(person));

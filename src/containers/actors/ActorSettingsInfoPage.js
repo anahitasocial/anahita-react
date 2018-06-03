@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { singularize } from 'inflected';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSettingCard';
@@ -11,11 +12,16 @@ import {
   editActor,
 } from '../../actions/actor';
 
-const styles = {
+const styles = theme => ({
   root: {
     width: '100%',
   },
-};
+  progress: {
+    marginLeft: '48%',
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+  },
+});
 
 const BODY_CHARACTER_LIMIT = 1000;
 
@@ -47,6 +53,8 @@ class ActorSettingsInfoPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       actor: Object.assign({}, nextProps.actor),
+      success: nextProps.success,
+      error: nextProps.error,
     });
   }
 
@@ -133,6 +141,9 @@ class ActorSettingsInfoPage extends React.Component {
 
     return (
       <div className={classes.root}>
+        {!actor.id &&
+          <CircularProgress className={classes.progress} />
+        }
         {actor.id &&
           <ActorSettingCard
             namespace={namespace}
@@ -181,6 +192,7 @@ ActorSettingsInfoPage.propTypes = {
   success: PropTypes.bool.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool,
+  computedMatch: PropTypes.object.isRequired,
 };
 
 ActorSettingsInfoPage.defaultProps = {

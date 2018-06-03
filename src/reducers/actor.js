@@ -14,29 +14,34 @@ export default function (state = {
         ...state,
         isFetching: true,
         actor: {},
+        success: false,
+        error: '',
       };
     case ACTORS.EDIT.REQUEST:
       return {
         ...state,
         isFetching: true,
-        success: false,
         actor: action.actor,
+        success: false,
+        error: '',
       };
     case ACTORS.AVATAR.ADD.REQUEST:
     case ACTORS.AVATAR.DELETE.REQUEST:
       return {
         ...state,
         isFetchingAvatar: true,
-        success: false,
         actor: action.actor,
+        success: false,
+        error: '',
       };
     case ACTORS.COVER.ADD.REQUEST:
     case ACTORS.COVER.DELETE.REQUEST:
       return {
         ...state,
         isFetchingCover: true,
-        success: false,
         actor: action.actor,
+        success: false,
+        error: '',
       };
     case ACTORS.ADD.REQUEST:
     case ACTORS.DELETE.REQUEST:
@@ -48,12 +53,12 @@ export default function (state = {
         ...state,
         isFetching: true,
         success: false,
+        error: '',
       };
     case ACTORS.READ.SUCCESS:
       return {
         ...state,
         isFetching: false,
-        success: false,
         actor: action.actor,
         error: '',
       };
@@ -66,8 +71,8 @@ export default function (state = {
       return {
         ...state,
         isFetching: false,
-        success: true,
         actor: action.actor,
+        success: true,
         error: '',
       };
     case ACTORS.AVATAR.ADD.SUCCESS:
@@ -75,8 +80,8 @@ export default function (state = {
       return {
         ...state,
         isFetchingAvatar: false,
-        success: true,
         actor: action.actor,
+        success: true,
         error: '',
       };
     case ACTORS.COVER.ADD.SUCCESS:
@@ -84,8 +89,16 @@ export default function (state = {
       return {
         ...state,
         isFetchingCover: false,
-        success: true,
         actor: action.actor,
+        success: true,
+        error: '',
+      };
+    case ACTORS.DELETE.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        actor: {},
+        success: true,
         error: '',
       };
     case ACTORS.READ.FAILURE:
@@ -117,13 +130,6 @@ export default function (state = {
         isFetchingCover: false,
         success: false,
         error: action.error,
-      };
-    case ACTORS.DELETE.SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        actor: {},
-        success: true,
       };
     default:
       return state;
