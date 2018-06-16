@@ -196,6 +196,7 @@ class PersonSettingsInfoPage extends React.Component {
           <ActorSettingCard
             namespace="people"
             actor={person}
+            key="com:people.person"
           >
             <PersonInfoForm
               givenName={person.givenName}

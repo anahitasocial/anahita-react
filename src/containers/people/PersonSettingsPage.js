@@ -4,7 +4,11 @@ import ActorSettingsPage from '../actors/ActorSettingsPage';
 
 const PersonSettingsPage = (params) => {
   return (
-    <ActorSettingsPage namespace="people" {...params} />
+    <ActorSettingsPage
+      key="com:people.person"
+      namespace="people"
+      {...params}
+    />
   );
 };
 

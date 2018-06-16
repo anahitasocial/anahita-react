@@ -18,6 +18,7 @@ class TopicsPage extends React.Component {
 
     return (
       <MediaPage
+        key="com:topics.topic"
         namespace="topics"
         queryFilters={filters}
         {...this.params}

@@ -18,6 +18,7 @@ class NotesPage extends React.Component {
 
     return (
       <MediaPage
+        key="com:notes.note"
         namespace="notes"
         queryFilters={filters}
         {...this.params}

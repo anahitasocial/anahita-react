@@ -18,6 +18,7 @@ class PeoplePage extends React.Component {
 
     return (
       <ActorsPage
+        key="com:people.person"
         namespace="people"
         queryFilters={filters}
         {...this.params}

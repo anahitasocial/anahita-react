@@ -18,6 +18,7 @@ class PhotosPage extends React.Component {
 
     return (
       <MediaPage
+        key="com:photos.photo"
         namespace="photos"
         queryFilters={filters}
         {...this.params}
