@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+import {
+  Toolbar,
+  Button,
+  Typography,
+  CircularProgress,
+  withWidth,
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import Link from 'react-router-dom/Link';
@@ -97,6 +100,32 @@ class MediaPage extends React.Component {
     return false;
   }
 
+  getColumnWidth() {
+    let columnWidth = '100%';
+
+    switch (this.props.width) {
+      case 'md': {
+        columnWidth = '50%';
+        break;
+      }
+      case 'lg': {
+        columnWidth = '33.33%';
+        break;
+      }
+      case 'xl': {
+        columnWidth = '25%';
+        break;
+      }
+      case 'xs':
+      case 'sm':
+      default: {
+        break;
+      }
+    }
+
+    return columnWidth;
+  }
+
   render() {
     const {
       classes,
@@ -135,9 +164,10 @@ class MediaPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={440}
-            gutterWidth={20}
-            gutterHeight={20}
+            columnWidth={this.getColumnWidth()}
+            duration={50}
+            gutterWidth={16}
+            gutterHeight={16}
           >
             {media.allIds.map((mediumId) => {
               const medium = media.byId[mediumId];
@@ -214,6 +244,7 @@ MediaPage.propTypes = {
   total: PropTypes.number.isRequired,
   viewer: PropTypes.object.isRequired,
   queryFilters: PropTypes.object,
+  width: PropTypes.string.isRequired,
 };
 
 MediaPage.defaultProps = {
@@ -251,4 +282,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MediaPage));
+)(withWidth()(MediaPage)));

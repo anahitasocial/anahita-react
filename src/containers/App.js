@@ -111,7 +111,7 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     height: 'calc(100% - 56px)',
-    padding: 20,
+    padding: 16,
     marginTop: 64,
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
