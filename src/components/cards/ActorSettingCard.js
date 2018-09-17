@@ -29,7 +29,7 @@ const ActorSettingCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card className={classes.root}>
+      <Card className={classes.root} square>
         <CardHeader
           avatar={
             <Avatar

@@ -46,7 +46,7 @@ const MediumCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card className={classes.root}>
+      <Card className={classes.root} square>
         <CardHeader
           avatar={authorAvatar}
           title={author}

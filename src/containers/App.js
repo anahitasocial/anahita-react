@@ -111,12 +111,13 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     height: 'calc(100% - 56px)',
-    padding: 16,
-    marginTop: 64,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       height: 'calc(100% - 64px)',
       marginTop: 64,
+      padding: 16,
     },
+    marginTop: 64,
+    padding: '16px 0',
   },
 });
 
@@ -142,19 +143,12 @@ class App extends React.Component {
       open: false,
     };
 
-    this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
-    this.handleDrawerClose = this.handleDrawerClose.bind(this);
+    this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
   }
 
-  handleDrawerOpen() {
+  handleDrawerToggle() {
     this.setState({
-      open: true,
-    });
-  }
-
-  handleDrawerClose() {
-    this.setState({
-      open: false,
+      open: !this.state.open,
     });
   }
 
@@ -192,7 +186,7 @@ class App extends React.Component {
                   )}
                   color="inherit"
                   aria-label="open drawer"
-                  onClick={this.handleDrawerOpen}
+                  onClick={this.handleDrawerToggle}
                 >
                   <MenuIcon />
                 </IconButton>
@@ -209,16 +203,20 @@ class App extends React.Component {
               </Toolbar>
             </AppBar>
             <Drawer
-              variant="permanent"
+              variant="temporary"
               classes={{
                 paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
               }}
               open={open}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              onClose={this.handleDrawerToggle}
             >
               <div className={classes.drawerInner}>
                 <div className={classes.drawerHeader}>
                   <Typography variant="title" color="inherit" noWrap>
-                    Anahita
+                    {'Anahita'}
                   </Typography>
                   <IconButton onClick={this.handleDrawerClose}>
                     {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}

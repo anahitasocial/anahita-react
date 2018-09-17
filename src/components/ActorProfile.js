@@ -35,7 +35,7 @@ const ActorProfile = (props) => {
 
   return (
     <div className={classes.root}>
-      <Card>
+      <Card square>
         {cover}
         <CardHeader
           avatar={avatar}
