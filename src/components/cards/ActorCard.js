@@ -36,7 +36,7 @@ const ActorCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card className={classes.root}>
+      <Card className={classes.root} square>
         {cover &&
           <Link to={profile} href={profile}>
             <CardMedia

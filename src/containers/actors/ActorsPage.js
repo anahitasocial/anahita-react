@@ -72,9 +72,30 @@ class ActorsPage extends React.Component {
     this.props.resetActors();
   }
 
-  canFollow(actor) {
-    const { viewer, isAuthenticated } = this.props;
-    return isAuthenticated && (viewer.id !== actor.id) && !actor.isBlocked;
+  getColumnWidth() {
+    let columnWidth = '100%';
+
+    switch (this.props.width) {
+      case 'md': {
+        columnWidth = '50%';
+        break;
+      }
+      case 'lg': {
+        columnWidth = '33.33%';
+        break;
+      }
+      case 'xl': {
+        columnWidth = '25%';
+        break;
+      }
+      case 'xs':
+      case 'sm':
+      default: {
+        break;
+      }
+    }
+
+    return columnWidth;
   }
 
   fetchActors() {
@@ -113,30 +134,9 @@ class ActorsPage extends React.Component {
     return false;
   }
 
-  getColumnWidth() {
-    let columnWidth = '100%';
-
-    switch (this.props.width) {
-      case 'md': {
-        columnWidth = '50%';
-        break;
-      }
-      case 'lg': {
-        columnWidth = '33.33%';
-        break;
-      }
-      case 'xl': {
-        columnWidth = '25%';
-        break;
-      }
-      case 'xs':
-      case 'sm':
-      default: {
-        break;
-      }
-    }
-
-    return columnWidth;
+  canFollow(actor) {
+    const { viewer, isAuthenticated } = this.props;
+    return isAuthenticated && (viewer.id !== actor.id) && !actor.isBlocked;
   }
 
   render() {
