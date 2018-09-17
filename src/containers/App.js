@@ -185,7 +185,7 @@ class App extends React.Component {
                     open && classes.hide,
                   )}
                   color="inherit"
-                  aria-label="open drawer"
+                  aria-label="toggle drawer"
                   onClick={this.handleDrawerToggle}
                 >
                   <MenuIcon />
@@ -218,7 +218,7 @@ class App extends React.Component {
                   <Typography variant="title" color="inherit" noWrap>
                     {'Anahita'}
                   </Typography>
-                  <IconButton onClick={this.handleDrawerClose}>
+                  <IconButton onClick={this.handleDrawerToggle}>
                     {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                   </IconButton>
                 </div>
