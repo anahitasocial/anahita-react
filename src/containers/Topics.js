@@ -1,5 +1,5 @@
 import React from 'react';
-import MediaPage from './media/MediaPage';
+import MediaPage from './media/Media';
 
 class TopicsPage extends React.Component {
   constructor(props) {

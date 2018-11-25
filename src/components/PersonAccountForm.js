@@ -80,7 +80,7 @@ const ActorInfoForm = (props) => {
         </Button>
         }
         <Button
-          variant="raised"
+          variant="contained"
           type="submit"
           color="primary"
           className={classes.button}

@@ -1,5 +1,5 @@
 import React from 'react';
-import ActorSettingsPage from '../actors/ActorSettingsPage';
+import ActorSettingsPage from '../actors/ActorSettings';
 
 
 const PersonSettingsPage = (params) => {

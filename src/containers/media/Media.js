@@ -69,38 +69,6 @@ class MediaPage extends React.Component {
     this.props.resetMedia();
   }
 
-  fetchMedia() {
-    const { ownerId, filter } = this.state;
-    const { namespace } = this.props;
-
-    this.props.browseMedia({
-      ownerId,
-      filter,
-      start: this.offset,
-      limit: LIMIT,
-    }, namespace);
-
-    this.offset += LIMIT;
-  }
-
-  hasMore() {
-    const { total, media } = this.props;
-    return !this.offset || media.allIds.length < total;
-  }
-
-  canAdd() {
-    const { viewer } = this.props;
-
-    if ([
-      PERSON.TYPE.SUPER_ADMIN,
-      PERSON.TYPE.ADMIN,
-    ].includes(viewer.usertype)) {
-      return true;
-    }
-
-    return false;
-  }
-
   getColumnWidth() {
     let columnWidth = '100%';
 
@@ -125,6 +93,38 @@ class MediaPage extends React.Component {
     }
 
     return columnWidth;
+  }
+
+  hasMore() {
+    const { total, media } = this.props;
+    return !this.offset || media.allIds.length < total;
+  }
+
+  fetchMedia() {
+    const { ownerId, filter } = this.state;
+    const { namespace } = this.props;
+
+    this.props.browseMedia({
+      ownerId,
+      filter,
+      start: this.offset,
+      limit: LIMIT,
+    }, namespace);
+
+    this.offset += LIMIT;
+  }
+
+  canAdd() {
+    const { viewer } = this.props;
+
+    if ([
+      PERSON.TYPE.SUPER_ADMIN,
+      PERSON.TYPE.ADMIN,
+    ].includes(viewer.usertype)) {
+      return true;
+    }
+
+    return false;
   }
 
   render() {

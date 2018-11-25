@@ -73,7 +73,7 @@ const LoginForm = (props) => {
           margin="normal"
         />
         <Button
-          variant="raised"
+          variant="contained"
           type="submit"
           color="primary"
           className={classes.button}

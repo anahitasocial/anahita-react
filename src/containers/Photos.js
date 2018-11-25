@@ -1,7 +1,7 @@
 import React from 'react';
-import MediaPage from './media/MediaPage';
+import MediaPage from './media/Media';
 
-class NotesPage extends React.Component {
+class PhotosPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,8 +18,8 @@ class NotesPage extends React.Component {
 
     return (
       <MediaPage
-        key="com:notes.note"
-        namespace="notes"
+        key="com:photos.photo"
+        namespace="photos"
         queryFilters={filters}
         {...this.params}
       />
@@ -27,4 +27,4 @@ class NotesPage extends React.Component {
   }
 }
 
-export default NotesPage;
+export default PhotosPage;

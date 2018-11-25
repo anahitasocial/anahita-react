@@ -159,7 +159,7 @@ const PersonInfoForm = (props) => {
         }
         <Button
           type="submit"
-          variant="raised"
+          variant="contained"
           color="primary"
           className={classes.button}
           disabled={isFetching}

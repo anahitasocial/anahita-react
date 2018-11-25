@@ -81,7 +81,7 @@ const ActorInfoForm = (props) => {
           }
           <Button
             type="submit"
-            variant="raised"
+            variant="contained"
             color="secondary"
             className={classes.button}
             disabled={isFetching || !canDelete}

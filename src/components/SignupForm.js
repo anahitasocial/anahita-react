@@ -109,7 +109,7 @@ const SignupForm = (props) => {
           disabled={success}
         />
         <Button
-          variant="raised"
+          variant="contained"
           type="submit"
           color="primary"
           className={classes.button}

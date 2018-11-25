@@ -9,29 +9,29 @@ import {
 import AuthenticatedRoute from './AuthenticatedRoute';
 import App from '../containers/App';
 
-import LoginPage from '../containers/people/LoginPage';
-import SignupPage from '../containers/people/SignupPage';
-import PasswordResetPage from '../containers/people/PasswordResetPage';
-import HomePage from '../containers/HomePage';
+import LoginPage from '../containers/people/Login';
+import SignupPage from '../containers/people/Signup';
+import PasswordResetPage from '../containers/people/PasswordReset';
+import HomePage from '../containers/Home';
 
-import ActorsPage from '../containers/actors/ActorsPage';
-import ActorPage from '../containers/actors/ActorPage';
-import ActorAddPage from '../containers/actors/ActorAddPage';
-import ActorSettingsPage from '../containers/actors/ActorSettingsPage';
-import ActorSettingsInfoPage from '../containers/actors/ActorSettingsInfoPage';
-import ActorSettingsDeletePage from '../containers/actors/ActorSettingsDeletePage';
+import ActorsPage from '../containers/actors/Actors';
+import ActorPage from '../containers/actors/Actor';
+import ActorAddPage from '../containers/actors/ActorAdd';
+import ActorSettingsPage from '../containers/actors/ActorSettings';
+import ActorSettingsInfoPage from '../containers/actors/ActorSettingsInfo';
+import ActorSettingsDeletePage from '../containers/actors/ActorSettingsDelete';
 
-import PeoplePage from '../containers/people/PeoplePage';
-import PersonAddPage from '../containers/people/PersonAddPage';
-import PersonSettingsInfoPage from '../containers/people/PersonSettingsInfoPage';
-import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccountPage';
+import PeoplePage from '../containers/people/People';
+import PersonAddPage from '../containers/people/PersonAdd';
+import PersonSettingsInfoPage from '../containers/people/PersonSettingsInfo';
+import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccount';
 
-import NotesPage from '../containers/NotesPage';
-import PhotosPage from '../containers/PhotosPage';
-import TopicsPage from '../containers/TopicsPage';
+import NotesPage from '../containers/Notes';
+import PhotosPage from '../containers/Photos';
+import TopicsPage from '../containers/Topics';
 
-import DashboardPage from '../containers/DashboardPage';
-import NotFoundPage from '../containers/NotFoundPage';
+import DashboardPage from '../containers/Dashboard';
+import NotFoundPage from '../containers/NotFound';
 
 const scrollUp = () => {
   window.scrollTo(0, 0);

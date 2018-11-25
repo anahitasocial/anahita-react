@@ -1,5 +1,5 @@
 import React from 'react';
-import ActorsPage from '../actors/ActorsPage';
+import ActorsPage from '../actors/Actors';
 
 class PeoplePage extends React.Component {
   constructor(props) {
