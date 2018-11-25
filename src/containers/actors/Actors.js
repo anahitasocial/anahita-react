@@ -28,9 +28,6 @@ import ActorAvatar from '../../components/ActorAvatar';
 import ActorTitle from '../../components/ActorTitle';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   title: {
     textTransform: 'capitalize',
     marginBottom: theme.spacing.unit * 2,
@@ -150,7 +147,7 @@ class ActorsPage extends React.Component {
     const hasMore = this.hasMore();
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         {this.canAdd() &&
           <Button
             className={classes.addButton}
@@ -217,7 +214,7 @@ class ActorsPage extends React.Component {
             }
           </StackGrid>
         </InfiniteScroll>
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -1,15 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
 import ActorSettingsList from '../../components/lists/ActorSettings';
 import { readActor } from '../../actions/actor';
-
-const styles = {
-  root: {
-    width: '100%',
-  },
-};
 
 class ActorSettingsPage extends React.Component {
   componentWillMount() {
@@ -23,14 +16,13 @@ class ActorSettingsPage extends React.Component {
 
   render() {
     const {
-      classes,
       actor,
       viewer,
       namespace,
     } = this.props;
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         {actor.id &&
           <ActorSettingsList
             actor={actor}
@@ -38,13 +30,12 @@ class ActorSettingsPage extends React.Component {
             namespace={namespace}
           />
         }
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 ActorSettingsPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   actor: PropTypes.object,
   viewer: PropTypes.object.isRequired,
@@ -83,7 +74,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorSettingsPage));
+)(ActorSettingsPage);

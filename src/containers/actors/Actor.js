@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Divider from '@material-ui/core/Divider';
 import ActorProfile from '../../components/ActorProfile';
+import StoriesContainer from '../Stories';
 import ActorAvatar from './ActorAvatar';
 import ActorCover from './ActorCover';
 import ActorCommands from './ActorCommands';
@@ -11,13 +13,14 @@ import FollowAction from '../actions/FollowAction';
 import { readActor } from '../../actions/actor';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   progress: {
     marginLeft: '48%',
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
+  },
+  divider: {
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
   },
 });
 
@@ -54,33 +57,47 @@ class ActorPage extends React.Component {
   renderProfile(actor) {
     const canFollow = this.canFollow(actor);
     const {
+      classes,
       isAuthenticated,
       viewer,
       isFetchingAvatar,
       isFetchingCover,
     } = this.props;
+
+    const filters = {
+      oid: actor.id,
+    };
+
     return (
-      <ActorProfile
-        cover={
-          <ActorCover
-            actor={actor}
-            viewer={viewer}
-            isFetching={isFetchingCover}
-          />
-        }
-        avatar={
-          <ActorAvatar
-            actor={actor}
-            viewer={viewer}
-            isFetching={isFetchingAvatar}
-          />
-        }
-        name={actor.name}
-        description={actor.body}
-        alias={actor.alias}
-        followAction={canFollow && <FollowAction actor={actor} />}
-        headerAction={isAuthenticated && <ActorCommands actor={actor} />}
-      />
+      <React.Fragment>
+        <ActorProfile
+          cover={
+            <ActorCover
+              actor={actor}
+              viewer={viewer}
+              isFetching={isFetchingCover}
+            />
+          }
+          avatar={
+            <ActorAvatar
+              actor={actor}
+              viewer={viewer}
+              isFetching={isFetchingAvatar}
+            />
+          }
+          name={actor.name}
+          description={actor.body}
+          alias={actor.alias}
+          followAction={canFollow && <FollowAction actor={actor} />}
+          headerAction={isAuthenticated && <ActorCommands actor={actor} />}
+        />
+        <Divider className={classes.divider} />
+        <StoriesContainer
+          key="com:stories.story"
+          queryFilters={filters}
+          {...this.params}
+        />
+      </React.Fragment>
     );
   }
 

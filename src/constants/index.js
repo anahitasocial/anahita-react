@@ -3,6 +3,7 @@ import Auth from './auth';
 import Media from './media';
 import Person from './person';
 import Storage from './storage';
+import Stories from './stories';
 
 export {
   Actors,
@@ -10,4 +11,5 @@ export {
   Media,
   Person,
   Storage,
+  Stories,
 };

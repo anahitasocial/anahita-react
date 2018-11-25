@@ -15,6 +15,9 @@ import mediaReducer from './media';
 import peopleReducer from './people';
 import personReducer from './person';
 
+// Stories
+import storiesReducer from './stories';
+
 export default combineReducers({
   formReducer,
   authReducer,
@@ -23,4 +26,5 @@ export default combineReducers({
   mediaReducer,
   peopleReducer,
   personReducer,
+  storiesReducer,
 });

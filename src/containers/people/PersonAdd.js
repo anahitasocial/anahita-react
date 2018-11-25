@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { Redirect } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -12,12 +11,6 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { addPerson } from '../../actions/person';
 import { Person as PERSON } from '../../constants';
 import validate from './validate';
-
-const styles = {
-  root: {
-    width: '100%',
-  },
-};
 
 class PersonAddPage extends React.Component {
   constructor(props) {
@@ -174,7 +167,6 @@ class PersonAddPage extends React.Component {
 
   render() {
     const {
-      classes,
       success,
       error,
       isFetching,
@@ -195,7 +187,7 @@ class PersonAddPage extends React.Component {
     } = this.state;
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         <Card>
           <CardHeader
             title={this.getName()}
@@ -203,7 +195,6 @@ class PersonAddPage extends React.Component {
             avatar={
               <Avatar
                 aria-label={this.getName() || ''}
-                className={classes.avatar}
                 alt={this.getName() || ''}
               >
                 {this.getInitials() || <PersonAddIcon />}
@@ -243,13 +234,12 @@ class PersonAddPage extends React.Component {
         {success && person.id &&
           <Redirect to={`/people/${person.id}/`} />
         }
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 PersonAddPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   addPerson: PropTypes.func.isRequired,
   viewer: PropTypes.object.isRequired,
   person: PropTypes.object,
@@ -302,7 +292,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PersonAddPage));
+)(PersonAddPage);

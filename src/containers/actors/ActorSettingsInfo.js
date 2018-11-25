@@ -13,9 +13,6 @@ import {
 } from '../../actions/actor';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   progress: {
     marginLeft: '48%',
     marginTop: theme.spacing.unit,
@@ -140,7 +137,7 @@ class ActorSettingsInfoPage extends React.Component {
     } = this.state;
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         {!actor.id &&
           <CircularProgress className={classes.progress} />
         }
@@ -178,7 +175,7 @@ class ActorSettingsInfoPage extends React.Component {
             type="success"
           />
         }
-      </div>
+      </React.Fragment>
     );
   }
 }

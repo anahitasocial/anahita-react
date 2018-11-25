@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { singularize } from 'inflected';
 import { Redirect } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
@@ -11,12 +10,6 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { addActor } from '../../actions/actor';
-
-const styles = {
-  root: {
-    width: '100%',
-  },
-};
 
 const BODY_CHARACTER_LIMIT = 350;
 
@@ -113,7 +106,6 @@ class ActorAddPage extends React.Component {
 
   render() {
     const {
-      classes,
       namespace,
       success,
       error,
@@ -129,14 +121,13 @@ class ActorAddPage extends React.Component {
     } = this.state;
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         <Card>
           <CardHeader
             title={actor.name}
             avatar={
               <Avatar
                 aria-label={actor.name || ''}
-                className={classes.avatar}
                 alt={actor.name || ''}
               >
                 {actor.name ? actor.name.charAt(0).toUpperCase() : <GroupAddIcon />}
@@ -167,13 +158,12 @@ class ActorAddPage extends React.Component {
         {success && actor.id &&
           <Redirect to={`/${namespace}/${actor.id}/`} />
         }
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 ActorAddPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   addActor: PropTypes.func.isRequired,
   actor: PropTypes.object,
   namespace: PropTypes.string.isRequired,
@@ -217,7 +207,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorAddPage));
+)(ActorAddPage);

@@ -2,17 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import withStyles from '@material-ui/core/styles/withStyles';
 import SignupForm from '../../components/SignupForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { signup } from '../../actions/auth';
 import validate from './validate';
-
-const styles = {
-  root: {
-    width: '100%',
-  },
-};
 
 class SignupPage extends React.Component {
   constructor(props) {
@@ -134,7 +127,6 @@ class SignupPage extends React.Component {
 
   render() {
     const {
-      classes,
       success,
       error,
       isFetching,
@@ -156,7 +148,7 @@ class SignupPage extends React.Component {
     } = this.state;
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         <SignupForm
           givenName={person.givenName}
           givenNameError={givenNameError}
@@ -197,13 +189,12 @@ class SignupPage extends React.Component {
         {isAuthenticated &&
           <Redirect push to="/dashboard/" />
         }
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 SignupPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   signup: PropTypes.func.isRequired,
   person: PropTypes.object,
   success: PropTypes.bool,
@@ -250,7 +241,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SignupPage));
+)(SignupPage);
