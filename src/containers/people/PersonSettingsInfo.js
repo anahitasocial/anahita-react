@@ -251,14 +251,7 @@ PersonSettingsInfoPage.propTypes = {
 };
 
 PersonSettingsInfoPage.defaultProps = {
-  person: {
-    id: null,
-    givenName: '',
-    familyName: '',
-    body: '',
-    gender: PERSON.GENDER.NEUTRAL,
-    usertype: PERSON.TYPE.REGISTERED,
-  },
+  person: {},
   isFetching: false,
   error: '',
   success: false,

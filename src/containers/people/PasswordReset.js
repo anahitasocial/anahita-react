@@ -122,9 +122,7 @@ PasswordResetPage.propTypes = {
 };
 
 PasswordResetPage.defaultProps = {
-  person: {
-    email: '',
-  },
+  person: {},
   isFetching: false,
   success: false,
   error: '',

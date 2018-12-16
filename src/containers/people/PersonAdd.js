@@ -251,15 +251,7 @@ PersonAddPage.propTypes = {
 };
 
 PersonAddPage.defaultProps = {
-  person: {
-    id: null,
-    givenName: '',
-    familyName: '',
-    email: '',
-    username: '',
-    usertype: PERSON.TYPE.REGISTERED,
-    gender: PERSON.GENDER.NEUTRAL,
-  },
+  person: {},
   isFetching: false,
   success: false,
   error: '',

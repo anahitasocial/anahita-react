@@ -134,11 +134,7 @@ ActorPage.propTypes = {
 };
 
 ActorPage.defaultProps = {
-  actor: {
-    id: null,
-    name: '',
-    body: '',
-  },
+  actor: {},
   isAuthenticated: false,
   isFetchingAvatar: false,
   isFetchingCover: false,

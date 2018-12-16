@@ -213,12 +213,7 @@ PersonSettingsAccountPage.propTypes = {
 };
 
 PersonSettingsAccountPage.defaultProps = {
-  person: {
-    id: null,
-    email: '',
-    username: '',
-    password: '',
-  },
+  person: {},
   isFetching: false,
   success: false,
   error: '',

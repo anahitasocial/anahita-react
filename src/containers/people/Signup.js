@@ -206,13 +206,7 @@ SignupPage.propTypes = {
 };
 
 SignupPage.defaultProps = {
-  person: {
-    givenName: '',
-    familyName: '',
-    email: '',
-    username: '',
-    password: '',
-  },
+  person: {},
   isFetching: false,
   success: false,
   error: '',

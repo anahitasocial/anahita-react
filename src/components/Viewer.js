@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Link from 'react-router-dom/Link';
 
+import PersonType from '../proptypes/Person';
+
 const styles = theme => ({
   root: {
     marginRight: 20,
@@ -92,7 +94,7 @@ const Viewer = (props) => {
 
 Viewer.propTypes = {
   classes: PropTypes.object.isRequired,
-  viewer: PropTypes.object,
+  viewer: PersonType,
   isAuthenticated: PropTypes.bool,
 };
 

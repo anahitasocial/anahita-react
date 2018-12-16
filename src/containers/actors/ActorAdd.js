@@ -20,11 +20,7 @@ class ActorAddPage extends React.Component {
     super(props);
 
     this.state = {
-      actor: {
-        id: null,
-        name: '',
-        body: '',
-      },
+      actor: {},
       nameError: false,
       nameHelperText: '',
       bodyError: false,
