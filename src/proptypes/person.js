@@ -29,6 +29,8 @@ export default shape({
     GENDER.NEUTRAL,
     GENDER.FEMALE,
     GENDER.MALE,
+    GENDER.OTHER,
+    '',
   ]),
   imageURL: ImageURL,
   coverURL: ImageURL,

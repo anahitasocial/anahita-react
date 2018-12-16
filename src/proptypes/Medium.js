@@ -2,9 +2,9 @@ import {
   shape,
   number,
   string,
+  object,
   oneOf,
   arrayOf,
-  bool,
 } from 'prop-types';
 
 import PersonType from './Person';
@@ -13,22 +13,25 @@ import ImageURL from './ImageURL';
 export default shape({
   id: number,
   objectType: oneOf([
-    'com.people.person',
-    'com.groups.group',
+    'com.photos.photo',
+    'com.topics.topic',
+    'com.todos.todo',
+    'com.notes.note',
+    'com.articles.article',
   ]),
   name: string,
   alias: string,
   body: string,
-  commands: arrayOf(string),
   imageURL: ImageURL,
   coverURL: ImageURL,
-  administratorIds: arrayOf(number),
-  followerCount: number,
+  commands: arrayOf(string),
   subscriberCount: number,
   author: PersonType,
   creationTime: string,
   editor: PersonType,
   updateTime: string,
-  isAdministrated: bool,
-  isLeader: bool,
+  lastComment: object,
+  lastCommenter: PersonType,
+  lastCommentTime: string,
+  voteUpCount: number,
 });
