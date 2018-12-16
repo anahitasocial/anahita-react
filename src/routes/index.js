@@ -29,6 +29,7 @@ import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccoun
 import NotesPage from '../containers/Notes';
 import PhotosPage from '../containers/Photos';
 import TopicsPage from '../containers/Topics';
+import ArticlesPage from '../containers/Articles';
 
 import DashboardPage from '../containers/Dashboard';
 import NotFoundPage from '../containers/NotFound';
@@ -172,6 +173,11 @@ const Routes = (props) => {
           exact
           path="/topics/"
           component={TopicsPage}
+        />
+        <Route
+          exact
+          path="/articles/"
+          component={ArticlesPage}
         />
         <Route component={NotFoundPage} />
       </Switch>

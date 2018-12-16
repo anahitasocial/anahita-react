@@ -19,5 +19,6 @@ export default {
     FEMALE: 'female',
     MALE: 'male',
     NEUTRAL: 'neutral',
+    OTHER: 'other',
   },
 };

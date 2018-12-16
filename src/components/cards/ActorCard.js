@@ -11,15 +11,16 @@ import { Link } from 'react-router-dom';
 
 import EntityBody from '../EntityBody';
 
-const styles = theme => ({
-  root: {},
-  alias: {
-    fontSize: 14,
-  },
-  media: {
-    height: theme.spacing.unit * 20,
-  },
-});
+const styles = (theme) => {
+  return {
+    alias: {
+      fontSize: 14,
+    },
+    media: {
+      height: theme.spacing.unit * 20,
+    },
+  };
+};
 
 const ActorCard = (props) => {
   const {
@@ -36,7 +37,7 @@ const ActorCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card className={classes.root} square>
+      <Card square>
         {cover &&
           <Link to={profile} href={profile}>
             <CardMedia

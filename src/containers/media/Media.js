@@ -24,33 +24,36 @@ import ActorAvatar from '../../components/ActorAvatar';
 import ActorTitle from '../../components/ActorTitle';
 
 import PersonType from '../../proptypes/Person';
+import MediaListType from '../../proptypes/Media';
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-  },
-  title: {
-    textTransform: 'capitalize',
-    marginBottom: theme.spacing.unit * 2,
-  },
-  authorName: {
-    fontSize: 16,
-  },
-  ownerName: {
-    fontSize: 14,
-  },
-  progress: {
-    marginLeft: '48%',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-  addButton: {
-    position: 'fixed',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-    zIndex: 10,
-  },
-});
+const styles = (theme) => {
+  return {
+    root: {
+      width: '100%',
+    },
+    title: {
+      textTransform: 'capitalize',
+      marginBottom: theme.spacing.unit * 2,
+    },
+    authorName: {
+      fontSize: 16,
+    },
+    ownerName: {
+      fontSize: 14,
+    },
+    progress: {
+      marginLeft: '48%',
+      marginTop: theme.spacing.unit,
+      marginBottom: theme.spacing.unit,
+    },
+    addButton: {
+      position: 'fixed',
+      bottom: theme.spacing.unit * 2,
+      right: theme.spacing.unit * 2,
+      zIndex: 10,
+    },
+  };
+};
 
 const LIMIT = 20;
 
@@ -188,6 +191,10 @@ class MediaPage extends React.Component {
               medium.imageURL.medium &&
               medium.imageURL.medium.url;
 
+              const cover = medium.coverURL &&
+              medium.coverURL.medium &&
+              medium.coverURL.medium.url;
+
               return (
                 <MediumCard
                   key={key}
@@ -223,6 +230,7 @@ class MediaPage extends React.Component {
                   alias={medium.alias}
                   description={medium.body}
                   portrait={portrait}
+                  cover={cover}
                   path={`/${namespace}/${medium.id}/`}
                 />
               );
@@ -239,10 +247,7 @@ MediaPage.propTypes = {
   classes: PropTypes.object.isRequired,
   browseMedia: PropTypes.func.isRequired,
   resetMedia: PropTypes.func.isRequired,
-  media: PropTypes.shape({
-    byId: PropTypes.object,
-    allIds: PropTypes.array,
-  }).isRequired,
+  media: MediaListType.isRequired,
   namespace: PropTypes.string.isRequired,
   total: PropTypes.number.isRequired,
   viewer: PersonType.isRequired,

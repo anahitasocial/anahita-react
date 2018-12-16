@@ -23,34 +23,37 @@ import {
 
 import { Person as PERSON } from '../../constants';
 import PersonType from '../../proptypes/Person';
+import ActorsListType from '../../proptypes/Actors';
 
 import ActorCard from '../../components/cards/ActorCard';
 import ActorAvatar from '../../components/ActorAvatar';
 import ActorTitle from '../../components/ActorTitle';
 
-const styles = theme => ({
-  title: {
-    textTransform: 'capitalize',
-    marginBottom: theme.spacing.unit * 2,
-  },
-  actorTitle: {
-    fontSize: 16,
-  },
-  actorAlias: {
-    fontSize: 12,
-  },
-  progress: {
-    marginLeft: '48%',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-  addButton: {
-    position: 'fixed',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-    zIndex: 10,
-  },
-});
+const styles = (theme) => {
+  return {
+    title: {
+      textTransform: 'capitalize',
+      marginBottom: theme.spacing.unit * 2,
+    },
+    actorTitle: {
+      fontSize: 16,
+    },
+    actorAlias: {
+      fontSize: 12,
+    },
+    progress: {
+      marginLeft: '48%',
+      marginTop: theme.spacing.unit,
+      marginBottom: theme.spacing.unit,
+    },
+    addButton: {
+      position: 'fixed',
+      bottom: theme.spacing.unit * 2,
+      right: theme.spacing.unit * 2,
+      zIndex: 10,
+    },
+  };
+};
 
 const LIMIT = 20;
 
@@ -184,7 +187,7 @@ class ActorsPage extends React.Component {
             {actors.allIds.map((actorId) => {
               const actor = actors.byId[actorId];
               const key = `actor_${actor.id}`;
-              const coverSrc = actor.coverURL.medium && actor.coverURL.medium.url;
+              const cover = actor.coverURL.medium && actor.coverURL.medium.url;
               const canFollow = this.canFollow(actor);
               return (
                 <ActorCard
@@ -204,7 +207,7 @@ class ActorsPage extends React.Component {
                       }}
                       linked
                     />}
-                  cover={coverSrc}
+                  cover={cover}
                   profile={`/${namespace}/${actor.id}/`}
                   action={canFollow &&
                     <FollowAction actor={actor} />
@@ -225,10 +228,7 @@ ActorsPage.propTypes = {
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  actors: PropTypes.shape({
-    byId: PropTypes.object,
-    allIds: PropTypes.array,
-  }).isRequired,
+  actors: ActorsListType.isRequired,
   namespace: PropTypes.string.isRequired,
   total: PropTypes.number,
   viewer: PersonType.isRequired,

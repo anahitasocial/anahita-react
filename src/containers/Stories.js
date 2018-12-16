@@ -14,29 +14,31 @@ import StoryCard from '../components/cards/StoryCard';
 import ActorAvatar from '../components/ActorAvatar';
 import ActorTitle from '../components/ActorTitle';
 
-const styles = theme => ({
-  title: {
-    textTransform: 'capitalize',
-    marginBottom: theme.spacing.unit * 2,
-  },
-  authorName: {
-    fontSize: 16,
-  },
-  ownerName: {
-    fontSize: 14,
-  },
-  progress: {
-    marginLeft: '48%',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-  addButton: {
-    position: 'fixed',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-    zIndex: 10,
-  },
-});
+const styles = (theme) => {
+  return {
+    title: {
+      textTransform: 'capitalize',
+      marginBottom: theme.spacing.unit * 2,
+    },
+    authorName: {
+      fontSize: 16,
+    },
+    ownerName: {
+      fontSize: 14,
+    },
+    progress: {
+      marginLeft: '48%',
+      marginTop: theme.spacing.unit,
+      marginBottom: theme.spacing.unit,
+    },
+    addButton: {
+      position: 'fixed',
+      bottom: theme.spacing.unit * 2,
+      right: theme.spacing.unit * 2,
+      zIndex: 10,
+    },
+  };
+};
 
 const LIMIT = 20;
 
@@ -131,7 +133,13 @@ class StoriesContainer extends React.Component {
               story.object.imageURL.medium &&
               story.object.imageURL.medium.url;
 
-              const storyBody = story.object && story.object.body;
+              const cover = story.object &&
+              story.object.coverURL &&
+              story.object.coverURL.medium &&
+              story.object.coverURL.medium.url;
+
+              const title = story.object && story.object.name;
+              const body = story.object && story.object.body;
 
               return (
                 <StoryCard
@@ -164,8 +172,10 @@ class StoriesContainer extends React.Component {
                       linked
                     />
                   }
-                  description={storyBody}
+                  title={title}
+                  description={body}
                   portrait={portrait}
+                  cover={cover}
                   path={`/stories/${story.id}/`}
                 />
               );

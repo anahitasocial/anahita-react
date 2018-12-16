@@ -8,9 +8,6 @@ import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
 
 const styles = {
-  root: {
-    width: '100%',
-  },
   avatar: {
     textDecoration: 'none',
   },
@@ -29,7 +26,7 @@ const ActorSettingCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card className={classes.root} square>
+      <Card square>
         <CardHeader
           avatar={
             <Avatar

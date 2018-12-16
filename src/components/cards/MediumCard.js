@@ -12,28 +12,30 @@ import { Link } from 'react-router-dom';
 import EntityBody from '../EntityBody';
 import PersonType from '../../proptypes/Person';
 
-const styles = theme => ({
-  root: {},
-  media: {
-    height: theme.spacing.unit * 20,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 500,
-    marginBottom: theme.spacing.unit * 2,
-  },
-  titleLink: {
-    textDecoration: 'none',
-    color: theme.palette.text.primary,
-  },
-  portrait: {
-    minHeight: theme.spacing.unit * 30,
-  },
-});
+const styles = (theme) => {
+  return {
+    media: {
+      height: theme.spacing.unit * 20,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: 500,
+      marginBottom: theme.spacing.unit * 2,
+    },
+    titleLink: {
+      textDecoration: 'none',
+      color: theme.palette.text.primary,
+    },
+    portrait: {
+      minHeight: theme.spacing.unit * 30,
+    },
+  };
+};
 
 const MediumCard = (props) => {
   const {
     classes,
+    cover,
     author,
     authorAvatar,
     title,
@@ -47,7 +49,14 @@ const MediumCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card className={classes.root} square>
+      <Card square>
+        {cover &&
+          <CardMedia
+            className={classes.media}
+            image={cover}
+            title={title}
+          />
+        }
         <CardHeader
           avatar={authorAvatar}
           title={author}
@@ -95,6 +104,7 @@ MediumCard.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   portrait: PropTypes.string,
+  cover: PropTypes.string,
   path: PropTypes.string.isRequired,
   action: PropTypes.node,
   owner: PropTypes.node.isRequired,
@@ -106,6 +116,7 @@ MediumCard.defaultProps = {
   title: '',
   description: '',
   portrait: '',
+  cover: '',
   action: null,
 };
 
