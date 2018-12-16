@@ -4,13 +4,16 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+
 import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupsIcon from '@material-ui/icons/GroupWork';
 import NotesIcon from '@material-ui/icons/Note';
 import PhotosIcon from '@material-ui/icons/Photo';
 import TopicsIcon from '@material-ui/icons/QuestionAnswer';
+import ArticlesIcon from '@material-ui/icons/LibraryBooks';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+
 import { Link } from 'react-router-dom';
 
 const LeftMenu = (props) => {
@@ -80,6 +83,16 @@ const LeftMenu = (props) => {
           <TopicsIcon />
         </ListItemIcon>
         <ListItemText primary="Topics" />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/articles/"
+      >
+        <ListItemIcon>
+          <ArticlesIcon />
+        </ListItemIcon>
+        <ListItemText primary="Articles" />
       </ListItem>
       {isAuthenticated &&
         <ListItem
