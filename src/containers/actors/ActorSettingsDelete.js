@@ -12,6 +12,8 @@ import {
   deleteActor,
 } from '../../actions/actor';
 
+import PersonType from '../../proptypes/person';
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -199,7 +201,7 @@ ActorSettingsDeletePage.propTypes = {
   error: PropTypes.string,
   isFetching: PropTypes.bool,
   success: PropTypes.bool,
-  viewer: PropTypes.object.isRequired,
+  viewer: PersonType.isRequired,
   computedMatch: PropTypes.object.isRequired,
 };
 

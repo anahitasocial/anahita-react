@@ -132,8 +132,6 @@ class StoriesContainer extends React.Component {
 
               const storyBody = story.object && story.object.body;
 
-              console.log(story);
-
               return (
                 <StoryCard
                   key={key}
@@ -187,7 +185,6 @@ StoriesContainer.propTypes = {
     byId: PropTypes.object,
     allIds: PropTypes.array,
   }).isRequired,
-  viewer: PropTypes.object.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
 };

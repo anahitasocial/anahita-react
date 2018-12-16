@@ -7,6 +7,8 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { signup } from '../../actions/auth';
 import validate from './validate';
 
+import PersonType from '../../proptypes/person';
+
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);
@@ -196,7 +198,7 @@ class SignupPage extends React.Component {
 
 SignupPage.propTypes = {
   signup: PropTypes.func.isRequired,
-  person: PropTypes.object,
+  person: PersonType,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,

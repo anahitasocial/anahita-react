@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import ActorSettingsList from '../../components/lists/ActorSettings';
 import { readActor } from '../../actions/actor';
 
+import PersonType from '../../proptypes/person';
+
 class ActorSettingsPage extends React.Component {
   componentWillMount() {
     const { actor } = this.props;
@@ -38,7 +40,7 @@ class ActorSettingsPage extends React.Component {
 ActorSettingsPage.propTypes = {
   readActor: PropTypes.func.isRequired,
   actor: PropTypes.object,
-  viewer: PropTypes.object.isRequired,
+  viewer: PersonType.isRequired,
   namespace: PropTypes.string.isRequired,
   computedMatch: PropTypes.object.isRequired,
 };

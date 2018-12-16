@@ -8,6 +8,8 @@ import {
   unblockActor,
 } from '../../actions/block';
 
+import PersonType from '../../proptypes/person';
+
 class BlockAction extends React.Component {
   constructor(props) {
     super(props);
@@ -66,7 +68,7 @@ BlockAction.propTypes = {
   blockPerson: PropTypes.func.isRequired,
   unblockPerson: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
-  viewer: PropTypes.object.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 const mapStateToProps = (state) => {

@@ -6,6 +6,8 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { resetPassword } from '../../actions/auth';
 import validate from './validate';
 
+import PersonType from '../../proptypes/person';
+
 class PasswordResetPage extends React.Component {
   constructor(props) {
     super(props);
@@ -112,7 +114,7 @@ class PasswordResetPage extends React.Component {
 }
 
 PasswordResetPage.propTypes = {
-  person: PropTypes.object,
+  person: PersonType,
   resetPassword: PropTypes.func.isRequired,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,

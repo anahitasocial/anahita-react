@@ -12,6 +12,8 @@ import { addPerson } from '../../actions/person';
 import { Person as PERSON } from '../../constants';
 import validate from './validate';
 
+import PersonType from '../../proptypes/person';
+
 class PersonAddPage extends React.Component {
   constructor(props) {
     super(props);
@@ -241,8 +243,8 @@ class PersonAddPage extends React.Component {
 
 PersonAddPage.propTypes = {
   addPerson: PropTypes.func.isRequired,
-  viewer: PropTypes.object.isRequired,
-  person: PropTypes.object,
+  viewer: PersonType.isRequired,
+  person: PersonType,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,

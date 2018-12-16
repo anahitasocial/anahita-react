@@ -7,6 +7,7 @@ import {
 } from '../../actions/actor';
 import { Person as PERSON } from '../../constants';
 import ActorCoverForm from '../../components/ActorCoverForm';
+import PersonType from '../../proptypes/person';
 
 class ActorCover extends React.Component {
   constructor(props) {
@@ -155,7 +156,7 @@ ActorCover.propTypes = {
   addCover: PropTypes.func.isRequired,
   deleteCover: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
-  viewer: PropTypes.object.isRequired,
+  viewer: PersonType.isRequired,
   isFetching: PropTypes.bool,
 };
 

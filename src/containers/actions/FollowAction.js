@@ -8,6 +8,8 @@ import {
   unfollowActor,
 } from '../../actions/follow';
 
+import PersonType from '../../proptypes/person';
+
 class FollowAction extends React.Component {
   constructor(props) {
     super(props);
@@ -67,7 +69,7 @@ FollowAction.propTypes = {
   followActor: PropTypes.func.isRequired,
   unfollowActor: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
-  viewer: PropTypes.object.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 

@@ -11,6 +11,7 @@ import {
   editPerson,
 } from '../../actions/person';
 import { Person as PERSON } from '../../constants';
+import PersonType from '../../proptypes/person';
 
 const styles = theme => ({
   progress: {
@@ -241,8 +242,8 @@ PersonSettingsInfoPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readPerson: PropTypes.func.isRequired,
   editPerson: PropTypes.func.isRequired,
-  person: PropTypes.object,
-  viewer: PropTypes.object.isRequired,
+  person: PersonType,
+  viewer: PersonType.isRequired,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
   success: PropTypes.bool,

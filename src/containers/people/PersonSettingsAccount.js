@@ -12,6 +12,8 @@ import {
 } from '../../actions/person';
 import validate from './validate';
 
+import PersonType from '../../proptypes/person';
+
 const styles = theme => ({
   progress: {
     marginLeft: '48%',
@@ -203,7 +205,7 @@ PersonSettingsAccountPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readPerson: PropTypes.func.isRequired,
   editPersonAccount: PropTypes.func.isRequired,
-  person: PropTypes.object,
+  person: PersonType,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,

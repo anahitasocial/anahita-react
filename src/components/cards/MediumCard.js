@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
 import EntityBody from '../EntityBody';
+import PersonType from '../../proptypes/person';
 
 const styles = theme => ({
   root: {},
@@ -89,7 +90,7 @@ const MediumCard = (props) => {
 
 MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  author: PropTypes.object,
+  author: PersonType,
   authorAvatar: PropTypes.node.isRequired,
   title: PropTypes.string,
   description: PropTypes.string,

@@ -7,6 +7,7 @@ import {
 } from '../../actions/actor';
 import { Person as PERSON } from '../../constants';
 import ActorAvatarForm from '../../components/ActorAvatarForm';
+import PersonType from '../../proptypes/person';
 
 class ActorAvatar extends React.Component {
   constructor(props) {
@@ -162,7 +163,7 @@ ActorAvatar.propTypes = {
   addAvatar: PropTypes.func.isRequired,
   deleteAvatar: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
-  viewer: PropTypes.object.isRequired,
+  viewer: PersonType.isRequired,
   isFetching: PropTypes.bool,
 };
 

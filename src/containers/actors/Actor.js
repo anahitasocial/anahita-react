@@ -12,6 +12,8 @@ import ActorCommands from './ActorCommands';
 import FollowAction from '../actions/FollowAction';
 import { readActor } from '../../actions/actor';
 
+import PersonType from '../../proptypes/person';
+
 const styles = theme => ({
   progress: {
     marginLeft: '48%',
@@ -122,7 +124,7 @@ ActorPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   actor: PropTypes.object,
-  viewer: PropTypes.object.isRequired,
+  viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool,
   namespace: PropTypes.string.isRequired,
   isFetchingAvatar: PropTypes.bool,

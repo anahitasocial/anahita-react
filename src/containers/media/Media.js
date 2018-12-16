@@ -23,6 +23,8 @@ import MediumCard from '../../components/cards/MediumCard';
 import ActorAvatar from '../../components/ActorAvatar';
 import ActorTitle from '../../components/ActorTitle';
 
+import PersonType from '../../proptypes/person';
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -243,7 +245,7 @@ MediaPage.propTypes = {
   }).isRequired,
   namespace: PropTypes.string.isRequired,
   total: PropTypes.number.isRequired,
-  viewer: PropTypes.object.isRequired,
+  viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
 };

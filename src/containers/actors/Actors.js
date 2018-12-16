@@ -22,6 +22,7 @@ import {
 } from '../../actions/actors';
 
 import { Person as PERSON } from '../../constants';
+import PersonType from '../../proptypes/person';
 
 import ActorCard from '../../components/cards/ActorCard';
 import ActorAvatar from '../../components/ActorAvatar';
@@ -230,7 +231,7 @@ ActorsPage.propTypes = {
   }).isRequired,
   namespace: PropTypes.string.isRequired,
   total: PropTypes.number,
-  viewer: PropTypes.object.isRequired,
+  viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
 };
