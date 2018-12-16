@@ -8,6 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { NavLink } from 'react-router-dom';
 import BlockAction from '../actions/BlockAction';
 
+import ActorType from '../../proptypes/Actor';
+
 const styles = theme => ({
   navlink: {
     width: '100%',
@@ -103,7 +105,7 @@ class ActorCommands extends React.Component {
 
 ActorCommands.propTypes = {
   classes: PropTypes.object.isRequired,
-  actor: PropTypes.object,
+  actor: ActorType,
 };
 
 ActorCommands.defaultProps = {
