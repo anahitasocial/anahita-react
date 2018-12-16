@@ -23,7 +23,7 @@ import MediumCard from '../../components/cards/MediumCard';
 import ActorAvatar from '../../components/ActorAvatar';
 import ActorTitle from '../../components/ActorTitle';
 
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 const styles = theme => ({
   root: {

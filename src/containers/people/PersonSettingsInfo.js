@@ -11,7 +11,7 @@ import {
   editPerson,
 } from '../../actions/person';
 import { Person as PERSON } from '../../constants';
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 const styles = theme => ({
   progress: {

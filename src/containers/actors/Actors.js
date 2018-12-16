@@ -22,7 +22,7 @@ import {
 } from '../../actions/actors';
 
 import { Person as PERSON } from '../../constants';
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 import ActorCard from '../../components/cards/ActorCard';
 import ActorAvatar from '../../components/ActorAvatar';

@@ -8,7 +8,7 @@ import {
   unblockActor,
 } from '../../actions/block';
 
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 class BlockAction extends React.Component {
   constructor(props) {

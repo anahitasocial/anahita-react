@@ -6,7 +6,7 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { resetPassword } from '../../actions/auth';
 import validate from './validate';
 
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 class PasswordResetPage extends React.Component {
   constructor(props) {

@@ -7,7 +7,7 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { signup } from '../../actions/auth';
 import validate from './validate';
 
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 class SignupPage extends React.Component {
   constructor(props) {

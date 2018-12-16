@@ -6,6 +6,7 @@ import {
 } from 'prop-types';
 
 import PERSON from '../constants/person';
+import ImageURL from './ImageURL';
 
 const { TYPE, GENDER } = PERSON;
 
@@ -15,7 +16,6 @@ export default shape({
   name: string,
   alias: string,
   username: string,
-  password: string,
   usertype: oneOf([
     TYPE.GUEST,
     TYPE.REGISTERED,
@@ -30,52 +30,8 @@ export default shape({
     GENDER.FEMALE,
     GENDER.MALE,
   ]),
-  imageURL: {
-    large: {
-      size: {
-        width: number,
-        height: number,
-      },
-      url: string,
-    },
-    medium: {
-      size: {
-        width: number,
-        height: number,
-      },
-      url: string,
-    },
-    original: {
-      size: {
-        width: number,
-        height: number,
-      },
-      url: string,
-    },
-  },
-  coverURL: {
-    large: {
-      size: {
-        width: number,
-        height: number,
-      },
-      url: string,
-    },
-    medium: {
-      size: {
-        width: number,
-        height: number,
-      },
-      url: string,
-    },
-    original: {
-      size: {
-        width: number,
-        height: number,
-      },
-      url: string,
-    },
-  },
+  imageURL: ImageURL,
+  coverURL: ImageURL,
   followerCount: number,
   leaderCount: number,
   mutualCount: number,

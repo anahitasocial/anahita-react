@@ -12,7 +12,8 @@ import ActorCommands from './ActorCommands';
 import FollowAction from '../actions/FollowAction';
 import { readActor } from '../../actions/actor';
 
-import PersonType from '../../proptypes/person';
+import ActorType from '../../proptypes/Actor';
+import PersonType from '../../proptypes/Person';
 
 const styles = theme => ({
   progress: {
@@ -123,7 +124,7 @@ class ActorPage extends React.Component {
 ActorPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
-  actor: PropTypes.object,
+  actor: ActorType,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool,
   namespace: PropTypes.string.isRequired,

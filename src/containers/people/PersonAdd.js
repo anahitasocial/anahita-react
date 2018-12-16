@@ -12,7 +12,7 @@ import { addPerson } from '../../actions/person';
 import { Person as PERSON } from '../../constants';
 import validate from './validate';
 
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 class PersonAddPage extends React.Component {
   constructor(props) {

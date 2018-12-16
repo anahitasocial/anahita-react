@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
 import EntityBody from '../EntityBody';
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 const styles = theme => ({
   root: {},

@@ -8,7 +8,7 @@ import {
   unfollowActor,
 } from '../../actions/follow';
 
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 class FollowAction extends React.Component {
   constructor(props) {

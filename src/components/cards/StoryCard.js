@@ -9,11 +9,9 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
-import PersonType from '../../proptypes/person';
 import EntityBody from '../EntityBody';
 
 const styles = theme => ({
-  root: {},
   media: {
     height: theme.spacing.unit * 20,
   },
@@ -90,7 +88,7 @@ const StoryCard = (props) => {
 
 StoryCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  author: PersonType.isRequired,
+  author: PropTypes.node.isRequired,
   authorAvatar: PropTypes.node.isRequired,
   title: PropTypes.string,
   description: PropTypes.string,
@@ -102,7 +100,6 @@ StoryCard.propTypes = {
 };
 
 StoryCard.defaultProps = {
-  author: {},
   title: '',
   description: '',
   portrait: '',

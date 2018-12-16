@@ -12,6 +12,8 @@ import {
   editActor,
 } from '../../actions/actor';
 
+import ActorType from '../../proptypes/Actor';
+
 const styles = theme => ({
   progress: {
     marginLeft: '48%',
@@ -184,7 +186,7 @@ ActorSettingsInfoPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   editActor: PropTypes.func.isRequired,
-  actor: PropTypes.object,
+  actor: ActorType.isRequired,
   namespace: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   error: PropTypes.string,
@@ -193,11 +195,6 @@ ActorSettingsInfoPage.propTypes = {
 };
 
 ActorSettingsInfoPage.defaultProps = {
-  actor: {
-    id: null,
-    name: '',
-    body: '',
-  },
   isFetching: false,
   error: '',
 };

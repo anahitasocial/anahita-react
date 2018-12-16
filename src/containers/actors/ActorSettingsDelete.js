@@ -12,12 +12,10 @@ import {
   deleteActor,
 } from '../../actions/actor';
 
-import PersonType from '../../proptypes/person';
+import ActorType from '../../proptypes/Actor';
+import PersonType from '../../proptypes/Person';
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   progress: {
     marginLeft: '48%',
     marginTop: theme.spacing.unit,
@@ -161,7 +159,7 @@ class ActorSettingsDeletePage extends React.Component {
     } = this.state;
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         {!actor.id &&
           <CircularProgress className={classes.progress} />
         }
@@ -187,7 +185,7 @@ class ActorSettingsDeletePage extends React.Component {
         {success && !actor.id &&
           <Redirect to={`/${namespace}/`} />
         }
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -196,7 +194,7 @@ ActorSettingsDeletePage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   deleteActor: PropTypes.func.isRequired,
-  actor: PropTypes.object,
+  actor: ActorType.isRequired,
   namespace: PropTypes.string.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool,
@@ -206,10 +204,6 @@ ActorSettingsDeletePage.propTypes = {
 };
 
 ActorSettingsDeletePage.defaultProps = {
-  actor: {
-    id: null,
-    alias: '',
-  },
   isFetching: false,
   error: '',
   success: false,

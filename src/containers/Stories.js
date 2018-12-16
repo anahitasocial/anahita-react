@@ -46,6 +46,7 @@ class StoriesContainer extends React.Component {
 
     this.state = {
       queryFilters: props.queryFilters,
+      hasMore: true,
     };
 
     this.offset = 0;
@@ -104,7 +105,7 @@ class StoriesContainer extends React.Component {
       <React.Fragment>
         <InfiniteScroll
           loadMore={this.fetchStories}
-          hasMore
+          hasMore={this.state.hasMore}
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
@@ -122,7 +123,7 @@ class StoriesContainer extends React.Component {
                 givenName: '?',
                 familyName: '?',
                 objectType: 'com.people.person',
-                imageURL: '',
+                imageURL: {},
               };
 
               const portrait = story.object &&
@@ -202,12 +203,9 @@ const mapStateToProps = (state) => {
     error,
   } = state.storiesReducer;
 
-  const { viewer } = state.authReducer;
-
   return {
     stories,
     error,
-    viewer,
   };
 };
 

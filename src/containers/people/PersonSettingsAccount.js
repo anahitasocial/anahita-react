@@ -12,7 +12,7 @@ import {
 } from '../../actions/person';
 import validate from './validate';
 
-import PersonType from '../../proptypes/person';
+import PersonType from '../../proptypes/Person';
 
 const styles = theme => ({
   progress: {

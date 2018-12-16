@@ -11,6 +11,8 @@ import ActorInfoForm from '../../components/ActorInfoForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import { addActor } from '../../actions/actor';
 
+import ActorType from '../../proptypes/Actor';
+
 const BODY_CHARACTER_LIMIT = 350;
 
 class ActorAddPage extends React.Component {
@@ -165,7 +167,7 @@ class ActorAddPage extends React.Component {
 
 ActorAddPage.propTypes = {
   addActor: PropTypes.func.isRequired,
-  actor: PropTypes.object,
+  actor: ActorType,
   namespace: PropTypes.string.isRequired,
   success: PropTypes.bool,
   error: PropTypes.string,
