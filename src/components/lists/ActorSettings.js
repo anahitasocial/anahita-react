@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -14,18 +13,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Link from 'react-router-dom/Link';
 import ActorSettingCard from '../cards/ActorSettingCard';
 
-const styles = {
-  root: {
-    width: '100%',
-  },
-  card: {
-    margin: '64px auto',
-  },
-};
-
 const ActorSettingsList = (props) => {
   const {
-    classes,
     actor,
     namespace,
   } = props;
@@ -34,7 +23,6 @@ const ActorSettingsList = (props) => {
     <ActorSettingCard
       namespace={namespace}
       actor={actor}
-      className={classes.root}
     >
       <List>
         <ListItem
@@ -105,9 +93,8 @@ const ActorSettingsList = (props) => {
 };
 
 ActorSettingsList.propTypes = {
-  classes: PropTypes.object.isRequired,
   actor: PropTypes.object.isRequired,
   namespace: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(ActorSettingsList);
+export default ActorSettingsList;

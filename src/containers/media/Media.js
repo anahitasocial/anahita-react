@@ -28,9 +28,6 @@ import MediaListType from '../../proptypes/Media';
 
 const styles = (theme) => {
   return {
-    root: {
-      width: '100%',
-    },
     title: {
       textTransform: 'capitalize',
       marginBottom: theme.spacing.unit * 2,
@@ -39,7 +36,7 @@ const styles = (theme) => {
       fontSize: 16,
     },
     ownerName: {
-      fontSize: 14,
+      fontSize: 12,
     },
     progress: {
       marginLeft: '48%',
@@ -140,9 +137,10 @@ class MediaPage extends React.Component {
     } = this.props;
 
     const hasMore = this.hasMore();
+    const columnWidth = this.getColumnWidth();
 
     return (
-      <div className={classes.root}>
+      <React.Fragment>
         {this.canAdd() &&
           <Button
             className={classes.addButton}
@@ -170,7 +168,7 @@ class MediaPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={this.getColumnWidth()}
+            columnWidth={columnWidth}
             duration={50}
             gutterWidth={16}
             gutterHeight={16}
@@ -238,7 +236,7 @@ class MediaPage extends React.Component {
             }
           </StackGrid>
         </InfiniteScroll>
-      </div>
+      </React.Fragment>
     );
   }
 }

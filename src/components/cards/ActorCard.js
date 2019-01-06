@@ -14,7 +14,7 @@ import EntityBody from '../EntityBody';
 const styles = (theme) => {
   return {
     alias: {
-      fontSize: 14,
+      fontSize: 12,
     },
     media: {
       height: theme.spacing.unit * 20,

@@ -18,7 +18,7 @@ const styles = (theme) => {
       height: theme.spacing.unit * 20,
     },
     title: {
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: 500,
       marginBottom: theme.spacing.unit * 2,
     },

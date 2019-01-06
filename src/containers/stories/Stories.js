@@ -9,23 +9,11 @@ import InfiniteScroll from 'react-infinite-scroller';
 import {
   browseStories,
   resetStories,
-} from '../actions/stories';
-import StoryCard from '../components/cards/StoryCard';
-import ActorAvatar from '../components/ActorAvatar';
-import ActorTitle from '../components/ActorTitle';
+} from '../../actions/stories';
+import StoryContainer from './Story';
 
 const styles = (theme) => {
   return {
-    title: {
-      textTransform: 'capitalize',
-      marginBottom: theme.spacing.unit * 2,
-    },
-    authorName: {
-      fontSize: 16,
-    },
-    ownerName: {
-      fontSize: 14,
-    },
     progress: {
       marginLeft: '48%',
       marginTop: theme.spacing.unit,
@@ -103,6 +91,8 @@ class StoriesContainer extends React.Component {
       stories,
     } = this.props;
 
+    const columnWidth = this.getColumnWidth();
+
     return (
       <React.Fragment>
         <InfiniteScroll
@@ -111,7 +101,7 @@ class StoriesContainer extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={this.getColumnWidth()}
+            columnWidth={columnWidth}
             duration={50}
             gutterWidth={16}
             gutterHeight={16}
@@ -119,64 +109,10 @@ class StoriesContainer extends React.Component {
             {stories.allIds.map((storyId) => {
               const story = stories.byId[storyId];
               const key = `story_${story.id}`;
-              const subject = story.subject || {
-                id: null,
-                name: 'unknown',
-                givenName: '?',
-                familyName: '?',
-                objectType: 'com.people.person',
-                imageURL: {},
-              };
-
-              const portrait = story.object &&
-              story.object.imageURL &&
-              story.object.imageURL.medium &&
-              story.object.imageURL.medium.url;
-
-              const cover = story.object &&
-              story.object.coverURL &&
-              story.object.coverURL.medium &&
-              story.object.coverURL.medium.url;
-
-              const title = story.object && story.object.name;
-              const body = story.object && story.object.body;
-
               return (
-                <StoryCard
+                <StoryContainer
+                  story={story}
                   key={key}
-                  author={
-                    <ActorTitle
-                      actor={subject}
-                      typographyProps={{
-                          component: 'h4',
-                          variant: 'title',
-                          className: classes.authorName,
-                      }}
-                      linked={Boolean(subject.id)}
-                    />
-                  }
-                  authorAvatar={
-                    <ActorAvatar
-                      actor={subject}
-                      linked={Boolean(subject.id)}
-                    />
-                  }
-                  owner={
-                    <ActorTitle
-                      actor={story.owner}
-                      typographyProps={{
-                          component: 'h5',
-                          variant: 'subheading',
-                          className: classes.ownerName,
-                      }}
-                      linked
-                    />
-                  }
-                  title={title}
-                  description={body}
-                  portrait={portrait}
-                  cover={cover}
-                  path={`/stories/${story.id}/`}
                 />
               );
             })

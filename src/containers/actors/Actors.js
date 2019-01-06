@@ -149,6 +149,7 @@ class ActorsPage extends React.Component {
     } = this.props;
 
     const hasMore = this.hasMore();
+    const columnWidth = this.getColumnWidth();
 
     return (
       <React.Fragment>
@@ -179,7 +180,7 @@ class ActorsPage extends React.Component {
           loader={<CircularProgress key={0} className={classes.progress} />}
         >
           <StackGrid
-            columnWidth={this.getColumnWidth()}
+            columnWidth={columnWidth}
             duration={50}
             gutterWidth={16}
             gutterHeight={16}

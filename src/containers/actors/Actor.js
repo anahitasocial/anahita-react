@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import ActorProfile from '../../components/ActorProfile';
-import StoriesContainer from '../Stories';
+import StoriesContainer from '../stories/Stories';
 import ActorAvatar from './ActorAvatar';
 import ActorCover from './ActorCover';
 import ActorCommands from './ActorCommands';

@@ -1,5 +1,5 @@
 import React from 'react';
-import StoriesContainer from './Stories';
+import StoriesContainer from './stories/Stories';
 
 class DashboardPage extends React.Component {
   render() {

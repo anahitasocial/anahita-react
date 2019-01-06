@@ -1,19 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import { Link } from 'react-router-dom';
-
-const styles = {
-  avatar: {},
-  avatarLinked: {
-    textDecoration: 'none',
-  },
-};
+import ActorType from '../proptypes/Actor';
 
 const ActorAvatar = (props) => {
   const {
-    classes,
     actor,
     linked,
   } = props;
@@ -32,21 +25,22 @@ const ActorAvatar = (props) => {
   return (
     <React.Fragment>
       {linked &&
-        <Avatar
-          aria-label={actor.name}
-          className={classes.avatarLinked}
-          alt={actor.name}
-          src={avatarSrc}
+        <ButtonBase
           component={Link}
           to={`/${namespace}/${actorId}/`}
         >
-          {!avatarSrc && initials}
-        </Avatar>
+          <Avatar
+            aria-label={actor.name}
+            alt={actor.name}
+            src={avatarSrc}
+          >
+            {!avatarSrc && initials}
+          </Avatar>
+        </ButtonBase>
       }
       {!linked &&
         <Avatar
           aria-label={actor.name}
-          className={classes.avatar}
           alt={actor.name}
           src={avatarSrc}
         >
@@ -58,21 +52,12 @@ const ActorAvatar = (props) => {
 };
 
 ActorAvatar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  actor: PropTypes.object,
+  actor: ActorType.isRequired,
   linked: PropTypes.bool,
 };
 
 ActorAvatar.defaultProps = {
-  actor: {
-    id: null,
-    name: '',
-    givenName: '',
-    familyName: '',
-    alias: '',
-    namespace: 'com.people.person',
-  },
   linked: false,
 };
 
-export default withStyles(styles)(ActorAvatar);
+export default ActorAvatar;
