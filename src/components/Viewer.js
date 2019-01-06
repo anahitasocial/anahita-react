@@ -8,31 +8,29 @@ import Link from 'react-router-dom/Link';
 
 import PersonType from '../proptypes/Person';
 
-const styles = theme => ({
-  root: {
-    marginRight: 20,
-  },
-  viewer: {},
-  content: {
-    flex: '0 0 auto',
-    marginRight: theme.spacing.unit * 2,
-  },
-  avatarContent: {
-    flex: '1 1 auto',
-  },
-  avatar: {
-    textDecoration: 'none',
-    fontSize: 16,
-  },
-  name: {
-    textTransform: 'capitalize',
-    fontSize: 16,
-  },
-  alias: {
-    textTransform: 'lowercase',
-    fontSize: 14,
-  },
-});
+const styles = (theme) => {
+  return {
+    content: {
+      flex: '0 0 auto',
+      marginRight: theme.spacing.unit * 2,
+    },
+    avatarContent: {
+      flex: '1 1 auto',
+    },
+    avatar: {
+      textDecoration: 'none',
+      fontSize: 16,
+    },
+    name: {
+      textTransform: 'capitalize',
+      fontSize: 16,
+    },
+    alias: {
+      textTransform: 'lowercase',
+      fontSize: 14,
+    },
+  };
+};
 
 const Viewer = (props) => {
   const {
@@ -43,7 +41,7 @@ const Viewer = (props) => {
 
   const profile = `/people/${viewer.username}/`;
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       {!isAuthenticated &&
       <Button
         component={Link}
@@ -54,7 +52,6 @@ const Viewer = (props) => {
       </Button>
       }
       {isAuthenticated &&
-      <div className={classes.viewer}>
         <Button
           component={Link}
           to={profile}
@@ -86,9 +83,8 @@ const Viewer = (props) => {
             />
           </div>
         </Button>
-      </div>
       }
-    </div>
+    </React.Fragment>
   );
 };
 

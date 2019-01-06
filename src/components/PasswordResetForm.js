@@ -7,20 +7,22 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from 'react-router-dom/Link';
 
-const styles = theme => ({
-  formPaper: {
-    padding: '20px',
-    maxWidth: '360px',
-    margin: '64px auto',
-  },
-  title: {
-    marginBottom: theme.spacing.unit,
-  },
-  button: {
-    marginTop: 10,
-    width: '100%',
-  },
-});
+const styles = (theme) => {
+  return {
+    formPaper: {
+      padding: theme.spacing.unit * 2,
+      maxWidth: '360px',
+      margin: '64px auto',
+    },
+    title: {
+      marginBottom: theme.spacing.unit,
+    },
+    button: {
+      marginTop: 10,
+      width: '100%',
+    },
+  };
+};
 
 const PasswordResetForm = (props) => {
   const {

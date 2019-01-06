@@ -9,19 +9,21 @@ import Link from 'react-router-dom/Link';
 import TextFieldUsername from './textfields/TextFieldUsername';
 import TextFieldEmail from './textfields/TextFieldEmail';
 
-const styles = theme => ({
-  formPaper: {
-    padding: '20px',
-  },
-  formControl: {
-    marginTop: theme.spacing.unit * 3,
-    display: 'block',
-  },
-  button: {
-    marginTop: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit,
-  },
-});
+const styles = (theme) => {
+  return {
+    formPaper: {
+      padding: theme.spacing.unit * 2,
+    },
+    formControl: {
+      marginTop: theme.spacing.unit * 3,
+      display: 'block',
+    },
+    button: {
+      marginTop: theme.spacing.unit * 3,
+      marginRight: theme.spacing.unit,
+    },
+  };
+};
 
 const ActorInfoForm = (props) => {
   const {

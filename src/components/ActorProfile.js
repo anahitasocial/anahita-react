@@ -6,20 +6,17 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-  },
+const styles = {
   titleContainer: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   title: {
-    marginBottom: 5,
+    marginBottom: 4,
   },
   alias: {
     fontSize: 16,
   },
-});
+};
 
 const ActorProfile = (props) => {
   const {
@@ -34,7 +31,7 @@ const ActorProfile = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       <Card square>
         {cover}
         <CardHeader
@@ -64,7 +61,7 @@ const ActorProfile = (props) => {
           {followAction}
         </CardActions>
       </Card>
-    </div>
+    </React.Fragment>
   );
 };
 

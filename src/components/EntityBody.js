@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
-    fontSize: 13,
+    fontSize: 14,
     fontFamily: 'inherit',
     color: theme.palette.text.primary,
   },

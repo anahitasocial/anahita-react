@@ -9,19 +9,21 @@ import SuccessIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import WarningIcon from '@material-ui/icons/Warning';
 
-const styles = theme => ({
-  close: {
-    width: theme.spacing.unit * 4,
-    height: theme.spacing.unit * 4,
-  },
-  message: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  icon: {
-    verticalAlign: 'middle',
-  },
-});
+const styles = (theme) => {
+  return {
+    close: {
+      width: theme.spacing.unit * 4,
+      height: theme.spacing.unit * 4,
+    },
+    message: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+    },
+    icon: {
+      verticalAlign: 'middle',
+    },
+  };
+};
 
 class SimpleSnackbar extends React.Component {
   constructor(props) {

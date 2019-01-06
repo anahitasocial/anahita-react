@@ -10,20 +10,22 @@ import TextFieldUsername from './textfields/TextFieldUsername';
 import TextFieldEmail from './textfields/TextFieldEmail';
 
 
-const styles = theme => ({
-  formPaper: {
-    padding: '20px',
-    maxWidth: '360px',
-    margin: '64px auto',
-  },
-  title: {
-    marginBottom: theme.spacing.unit,
-  },
-  button: {
-    marginTop: theme.spacing.unit,
-    width: '100%',
-  },
-});
+const styles = (theme) => {
+  return {
+    formPaper: {
+      padding: theme.spacing.unit * 2,
+      maxWidth: '360px',
+      margin: '64px auto',
+    },
+    title: {
+      marginBottom: theme.spacing.unit,
+    },
+    button: {
+      marginTop: theme.spacing.unit,
+      width: '100%',
+    },
+  };
+};
 
 const SignupForm = (props) => {
   const {

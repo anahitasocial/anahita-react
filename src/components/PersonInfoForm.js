@@ -13,20 +13,22 @@ import Button from '@material-ui/core/Button';
 import Link from 'react-router-dom/Link';
 import { Person as PERSON } from '../constants';
 
-const styles = theme => ({
-  formPaper: {
-    padding: '20px',
-  },
-  formControl: {
-    marginTop: theme.spacing.unit * 3,
-    display: 'block',
-  },
-  group: {},
-  button: {
-    marginTop: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit,
-  },
-});
+const styles = (theme) => {
+  return {
+    formPaper: {
+      padding: theme.spacing.unit * 2,
+    },
+    formControl: {
+      marginTop: theme.spacing.unit * 3,
+      display: 'block',
+    },
+    group: {},
+    button: {
+      marginTop: theme.spacing.unit * 3,
+      marginRight: theme.spacing.unit,
+    },
+  };
+};
 
 const PersonInfoForm = (props) => {
   const {

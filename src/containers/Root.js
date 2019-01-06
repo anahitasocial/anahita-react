@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import Routes from '../routes';
 
-const Root = ({ store }) => (
-  <Provider store={store}>
-    <Routes store={store} />
-  </Provider>
-);
+const Root = ({ store }) => {
+  return (
+    <Provider store={store}>
+      <Routes store={store} />
+    </Provider>
+  );
+};
 
 Root.propTypes = {
   store: PropTypes.object.isRequired,

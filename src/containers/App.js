@@ -26,100 +26,102 @@ import { logout } from '../actions/auth';
 const drawerWidth = 240;
 
 // Apply some reset
-const styles = theme => ({
-  '@global': {
-    body: {
-      margin: 0,
+const styles = (theme) => {
+  return {
+    '@global': {
+      body: {
+        margin: 0,
+        backgroundColor: theme.palette.background.default,
+      },
+    },
+    root: {
+      width: '100%',
+      height: 430,
+      marginTop: theme.spacing.unit * 3,
+      zIndex: 1,
+      overflow: 'hidden',
+    },
+    appFrame: {
+      position: 'relative',
+      display: 'flex',
+      width: '100%',
+      height: '100%',
+    },
+    appBar: {
+      position: 'absolute',
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appToolbar: {
+      paddingRight: 0,
+    },
+    grow: {
+      flex: '1 1 auto',
+    },
+    appBarShift: {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    menuButton: {
+      marginLeft: 12,
+      marginRight: 36,
+    },
+    hide: {
+      display: 'none',
+    },
+    drawerPaper: {
+      position: 'relative',
+      height: '100%',
+      width: drawerWidth,
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    drawerPaperClose: {
+      width: 0,
+      overflowX: 'hidden',
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    drawerInner: {
+      // Make the items inside not wrap when transitioning:
+      width: drawerWidth,
+    },
+    drawerHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      padding: '0 8px',
+      ...theme.mixins.toolbar,
+    },
+    viewer: {
+      display: 'flex',
+    },
+    content: {
+      width: '100%',
+      flexGrow: 1,
       backgroundColor: theme.palette.background.default,
+      height: 'calc(100% - 56px)',
+      [theme.breakpoints.up('md')]: {
+        height: 'calc(100% - 64px)',
+        marginTop: theme.spacing.unit * 8,
+        padding: theme.spacing.unit * 2,
+      },
+      marginTop: theme.spacing.unit * 8,
+      padding: '16px 0',
     },
-  },
-  root: {
-    width: '100%',
-    height: 430,
-    marginTop: theme.spacing.unit * 3,
-    zIndex: 1,
-    overflow: 'hidden',
-  },
-  appFrame: {
-    position: 'relative',
-    display: 'flex',
-    width: '100%',
-    height: '100%',
-  },
-  appBar: {
-    position: 'absolute',
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appToolbar: {
-    paddingRight: 0,
-  },
-  grow: {
-    flex: '1 1 auto',
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawerPaper: {
-    position: 'relative',
-    height: '100%',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    width: 0,
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  drawerInner: {
-    // Make the items inside not wrap when transitioning:
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  viewer: {
-    display: 'flex',
-  },
-  content: {
-    width: '100%',
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    height: 'calc(100% - 56px)',
-    [theme.breakpoints.up('md')]: {
-      height: 'calc(100% - 64px)',
-      marginTop: 64,
-      padding: 16,
-    },
-    marginTop: 64,
-    padding: '16px 0',
-  },
-});
+  };
+};
 
 let AppWrapper = ({ children }) => {
   return (

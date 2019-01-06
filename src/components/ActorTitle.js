@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 
-const styles = theme => ({
-  link: {
-    textDecoration: 'none',
-    color: theme.palette.text.primary,
-  },
-});
+const styles = (theme) => {
+  return {
+    link: {
+      textDecoration: 'none',
+      color: theme.palette.text.primary,
+    },
+  };
+};
 
 const ActorTitle = (props) => {
   const {
@@ -23,20 +26,29 @@ const ActorTitle = (props) => {
   const id = (namespace === 'people') ? actor.alias : actor.id;
 
   return (
-    <Typography
-      {...typographyProps}
-    >
-      {!linked && actor.name}
+    <React.Fragment>
       {linked &&
-        <Link
+        <ButtonBase
+          component={Link}
           to={`/${namespace}/${id}/`}
           href={`/${namespace}/${id}/`}
           className={classes.link}
         >
-          {actor.name}
-        </Link>
+          <Typography
+            {...typographyProps}
+          >
+            {actor.name}
+          </Typography>
+        </ButtonBase>
       }
-    </Typography>
+      {!linked &&
+        <Typography
+          {...typographyProps}
+        >
+          {actor.name}
+        </Typography>
+      }
+    </React.Fragment>
   );
 };
 
