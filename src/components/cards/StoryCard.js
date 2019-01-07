@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -9,6 +10,8 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
+import ActorTitle from '../ActorTitle';
+import ActorAvatar from '../ActorAvatar';
 import EntityBody from '../EntityBody';
 
 const styles = (theme) => {
@@ -17,13 +20,14 @@ const styles = (theme) => {
       height: theme.spacing.unit * 20,
     },
     title: {
-      fontSize: 16,
-      fontWeight: 500,
+      textTransform: 'capitalize',
       marginBottom: theme.spacing.unit * 2,
     },
-    titleLink: {
-      textDecoration: 'none',
-      color: theme.palette.text.primary,
+    authorName: {
+      fontSize: 16,
+    },
+    ownerName: {
+      fontSize: 14,
     },
     portrait: {
       minHeight: theme.spacing.unit * 30,
@@ -34,24 +38,64 @@ const styles = (theme) => {
 const StoryCard = (props) => {
   const {
     classes,
-    author,
-    authorAvatar,
-    title,
-    description,
-    portrait,
-    cover,
-    // createdOn,
-    path,
+    story,
     action,
-    owner,
   } = props;
+
+  const subject = story.subject || {
+    id: null,
+    name: 'unknown',
+    givenName: '?',
+    familyName: '?',
+    objectType: 'com.people.person',
+    imageURL: {},
+  };
+
+  const portrait = story.object &&
+  story.object.imageURL &&
+  story.object.imageURL.medium &&
+  story.object.imageURL.medium.url;
+
+  const cover = story.object &&
+  story.object.coverURL &&
+  story.object.coverURL.medium &&
+  story.object.coverURL.medium.url;
+
+  const title = story.object && story.object.name;
+  const body = story.object && story.object.body;
+  const path = `/stories/${story.id}/`;
 
   return (
     <Card square>
       <CardHeader
-        avatar={authorAvatar}
-        title={author}
-        subheader={owner}
+        avatar={
+          <ActorAvatar
+            actor={subject}
+            linked={Boolean(subject.id)}
+          />
+        }
+        title={
+          <ActorTitle
+            actor={subject}
+            typographyProps={{
+                component: 'h4',
+                variant: 'title',
+                className: classes.authorName,
+            }}
+            linked={Boolean(subject.id)}
+          />
+        }
+        subheader={
+          <ActorTitle
+            actor={story.owner}
+            typographyProps={{
+                component: 'h5',
+                variant: 'subheading',
+                className: classes.ownerName,
+            }}
+            linked
+          />
+        }
       />
       {cover &&
         <CardMedia
@@ -69,22 +113,22 @@ const StoryCard = (props) => {
       }
       <CardContent>
         {title &&
-          <Typography
-            variant="title"
-            component="h2"
-            className={classes.title}
+          <ButtonBase
+            component={Link}
+            to={path}
+            href={path}
           >
-            <Link
-              to={path}
-              href={path}
-              className={classes.titleLink}
+            <Typography
+              variant="title"
+              component="h2"
+              className={classes.title}
             >
               {title}
-            </Link>
-          </Typography>
+            </Typography>
+          </ButtonBase>
         }
-        {description &&
-          <EntityBody body={description} />
+        {body &&
+          <EntityBody body={body} />
         }
       </CardContent>
       <CardActions>
@@ -96,23 +140,11 @@ const StoryCard = (props) => {
 
 StoryCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  author: PropTypes.node.isRequired,
-  authorAvatar: PropTypes.node.isRequired,
-  title: PropTypes.string,
-  description: PropTypes.string,
-  portrait: PropTypes.string,
-  cover: PropTypes.string,
-  path: PropTypes.string.isRequired,
   action: PropTypes.node,
-  owner: PropTypes.node.isRequired,
-  // createdOn: PropTypes.node.isRequired,
+  story: PropTypes.object.isRequired,
 };
 
 StoryCard.defaultProps = {
-  title: '',
-  description: '',
-  portrait: '',
-  cover: '',
   action: null,
 };
 

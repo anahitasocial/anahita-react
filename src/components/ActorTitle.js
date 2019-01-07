@@ -2,21 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 
-const styles = (theme) => {
-  return {
-    link: {
-      textDecoration: 'none',
-      color: theme.palette.text.primary,
-    },
-  };
-};
+import ActorType from '../proptypes/Actor';
 
 const ActorTitle = (props) => {
   const {
-    classes,
     actor,
     linked,
     typographyProps,
@@ -32,7 +23,6 @@ const ActorTitle = (props) => {
           component={Link}
           to={`/${namespace}/${id}/`}
           href={`/${namespace}/${id}/`}
-          className={classes.link}
         >
           <Typography
             {...typographyProps}
@@ -53,21 +43,14 @@ const ActorTitle = (props) => {
 };
 
 ActorTitle.propTypes = {
-  classes: PropTypes.object.isRequired,
-  actor: PropTypes.object,
+  actor: ActorType.isRequired,
   linked: PropTypes.bool,
   typographyProps: PropTypes.object,
 };
 
 ActorTitle.defaultProps = {
-  actor: {
-    id: null,
-    name: '',
-    alias: '',
-    namespace: 'com.people.person',
-  },
   linked: false,
   typographyProps: {},
 };
 
-export default withStyles(styles)(ActorTitle);
+export default ActorTitle;
