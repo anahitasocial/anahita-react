@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import { pluralize } from 'inflection';
 
 import ActorTitle from '../ActorTitle';
 import ActorAvatar from '../ActorAvatar';
@@ -62,8 +63,14 @@ const StoryCard = (props) => {
   story.object.coverURL.medium.url;
 
   const title = story.object && story.object.name;
+  let path = '';
   const body = story.object && story.object.body;
-  const path = `/stories/${story.id}/`;
+
+  if (title) {
+    const namespace = pluralize(story.object.objectType.split('.')[2]);
+    const objectId = story.object.id;
+    path = `/${namespace}/${objectId}/`;
+  }
 
   return (
     <Card square>

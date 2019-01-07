@@ -34,6 +34,7 @@
     "classnames": "^2.2.6",
     "humps": "^2.0.0",
     "inflected": "^2.0.4",
+    "inflection": "^1.12.0",
     "lodash": "^4.17.11",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.2",
