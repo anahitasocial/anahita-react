@@ -24,10 +24,7 @@ import {
 import { Person as PERSON } from '../../constants';
 import PersonType from '../../proptypes/Person';
 import ActorsListType from '../../proptypes/Actors';
-
 import ActorCard from '../../components/cards/ActorCard';
-import ActorAvatar from '../../components/ActorAvatar';
-import ActorTitle from '../../components/ActorTitle';
 
 const styles = (theme) => {
   return {
@@ -188,28 +185,11 @@ class ActorsPage extends React.Component {
             {actors.allIds.map((actorId) => {
               const actor = actors.byId[actorId];
               const key = `actor_${actor.id}`;
-              const cover = actor.coverURL.medium && actor.coverURL.medium.url;
               const canFollow = this.canFollow(actor);
               return (
                 <ActorCard
                   key={key}
                   actor={actor}
-                  name={actor.name}
-                  alias={actor.alias}
-                  description={actor.body}
-                  cardAvatar={<ActorAvatar actor={actor} linked />}
-                  cardTitle={
-                    <ActorTitle
-                      actor={actor}
-                      typographyProps={{
-                          component: 'h2',
-                          variant: 'title',
-                          className: classes.actorTitle,
-                      }}
-                      linked
-                    />}
-                  cover={cover}
-                  profile={`/${namespace}/${actor.id}/`}
                   action={canFollow &&
                     <FollowAction actor={actor} />
                   }

@@ -20,9 +20,6 @@ import {
 } from '../../actions/media';
 import { Person as PERSON } from '../../constants';
 import MediumCard from '../../components/cards/MediumCard';
-import ActorAvatar from '../../components/ActorAvatar';
-import ActorTitle from '../../components/ActorTitle';
-
 import PersonType from '../../proptypes/Person';
 import MediaListType from '../../proptypes/Media';
 
@@ -31,12 +28,6 @@ const styles = (theme) => {
     title: {
       textTransform: 'capitalize',
       marginBottom: theme.spacing.unit * 2,
-    },
-    authorName: {
-      fontSize: 16,
-    },
-    ownerName: {
-      fontSize: 12,
     },
     progress: {
       marginLeft: '48%',
@@ -176,60 +167,10 @@ class MediaPage extends React.Component {
             {media.allIds.map((mediumId) => {
               const medium = media.byId[mediumId];
               const key = `medium_${medium.id}`;
-              const author = medium.author || {
-                id: null,
-                name: 'unknown',
-                givenName: '?',
-                familyName: '?',
-                objectType: 'com.people.person',
-                imageURL: '',
-              };
-
-              const portrait = medium.imageURL &&
-              medium.imageURL.medium &&
-              medium.imageURL.medium.url;
-
-              const cover = medium.coverURL &&
-              medium.coverURL.medium &&
-              medium.coverURL.medium.url;
-
               return (
                 <MediumCard
                   key={key}
-                  author={
-                    <ActorTitle
-                      actor={author}
-                      typographyProps={{
-                          component: 'h4',
-                          variant: 'title',
-                          className: classes.authorName,
-                      }}
-                      linked={Boolean(author.id)}
-                    />
-                  }
-                  authorAvatar={
-                    <ActorAvatar
-                      actor={author}
-                      linked={Boolean(author.id)}
-                    />
-                  }
-                  owner={
-                    <ActorTitle
-                      actor={medium.owner}
-                      typographyProps={{
-                          component: 'h5',
-                          variant: 'subheading',
-                          className: classes.ownerName,
-                      }}
-                      linked
-                    />
-                  }
-                  title={medium.name}
-                  alias={medium.alias}
-                  description={medium.body}
-                  portrait={portrait}
-                  cover={cover}
-                  path={`/${namespace}/${medium.id}/`}
+                  medium={medium}
                 />
               );
             })

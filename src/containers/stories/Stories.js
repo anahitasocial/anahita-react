@@ -10,7 +10,8 @@ import {
   browseStories,
   resetStories,
 } from '../../actions/stories';
-import StoryContainer from './Story';
+
+import StoryCard from '../../components/cards/StoryCard';
 
 const styles = (theme) => {
   return {
@@ -110,7 +111,7 @@ class StoriesContainer extends React.Component {
               const story = stories.byId[storyId];
               const key = `story_${story.id}`;
               return (
-                <StoryContainer
+                <StoryCard
                   story={story}
                   key={key}
                 />

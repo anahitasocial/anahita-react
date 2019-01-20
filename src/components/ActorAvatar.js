@@ -5,36 +5,35 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import { Link } from 'react-router-dom';
 import ActorType from '../proptypes/Actor';
 
+import {
+  getURL,
+  getPortraitURL,
+  getActorInitials,
+} from './utils';
+
 const ActorAvatar = (props) => {
   const {
     actor,
     linked,
   } = props;
 
-  const namespace = actor.objectType.split('.')[1];
-  const actorId = (namespace === 'people') ? actor.alias : actor.id;
-  const avatarSrc = actor.imageURL.medium && actor.imageURL.medium.url;
-
-  let initials = '';
-  if (namespace === 'people') {
-    initials = `${actor.givenName.charAt(0).toUpperCase()}${actor.familyName.charAt(0).toUpperCase()}`;
-  } else {
-    initials = actor.name.charAt(0).toUpperCase();
-  }
+  const url = getURL(actor);
+  const portrait = getPortraitURL(actor);
+  const initials = getActorInitials(actor);
 
   return (
     <React.Fragment>
       {linked &&
         <ButtonBase
           component={Link}
-          to={`/${namespace}/${actorId}/`}
+          to={url}
         >
           <Avatar
             aria-label={actor.name}
             alt={actor.name}
-            src={avatarSrc}
+            src={portrait}
           >
-            {!avatarSrc && initials}
+            {!portrait && initials}
           </Avatar>
         </ButtonBase>
       }
@@ -42,9 +41,9 @@ const ActorAvatar = (props) => {
         <Avatar
           aria-label={actor.name}
           alt={actor.name}
-          src={avatarSrc}
+          src={portrait}
         >
-          {!avatarSrc && initials}
+          {!portrait && initials}
         </Avatar>
       }
     </React.Fragment>

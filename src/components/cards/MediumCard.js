@@ -9,8 +9,16 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
+import ActorTitle from '../ActorTitle';
+import ActorAvatar from '../ActorAvatar';
 import EntityBody from '../EntityBody';
-import PersonType from '../../proptypes/Person';
+
+import {
+  getAuthor,
+  getURL,
+  getPortraitURL,
+  getCoverURL,
+} from '../utils';
 
 const styles = (theme) => {
   return {
@@ -29,23 +37,26 @@ const styles = (theme) => {
     portrait: {
       minHeight: theme.spacing.unit * 30,
     },
+    authorName: {
+      fontSize: 16,
+    },
+    ownerName: {
+      fontSize: 12,
+    },
   };
 };
 
 const MediumCard = (props) => {
   const {
     classes,
-    cover,
-    author,
-    authorAvatar,
-    title,
-    description,
-    portrait,
-    // createdOn,
-    path,
+    medium,
     action,
-    owner,
   } = props;
+
+  const portrait = getPortraitURL(medium);
+  const cover = getCoverURL(medium);
+  const url = getURL(medium);
+  const author = getAuthor(medium);
 
   return (
     <React.Fragment>
@@ -54,39 +65,70 @@ const MediumCard = (props) => {
           <CardMedia
             className={classes.media}
             image={cover}
-            title={title}
+            title={medium.name}
+            component={Link}
+            to={url}
+            href={url}
           />
         }
         <CardHeader
-          avatar={authorAvatar}
-          title={author}
-          subheader={owner}
+          avatar={
+            <ActorAvatar
+              actor={author}
+              linked={Boolean(author.id)}
+            />
+          }
+          title={
+            <ActorTitle
+              actor={author}
+              typographyProps={{
+                  component: 'h4',
+                  variant: 'title',
+                  className: classes.authorName,
+              }}
+              linked={Boolean(author.id)}
+            />
+          }
+          subheader={
+            <ActorTitle
+              actor={medium.owner}
+              typographyProps={{
+                  component: 'h5',
+                  variant: 'subheading',
+                  className: classes.ownerName,
+              }}
+              linked
+            />
+          }
         />
         {portrait &&
           <CardMedia
             className={classes.portrait}
-            title={title}
+            title={medium.name}
             image={portrait}
+            component={Link}
+            to={url}
+            href={url}
           />
         }
         <CardContent>
-          {title &&
+          {medium.name &&
             <Typography
               variant="title"
               component="h2"
               className={classes.title}
             >
               <Link
-                to={path}
-                href={path}
+                to={url}
+                href={url}
                 className={classes.titleLink}
               >
-                {title}
+                {medium.name}
               </Link>
             </Typography>
           }
-          {description &&
-            <EntityBody body={description} />
+          {medium.body &&
+            <EntityBody body={medium.body} />
           }
         </CardContent>
         <CardActions>
@@ -99,24 +141,11 @@ const MediumCard = (props) => {
 
 MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  author: PersonType,
-  authorAvatar: PropTypes.node.isRequired,
-  title: PropTypes.string,
-  description: PropTypes.string,
-  portrait: PropTypes.string,
-  cover: PropTypes.string,
-  path: PropTypes.string.isRequired,
   action: PropTypes.node,
-  owner: PropTypes.node.isRequired,
-  // createdOn: PropTypes.node.isRequired,
+  medium: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MediumCard.defaultProps = {
-  author: {},
-  title: '',
-  description: '',
-  portrait: '',
-  cover: '',
   action: null,
 };
 

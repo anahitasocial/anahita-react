@@ -9,11 +9,15 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import { pluralize } from 'inflection';
 
 import ActorTitle from '../ActorTitle';
 import ActorAvatar from '../ActorAvatar';
 import EntityBody from '../EntityBody';
+import {
+  getURL,
+  getPortraitURL,
+  getCoverURL,
+} from '../utils';
 
 const styles = (theme) => {
   return {
@@ -40,7 +44,7 @@ const StoryCard = (props) => {
   const {
     classes,
     story,
-    action,
+    actions,
   } = props;
 
   const subject = story.subject || {
@@ -52,25 +56,11 @@ const StoryCard = (props) => {
     imageURL: {},
   };
 
-  const portrait = story.object &&
-  story.object.imageURL &&
-  story.object.imageURL.medium &&
-  story.object.imageURL.medium.url;
-
-  const cover = story.object &&
-  story.object.coverURL &&
-  story.object.coverURL.medium &&
-  story.object.coverURL.medium.url;
-
+  const portrait = story.object && getPortraitURL(story.object);
+  const cover = story.object && getCoverURL(story.object);
   const title = story.object && story.object.name;
-  let path = '';
   const body = story.object && story.object.body;
-
-  if (title) {
-    const namespace = pluralize(story.object.objectType.split('.')[2]);
-    const objectId = story.object.id;
-    path = `/${namespace}/${objectId}/`;
-  }
+  const url = title ? getURL(story.object) : '';
 
   return (
     <Card square>
@@ -109,6 +99,9 @@ const StoryCard = (props) => {
           className={classes.media}
           image={cover}
           title={title}
+          component={Link}
+          to={url}
+          href={url}
         />
       }
       {portrait &&
@@ -116,14 +109,17 @@ const StoryCard = (props) => {
           className={classes.portrait}
           title={title}
           image={portrait}
+          component={Link}
+          to={url}
+          href={url}
         />
       }
       <CardContent>
         {title &&
           <ButtonBase
             component={Link}
-            to={path}
-            href={path}
+            to={url}
+            href={url}
           >
             <Typography
               variant="title"
@@ -139,7 +135,7 @@ const StoryCard = (props) => {
         }
       </CardContent>
       <CardActions>
-        {action}
+        {actions}
       </CardActions>
     </Card>
   );
@@ -147,12 +143,12 @@ const StoryCard = (props) => {
 
 StoryCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  action: PropTypes.node,
+  actions: PropTypes.arrayOf(PropTypes.node),
   story: PropTypes.object.isRequired,
 };
 
 StoryCard.defaultProps = {
-  action: null,
+  actions: [],
 };
 
 export default withStyles(styles)(StoryCard);

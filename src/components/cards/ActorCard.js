@@ -9,10 +9,21 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
+import ActorType from '../../proptypes/Actor';
+import ActorTitle from '../ActorTitle';
+import ActorAvatar from '../ActorAvatar';
 import EntityBody from '../EntityBody';
+
+import {
+  getURL,
+  getCoverURL,
+} from '../utils';
 
 const styles = (theme) => {
   return {
+    title: {
+      fontSize: 16,
+    },
     alias: {
       fontSize: 12,
     },
@@ -25,43 +36,55 @@ const styles = (theme) => {
 const ActorCard = (props) => {
   const {
     classes,
-    name,
-    alias,
-    description,
-    cardAvatar,
-    cardTitle,
-    cover,
-    profile,
+    actor,
     action,
   } = props;
+
+  const cover = getCoverURL(actor);
+  const url = getURL(actor);
 
   return (
     <React.Fragment>
       <Card square>
         {cover &&
-          <Link to={profile} href={profile}>
+          <Link to={url} href={url}>
             <CardMedia
               className={classes.media}
               image={cover}
-              title={name}
+              title={actor.name}
             />
           </Link>
         }
         <CardHeader
-          avatar={cardAvatar}
-          title={cardTitle}
+          avatar={
+            <ActorAvatar
+              actor={actor}
+              linked
+            />
+          }
+          title={
+            <ActorTitle
+              actor={actor}
+              typographyProps={{
+                  component: 'h4',
+                  variant: 'title',
+                  className: classes.title,
+              }}
+              linked
+            />
+          }
           subheader={
             <Typography
               variant="subheading"
               className={classes.alias}
             >
-              {`@${alias}`}
+              {`@${actor.alias}`}
             </Typography>
           }
         />
-        {description &&
+        {actor.body &&
         <CardContent>
-          <EntityBody body={description} />
+          <EntityBody body={actor.body} />
         </CardContent>
         }
         <CardActions>
@@ -74,19 +97,11 @@ const ActorCard = (props) => {
 
 ActorCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
-  alias: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  cardAvatar: PropTypes.node.isRequired,
-  cardTitle: PropTypes.node.isRequired,
-  cover: PropTypes.string,
-  profile: PropTypes.string.isRequired,
   action: PropTypes.node,
+  actor: PropTypes.objectOf(ActorType).isRequired,
 };
 
 ActorCard.defaultProps = {
-  description: '',
-  cover: '',
   action: null,
 };
 
