@@ -47,13 +47,14 @@ const ActorCard = (props) => {
     <React.Fragment>
       <Card square>
         {cover &&
-          <Link to={url} href={url}>
-            <CardMedia
-              className={classes.media}
-              image={cover}
-              title={actor.name}
-            />
-          </Link>
+          <CardMedia
+            className={classes.media}
+            image={cover}
+            title={actor.name}
+            component={Link}
+            to={url}
+            href={url}
+          />
         }
         <CardHeader
           avatar={
