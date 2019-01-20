@@ -9,6 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
+import MediumType from '../../proptypes/Medium';
 import ActorTitle from '../ActorTitle';
 import ActorAvatar from '../ActorAvatar';
 import EntityBody from '../EntityBody';
@@ -142,7 +143,7 @@ const MediumCard = (props) => {
 MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
   action: PropTypes.node,
-  medium: PropTypes.objectOf(PropTypes.any).isRequired,
+  medium: MediumType.isRequired,
 };
 
 MediumCard.defaultProps = {

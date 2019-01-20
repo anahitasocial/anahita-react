@@ -99,7 +99,7 @@ const ActorCard = (props) => {
 ActorCard.propTypes = {
   classes: PropTypes.object.isRequired,
   action: PropTypes.node,
-  actor: PropTypes.objectOf(ActorType).isRequired,
+  actor: ActorType.isRequired,
 };
 
 ActorCard.defaultProps = {
