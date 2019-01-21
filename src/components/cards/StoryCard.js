@@ -10,6 +10,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
+import StoryTitle from '../StoryTitle';
 import ActorTitle from '../ActorTitle';
 import ActorAvatar from '../ActorAvatar';
 import EntityBody from '../EntityBody';
@@ -56,6 +57,7 @@ const StoryCard = (props) => {
     imageURL: {},
   };
 
+  // @Todo add support for array objects
   const portrait = story.object && getPortraitURL(story.object);
   const cover = story.object && getCoverURL(story.object);
   const title = story.object && story.object.name;
@@ -72,15 +74,7 @@ const StoryCard = (props) => {
           />
         }
         title={
-          <ActorTitle
-            actor={subject}
-            typographyProps={{
-                component: 'h4',
-                variant: 'title',
-                className: classes.authorName,
-            }}
-            linked={Boolean(subject.id)}
-          />
+          <StoryTitle story={story} />
         }
         subheader={
           <ActorTitle
