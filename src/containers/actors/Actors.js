@@ -24,7 +24,7 @@ import {
 import { Person as PERSON } from '../../constants';
 import PersonType from '../../proptypes/Person';
 import ActorsListType from '../../proptypes/Actors';
-import ActorCard from '../../components/cards/ActorCard';
+import ActorCard from '../../components/cards/Actor';
 
 const styles = (theme) => {
   return {

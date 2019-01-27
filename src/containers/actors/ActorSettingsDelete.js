@@ -6,7 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Person as PERSON } from '../../constants';
 import ActorDeleteForm from '../../components/ActorDeleteForm';
-import ActorSettingCard from '../../components/cards/ActorSettingCard';
+import ActorSettingCard from '../../components/cards/ActorSetting';
 import {
   readActor,
   deleteActor,

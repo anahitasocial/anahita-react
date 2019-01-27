@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { singularize } from 'inflected';
 import ActorInfoForm from '../../components/ActorInfoForm';
-import ActorSettingCard from '../../components/cards/ActorSettingCard';
+import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import {
   readActor,

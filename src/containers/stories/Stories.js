@@ -11,7 +11,7 @@ import {
   resetStories,
 } from '../../actions/stories';
 
-import StoryCard from '../../components/cards/StoryCard';
+import StoryCard from '../../components/cards/Story';
 
 const styles = (theme) => {
   return {

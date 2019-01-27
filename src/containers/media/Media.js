@@ -19,7 +19,7 @@ import {
   resetMedia,
 } from '../../actions/media';
 import { Person as PERSON } from '../../constants';
-import MediumCard from '../../components/cards/MediumCard';
+import MediumCard from '../../components/cards/Medium';
 import PersonType from '../../proptypes/Person';
 import MediaListType from '../../proptypes/Media';
 

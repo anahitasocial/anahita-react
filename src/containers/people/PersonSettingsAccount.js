@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonAccountForm from '../../components/PersonAccountForm';
-import ActorSettingCard from '../../components/cards/ActorSettingCard';
+import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import {
   readPerson,

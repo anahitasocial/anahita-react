@@ -23,14 +23,20 @@ const StoryTitle = (props) => {
   const subject = getStorySubject(story);
 
   switch (story.name) {
-    case 'article_add':
+    case 'article_add': {
+      const title = `${subject.name} published an article`;
+      return (
+        <Typography variant="body2">
+          {title}
+        </Typography>
+      );
+    }
     case 'note_add':
     case 'photo_add':
     case 'topic_add':
     case 'todo_add':
     case 'set_add': {
-      const objectType = getStoryObjectType(story);
-      const title = `${subject.name} added a ${objectType}`;
+      const title = `${subject.name} created a set`;
       return (
         <Typography variant="body2">
           {title}

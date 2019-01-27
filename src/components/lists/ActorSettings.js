@@ -11,7 +11,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import ConnectIcon from '@material-ui/icons/Share';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Link from 'react-router-dom/Link';
-import ActorSettingCard from '../cards/ActorSettingCard';
+import ActorSettingCard from '../cards/ActorSetting';
 
 const ActorSettingsList = (props) => {
   const {
