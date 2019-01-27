@@ -38,7 +38,7 @@ const ActorProfile = (props) => {
           avatar={avatar}
           title={
             <div className={classes.titleContainer}>
-              <Typography variant="title" className={classes.title}>
+              <Typography variant="h6" className={classes.title}>
                 {name}
               </Typography>
               <Typography

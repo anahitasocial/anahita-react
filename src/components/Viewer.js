@@ -59,7 +59,7 @@ const Viewer = (props) => {
         >
           <div className={classes.content}>
             <Typography
-              variant="title"
+              variant="h4"
               color="inherit"
               className={classes.name}
               align="right"
@@ -68,7 +68,7 @@ const Viewer = (props) => {
             </Typography>
             <Typography
               className={classes.alias}
-              variant="subheading"
+              variant="subtitle1"
               color="inherit"
               align="right"
             >

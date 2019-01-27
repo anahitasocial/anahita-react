@@ -41,7 +41,7 @@ const ActorInfoForm = (props) => {
       <Paper className={classes.formPaper} elevation={0}>
         {formTitle &&
           <Typography
-            variant="title"
+            variant="h6"
             color="primary"
             className={classes.formTitle}
           >

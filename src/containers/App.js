@@ -193,7 +193,7 @@ class App extends React.Component {
                   <MenuIcon />
                 </IconButton>
                 {title !== null && (
-                  <Typography className={classes.title} variant="title" color="inherit" noWrap>
+                  <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                     {title}
                   </Typography>
                 )}
@@ -217,7 +217,7 @@ class App extends React.Component {
             >
               <div className={classes.drawerInner}>
                 <div className={classes.drawerHeader}>
-                  <Typography variant="title" color="inherit" noWrap>
+                  <Typography variant="h6" color="inherit" noWrap>
                     {'Anahita'}
                   </Typography>
                   <IconButton onClick={this.handleDrawerToggle}>

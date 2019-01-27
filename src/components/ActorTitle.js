@@ -26,7 +26,6 @@ const ActorTitle = (props) => {
         >
           <Typography
             noWrap
-            gutterBottom
             {...typographyProps}
           >
             {actor.name}
@@ -36,7 +35,6 @@ const ActorTitle = (props) => {
       {!linked &&
         <Typography
           noWrap
-          gutterBottom
           {...typographyProps}
         >
           {actor.name}

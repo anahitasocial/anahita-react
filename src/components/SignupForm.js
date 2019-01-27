@@ -54,7 +54,7 @@ const SignupForm = (props) => {
   return (
     <Paper className={classes.formPaper} elevation={2}>
       <Typography
-        variant="title"
+        variant="h6"
         color="primary"
         className={classes.title}
       >

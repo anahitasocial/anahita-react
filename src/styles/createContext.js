@@ -6,6 +6,9 @@ import createGenerateClassName from '@material-ui/core/styles/createGenerateClas
 import { blue, red } from '@material-ui/core/colors'
 
 const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
   palette: {
     primary: blue,
     error: red,

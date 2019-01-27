@@ -61,7 +61,7 @@ const MediumCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card square>
+      <Card>
         {cover &&
           <CardMedia
             className={classes.media}
@@ -83,8 +83,7 @@ const MediumCard = (props) => {
             <ActorTitle
               actor={author}
               typographyProps={{
-                  component: 'h4',
-                  variant: 'title',
+                  variant: 'h6',
                   className: classes.authorName,
               }}
               linked={Boolean(author.id)}
@@ -94,8 +93,7 @@ const MediumCard = (props) => {
             <ActorTitle
               actor={medium.owner}
               typographyProps={{
-                  component: 'h5',
-                  variant: 'subheading',
+                  variant: 'subtitle1',
                   className: classes.ownerName,
               }}
               linked
@@ -115,7 +113,7 @@ const MediumCard = (props) => {
         <CardContent>
           {medium.name &&
             <Typography
-              variant="title"
+              variant="h6"
               component="h2"
               className={classes.title}
             >

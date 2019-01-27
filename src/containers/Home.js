@@ -11,10 +11,10 @@ const HomePage = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <Typography type="title" color="inherit" className={classes.flex}>
+      <Typography variant="h6" color="inherit" className={classes.flex}>
           Anahita
       </Typography>
-      <Typography type="body1" color="inherit" className={classes.flex}>
+      <Typography variant="body1" color="inherit" className={classes.flex}>
           Social networking platform and framework!
       </Typography>
     </div>

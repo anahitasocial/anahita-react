@@ -21,6 +21,9 @@ import {
 
 const styles = (theme) => {
   return {
+    actions: {
+      padding: 8,
+    },
     title: {
       fontSize: 16,
     },
@@ -45,7 +48,7 @@ const ActorCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card square>
+      <Card>
         {cover &&
           <CardMedia
             className={classes.media}
@@ -67,8 +70,7 @@ const ActorCard = (props) => {
             <ActorTitle
               actor={actor}
               typographyProps={{
-                  component: 'h4',
-                  variant: 'title',
+                  variant: 'h6',
                   className: classes.title,
               }}
               linked
@@ -76,7 +78,7 @@ const ActorCard = (props) => {
           }
           subheader={
             <Typography
-              variant="subheading"
+              variant="subtitle1"
               className={classes.alias}
             >
               {`@${actor.alias}`}
@@ -88,7 +90,7 @@ const ActorCard = (props) => {
           <EntityBody body={actor.body} />
         </CardContent>
         }
-        <CardActions>
+        <CardActions className={classes.actions}>
           {action}
         </CardActions>
       </Card>

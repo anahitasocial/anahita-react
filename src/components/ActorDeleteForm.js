@@ -40,7 +40,7 @@ const ActorInfoForm = (props) => {
     <React.Fragment>
       <Paper className={classes.formPaper} elevation={0}>
         <Typography
-          variant="title"
+          variant="h6"
           color="primary"
           className={classes.title}
         >
@@ -52,7 +52,7 @@ const ActorInfoForm = (props) => {
         <form className={classes.container} onSubmit={handleFormSubmit}>
           { error &&
             <Typography
-              variant="display1"
+              variant="h4"
               color="error"
               paragraph
             >

@@ -42,7 +42,7 @@ const LoginForm = (props) => {
   return (
     <Paper className={classes.formPaper} square>
       <Typography
-        variant="title"
+        variant="h6"
         color="primary"
         className={classes.title}
       >

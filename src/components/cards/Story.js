@@ -65,7 +65,7 @@ const StoryCard = (props) => {
   const url = title ? getURL(story.object) : '';
 
   return (
-    <Card square>
+    <Card>
       <CardHeader
         avatar={
           <ActorAvatar
@@ -80,8 +80,7 @@ const StoryCard = (props) => {
           <ActorTitle
             actor={story.owner}
             typographyProps={{
-                component: 'h5',
-                variant: 'subheading',
+                variant: 'subtitle1',
                 className: classes.ownerName,
             }}
             linked
@@ -116,8 +115,7 @@ const StoryCard = (props) => {
             href={url}
           >
             <Typography
-              variant="title"
-              component="h2"
+              variant="h6"
               className={classes.title}
             >
               {title}

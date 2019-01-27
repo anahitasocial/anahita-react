@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';
 
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -36,8 +36,8 @@ const styles = (theme) => {
     },
     addButton: {
       position: 'fixed',
-      bottom: theme.spacing.unit * 2,
-      right: theme.spacing.unit * 2,
+      bottom: theme.spacing.unit * 3,
+      right: theme.spacing.unit * 3,
       zIndex: 10,
     },
   };
@@ -133,20 +133,19 @@ class MediaPage extends React.Component {
     return (
       <React.Fragment>
         {this.canAdd() &&
-          <Button
-            className={classes.addButton}
-            variant="fab"
+          <Fab
+            aria-label="Add"
             color="secondary"
-            aria-label="add"
+            className={classes.addButton}
             component={Link}
             to={`/${namespace}/add/`}
           >
             <AddIcon />
-          </Button>
+          </Fab>
         }
         <Toolbar>
           <Typography
-            variant="display1"
+            variant="h2"
             color="inherit"
             className={classes.title}
           >

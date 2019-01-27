@@ -54,7 +54,7 @@ const PersonInfoForm = (props) => {
 
   return (
     <Paper className={classes.formPaper} elevation={0}>
-      <Typography variant="title" color="primary">
+      <Typography variant="h6" color="primary">
           Information
       </Typography>
       <form className={classes.container} onSubmit={handleFormSubmit}>

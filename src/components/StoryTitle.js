@@ -21,27 +21,21 @@ function getStoryObjectType(story) {
 const StoryTitle = (props) => {
   const { story } = props;
   const subject = getStorySubject(story);
+  const objectType = getStoryObjectType(story);
+  let title = '';
 
   switch (story.name) {
     case 'article_add': {
-      const title = `${subject.name} published an article`;
-      return (
-        <Typography variant="body2">
-          {title}
-        </Typography>
-      );
+      title = `${subject.name} published an ${objectType}`;
+      break;
     }
     case 'note_add':
     case 'photo_add':
     case 'topic_add':
     case 'todo_add':
     case 'set_add': {
-      const title = `${subject.name} created a set`;
-      return (
-        <Typography variant="body2">
-          {title}
-        </Typography>
-      );
+      title = `${subject.name} created a ${objectType}`;
+      break;
     }
     case 'article_comment':
     case 'note_comment':
@@ -49,24 +43,22 @@ const StoryTitle = (props) => {
     case 'topic_comment':
     case 'todo_comment':
     case 'set_comment': {
-      const objectType = getStoryObjectType(story);
-      const title = `${subject.name} commented on the ${objectType}`;
-      return (
-        <Typography variant="body2">
-          {title}
-        </Typography>
-      );
+      title = `${subject.name} commented on the ${objectType}`;
+      break;
     }
     case 'actor_add':
     case 'actor_follow':
     case 'actor_follower_add':
-    default:
-      return (
-        <Typography variant="caption">
-          {story.name}
-        </Typography>
-      );
+    default: {
+      title = story.name;
+    }
   }
+
+  return (
+    <Typography variant="body1">
+      {title}
+    </Typography>
+  );
 };
 
 StoryTitle.propTypes = {
