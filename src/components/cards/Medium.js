@@ -114,11 +114,7 @@ const MediumCard = (props) => {
               variant="h6"
               className={classes.title}
             >
-              <Link
-                to={url}
-                href={url}
-                className={classes.titleLink}
-              >
+              <Link href={url}>
                 {medium.name}
               </Link>
             </Typography>

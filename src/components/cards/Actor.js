@@ -7,7 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 import ActorType from '../../proptypes/Actor';
 import ActorTitle from '../ActorTitle';
@@ -50,14 +50,13 @@ const ActorCard = (props) => {
     <React.Fragment>
       <Card>
         {cover &&
-          <CardMedia
-            className={classes.media}
-            image={cover}
-            title={actor.name}
-            component={Link}
-            to={url}
-            href={url}
-          />
+          <Link href={url}>
+            <CardMedia
+              className={classes.media}
+              image={cover}
+              title={actor.name}
+            />
+          </Link>
         }
         <CardHeader
           avatar={
