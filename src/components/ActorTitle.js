@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import ActorType from '../proptypes/Actor';
 
 import { getURL } from './utils';
@@ -19,18 +18,14 @@ const ActorTitle = (props) => {
   return (
     <React.Fragment>
       {linked &&
-        <ButtonBase
-          component={Link}
-          to={url}
-          href={url}
+        <Typography
+          noWrap
+          {...typographyProps}
         >
-          <Typography
-            noWrap
-            {...typographyProps}
-          >
+          <Link href={url}>
             {actor.name}
-          </Typography>
-        </ButtonBase>
+          </Link>
+        </Typography>
       }
       {!linked &&
         <Typography

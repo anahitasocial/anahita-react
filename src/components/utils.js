@@ -14,9 +14,19 @@ export function getAuthor(entity) {
 export function getURL(entity) {
   if (entity.objectType) {
     const namespace = pluralize(entity.objectType.split('.')[2]);
-    const id = (namespace === 'people') ? entity.alias : `${entity.id}-${entity.alias}`;
-    return `/${namespace}/${id}/`;
-  } return '';
+    let identifier = null;
+
+    if (namespace === 'people') {
+      identifier = entity.alias;
+    } else if (entity.alias) {
+      identifier = `${entity.id}-${entity.alias}`;
+    } else {
+      identifier = entity.id;
+    }
+    return `/${namespace}/${identifier}/`;
+  }
+
+  return '';
 }
 
 export function getPortraitURL(entity) {

@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
-import StoryTitle from '../StoryTitle';
+import StoryMessage from '../StoryMessage';
 import ActorTitle from '../ActorTitle';
 import ActorAvatar from '../ActorAvatar';
 import EntityBody from '../EntityBody';
@@ -62,7 +61,7 @@ const StoryCard = (props) => {
   const cover = story.object && getCoverURL(story.object);
   const title = story.object && story.object.name;
   const body = story.object && story.object.body;
-  const url = title ? getURL(story.object) : '';
+  const url = title && story.object ? getURL(story.object) : '';
 
   return (
     <Card>
@@ -74,7 +73,7 @@ const StoryCard = (props) => {
           />
         }
         title={
-          <StoryTitle story={story} />
+          <StoryMessage story={story} />
         }
         subheader={
           <ActorTitle
@@ -88,39 +87,33 @@ const StoryCard = (props) => {
         }
       />
       {cover &&
-        <CardMedia
-          className={classes.media}
-          image={cover}
-          title={title}
-          component={Link}
-          to={url}
-          href={url}
-        />
+        <Link href={url}>
+          <CardMedia
+            className={classes.media}
+            image={cover}
+            title={title}
+          />
+        </Link>
       }
       {portrait &&
-        <CardMedia
-          className={classes.portrait}
-          title={title}
-          image={portrait}
-          component={Link}
-          to={url}
-          href={url}
-        />
+        <Link href={url}>
+          <CardMedia
+            className={classes.portrait}
+            title={title}
+            image={portrait}
+          />
+        </Link>
       }
       <CardContent>
         {title &&
-          <ButtonBase
-            component={Link}
-            to={url}
-            href={url}
+          <Typography
+            variant="h6"
+            className={classes.title}
           >
-            <Typography
-              variant="h6"
-              className={classes.title}
-            >
+            <Link href={url}>
               {title}
-            </Typography>
-          </ButtonBase>
+            </Link>
+          </Typography>
         }
         {body &&
           <EntityBody body={body} />
