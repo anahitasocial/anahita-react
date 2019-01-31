@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/LoginForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import { login } from '../../actions/auth';
+import * as actions from '../../actions/auth';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -83,7 +83,8 @@ class LoginPage extends React.Component {
     event.preventDefault();
     const { credentials } = this.state;
     if (this.validate()) {
-      this.props.login(credentials);
+      const { login } = this.props;
+      login(credentials);
     }
   }
 
@@ -158,7 +159,7 @@ const mapStateToProps = (state) => {
     success,
     error,
     isFetching,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     isAuthenticated,
@@ -171,7 +172,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (credentials) => {
-      dispatch(login(credentials));
+      dispatch(actions.login(credentials));
     },
   };
 };

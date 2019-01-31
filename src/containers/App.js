@@ -264,7 +264,7 @@ const mapStateToProps = (state) => {
   const {
     isAuthenticated,
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     isAuthenticated,

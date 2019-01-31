@@ -7,21 +7,20 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Person as PERSON } from '../../constants';
 import ActorDeleteForm from '../../components/ActorDeleteForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
-import {
-  readActor,
-  deleteActor,
-} from '../../actions/actor';
+import * as actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
 
-const styles = theme => ({
-  progress: {
-    marginLeft: '48%',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-});
+const styles = (theme) => {
+  return {
+    progress: {
+      marginLeft: '48%',
+      marginTop: theme.spacing.unit,
+      marginBottom: theme.spacing.unit,
+    },
+  };
+};
 
 class ActorSettingsDeletePage extends React.Component {
   constructor(props) {
@@ -43,13 +42,15 @@ class ActorSettingsDeletePage extends React.Component {
 
     if (!actor.id) {
       const { id } = this.props.computedMatch.params;
-      this.props.readActor(id, namespace);
+      const { readActor } = this.props;
+
+      readActor(id, namespace);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      actor: Object.assign({}, nextProps.actor),
+      actor: { ...nextProps.actor },
     });
   }
 
@@ -95,7 +96,9 @@ class ActorSettingsDeletePage extends React.Component {
 
   deleteActor() {
     const { actor } = this.state;
-    this.props.deleteActor(actor);
+    const { deleteActor } = this.props;
+
+    deleteActor(actor);
   }
 
   handleFormSubmit(event) {
@@ -215,11 +218,11 @@ const mapStateToProps = (state) => {
     error,
     success,
     isFetching,
-  } = state.actorReducer;
+  } = state.actor;
 
   const {
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     actor,
@@ -233,10 +236,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readActor: (id, namespace) => {
-      dispatch(readActor(id, namespace));
+      dispatch(actions.read(id, namespace));
     },
     deleteActor: (actor) => {
-      dispatch(deleteActor(actor));
+      dispatch(actions.deleteActor(actor));
     },
   };
 };

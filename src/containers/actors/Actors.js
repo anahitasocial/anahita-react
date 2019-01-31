@@ -16,10 +16,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Link from 'react-router-dom/Link';
 import FollowAction from '../actions/FollowAction';
 
-import {
-  browseActors,
-  resetActors,
-} from '../../actions/actors';
+import * as actions from '../../actions/actors';
 
 import { Person as PERSON } from '../../constants';
 import PersonType from '../../proptypes/Person';
@@ -68,7 +65,9 @@ class ActorsPage extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.resetActors();
+    const { resetActors } = this.props;
+
+    resetActors();
   }
 
   getColumnWidth() {
@@ -102,9 +101,10 @@ class ActorsPage extends React.Component {
     const {
       queryFilters,
       namespace,
+      browseActors,
     } = this.props;
 
-    this.props.browseActors({
+    browseActors({
       q: keywordFilter,
       disabled: disabledFilter,
       start: this.offset,
@@ -230,12 +230,12 @@ const mapStateToProps = (state) => {
     offset,
     limit,
     total,
-  } = state.actorsReducer;
+  } = state.actors;
 
   const {
     isAuthenticated,
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     actors,
@@ -252,10 +252,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseActors: (params, namespace) => {
-      dispatch(browseActors(params, namespace));
+      dispatch(actions.browse(params, namespace));
     },
     resetActors: () => {
-      dispatch(resetActors());
+      dispatch(actions.reset());
     },
   };
 };

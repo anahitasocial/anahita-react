@@ -7,20 +7,19 @@ import { singularize } from 'inflected';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import {
-  readActor,
-  editActor,
-} from '../../actions/actor';
+import * as actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 
-const styles = theme => ({
-  progress: {
-    marginLeft: '48%',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-});
+const styles = (theme) => {
+  return {
+    progress: {
+      marginLeft: '48%',
+      marginTop: theme.spacing.unit,
+      marginBottom: theme.spacing.unit,
+    },
+  };
+};
 
 const BODY_CHARACTER_LIMIT = 1000;
 
@@ -45,15 +44,16 @@ class ActorSettingsInfoPage extends React.Component {
 
     if (!actor.id) {
       const { id } = this.props.computedMatch.params;
-      this.props.readActor(id, this.props.namespace);
+      const { readActor, namespace } = this.props;
+
+      readActor(id, namespace);
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    const { actor } = nextProps;
     this.setState({
-      actor: Object.assign({}, nextProps.actor),
-      success: nextProps.success,
-      error: nextProps.error,
+      actor: { ...actor },
     });
   }
 
@@ -111,7 +111,9 @@ class ActorSettingsInfoPage extends React.Component {
 
   saveActor() {
     const { actor } = this.state;
-    this.props.editActor(actor);
+    const { editActor } = this.props;
+
+    editActor(actor);
   }
 
   handleFormSubmit(event) {
@@ -205,7 +207,7 @@ const mapStateToProps = (state) => {
     success,
     error,
     isFetching,
-  } = state.actorReducer;
+  } = state.actor;
 
   return {
     actor,
@@ -218,10 +220,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readActor: (id, namespace) => {
-      dispatch(readActor(id, namespace));
+      dispatch(actions.read(id, namespace));
     },
     editActor: (actor) => {
-      dispatch(editActor(actor));
+      dispatch(actions.edit(actor));
     },
   };
 };

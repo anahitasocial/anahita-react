@@ -2,7 +2,7 @@ import axios from 'axios';
 import { singularize } from 'inflected';
 import { constructURLSearchParams } from './utils';
 
-export function browseMedia(params, namespace) {
+function browse(params, namespace) {
   return axios.get(`/${namespace}.json`, {
     params: {
       start: params.offset,
@@ -12,11 +12,11 @@ export function browseMedia(params, namespace) {
   });
 }
 
-export function readMedium(id, namespace) {
+function read(id, namespace) {
   return axios.get(`/${namespace}/${id}.json`);
 }
 
-export function editMedium(medium) {
+function edit(medium) {
   const {
     title,
     description,
@@ -28,13 +28,14 @@ export function editMedium(medium) {
   }));
 }
 
-export function addMedium(params, namespace) {
+function add(params, namespace) {
   const {
     title,
     description,
     enabled,
     access,
   } = params;
+
   return axios.post(`/${namespace}/${singularize(namespace)}.json`, constructURLSearchParams({
     title,
     description,
@@ -43,7 +44,15 @@ export function addMedium(params, namespace) {
   }));
 }
 
-export function deleteMedium(medium) {
+function deleteMedium(medium) {
   const namespace = medium.objectType.split('.')[1];
   return axios.delete(`/${namespace}/${medium.id}.json`);
 }
+
+export {
+  browse,
+  read,
+  edit,
+  add,
+  deleteMedium,
+};

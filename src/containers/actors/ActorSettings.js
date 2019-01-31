@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ActorSettingsList from '../../components/lists/ActorSettings';
-import { readActor } from '../../actions/actor';
+import * as actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
@@ -56,11 +56,11 @@ const mapStateToProps = (state) => {
   const {
     actor,
     error,
-  } = state.actorReducer;
+  } = state.actor;
 
   const {
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     actor,
@@ -72,7 +72,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readActor: (id, namespace) => {
-      dispatch(readActor(id, namespace));
+      dispatch(actions.read(id, namespace));
     },
   };
 };

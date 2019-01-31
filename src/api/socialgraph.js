@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { constructURLSearchParams } from './utils';
 
-export function followActor(viewer, actor) {
+function follow(viewer, actor) {
   const component = actor.objectType.split('.')[1];
   return axios.post(`/${component}/${actor.id}.json`, constructURLSearchParams({
     actor: viewer.id,
@@ -9,7 +9,7 @@ export function followActor(viewer, actor) {
   }));
 }
 
-export function unfollowActor(viewer, actor) {
+function unfollow(viewer, actor) {
   const component = actor.objectType.split('.')[1];
   return axios.post(`/${component}/${actor.id}.json`, constructURLSearchParams({
     actor: viewer.id,
@@ -17,7 +17,7 @@ export function unfollowActor(viewer, actor) {
   }));
 }
 
-export function blockActor(viewer, actor) {
+function block(viewer, actor) {
   const component = actor.objectType.split('.')[1];
   return axios.post(`/${component}/${actor.id}.json`, constructURLSearchParams({
     actor: viewer.id,
@@ -25,10 +25,17 @@ export function blockActor(viewer, actor) {
   }));
 }
 
-export function unblockActor(viewer, actor) {
+function unblock(viewer, actor) {
   const component = actor.objectType.split('.')[1];
   return axios.post(`/${component}/${actor.id}.json`, constructURLSearchParams({
     actor: viewer.id,
     action: 'unblock',
   }));
 }
+
+export {
+  follow,
+  unfollow,
+  block,
+  unblock,
+};

@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { constructURLSearchParams } from './utils';
 
-export function readPerson(id) {
+function read(id) {
   return axios.get(`/people/${id}.json`);
 }
 
-export function editPerson(person) {
+function edit(person) {
   const {
     givenName,
     familyName,
@@ -13,6 +13,7 @@ export function editPerson(person) {
     gender,
     usertype,
   } = person;
+
   return axios.post(`/people/${person.id}.json`, constructURLSearchParams({
     givenName,
     familyName,
@@ -22,8 +23,9 @@ export function editPerson(person) {
   }));
 }
 
-export function editPersonAccount(person) {
+function editAccount(person) {
   const { username, email, password } = person;
+
   return axios.post(`/people/${person.id}.json`, constructURLSearchParams({
     username,
     email,
@@ -31,7 +33,7 @@ export function editPersonAccount(person) {
   }));
 }
 
-export function addPerson(person) {
+function add(person) {
   const {
     givenName,
     familyName,
@@ -39,6 +41,7 @@ export function addPerson(person) {
     email,
     usertype,
   } = person;
+
   return axios.post('/people.json', constructURLSearchParams({
     givenName,
     familyName,
@@ -47,3 +50,10 @@ export function addPerson(person) {
     usertype,
   }));
 }
+
+export {
+  read,
+  edit,
+  editAccount,
+  add,
+};

@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
-import {
-  followActor,
-  unfollowActor,
-} from '../../actions/follow';
-
+import * as actions from '../../actions/follow';
 import PersonType from '../../proptypes/Person';
 
 class FollowAction extends React.Component {
@@ -33,8 +29,10 @@ class FollowAction extends React.Component {
 
   handleUnfollowActor(event) {
     event.preventDefault();
+
     const { viewer, actor } = this.props;
     this.props.unfollowActor(viewer, actor);
+
     this.setState({
       isLeader: false,
     });
@@ -76,7 +74,7 @@ FollowAction.propTypes = {
 const mapStateToProps = (state) => {
   const {
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     viewer,
@@ -86,10 +84,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     followActor: (viewer, actor) => {
-      dispatch(followActor(viewer, actor));
+      dispatch(actions.follow(viewer, actor));
     },
     unfollowActor: (viewer, actor) => {
-      dispatch(unfollowActor(viewer, actor));
+      dispatch(actions.unfollow(viewer, actor));
     },
   };
 };

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import { validateEmail } from '../../actions/auth';
-import validate from '../../containers/people/validate';
+import * as actions from '../../actions/auth';
+import * as validate from '../../containers/people/validate';
 
 class TextFieldEmail extends React.Component {
   constructor(props) {
@@ -29,11 +29,13 @@ class TextFieldEmail extends React.Component {
 
   handleFieldChange(event) {
     const { value } = event.target;
+    const { isEmailTaken, onChange } = this.props;
+
     if (validate.email(value) && this.state.initValue !== value) {
-      this.props.isEmailTaken(value);
+      isEmailTaken(value);
     }
 
-    this.props.onChange(event);
+    onChange(event);
   }
 
   render() {
@@ -84,7 +86,7 @@ TextFieldEmail.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     emailAvailable,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     emailAvailable,
@@ -94,7 +96,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     isEmailTaken: (email) => {
-      dispatch(validateEmail(email));
+      dispatch(actions.validateEmail(email));
     },
   };
 };

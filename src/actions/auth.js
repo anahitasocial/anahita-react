@@ -23,7 +23,7 @@ function validateUsernameFailure(error) {
   };
 }
 
-export function validateUsername(username) {
+function validateUsername(username) {
   return (dispatch) => {
     dispatch(validateUsernameRequest());
     return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ function validateEmailFailure(error) {
   };
 }
 
-export function validateEmail(email) {
+function validateEmail(email) {
   return (dispatch) => {
     dispatch(validateEmailRequest());
     return new Promise((resolve, reject) => {
@@ -103,7 +103,7 @@ function loginError(error) {
   };
 }
 
-export function login(credentials) {
+function login(credentials) {
   return (dispatch) => {
     dispatch(requestLogin());
     return new Promise((resolve, reject) => {
@@ -137,7 +137,7 @@ function receiveLogout() {
   };
 }
 
-export function logout() {
+function logout() {
   return (dispatch) => {
     dispatch(requestLogout());
     return new Promise((resolve, reject) => {
@@ -155,11 +155,11 @@ export function logout() {
   };
 }
 
-export function unauthorized() {
+const unauthorized = () => {
   return (dispatch) => {
     dispatch(logout());
   };
-}
+};
 
 // - Signup Action -
 
@@ -183,7 +183,7 @@ function signupFailure(error) {
   };
 }
 
-export function signup(person) {
+function signup(person) {
   return (dispatch) => {
     dispatch(signupRequest());
     return new Promise((resolve, reject) => {
@@ -224,7 +224,7 @@ function resetPasswordFailure(error) {
   };
 }
 
-export function resetPassword(person) {
+function resetPassword(person) {
   return (dispatch) => {
     dispatch(resetPasswordRequest());
     return new Promise((resolve, reject) => {
@@ -241,3 +241,13 @@ export function resetPassword(person) {
     });
   };
 }
+
+export {
+  validateUsername,
+  validateEmail,
+  login,
+  logout,
+  unauthorized,
+  signup,
+  resetPassword,
+};

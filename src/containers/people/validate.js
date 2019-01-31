@@ -13,7 +13,7 @@ function password(value) {
   return regex.test(String(value));
 }
 
-export default {
+export {
   username,
   email,
   password,

@@ -6,21 +6,20 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonAccountForm from '../../components/PersonAccountForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import {
-  readPerson,
-  editPersonAccount,
-} from '../../actions/person';
-import validate from './validate';
+import * as actions from '../../actions/person';
+import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';
 
-const styles = theme => ({
-  progress: {
-    marginLeft: '48%',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-});
+const styles = (theme) => {
+  return {
+    progress: {
+      marginLeft: '48%',
+      marginTop: theme.spacing.unit,
+      marginBottom: theme.spacing.unit,
+    },
+  };
+};
 
 class PersonSettingsAccountPage extends React.Component {
   constructor(props) {
@@ -42,12 +41,14 @@ class PersonSettingsAccountPage extends React.Component {
 
   componentWillMount() {
     const { id } = this.props.computedMatch.params;
-    this.props.readPerson(id);
+    const { readPerson } = this.props;
+
+    readPerson(id);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      person: Object.assign({}, nextProps.person),
+      person: { ...nextProps.person },
     });
   }
 
@@ -225,7 +226,7 @@ const mapStateToProps = (state) => {
     isFetching,
     success,
     error,
-  } = state.personReducer;
+  } = state.person;
 
   return {
     person,
@@ -238,10 +239,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readPerson: (id) => {
-      dispatch(readPerson(id));
+      dispatch(actions.read(id));
     },
     editPersonAccount: (person) => {
-      dispatch(editPersonAccount(person));
+      dispatch(actions.editAccount(person));
     },
   };
 };

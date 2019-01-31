@@ -2,7 +2,7 @@ import axios from 'axios';
 import { singularize } from 'inflected';
 import { constructURLSearchParams } from './utils';
 
-export function browseActors(params, namespace) {
+function browse(params, namespace) {
   return axios.get(`/${namespace}.json`, {
     params: {
       start: params.offset,
@@ -12,11 +12,11 @@ export function browseActors(params, namespace) {
   });
 }
 
-export function readActor(id, namespace) {
+function read(id, namespace) {
   return axios.get(`/${namespace}/${id}.json`);
 }
 
-export function editActor(actor) {
+function edit(actor) {
   const {
     name,
     body,
@@ -28,7 +28,7 @@ export function editActor(actor) {
   }));
 }
 
-export function addActor(params, namespace) {
+function add(params, namespace) {
   const {
     name,
     body,
@@ -43,14 +43,14 @@ export function addActor(params, namespace) {
   }));
 }
 
-export function deleteActor(actor) {
+function deleteActor(actor) {
   const namespace = actor.objectType.split('.')[1];
   return axios.delete(`/${namespace}/${actor.id}.json`);
 }
 
 // @todo the editAvatar and editCover code is wet. Make it DRY!
 
-export function editAvatar(actor, file) {
+function editAvatar(actor, file) {
   const namespace = actor.objectType.split('.')[1];
   const { id } = actor;
   const formData = new FormData();
@@ -71,7 +71,7 @@ export function editAvatar(actor, file) {
   return axios.post(`/${namespace}/${id}.json?edit=avatar`, formData, config);
 }
 
-export function editCover(actor, file) {
+function editCover(actor, file) {
   const namespace = actor.objectType.split('.')[1];
   const { id } = actor;
   const formData = new FormData();
@@ -91,3 +91,13 @@ export function editCover(actor, file) {
 
   return axios.post(`/${namespace}/${id}.json?edit=cover`, formData, config);
 }
+
+export {
+  browse,
+  read,
+  edit,
+  add,
+  deleteActor,
+  editAvatar,
+  editCover,
+};

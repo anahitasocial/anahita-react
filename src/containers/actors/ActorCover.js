@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  addCover,
-  deleteCover,
-} from '../../actions/actor';
+import * as actions from '../../actions/actor';
 import { Person as PERSON } from '../../constants';
 import ActorCoverForm from '../../components/ActorCoverForm';
 
@@ -58,13 +55,13 @@ class ActorCover extends React.Component {
   }
 
   addCover() {
-    const { actor } = this.props;
-    this.props.addCover(actor, this.file);
+    const { actor, addCover } = this.props;
+    addCover(actor, this.file);
   }
 
   deleteCover() {
-    const { actor } = this.props;
-    this.props.deleteCover(actor);
+    const { actor, deleteCover } = this.props;
+    deleteCover(actor);
   }
 
   handleFieldChange(event) {
@@ -169,7 +166,7 @@ ActorCover.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     viewer,
@@ -179,10 +176,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addCover: (actor, file) => {
-      dispatch(addCover(actor, file));
+      dispatch(actions.addCover(actor, file));
     },
     deleteCover: (actor) => {
-      dispatch(deleteCover(actor));
+      dispatch(actions.deleteCover(actor));
     },
   };
 };

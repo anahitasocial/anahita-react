@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {
-  blockActor,
-  unblockActor,
-} from '../../actions/block';
-
+import * as actions from '../../actions/block';
 import PersonType from '../../proptypes/Person';
 
 class BlockAction extends React.Component {
@@ -24,8 +20,10 @@ class BlockAction extends React.Component {
 
   handleBlockActor(event) {
     event.preventDefault();
-    const { viewer, actor } = this.props;
-    this.props.blockPerson(viewer, actor);
+
+    const { viewer, actor, blockPerson } = this.props;
+    blockPerson(viewer, actor);
+
     this.setState({
       isBlocked: true,
     });
@@ -33,8 +31,10 @@ class BlockAction extends React.Component {
 
   handleUnblockActor(event) {
     event.preventDefault();
-    const { viewer, actor } = this.props;
-    this.props.unblockPerson(viewer, actor);
+
+    const { viewer, actor, unblockPerson } = this.props;
+    unblockPerson(viewer, actor);
+
     this.setState({
       isBlocked: false,
     });
@@ -74,7 +74,7 @@ BlockAction.propTypes = {
 const mapStateToProps = (state) => {
   const {
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     viewer,
@@ -84,10 +84,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     blockPerson: (viewer, actor) => {
-      dispatch(blockActor(viewer, actor));
+      dispatch(actions.block(viewer, actor));
     },
     unblockPerson: (viewer, actor) => {
-      dispatch(unblockActor(viewer, actor));
+      dispatch(actions.unblock(viewer, actor));
     },
   };
 };

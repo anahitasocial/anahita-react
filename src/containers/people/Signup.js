@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SignupForm from '../../components/SignupForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import { signup } from '../../actions/auth';
-import validate from './validate';
+import * as actions from '../../actions/auth';
+import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';
 
@@ -117,7 +117,9 @@ class SignupPage extends React.Component {
 
   signup() {
     const { person } = this.state;
-    this.props.signup(person);
+    const { signup } = this.props;
+
+    signup(person);
   }
 
   handleFormSubmit(event) {
@@ -219,7 +221,7 @@ const mapStateToProps = (state) => {
     success,
     isFetching,
     isAuthenticated,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     error,
@@ -232,7 +234,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     signup: (person) => {
-      dispatch(signup(person));
+      dispatch(actions.signup(person));
     },
   };
 };

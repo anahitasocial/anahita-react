@@ -23,11 +23,11 @@ function readFailure(response) {
   };
 }
 
-export function readPerson(id) {
+function read(id) {
   return (dispatch) => {
     dispatch(readRequest());
     return new Promise((resolve, reject) => {
-      api.readPerson(id)
+      api.read(id)
         .then((result) => {
           dispatch(readSuccess(result));
           return resolve();
@@ -64,11 +64,11 @@ function editFailure(error) {
   };
 }
 
-export function editPerson(person) {
+function edit(person) {
   return (dispatch) => {
     dispatch(editRequest(person));
     return new Promise((resolve, reject) => {
-      api.editPerson(person)
+      api.edit(person)
         .then((result) => {
           dispatch(editSuccess(result));
           return resolve();
@@ -104,11 +104,11 @@ function editAccountFailure(error) {
   };
 }
 
-export function editPersonAccount(person) {
+function editAccount(person) {
   return (dispatch) => {
     dispatch(editAccountRequest());
     return new Promise((resolve, reject) => {
-      api.editPersonAccount(person)
+      api.editAccount(person)
         .then((result) => {
           dispatch(editAccountSuccess(result));
           return resolve();
@@ -144,11 +144,11 @@ function addFailure(error) {
   };
 }
 
-export function addPerson(person) {
+function add(person) {
   return (dispatch) => {
     dispatch(addRequest());
     return new Promise((resolve, reject) => {
-      api.addPerson(person)
+      api.add(person)
         .then((result) => {
           dispatch(addSuccess(result));
           return resolve();
@@ -161,3 +161,10 @@ export function addPerson(person) {
     });
   };
 }
+
+export {
+  read,
+  edit,
+  editAccount,
+  add,
+};

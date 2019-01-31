@@ -10,14 +10,16 @@ import BlockAction from '../actions/BlockAction';
 
 import ActorType from '../../proptypes/Actor';
 
-const styles = theme => ({
-  navlink: {
-    width: '100%',
-    padding: '20px 0',
-    textDecoration: 'none',
-    color: theme.palette.text.primary,
-  },
-});
+const styles = (theme) => {
+  return {
+    navlink: {
+      width: '100%',
+      padding: '20px 0',
+      textDecoration: 'none',
+      color: theme.palette.text.primary,
+    },
+  };
+};
 
 const ITEM_HEIGHT = 48;
 

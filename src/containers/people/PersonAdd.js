@@ -8,9 +8,9 @@ import Avatar from '@material-ui/core/Avatar';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonAddForm from '../../components/PersonAddForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import { addPerson } from '../../actions/person';
+import * as actions from '../../actions/person';
 import { Person as PERSON } from '../../constants';
-import validate from './validate';
+import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';
 
@@ -45,15 +45,17 @@ class PersonAddPage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      person: Object.assign({}, nextProps.person),
+      person: { ...nextProps.person },
     });
   }
 
   getInitials() {
     const { person } = this.state;
+
     if (!person.id) {
       return '';
     }
+
     const givenName = person.givenName.charAt(0);
     const familyName = person.familyName.charAt(0);
     return `${givenName}${familyName}`;
@@ -61,9 +63,11 @@ class PersonAddPage extends React.Component {
 
   getName() {
     const { person } = this.state;
+
     if (!person.id) {
       return '';
     }
+
     return `${person.givenName} ${person.familyName}`;
   }
 
@@ -157,7 +161,9 @@ class PersonAddPage extends React.Component {
 
   savePerson() {
     const { person } = this.state;
-    this.props.addPerson(person);
+    const { addPerson } = this.props;
+
+    addPerson(person);
   }
 
   handleFormSubmit(event) {
@@ -263,11 +269,11 @@ const mapStateToProps = (state) => {
     success,
     error,
     isFetching,
-  } = state.personReducer;
+  } = state.person;
 
   const {
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     person,
@@ -281,7 +287,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addPerson: (person) => {
-      dispatch(addPerson(person));
+      dispatch(actions.add(person));
     },
   };
 };

@@ -4,7 +4,7 @@ import { Media as MEDIA } from '../constants';
 
 // -- reset
 
-export function resetMedia() {
+function reset() {
   return {
     type: MEDIA.BROWSE.RESET,
   };
@@ -38,11 +38,11 @@ function browseFailure(error) {
   };
 }
 
-export function browseMedia(params, namespace) {
+function browse(params, namespace) {
   return (dispatch) => {
     dispatch(browseRequest());
     return new Promise((resolve, reject) => {
-      api.browseMedia(params, namespace)
+      api.browse(params, namespace)
         .then((result) => {
           dispatch(browseSuccess(result));
           return resolve();
@@ -55,3 +55,8 @@ export function browseMedia(params, namespace) {
     });
   };
 }
+
+export {
+  reset,
+  browse,
+};

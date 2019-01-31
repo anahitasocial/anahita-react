@@ -23,11 +23,11 @@ function readFailure(response) {
   };
 }
 
-export function readActor(id, namespace) {
+function read(id, namespace) {
   return (dispatch) => {
     dispatch(readRequest());
     return new Promise((resolve, reject) => {
-      api.readActor(id, namespace)
+      api.read(id, namespace)
         .then((result) => {
           dispatch(readSuccess(result));
           return resolve();
@@ -64,11 +64,11 @@ function editFailure(response) {
   };
 }
 
-export function editActor(actor) {
+function edit(actor) {
   return (dispatch) => {
     dispatch(editRequest(actor));
     return new Promise((resolve, reject) => {
-      api.editActor(actor)
+      api.edit(actor)
         .then((result) => {
           dispatch(editSuccess(result));
           return resolve();
@@ -105,11 +105,11 @@ function addFailure(response) {
   };
 }
 
-export function addActor(actor, namespace) {
+function add(actor, namespace) {
   return (dispatch) => {
     dispatch(addRequest(actor));
     return new Promise((resolve, reject) => {
-      api.addActor(actor, namespace)
+      api.add(actor, namespace)
         .then((result) => {
           dispatch(addSuccess(result));
           return resolve();
@@ -146,7 +146,7 @@ function deleteFailure(response) {
   };
 }
 
-export function deleteActor(actor) {
+function deleteActor(actor) {
   return (dispatch) => {
     dispatch(deleteRequest(actor));
     return new Promise((resolve, reject) => {
@@ -187,7 +187,7 @@ function addAvatarFailure(response) {
   };
 }
 
-export function addAvatar(actor, file) {
+function addAvatar(actor, file) {
   return (dispatch) => {
     dispatch(addAvatarRequest(actor));
     return new Promise((resolve, reject) => {
@@ -228,7 +228,7 @@ function deleteAvatarFailure(response) {
   };
 }
 
-export function deleteAvatar(actor) {
+function deleteAvatar(actor) {
   return (dispatch) => {
     dispatch(deleteAvatarRequest(actor));
     return new Promise((resolve, reject) => {
@@ -269,7 +269,7 @@ function addCoverFailure(response) {
   };
 }
 
-export function addCover(actor, file) {
+function addCover(actor, file) {
   return (dispatch) => {
     dispatch(addCoverRequest(actor));
     return new Promise((resolve, reject) => {
@@ -310,7 +310,7 @@ function deleteCoverFailure(response) {
   };
 }
 
-export function deleteCover(actor) {
+function deleteCover(actor) {
   return (dispatch) => {
     dispatch(deleteCoverRequest(actor));
     return new Promise((resolve, reject) => {
@@ -327,3 +327,14 @@ export function deleteCover(actor) {
     });
   };
 }
+
+export {
+  read,
+  edit,
+  add,
+  deleteActor,
+  addAvatar,
+  deleteAvatar,
+  addCover,
+  deleteCover,
+};

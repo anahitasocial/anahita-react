@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import { validateUsername } from '../../actions/auth';
-import validate from '../../containers/people/validate';
+import * as actions from '../../actions/auth';
+import * as validate from '../../containers/people/validate';
 
 class TextFieldUsername extends React.Component {
   constructor(props) {
@@ -29,12 +29,13 @@ class TextFieldUsername extends React.Component {
 
   handleFieldChange(event) {
     const { value } = event.target;
+    const { isUsernameTaken, onChange } = this.props;
 
     if (validate.username(value) && this.state.initValue !== value) {
-      this.props.isUsernameTaken(value);
+      isUsernameTaken(value);
     }
 
-    this.props.onChange(event);
+    onChange(event);
   }
 
   render() {
@@ -85,7 +86,7 @@ TextFieldUsername.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     usernameAvailable,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     usernameAvailable,
@@ -95,7 +96,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     isUsernameTaken: (username) => {
-      dispatch(validateUsername(username));
+      dispatch(actions.validateUsername(username));
     },
   };
 };

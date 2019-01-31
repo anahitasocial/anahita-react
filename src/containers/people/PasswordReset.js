@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PasswordResetForm from '../../components/PasswordResetForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import { resetPassword } from '../../actions/auth';
-import validate from './validate';
+import * as actions from '../../actions/auth';
+import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';
 
@@ -64,7 +64,8 @@ class PasswordResetPage extends React.Component {
     event.preventDefault();
     const { person } = this.state;
     if (this.validate()) {
-      this.props.resetPassword(person);
+      const { resetPassword } = this.props;
+      resetPassword(person);
     }
   }
 
@@ -133,7 +134,7 @@ const mapStateToProps = (state) => {
     success,
     error,
     isFetching,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     isFetching,
@@ -145,7 +146,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     resetPassword: (person) => {
-      dispatch(resetPassword(person));
+      dispatch(actions.resetPassword(person));
     },
   };
 };

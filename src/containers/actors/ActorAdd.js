@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import { addActor } from '../../actions/actor';
+import * as actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 
@@ -33,7 +33,7 @@ class ActorAddPage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      actor: Object.assign({}, nextProps.actor),
+      actor: { ...nextProps.actor },
     });
   }
 
@@ -91,8 +91,9 @@ class ActorAddPage extends React.Component {
 
   saveActor() {
     const { actor } = this.state;
-    const { namespace } = this.props;
-    this.props.addActor(actor, namespace);
+    const { namespace, addActor } = this.props;
+
+    addActor(actor, namespace);
   }
 
   handleFormSubmit(event) {
@@ -176,7 +177,7 @@ const mapStateToProps = (state) => {
     success,
     error,
     isFetching,
-  } = state.actorReducer;
+  } = state.actor;
 
   return {
     actor,
@@ -200,7 +201,7 @@ ActorAddPage.defaultProps = {
 const mapDispatchToProps = (dispatch) => {
   return {
     addActor: (actor, namespace) => {
-      dispatch(addActor(actor, namespace));
+      dispatch(actions.add(actor, namespace));
     },
   };
 };

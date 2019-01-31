@@ -14,10 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import Link from 'react-router-dom/Link';
-import {
-  browseMedia,
-  resetMedia,
-} from '../../actions/media';
+import * as actions from '../../actions/media';
 import { Person as PERSON } from '../../constants';
 import MediumCard from '../../components/cards/Medium';
 import PersonType from '../../proptypes/Person';
@@ -59,7 +56,9 @@ class MediaPage extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.resetMedia();
+    const { resetMedia } = this.props;
+
+    resetMedia();
   }
 
   getColumnWidth() {
@@ -95,9 +94,9 @@ class MediaPage extends React.Component {
 
   fetchMedia() {
     const { ownerId, filter } = this.state;
-    const { namespace } = this.props;
+    const { namespace, browseMedia } = this.props;
 
-    this.props.browseMedia({
+    browseMedia({
       ownerId,
       filter,
       start: this.offset,
@@ -202,9 +201,9 @@ const mapStateToProps = (state) => {
     media,
     error,
     total,
-  } = state.mediaReducer;
+  } = state.media;
 
-  const { viewer } = state.authReducer;
+  const { viewer } = state.auth;
 
   return {
     media,
@@ -217,10 +216,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseMedia: (params, namespace) => {
-      dispatch(browseMedia(params, namespace));
+      dispatch(actions.browse(params, namespace));
     },
     resetMedia: () => {
-      dispatch(resetMedia());
+      dispatch(actions.reset());
     },
   };
 };

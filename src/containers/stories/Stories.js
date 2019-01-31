@@ -6,10 +6,7 @@ import withWidth from '@material-ui/core/withWidth';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
-import {
-  browseStories,
-  resetStories,
-} from '../../actions/stories';
+import * as actions from '../../actions/stories';
 
 import StoryCard from '../../components/cards/Story';
 
@@ -45,7 +42,9 @@ class StoriesContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.resetStories();
+    const { resetStories } = this.props;
+
+    resetStories();
   }
 
   getColumnWidth() {
@@ -76,7 +75,9 @@ class StoriesContainer extends React.Component {
 
   fetchStories() {
     const { queryFilters } = this.state;
-    this.props.browseStories({
+    const { browseStories } = this.props;
+
+    browseStories({
       ownerId: queryFilters.oid,
       filter: queryFilters.filter,
       start: this.offset,
@@ -148,7 +149,7 @@ const mapStateToProps = (state) => {
   const {
     stories,
     error,
-  } = state.storiesReducer;
+  } = state.stories;
 
   return {
     stories,
@@ -159,10 +160,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseStories: (params) => {
-      dispatch(browseStories(params));
+      dispatch(actions.browse(params));
     },
     resetStories: () => {
-      dispatch(resetStories());
+      dispatch(actions.reset());
     },
   };
 };

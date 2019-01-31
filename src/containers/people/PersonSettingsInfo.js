@@ -6,20 +6,19 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonInfoForm from '../../components/PersonInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import {
-  readPerson,
-  editPerson,
-} from '../../actions/person';
+import * as actions from '../../actions/person';
 import { Person as PERSON } from '../../constants';
 import PersonType from '../../proptypes/Person';
 
-const styles = theme => ({
-  progress: {
-    marginLeft: '48%',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-});
+const styles = (theme) => {
+  return {
+    progress: {
+      marginLeft: '48%',
+      marginTop: theme.spacing.unit,
+      marginBottom: theme.spacing.unit,
+    },
+  };
+};
 
 const BODY_CHARACTER_LIMIT = 1000;
 
@@ -43,12 +42,14 @@ class PersonSettingsInfoPage extends React.Component {
 
   componentWillMount() {
     const { id } = this.props.computedMatch.params;
-    this.props.readPerson(id);
+    const { readPerson } = this.props;
+
+    readPerson(id);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      person: Object.assign({}, nextProps.person),
+      person: { ...nextProps.person },
     });
   }
 
@@ -141,7 +142,9 @@ class PersonSettingsInfoPage extends React.Component {
 
   editPerson() {
     const { person } = this.state;
-    this.props.editPerson(person);
+    const { editPerson } = this.props;
+
+    editPerson(person);
   }
 
   handleFormSubmit(event) {
@@ -263,11 +266,11 @@ const mapStateToProps = (state) => {
     success,
     error,
     isFetching,
-  } = state.personReducer;
+  } = state.person;
 
   const {
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     person,
@@ -281,10 +284,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readPerson: (id) => {
-      dispatch(readPerson(id));
+      dispatch(actions.read(id));
     },
     editPerson: (person) => {
-      dispatch(editPerson(person));
+      dispatch(actions.edit(person));
     },
   };
 };

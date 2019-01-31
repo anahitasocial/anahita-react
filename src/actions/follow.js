@@ -23,11 +23,11 @@ function followFailure(error) {
   };
 }
 
-export function followActor(viewer, actor) {
+function follow(viewer, actor) {
   return (dispatch) => {
     dispatch(followRequest());
     return new Promise((resolve, reject) => {
-      api.followActor(viewer, actor)
+      api.follow(viewer, actor)
         .then((result) => {
           dispatch(followSuccess(result));
           return resolve();
@@ -63,11 +63,11 @@ function unfollowFailure(error) {
   };
 }
 
-export function unfollowActor(viewer, actor) {
+function unfollow(viewer, actor) {
   return (dispatch) => {
     dispatch(unfollowRequest());
     return new Promise((resolve, reject) => {
-      api.unfollowActor(viewer, actor)
+      api.unfollow(viewer, actor)
         .then((result) => {
           dispatch(unfollowSuccess(result));
           return resolve();
@@ -80,3 +80,8 @@ export function unfollowActor(viewer, actor) {
     });
   };
 }
+
+export {
+  follow,
+  unfollow,
+};

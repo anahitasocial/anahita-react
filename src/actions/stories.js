@@ -4,7 +4,7 @@ import { Stories as STORIES } from '../constants';
 
 // -- reset
 
-export function resetStories() {
+function reset() {
   return {
     type: STORIES.BROWSE.RESET,
   };
@@ -38,11 +38,11 @@ function browseFailure(error) {
   };
 }
 
-export function browseStories(params) {
+function browse(params) {
   return (dispatch) => {
     dispatch(browseRequest());
     return new Promise((resolve, reject) => {
-      api.browseStories(params)
+      api.browse(params)
         .then((result) => {
           dispatch(browseSuccess(result));
           return resolve();
@@ -55,3 +55,8 @@ export function browseStories(params) {
     });
   };
 }
+
+export {
+  reset,
+  browse,
+};

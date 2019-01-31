@@ -35,7 +35,7 @@ AuthenticatedRoute.defaultProps = {
 function mapStateToProps(state) {
   const {
     isAuthenticated,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     isAuthenticated,

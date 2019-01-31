@@ -4,7 +4,7 @@ import { Actors as ACTORS } from '../constants';
 
 // -- reset
 
-export function resetActors() {
+function reset() {
   return {
     type: ACTORS.BROWSE.RESET,
   };
@@ -38,11 +38,11 @@ function browseFailure(error) {
   };
 }
 
-export function browseActors(params, namespace) {
+function browse(params, namespace) {
   return (dispatch) => {
     dispatch(browseRequest());
     return new Promise((resolve, reject) => {
-      api.browseActors(params, namespace)
+      api.browse(params, namespace)
         .then((result) => {
           dispatch(browseSuccess(result));
           return resolve();
@@ -55,3 +55,8 @@ export function browseActors(params, namespace) {
     });
   };
 }
+
+export {
+  reset,
+  browse,
+};

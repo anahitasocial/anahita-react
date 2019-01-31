@@ -11,6 +11,6 @@ const middleware = applyMiddleware(
 
 const createFinalStore = compose(middleware)(createStore);
 
-export default function configureStore(initialState) {
+export default (initialState) => {
   return createFinalStore(reducer, initialState);
-}
+};

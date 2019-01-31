@@ -23,11 +23,11 @@ function blockFailure(error) {
   };
 }
 
-export function blockActor(viewer, actor) {
+function block(viewer, actor) {
   return (dispatch) => {
     dispatch(blockRequest());
     return new Promise((resolve, reject) => {
-      api.blockActor(viewer, actor)
+      api.block(viewer, actor)
         .then((result) => {
           dispatch(blockSuccess(result));
           return resolve();
@@ -63,11 +63,11 @@ function unblockFailure(error) {
   };
 }
 
-export function unblockActor(viewer, actor) {
+function unblock(viewer, actor) {
   return (dispatch) => {
     dispatch(unblockRequest());
     return new Promise((resolve, reject) => {
-      api.unblockActor(viewer, actor)
+      api.unblock(viewer, actor)
         .then((result) => {
           dispatch(unblockSuccess(result));
           return resolve();
@@ -80,3 +80,8 @@ export function unblockActor(viewer, actor) {
     });
   };
 }
+
+export {
+  block,
+  unblock,
+};

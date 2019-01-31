@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { constructURLSearchParams } from './utils';
 
-export function deleteSession() {
-  return axios.delete('/people/session.json');
+function readSession() {
+  return axios.get('/people/session.json');
 }
 
-export function addSession(credentials) {
+function addSession(credentials) {
   const { username, password } = credentials;
   return axios.post('/people/session.json', constructURLSearchParams({
     username,
@@ -13,11 +13,11 @@ export function addSession(credentials) {
   }));
 }
 
-export function readSession() {
-  return axios.get('/people/session.json');
+function deleteSession() {
+  return axios.delete('/people/session.json');
 }
 
-export function signup(person) {
+function signup(person) {
   const {
     givenName,
     familyName,
@@ -25,6 +25,7 @@ export function signup(person) {
     email,
     password,
   } = person;
+
   return axios.post('/people/person.json', constructURLSearchParams({
     action: 'signup',
     givenName,
@@ -35,17 +36,26 @@ export function signup(person) {
   }));
 }
 
-export function resetPassword(person) {
+function resetPassword(person) {
   const { email } = person;
   return axios.post('/people/token.json', constructURLSearchParams({
     email,
   }));
 }
 
-export function validateField(key, value) {
+function validateField(key, value) {
   return axios.post('/people/person.json', constructURLSearchParams({
     action: 'validate',
     key,
     value,
   }));
 }
+
+export {
+  readSession,
+  addSession,
+  deleteSession,
+  signup,
+  resetPassword,
+  validateField,
+};

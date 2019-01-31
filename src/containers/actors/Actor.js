@@ -10,22 +10,24 @@ import ActorAvatar from './ActorAvatar';
 import ActorCover from './ActorCover';
 import ActorCommands from './ActorCommands';
 import FollowAction from '../actions/FollowAction';
-import { readActor } from '../../actions/actor';
+import * as actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
 
-const styles = theme => ({
-  progress: {
-    marginLeft: '48%',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-  divider: {
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
-  },
-});
+const styles = (theme) => {
+  return {
+    progress: {
+      marginLeft: '48%',
+      marginTop: theme.spacing.unit,
+      marginBottom: theme.spacing.unit,
+    },
+    divider: {
+      marginTop: theme.spacing.unit * 2,
+      marginBottom: theme.spacing.unit * 2,
+    },
+  };
+};
 
 class ActorPage extends React.Component {
   constructor(props) {
@@ -42,7 +44,7 @@ class ActorPage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      actor: Object.assign({}, nextProps.actor),
+      actor: { ...nextProps.actor },
     });
   }
 
@@ -52,9 +54,7 @@ class ActorPage extends React.Component {
       isAuthenticated,
     } = this.props;
 
-    return isAuthenticated &&
-    (viewer.id !== actor.id) &&
-    !actor.isBlocked;
+    return isAuthenticated && (viewer.id !== actor.id) && !actor.isBlocked;
   }
 
   renderProfile(actor) {
@@ -148,12 +148,12 @@ const mapStateToProps = (state) => {
     isFetching,
     isFetchingAvatar,
     isFetchingCover,
-  } = state.actorReducer;
+  } = state.actor;
 
   const {
     isAuthenticated,
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     actor,
@@ -170,7 +170,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readActor: (id, namespace) => {
-      dispatch(readActor(id, namespace));
+      dispatch(actions.read(id, namespace));
     },
   };
 };

@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  addAvatar,
-  deleteAvatar,
-} from '../../actions/actor';
+import * as actions from '../../actions/actor';
 import { Person as PERSON } from '../../constants';
 import ActorAvatarForm from '../../components/ActorAvatarForm';
 
@@ -176,7 +173,7 @@ ActorAvatar.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     viewer,
-  } = state.authReducer;
+  } = state.auth;
 
   return {
     viewer,
@@ -186,10 +183,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addAvatar: (actor, file) => {
-      dispatch(addAvatar(actor, file));
+      dispatch(actions.addAvatar(actor, file));
     },
     deleteAvatar: (actor) => {
-      dispatch(deleteAvatar(actor));
+      dispatch(actions.deleteAvatar(actor));
     },
   };
 };

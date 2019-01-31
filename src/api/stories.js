@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function browseStories(params) {
+function browse(params) {
   return axios.get('/stories.json', {
     params: {
       start: params.offset,
@@ -10,10 +10,16 @@ export function browseStories(params) {
   });
 }
 
-export function readStory(id) {
+function read(id) {
   return axios.get(`/stories/${id}.json`);
 }
 
-export function deleteStory(story) {
+function deleteStory(story) {
   return axios.delete(`/stories/${story.id}.json`);
 }
+
+export {
+  browse,
+  read,
+  deleteStory,
+};
