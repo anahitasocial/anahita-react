@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonAddForm from '../../components/PersonAddForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import * as actions from '../../actions/person';
+import actions from '../../actions/person';
 import { Person as PERSON } from '../../constants';
 import * as validate from './validate';
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SignupForm from '../../components/SignupForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import * as actions from '../../actions/auth';
+import actions from '../../actions/auth';
 import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';

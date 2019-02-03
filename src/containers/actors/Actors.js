@@ -16,7 +16,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Link from 'react-router-dom/Link';
 import FollowAction from '../actions/FollowAction';
 
-import * as actions from '../../actions/actors';
+import actions from '../../actions/actors';
 
 import { Person as PERSON } from '../../constants';
 import PersonType from '../../proptypes/Person';

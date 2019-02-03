@@ -10,7 +10,7 @@ import ActorAvatar from './ActorAvatar';
 import ActorCover from './ActorCover';
 import ActorCommands from './ActorCommands';
 import FollowAction from '../actions/FollowAction';
-import * as actions from '../../actions/actor';
+import actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';

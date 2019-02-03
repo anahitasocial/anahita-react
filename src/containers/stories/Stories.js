@@ -6,7 +6,7 @@ import withWidth from '@material-ui/core/withWidth';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
-import * as actions from '../../actions/stories';
+import actions from '../../actions/stories';
 
 import StoryCard from '../../components/cards/Story';
 

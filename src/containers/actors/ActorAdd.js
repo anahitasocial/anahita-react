@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import * as actions from '../../actions/actor';
+import actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 

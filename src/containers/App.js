@@ -21,7 +21,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import createContext from '../styles/createContext';
 import Viewer from '../components/Viewer';
 import LeftMenu from '../components/LeftMenu';
-import { logout } from '../actions/auth';
+import actions from '../actions/auth';
 
 const drawerWidth = 240;
 
@@ -275,7 +275,7 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
   return {
     logout: () => {
-      return dispatch(logout());
+      return dispatch(actions.logout());
     },
   };
 }

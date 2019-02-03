@@ -162,7 +162,7 @@ function add(person) {
   };
 }
 
-export {
+export default {
   read,
   edit,
   editAccount,

@@ -8,7 +8,7 @@ import person from './person';
 import stories from './stories';
 
 
-export {
+export default {
   auth,
   actors,
   actor,

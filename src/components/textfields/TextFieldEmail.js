@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import * as actions from '../../actions/auth';
+import actions from '../../actions/auth';
 import * as validate from '../../containers/people/validate';
 
 class TextFieldEmail extends React.Component {

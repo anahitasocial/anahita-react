@@ -328,7 +328,7 @@ function deleteCover(actor) {
   };
 }
 
-export {
+export default {
   read,
   edit,
   add,

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ActorSettingsList from '../../components/lists/ActorSettings';
-import * as actions from '../../actions/actor';
+import actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';

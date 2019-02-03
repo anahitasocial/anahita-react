@@ -56,7 +56,7 @@ function browse(params) {
   };
 }
 
-export {
+export default {
   reset,
   browse,
 };

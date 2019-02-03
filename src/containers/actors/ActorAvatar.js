@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/actor';
+import actions from '../../actions/actor';
 import { Person as PERSON } from '../../constants';
 import ActorAvatarForm from '../../components/ActorAvatarForm';
 

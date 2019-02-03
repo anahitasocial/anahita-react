@@ -81,7 +81,7 @@ function unfollow(viewer, actor) {
   };
 }
 
-export {
+export default {
   follow,
   unfollow,
 };

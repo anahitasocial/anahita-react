@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Person as PERSON } from '../../constants';
 import ActorDeleteForm from '../../components/ActorDeleteForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
-import * as actions from '../../actions/actor';
+import actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';

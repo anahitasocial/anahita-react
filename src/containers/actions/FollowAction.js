@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
-import * as actions from '../../actions/follow';
+import actions from '../../actions/follow';
 import PersonType from '../../proptypes/Person';
 
 class FollowAction extends React.Component {

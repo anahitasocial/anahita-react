@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/LoginForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import * as actions from '../../actions/auth';
+import actions from '../../actions/auth';
 
 class LoginPage extends React.Component {
   constructor(props) {

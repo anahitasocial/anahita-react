@@ -81,7 +81,7 @@ function unblock(viewer, actor) {
   };
 }
 
-export {
+export default {
   block,
   unblock,
 };

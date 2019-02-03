@@ -7,7 +7,7 @@ import { singularize } from 'inflected';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import * as actions from '../../actions/actor';
+import actions from '../../actions/actor';
 
 import ActorType from '../../proptypes/Actor';
 

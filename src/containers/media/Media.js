@@ -14,7 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import Link from 'react-router-dom/Link';
-import * as actions from '../../actions/media';
+import actions from '../../actions/media';
 import { Person as PERSON } from '../../constants';
 import MediumCard from '../../components/cards/Medium';
 import PersonType from '../../proptypes/Person';

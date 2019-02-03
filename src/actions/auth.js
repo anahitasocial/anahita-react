@@ -242,7 +242,7 @@ function resetPassword(person) {
   };
 }
 
-export {
+export default {
   validateUsername,
   validateEmail,
   login,

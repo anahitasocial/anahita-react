@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import * as actions from '../../actions/block';
+import actions from '../../actions/block';
 import PersonType from '../../proptypes/Person';
 
 class BlockAction extends React.Component {

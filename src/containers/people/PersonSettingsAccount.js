@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonAccountForm from '../../components/PersonAccountForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import * as actions from '../../actions/person';
+import actions from '../../actions/person';
 import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';

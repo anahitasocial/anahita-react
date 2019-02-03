@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PasswordResetForm from '../../components/PasswordResetForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import * as actions from '../../actions/auth';
+import actions from '../../actions/auth';
 import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';

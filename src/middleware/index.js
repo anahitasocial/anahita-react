@@ -1,4 +1,4 @@
-import { unauthorized } from '../actions/auth';
+import actions from '../actions/auth';
 
 // should catch any API errors and act accordingly
 export const apiErrorMiddleware = store => next => action => {
@@ -16,7 +16,7 @@ export const apiErrorMiddleware = store => next => action => {
 
       case 401:
 
-        store.dispatch(unauthorized());
+        store.dispatch(actions.unauthorized());
         break;
 
       case 404:
