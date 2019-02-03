@@ -41,6 +41,13 @@ class StoriesContainer extends React.Component {
     this.fetchStories = this.fetchStories.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { stories } = nextProps;
+    this.setState({
+      hasMore: stories.allIds.length >= LIMIT,
+    });
+  }
+
   componentWillUnmount() {
     const { resetStories } = this.props;
 
