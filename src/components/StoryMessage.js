@@ -37,12 +37,12 @@ const StoryMessage = (props) => {
   const targetName = story.target ? story.target.name : i18n.t('actor:unknown');
   const targetURL = story.target ? getURL(story.target) : '/';
 
-  const i18nKey = _.camelCase(`story_${story.name}`);
+  const i18nKey = _.camelCase(`${story.name}`);
 
   return (
     <Typography variant="body1">
       <Trans
-        i18nKey={i18nKey}
+        i18nKey={`stories.${i18nKey}`}
         values={{
           subject: subjectName,
           object: objectName,

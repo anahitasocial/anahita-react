@@ -2,7 +2,7 @@ import stories from './stories';
 
 export default {
   translation: {
-    ...stories,
+    stories,
   },
   actor: {
     unknown: 'Unknown',
