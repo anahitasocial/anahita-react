@@ -3,14 +3,16 @@ import preset from 'jss-preset-default'
 import { SheetsRegistry } from 'react-jss/lib/jss'
 import { createMuiTheme } from '@material-ui/core/styles'
 import createGenerateClassName from '@material-ui/core/styles/createGenerateClassName'
-import { blue, red } from '@material-ui/core/colors'
+import { lightBlue, red } from '@material-ui/core/colors'
 
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
   },
   palette: {
-    primary: blue,
+    primary: {
+      main: lightBlue['700']
+    },
     error: red,
   }
 })
