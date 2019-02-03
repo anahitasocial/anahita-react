@@ -5,7 +5,7 @@ export default {
   noteComment: '<0>{{subject}}</0> commented on <1>note</1>',
   photoAdd: '<0>{{subject}}</0> posted a <1>photo</1>',
   photoComment: '<0>{{subject}}</0> commented on <1>photo</1>',
-  actorAdd: '<0>{{subject}}</0> created a <1>{{object}}</1>',
+  actorAdd: '<0>{{subject}}</0> created <1>{{object}}</1>',
   todoAdd: '<0>{{subject}}</0> created a <1>todo</1>',
   todoComment: '<0>{{subject}}</0> commented on <1>todo</1>',
   topicAdd: '<0>{{subject}}</0> started a <1>topic</1>',
