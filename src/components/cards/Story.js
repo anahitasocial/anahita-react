@@ -64,7 +64,7 @@ const StoryCard = (props) => {
   const url = title && story.object ? getURL(story.object) : '';
 
   return (
-    <Card>
+    <Card square>
       <CardHeader
         avatar={
           <ActorAvatar

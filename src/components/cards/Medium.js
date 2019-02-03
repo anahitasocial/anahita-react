@@ -61,7 +61,7 @@ const MediumCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card>
+      <Card square>
         {cover &&
           <Link href={url}>
             <CardMedia
