@@ -12,9 +12,9 @@ export function getAuthor(entity) {
 }
 
 export function getURL(entity) {
-  if (entity.objectType) {
+  if (entity.id && entity.objectType) {
     const namespace = pluralize(entity.objectType.split('.')[2]);
-    let identifier = null;
+    let identifier = '';
 
     if (namespace === 'people') {
       identifier = entity.alias;
@@ -26,7 +26,7 @@ export function getURL(entity) {
     return `/${namespace}/${identifier}/`;
   }
 
-  return '';
+  return '/';
 }
 
 export function getPortraitURL(entity) {
