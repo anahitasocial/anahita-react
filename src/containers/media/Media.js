@@ -88,6 +88,10 @@ class MediaPage extends React.Component {
     return columnWidth;
   }
 
+  componentWillMout() {
+    this.fetchMedia();
+  }
+
   hasMore() {
     const { total, media } = this.props;
     return !this.offset || media.allIds.length < total;
@@ -156,8 +160,13 @@ class MediaPage extends React.Component {
           loadMore={this.fetchMedia}
           hasMore={hasMore}
           loader={
-            <Grid container justify="center">
-              <Grid item alignItems="center">
+            <Grid
+              container
+              justify="center"
+              alignItems="center"
+              key="actors-progress"
+            >
+              <Grid item>
                 <CircularProgress className={classes.progress} />
               </Grid>
             </Grid>

@@ -96,6 +96,10 @@ class ActorsPage extends React.Component {
     return columnWidth;
   }
 
+  componentWillMout() {
+    this.fetchActors();
+  }
+
   fetchActors() {
     const { disabledFilter, keywordFilter } = this.state;
     const {
@@ -174,8 +178,13 @@ class ActorsPage extends React.Component {
           loadMore={this.fetchActors}
           hasMore={hasMore}
           loader={
-            <Grid container justify="center">
-              <Grid item alignItems="center">
+            <Grid
+              container
+              justify="center"
+              alignItems="center"
+              key="actors-progress"
+            >
+              <Grid item>
                 <CircularProgress className={classes.progress} />
               </Grid>
             </Grid>

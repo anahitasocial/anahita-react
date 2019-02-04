@@ -23,6 +23,10 @@ class StoriesContainer extends React.Component {
     this.fetchStories = this.fetchStories.bind(this);
   }
 
+  componentWillMount() {
+    this.fetchStories();
+  }
+
   componentWillReceiveProps(nextProps) {
     const { stories } = nextProps;
     this.setState({
@@ -57,16 +61,20 @@ class StoriesContainer extends React.Component {
     return (
       <Grid
         container
-        xs={24}
         justify="center"
       >
-        <Grid item xs={12} sm={12} lg={6}>
+        <Grid item xs={12} sm={6} lg={6}>
           <InfiniteScroll
             loadMore={this.fetchStories}
             hasMore={this.state.hasMore}
             loader={
-              <Grid container justify="center">
-                <Grid item alignItems="center">
+              <Grid
+                container
+                justify="center"
+                alignItems="center"
+                key="stories-progress"
+              >
+                <Grid item>
                   <CircularProgress />
                 </Grid>
               </Grid>

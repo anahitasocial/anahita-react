@@ -23,7 +23,7 @@ import Viewer from '../components/Viewer';
 import LeftMenu from '../components/LeftMenu';
 import actions from '../actions/auth';
 
-const drawerWidth = 240;
+const drawerWidth = 160;
 
 // Apply some reset
 const styles = (theme) => {
@@ -56,7 +56,7 @@ const styles = (theme) => {
       }),
     },
     appToolbar: {
-      paddingRight: 0,
+      paddingRight: theme.spacing.unit,
     },
     grow: {
       flex: '1 1 auto',
@@ -111,14 +111,14 @@ const styles = (theme) => {
       width: '100%',
       flexGrow: 1,
       backgroundColor: theme.palette.background.default,
-      height: 'calc(100% - 56px)',
+      height: 'calc(100% - 64px)',
       [theme.breakpoints.up('md')]: {
         height: 'calc(100% - 64px)',
         marginTop: theme.spacing.unit * 8,
         padding: theme.spacing.unit * 2,
       },
-      marginTop: theme.spacing.unit * 8,
-      padding: '16px 0',
+      marginTop: theme.spacing.unit * 6,
+      paddingTop: theme.spacing.unit,
     },
   };
 };
