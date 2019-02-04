@@ -7,6 +7,7 @@ import withWidth from '@material-ui/core/withWidth';
 
 import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
@@ -36,9 +37,8 @@ const styles = (theme) => {
       fontSize: 12,
     },
     progress: {
-      marginLeft: '48%',
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit,
+      marginTop: theme.spacing.unit * 2,
+      marginBottom: theme.spacing.unit * 2,
     },
     addButton: {
       position: 'fixed',
@@ -173,7 +173,13 @@ class ActorsPage extends React.Component {
         <InfiniteScroll
           loadMore={this.fetchActors}
           hasMore={hasMore}
-          loader={<CircularProgress key={0} className={classes.progress} />}
+          loader={
+            <Grid container justify="center">
+              <Grid item alignItems="center">
+                <CircularProgress className={classes.progress} />
+              </Grid>
+            </Grid>
+          }
         >
           <StackGrid
             columnWidth={columnWidth}

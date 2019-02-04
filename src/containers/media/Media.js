@@ -7,6 +7,7 @@ import withWidth from '@material-ui/core/withWidth';
 
 import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
@@ -154,7 +155,13 @@ class MediaPage extends React.Component {
         <InfiniteScroll
           loadMore={this.fetchMedia}
           hasMore={hasMore}
-          loader={<CircularProgress key={0} className={classes.progress} />}
+          loader={
+            <Grid container justify="center">
+              <Grid item alignItems="center">
+                <CircularProgress className={classes.progress} />
+              </Grid>
+            </Grid>
+          }
         >
           <StackGrid
             columnWidth={columnWidth}

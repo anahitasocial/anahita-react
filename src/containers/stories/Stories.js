@@ -1,30 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
-import withWidth from '@material-ui/core/withWidth';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import StackGrid from 'react-stack-grid';
+import Grid from '@material-ui/core/Grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import actions from '../../actions/stories';
 
 import StoryCard from '../../components/cards/Story';
-
-const styles = (theme) => {
-  return {
-    progress: {
-      marginLeft: '48%',
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit,
-    },
-    addButton: {
-      position: 'fixed',
-      bottom: theme.spacing.unit * 2,
-      right: theme.spacing.unit * 2,
-      zIndex: 10,
-    },
-  };
-};
 
 const LIMIT = 20;
 
@@ -50,34 +32,7 @@ class StoriesContainer extends React.Component {
 
   componentWillUnmount() {
     const { resetStories } = this.props;
-
     resetStories();
-  }
-
-  getColumnWidth() {
-    let columnWidth = '100%';
-
-    switch (this.props.width) {
-      case 'md': {
-        columnWidth = '50%';
-        break;
-      }
-      case 'lg': {
-        columnWidth = '33.33%';
-        break;
-      }
-      case 'xl': {
-        columnWidth = '25%';
-        break;
-      }
-      case 'xs':
-      case 'sm':
-      default: {
-        break;
-      }
-    }
-
-    return columnWidth;
   }
 
   fetchStories() {
@@ -96,24 +51,26 @@ class StoriesContainer extends React.Component {
 
   render() {
     const {
-      classes,
       stories,
     } = this.props;
 
-    const columnWidth = this.getColumnWidth();
-
     return (
-      <React.Fragment>
-        <InfiniteScroll
-          loadMore={this.fetchStories}
-          hasMore={this.state.hasMore}
-          loader={<CircularProgress key={0} className={classes.progress} />}
-        >
-          <StackGrid
-            columnWidth={columnWidth}
-            duration={50}
-            gutterWidth={16}
-            gutterHeight={16}
+      <Grid
+        container
+        xs={24}
+        justify="center"
+      >
+        <Grid item xs={12} sm={12} lg={6}>
+          <InfiniteScroll
+            loadMore={this.fetchStories}
+            hasMore={this.state.hasMore}
+            loader={
+              <Grid container justify="center">
+                <Grid item alignItems="center">
+                  <CircularProgress />
+                </Grid>
+              </Grid>
+            }
           >
             {stories.allIds.map((storyId) => {
               const story = stories.byId[storyId];
@@ -126,15 +83,14 @@ class StoriesContainer extends React.Component {
               );
             })
             }
-          </StackGrid>
-        </InfiniteScroll>
-      </React.Fragment>
+          </InfiniteScroll>
+        </Grid>
+      </Grid>
     );
   }
 }
 
 StoriesContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
   browseStories: PropTypes.func.isRequired,
   resetStories: PropTypes.func.isRequired,
   stories: PropTypes.shape({
@@ -142,7 +98,6 @@ StoriesContainer.propTypes = {
     allIds: PropTypes.array,
   }).isRequired,
   queryFilters: PropTypes.object,
-  width: PropTypes.string.isRequired,
 };
 
 StoriesContainer.defaultProps = {
@@ -175,7 +130,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default (connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withWidth()(StoriesContainer)));
+)(StoriesContainer));

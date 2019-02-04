@@ -8,19 +8,25 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Truncate from 'react-truncate';
+import striptags from 'striptags';
 
 import StoryMessage from '../StoryMessage';
 import ActorTitle from '../ActorTitle';
 import ActorAvatar from '../ActorAvatar';
-import EntityBody from '../EntityBody';
+
 import {
   getURL,
   getPortraitURL,
   getCoverURL,
+  getStorySubject,
 } from '../utils';
 
 const styles = (theme) => {
   return {
+    card: {
+      marginBottom: theme.spacing.unit * 2,
+    },
     media: {
       height: theme.spacing.unit * 20,
     },
@@ -40,6 +46,9 @@ const styles = (theme) => {
   };
 };
 
+const TRUNCATE_WIDTH = 640;
+const TRUNCATE_LINES = 3;
+
 const StoryCard = (props) => {
   const {
     classes,
@@ -47,24 +56,17 @@ const StoryCard = (props) => {
     actions,
   } = props;
 
-  const subject = story.subject || {
-    id: null,
-    name: 'unknown',
-    givenName: '?',
-    familyName: '?',
-    objectType: 'com.people.person',
-    imageURL: {},
-  };
+  const subject = getStorySubject(story);
 
   // @Todo add support for array objects
   const portrait = story.object && getPortraitURL(story.object);
   const cover = story.object && getCoverURL(story.object);
   const title = story.object && story.object.name;
-  const body = story.object && story.object.body;
+  const body = story.object && striptags(story.object.body);
   const url = title && story.object ? getURL(story.object) : '';
 
   return (
-    <Card square>
+    <Card square className={classes.card}>
       <CardHeader
         avatar={
           <ActorAvatar
@@ -116,12 +118,24 @@ const StoryCard = (props) => {
           </Typography>
         }
         {body &&
-          <EntityBody body={body} />
+          <Typography variant="body2">
+            <Truncate
+              trimWhitespace
+              width={TRUNCATE_WIDTH}
+              lines={TRUNCATE_LINES}
+              ellipsis={
+                <span>... <Link href={url}>Read more</Link></span>}
+            >
+              {body}
+            </Truncate>
+          </Typography>
         }
       </CardContent>
-      <CardActions>
-        {actions}
-      </CardActions>
+      {actions &&
+        <CardActions>
+          {actions}
+        </CardActions>
+      }
     </Card>
   );
 };

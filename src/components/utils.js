@@ -1,13 +1,14 @@
 import { pluralize } from 'inflection';
+import i18n from '../languages';
 
 export function getAuthor(entity) {
   return entity.author || {
     id: null,
-    name: 'Unknown',
+    name: i18n.t('actor:unknown'),
     givenName: '?',
     familyName: '?',
     objectType: 'com.people.person',
-    imageURL: '',
+    imageURL: {},
   };
 }
 
@@ -44,4 +45,15 @@ export function getActorInitials(actor) {
   }
 
   return actor.name.charAt(0).toUpperCase();
+}
+
+export function getStorySubject(story) {
+  return story.subject || {
+    id: null,
+    name: i18n.t('actor:unknown'),
+    givenName: '?',
+    familyName: '?',
+    objectType: 'com.people.person',
+    imageURL: {},
+  };
 }

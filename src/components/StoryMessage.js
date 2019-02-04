@@ -4,19 +4,11 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { Trans } from 'react-i18next';
 import _ from 'lodash';
-import { getURL } from './utils';
+import {
+  getURL,
+  getStorySubject,
+} from './utils';
 import i18n from '../languages';
-
-function getStorySubject(story) {
-  return story.subject || {
-    id: null,
-    name: i18n.t('actor:unknown'),
-    givenName: '?',
-    familyName: '?',
-    objectType: 'com.people.person',
-    imageURL: '',
-  };
-}
 
 // @Todo add support for array objects
 function getStoryObjectName(story) {
@@ -27,16 +19,12 @@ const StoryMessage = (props) => {
   const { story } = props;
 
   const subject = getStorySubject(story);
-
   const subjectName = story.subject ? story.subject.name : i18n.t('actor:unknown');
   const subjectURL = getURL(subject);
-
   const objectName = getStoryObjectName(story) ? getStoryObjectName(story) : 'object';
   const objectURL = story.object ? getURL(story.object) : '';
-
   const targetName = story.target ? story.target.name : i18n.t('actor:unknown');
   const targetURL = story.target ? getURL(story.target) : '/';
-
   const i18nKey = _.camelCase(`${story.name}`);
 
   return (
