@@ -6,10 +6,13 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Truncate from 'react-truncate';
 import striptags from 'striptags';
+
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import StoryMessage from '../StoryMessage';
 import ActorTitle from '../ActorTitle';
@@ -76,6 +79,11 @@ const StoryCard = (props) => {
         }
         title={
           <StoryMessage story={story} />
+        }
+        action={
+          <IconButton>
+            <MoreVertIcon />
+          </IconButton>
         }
         subheader={
           <ActorTitle
