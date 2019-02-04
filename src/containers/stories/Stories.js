@@ -63,7 +63,7 @@ class StoriesContainer extends React.Component {
         container
         justify="center"
       >
-        <Grid item xs={12} sm={6} lg={6}>
+        <Grid item xs={12} md={4}>
           <InfiniteScroll
             loadMore={this.fetchStories}
             hasMore={this.state.hasMore}
