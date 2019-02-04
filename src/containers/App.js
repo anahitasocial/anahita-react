@@ -48,7 +48,7 @@ const styles = (theme) => {
       height: '100%',
     },
     appBar: {
-      position: 'absolute',
+      position: 'fixed',
       zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
@@ -192,11 +192,16 @@ class App extends React.Component {
                 >
                   <MenuIcon />
                 </IconButton>
-                {title !== null && (
-                  <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                {title &&
+                  <Typography
+                    className={classes.title}
+                    variant="h6"
+                    color="inherit"
+                    noWrap
+                  >
                     {title}
                   </Typography>
-                )}
+                }
                 <div className={classes.grow} />
                 <Viewer
                   viewer={viewer}
