@@ -7,13 +7,9 @@ import _ from 'lodash';
 import {
   getURL,
   getStorySubject,
+  getStoryObjectName,
 } from './utils';
 import i18n from '../languages';
-
-// @Todo add support for array objects
-function getStoryObjectName(story) {
-  return story.object && story.object.name;
-}
 
 const StoryMessage = (props) => {
   const { story } = props;
@@ -28,7 +24,7 @@ const StoryMessage = (props) => {
   const i18nKey = _.camelCase(`${story.name}`);
 
   return (
-    <Typography variant="body1">
+    <Typography variant="body2">
       <Trans
         i18nKey={`stories.${i18nKey}`}
         values={{

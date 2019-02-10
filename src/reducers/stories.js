@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Stories as STORIES } from '../constants';
 
 export default function (state = {
@@ -30,8 +31,11 @@ export default function (state = {
       return {
         ...state,
         stories: {
-          byId: Object.assign({}, state.stories.byId, action.stories),
-          allIds: state.stories.allIds.concat(action.ids),
+          byId: {
+            ...state.stories.byId,
+            ...action.stories,
+          },
+          allIds: _.union(state.stories.allIds, action.ids),
         },
         total: action.total,
         isFetching: false,

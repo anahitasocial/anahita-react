@@ -1,7 +1,8 @@
+import _ from 'lodash';
 import { Actors as ACTORS } from '../constants';
 
 const updateItem = (state, item) => {
-  const actors = Object.assign({}, state.actors);
+  const actors = { ...state.actors };
   actors.byId[item.id] = item;
   return actors;
 };
@@ -39,8 +40,11 @@ export default function (higherOrderState, action) {
       return {
         ...state,
         actors: {
-          byId: Object.assign({}, state.actors.byId, action.actors),
-          allIds: state.actors.allIds.concat(action.ids),
+          byId: {
+            ...state.actors.byId,
+            ...action.actors,
+          },
+          allIds: _.union(state.actors.allIds, action.ids),
         },
         total: action.total,
         isFetching: false,

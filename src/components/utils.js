@@ -57,3 +57,8 @@ export function getStorySubject(story) {
     imageURL: {},
   };
 }
+
+// @todo add support for array of objects
+export function getStoryObjectName(story) {
+  return story.object && story.object.name;
+}

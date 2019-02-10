@@ -12,7 +12,7 @@ axios.defaults.baseURL = 'http://localhost';
 axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use((config) => {
-  const headers = Object.assign({}, config.headers);
+  const headers = { ...config.headers };
   return Object.assign({}, config, { headers });
 }, (error) => { return Promise.reject(error); });
 

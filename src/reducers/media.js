@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Media as MEDIA } from '../constants';
 
 export default function (higherOrderState, action) {
@@ -33,8 +34,11 @@ export default function (higherOrderState, action) {
       return {
         ...state,
         media: {
-          byId: Object.assign({}, state.media.byId, action.media),
-          allIds: state.media.allIds.concat(action.ids),
+          byId: {
+            ...state.media.byId,
+            ...action.media,
+          },
+          allIds: _.union(state.media.allIds, action.ids),
         },
         total: action.total,
         isFetching: false,
