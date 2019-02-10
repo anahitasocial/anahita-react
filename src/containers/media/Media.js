@@ -50,15 +50,22 @@ class MediaPage extends React.Component {
     this.state = {
       ownerId: 0,
       filter: '',
+      hasMore: true,
     };
 
     this.offset = 0;
     this.fetchMedia = this.fetchMedia.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { media, total } = nextProps;
+    this.setState({
+      hasMore: media.allIds.length < total,
+    });
+  }
+
   componentWillUnmount() {
     const { resetMedia } = this.props;
-
     resetMedia();
   }
 
@@ -86,15 +93,6 @@ class MediaPage extends React.Component {
     }
 
     return columnWidth;
-  }
-
-  componentWillMout() {
-    this.fetchMedia();
-  }
-
-  hasMore() {
-    const { total, media } = this.props;
-    return !this.offset || media.allIds.length < total;
   }
 
   fetchMedia() {
@@ -131,7 +129,6 @@ class MediaPage extends React.Component {
       namespace,
     } = this.props;
 
-    const hasMore = this.hasMore();
     const columnWidth = this.getColumnWidth();
 
     return (
@@ -158,7 +155,7 @@ class MediaPage extends React.Component {
         </Toolbar>
         <InfiniteScroll
           loadMore={this.fetchMedia}
-          hasMore={hasMore}
+          hasMore={this.state.hasMore}
           loader={
             <Grid
               container

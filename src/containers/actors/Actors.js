@@ -58,15 +58,22 @@ class ActorsPage extends React.Component {
     this.state = {
       disabledFilter: false,
       keywordFilter: '',
+      hasMore: true,
     };
 
     this.offset = 0;
     this.fetchActors = this.fetchActors.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { actors, total } = nextProps;
+    this.setState({
+      hasMore: actors.allIds.length < total,
+    });
+  }
+
   componentWillUnmount() {
     const { resetActors } = this.props;
-
     resetActors();
   }
 
@@ -96,10 +103,6 @@ class ActorsPage extends React.Component {
     return columnWidth;
   }
 
-  componentWillMout() {
-    this.fetchActors();
-  }
-
   fetchActors() {
     const { disabledFilter, keywordFilter } = this.state;
     const {
@@ -117,11 +120,6 @@ class ActorsPage extends React.Component {
     }, namespace);
 
     this.offset += LIMIT;
-  }
-
-  hasMore() {
-    const { total, actors } = this.props;
-    return !this.offset || actors.allIds.length < total;
   }
 
   canAdd() {
@@ -149,7 +147,6 @@ class ActorsPage extends React.Component {
       namespace,
     } = this.props;
 
-    const hasMore = this.hasMore();
     const columnWidth = this.getColumnWidth();
 
     return (
@@ -176,7 +173,7 @@ class ActorsPage extends React.Component {
         </Toolbar>
         <InfiniteScroll
           loadMore={this.fetchActors}
-          hasMore={hasMore}
+          hasMore={this.state.hasMore}
           loader={
             <Grid
               container

@@ -23,10 +23,6 @@ class StoriesContainer extends React.Component {
     this.fetchStories = this.fetchStories.bind(this);
   }
 
-  componentWillMount() {
-    this.fetchStories();
-  }
-
   componentWillReceiveProps(nextProps) {
     const { stories } = nextProps;
     this.setState({
