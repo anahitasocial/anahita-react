@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
@@ -10,7 +11,10 @@ import ActorAvatar from './ActorAvatar';
 import ActorCover from './ActorCover';
 import ActorCommands from './ActorCommands';
 import FollowAction from '../actions/FollowAction';
+import appActions from '../../actions/app';
 import actions from '../../actions/actor';
+import i18n from '../../languages';
+import striptags from 'striptags';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
@@ -105,11 +109,23 @@ class ActorPage extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const {
+      classes,
+      setAppTitle,
+      namespace,
+    } = this.props;
     const { actor } = this.state;
+
+    setAppTitle(i18n.t(`${namespace}:cTitle`));
 
     return (
       <div className={classes.root}>
+        <Helmet>
+          <title>
+            {i18n.t(actor.name)}
+          </title>
+          <meta name="description" content={i18n.t(striptags(actor.body))} />
+        </Helmet>
         {!actor.id &&
           <CircularProgress className={classes.progress} />
         }
@@ -131,6 +147,7 @@ ActorPage.propTypes = {
   isFetchingAvatar: PropTypes.bool,
   isFetchingCover: PropTypes.bool,
   match: PropTypes.object.isRequired,
+  setAppTitle: PropTypes.func.isRequired,
 };
 
 ActorPage.defaultProps = {
@@ -171,6 +188,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     readActor: (id, namespace) => {
       dispatch(actions.read(id, namespace));
+    },
+    setAppTitle: (title) => {
+      dispatch(appActions.setAppTitle(title));
     },
   };
 };

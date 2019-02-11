@@ -1,3 +1,4 @@
+import app from './app';
 import auth from './auth';
 import actors from './actors';
 import actor from './actor';
@@ -9,6 +10,7 @@ import stories from './stories';
 
 
 export default {
+  app,
   auth,
   actors,
   actor,

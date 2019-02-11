@@ -8,8 +8,6 @@ import withWidth from '@material-ui/core/withWidth';
 import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 
 import AddIcon from '@material-ui/icons/Add';
 import StackGrid from 'react-stack-grid';
@@ -17,7 +15,9 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Link from 'react-router-dom/Link';
 import FollowAction from '../actions/FollowAction';
 
+import appActions from '../../actions/app';
 import actions from '../../actions/actors';
+import i18n from '../../languages';
 
 import { Person as PERSON } from '../../constants';
 import PersonType from '../../proptypes/Person';
@@ -145,9 +145,12 @@ class ActorsPage extends React.Component {
       classes,
       actors,
       namespace,
+      setAppTitle,
     } = this.props;
 
     const columnWidth = this.getColumnWidth();
+
+    setAppTitle(i18n.t(`${namespace}:cTitle`));
 
     return (
       <React.Fragment>
@@ -162,15 +165,6 @@ class ActorsPage extends React.Component {
             <AddIcon />
           </Fab>
         }
-        <Toolbar>
-          <Typography
-            variant="h2"
-            color="inherit"
-            className={classes.title}
-          >
-            {namespace}
-          </Typography>
-        </Toolbar>
         <InfiniteScroll
           loadMore={this.fetchActors}
           hasMore={this.state.hasMore}
@@ -226,6 +220,7 @@ ActorsPage.propTypes = {
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
+  setAppTitle: PropTypes.func.isRequired,
 };
 
 ActorsPage.defaultProps = {
@@ -268,6 +263,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetActors: () => {
       dispatch(actions.reset());
+    },
+    setAppTitle: (title) => {
+      dispatch(appActions.setAppTitle(title));
     },
   };
 };

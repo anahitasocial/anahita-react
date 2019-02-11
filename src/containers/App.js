@@ -24,7 +24,7 @@ import Viewer from '../components/Viewer';
 import LeftMenu from '../components/LeftMenu';
 import actions from '../actions/auth';
 
-const drawerWidth = 160;
+const drawerWidth = 200;
 
 // Apply some reset
 const styles = (theme) => {
@@ -71,8 +71,8 @@ const styles = (theme) => {
       }),
     },
     menuButton: {
-      marginLeft: 12,
-      marginRight: 36,
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
     },
     hide: {
       display: 'none',
@@ -162,11 +162,11 @@ class App extends React.Component {
       theme,
       isAuthenticated,
       viewer,
+      appBarTitle,
     } = this.props;
 
     const { open } = this.state;
     const context = createContext();
-    const title = '';
 
     return (
       <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
@@ -193,14 +193,13 @@ class App extends React.Component {
                 >
                   <MenuIcon />
                 </IconButton>
-                {title &&
+                {appBarTitle && !open &&
                   <Typography
-                    className={classes.title}
                     variant="h6"
                     color="inherit"
                     noWrap
                   >
-                    {title}
+                    {appBarTitle}
                   </Typography>
                 }
                 <div className={classes.grow} />
@@ -260,19 +259,26 @@ App.propTypes = {
   children: PropTypes.node.isRequired,
   isAuthenticated: PropTypes.bool,
   logout: PropTypes.func.isRequired,
+  appBarTitle: PropTypes.string,
 };
 
 App.defaultProps = {
+  appBarTitle: '',
   isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {
+  const {
+    appBarTitle,
+  } = state.app;
+
   const {
     isAuthenticated,
     viewer,
   } = state.auth;
 
   return {
+    appBarTitle,
     isAuthenticated,
     viewer,
   };

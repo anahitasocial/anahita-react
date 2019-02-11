@@ -13,8 +13,9 @@ import PhotosIcon from '@material-ui/icons/Photo';
 import TopicsIcon from '@material-ui/icons/QuestionAnswer';
 import ArticlesIcon from '@material-ui/icons/LibraryBooks';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-
 import { Link } from 'react-router-dom';
+
+import i18n from '../languages';
 
 const LeftMenu = (props) => {
   const {
@@ -32,7 +33,7 @@ const LeftMenu = (props) => {
         <ListItemIcon>
           <HomeIcon />
         </ListItemIcon>
-        <ListItemText primary="Home" />
+        <ListItemText primary={i18n.t('dashboard:cTitle')} />
       </ListItem>
       <ListItem
         button
@@ -42,7 +43,7 @@ const LeftMenu = (props) => {
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
-        <ListItemText primary="People" />
+        <ListItemText primary={i18n.t('people:cTitle')} />
       </ListItem>
       <ListItem
         button
@@ -52,7 +53,7 @@ const LeftMenu = (props) => {
         <ListItemIcon>
           <GroupsIcon />
         </ListItemIcon>
-        <ListItemText primary="Groups" />
+        <ListItemText primary={i18n.t('groups:cTitle')} />
       </ListItem>
       <ListItem
         button
@@ -62,7 +63,7 @@ const LeftMenu = (props) => {
         <ListItemIcon>
           <NotesIcon />
         </ListItemIcon>
-        <ListItemText primary="Notes" />
+        <ListItemText primary={i18n.t('notes:cTitle')} />
       </ListItem>
       <ListItem
         button
@@ -72,7 +73,7 @@ const LeftMenu = (props) => {
         <ListItemIcon>
           <PhotosIcon />
         </ListItemIcon>
-        <ListItemText primary="Photos" />
+        <ListItemText primary={i18n.t('photos:cTitle')} />
       </ListItem>
       <ListItem
         button
@@ -82,7 +83,7 @@ const LeftMenu = (props) => {
         <ListItemIcon>
           <TopicsIcon />
         </ListItemIcon>
-        <ListItemText primary="Topics" />
+        <ListItemText primary={i18n.t('topics:cTitle')} />
       </ListItem>
       <ListItem
         button
@@ -92,7 +93,7 @@ const LeftMenu = (props) => {
         <ListItemIcon>
           <ArticlesIcon />
         </ListItemIcon>
-        <ListItemText primary="Articles" />
+        <ListItemText primary={i18n.t('articles:cTitle')} />
       </ListItem>
       {isAuthenticated &&
         <ListItem
@@ -103,7 +104,7 @@ const LeftMenu = (props) => {
           <ListItemIcon>
             <LockOpenIcon />
           </ListItemIcon>
-          <ListItemText primary="Logout" />
+          <ListItemText primary={i18n.t('auth:logout')} />
         </ListItem>
       }
     </List>
