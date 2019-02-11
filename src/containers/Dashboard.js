@@ -7,12 +7,15 @@ import appActions from '../actions/app';
 import i18n from '../languages';
 
 class DashboardPage extends React.Component {
+  componentWillMount() {
+    const { setAppTitle } = this.props;
+    setAppTitle(i18n.t('dashboard:cTitle'));
+  }
+
   render() {
     const filters = {
       filter: 'leaders',
     };
-
-    this.props.setAppTitle(i18n.t('dashboard:cTitle'));
 
     return (
       <React.Fragment>
@@ -33,7 +36,9 @@ DashboardPage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = () => {};
+const mapStateToProps = () => {
+  return {};
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     setAppTitle: (title) => {

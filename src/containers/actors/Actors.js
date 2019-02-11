@@ -65,6 +65,11 @@ class ActorsPage extends React.Component {
     this.fetchActors = this.fetchActors.bind(this);
   }
 
+  componentWillMount() {
+    const { setAppTitle, namespace } = this.props;
+    setAppTitle(i18n.t(`${namespace}:cTitle`));
+  }
+
   componentWillReceiveProps(nextProps) {
     const { actors, total } = nextProps;
     this.setState({
@@ -145,12 +150,9 @@ class ActorsPage extends React.Component {
       classes,
       actors,
       namespace,
-      setAppTitle,
     } = this.props;
 
     const columnWidth = this.getColumnWidth();
-
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
 
     return (
       <React.Fragment>

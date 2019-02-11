@@ -59,6 +59,11 @@ class MediaPage extends React.Component {
     this.fetchMedia = this.fetchMedia.bind(this);
   }
 
+  componentWillMount() {
+    const { setAppTitle, namespace } = this.props;
+    setAppTitle(i18n.t(`${namespace}:cTitle`));
+  }
+
   componentWillReceiveProps(nextProps) {
     const { media, total } = nextProps;
     this.setState({
@@ -129,12 +134,9 @@ class MediaPage extends React.Component {
       classes,
       media,
       namespace,
-      setAppTitle,
     } = this.props;
 
     const columnWidth = this.getColumnWidth();
-
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
 
     return (
       <React.Fragment>
@@ -152,6 +154,7 @@ class MediaPage extends React.Component {
         <InfiniteScroll
           loadMore={this.fetchMedia}
           hasMore={this.state.hasMore}
+          useWindow
           loader={
             <Grid
               container
