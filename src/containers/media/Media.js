@@ -53,6 +53,10 @@ class MediaPage extends React.Component {
       ownerId: 0,
       filter: '',
       hasMore: true,
+      media: {
+        byId: {},
+        allIds: [],
+      },
     };
 
     this.offset = 0;
@@ -68,6 +72,7 @@ class MediaPage extends React.Component {
     const { media, total } = nextProps;
     this.setState({
       hasMore: media.allIds.length < total,
+      media,
     });
   }
 
@@ -130,11 +135,8 @@ class MediaPage extends React.Component {
   }
 
   render() {
-    const {
-      classes,
-      media,
-      namespace,
-    } = this.props;
+    const { classes, namespace } = this.props;
+    const { hasMore, media } = this.state;
 
     const columnWidth = this.getColumnWidth();
 
@@ -153,7 +155,7 @@ class MediaPage extends React.Component {
         }
         <InfiniteScroll
           loadMore={this.fetchMedia}
-          hasMore={this.state.hasMore}
+          hasMore={hasMore}
           useWindow
           loader={
             <Grid

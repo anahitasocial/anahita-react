@@ -15,8 +15,11 @@ class StoriesContainer extends React.Component {
     super(props, context);
 
     this.state = {
-      queryFilters: props.queryFilters,
       hasMore: true,
+      stories: {
+        byId: {},
+        allIds: [],
+      },
     };
 
     this.offset = 0;
@@ -25,8 +28,10 @@ class StoriesContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { stories } = nextProps;
+
     this.setState({
       hasMore: stories.allIds.length >= LIMIT,
+      stories,
     });
   }
 
@@ -36,8 +41,10 @@ class StoriesContainer extends React.Component {
   }
 
   fetchStories() {
-    const { queryFilters } = this.state;
-    const { browseStories } = this.props;
+    const {
+      browseStories,
+      queryFilters,
+    } = this.props;
 
     browseStories({
       ownerId: queryFilters.oid,
@@ -52,7 +59,8 @@ class StoriesContainer extends React.Component {
   render() {
     const {
       stories,
-    } = this.props;
+      hasMore,
+    } = this.state;
 
     return (
       <Grid
@@ -62,7 +70,7 @@ class StoriesContainer extends React.Component {
         <Grid item xs={12} md={4}>
           <InfiniteScroll
             loadMore={this.fetchStories}
-            hasMore={this.state.hasMore}
+            hasMore={hasMore}
             loader={
               <Grid
                 container

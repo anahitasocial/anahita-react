@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
+import striptags from 'striptags';
 import ActorProfile from '../../components/ActorProfile';
 import StoriesContainer from '../stories/Stories';
 import ActorAvatar from './ActorAvatar';
@@ -14,7 +15,6 @@ import FollowAction from '../actions/FollowAction';
 import appActions from '../../actions/app';
 import actions from '../../actions/actor';
 import i18n from '../../languages';
-import striptags from 'striptags';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
@@ -122,9 +122,9 @@ class ActorPage extends React.Component {
       <div className={classes.root}>
         <Helmet>
           <title>
-            {i18n.t(actor.name)}
+            {actor.name}
           </title>
-          <meta name="description" content={i18n.t(striptags(actor.body))} />
+          <meta name="description" content={striptags(actor.body)} />
         </Helmet>
         {!actor.id &&
           <CircularProgress className={classes.progress} />

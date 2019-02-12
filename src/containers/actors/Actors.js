@@ -59,6 +59,10 @@ class ActorsPage extends React.Component {
       disabledFilter: false,
       keywordFilter: '',
       hasMore: true,
+      actors: {
+        byId: {},
+        allIds: [],
+      },
     };
 
     this.offset = 0;
@@ -74,6 +78,7 @@ class ActorsPage extends React.Component {
     const { actors, total } = nextProps;
     this.setState({
       hasMore: actors.allIds.length < total,
+      actors,
     });
   }
 
@@ -146,11 +151,8 @@ class ActorsPage extends React.Component {
   }
 
   render() {
-    const {
-      classes,
-      actors,
-      namespace,
-    } = this.props;
+    const { classes, namespace } = this.props;
+    const { hasMore, actors } = this.state;
 
     const columnWidth = this.getColumnWidth();
 
@@ -169,7 +171,7 @@ class ActorsPage extends React.Component {
         }
         <InfiniteScroll
           loadMore={this.fetchActors}
-          hasMore={this.state.hasMore}
+          hasMore={hasMore}
           loader={
             <Grid
               container
