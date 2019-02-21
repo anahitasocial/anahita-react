@@ -9,11 +9,10 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Truncate from 'react-truncate';
-import striptags from 'striptags';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import ReadMore from '../ReadMore';
 import StoryMessage from '../StoryMessage';
 import ActorTitle from '../ActorTitle';
 import ActorAvatar from '../ActorAvatar';
@@ -49,9 +48,6 @@ const styles = (theme) => {
   };
 };
 
-const TRUNCATE_WIDTH = 640;
-const TRUNCATE_LINES = 3;
-
 const StoryCard = (props) => {
   const {
     classes,
@@ -65,7 +61,7 @@ const StoryCard = (props) => {
   const portrait = story.object && getPortraitURL(story.object);
   const cover = story.object && getCoverURL(story.object);
   const title = story.object && story.object.name;
-  const body = story.object && striptags(story.object.body);
+  const body = story.object && story.object.body;
   const url = title && story.object ? getURL(story.object) : '';
 
   return (
@@ -126,17 +122,9 @@ const StoryCard = (props) => {
           </Typography>
         }
         {body &&
-          <Typography variant="body2">
-            <Truncate
-              trimWhitespace
-              width={TRUNCATE_WIDTH}
-              lines={TRUNCATE_LINES}
-              ellipsis={
-                <span>... <Link href={url}>Read more</Link></span>}
-            >
-              {body}
-            </Truncate>
-          </Typography>
+          <ReadMore>
+            {body}
+          </ReadMore>
         }
       </CardContent>
       {actions &&

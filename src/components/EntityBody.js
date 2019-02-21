@@ -1,38 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
-  root: {
-    fontFamily: 'inherit',
-    color: theme.palette.text.primary,
-  },
-});
+const styles = (theme) => {
+  return {
+    root: {
+      fontFamily: theme.typography.fontFamily,
+      fontSize: '0.875rem',
+      fontWeight: 400,
+      letterSpacing: '0.01071em',
+      lineHeight: 1.5,
+      color: theme.palette.text.primary,
+    },
+  };
+};
 
 const EntityBody = (props) => {
-  const { classes, body, noWrap } = props;
+  const {
+    classes,
+    children,
+  } = props;
+
   return (
-    <Typography variatn="body2" noWrap={noWrap}>
-      <span
-        className={classes.root}
-        dangerouslySetInnerHTML={{
-        __html: body,
-        }}
-      />
-    </Typography>
+    <span
+      className={classes.root}
+      dangerouslySetInnerHTML={{
+        __html: children,
+      }}
+    />
   );
 };
 
 EntityBody.propTypes = {
   classes: PropTypes.object.isRequired,
-  body: PropTypes.string,
-  noWrap: PropTypes.bool,
-};
-
-EntityBody.defaultProps = {
-  body: '',
-  noWrap: false,
+  children: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(EntityBody);

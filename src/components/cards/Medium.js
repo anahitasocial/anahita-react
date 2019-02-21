@@ -128,7 +128,9 @@ const MediumCard = (props) => {
             </Typography>
           }
           {medium.body &&
-            <EntityBody body={medium.body} />
+            <EntityBody>
+              {medium.body}
+            </EntityBody>
           }
         </CardContent>
         <CardActions>

@@ -42,4 +42,8 @@ export default {
     cTitle: 'Articles',
     mTitle: 'Articles',
   },
+  commons: {
+    readMore: 'Read more',
+    close: 'Close',
+  },
 };
