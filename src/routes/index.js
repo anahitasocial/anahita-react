@@ -7,7 +7,6 @@ import {
   withRouter,
 } from 'react-router-dom';
 import AuthenticatedRoute from './AuthenticatedRoute';
-import App from '../containers/App';
 
 import LoginPage from '../containers/people/Login';
 import SignupPage from '../containers/people/Signup';
@@ -44,144 +43,142 @@ const Routes = (props) => {
   scrollUp();
 
   return (
-    <App>
-      <Switch>
-        <Route
-          exact
-          path="/"
-          component={isAuthenticated ? DashboardPage : HomePage}
-        />
-        <Route
-          exact
-          path="/login/"
-          component={LoginPage}
-        />
-        <Route
-          exact
-          path="/signup/"
-          component={SignupPage}
-        />
-        <Route
-          exact
-          path="/passwordreset/"
-          component={PasswordResetPage}
-        />
-        <AuthenticatedRoute
-          path="/dashboard/"
-          component={DashboardPage}
-        />
-        <AuthenticatedRoute
-          path="/people/:id/settings/"
-          exact
-          component={(params) => {
-            return <ActorSettingsPage namespace="people" {...params} />;
-          }}
-        />
-        <AuthenticatedRoute
-          path="/people/:id/settings/info/"
-          exact
-          component={(params) => {
-            return <PersonSettingsInfoPage {...params} />;
-          }}
-        />
-        <AuthenticatedRoute
-          path="/people/:id/settings/account/"
-          exact
-          component={(params) => {
-            return <PersonSettingsAccountPage {...params} />;
-          }}
-        />
-        <AuthenticatedRoute
-          path="/people/:id/settings/deleteforever/"
-          exact
-          component={(params) => {
-            return <ActorSettingsDeletePage namespace="people" {...params} />;
-          }}
-        />
-        <Route
-          exact
-          path="/people/"
-          component={PeoplePage}
-        />
-        <AuthenticatedRoute
-          exact
-          path="/people/add/"
-          component={(params) => {
-            return <PersonAddPage {...params} />;
-          }}
-        />
-        <Route
-          exact
-          path="/people/:id/"
-          component={(params) => {
-            return <ActorPage namespace="people" {...params} />;
-          }}
-        />
-        <Route
-          exact
-          path="/groups/"
-          component={(params) => {
-            return <ActorsPage namespace="groups" {...params} />;
-          }}
-        />
-        <AuthenticatedRoute
-          exact
-          path="/groups/add/"
-          component={(params) => {
-            return <ActorAddPage namespace="groups" {...params} />;
-          }}
-        />
-        <Route
-          exact
-          path="/groups/:id/"
-          component={(params) => {
-            return <ActorPage namespace="groups" {...params} />;
-          }}
-        />
-        <AuthenticatedRoute
-          exact
-          path="/groups/:id/settings/"
-          component={(params) => {
-            return <ActorSettingsPage namespace="groups" {...params} />;
-          }}
-        />
-        <AuthenticatedRoute
-          exact
-          path="/groups/:id/settings/info/"
-          component={(params) => {
-            return <ActorSettingsInfoPage namespace="groups" {...params} />;
-          }}
-        />
-        <AuthenticatedRoute
-          exact
-          path="/groups/:id/settings/deleteforever/"
-          component={(params) => {
-            return <ActorSettingsDeletePage namespace="groups" {...params} />;
-          }}
-        />
-        <Route
-          exact
-          path="/notes/"
-          component={NotesPage}
-        />
-        <Route
-          exact
-          path="/photos/"
-          component={PhotosPage}
-        />
-        <Route
-          exact
-          path="/topics/"
-          component={TopicsPage}
-        />
-        <Route
-          exact
-          path="/articles/"
-          component={ArticlesPage}
-        />
-        <Route component={NotFoundPage} />
-      </Switch>
-    </App>
+    <Switch>
+      <Route
+        exact
+        path="/"
+        component={isAuthenticated ? DashboardPage : HomePage}
+      />
+      <Route
+        exact
+        path="/login/"
+        component={LoginPage}
+      />
+      <Route
+        exact
+        path="/signup/"
+        component={SignupPage}
+      />
+      <Route
+        exact
+        path="/passwordreset/"
+        component={PasswordResetPage}
+      />
+      <AuthenticatedRoute
+        path="/dashboard/"
+        component={DashboardPage}
+      />
+      <AuthenticatedRoute
+        path="/people/:id/settings/"
+        exact
+        component={(params) => {
+          return <ActorSettingsPage namespace="people" {...params} />;
+        }}
+      />
+      <AuthenticatedRoute
+        path="/people/:id/settings/info/"
+        exact
+        component={(params) => {
+          return <PersonSettingsInfoPage {...params} />;
+        }}
+      />
+      <AuthenticatedRoute
+        path="/people/:id/settings/account/"
+        exact
+        component={(params) => {
+          return <PersonSettingsAccountPage {...params} />;
+        }}
+      />
+      <AuthenticatedRoute
+        path="/people/:id/settings/deleteforever/"
+        exact
+        component={(params) => {
+          return <ActorSettingsDeletePage namespace="people" {...params} />;
+        }}
+      />
+      <Route
+        exact
+        path="/people/"
+        component={PeoplePage}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/people/add/"
+        component={(params) => {
+          return <PersonAddPage {...params} />;
+        }}
+      />
+      <Route
+        exact
+        path="/people/:id/"
+        component={(params) => {
+          return <ActorPage namespace="people" {...params} />;
+        }}
+      />
+      <Route
+        exact
+        path="/groups/"
+        component={(params) => {
+          return <ActorsPage namespace="groups" {...params} />;
+        }}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/groups/add/"
+        component={(params) => {
+          return <ActorAddPage namespace="groups" {...params} />;
+        }}
+      />
+      <Route
+        exact
+        path="/groups/:id/"
+        component={(params) => {
+          return <ActorPage namespace="groups" {...params} />;
+        }}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/groups/:id/settings/"
+        component={(params) => {
+          return <ActorSettingsPage namespace="groups" {...params} />;
+        }}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/groups/:id/settings/info/"
+        component={(params) => {
+          return <ActorSettingsInfoPage namespace="groups" {...params} />;
+        }}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/groups/:id/settings/deleteforever/"
+        component={(params) => {
+          return <ActorSettingsDeletePage namespace="groups" {...params} />;
+        }}
+      />
+      <Route
+        exact
+        path="/notes/"
+        component={NotesPage}
+      />
+      <Route
+        exact
+        path="/photos/"
+        component={PhotosPage}
+      />
+      <Route
+        exact
+        path="/topics/"
+        component={TopicsPage}
+      />
+      <Route
+        exact
+        path="/articles/"
+        component={ArticlesPage}
+      />
+      <Route component={NotFoundPage} />
+    </Switch>
   );
 };
 

@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
+import App from '../containers/App';
 import Routes from '../routes';
 
 const Root = ({ store }) => {
   return (
     <Provider store={store}>
-      <Routes store={store} />
+      <App>
+        <Routes store={store} />
+      </App>
     </Provider>
   );
 };

@@ -14,6 +14,7 @@ export default shape({
   id: number,
   objectType: oneOf([
     'com.photos.photo',
+    'com.photos.set',
     'com.topics.topic',
     'com.todos.todo',
     'com.notes.note',

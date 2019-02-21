@@ -7,6 +7,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import actions from '../../actions/stories';
 
 import StoryCard from '../../components/cards/Story';
+import StoriesType from '../../proptypes/Stories';
 
 const LIMIT = 20;
 
@@ -105,10 +106,7 @@ class StoriesContainer extends React.Component {
 StoriesContainer.propTypes = {
   browseStories: PropTypes.func.isRequired,
   resetStories: PropTypes.func.isRequired,
-  stories: PropTypes.shape({
-    byId: PropTypes.object,
-    allIds: PropTypes.array,
-  }).isRequired,
+  stories: StoriesType.isRequired,
   queryFilters: PropTypes.object,
 };
 
