@@ -19,15 +19,20 @@ function browseRequest() {
 }
 
 function browseSuccess(results) {
+  const { data } = results;
+  const { pagination } = data;
+
   const story = new schema.Entity('stories');
   const stories = [story];
-  const normalized = normalize(results.data.data, stories);
+  const normalized = normalize(data.data, stories);
+  const hasMore = data.data.length >= pagination.limit;
 
   return {
     type: STORIES.BROWSE.SUCCESS,
     stories: normalized.entities.stories,
     ids: normalized.result,
-    total: results.data.pagination.total,
+    total: pagination.total,
+    hasMore,
   };
 }
 

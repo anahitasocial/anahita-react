@@ -16,6 +16,7 @@ export default function (higherOrderState, action) {
     },
     error: '',
     total: 0,
+    hasMore: true,
     ...higherOrderState,
   };
 
@@ -28,6 +29,7 @@ export default function (higherOrderState, action) {
           allIds: [],
         },
         total: 0,
+        hasMore: true,
       };
     case ACTORS.BROWSE.REQUEST:
     case ACTORS.FOLLOW.REQUEST:
@@ -47,6 +49,7 @@ export default function (higherOrderState, action) {
           allIds: _.union(state.actors.allIds, action.ids),
         },
         total: action.total,
+        hasMore: action.hasMore,
         isFetching: false,
       };
     case ACTORS.FOLLOW.SUCCESS:
@@ -61,6 +64,7 @@ export default function (higherOrderState, action) {
     case ACTORS.UNFOLLOW.FAILURE:
       return {
         ...state,
+        hasMore: false,
         isFetching: false,
         error: action.error,
       };

@@ -10,6 +10,7 @@ export default function (higherOrderState, action) {
     },
     error: '',
     total: 0,
+    hasMore: true,
     ...higherOrderState,
   };
 
@@ -22,6 +23,7 @@ export default function (higherOrderState, action) {
           allIds: [],
         },
         total: 0,
+        hasMore: true,
         isFetching: false,
         error: '',
       };
@@ -41,9 +43,16 @@ export default function (higherOrderState, action) {
           allIds: _.union(state.media.allIds, action.ids),
         },
         total: action.total,
+        hasMore: action.hasMore,
         isFetching: false,
       };
     case MEDIA.BROWSE.FAILURE:
+      return {
+        ...state,
+        hasMore: false,
+        isFetching: false,
+        error: action.error,
+      };
     default:
       return state;
   }

@@ -28,12 +28,8 @@ class StoriesContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { stories } = nextProps;
-
-    this.setState({
-      hasMore: stories.allIds.length >= LIMIT,
-      stories,
-    });
+    const { stories, hasMore } = nextProps;
+    this.setState({ hasMore, stories });
   }
 
   componentWillUnmount() {
@@ -108,6 +104,7 @@ StoriesContainer.propTypes = {
   resetStories: PropTypes.func.isRequired,
   stories: StoriesType.isRequired,
   queryFilters: PropTypes.object,
+  hasMore: PropTypes.bool.isRequired,
 };
 
 StoriesContainer.defaultProps = {
@@ -120,11 +117,13 @@ StoriesContainer.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     stories,
+    hasMore,
     error,
   } = state.stories;
 
   return {
     stories,
+    hasMore,
     error,
   };
 };

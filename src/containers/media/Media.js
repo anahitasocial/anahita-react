@@ -69,11 +69,8 @@ class MediaPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { media, total } = nextProps;
-    this.setState({
-      hasMore: media.allIds.length < total,
-      media,
-    });
+    const { media, hasMore } = nextProps;
+    this.setState({ media, hasMore });
   }
 
   componentWillUnmount() {
@@ -200,22 +197,22 @@ MediaPage.propTypes = {
   resetMedia: PropTypes.func.isRequired,
   media: MediaListType.isRequired,
   namespace: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
+  hasMore: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
-  queryFilters: PropTypes.object,
+  // queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
   setAppTitle: PropTypes.func.isRequired,
 };
 
 MediaPage.defaultProps = {
-  queryFilters: {},
+  // queryFilters: {},
 };
 
 const mapStateToProps = (state) => {
   const {
     media,
     error,
-    total,
+    hasMore,
   } = state.media;
 
   const { viewer } = state.auth;
@@ -223,7 +220,7 @@ const mapStateToProps = (state) => {
   return {
     media,
     error,
-    total,
+    hasMore,
     viewer,
   };
 };

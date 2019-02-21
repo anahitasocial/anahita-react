@@ -9,6 +9,7 @@ export default function (state = {
   },
   error: '',
   total: 0,
+  hasMore: true,
 }, action) {
   switch (action.type) {
     case STORIES.BROWSE.RESET:
@@ -21,6 +22,7 @@ export default function (state = {
         total: 0,
         isFetching: false,
         error: '',
+        hasMore: true,
       };
     case STORIES.BROWSE.REQUEST:
       return {
@@ -38,9 +40,16 @@ export default function (state = {
           allIds: _.union(state.stories.allIds, action.ids),
         },
         total: action.total,
+        hasMore: action.hasMore,
         isFetching: false,
       };
     case STORIES.BROWSE.FAILURE:
+      return {
+        ...state,
+        hasMore: false,
+        isFetching: false,
+        error: action.error,
+      };
     default:
       return state;
   }

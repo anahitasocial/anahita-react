@@ -75,11 +75,8 @@ class ActorsPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { actors, total } = nextProps;
-    this.setState({
-      hasMore: actors.allIds.length < total,
-      actors,
-    });
+    const { actors, hasMore } = nextProps;
+    this.setState({ actors, hasMore });
   }
 
   componentWillUnmount() {
@@ -220,7 +217,7 @@ ActorsPage.propTypes = {
   isAuthenticated: PropTypes.bool,
   actors: ActorsListType.isRequired,
   namespace: PropTypes.string.isRequired,
-  total: PropTypes.number,
+  hasMore: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
@@ -229,7 +226,6 @@ ActorsPage.propTypes = {
 
 ActorsPage.defaultProps = {
   queryFilters: {},
-  total: 0,
   isAuthenticated: false,
 };
 
@@ -240,7 +236,7 @@ const mapStateToProps = (state) => {
     error,
     offset,
     limit,
-    total,
+    hasMore,
   } = state.actors;
 
   const {
@@ -254,7 +250,7 @@ const mapStateToProps = (state) => {
     error,
     offset,
     limit,
-    total,
+    hasMore,
     isAuthenticated,
     viewer,
   };
