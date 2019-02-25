@@ -196,6 +196,7 @@ function deleteSuccess(result) {
   return {
     type: ACTORS.DELETE.SUCCESS,
     status: result.status,
+    actor: null,
   };
 }
 

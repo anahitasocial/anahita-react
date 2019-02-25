@@ -10,18 +10,30 @@ const updateItem = (state, actor) => {
   return actors;
 };
 
+const removeItem = (state, actor) => {
+  const actors = { ...state.actors };
+  // implement
+  return actors;
+};
+
+const DEFAULT_STATE = {
+  isFetching: false,
+  isFetchingAvatar: false,
+  isFetchingCover: false,
+  actors: {
+    byId: {},
+    allIds: [],
+    current: ACTOR_DEFAULT,
+  },
+  error: '',
+  total: 0,
+  hasMore: true,
+  success: false,
+};
+
 export default function (higherOrderState, action) {
   const state = {
-    isFetching: false,
-    actors: {
-      byId: {},
-      allIds: [],
-      current: ACTOR_DEFAULT,
-    },
-    error: '',
-    total: 0,
-    hasMore: true,
-    success: false,
+    ...DEFAULT_STATE,
     ...higherOrderState,
   };
 
@@ -29,25 +41,36 @@ export default function (higherOrderState, action) {
     case ACTORS.BROWSE.RESET:
       return {
         ...state,
-        actors: {
-          byId: {},
-          allIds: [],
-          current: ACTOR_DEFAULT,
-        },
-        total: 0,
-        hasMore: true,
-        success: false,
+        ...DEFAULT_STATE,
       };
     case ACTORS.BROWSE.REQUEST:
     case ACTORS.READ.REQUEST:
     case ACTORS.EDIT.REQUEST:
     case ACTORS.ADD.REQUEST:
+    case ACTORS.DELETE.REQUEST:
     case ACTORS.FOLLOW.REQUEST:
     case ACTORS.UNFOLLOW.REQUEST:
       return {
         ...state,
         isFetching: true,
         success: false,
+        error: '',
+      };
+    case ACTORS.AVATAR.ADD.REQUEST:
+    case ACTORS.AVATAR.DELETE.REQUEST:
+      return {
+        ...state,
+        isFetchingAvatar: true,
+        success: false,
+        error: '',
+      };
+    case ACTORS.COVER.ADD.REQUEST:
+    case ACTORS.COVER.DELETE.REQUEST:
+      return {
+        ...state,
+        isFetchingCover: true,
+        success: false,
+        error: '',
       };
     case ACTORS.BROWSE.SUCCESS:
       return {
@@ -81,15 +104,39 @@ export default function (higherOrderState, action) {
         actors: updateItem(state, action.actor),
         success: true,
       };
+    case ACTORS.DELETE.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        actors: removeItem(state, state.current),
+        success: true,
+      };
+    case ACTORS.AVATAR.ADD.SUCCESS:
+    case ACTORS.AVATAR.DELETE.SUCCESS:
+    case ACTORS.COVER.ADD.SUCCESS:
+    case ACTORS.COVER.DELETE.SUCCESS:
+      return {
+        ...state,
+        isFetchingAvatar: false,
+        isFetchingCover: false,
+        success: true,
+        error: '',
+        actors: updateItem(state, action.actor),
+      };
     case ACTORS.BROWSE.FAILURE:
     case ACTORS.READ.FAILURE:
     case ACTORS.EDIT.FAILURE:
     case ACTORS.ADD.FAILURE:
+    case ACTORS.DELETE.FAILURE:
     case ACTORS.FOLLOW.FAILURE:
     case ACTORS.UNFOLLOW.FAILURE:
+    case ACTORS.AVATAR.ADD.FAILURE:
+    case ACTORS.AVATAR.DELETE.FAILURE:
       return {
         ...state,
         hasMore: false,
+        isFetchingAvatar: false,
+        isFetchingCover: false,
         isFetching: false,
         success: false,
         error: action.error,
