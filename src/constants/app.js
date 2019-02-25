@@ -1,5 +1,5 @@
 export default {
   TITLE: {
-    UPDATE: 'app_title_update',
+    UPDATE: 'APP_TITLE_UPDATE',
   },
 };

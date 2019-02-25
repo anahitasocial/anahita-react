@@ -13,6 +13,9 @@ const styles = (theme) => {
     content: {
       flex: '0 0 auto',
       marginRight: theme.spacing.unit * 2,
+      [theme.breakpoints.down('md')]: {
+        display: 'none',
+      },
     },
     avatarContent: {
       flex: '1 1 auto',

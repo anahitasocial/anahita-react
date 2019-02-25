@@ -6,6 +6,7 @@ export default function (state = {
   stories: {
     byId: {},
     allIds: [],
+    current: null,
   },
   error: '',
   total: 0,
@@ -18,6 +19,7 @@ export default function (state = {
         stories: {
           byId: {},
           allIds: [],
+          current: null,
         },
         total: 0,
         isFetching: false,
@@ -38,6 +40,7 @@ export default function (state = {
             ...action.stories,
           },
           allIds: _.union(state.stories.allIds, action.ids),
+          current: null,
         },
         total: action.total,
         hasMore: action.hasMore,

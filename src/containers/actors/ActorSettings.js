@@ -4,25 +4,51 @@ import { connect } from 'react-redux';
 import ActorSettingsList from '../../components/lists/ActorSettings';
 import actions from '../../actions/actor';
 
-import ActorType from '../../proptypes/Actor';
+import ActorsType from '../../proptypes/Actors';
+import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
 
 class ActorSettingsPage extends React.Component {
-  componentWillMount() {
-    const { actor } = this.props;
+  constructor(props) {
+    super(props);
 
-    if (!actor.id) {
-      const { id } = this.props.computedMatch.params;
-      this.props.readActor(id, this.props.namespace);
-    }
+    this.state = {
+      actor: ActorDefault,
+    };
+
+    const {
+      computedMatch: {
+        params,
+      },
+    } = props;
+    const [id] = params.id.split('-');
+    this.id = id;
+  }
+
+  componentWillMount() {
+    const { namespace, readActor } = this.props;
+    readActor(this.id, namespace);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { actors } = nextProps;
+    this.setState({
+      actor: actors.current,
+    });
+  }
+
+  componentWillUnmount() {
+    const { resetActors } = this.props;
+    resetActors();
   }
 
   render() {
     const {
-      actor,
       viewer,
       namespace,
     } = this.props;
+
+    const { actor } = this.state;
 
     return (
       <React.Fragment>
@@ -40,30 +66,28 @@ class ActorSettingsPage extends React.Component {
 
 ActorSettingsPage.propTypes = {
   readActor: PropTypes.func.isRequired,
-  actor: ActorType,
+  actors: ActorsType.isRequired,
+  resetActors: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   namespace: PropTypes.string.isRequired,
   computedMatch: PropTypes.object.isRequired,
-};
-
-ActorSettingsPage.defaultProps = {
-  actor: {
-    id: null,
-  },
+  // isFetching: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
-    actor,
+    actors,
     error,
-  } = state.actor;
+    isFetching,
+  } = state.actors;
 
   const {
     viewer,
   } = state.auth;
 
   return {
-    actor,
+    actors,
+    isFetching,
     error,
     viewer,
   };
@@ -73,6 +97,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     readActor: (id, namespace) => {
       dispatch(actions.read(id, namespace));
+    },
+    resetActors: () => {
+      dispatch(actions.reset());
     },
   };
 };

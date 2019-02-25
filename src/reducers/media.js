@@ -7,6 +7,7 @@ export default function (higherOrderState, action) {
     media: {
       byId: {},
       allIds: [],
+      current: null,
     },
     error: '',
     total: 0,
@@ -21,6 +22,7 @@ export default function (higherOrderState, action) {
         media: {
           byId: {},
           allIds: [],
+          current: null,
         },
         total: 0,
         hasMore: true,
@@ -41,6 +43,7 @@ export default function (higherOrderState, action) {
             ...action.media,
           },
           allIds: _.union(state.media.allIds, action.ids),
+          current: null,
         },
         total: action.total,
         hasMore: action.hasMore,

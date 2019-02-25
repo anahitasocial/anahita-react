@@ -1,25 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { singularize } from 'inflected';
 import ActorInfoForm from '../../components/ActorInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import actions from '../../actions/actor';
 
-import ActorType from '../../proptypes/Actor';
-
-const styles = (theme) => {
-  return {
-    progress: {
-      marginLeft: '48%',
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit,
-    },
-  };
-};
+import ActorsType from '../../proptypes/Actors';
+import ActorDefault from '../../proptypes/ActorDefault';
 
 const BODY_CHARACTER_LIMIT = 1000;
 
@@ -28,32 +17,34 @@ class ActorSettingsInfoPage extends React.Component {
     super(props);
 
     this.state = {
-      actor: props.actor,
+      actor: ActorDefault,
       nameError: false,
       nameHelperText: '',
       bodyError: false,
       bodyHelperText: '',
     };
 
+    const {
+      computedMatch: {
+        params,
+      },
+    } = props;
+    const [id] = params.id.split('-');
+    this.id = id;
+
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   componentWillMount() {
-    const { actor } = this.props;
-
-    if (!actor.id) {
-      const { id } = this.props.computedMatch.params;
-      const { readActor, namespace } = this.props;
-
-      readActor(id, namespace);
-    }
+    const { namespace, readActor } = this.props;
+    readActor(this.id, namespace);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { actor } = nextProps;
+    const { actors } = nextProps;
     this.setState({
-      actor: { ...actor },
+      actor: actors.current,
     });
   }
 
@@ -125,7 +116,6 @@ class ActorSettingsInfoPage extends React.Component {
 
   render() {
     const {
-      classes,
       namespace,
       isFetching,
       success,
@@ -142,9 +132,6 @@ class ActorSettingsInfoPage extends React.Component {
 
     return (
       <React.Fragment>
-        {!actor.id &&
-          <CircularProgress className={classes.progress} />
-        }
         {actor.id &&
           <ActorSettingCard
             namespace={namespace}
@@ -185,32 +172,30 @@ class ActorSettingsInfoPage extends React.Component {
 }
 
 ActorSettingsInfoPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   editActor: PropTypes.func.isRequired,
-  actor: ActorType.isRequired,
+  actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   error: PropTypes.string,
-  isFetching: PropTypes.bool,
+  isFetching: PropTypes.bool.isRequired,
   computedMatch: PropTypes.object.isRequired,
 };
 
 ActorSettingsInfoPage.defaultProps = {
-  isFetching: false,
   error: '',
 };
 
 const mapStateToProps = (state) => {
   const {
-    actor,
+    actors,
     success,
     error,
     isFetching,
-  } = state.actor;
+  } = state.actors;
 
   return {
-    actor,
+    actors,
     error,
     success,
     isFetching,
@@ -228,7 +213,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorSettingsInfoPage));
+)(ActorSettingsInfoPage);

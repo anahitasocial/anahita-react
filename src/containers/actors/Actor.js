@@ -5,7 +5,9 @@ import { Helmet } from 'react-helmet';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 import striptags from 'striptags';
+
 import ActorProfile from '../../components/ActorProfile';
 import StoriesContainer from '../stories/Stories';
 import ActorAvatar from './ActorAvatar';
@@ -16,15 +18,15 @@ import appActions from '../../actions/app';
 import actions from '../../actions/actor';
 import i18n from '../../languages';
 
-import ActorType from '../../proptypes/Actor';
+import ActorsType from '../../proptypes/Actors';
+import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
 
 const styles = (theme) => {
   return {
     progress: {
-      marginLeft: '48%',
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit,
+      marginTop: theme.spacing.unit * 2,
+      marginBottom: theme.spacing.unit * 2,
     },
     divider: {
       marginTop: theme.spacing.unit * 2,
@@ -36,20 +38,37 @@ const styles = (theme) => {
 class ActorPage extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      actor: props.actor,
+      actor: ActorDefault,
     };
+
+    const {
+      match: {
+        params: {
+          id,
+        },
+      },
+    } = props;
+    this.id = id;
   }
 
   componentWillMount() {
-    const { id } = this.props.match.params;
-    this.props.readActor(id, this.props.namespace);
+    const { namespace, readActor, setAppTitle } = this.props;
+    readActor(this.id, namespace);
+    setAppTitle(i18n.t(`${namespace}:cTitle`));
   }
 
   componentWillReceiveProps(nextProps) {
+    const { actors } = nextProps;
     this.setState({
-      actor: { ...nextProps.actor },
+      actor: actors.current,
     });
+  }
+
+  componentWillUnmount() {
+    const { resetActors } = this.props;
+    resetActors();
   }
 
   canFollow(actor) {
@@ -61,78 +80,72 @@ class ActorPage extends React.Component {
     return isAuthenticated && (viewer.id !== actor.id) && !actor.isBlocked;
   }
 
-  renderProfile(actor) {
-    const canFollow = this.canFollow(actor);
+  render() {
     const {
       classes,
+      isFetching,
       isAuthenticated,
       viewer,
       isFetchingAvatar,
       isFetchingCover,
     } = this.props;
 
-    const filters = {
-      oid: actor.id,
-    };
+    const { actor } = this.state;
 
     return (
       <React.Fragment>
-        <ActorProfile
-          cover={
-            <ActorCover
-              actor={actor}
-              viewer={viewer}
-              isFetching={isFetchingCover}
-            />
-          }
-          avatar={
-            <ActorAvatar
-              actor={actor}
-              viewer={viewer}
-              isFetching={isFetchingAvatar}
-            />
-          }
-          name={actor.name}
-          description={actor.body}
-          alias={actor.alias}
-          followAction={canFollow && <FollowAction actor={actor} />}
-          headerAction={isAuthenticated && <ActorCommands actor={actor} />}
-        />
-        <Divider className={classes.divider} />
-        <StoriesContainer
-          key="com:stories.story"
-          queryFilters={filters}
-          {...this.params}
-        />
-      </React.Fragment>
-    );
-  }
-
-  render() {
-    const {
-      classes,
-      setAppTitle,
-      namespace,
-    } = this.props;
-    const { actor } = this.state;
-
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
-
-    return (
-      <div className={classes.root}>
-        <Helmet>
-          <title>
-            {actor.name}
-          </title>
-          <meta name="description" content={striptags(actor.body)} />
-        </Helmet>
-        {!actor.id &&
-          <CircularProgress className={classes.progress} />
+        {isFetching &&
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            key="actors-progress"
+          >
+            <Grid item>
+              <CircularProgress className={classes.progress} />
+            </Grid>
+          </Grid>
         }
         {actor.id &&
-          this.renderProfile(actor)
+          <React.Fragment>
+            <Helmet>
+              <title>
+                {actor.name}
+              </title>
+              <meta name="description" content={striptags(actor.body)} />
+            </Helmet>
+            <ActorProfile
+              cover={
+                <ActorCover
+                  actor={actor}
+                  viewer={viewer}
+                  isFetching={isFetchingCover}
+                />
+              }
+              avatar={
+                <ActorAvatar
+                  actor={actor}
+                  viewer={viewer}
+                  isFetching={isFetchingAvatar}
+                />
+              }
+              name={actor.name}
+              description={actor.body}
+              alias={actor.alias}
+              followAction={this.canFollow(actor) && <FollowAction actor={actor} />}
+              headerAction={isAuthenticated && <ActorCommands actor={actor} />}
+            />
+            <Divider className={classes.divider} />
+            <StoriesContainer
+              key="com:stories.story"
+              queryFilters={{
+                oid: actor.id,
+              }}
+              {...this.params}
+            />
+          </React.Fragment>
         }
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -140,10 +153,12 @@ class ActorPage extends React.Component {
 ActorPage.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
-  actor: ActorType,
+  resetActors: PropTypes.func.isRequired,
+  actors: ActorsType.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool,
   namespace: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   isFetchingAvatar: PropTypes.bool,
   isFetchingCover: PropTypes.bool,
   match: PropTypes.object.isRequired,
@@ -151,7 +166,6 @@ ActorPage.propTypes = {
 };
 
 ActorPage.defaultProps = {
-  actor: {},
   isAuthenticated: false,
   isFetchingAvatar: false,
   isFetchingCover: false,
@@ -159,13 +173,13 @@ ActorPage.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    actor,
+    actors,
     error,
     isLeader,
     isFetching,
     isFetchingAvatar,
     isFetchingCover,
-  } = state.actor;
+  } = state.actors;
 
   const {
     isAuthenticated,
@@ -173,7 +187,7 @@ const mapStateToProps = (state) => {
   } = state.auth;
 
   return {
-    actor,
+    actors,
     isLeader,
     error,
     isAuthenticated,
@@ -188,6 +202,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     readActor: (id, namespace) => {
       dispatch(actions.read(id, namespace));
+    },
+    resetActors: () => {
+      dispatch(actions.reset());
     },
     setAppTitle: (title) => {
       dispatch(appActions.setAppTitle(title));

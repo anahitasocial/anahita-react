@@ -1,9 +1,10 @@
 import { Person as PERSON } from '../constants';
+import PersonDefault from '../proptypes/PersonDefault';
 
 export default function (state = {
   isFetching: false,
   success: false,
-  person: {},
+  person: PersonDefault,
   error: '',
 }, action) {
   switch (action.type) {
@@ -11,7 +12,7 @@ export default function (state = {
       return {
         ...state,
         isFetching: true,
-        person: {},
+        person: PersonDefault,
         success: false,
         error: '',
       };

@@ -13,7 +13,6 @@ import i18n from '../languages';
 
 const StoryMessage = (props) => {
   const { story } = props;
-
   const subject = getStorySubject(story);
   const subjectName = story.subject ? story.subject.name : i18n.t('actor:unknown');
   const subjectURL = getURL(subject);

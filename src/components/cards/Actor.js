@@ -86,7 +86,9 @@ const ActorCard = (props) => {
         />
         {actor.body &&
         <CardContent>
-          <EntityBody body={actor.body} />
+          <EntityBody>
+            {actor.body}
+          </EntityBody>
         </CardContent>
         }
         <CardActions className={classes.actions}>

@@ -1,57 +1,65 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom';
-import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { withRouter } from 'react-router-dom';
 import { Person as PERSON } from '../../constants';
 import ActorDeleteForm from '../../components/ActorDeleteForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
 import actions from '../../actions/actor';
 
-import ActorType from '../../proptypes/Actor';
+import ActorsType from '../../proptypes/Actors';
+import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
 
-const styles = (theme) => {
-  return {
-    progress: {
-      marginLeft: '48%',
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit,
-    },
-  };
-};
-
-class ActorSettingsDeletePage extends React.Component {
+class ActorSettingsDelete extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      actor: props.actor,
+      actor: ActorDefault,
       alias: '',
       aliasError: false,
       aliasHelperText: '',
     };
+
+    const {
+      match: {
+        params: {
+          id,
+        },
+      },
+    } = props;
+    this.id = id;
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   componentWillMount() {
-    const { actor, namespace } = this.props;
-
-    if (!actor.id) {
-      const { id } = this.props.computedMatch.params;
-      const { readActor } = this.props;
-
-      readActor(id, namespace);
-    }
+    const { namespace, readActor } = this.props;
+    readActor(this.id, namespace);
   }
 
   componentWillReceiveProps(nextProps) {
+    const {
+      actors,
+      history,
+      namespace,
+      success,
+    } = nextProps;
+
+    if (success) {
+      history.push(`/${namespace}/`);
+    }
+
     this.setState({
-      actor: { ...nextProps.actor },
+      actor: actors.current,
     });
+  }
+
+  componentWillUnmount() {
+    const { resetActors } = this.props;
+    resetActors();
   }
 
   handleFieldChange(event) {
@@ -109,11 +117,8 @@ class ActorSettingsDeletePage extends React.Component {
   }
 
   canDelete() {
-    const {
-      actor,
-      viewer,
-    } = this.props;
-
+    const { viewer } = this.props;
+    const { actor } = this.state;
 
     if (viewer.type !== PERSON.TYPE.SUPER_ADMIN) {
       if (viewer.id === actor.id) {
@@ -147,11 +152,9 @@ class ActorSettingsDeletePage extends React.Component {
 
   render() {
     const {
-      classes,
       namespace,
       isFetching,
       error,
-      success,
     } = this.props;
 
     const {
@@ -163,9 +166,6 @@ class ActorSettingsDeletePage extends React.Component {
 
     return (
       <React.Fragment>
-        {!actor.id &&
-          <CircularProgress className={classes.progress} />
-        }
         {actor.id &&
           <ActorSettingCard
             namespace={namespace}
@@ -185,28 +185,26 @@ class ActorSettingsDeletePage extends React.Component {
             />
           </ActorSettingCard>
         }
-        {success && !actor.id &&
-          <Redirect to={`/${namespace}/`} />
-        }
       </React.Fragment>
     );
   }
 }
 
-ActorSettingsDeletePage.propTypes = {
-  classes: PropTypes.object.isRequired,
+ActorSettingsDelete.propTypes = {
   readActor: PropTypes.func.isRequired,
+  resetActors: PropTypes.func.isRequired,
   deleteActor: PropTypes.func.isRequired,
-  actor: ActorType.isRequired,
+  actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool,
   success: PropTypes.bool,
   viewer: PersonType.isRequired,
-  computedMatch: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
-ActorSettingsDeletePage.defaultProps = {
+ActorSettingsDelete.defaultProps = {
   isFetching: false,
   error: '',
   success: false,
@@ -214,18 +212,18 @@ ActorSettingsDeletePage.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    actor,
+    actors,
     error,
     success,
     isFetching,
-  } = state.actor;
+  } = state.actors;
 
   const {
     viewer,
   } = state.auth;
 
   return {
-    actor,
+    actors,
     viewer,
     error,
     success,
@@ -238,13 +236,16 @@ const mapDispatchToProps = (dispatch) => {
     readActor: (id, namespace) => {
       dispatch(actions.read(id, namespace));
     },
+    resetActors: () => {
+      dispatch(actions.reset());
+    },
     deleteActor: (actor) => {
       dispatch(actions.deleteActor(actor));
     },
   };
 };
 
-export default withStyles(styles)(withRouter(connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorSettingsDeletePage)));
+)(ActorSettingsDelete));

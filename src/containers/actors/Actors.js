@@ -16,7 +16,7 @@ import Link from 'react-router-dom/Link';
 import FollowAction from '../actions/FollowAction';
 
 import appActions from '../../actions/app';
-import actions from '../../actions/actors';
+import actions from '../../actions/actor';
 import i18n from '../../languages';
 
 import { Person as PERSON } from '../../constants';

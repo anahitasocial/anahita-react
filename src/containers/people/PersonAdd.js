@@ -13,21 +13,14 @@ import { Person as PERSON } from '../../constants';
 import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';
+import PersonDefault from '../../proptypes/PersonDefault';
 
-class PersonAddPage extends React.Component {
+class PersonAdd extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      person: {
-        givenName: '',
-        familyName: '',
-        username: '',
-        email: '',
-        usertype: PERSON.TYPE.REGISTERED,
-        gender: PERSON.GENDER.NEUTRAL,
-        password: '',
-      },
+      person: PersonDefault,
       givenNameError: false,
       givenNameHelperText: '',
       familyNameError: false,
@@ -247,7 +240,7 @@ class PersonAddPage extends React.Component {
   }
 }
 
-PersonAddPage.propTypes = {
+PersonAdd.propTypes = {
   addPerson: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   person: PersonType,
@@ -256,8 +249,8 @@ PersonAddPage.propTypes = {
   error: PropTypes.string,
 };
 
-PersonAddPage.defaultProps = {
-  person: {},
+PersonAdd.defaultProps = {
+  person: PersonDefault,
   isFetching: false,
   success: false,
   error: '',
@@ -295,4 +288,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PersonAddPage);
+)(PersonAdd);

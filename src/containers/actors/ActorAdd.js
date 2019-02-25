@@ -11,7 +11,8 @@ import ActorInfoForm from '../../components/ActorInfoForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import actions from '../../actions/actor';
 
-import ActorType from '../../proptypes/Actor';
+import ActorsType from '../../proptypes/Actors';
+import ActorDefault from '../../proptypes/ActorDefault';
 
 const BODY_CHARACTER_LIMIT = 350;
 
@@ -20,7 +21,7 @@ class ActorAddPage extends React.Component {
     super(props);
 
     this.state = {
-      actor: {},
+      actor: ActorDefault,
       nameError: false,
       nameHelperText: '',
       bodyError: false,
@@ -32,8 +33,9 @@ class ActorAddPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { actors } = nextProps;
     this.setState({
-      actor: { ...nextProps.actor },
+      actor: actors.current,
     });
   }
 
@@ -106,7 +108,6 @@ class ActorAddPage extends React.Component {
   render() {
     const {
       namespace,
-      success,
       error,
       isFetching,
     } = this.props;
@@ -154,7 +155,7 @@ class ActorAddPage extends React.Component {
             type="error"
           />
         }
-        {success && actor.id &&
+        {actor.id &&
           <Redirect to={`/${namespace}/${actor.id}/`} />
         }
       </React.Fragment>
@@ -164,37 +165,28 @@ class ActorAddPage extends React.Component {
 
 ActorAddPage.propTypes = {
   addActor: PropTypes.func.isRequired,
-  actor: ActorType,
+  actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
-  success: PropTypes.bool,
   error: PropTypes.string,
   isFetching: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
   const {
-    actor,
-    success,
+    actors,
     error,
     isFetching,
-  } = state.actor;
+  } = state.actors;
 
   return {
-    actor,
-    success,
+    actors,
     error,
     isFetching,
   };
 };
 
 ActorAddPage.defaultProps = {
-  actor: {
-    id: null,
-    name: '',
-    body: '',
-  },
   isFetching: false,
-  success: false,
   error: '',
 };
 
