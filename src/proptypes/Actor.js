@@ -13,6 +13,7 @@ import ImageURL from './ImageURL';
 export default shape({
   id: number,
   objectType: oneOf([
+    'com.actors.actor',
     'com.people.person',
     'com.groups.group',
   ]),

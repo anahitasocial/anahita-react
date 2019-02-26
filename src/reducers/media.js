@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { Media as MEDIA } from '../constants';
+import MediumDefault from '../proptypes/MediumDefault';
 
 export default function (higherOrderState, action) {
   const state = {
@@ -7,7 +8,7 @@ export default function (higherOrderState, action) {
     media: {
       byId: {},
       allIds: [],
-      current: null,
+      current: MediumDefault,
     },
     error: '',
     total: 0,
@@ -22,7 +23,7 @@ export default function (higherOrderState, action) {
         media: {
           byId: {},
           allIds: [],
-          current: null,
+          current: MediumDefault,
         },
         total: 0,
         hasMore: true,
@@ -43,7 +44,7 @@ export default function (higherOrderState, action) {
             ...action.media,
           },
           allIds: _.union(state.media.allIds, action.ids),
-          current: null,
+          current: MediumDefault,
         },
         total: action.total,
         hasMore: action.hasMore,

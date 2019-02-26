@@ -6,14 +6,14 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import actions from '../../actions/auth';
 import * as validate from './validate';
 
-import PersonType from '../../proptypes/Person';
+import PersonDefault from '../../proptypes/PersonDefault';
 
 class PasswordResetPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      person: props.person,
+      person: PersonDefault,
       emailError: false,
       emailHelperText: '',
     };
@@ -115,7 +115,6 @@ class PasswordResetPage extends React.Component {
 }
 
 PasswordResetPage.propTypes = {
-  person: PersonType,
   resetPassword: PropTypes.func.isRequired,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
@@ -123,7 +122,6 @@ PasswordResetPage.propTypes = {
 };
 
 PasswordResetPage.defaultProps = {
-  person: {},
   isFetching: false,
   success: false,
   error: '',

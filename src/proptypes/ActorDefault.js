@@ -3,7 +3,7 @@ import ImageURLDefault from './ImageURLDefault';
 
 export default {
   id: null,
-  objectType: 'com.groups.group',
+  objectType: 'com.actors.actor',
   name: '',
   alias: '',
   body: '',

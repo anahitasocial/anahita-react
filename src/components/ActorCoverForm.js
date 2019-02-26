@@ -12,11 +12,11 @@ import CoverIcon from '@material-ui/icons/Panorama';
 const styles = theme => ({
   cover: {
     width: '100%',
-    minHeight: theme.spacing.unit * 40,
+    height: theme.spacing.unit * 45,
   },
   coverPlaceholder: {
     width: '100%',
-    minHeight: theme.spacing.unit * 40,
+    height: theme.spacing.unit * 45,
     backgroundColor: theme.palette.background.default,
   },
   coverIcon: {
@@ -27,7 +27,7 @@ const styles = theme => ({
   button: {
     position: 'relative',
     width: '100%',
-    minHeight: theme.spacing.unit * 40,
+    height: theme.spacing.unit * 45,
   },
   input: {
     display: 'none',

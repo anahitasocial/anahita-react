@@ -10,7 +10,6 @@ class TextFieldEmail extends React.Component {
     super(props);
 
     this.state = {
-      initValue: props.value,
       error: false,
       helperText: '',
     };
@@ -27,11 +26,15 @@ class TextFieldEmail extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    this.props.reset();
+  }
+
   handleFieldChange(event) {
     const { value } = event.target;
     const { isEmailTaken, onChange } = this.props;
 
-    if (validate.email(value) && this.state.initValue !== value) {
+    if (validate.email(value)) {
       isEmailTaken(value);
     }
 
@@ -55,8 +58,8 @@ class TextFieldEmail extends React.Component {
         value={value}
         onChange={this.handleFieldChange}
         label="Email"
-        error={this.props.error || error}
-        helperText={this.props.helperText || helperText}
+        error={error}
+        helperText={helperText}
         fullWidth
         margin="normal"
         disabled={disabled}
@@ -70,17 +73,13 @@ TextFieldEmail.propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   isEmailTaken: PropTypes.func.isRequired,
-  emailAvailable: PropTypes.bool,
-  error: PropTypes.bool,
-  helperText: PropTypes.string,
+  reset: PropTypes.func.isRequired,
+  emailAvailable: PropTypes.bool.isRequired,
 };
 
 TextFieldEmail.defaultProps = {
   value: '',
   disabled: false,
-  emailAvailable: false,
-  error: false,
-  helperText: '',
 };
 
 const mapStateToProps = (state) => {
@@ -97,6 +96,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     isEmailTaken: (email) => {
       dispatch(actions.validateEmail(email));
+    },
+    reset: () => {
+      dispatch(actions.validateEmailReset());
     },
   };
 };

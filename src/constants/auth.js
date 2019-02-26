@@ -12,7 +12,13 @@ export default {
     RESET: password('reset'),
   },
   VALIDATE: {
-    EMAIL: validate('email'),
-    USERNAME: validate('username'),
+    EMAIL: {
+      ...validate('email'),
+      RESET: 'VALIDATE_EMAIL_RESET',
+    },
+    USERNAME: {
+      ...validate('username'),
+      RESET: 'VALIDATE_USERNAME_RESET',
+    },
   },
 };

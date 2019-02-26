@@ -1,6 +1,14 @@
 import { auth as api } from '../api';
 import { Auth as AUTH } from '../constants';
 
+// -- Validate Username Reset
+
+function validateUsernameReset() {
+  return {
+    type: AUTH.VALIDATE.USERNAME.RESET,
+  };
+}
+
 // -- Validate Username Existence
 
 function validateUsernameRequest() {
@@ -38,6 +46,14 @@ function validateUsername(username) {
           throw new Error(error);
         });
     });
+  };
+}
+
+// -- Validate Email Reset
+
+function validateEmailReset() {
+  return {
+    type: AUTH.VALIDATE.EMAIL.RESET,
   };
 }
 
@@ -83,20 +99,20 @@ function validateEmail(email) {
 
 // - Login Action -
 
-function requestLogin() {
+function loginRequest() {
   return {
     type: AUTH.LOGIN.REQUEST,
   };
 }
 
-function receiveLogin(result) {
+function loginSuccess(viewer) {
   return {
     type: AUTH.LOGIN.SUCCESS,
-    result,
+    viewer,
   };
 }
 
-function loginError(error) {
+function loginFailure(error) {
   return {
     type: AUTH.LOGIN.FAILURE,
     error: error.message,
@@ -105,19 +121,19 @@ function loginError(error) {
 
 function login(credentials) {
   return (dispatch) => {
-    dispatch(requestLogin());
+    dispatch(loginRequest());
     return new Promise((resolve, reject) => {
       api.addSession(credentials)
         .then((response) => {
           localStorage.setItem('viewer', JSON.stringify(response.data));
-          dispatch(receiveLogin(response));
+          dispatch(loginSuccess(response.data));
           return resolve();
         }, (response) => {
-          dispatch(loginError(response));
+          dispatch(loginFailure(response));
           return reject(response);
         });
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       // throw new Error(error);
     });
   };
@@ -125,13 +141,13 @@ function login(credentials) {
 
 // - Logout Action
 
-function requestLogout() {
+function logoutRequest() {
   return {
     type: AUTH.LOGOUT.REQUEST,
   };
 }
 
-function receiveLogout() {
+function logoutSuccess() {
   return {
     type: AUTH.LOGOUT.SUCCESS,
   };
@@ -139,11 +155,11 @@ function receiveLogout() {
 
 function logout() {
   return (dispatch) => {
-    dispatch(requestLogout());
+    dispatch(logoutRequest());
     return new Promise((resolve, reject) => {
       api.deleteSession()
         .then(() => {
-          dispatch(receiveLogout());
+          dispatch(logoutSuccess());
           localStorage.removeItem('viewer');
           return resolve();
         }, (response) => {
@@ -243,7 +259,9 @@ function resetPassword(person) {
 }
 
 export default {
+  validateUsernameReset,
   validateUsername,
+  validateEmailReset,
   validateEmail,
   login,
   logout,

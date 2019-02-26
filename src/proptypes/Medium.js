@@ -7,12 +7,14 @@ import {
   arrayOf,
 } from 'prop-types';
 
+import ActorType from './Actor';
 import PersonType from './Person';
 import ImageURL from './ImageURL';
 
 export default shape({
   id: number,
   objectType: oneOf([
+    'com.media.medium',
     'com.photos.photo',
     'com.photos.set',
     'com.topics.topic',
@@ -27,6 +29,7 @@ export default shape({
   coverURL: ImageURL,
   commands: arrayOf(string),
   subscriberCount: number,
+  owner: ActorType,
   author: PersonType,
   creationTime: string,
   editor: PersonType,

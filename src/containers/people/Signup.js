@@ -7,14 +7,14 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import actions from '../../actions/auth';
 import * as validate from './validate';
 
-import PersonType from '../../proptypes/Person';
+import PersonDefault from '../../proptypes/PersonDefault';
 
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      person: props.person,
+      person: PersonDefault,
       givenNameError: false,
       givenNameHelperText: '',
       familyNameError: false,
@@ -200,7 +200,6 @@ class SignupPage extends React.Component {
 
 SignupPage.propTypes = {
   signup: PropTypes.func.isRequired,
-  person: PersonType,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
@@ -208,7 +207,6 @@ SignupPage.propTypes = {
 };
 
 SignupPage.defaultProps = {
-  person: {},
   isFetching: false,
   success: false,
   error: '',

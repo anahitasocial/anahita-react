@@ -3,11 +3,13 @@ import {
   Person as PERSON,
 } from '../constants';
 
-const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {};
+import PersonDefault from '../proptypes/PersonDefault';
+
+const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : PersonDefault;
 
 export default function (state = {
-  emailAvailable: false,
-  usernameAvailable: false,
+  emailAvailable: true,
+  usernameAvailable: true,
   isFetching: false,
   isValidating: false,
   isAuthenticated: viewer.id && (
@@ -20,17 +22,23 @@ export default function (state = {
   error: '',
 }, action) {
   switch (action.type) {
-    case AUTH.VALIDATE.USERNAME.REQUEST:
+    case AUTH.VALIDATE.USERNAME.RESET:
       return {
         ...state,
-        isValidating: true,
-        usernameAvailable: false,
+        usernameAvailable: true,
       };
+    case AUTH.VALIDATE.EMAIL.RESET:
+      return {
+        ...state,
+        emailAvailable: true,
+      };
+    case AUTH.VALIDATE.USERNAME.REQUEST:
     case AUTH.VALIDATE.EMAIL.REQUEST:
       return {
         ...state,
         isValidating: true,
-        emailAvailable: false,
+        usernameAvailable: true,
+        emailAvailable: true,
       };
     case AUTH.LOGIN.REQUEST:
       return {
@@ -38,7 +46,7 @@ export default function (state = {
         isFetching: true,
         isAuthenticated: false,
         success: false,
-        viewer: {},
+        viewer: PersonDefault,
       };
     case AUTH.VALIDATE.USERNAME.SUCCESS:
       return {
@@ -59,7 +67,7 @@ export default function (state = {
         isAuthenticated: true,
         success: true,
         error: '',
-        viewer: localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : {},
+        viewer: action.viewer,
       };
     case AUTH.VALIDATE.USERNAME.FAILURE:
       return {
