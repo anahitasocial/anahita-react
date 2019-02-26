@@ -131,6 +131,9 @@ class ActorCover extends React.Component {
     } = this.props;
 
     const { anchorEl, coverLoaded } = this.state;
+    const canEdit = this.canEdit();
+    const hasCover = this.hasCover();
+    const isWaiting = this.isWaiting();
 
     return (
       <ActorCoverForm
@@ -138,9 +141,9 @@ class ActorCover extends React.Component {
         name={actor.name}
         cover={this.cover}
         anchorEl={anchorEl}
-        canEdit={this.canEdit()}
-        hasCover={this.hasCover()}
-        isWaiting={this.isWaiting()}
+        canEdit={canEdit}
+        hasCover={hasCover}
+        isWaiting={isWaiting}
         isCoverLoaded={coverLoaded}
         handleOpen={this.handleOpen}
         handleClose={this.handleClose}

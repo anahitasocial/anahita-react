@@ -1,4 +1,5 @@
 import PERSON from '../constants/person';
+import ImageURLDefault from './ImageURLDefault';
 
 const { TYPE, GENDER } = PERSON;
 
@@ -13,8 +14,8 @@ export default {
   familyName: '',
   body: '',
   gender: GENDER.NEUTRAL,
-  imageURL: null,
-  coverURL: null,
+  imageURL: ImageURLDefault,
+  coverURL: ImageURLDefault,
   followerCount: 0,
   leaderCount: 0,
   mutualCount: 0,

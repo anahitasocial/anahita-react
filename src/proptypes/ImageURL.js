@@ -4,26 +4,16 @@ import {
   string,
 } from 'prop-types';
 
+const ImageType = shape({
+  size: shape({
+    width: number,
+    height: number,
+  }),
+  url: string,
+});
+
 export default shape({
-  large: shape({
-    size: shape({
-      width: number,
-      height: number,
-    }),
-    url: string,
-  }),
-  medium: shape({
-    size: shape({
-      width: number,
-      height: number,
-    }),
-    url: string,
-  }),
-  original: shape({
-    size: shape({
-      width: number,
-      height: number,
-    }),
-    url: string,
-  }),
+  large: ImageType,
+  medium: ImageType,
+  original: ImageType,
 });

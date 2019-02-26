@@ -51,15 +51,11 @@ class ActorSettingsPage extends React.Component {
     const { actor } = this.state;
 
     return (
-      <React.Fragment>
-        {actor.id &&
-          <ActorSettingsList
-            actor={actor}
-            viewer={viewer}
-            namespace={namespace}
-          />
-        }
-      </React.Fragment>
+      <ActorSettingsList
+        actor={actor}
+        viewer={viewer}
+        namespace={namespace}
+      />
     );
   }
 }

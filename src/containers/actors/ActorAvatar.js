@@ -139,15 +139,19 @@ class ActorAvatar extends React.Component {
       avatarLoaded,
     } = this.state;
 
+    const canEdit = this.canEdit();
+    const hasAvatar = this.hasAvatar();
+    const isWaiting = this.isWaiting();
+
     return (
       <ActorAvatarForm
         isFetching={isFetching}
         name={actor.name}
         avatar={this.avatar}
         anchorEl={anchorEl}
-        canEdit={this.canEdit()}
-        hasAvatar={this.hasAvatar()}
-        isWaiting={this.isWaiting()}
+        canEdit={canEdit}
+        hasAvatar={hasAvatar}
+        isWaiting={isWaiting}
         isAvatarLoaded={avatarLoaded}
         handleOpen={this.handleOpen}
         handleClose={this.handleClose}

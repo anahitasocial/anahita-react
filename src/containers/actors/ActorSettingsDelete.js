@@ -165,27 +165,23 @@ class ActorSettingsDelete extends React.Component {
     } = this.state;
 
     return (
-      <React.Fragment>
-        {actor.id &&
-          <ActorSettingCard
-            namespace={namespace}
-            actor={actor}
-          >
-            <ActorDeleteForm
-              referenceAlias={actor.alias}
-              alias={alias}
-              aliasError={aliasError}
-              aliasHelperText={aliasHelperText}
-              canDelete={this.canDelete()}
-              isFetching={isFetching}
-              error={error}
-              handleFieldChange={this.handleFieldChange}
-              handleFormSubmit={this.handleFormSubmit}
-              dismissPath={`/${namespace}/${actor.id}/settings/`}
-            />
-          </ActorSettingCard>
-        }
-      </React.Fragment>
+      <ActorSettingCard
+        namespace={namespace}
+        actor={actor}
+      >
+        <ActorDeleteForm
+          referenceAlias={actor.alias}
+          alias={alias}
+          aliasError={aliasError}
+          aliasHelperText={aliasHelperText}
+          canDelete={this.canDelete()}
+          isFetching={isFetching}
+          error={error}
+          handleFieldChange={this.handleFieldChange}
+          handleFormSubmit={this.handleFormSubmit}
+          dismissPath={`/${namespace}/${actor.id}/settings/`}
+        />
+      </ActorSettingCard>
     );
   }
 }

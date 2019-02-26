@@ -1,24 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonInfoForm from '../../components/PersonInfoForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import actions from '../../actions/person';
 import { Person as PERSON } from '../../constants';
 import PersonType from '../../proptypes/Person';
-
-const styles = (theme) => {
-  return {
-    progress: {
-      marginLeft: '48%',
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit,
-    },
-  };
-};
+import PersonDefault from '../../proptypes/PersonDefault';
 
 const BODY_CHARACTER_LIMIT = 1000;
 
@@ -27,7 +16,7 @@ class PersonSettingsInfoPage extends React.Component {
     super(props);
 
     this.state = {
-      person: {},
+      person: PersonDefault,
       givenNameError: false,
       givenNameHelperText: '',
       familyNameError: false,
@@ -48,9 +37,8 @@ class PersonSettingsInfoPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      person: { ...nextProps.person },
-    });
+    const { person } = nextProps;
+    this.setState({ person });
   }
 
   handleFieldChange(event) {
@@ -143,7 +131,6 @@ class PersonSettingsInfoPage extends React.Component {
   editPerson() {
     const { person } = this.state;
     const { editPerson } = this.props;
-
     editPerson(person);
   }
 
@@ -171,7 +158,6 @@ class PersonSettingsInfoPage extends React.Component {
 
   render() {
     const {
-      classes,
       viewer,
       isFetching,
       success,
@@ -190,38 +176,33 @@ class PersonSettingsInfoPage extends React.Component {
 
     return (
       <React.Fragment>
-        {!person.id &&
-          <CircularProgress className={classes.progress} />
-        }
-        {person.id &&
-          <ActorSettingCard
-            namespace="people"
-            actor={person}
-            key="com:people.person"
-          >
-            <PersonInfoForm
-              givenName={person.givenName}
-              givenNameError={givenNameError}
-              givenNameHelperText={givenNameHelperText}
-              familyName={person.familyName}
-              familyNameError={familyNameError}
-              familyNameHelperText={familyNameHelperText}
-              body={person.body}
-              bodyError={bodyError}
-              bodyHelperText={bodyHelperText}
-              gender={person.gender}
-              usertype={person.usertype}
-              handleFieldChange={this.handleFieldChange}
-              handleFormSubmit={this.handleFormSubmit}
-              isFetching={isFetching}
-              canChangeUsertype={this.canChangeUsertype()}
-              isSuperAdmin={
-                viewer.usertype === PERSON.TYPE.SUPER_ADMIN
-              }
-              dismissPath={`/people/${person.id}/settings/`}
-            />
-          </ActorSettingCard>
-        }
+        <ActorSettingCard
+          namespace="people"
+          actor={person}
+          key="com:people.person"
+        >
+          <PersonInfoForm
+            givenName={person.givenName}
+            givenNameError={givenNameError}
+            givenNameHelperText={givenNameHelperText}
+            familyName={person.familyName}
+            familyNameError={familyNameError}
+            familyNameHelperText={familyNameHelperText}
+            body={person.body}
+            bodyError={bodyError}
+            bodyHelperText={bodyHelperText}
+            gender={person.gender}
+            usertype={person.usertype}
+            handleFieldChange={this.handleFieldChange}
+            handleFormSubmit={this.handleFormSubmit}
+            isFetching={isFetching}
+            canChangeUsertype={this.canChangeUsertype()}
+            isSuperAdmin={
+              viewer.usertype === PERSON.TYPE.SUPER_ADMIN
+            }
+            dismissPath={`/people/${person.id}/settings/`}
+          />
+        </ActorSettingCard>
         {error &&
           <SimpleSnackbar
             isOpen={Boolean(error)}
@@ -242,10 +223,9 @@ class PersonSettingsInfoPage extends React.Component {
 }
 
 PersonSettingsInfoPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   readPerson: PropTypes.func.isRequired,
   editPerson: PropTypes.func.isRequired,
-  person: PersonType,
+  person: PersonType.isRequired,
   viewer: PersonType.isRequired,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
@@ -254,7 +234,6 @@ PersonSettingsInfoPage.propTypes = {
 };
 
 PersonSettingsInfoPage.defaultProps = {
-  person: {},
   isFetching: false,
   error: '',
   success: false,
@@ -292,7 +271,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PersonSettingsInfoPage));
+)(PersonSettingsInfoPage);

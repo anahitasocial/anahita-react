@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonAccountForm from '../../components/PersonAccountForm';
 import ActorSettingCard from '../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
@@ -10,23 +8,14 @@ import actions from '../../actions/person';
 import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';
-
-const styles = (theme) => {
-  return {
-    progress: {
-      marginLeft: '48%',
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit,
-    },
-  };
-};
+import PersonDefault from '../../proptypes/PersonDefault';
 
 class PersonSettingsAccountPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      person: {},
+      person: PersonDefault,
       usernameError: false,
       usernameHelperText: '',
       emailError: false,
@@ -47,9 +36,8 @@ class PersonSettingsAccountPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      person: { ...nextProps.person },
-    });
+    const { person } = nextProps;
+    this.setState({ person });
   }
 
   handleFieldChange(event) {
@@ -138,7 +126,6 @@ class PersonSettingsAccountPage extends React.Component {
 
   render() {
     const {
-      classes,
       isFetching,
       success,
       error,
@@ -156,33 +143,28 @@ class PersonSettingsAccountPage extends React.Component {
 
     return (
       <React.Fragment>
-        {!person.id &&
-          <CircularProgress className={classes.progress} />
-        }
-        {person.id &&
-          <ActorSettingCard
-            namespace="people"
-            actor={person}
-          >
-            <PersonAccountForm
-              usernameError={usernameError}
-              usernameHelperText={usernameHelperText}
-              emailError={emailError}
-              emailHelperText={emailHelperText}
-              passwordError={passwordError}
-              passwordHelperText={passwordHelperText}
-              username={person.username}
-              email={person.email}
-              password={person.password}
-              handleFieldChange={this.handleFieldChange}
-              handleFormSubmit={this.handleFormSubmit}
-              dismissPath={`/people/${person.id}/settings/`}
-              isFetching={isFetching}
-              success={success}
-              error={error}
-            />
-          </ActorSettingCard>
-        }
+        <ActorSettingCard
+          namespace="people"
+          actor={person}
+        >
+          <PersonAccountForm
+            usernameError={usernameError}
+            usernameHelperText={usernameHelperText}
+            emailError={emailError}
+            emailHelperText={emailHelperText}
+            passwordError={passwordError}
+            passwordHelperText={passwordHelperText}
+            username={person.username}
+            email={person.email}
+            password={person.password}
+            handleFieldChange={this.handleFieldChange}
+            handleFormSubmit={this.handleFormSubmit}
+            dismissPath={`/people/${person.id}/settings/`}
+            isFetching={isFetching}
+            success={success}
+            error={error}
+          />
+        </ActorSettingCard>
         {error &&
           <SimpleSnackbar
             isOpen={Boolean(error)}
@@ -203,10 +185,9 @@ class PersonSettingsAccountPage extends React.Component {
 }
 
 PersonSettingsAccountPage.propTypes = {
-  classes: PropTypes.object.isRequired,
   readPerson: PropTypes.func.isRequired,
   editPersonAccount: PropTypes.func.isRequired,
-  person: PersonType,
+  person: PersonType.isRequired,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
@@ -214,7 +195,6 @@ PersonSettingsAccountPage.propTypes = {
 };
 
 PersonSettingsAccountPage.defaultProps = {
-  person: {},
   isFetching: false,
   success: false,
   error: '',
@@ -247,7 +227,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PersonSettingsAccountPage));
+)(PersonSettingsAccountPage);

@@ -132,26 +132,24 @@ class ActorSettingsInfoPage extends React.Component {
 
     return (
       <React.Fragment>
-        {actor.id &&
-          <ActorSettingCard
-            namespace={namespace}
-            actor={actor}
-          >
-            <ActorInfoForm
-              formTitle={`${singularize(namespace)} Information`}
-              name={actor.name}
-              nameError={nameError}
-              nameHelperText={nameHelperText}
-              body={actor.body}
-              bodyError={bodyError}
-              bodyHelperText={bodyHelperText}
-              handleFieldChange={this.handleFieldChange}
-              handleFormSubmit={this.handleFormSubmit}
-              isFetching={isFetching}
-              dismissPath={`/${namespace}/${actor.id}/settings/`}
-            />
-          </ActorSettingCard>
-        }
+        <ActorSettingCard
+          namespace={namespace}
+          actor={actor}
+        >
+          <ActorInfoForm
+            formTitle={`${singularize(namespace)} Information`}
+            name={actor.name}
+            nameError={nameError}
+            nameHelperText={nameHelperText}
+            body={actor.body}
+            bodyError={bodyError}
+            bodyHelperText={bodyHelperText}
+            handleFieldChange={this.handleFieldChange}
+            handleFormSubmit={this.handleFormSubmit}
+            isFetching={isFetching}
+            dismissPath={`/${namespace}/${actor.id}/settings/`}
+          />
+        </ActorSettingCard>
         {error &&
           <SimpleSnackbar
             isOpen={Boolean(error)}
