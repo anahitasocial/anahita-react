@@ -138,12 +138,12 @@ const StoryCard = (props) => {
 
 StoryCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  actions: PropTypes.arrayOf(PropTypes.node),
+  actions: PropTypes.node,
   story: PropTypes.object.isRequired,
 };
 
 StoryCard.defaultProps = {
-  actions: [],
+  actions: null,
 };
 
 export default withStyles(styles)(StoryCard);

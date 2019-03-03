@@ -54,7 +54,7 @@ const MediumCard = (props) => {
   const {
     classes,
     medium,
-    action,
+    actions,
   } = props;
 
   const portrait = getPortraitURL(medium);
@@ -133,9 +133,11 @@ const MediumCard = (props) => {
             </EntityBody>
           }
         </CardContent>
-        <CardActions>
-          {action}
-        </CardActions>
+        {actions &&
+          <CardActions>
+            {actions}
+          </CardActions>
+        }
       </Card>
     </React.Fragment>
   );
@@ -143,12 +145,12 @@ const MediumCard = (props) => {
 
 MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  action: PropTypes.node,
+  actions: PropTypes.node,
   medium: MediumType.isRequired,
 };
 
 MediumCard.defaultProps = {
-  action: null,
+  actions: null,
 };
 
 export default withStyles(styles)(MediumCard);

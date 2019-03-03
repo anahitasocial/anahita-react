@@ -18,6 +18,7 @@ import appActions from '../../actions/app';
 import actions from '../../actions/media';
 import i18n from '../../languages';
 
+import LikeAction from '../actions/Like';
 import { Person as PERSON } from '../../constants';
 import MediumCard from '../../components/cards/Medium';
 import PersonType from '../../proptypes/Person';
@@ -180,6 +181,14 @@ class MediaPage extends React.Component {
                 <MediumCard
                   key={key}
                   medium={medium}
+                  actions={
+                    <React.Fragment>
+                      <LikeAction
+                        medium={medium}
+                        isLiked={medium.commands.includes('unvote')}
+                      />
+                    </React.Fragment>
+                  }
                 />
               );
             })

@@ -1,6 +1,14 @@
 import stories from './stories';
 
 export default {
+  actions: {
+    follow: 'Follow',
+    unfollow: 'Unfollow',
+    block: 'Block',
+    unblock: 'Unblock',
+    like: 'Like',
+    unlike: 'Unlike',
+  },
   translation: {
     stories,
   },

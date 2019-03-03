@@ -7,7 +7,7 @@ import PersonDefault from '../proptypes/PersonDefault';
 
 const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : PersonDefault;
 
-export default function (state = {
+export default (state = {
   emailAvailable: true,
   usernameAvailable: true,
   isFetching: false,
@@ -20,7 +20,7 @@ export default function (state = {
   viewer,
   success: false,
   error: '',
-}, action) {
+}, action) => {
   switch (action.type) {
     case AUTH.VALIDATE.USERNAME.RESET:
       return {
@@ -129,4 +129,4 @@ export default function (state = {
     default:
       return state;
   }
-}
+};

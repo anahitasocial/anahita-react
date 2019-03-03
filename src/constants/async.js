@@ -1,9 +1,9 @@
-export default function (entity) {
+export default (node) => {
   return (action) => {
     return {
-      REQUEST: `${entity.toUpperCase()}_${action.toUpperCase()}_REQUEST`,
-      SUCCESS: `${entity.toUpperCase()}_${action.toUpperCase()}_SUCCESS`,
-      FAILURE: `${entity.toUpperCase()}_${action.toUpperCase()}_FAILURE`,
+      REQUEST: `${node.toUpperCase()}_${action.toUpperCase()}_REQUEST`,
+      SUCCESS: `${node.toUpperCase()}_${action.toUpperCase()}_SUCCESS`,
+      FAILURE: `${node.toUpperCase()}_${action.toUpperCase()}_FAILURE`,
     };
   };
-}
+};

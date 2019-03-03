@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import actions from '../../actions/stories';
 
+import LikeAction from '../actions/Like';
 import StoryCard from '../../components/cards/Story';
 import StoriesType from '../../proptypes/Stories';
 
@@ -88,6 +89,16 @@ class StoriesContainer extends React.Component {
                 <StoryCard
                   story={story}
                   key={key}
+                  actions={
+                    <React.Fragment>
+                      {story.object &&
+                      <LikeAction
+                        medium={story.object}
+                        isLiked={story.commands.includes('unvote')}
+                      />
+                      }
+                    </React.Fragment>
+                  }
                 />
               );
             })

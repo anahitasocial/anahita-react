@@ -3,6 +3,7 @@ import auth from './auth';
 import actor from './actor';
 import block from './block';
 import follow from './follow';
+import likes from './likes';
 import media from './media';
 import person from './person';
 import stories from './stories';
@@ -14,6 +15,7 @@ export default {
   actor,
   block,
   follow,
+  likes,
   media,
   person,
   stories,

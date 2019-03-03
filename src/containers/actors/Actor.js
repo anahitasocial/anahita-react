@@ -11,7 +11,7 @@ import StoriesContainer from '../stories/Stories';
 import ActorAvatar from './ActorAvatar';
 import ActorCover from './ActorCover';
 import ActorCommands from './ActorCommands';
-import FollowAction from '../actions/FollowAction';
+import FollowAction from '../actions/Follow';
 import appActions from '../../actions/app';
 import actions from '../../actions/actor';
 import i18n from '../../languages';
@@ -89,6 +89,8 @@ class ActorPage extends React.Component {
 
     const { actor } = this.state;
 
+    const canFollow = this.canFollow(actor);
+
     return (
       <React.Fragment>
         <Helmet>
@@ -115,17 +117,19 @@ class ActorPage extends React.Component {
           name={actor.name}
           description={actor.body}
           alias={actor.alias}
-          followAction={this.canFollow(actor) && <FollowAction actor={actor} />}
+          followAction={canFollow && <FollowAction actor={actor} />}
           headerAction={isAuthenticated && <ActorCommands actor={actor} />}
         />
         <Divider className={classes.divider} />
-        <StoriesContainer
-          key="com:stories.story"
-          queryFilters={{
-            oid: actor.id,
-          }}
-          {...this.params}
-        />
+        {actor.id &&
+          <StoriesContainer
+            key="com:stories.story"
+            queryFilters={{
+              oid: actor.id,
+            }}
+            {...this.params}
+          />
+        }
       </React.Fragment>
     );
   }

@@ -1,5 +1,5 @@
-import * as FollowAction from './FollowAction';
-import * as BlockAction from './BlockAction';
+import FollowAction from './Follow';
+import BlockAction from './Block';
 
 export {
   FollowAction,

@@ -13,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import Link from 'react-router-dom/Link';
-import FollowAction from '../actions/FollowAction';
+import FollowAction from '../actions/Follow';
 
 import appActions from '../../actions/app';
 import actions from '../../actions/actor';
@@ -214,7 +214,7 @@ ActorsPage.propTypes = {
   classes: PropTypes.object.isRequired,
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool.isRequired,
   actors: ActorsListType.isRequired,
   namespace: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
@@ -226,7 +226,6 @@ ActorsPage.propTypes = {
 
 ActorsPage.defaultProps = {
   queryFilters: {},
-  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {

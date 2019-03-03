@@ -4,9 +4,11 @@ import ACTOR_DEFAULT from '../proptypes/ActorDefault';
 
 const updateItem = (state, actor) => {
   const actors = { ...state.actors };
+
   actors.byId[actor.id] = actor;
   actors.allIds = _.union(actors.allIds, [actor.id]);
   actors.current = actor;
+
   return actors;
 };
 

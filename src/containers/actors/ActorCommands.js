@@ -6,7 +6,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { NavLink } from 'react-router-dom';
-import BlockAction from '../actions/BlockAction';
+import BlockAction from '../actions/Block';
 
 import ActorType from '../../proptypes/Actor';
 

@@ -257,14 +257,9 @@ App.propTypes = {
   theme: PropTypes.object.isRequired,
   viewer: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
-  appBarTitle: PropTypes.string,
-};
-
-App.defaultProps = {
-  appBarTitle: '',
-  isAuthenticated: false,
+  appBarTitle: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
