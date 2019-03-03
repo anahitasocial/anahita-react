@@ -41,6 +41,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
+    "react-google-charts": "^3.0.10",
     "react-helmet": "^5.2.0",
     "react-i18next": "^9.0.10",
     "react-infinite-scroller": "^1.2.1",
@@ -55,12 +56,21 @@
     "redux-devtools-log-monitor": "^1.3.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "striptags": "^2.2.1"
+    "striptags": "^3.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
-  }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
