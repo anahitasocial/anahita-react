@@ -26,10 +26,10 @@ import PeopleAdd from '../containers/people/Add';
 import PersonSettingsInfo from '../containers/people/settings/Info';
 import PersonSettingsAccount from '../containers/people/settings/Account';
 
-import NotesPage from '../containers/Notes';
-import PhotosPage from '../containers/Photos';
-import TopicsPage from '../containers/Topics';
-import ArticlesPage from '../containers/Articles';
+import NotesBrowse from '../containers/notes/Browse';
+import PhotosBrowse from '../containers/photos/Browse';
+import TopicsBrowse from '../containers/topics/Browse';
+import ArticlesBrowse from '../containers/articles/Browse';
 
 import DashboardPage from '../containers/Dashboard';
 import NotFoundPage from '../containers/NotFound';
@@ -161,22 +161,22 @@ const Routes = (props) => {
       <Route
         exact
         path="/notes/"
-        component={NotesPage}
+        component={NotesBrowse}
       />
       <Route
         exact
         path="/photos/"
-        component={PhotosPage}
+        component={PhotosBrowse}
       />
       <Route
         exact
         path="/topics/"
-        component={TopicsPage}
+        component={TopicsBrowse}
       />
       <Route
         exact
         path="/articles/"
-        component={ArticlesPage}
+        component={ArticlesBrowse}
       />
       <Route component={NotFoundPage} />
     </Switch>

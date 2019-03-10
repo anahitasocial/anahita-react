@@ -1,7 +1,7 @@
 import React from 'react';
-import MediaBrowse from './media/Browse';
+import MediaBrowse from '../media/Browse';
 
-class NotesPage extends React.Component {
+class NotesBrowse extends React.Component {
   constructor(props) {
     super(props);
 
@@ -27,4 +27,4 @@ class NotesPage extends React.Component {
   }
 }
 
-export default NotesPage;
+export default NotesBrowse;

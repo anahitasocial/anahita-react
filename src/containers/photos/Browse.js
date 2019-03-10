@@ -1,7 +1,7 @@
 import React from 'react';
-import MediaBrowse from './media/Browse';
+import MediaBrowse from '../media/Browse';
 
-class TopicsPage extends React.Component {
+class PhotosBrowse extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,8 +18,8 @@ class TopicsPage extends React.Component {
 
     return (
       <MediaBrowse
-        key="com:topics.topic"
-        namespace="topics"
+        key="com:photos.photo"
+        namespace="photos"
         queryFilters={filters}
         {...this.params}
       />
@@ -27,4 +27,4 @@ class TopicsPage extends React.Component {
   }
 }
 
-export default TopicsPage;
+export default PhotosBrowse;
