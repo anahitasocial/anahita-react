@@ -8,18 +8,20 @@ import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Link from 'react-router-dom/Link';
 
-const styles = theme => ({
-  formPaper: {
-    padding: '20px',
-  },
-  button: {
-    marginTop: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  title: {
-    marginBottom: 10,
-  },
-});
+const styles = (theme) => {
+  return {
+    formPaper: {
+      padding: '20px',
+    },
+    button: {
+      marginTop: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+    },
+    title: {
+      marginBottom: 10,
+    },
+  };
+};
 
 const ActorInfoForm = (props) => {
   const {

@@ -1,24 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import SignupForm from '../../components/SignupForm';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
-import actions from '../../actions/auth';
-import * as validate from './validate';
+import AccountForm from '../../../components/person/AccountForm';
+import ActorSettingCard from '../../../components/cards/ActorSetting';
+import SimpleSnackbar from '../../../components/SimpleSnackbar';
+import actions from '../../../actions/person';
+import * as validate from '../validate';
 
-import PersonDefault from '../../proptypes/PersonDefault';
+import PersonType from '../../../proptypes/Person';
+import PersonDefault from '../../../proptypes/PersonDefault';
 
-class SignupPage extends React.Component {
+class PeopleSettingsAccount extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       person: PersonDefault,
-      givenNameError: false,
-      givenNameHelperText: '',
-      familyNameError: false,
-      familyNameHelperText: '',
       usernameError: false,
       usernameHelperText: '',
       emailError: false,
@@ -29,6 +26,18 @@ class SignupPage extends React.Component {
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    const { id } = this.props.computedMatch.params;
+    const { readPerson } = this.props;
+
+    readPerson(id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { person } = nextProps;
+    this.setState({ person });
   }
 
   handleFieldChange(event) {
@@ -65,13 +74,6 @@ class SignupPage extends React.Component {
           fieldError.helperText = 'A valid email address is required!';
         }
         break;
-      case 'givenName':
-      case 'familyName':
-        if (value.length < 3) {
-          fieldError.error = true;
-          fieldError.helperText = 'At least 3 characters are required!';
-        }
-        break;
       case 'password':
         if (!validate.password(value)) {
           fieldError.error = true;
@@ -95,56 +97,44 @@ class SignupPage extends React.Component {
 
   validate() {
     const {
-      givenName,
-      familyName,
       username,
       email,
       password,
     } = this.state.person;
 
-    const givenNameValidated = this.validateField('givenName', givenName);
-    const familyNameValidated = this.validateField('familyName', familyName);
     const usernameValidated = this.validateField('username', username);
     const emailValidated = this.validateField('email', email);
     const passwordValidated = this.validateField('password', password);
 
-    return givenNameValidated &&
-    familyNameValidated &&
-    usernameValidated &&
+    return usernameValidated &&
     emailValidated &&
     passwordValidated;
   }
 
-  signup() {
+  editPerson() {
     const { person } = this.state;
-    const { signup } = this.props;
-
-    signup(person);
+    this.props.editPersonAccount(person);
+    delete person.password;
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
     if (this.validate()) {
-      this.signup();
+      this.editPerson();
     }
   }
 
   render() {
     const {
+      isFetching,
       success,
       error,
-      isFetching,
-      isAuthenticated,
     } = this.props;
 
     const {
       person,
-      givenNameError,
-      givenNameHelperText,
-      familyNameError,
-      familyNameHelperText,
-      usernameError,
       usernameHelperText,
+      usernameError,
       emailHelperText,
       emailError,
       passwordError,
@@ -153,28 +143,28 @@ class SignupPage extends React.Component {
 
     return (
       <React.Fragment>
-        <SignupForm
-          givenName={person.givenName}
-          givenNameError={givenNameError}
-          givenNameHelperText={givenNameHelperText}
-          familyName={person.familyName}
-          familyNameError={familyNameError}
-          familyNameHelperText={familyNameHelperText}
-          username={person.username}
-          usernameError={usernameError}
-          usernameHelperText={usernameHelperText}
-          email={person.email}
-          emailError={emailError}
-          emailHelperText={emailHelperText}
-          password={person.password}
-          passwordError={passwordError}
-          passwordHelperText={passwordHelperText}
-          handleFieldChange={this.handleFieldChange}
-          handleFormSubmit={this.handleFormSubmit}
-          isFetching={isFetching}
-          success={success}
-          error={error}
-        />
+        <ActorSettingCard
+          namespace="people"
+          actor={person}
+        >
+          <AccountForm
+            usernameError={usernameError}
+            usernameHelperText={usernameHelperText}
+            emailError={emailError}
+            emailHelperText={emailHelperText}
+            passwordError={passwordError}
+            passwordHelperText={passwordHelperText}
+            username={person.username}
+            email={person.email}
+            password={person.password}
+            handleFieldChange={this.handleFieldChange}
+            handleFormSubmit={this.handleFormSubmit}
+            dismissPath={`/people/${person.id}/settings/`}
+            isFetching={isFetching}
+            success={success}
+            error={error}
+          />
+        </ActorSettingCard>
         {error &&
           <SimpleSnackbar
             isOpen={Boolean(error)}
@@ -185,54 +175,54 @@ class SignupPage extends React.Component {
         {success &&
           <SimpleSnackbar
             isOpen={Boolean(success)}
-            message="Thank you! We just emailed you an account activation link. Please click on it and log on to your account."
+            message="Account Updated!"
             type="success"
-            autoHideDuration={null}
           />
-        }
-        {isAuthenticated &&
-          <Redirect push to="/dashboard/" />
         }
       </React.Fragment>
     );
   }
 }
 
-SignupPage.propTypes = {
-  signup: PropTypes.func.isRequired,
+PeopleSettingsAccount.propTypes = {
+  readPerson: PropTypes.func.isRequired,
+  editPersonAccount: PropTypes.func.isRequired,
+  person: PersonType.isRequired,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
-  isAuthenticated: PropTypes.bool,
+  computedMatch: PropTypes.object.isRequired,
 };
 
-SignupPage.defaultProps = {
+PeopleSettingsAccount.defaultProps = {
   isFetching: false,
   success: false,
   error: '',
-  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {
   const {
-    error,
-    success,
+    person,
     isFetching,
-    isAuthenticated,
-  } = state.auth;
+    success,
+    error,
+  } = state.person;
 
   return {
+    person,
     error,
     success,
     isFetching,
-    isAuthenticated,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signup: (person) => {
-      dispatch(actions.signup(person));
+    readPerson: (id) => {
+      dispatch(actions.read(id));
+    },
+    editPersonAccount: (person) => {
+      dispatch(actions.editAccount(person));
     },
   };
 };
@@ -240,4 +230,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SignupPage);
+)(PeopleSettingsAccount);

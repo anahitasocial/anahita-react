@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { Link } from 'react-router-dom';
-import ActorType from '../proptypes/Actor';
+import ActorType from '../../proptypes/Actor';
 
 import {
   getURL,
   getPortraitURL,
   getActorInitials,
-} from './utils';
+} from '../utils';
 
 const ActorAvatar = (props) => {
   const {

@@ -1,43 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import PersonAccountForm from '../../components/PersonAccountForm';
-import ActorSettingCard from '../../components/cards/ActorSetting';
+import { Redirect } from 'react-router-dom';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import Avatar from '@material-ui/core/Avatar';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PersonAddForm from '../../components/person/AddForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import actions from '../../actions/person';
+import { Person as PERSON } from '../../constants';
 import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';
 import PersonDefault from '../../proptypes/PersonDefault';
 
-class PersonSettingsAccountPage extends React.Component {
+class PeopleAdd extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       person: PersonDefault,
+      givenNameError: false,
+      givenNameHelperText: '',
+      familyNameError: false,
+      familyNameHelperText: '',
       usernameError: false,
       usernameHelperText: '',
       emailError: false,
       emailHelperText: '',
-      passwordError: false,
-      passwordHelperText: '',
+      usertypeError: false,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  componentWillMount() {
-    const { id } = this.props.computedMatch.params;
-    const { readPerson } = this.props;
-
-    readPerson(id);
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      person: { ...nextProps.person },
+    });
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { person } = nextProps;
-    this.setState({ person });
+  getInitials() {
+    const { person } = this.state;
+
+    if (!person.id) {
+      return '';
+    }
+
+    const givenName = person.givenName.charAt(0);
+    const familyName = person.familyName.charAt(0);
+    return `${givenName}${familyName}`;
+  }
+
+  getName() {
+    const { person } = this.state;
+
+    if (!person.id) {
+      return '';
+    }
+
+    return `${person.givenName} ${person.familyName}`;
   }
 
   handleFieldChange(event) {
@@ -74,10 +98,21 @@ class PersonSettingsAccountPage extends React.Component {
           fieldError.helperText = 'A valid email address is required!';
         }
         break;
-      case 'password':
-        if (!validate.password(value)) {
+      case 'givenName':
+      case 'familyName':
+        if (value.length < 3) {
           fieldError.error = true;
-          fieldError.helperText = 'A secure password is reuqired!';
+          fieldError.helperText = 'At least 3 characters are required!';
+        }
+        break;
+      case 'usertype':
+        if (![
+          PERSON.TYPE.REGISTERED,
+          PERSON.TYPE.ADMIN,
+          PERSON.TYPE.SUPER_ADMIN,
+        ].includes(value)) {
+          fieldError.error = true;
+          fieldError.helperText = 'Invalid user type!';
         }
         break;
       default:
@@ -97,74 +132,99 @@ class PersonSettingsAccountPage extends React.Component {
 
   validate() {
     const {
+      givenName,
+      familyName,
       username,
       email,
-      password,
+      usertype,
     } = this.state.person;
 
+    const givenNameValidated = this.validateField('givenName', givenName);
+    const familyNameValidated = this.validateField('familyName', familyName);
     const usernameValidated = this.validateField('username', username);
     const emailValidated = this.validateField('email', email);
-    const passwordValidated = this.validateField('password', password);
+    const usertypeValidated = this.validateField('usertype', usertype);
 
-    return usernameValidated &&
+    return givenNameValidated &&
+    familyNameValidated &&
+    usernameValidated &&
     emailValidated &&
-    passwordValidated;
+    usertypeValidated;
   }
 
-  editPerson() {
+  savePerson() {
     const { person } = this.state;
-    this.props.editPersonAccount(person);
-    delete person.password;
+    const { addPerson } = this.props;
+
+    addPerson(person);
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
     if (this.validate()) {
-      this.editPerson();
+      this.savePerson();
     }
   }
 
   render() {
     const {
-      isFetching,
       success,
       error,
+      isFetching,
+      viewer,
     } = this.props;
 
     const {
       person,
-      usernameHelperText,
+      givenNameError,
+      givenNameHelperText,
+      familyNameError,
+      familyNameHelperText,
       usernameError,
+      usernameHelperText,
       emailHelperText,
       emailError,
-      passwordError,
-      passwordHelperText,
+      usertypeError,
     } = this.state;
 
     return (
       <React.Fragment>
-        <ActorSettingCard
-          namespace="people"
-          actor={person}
-        >
-          <PersonAccountForm
+        <Card>
+          <CardHeader
+            title={this.getName()}
+            subheader={person.username ? `@${person.username}` : ''}
+            avatar={
+              <Avatar
+                aria-label={this.getName() || ''}
+                alt={this.getName() || ''}
+              >
+                {this.getInitials() || <PersonAddIcon />}
+              </Avatar>
+            }
+          />
+          <PersonAddForm
+            formTitle="Add New Person"
+            isSuperAdmin={viewer.usertype === PERSON.TYPE.SUPER_ADMIN}
+            givenName={person.givenName}
+            givenNameError={givenNameError}
+            givenNameHelperText={givenNameHelperText}
+            familyName={person.familyName}
+            familyNameError={familyNameError}
+            familyNameHelperText={familyNameHelperText}
+            username={person.username}
             usernameError={usernameError}
             usernameHelperText={usernameHelperText}
+            email={person.email}
             emailError={emailError}
             emailHelperText={emailHelperText}
-            passwordError={passwordError}
-            passwordHelperText={passwordHelperText}
-            username={person.username}
-            email={person.email}
-            password={person.password}
+            usertype={person.usertype}
+            usertypeError={usertypeError}
             handleFieldChange={this.handleFieldChange}
             handleFormSubmit={this.handleFormSubmit}
-            dismissPath={`/people/${person.id}/settings/`}
             isFetching={isFetching}
-            success={success}
-            error={error}
+            dismissPath="/people/"
           />
-        </ActorSettingCard>
+        </Card>
         {error &&
           <SimpleSnackbar
             isOpen={Boolean(error)}
@@ -172,29 +232,25 @@ class PersonSettingsAccountPage extends React.Component {
             type="error"
           />
         }
-        {success &&
-          <SimpleSnackbar
-            isOpen={Boolean(success)}
-            message="Account Updated!"
-            type="success"
-          />
+        {success && person.id &&
+          <Redirect to={`/people/${person.id}/`} />
         }
       </React.Fragment>
     );
   }
 }
 
-PersonSettingsAccountPage.propTypes = {
-  readPerson: PropTypes.func.isRequired,
-  editPersonAccount: PropTypes.func.isRequired,
-  person: PersonType.isRequired,
+PeopleAdd.propTypes = {
+  addPerson: PropTypes.func.isRequired,
+  viewer: PersonType.isRequired,
+  person: PersonType,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
-  computedMatch: PropTypes.object.isRequired,
 };
 
-PersonSettingsAccountPage.defaultProps = {
+PeopleAdd.defaultProps = {
+  person: PersonDefault,
   isFetching: false,
   success: false,
   error: '',
@@ -203,13 +259,18 @@ PersonSettingsAccountPage.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     person,
-    isFetching,
     success,
     error,
+    isFetching,
   } = state.person;
+
+  const {
+    viewer,
+  } = state.auth;
 
   return {
     person,
+    viewer,
     error,
     success,
     isFetching,
@@ -218,11 +279,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readPerson: (id) => {
-      dispatch(actions.read(id));
-    },
-    editPersonAccount: (person) => {
-      dispatch(actions.editAccount(person));
+    addPerson: (person) => {
+      dispatch(actions.add(person));
     },
   };
 };
@@ -230,4 +288,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PersonSettingsAccountPage);
+)(PeopleAdd);

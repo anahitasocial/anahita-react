@@ -14,8 +14,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import ReadMore from '../ReadMore';
 import StoryMessage from '../StoryMessage';
-import ActorTitle from '../ActorTitle';
-import ActorAvatar from '../ActorAvatar';
+import ActorTitle from '../actor/Title';
+import ActorAvatar from '../actor/Avatar';
 
 import {
   getURL,

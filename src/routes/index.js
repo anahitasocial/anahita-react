@@ -8,9 +8,10 @@ import {
 } from 'react-router-dom';
 import AuthenticatedRoute from './AuthenticatedRoute';
 
-import LoginPage from '../containers/people/Login';
-import SignupPage from '../containers/people/Signup';
-import PasswordResetPage from '../containers/people/PasswordReset';
+import LoginPage from '../containers/auth/Login';
+import SignupPage from '../containers/auth/Signup';
+import PasswordResetPage from '../containers/auth/PasswordReset';
+
 import HomePage from '../containers/Home';
 
 import ActorsBrowse from '../containers/actors/Browse';
@@ -21,9 +22,9 @@ import ActorsSettingsInfo from '../containers/actors/settings/Info';
 import ActorsSettingsDelete from '../containers/actors/settings/Delete';
 
 import PeopleBrowse from '../containers/people/Browse';
-import PersonAddPage from '../containers/people/PersonAdd';
-import PersonSettingsInfoPage from '../containers/people/PersonSettingsInfo';
-import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccount';
+import PeopleAdd from '../containers/people/Add';
+import PersonSettingsInfo from '../containers/people/settings/Info';
+import PersonSettingsAccount from '../containers/people/settings/Account';
 
 import NotesPage from '../containers/Notes';
 import PhotosPage from '../containers/Photos';
@@ -79,14 +80,14 @@ const Routes = (props) => {
         path="/people/:id/settings/info/"
         exact
         component={(params) => {
-          return <PersonSettingsInfoPage {...params} />;
+          return <PersonSettingsInfo {...params} />;
         }}
       />
       <AuthenticatedRoute
         path="/people/:id/settings/account/"
         exact
         component={(params) => {
-          return <PersonSettingsAccountPage {...params} />;
+          return <PersonSettingsAccount {...params} />;
         }}
       />
       <AuthenticatedRoute
@@ -105,7 +106,7 @@ const Routes = (props) => {
         exact
         path="/people/add/"
         component={(params) => {
-          return <PersonAddPage {...params} />;
+          return <PeopleAdd {...params} />;
         }}
       />
       <Route

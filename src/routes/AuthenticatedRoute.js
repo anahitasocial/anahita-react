@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-import LoginPage from '../containers/people/Login';
+import LoginPage from '../containers/auth/Login';
 
 const AuthenticatedRoute = ({
   component: Component,

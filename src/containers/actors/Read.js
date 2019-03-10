@@ -6,7 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Divider from '@material-ui/core/Divider';
 import striptags from 'striptags';
 
-import ActorProfile from '../../components/ActorProfile';
+import ActorProfile from '../../components/actor/Profile';
 import StoriesBrowse from '../stories/Browse';
 import Avatar from './read/Avatar';
 import Cover from './read/Cover';

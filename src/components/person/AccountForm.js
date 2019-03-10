@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from 'react-router-dom/Link';
-import TextFieldUsername from './textfields/TextFieldUsername';
-import TextFieldEmail from './textfields/TextFieldEmail';
+import TextFieldUsername from '../textfields/TextFieldUsername';
+import TextFieldEmail from '../textfields/TextFieldEmail';
 
 const styles = (theme) => {
   return {
@@ -25,7 +25,7 @@ const styles = (theme) => {
   };
 };
 
-const ActorInfoForm = (props) => {
+const PersonInfoForm = (props) => {
   const {
     classes,
     handleFieldChange,
@@ -95,7 +95,7 @@ const ActorInfoForm = (props) => {
   );
 };
 
-ActorInfoForm.propTypes = {
+PersonInfoForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
@@ -112,7 +112,7 @@ ActorInfoForm.propTypes = {
   dismissPath: PropTypes.string,
 };
 
-ActorInfoForm.defaultProps = {
+PersonInfoForm.defaultProps = {
   username: '',
   usernameError: false,
   usernameHelperText: '',
@@ -126,4 +126,4 @@ ActorInfoForm.defaultProps = {
   dismissPath: '',
 };
 
-export default withStyles(styles)(ActorInfoForm);
+export default withStyles(styles)(PersonInfoForm);

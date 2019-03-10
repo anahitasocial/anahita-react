@@ -9,30 +9,32 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Fade from '@material-ui/core/Fade';
 import CoverIcon from '@material-ui/icons/Panorama';
 
-const styles = theme => ({
-  cover: {
-    width: '100%',
-    height: theme.spacing.unit * 45,
-  },
-  coverPlaceholder: {
-    width: '100%',
-    height: theme.spacing.unit * 45,
-    backgroundColor: theme.palette.background.default,
-  },
-  coverIcon: {
-    width: theme.spacing.unit * 10,
-    height: theme.spacing.unit * 10,
-    margin: '10% auto',
-  },
-  button: {
-    position: 'relative',
-    width: '100%',
-    height: theme.spacing.unit * 45,
-  },
-  input: {
-    display: 'none',
-  },
-});
+const styles = (theme) => {
+  return {
+    cover: {
+      width: '100%',
+      height: theme.spacing.unit * 45,
+    },
+    coverPlaceholder: {
+      width: '100%',
+      height: theme.spacing.unit * 45,
+      backgroundColor: theme.palette.background.default,
+    },
+    coverIcon: {
+      width: theme.spacing.unit * 10,
+      height: theme.spacing.unit * 10,
+      margin: '10% auto',
+    },
+    button: {
+      position: 'relative',
+      width: '100%',
+      height: theme.spacing.unit * 45,
+    },
+    input: {
+      display: 'none',
+    },
+  };
+};
 
 const ActorCoverForm = (props) => {
   const {

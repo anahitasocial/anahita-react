@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import LoginForm from '../../components/LoginForm';
+import LoginForm from '../../components/auth/LoginForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import actions from '../../actions/auth';
 

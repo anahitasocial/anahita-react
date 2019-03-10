@@ -7,18 +7,20 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from 'react-router-dom/Link';
 
-const styles = theme => ({
-  formPaper: {
-    padding: '20px',
-  },
-  formTitle: {
-    textTransform: 'capitalize',
-  },
-  button: {
-    marginTop: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-});
+const styles = (theme) => {
+  return {
+    formPaper: {
+      padding: '20px',
+    },
+    formTitle: {
+      textTransform: 'capitalize',
+    },
+    button: {
+      marginTop: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+    },
+  };
+};
 
 const ActorInfoForm = (props) => {
   const {

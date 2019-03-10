@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import PasswordResetForm from '../../components/PasswordResetForm';
+import PasswordResetForm from '../../components/auth/PasswordResetForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import actions from '../../actions/auth';
-import * as validate from './validate';
+import * as validate from '../people/validate';
 
 import PersonDefault from '../../proptypes/PersonDefault';
 

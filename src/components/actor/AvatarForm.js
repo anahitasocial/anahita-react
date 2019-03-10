@@ -7,21 +7,23 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const styles = theme => ({
-  avatar: {
-    width: theme.spacing.unit * 15,
-    height: theme.spacing.unit * 15,
-  },
-  button: {
-    position: 'relative',
-    width: theme.spacing.unit * 15,
-    height: theme.spacing.unit * 15,
-    zIndex: 1,
-  },
-  input: {
-    display: 'none',
-  },
-});
+const styles = (theme) => {
+  return {
+    avatar: {
+      width: theme.spacing.unit * 15,
+      height: theme.spacing.unit * 15,
+    },
+    button: {
+      position: 'relative',
+      width: theme.spacing.unit * 15,
+      height: theme.spacing.unit * 15,
+      zIndex: 1,
+    },
+    input: {
+      display: 'none',
+    },
+  };
+};
 
 const ActorAvatarForm = (props) => {
   const {

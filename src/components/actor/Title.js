@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import ActorType from '../proptypes/Actor';
+import ActorType from '../../proptypes/Actor';
 
-import { getURL } from './utils';
+import { getURL } from '../utils';
 
 const ActorTitle = (props) => {
   const {

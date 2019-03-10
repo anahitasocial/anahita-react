@@ -10,8 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
 import ActorType from '../../proptypes/Actor';
-import ActorTitle from '../ActorTitle';
-import ActorAvatar from '../ActorAvatar';
+import ActorTitle from '../actor/Title';
+import ActorAvatar from '../actor/Avatar';
 import EntityBody from '../EntityBody';
 
 import {

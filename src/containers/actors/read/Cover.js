@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../../actions/actor';
 import { Person as PERSON } from '../../../constants';
-import ActorCoverForm from '../../../components/ActorCoverForm';
+import CoverForm from '../../../components/actor/CoverForm';
 
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
@@ -136,7 +136,7 @@ class ActorsCover extends React.Component {
     const isWaiting = this.isWaiting();
 
     return (
-      <ActorCoverForm
+      <CoverForm
         isFetching={isFetching}
         name={actor.name}
         cover={this.cover}

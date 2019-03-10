@@ -2,20 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import Avatar from '@material-ui/core/Avatar';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import PersonAddForm from '../../components/PersonAddForm';
+import SignupForm from '../../components/auth/SignupForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import actions from '../../actions/person';
-import { Person as PERSON } from '../../constants';
-import * as validate from './validate';
+import actions from '../../actions/auth';
+import * as validate from '../people/validate';
 
-import PersonType from '../../proptypes/Person';
 import PersonDefault from '../../proptypes/PersonDefault';
 
-class PersonAdd extends React.Component {
+class SignupPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -29,39 +23,12 @@ class PersonAdd extends React.Component {
       usernameHelperText: '',
       emailError: false,
       emailHelperText: '',
-      usertypeError: false,
+      passwordError: false,
+      passwordHelperText: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      person: { ...nextProps.person },
-    });
-  }
-
-  getInitials() {
-    const { person } = this.state;
-
-    if (!person.id) {
-      return '';
-    }
-
-    const givenName = person.givenName.charAt(0);
-    const familyName = person.familyName.charAt(0);
-    return `${givenName}${familyName}`;
-  }
-
-  getName() {
-    const { person } = this.state;
-
-    if (!person.id) {
-      return '';
-    }
-
-    return `${person.givenName} ${person.familyName}`;
   }
 
   handleFieldChange(event) {
@@ -105,14 +72,10 @@ class PersonAdd extends React.Component {
           fieldError.helperText = 'At least 3 characters are required!';
         }
         break;
-      case 'usertype':
-        if (![
-          PERSON.TYPE.REGISTERED,
-          PERSON.TYPE.ADMIN,
-          PERSON.TYPE.SUPER_ADMIN,
-        ].includes(value)) {
+      case 'password':
+        if (!validate.password(value)) {
           fieldError.error = true;
-          fieldError.helperText = 'Invalid user type!';
+          fieldError.helperText = 'A secure password is reuqired!';
         }
         break;
       default:
@@ -136,33 +99,33 @@ class PersonAdd extends React.Component {
       familyName,
       username,
       email,
-      usertype,
+      password,
     } = this.state.person;
 
     const givenNameValidated = this.validateField('givenName', givenName);
     const familyNameValidated = this.validateField('familyName', familyName);
     const usernameValidated = this.validateField('username', username);
     const emailValidated = this.validateField('email', email);
-    const usertypeValidated = this.validateField('usertype', usertype);
+    const passwordValidated = this.validateField('password', password);
 
     return givenNameValidated &&
     familyNameValidated &&
     usernameValidated &&
     emailValidated &&
-    usertypeValidated;
+    passwordValidated;
   }
 
-  savePerson() {
+  signup() {
     const { person } = this.state;
-    const { addPerson } = this.props;
+    const { signup } = this.props;
 
-    addPerson(person);
+    signup(person);
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
     if (this.validate()) {
-      this.savePerson();
+      this.signup();
     }
   }
 
@@ -171,7 +134,7 @@ class PersonAdd extends React.Component {
       success,
       error,
       isFetching,
-      viewer,
+      isAuthenticated,
     } = this.props;
 
     const {
@@ -184,47 +147,34 @@ class PersonAdd extends React.Component {
       usernameHelperText,
       emailHelperText,
       emailError,
-      usertypeError,
+      passwordError,
+      passwordHelperText,
     } = this.state;
 
     return (
       <React.Fragment>
-        <Card>
-          <CardHeader
-            title={this.getName()}
-            subheader={person.username ? `@${person.username}` : ''}
-            avatar={
-              <Avatar
-                aria-label={this.getName() || ''}
-                alt={this.getName() || ''}
-              >
-                {this.getInitials() || <PersonAddIcon />}
-              </Avatar>
-            }
-          />
-          <PersonAddForm
-            formTitle="Add New Person"
-            isSuperAdmin={viewer.usertype === PERSON.TYPE.SUPER_ADMIN}
-            givenName={person.givenName}
-            givenNameError={givenNameError}
-            givenNameHelperText={givenNameHelperText}
-            familyName={person.familyName}
-            familyNameError={familyNameError}
-            familyNameHelperText={familyNameHelperText}
-            username={person.username}
-            usernameError={usernameError}
-            usernameHelperText={usernameHelperText}
-            email={person.email}
-            emailError={emailError}
-            emailHelperText={emailHelperText}
-            usertype={person.usertype}
-            usertypeError={usertypeError}
-            handleFieldChange={this.handleFieldChange}
-            handleFormSubmit={this.handleFormSubmit}
-            isFetching={isFetching}
-            dismissPath="/people/"
-          />
-        </Card>
+        <SignupForm
+          givenName={person.givenName}
+          givenNameError={givenNameError}
+          givenNameHelperText={givenNameHelperText}
+          familyName={person.familyName}
+          familyNameError={familyNameError}
+          familyNameHelperText={familyNameHelperText}
+          username={person.username}
+          usernameError={usernameError}
+          usernameHelperText={usernameHelperText}
+          email={person.email}
+          emailError={emailError}
+          emailHelperText={emailHelperText}
+          password={person.password}
+          passwordError={passwordError}
+          passwordHelperText={passwordHelperText}
+          handleFieldChange={this.handleFieldChange}
+          handleFormSubmit={this.handleFormSubmit}
+          isFetching={isFetching}
+          success={success}
+          error={error}
+        />
         {error &&
           <SimpleSnackbar
             isOpen={Boolean(error)}
@@ -232,55 +182,57 @@ class PersonAdd extends React.Component {
             type="error"
           />
         }
-        {success && person.id &&
-          <Redirect to={`/people/${person.id}/`} />
+        {success &&
+          <SimpleSnackbar
+            isOpen={Boolean(success)}
+            message="Thank you! We just emailed you an account activation link. Please click on it and log on to your account."
+            type="success"
+            autoHideDuration={null}
+          />
+        }
+        {isAuthenticated &&
+          <Redirect push to="/dashboard/" />
         }
       </React.Fragment>
     );
   }
 }
 
-PersonAdd.propTypes = {
-  addPerson: PropTypes.func.isRequired,
-  viewer: PersonType.isRequired,
-  person: PersonType,
+SignupPage.propTypes = {
+  signup: PropTypes.func.isRequired,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
 };
 
-PersonAdd.defaultProps = {
-  person: PersonDefault,
+SignupPage.defaultProps = {
   isFetching: false,
   success: false,
   error: '',
+  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {
   const {
-    person,
-    success,
     error,
+    success,
     isFetching,
-  } = state.person;
-
-  const {
-    viewer,
+    isAuthenticated,
   } = state.auth;
 
   return {
-    person,
-    viewer,
     error,
     success,
     isFetching,
+    isAuthenticated,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addPerson: (person) => {
-      dispatch(actions.add(person));
+    signup: (person) => {
+      dispatch(actions.signup(person));
     },
   };
 };
@@ -288,4 +240,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PersonAdd);
+)(SignupPage);

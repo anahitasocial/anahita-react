@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../../actions/actor';
 import { Person as PERSON } from '../../../constants';
-import ActorAvatarForm from '../../../components/ActorAvatarForm';
+import AvatarForm from '../../../components/actor/AvatarForm';
 
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
@@ -144,7 +144,7 @@ class ActorsAvatar extends React.Component {
     const isWaiting = this.isWaiting();
 
     return (
-      <ActorAvatarForm
+      <AvatarForm
         isFetching={isFetching}
         name={actor.name}
         avatar={this.avatar}

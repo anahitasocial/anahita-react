@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Person as PERSON } from '../../../constants';
-import ActorDeleteForm from '../../../components/ActorDeleteForm';
+import ActorDeleteForm from '../../../components/actor/DeleteForm';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 import actions from '../../../actions/actor';
 

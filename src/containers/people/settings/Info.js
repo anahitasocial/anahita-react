@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import PersonInfoForm from '../../components/PersonInfoForm';
-import ActorSettingCard from '../../components/cards/ActorSetting';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
-import actions from '../../actions/person';
-import { Person as PERSON } from '../../constants';
-import PersonType from '../../proptypes/Person';
-import PersonDefault from '../../proptypes/PersonDefault';
+import InfoForm from '../../../components/person/InfoForm';
+import ActorSettingCard from '../../../components/cards/ActorSetting';
+import SimpleSnackbar from '../../../components/SimpleSnackbar';
+import actions from '../../../actions/person';
+import { Person as PERSON } from '../../../constants';
+import PersonType from '../../../proptypes/Person';
+import PersonDefault from '../../../proptypes/PersonDefault';
 
 const BODY_CHARACTER_LIMIT = 1000;
 
-class PersonSettingsInfoPage extends React.Component {
+class PersonSettingsInfo extends React.Component {
   constructor(props) {
     super(props);
 
@@ -181,7 +181,7 @@ class PersonSettingsInfoPage extends React.Component {
           actor={person}
           key="com:people.person"
         >
-          <PersonInfoForm
+          <InfoForm
             givenName={person.givenName}
             givenNameError={givenNameError}
             givenNameHelperText={givenNameHelperText}
@@ -222,7 +222,7 @@ class PersonSettingsInfoPage extends React.Component {
   }
 }
 
-PersonSettingsInfoPage.propTypes = {
+PersonSettingsInfo.propTypes = {
   readPerson: PropTypes.func.isRequired,
   editPerson: PropTypes.func.isRequired,
   person: PersonType.isRequired,
@@ -233,7 +233,7 @@ PersonSettingsInfoPage.propTypes = {
   computedMatch: PropTypes.object.isRequired,
 };
 
-PersonSettingsInfoPage.defaultProps = {
+PersonSettingsInfo.defaultProps = {
   isFetching: false,
   error: '',
   success: false,
@@ -274,4 +274,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PersonSettingsInfoPage);
+)(PersonSettingsInfo);
