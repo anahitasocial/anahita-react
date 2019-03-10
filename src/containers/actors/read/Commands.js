@@ -6,9 +6,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { NavLink } from 'react-router-dom';
-import BlockAction from '../actions/Block';
+import BlockAction from '../../actions/Block';
 
-import ActorType from '../../proptypes/Actor';
+import ActorType from '../../../proptypes/Actor';
 
 const styles = (theme) => {
   return {
@@ -23,7 +23,7 @@ const styles = (theme) => {
 
 const ITEM_HEIGHT = 48;
 
-class ActorCommands extends React.Component {
+class ActorsReadCommands extends React.Component {
   constructor(props) {
     super(props);
 
@@ -105,15 +105,15 @@ class ActorCommands extends React.Component {
   }
 }
 
-ActorCommands.propTypes = {
+ActorsReadCommands.propTypes = {
   classes: PropTypes.object.isRequired,
   actor: ActorType,
 };
 
-ActorCommands.defaultProps = {
+ActorsReadCommands.defaultProps = {
   actor: {
     commands: [],
   },
 };
 
-export default withStyles(styles)(ActorCommands);
+export default withStyles(styles)(ActorsReadCommands);

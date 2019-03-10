@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import actions from '../../actions/actor';
-import { Person as PERSON } from '../../constants';
-import ActorCoverForm from '../../components/ActorCoverForm';
+import actions from '../../../actions/actor';
+import { Person as PERSON } from '../../../constants';
+import ActorCoverForm from '../../../components/ActorCoverForm';
 
-import ActorType from '../../proptypes/Actor';
-import PersonType from '../../proptypes/Person';
+import ActorType from '../../../proptypes/Actor';
+import PersonType from '../../../proptypes/Person';
 
-class ActorCover extends React.Component {
+class ActorsCover extends React.Component {
   constructor(props) {
     super(props);
 
@@ -154,7 +154,7 @@ class ActorCover extends React.Component {
   }
 }
 
-ActorCover.propTypes = {
+ActorsCover.propTypes = {
   addCover: PropTypes.func.isRequired,
   deleteCover: PropTypes.func.isRequired,
   actor: ActorType.isRequired,
@@ -162,7 +162,7 @@ ActorCover.propTypes = {
   isFetching: PropTypes.bool,
 };
 
-ActorCover.defaultProps = {
+ActorsCover.defaultProps = {
   isFetching: false,
 };
 
@@ -190,4 +190,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorCover);
+)(ActorsCover);

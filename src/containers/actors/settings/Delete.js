@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Person as PERSON } from '../../constants';
-import ActorDeleteForm from '../../components/ActorDeleteForm';
-import ActorSettingCard from '../../components/cards/ActorSetting';
-import actions from '../../actions/actor';
+import { Person as PERSON } from '../../../constants';
+import ActorDeleteForm from '../../../components/ActorDeleteForm';
+import ActorSettingCard from '../../../components/cards/ActorSetting';
+import actions from '../../../actions/actor';
 
-import ActorsType from '../../proptypes/Actors';
-import ActorDefault from '../../proptypes/ActorDefault';
-import PersonType from '../../proptypes/Person';
+import ActorsType from '../../../proptypes/Actors';
+import ActorDefault from '../../../proptypes/ActorDefault';
+import PersonType from '../../../proptypes/Person';
 
-class ActorSettingsDelete extends React.Component {
+class ActorsSettingsDelete extends React.Component {
   constructor(props) {
     super(props);
 
@@ -186,7 +186,7 @@ class ActorSettingsDelete extends React.Component {
   }
 }
 
-ActorSettingsDelete.propTypes = {
+ActorsSettingsDelete.propTypes = {
   readActor: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
   deleteActor: PropTypes.func.isRequired,
@@ -200,7 +200,7 @@ ActorSettingsDelete.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-ActorSettingsDelete.defaultProps = {
+ActorsSettingsDelete.defaultProps = {
   isFetching: false,
   error: '',
   success: false,
@@ -244,4 +244,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorSettingsDelete));
+)(ActorsSettingsDelete));

@@ -7,10 +7,10 @@ import Divider from '@material-ui/core/Divider';
 import striptags from 'striptags';
 
 import ActorProfile from '../../components/ActorProfile';
-import StoriesContainer from '../stories/Stories';
-import ActorAvatar from './ActorAvatar';
-import ActorCover from './ActorCover';
-import ActorCommands from './ActorCommands';
+import StoriesBrowse from '../stories/Browse';
+import Avatar from './read/Avatar';
+import Cover from './read/Cover';
+import Commands from './read/Commands';
 import FollowAction from '../actions/Follow';
 import appActions from '../../actions/app';
 import actions from '../../actions/actor';
@@ -33,7 +33,7 @@ const styles = (theme) => {
   };
 };
 
-class ActorPage extends React.Component {
+class ActorsRead extends React.Component {
   constructor(props) {
     super(props);
 
@@ -101,14 +101,14 @@ class ActorPage extends React.Component {
         </Helmet>
         <ActorProfile
           cover={
-            <ActorCover
+            <Cover
               actor={actor}
               viewer={viewer}
               isFetching={isFetchingCover}
             />
           }
           avatar={
-            <ActorAvatar
+            <Avatar
               actor={actor}
               viewer={viewer}
               isFetching={isFetchingAvatar}
@@ -118,11 +118,11 @@ class ActorPage extends React.Component {
           description={actor.body}
           alias={actor.alias}
           followAction={canFollow && <FollowAction actor={actor} />}
-          headerAction={isAuthenticated && <ActorCommands actor={actor} />}
+          headerAction={isAuthenticated && <Commands actor={actor} />}
         />
         <Divider className={classes.divider} />
         {actor.id &&
-          <StoriesContainer
+          <StoriesBrowse
             key="com:stories.story"
             queryFilters={{
               oid: actor.id,
@@ -135,7 +135,7 @@ class ActorPage extends React.Component {
   }
 }
 
-ActorPage.propTypes = {
+ActorsRead.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
@@ -150,7 +150,7 @@ ActorPage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
 };
 
-ActorPage.defaultProps = {
+ActorsRead.defaultProps = {
   isAuthenticated: false,
   isFetchingAvatar: false,
   isFetchingCover: false,
@@ -200,4 +200,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorPage));
+)(ActorsRead));

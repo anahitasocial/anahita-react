@@ -8,7 +8,7 @@ import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
 
-class ActorSettingsPage extends React.Component {
+class ActorSettings extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,7 +60,7 @@ class ActorSettingsPage extends React.Component {
   }
 }
 
-ActorSettingsPage.propTypes = {
+ActorSettings.propTypes = {
   readActor: PropTypes.func.isRequired,
   actors: ActorsType.isRequired,
   resetActors: PropTypes.func.isRequired,
@@ -103,4 +103,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorSettingsPage);
+)(ActorSettings);

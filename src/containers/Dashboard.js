@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import StoriesContainer from './stories/Stories';
+import StoriesBrowse from './stories/Browse';
 import appActions from '../actions/app';
 import i18n from '../languages';
 
@@ -22,7 +22,7 @@ class DashboardPage extends React.Component {
         <Helmet>
           <title>{i18n.t('dashboard:cTitle')}</title>
         </Helmet>
-        <StoriesContainer
+        <StoriesBrowse
           key="com:stories.story"
           queryFilters={filters}
           {...this.params}

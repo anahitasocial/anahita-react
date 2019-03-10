@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import actions from '../../actions/actor';
-import { Person as PERSON } from '../../constants';
-import ActorAvatarForm from '../../components/ActorAvatarForm';
+import actions from '../../../actions/actor';
+import { Person as PERSON } from '../../../constants';
+import ActorAvatarForm from '../../../components/ActorAvatarForm';
 
-import ActorType from '../../proptypes/Actor';
-import PersonType from '../../proptypes/Person';
+import ActorType from '../../../proptypes/Actor';
+import PersonType from '../../../proptypes/Person';
 
-class ActorAvatar extends React.Component {
+class ActorsAvatar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -162,7 +162,7 @@ class ActorAvatar extends React.Component {
   }
 }
 
-ActorAvatar.propTypes = {
+ActorsAvatar.propTypes = {
   addAvatar: PropTypes.func.isRequired,
   deleteAvatar: PropTypes.func.isRequired,
   actor: ActorType.isRequired,
@@ -170,7 +170,7 @@ ActorAvatar.propTypes = {
   isFetching: PropTypes.bool,
 };
 
-ActorAvatar.defaultProps = {
+ActorsAvatar.defaultProps = {
   isFetching: false,
 };
 
@@ -198,4 +198,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorAvatar);
+)(ActorsAvatar);

@@ -12,7 +12,7 @@ import StoriesType from '../../proptypes/Stories';
 
 const LIMIT = 20;
 
-class StoriesContainer extends React.Component {
+class StoriesBrowse extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -92,10 +92,10 @@ class StoriesContainer extends React.Component {
                   actions={
                     <React.Fragment>
                       {story.object &&
-                      <LikeAction
-                        medium={story.object}
-                        isLiked={story.commands.includes('unvote')}
-                      />
+                        <LikeAction
+                          medium={story.object}
+                          isLiked={story.commands.includes('unvote')}
+                        />
                       }
                     </React.Fragment>
                   }
@@ -110,7 +110,7 @@ class StoriesContainer extends React.Component {
   }
 }
 
-StoriesContainer.propTypes = {
+StoriesBrowse.propTypes = {
   browseStories: PropTypes.func.isRequired,
   resetStories: PropTypes.func.isRequired,
   stories: StoriesType.isRequired,
@@ -118,7 +118,7 @@ StoriesContainer.propTypes = {
   hasMore: PropTypes.bool.isRequired,
 };
 
-StoriesContainer.defaultProps = {
+StoriesBrowse.defaultProps = {
   queryFilters: {
     filter: '',
     oid: '',
@@ -153,4 +153,4 @@ const mapDispatchToProps = (dispatch) => {
 export default (connect(
   mapStateToProps,
   mapDispatchToProps,
-)(StoriesContainer));
+)(StoriesBrowse));

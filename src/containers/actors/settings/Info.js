@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { singularize } from 'inflected';
-import ActorInfoForm from '../../components/ActorInfoForm';
-import ActorSettingCard from '../../components/cards/ActorSetting';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
-import actions from '../../actions/actor';
+import ActorInfoForm from '../../../components/ActorInfoForm';
+import ActorSettingCard from '../../../components/cards/ActorSetting';
+import SimpleSnackbar from '../../../components/SimpleSnackbar';
+import actions from '../../../actions/actor';
 
-import ActorsType from '../../proptypes/Actors';
-import ActorDefault from '../../proptypes/ActorDefault';
+import ActorsType from '../../../proptypes/Actors';
+import ActorDefault from '../../../proptypes/ActorDefault';
 
 const BODY_CHARACTER_LIMIT = 1000;
 
-class ActorSettingsInfoPage extends React.Component {
+class ActorsSettingsInfo extends React.Component {
   constructor(props) {
     super(props);
 
@@ -169,7 +169,7 @@ class ActorSettingsInfoPage extends React.Component {
   }
 }
 
-ActorSettingsInfoPage.propTypes = {
+ActorsSettingsInfo.propTypes = {
   readActor: PropTypes.func.isRequired,
   editActor: PropTypes.func.isRequired,
   actors: ActorsType.isRequired,
@@ -180,7 +180,7 @@ ActorSettingsInfoPage.propTypes = {
   computedMatch: PropTypes.object.isRequired,
 };
 
-ActorSettingsInfoPage.defaultProps = {
+ActorsSettingsInfo.defaultProps = {
   error: '',
 };
 
@@ -214,4 +214,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorSettingsInfoPage);
+)(ActorsSettingsInfo);

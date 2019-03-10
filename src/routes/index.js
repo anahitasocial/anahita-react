@@ -13,14 +13,14 @@ import SignupPage from '../containers/people/Signup';
 import PasswordResetPage from '../containers/people/PasswordReset';
 import HomePage from '../containers/Home';
 
-import ActorsPage from '../containers/actors/Actors';
-import ActorPage from '../containers/actors/Actor';
-import ActorAddPage from '../containers/actors/ActorAdd';
-import ActorSettingsPage from '../containers/actors/ActorSettings';
-import ActorSettingsInfoPage from '../containers/actors/ActorSettingsInfo';
-import ActorSettingsDeletePage from '../containers/actors/ActorSettingsDelete';
+import ActorsBrowse from '../containers/actors/Browse';
+import ActorsRead from '../containers/actors/Read';
+import ActorsAdd from '../containers/actors/Add';
+import ActorsSettings from '../containers/actors/Settings';
+import ActorsSettingsInfo from '../containers/actors/settings/Info';
+import ActorsSettingsDelete from '../containers/actors/settings/Delete';
 
-import PeoplePage from '../containers/people/People';
+import PeopleBrowse from '../containers/people/Browse';
 import PersonAddPage from '../containers/people/PersonAdd';
 import PersonSettingsInfoPage from '../containers/people/PersonSettingsInfo';
 import PersonSettingsAccountPage from '../containers/people/PersonSettingsAccount';
@@ -72,7 +72,7 @@ const Routes = (props) => {
         path="/people/:id/settings/"
         exact
         component={(params) => {
-          return <ActorSettingsPage namespace="people" {...params} />;
+          return <ActorsSettings namespace="people" {...params} />;
         }}
       />
       <AuthenticatedRoute
@@ -93,13 +93,13 @@ const Routes = (props) => {
         path="/people/:id/settings/deleteforever/"
         exact
         component={(params) => {
-          return <ActorSettingsDeletePage namespace="people" {...params} />;
+          return <ActorsSettingsDelete namespace="people" {...params} />;
         }}
       />
       <Route
         exact
         path="/people/"
-        component={PeoplePage}
+        component={PeopleBrowse}
       />
       <AuthenticatedRoute
         exact
@@ -112,49 +112,49 @@ const Routes = (props) => {
         exact
         path="/people/:id/"
         component={(params) => {
-          return <ActorPage namespace="people" {...params} />;
+          return <ActorsRead namespace="people" {...params} />;
         }}
       />
       <Route
         exact
         path="/groups/"
         component={(params) => {
-          return <ActorsPage namespace="groups" {...params} />;
+          return <ActorsBrowse namespace="groups" {...params} />;
         }}
       />
       <AuthenticatedRoute
         exact
         path="/groups/add/"
         component={(params) => {
-          return <ActorAddPage namespace="groups" {...params} />;
+          return <ActorsAdd namespace="groups" {...params} />;
         }}
       />
       <Route
         exact
         path="/groups/:id/"
         component={(params) => {
-          return <ActorPage namespace="groups" {...params} />;
+          return <ActorsRead namespace="groups" {...params} />;
         }}
       />
       <AuthenticatedRoute
         exact
         path="/groups/:id/settings/"
         component={(params) => {
-          return <ActorSettingsPage namespace="groups" {...params} />;
+          return <ActorsSettings namespace="groups" {...params} />;
         }}
       />
       <AuthenticatedRoute
         exact
         path="/groups/:id/settings/info/"
         component={(params) => {
-          return <ActorSettingsInfoPage namespace="groups" {...params} />;
+          return <ActorsSettingsInfo namespace="groups" {...params} />;
         }}
       />
       <AuthenticatedRoute
         exact
         path="/groups/:id/settings/deleteforever/"
         component={(params) => {
-          return <ActorSettingsDeletePage namespace="groups" {...params} />;
+          return <ActorsSettingsDelete namespace="groups" {...params} />;
         }}
       />
       <Route

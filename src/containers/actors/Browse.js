@@ -51,7 +51,7 @@ const styles = (theme) => {
 
 const LIMIT = 20;
 
-class ActorsPage extends React.Component {
+class ActorsBrowse extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -210,7 +210,7 @@ class ActorsPage extends React.Component {
   }
 }
 
-ActorsPage.propTypes = {
+ActorsBrowse.propTypes = {
   classes: PropTypes.object.isRequired,
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
@@ -224,7 +224,7 @@ ActorsPage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
 };
 
-ActorsPage.defaultProps = {
+ActorsBrowse.defaultProps = {
   queryFilters: {},
 };
 
@@ -272,4 +272,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withWidth()(ActorsPage)));
+)(withWidth()(ActorsBrowse)));

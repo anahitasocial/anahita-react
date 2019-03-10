@@ -16,7 +16,7 @@ import ActorDefault from '../../proptypes/ActorDefault';
 
 const BODY_CHARACTER_LIMIT = 350;
 
-class ActorAddPage extends React.Component {
+class ActorsAdd extends React.Component {
   constructor(props) {
     super(props);
 
@@ -163,7 +163,7 @@ class ActorAddPage extends React.Component {
   }
 }
 
-ActorAddPage.propTypes = {
+ActorsAdd.propTypes = {
   addActor: PropTypes.func.isRequired,
   actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -185,7 +185,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-ActorAddPage.defaultProps = {
+ActorsAdd.defaultProps = {
   isFetching: false,
   error: '',
 };
@@ -201,4 +201,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorAddPage);
+)(ActorsAdd);

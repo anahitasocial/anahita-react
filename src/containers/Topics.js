@@ -1,5 +1,5 @@
 import React from 'react';
-import MediaPage from './media/Media';
+import MediaBrowse from './media/Browse';
 
 class TopicsPage extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class TopicsPage extends React.Component {
     };
 
     return (
-      <MediaPage
+      <MediaBrowse
         key="com:topics.topic"
         namespace="topics"
         queryFilters={filters}

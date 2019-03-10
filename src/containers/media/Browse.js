@@ -46,7 +46,7 @@ const styles = (theme) => {
 
 const LIMIT = 20;
 
-class MediaPage extends React.Component {
+class MediaBrowse extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -200,7 +200,7 @@ class MediaPage extends React.Component {
   }
 }
 
-MediaPage.propTypes = {
+MediaBrowse.propTypes = {
   classes: PropTypes.object.isRequired,
   browseMedia: PropTypes.func.isRequired,
   resetMedia: PropTypes.func.isRequired,
@@ -213,7 +213,7 @@ MediaPage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
 };
 
-MediaPage.defaultProps = {
+MediaBrowse.defaultProps = {
   // queryFilters: {},
 };
 
@@ -251,4 +251,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withStyles(styles)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withWidth()(MediaPage)));
+)(withWidth()(MediaBrowse)));

@@ -1,7 +1,7 @@
 import React from 'react';
-import ActorsPage from '../actors/Actors';
+import ActorsBrowse from '../actors/Browse';
 
-class PeoplePage extends React.Component {
+class PeopleBrowse extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +17,7 @@ class PeoplePage extends React.Component {
     };
 
     return (
-      <ActorsPage
+      <ActorsBrowse
         key="com:people.person"
         namespace="people"
         queryFilters={filters}
@@ -27,4 +27,4 @@ class PeoplePage extends React.Component {
   }
 }
 
-export default PeoplePage;
+export default PeopleBrowse;
