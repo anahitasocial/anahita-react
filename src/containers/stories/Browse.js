@@ -7,10 +7,25 @@ import InfiniteScroll from 'react-infinite-scroller';
 import actions from '../../actions/stories';
 
 import LikeAction from '../actions/Like';
+import DeleteAction from '../actions/story/Delete';
+
 import StoryCard from '../../components/cards/Story';
 import StoriesType from '../../proptypes/Stories';
 
 const LIMIT = 20;
+
+const isLikeable = (node) => {
+  const likeables = [
+    'com.articles.article',
+    'com.notes.note',
+    'com.photos.photo',
+    'com.sets.set',
+    'com.topics.topic',
+    'com.todos.todo',
+  ];
+
+  return likeables.includes(node.objectType);
+};
 
 class StoriesBrowse extends React.Component {
   constructor(props, context) {
@@ -89,16 +104,20 @@ class StoriesBrowse extends React.Component {
                 <StoryCard
                   story={story}
                   key={key}
-                  actions={
-                    <React.Fragment>
-                      {story.object &&
-                        <LikeAction
-                          medium={story.object}
-                          isLiked={story.commands.includes('unvote')}
-                        />
-                      }
-                    </React.Fragment>
-                  }
+                  menuItems={[
+                    <DeleteAction
+                      story={story}
+                      key={`story-delete-${story.id}`}
+                    />,
+                  ]}
+                  actions={[
+                    story.object && isLikeable(story.object) &&
+                    <LikeAction
+                      medium={story.object}
+                      isLiked={story.commands.includes('unvote')}
+                      key={`story-like-${story.id}`}
+                    />,
+                  ]}
                 />
               );
             })
@@ -127,6 +146,11 @@ StoriesBrowse.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
+    isAuthenticated,
+    viewer,
+  } = state.auth;
+
+  const {
     stories,
     hasMore,
     error,
@@ -136,6 +160,8 @@ const mapStateToProps = (state) => {
     stories,
     hasMore,
     error,
+    isAuthenticated,
+    viewer,
   };
 };
 

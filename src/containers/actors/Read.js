@@ -15,6 +15,7 @@ import FollowAction from '../actions/Follow';
 import appActions from '../../actions/app';
 import actions from '../../actions/actor';
 import i18n from '../../languages';
+import permissions from '../../permissions/actor';
 
 import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';
@@ -69,15 +70,6 @@ class ActorsRead extends React.Component {
     resetActors();
   }
 
-  canFollow(actor) {
-    const {
-      viewer,
-      isAuthenticated,
-    } = this.props;
-
-    return isAuthenticated && (viewer.id !== actor.id) && !actor.isBlocked;
-  }
-
   render() {
     const {
       classes,
@@ -89,7 +81,7 @@ class ActorsRead extends React.Component {
 
     const { actor } = this.state;
 
-    const canFollow = this.canFollow(actor);
+    const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
 
     return (
       <React.Fragment>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import actions from '../../actions/follow';
 import PersonType from '../../proptypes/Person';
@@ -66,10 +67,24 @@ class FollowAction extends React.Component {
   }
 
   render() {
+    const { component } = this.props;
     const { isLeader, isWaiting } = this.state;
     const title = isLeader ? i18n.t('actions:unfollow') : i18n.t('actions:follow');
     const onClick = isLeader ? this.handleUnfollow : this.handleFollow;
     const color = isLeader ? 'inherit' : 'primary';
+
+    if (component === 'menuitem') {
+      return (
+        <MenuItem
+          onClick={onClick}
+          disabled={isWaiting}
+          color={color}
+        >
+          {title}
+        </MenuItem>
+      );
+    }
+
     return (
       <Button
         onClick={onClick}
@@ -87,8 +102,12 @@ FollowAction.propTypes = {
   unfollowActor: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
   viewer: PersonType.isRequired,
+  component: PropTypes.oneOf(['button', 'menuitem']),
 };
 
+FollowAction.defaultProps = {
+  component: 'button',
+};
 
 const mapStateToProps = (state) => {
   const {

@@ -18,8 +18,8 @@ import FollowAction from '../actions/Follow';
 import appActions from '../../actions/app';
 import actions from '../../actions/actor';
 import i18n from '../../languages';
+import permissions from '../../permissions/actor';
 
-import { Person as PERSON } from '../../constants';
 import PersonType from '../../proptypes/Person';
 import ActorsListType from '../../proptypes/Actors';
 import ActorCard from '../../components/cards/Actor';
@@ -129,33 +129,22 @@ class ActorsBrowse extends React.Component {
     this.offset += LIMIT;
   }
 
-  canAdd() {
-    const { viewer } = this.props;
-
-    if ([
-      PERSON.TYPE.SUPER_ADMIN,
-      PERSON.TYPE.ADMIN,
-    ].includes(viewer.usertype)) {
-      return true;
-    }
-
-    return false;
-  }
-
-  canFollow(actor) {
-    const { viewer, isAuthenticated } = this.props;
-    return isAuthenticated && (viewer.id !== actor.id) && !actor.isBlocked;
-  }
-
   render() {
-    const { classes, namespace } = this.props;
+    const {
+      classes,
+      namespace,
+      isAuthenticated,
+      viewer,
+    } = this.props;
+
     const { hasMore, actors } = this.state;
 
     const columnWidth = this.getColumnWidth();
+    const canAdd = permissions.canAdd(viewer);
 
     return (
       <React.Fragment>
-        {this.canAdd() &&
+        {canAdd &&
           <Fab
             aria-label="Add"
             color="secondary"
@@ -191,7 +180,7 @@ class ActorsBrowse extends React.Component {
             {actors.allIds.map((actorId) => {
               const actor = actors.byId[actorId];
               const key = `actor_${actor.id}`;
-              const canFollow = this.canFollow(actor);
+              const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
               return (
                 <ActorCard
                   key={key}

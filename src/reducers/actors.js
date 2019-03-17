@@ -1,22 +1,7 @@
 import _ from 'lodash';
 import { Actors as ACTORS } from '../constants';
 import ACTOR_DEFAULT from '../proptypes/ActorDefault';
-
-const updateItem = (state, actor) => {
-  const actors = { ...state.actors };
-
-  actors.byId[actor.id] = actor;
-  actors.allIds = _.union(actors.allIds, [actor.id]);
-  actors.current = actor;
-
-  return actors;
-};
-
-const removeItem = (state, actor) => {
-  const actors = { ...state.actors };
-  // implement
-  return actors;
-};
+import utils from './utils';
 
 const DEFAULT_STATE = {
   isFetching: false,
@@ -49,11 +34,18 @@ export default function (higherOrderState, action) {
     case ACTORS.READ.REQUEST:
     case ACTORS.EDIT.REQUEST:
     case ACTORS.ADD.REQUEST:
-    case ACTORS.DELETE.REQUEST:
     case ACTORS.FOLLOW.REQUEST:
     case ACTORS.UNFOLLOW.REQUEST:
       return {
         ...state,
+        isFetching: true,
+        success: false,
+        error: '',
+      };
+    case ACTORS.DELETE.REQUEST:
+      return {
+        ...state,
+        current: action.current,
         isFetching: true,
         success: false,
         error: '',
@@ -93,7 +85,7 @@ export default function (higherOrderState, action) {
       return {
         ...state,
         isFetching: false,
-        actors: updateItem(state, action.actor),
+        actors: utils.editItem(state, action.actor),
         success: false,
       };
     case ACTORS.EDIT.SUCCESS:
@@ -103,27 +95,26 @@ export default function (higherOrderState, action) {
       return {
         ...state,
         isFetching: false,
-        actors: updateItem(state, action.actor),
+        actors: utils.editItem(state, action.actor),
         success: true,
       };
     case ACTORS.DELETE.SUCCESS:
       return {
         ...state,
         isFetching: false,
-        actors: removeItem(state, state.current),
+        actors: utils.deleteItem(state.actors, state.current),
         success: true,
       };
     case ACTORS.AVATAR.ADD.SUCCESS:
     case ACTORS.AVATAR.DELETE.SUCCESS:
     case ACTORS.COVER.ADD.SUCCESS:
-    case ACTORS.COVER.DELETE.SUCCESS:
       return {
         ...state,
         isFetchingAvatar: false,
         isFetchingCover: false,
         success: true,
         error: '',
-        actors: updateItem(state, action.actor),
+        actors: utils.editItem(state, action.actor),
       };
     case ACTORS.BROWSE.FAILURE:
     case ACTORS.READ.FAILURE:

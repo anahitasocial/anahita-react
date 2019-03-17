@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { Stories as STORIES } from '../constants';
+import utils from './utils';
 
 export default function (state = {
   isFetching: false,
@@ -30,6 +31,16 @@ export default function (state = {
       return {
         ...state,
         isFetching: true,
+        success: false,
+        error: '',
+      };
+    case STORIES.DELETE.REQUEST:
+      return {
+        ...state,
+        current: action.current,
+        isFetching: true,
+        success: false,
+        error: '',
       };
     case STORIES.BROWSE.SUCCESS:
       return {
@@ -46,7 +57,15 @@ export default function (state = {
         hasMore: action.hasMore,
         isFetching: false,
       };
+    case STORIES.DELETE.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        stories: utils.deleteItem(state.stories, state.current),
+        success: true,
+      };
     case STORIES.BROWSE.FAILURE:
+    case STORIES.DELETE.FAILURE:
       return {
         ...state,
         hasMore: false,
