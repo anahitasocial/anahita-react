@@ -27,7 +27,7 @@ const ActorProfile = (props) => {
     alias,
     description,
     followAction,
-    headerAction,
+    headerActions,
   } = props;
 
   return (
@@ -55,7 +55,7 @@ const ActorProfile = (props) => {
             </Typography>
           }
           className={classes.header}
-          action={headerAction}
+          action={headerActions}
         />
         <CardActions>
           {followAction}
@@ -73,14 +73,14 @@ ActorProfile.propTypes = {
   alias: PropTypes.string,
   description: PropTypes.string,
   followAction: PropTypes.node,
-  headerAction: PropTypes.node,
+  headerActions: PropTypes.node,
 };
 
 ActorProfile.defaultProps = {
   description: '',
   alias: '',
   followAction: null,
-  headerAction: null,
+  headerActions: null,
 };
 
 export default withStyles(styles)(ActorProfile);

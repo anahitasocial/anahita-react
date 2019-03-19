@@ -110,7 +110,7 @@ class ActorsRead extends React.Component {
           description={actor.body}
           alias={actor.alias}
           followAction={canFollow && actor.id && <FollowAction actor={actor} />}
-          headerAction={isAuthenticated && actor.id && <Commands actor={actor} />}
+          headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
         />
         <Divider className={classes.divider} />
         {actor.id &&
