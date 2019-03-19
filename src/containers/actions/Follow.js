@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import actions from '../../actions/follow';
+import actions from '../../actions/socialgraph';
+import ActorsType from '../../proptypes/Actors';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
@@ -22,30 +23,26 @@ class FollowAction extends React.Component {
   }
 
   componentWillMount() {
-    const { actor } = this.props;
-
-    this.setState({
-      isLeader: actor.isLeader,
-    });
+    const { actor, actors } = this.props;
+    const isLeader = actors.byId[actor.id] ? actors.byId[actor.id].isLeader : actor.isLeader;
+    this.setState({ isLeader });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { actor } = nextProps;
+    const { actors, actor } = nextProps;
 
-    this.setState({
-      isLeader: actor.isLeader,
-      isWaiting: false,
-    });
+    if (actors.byId[actor.id]) {
+      this.setState({
+        isLeader: actors.byId[actor.id].isLeader,
+        isWaiting: false,
+      });
+    }
   }
 
   handleFollow(event) {
     event.preventDefault();
 
-    const {
-      viewer,
-      actor,
-      followActor,
-    } = this.props;
+    const { viewer, actor, followActor } = this.props;
 
     followActor(viewer, actor);
 
@@ -55,11 +52,7 @@ class FollowAction extends React.Component {
   handleUnfollow(event) {
     event.preventDefault();
 
-    const {
-      viewer,
-      actor,
-      unfollowActor,
-    } = this.props;
+    const { viewer, actor, unfollowActor } = this.props;
 
     unfollowActor(viewer, actor);
 
@@ -67,9 +60,14 @@ class FollowAction extends React.Component {
   }
 
   render() {
-    const { component } = this.props;
+    const {
+      component,
+      followLabel,
+      unfollowLabel,
+    } = this.props;
+
     const { isLeader, isWaiting } = this.state;
-    const title = isLeader ? i18n.t('actions:unfollow') : i18n.t('actions:follow');
+    const title = isLeader ? unfollowLabel : followLabel;
     const onClick = isLeader ? this.handleUnfollow : this.handleFollow;
     const color = isLeader ? 'inherit' : 'primary';
 
@@ -101,12 +99,17 @@ FollowAction.propTypes = {
   followActor: PropTypes.func.isRequired,
   unfollowActor: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
+  actors: ActorsType.isRequired,
   viewer: PersonType.isRequired,
   component: PropTypes.oneOf(['button', 'menuitem']),
+  followLabel: PropTypes.string,
+  unfollowLabel: PropTypes.string,
 };
 
 FollowAction.defaultProps = {
   component: 'button',
+  followLabel: i18n.t('actions:follow'),
+  unfollowLabel: i18n.t('actions:unfollow'),
 };
 
 const mapStateToProps = (state) => {
@@ -114,7 +117,12 @@ const mapStateToProps = (state) => {
     viewer,
   } = state.auth;
 
+  const {
+    actors,
+  } = state.socialgraph;
+
   return {
+    actors,
     viewer,
   };
 };

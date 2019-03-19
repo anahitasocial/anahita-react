@@ -186,7 +186,9 @@ class ActorsBrowse extends React.Component {
                   key={key}
                   actor={actor}
                   action={canFollow &&
-                    <FollowAction actor={actor} />
+                    <FollowAction
+                      actor={actor}
+                    />
                   }
                 />
               );

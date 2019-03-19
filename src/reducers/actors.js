@@ -34,8 +34,6 @@ export default function (higherOrderState, action) {
     case ACTORS.READ.REQUEST:
     case ACTORS.EDIT.REQUEST:
     case ACTORS.ADD.REQUEST:
-    case ACTORS.FOLLOW.REQUEST:
-    case ACTORS.UNFOLLOW.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -85,17 +83,15 @@ export default function (higherOrderState, action) {
       return {
         ...state,
         isFetching: false,
-        actors: utils.editItem(state, action.actor),
+        actors: utils.editItem(state.actors, action.actor),
         success: false,
       };
     case ACTORS.EDIT.SUCCESS:
     case ACTORS.ADD.SUCCESS:
-    case ACTORS.FOLLOW.SUCCESS:
-    case ACTORS.UNFOLLOW.SUCCESS:
       return {
         ...state,
         isFetching: false,
-        actors: utils.editItem(state, action.actor),
+        actors: utils.editItem(state.actors, action.actor),
         success: true,
       };
     case ACTORS.DELETE.SUCCESS:
@@ -114,15 +110,13 @@ export default function (higherOrderState, action) {
         isFetchingCover: false,
         success: true,
         error: '',
-        actors: utils.editItem(state, action.actor),
+        actors: utils.editItem(state.actors, action.actor),
       };
     case ACTORS.BROWSE.FAILURE:
     case ACTORS.READ.FAILURE:
     case ACTORS.EDIT.FAILURE:
     case ACTORS.ADD.FAILURE:
     case ACTORS.DELETE.FAILURE:
-    case ACTORS.FOLLOW.FAILURE:
-    case ACTORS.UNFOLLOW.FAILURE:
     case ACTORS.AVATAR.ADD.FAILURE:
     case ACTORS.AVATAR.DELETE.FAILURE:
       return {

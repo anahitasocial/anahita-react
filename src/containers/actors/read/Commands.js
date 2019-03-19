@@ -81,12 +81,13 @@ class ActorsReadCommands extends React.Component {
                 return (
                   <BlockAction
                     actor={actor}
-                    key={command}
+                    key={`actor-${command}`}
+                    component="menuitem"
                   />
                 );
               case 'edit-actor':
                 return (
-                  <MenuItem key={command}>
+                  <MenuItem key={`actor-${command}`}>
                     <NavLink
                       to="settings/"
                       className={classes.navlink}

@@ -8,11 +8,16 @@ import actions from '../../actions/stories';
 
 import LikeAction from '../actions/Like';
 import DeleteAction from '../actions/story/Delete';
+import FollowAction from '../actions/Follow';
 
 import StoryCard from '../../components/cards/Story';
 import StoriesType from '../../proptypes/Stories';
+import PersonType from '../../proptypes/Person';
+
+import i18n from '../../languages';
 
 const LIMIT = 20;
+const OWNER_NAME_CHAR_LIMIT = 16;
 
 const isLikeable = (node) => {
   const likeables = [
@@ -25,6 +30,14 @@ const isLikeable = (node) => {
   ];
 
   return likeables.includes(node.objectType);
+};
+
+const getOwnerName = (story) => {
+  const { owner: { name } } = story;
+  if (name.length > OWNER_NAME_CHAR_LIMIT) {
+    return `${name.substring(0, OWNER_NAME_CHAR_LIMIT)}...`;
+  }
+  return name;
 };
 
 class StoriesBrowse extends React.Component {
@@ -75,6 +88,8 @@ class StoriesBrowse extends React.Component {
       hasMore,
     } = this.state;
 
+    const { viewer } = this.props;
+
     return (
       <Grid
         container
@@ -100,11 +115,24 @@ class StoriesBrowse extends React.Component {
             {stories.allIds.map((storyId) => {
               const story = stories.byId[storyId];
               const key = `story_${story.id}`;
+              const ownerName = getOwnerName(story);
               return (
                 <StoryCard
                   story={story}
                   key={key}
                   menuItems={[
+                    story.owner.id !== viewer.id &&
+                    <FollowAction
+                      actor={story.owner}
+                      component="menuitem"
+                      key={`story-follow-${story.id}`}
+                      followLabel={i18n.t('stories:actions.followOwner', {
+                        name: ownerName,
+                      })}
+                      unfollowLabel={i18n.t('stories:actions.unfollowOwner', {
+                        name: ownerName,
+                      })}
+                    />,
                     <DeleteAction
                       story={story}
                       key={`story-delete-${story.id}`}
@@ -135,6 +163,7 @@ StoriesBrowse.propTypes = {
   stories: StoriesType.isRequired,
   queryFilters: PropTypes.object,
   hasMore: PropTypes.bool.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 StoriesBrowse.defaultProps = {

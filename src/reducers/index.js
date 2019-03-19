@@ -7,6 +7,7 @@ import likes from './likes';
 import media from './media';
 import people from './people';
 import person from './person';
+import socialgraph from './socialgraph';
 import stories from './stories';
 
 export default combineReducers({
@@ -17,5 +18,6 @@ export default combineReducers({
   media,
   people,
   person,
+  socialgraph,
   stories,
 });

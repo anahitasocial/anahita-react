@@ -8,9 +8,16 @@ export default {
     unblock: 'Unblock',
     like: 'Like',
     unlike: 'Unlike',
+    delete: 'Delete',
   },
   translation: {
     stories,
+  },
+  stories: {
+    actions: {
+      followOwner: 'Follow {{name}}',
+      unfollowOwner: 'Unfollow {{name}}',
+    },
   },
   auth: {
     logout: 'Logout',
