@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import actions from '../../../actions/actor';
-import { Person as PERSON } from '../../../constants';
+import actions from '../../../actions/avatar';
 import AvatarForm from '../../../components/actor/AvatarForm';
 
+import ActorsType from '../../../proptypes/Actors';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
+import permissions from '../../../permissions/actor';
 
 class ActorsAvatar extends React.Component {
   constructor(props) {
@@ -14,72 +15,82 @@ class ActorsAvatar extends React.Component {
 
     this.state = {
       anchorEl: null,
-      avatarLoaded: false,
+      isLoaded: false,
     };
 
-    this.avatar = new Image();
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+
+    /* global Image */
+    this.avatar = new Image();
   }
 
   componentDidMount() {
-    this.loadAvatar(this.props.actor);
+    const { actor } = this.props;
+    this.loadAvatar(actor);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.loadAvatar(nextProps.actor);
+    const { actor, actors } = nextProps;
+    this.loadAvatar(actors.byId[actor.id] || actor);
   }
 
   componentWillUnmount() {
-    this.avatar.onload = null;
-    this.avatar.onerror = null;
+    const { reset } = this.props;
+    reset();
   }
 
   loadAvatar(actor) {
-    this.avatar.onload = () => {
-      this.setState({
-        avatarLoaded: true,
-      });
-    };
-    this.avatar.onError = () => {
-      this.setState({
-        avatarLoaded: false,
-      });
-    };
-
-    this.avatar.src = actor.imageURL &&
+    const src = actor.imageURL &&
     actor.imageURL.large &&
     actor.imageURL.large.url;
+
+    if (!src) {
+      this.setState({ isLoaded: false });
+      return;
+    }
+
+    this.avatar.src = src;
+
+    this.avatar.onload = () => {
+      this.setState({ isLoaded: true });
+    };
+
+    this.avatar.onError = () => {
+      this.setState({ isLoaded: false });
+    };
   }
 
-  addAvatar() {
-    const { actor } = this.props;
-    this.props.addAvatar(actor, this.file);
+  addAvatar(file) {
+    const { actor, addAvatar } = this.props;
+    addAvatar(actor, file);
   }
 
   deleteAvatar() {
-    const { actor } = this.props;
-    this.props.deleteAvatar(actor);
+    const { actor, deleteAvatar } = this.props;
+    deleteAvatar(actor);
   }
 
   handleFieldChange(event) {
     const file = event.target.files[0];
-    this.file = file;
-    this.addAvatar();
+
     this.setState({
       anchorEl: null,
-      avatarLoaded: false,
+      isLoaded: false,
     });
+
+    this.addAvatar(file);
   }
 
   handleDelete() {
-    this.deleteAvatar();
     this.setState({
       anchorEl: null,
-      avatarLoaded: false,
+      isLoaded: false,
     });
+
+    this.deleteAvatar();
   }
 
   handleOpen(event) {
@@ -89,70 +100,31 @@ class ActorsAvatar extends React.Component {
   }
 
   handleClose() {
-    this.setState({
-      anchorEl: null,
-    });
-  }
-
-  canEdit() {
-    const { viewer, actor } = this.props;
-
-    if (viewer.id === actor.id) {
-      return true;
-    }
-
-    if (actor.administratorIds) {
-      if (actor.administratorIds.indexOf(String(viewer.id)) > -1) {
-        return true;
-      }
-    }
-
-    if ([
-      PERSON.TYPE.ADMIN,
-      PERSON.TYPE.SUPER_ADMIN,
-    ].includes(viewer.usertype)) {
-      return true;
-    }
-
-    return false;
-  }
-
-  hasAvatar() {
-    const { actor } = this.props;
-    return Boolean(actor.imageURL && actor.imageURL.large);
-  }
-
-  isWaiting() {
-    const { avatarLoaded } = this.state;
-    const { isFetching } = this.props;
-    return (this.hasAvatar() && !avatarLoaded) || isFetching;
+    this.setState({ anchorEl: null });
   }
 
   render() {
     const {
       isFetching,
       actor,
+      viewer,
     } = this.props;
 
     const {
       anchorEl,
-      avatarLoaded,
+      isLoaded,
     } = this.state;
 
-    const canEdit = this.canEdit();
-    const hasAvatar = this.hasAvatar();
-    const isWaiting = this.isWaiting();
+    const canEdit = permissions.canEdit(viewer, actor);
+    const avatar = isLoaded ? this.avatar.src : null;
 
     return (
       <AvatarForm
         isFetching={isFetching}
         name={actor.name}
-        avatar={this.avatar}
+        avatar={avatar}
         anchorEl={anchorEl}
         canEdit={canEdit}
-        hasAvatar={hasAvatar}
-        isWaiting={isWaiting}
-        isAvatarLoaded={avatarLoaded}
         handleOpen={this.handleOpen}
         handleClose={this.handleClose}
         handleFieldChange={this.handleFieldChange}
@@ -165,13 +137,11 @@ class ActorsAvatar extends React.Component {
 ActorsAvatar.propTypes = {
   addAvatar: PropTypes.func.isRequired,
   deleteAvatar: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  actors: ActorsType.isRequired,
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
-  isFetching: PropTypes.bool,
-};
-
-ActorsAvatar.defaultProps = {
-  isFetching: false,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -179,7 +149,18 @@ const mapStateToProps = (state) => {
     viewer,
   } = state.auth;
 
+  const {
+    actors,
+    isFetching,
+    success,
+    error,
+  } = state.avatar;
+
   return {
+    actors,
+    isFetching,
+    success,
+    error,
     viewer,
   };
 };
@@ -187,10 +168,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addAvatar: (actor, file) => {
-      dispatch(actions.addAvatar(actor, file));
+      dispatch(actions.add(actor, file));
     },
     deleteAvatar: (actor) => {
       dispatch(actions.deleteAvatar(actor));
+    },
+    reset: () => {
+      dispatch(actions.reset());
     },
   };
 };

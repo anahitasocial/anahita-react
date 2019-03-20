@@ -39,6 +39,11 @@ class BlockAction extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { reset } = this.props;
+    reset();
+  }
+
   handleBlock(event) {
     event.preventDefault();
 
@@ -98,6 +103,7 @@ class BlockAction extends React.Component {
 BlockAction.propTypes = {
   blockPerson: PropTypes.func.isRequired,
   unblockPerson: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
   actors: ActorsType.isRequired,
   viewer: PersonType.isRequired,
@@ -134,6 +140,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     unblockPerson: (viewer, actor) => {
       dispatch(actions.unblock(viewer, actor));
+    },
+    reset: () => {
+      dispatch(actions.reset());
     },
   };
 };

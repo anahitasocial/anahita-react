@@ -75,7 +75,6 @@ class ActorsRead extends React.Component {
       classes,
       isAuthenticated,
       viewer,
-      isFetchingAvatar,
       isFetchingCover,
     } = this.props;
 
@@ -100,11 +99,7 @@ class ActorsRead extends React.Component {
             />
           }
           avatar={
-            <Avatar
-              actor={actor}
-              viewer={viewer}
-              isFetching={isFetchingAvatar}
-            />
+            <Avatar actor={actor} />
           }
           name={actor.name}
           description={actor.body}
@@ -136,7 +131,6 @@ ActorsRead.propTypes = {
   isAuthenticated: PropTypes.bool,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  isFetchingAvatar: PropTypes.bool,
   isFetchingCover: PropTypes.bool,
   match: PropTypes.object.isRequired,
   setAppTitle: PropTypes.func.isRequired,
@@ -144,7 +138,6 @@ ActorsRead.propTypes = {
 
 ActorsRead.defaultProps = {
   isAuthenticated: false,
-  isFetchingAvatar: false,
   isFetchingCover: false,
 };
 
@@ -154,7 +147,6 @@ const mapStateToProps = (state) => {
     error,
     isLeader,
     isFetching,
-    isFetchingAvatar,
     isFetchingCover,
   } = state.actors;
 
@@ -170,7 +162,6 @@ const mapStateToProps = (state) => {
     isAuthenticated,
     viewer,
     isFetching,
-    isFetchingAvatar,
     isFetchingCover,
   };
 };

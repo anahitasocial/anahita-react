@@ -1,6 +1,8 @@
 import App from './app';
 import Actors from './actors';
 import Auth from './auth';
+import Avatar from './avatar';
+import Cover from './cover';
 import Likes from './likes';
 import Media from './media';
 import Person from './person';
@@ -12,6 +14,8 @@ export {
   App,
   Actors,
   Auth,
+  Avatar,
+  Cover,
   Likes,
   Media,
   Person,

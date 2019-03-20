@@ -1,6 +1,14 @@
 import { socialgraph as api } from '../api';
 import { Socialgraph as SOCIALGRAPH } from '../constants';
 
+// -- reset
+
+function reset() {
+  return {
+    type: SOCIALGRAPH.BROWSE.RESET,
+  };
+}
+
 // -- Follow
 
 function followRequest(actor) {
@@ -166,6 +174,7 @@ function unblock(viewer, actor) {
 }
 
 export default {
+  reset,
   follow,
   unfollow,
   block,

@@ -5,7 +5,6 @@ import utils from './utils';
 
 const DEFAULT_STATE = {
   isFetching: false,
-  isFetchingAvatar: false,
   isFetchingCover: false,
   actors: {
     byId: {},
@@ -45,14 +44,6 @@ export default function (higherOrderState, action) {
         ...state,
         current: action.current,
         isFetching: true,
-        success: false,
-        error: '',
-      };
-    case ACTORS.AVATAR.ADD.REQUEST:
-    case ACTORS.AVATAR.DELETE.REQUEST:
-      return {
-        ...state,
-        isFetchingAvatar: true,
         success: false,
         error: '',
       };
@@ -101,12 +92,9 @@ export default function (higherOrderState, action) {
         actors: utils.deleteItem(state.actors, state.current),
         success: true,
       };
-    case ACTORS.AVATAR.ADD.SUCCESS:
-    case ACTORS.AVATAR.DELETE.SUCCESS:
     case ACTORS.COVER.ADD.SUCCESS:
       return {
         ...state,
-        isFetchingAvatar: false,
         isFetchingCover: false,
         success: true,
         error: '',
@@ -117,12 +105,9 @@ export default function (higherOrderState, action) {
     case ACTORS.EDIT.FAILURE:
     case ACTORS.ADD.FAILURE:
     case ACTORS.DELETE.FAILURE:
-    case ACTORS.AVATAR.ADD.FAILURE:
-    case ACTORS.AVATAR.DELETE.FAILURE:
       return {
         ...state,
         hasMore: false,
-        isFetchingAvatar: false,
         isFetchingCover: false,
         isFetching: false,
         success: false,

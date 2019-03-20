@@ -225,88 +225,6 @@ function deleteActor(actor) {
   };
 }
 
-// -- Add Avatar
-
-function addAvatarRequest(actor) {
-  return {
-    type: ACTORS.AVATAR.ADD.REQUEST,
-    actor,
-  };
-}
-
-function addAvatarSuccess(result) {
-  return {
-    type: ACTORS.AVATAR.ADD.SUCCESS,
-    actor: result.data,
-  };
-}
-
-function addAvatarFailure(response) {
-  return {
-    type: ACTORS.AVATAR.ADD.FAILURE,
-    error: response.message,
-  };
-}
-
-function addAvatar(actor, file) {
-  return (dispatch) => {
-    dispatch(addAvatarRequest(actor));
-    return new Promise((resolve, reject) => {
-      api.editAvatar(actor, file)
-        .then((result) => {
-          dispatch(addAvatarSuccess(result));
-          return resolve();
-        }, (response) => {
-          dispatch(addAvatarFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
-// -- Delete Avatar
-
-function deleteAvatarRequest(actor) {
-  return {
-    type: ACTORS.AVATAR.DELETE.REQUEST,
-    actor,
-  };
-}
-
-function deleteAvatarSuccess(result) {
-  return {
-    type: ACTORS.AVATAR.DELETE.SUCCESS,
-    actor: result.data,
-  };
-}
-
-function deleteAvatarFailure(response) {
-  return {
-    type: ACTORS.AVATAR.DELETE.FAILURE,
-    error: response.message,
-  };
-}
-
-function deleteAvatar(actor) {
-  return (dispatch) => {
-    dispatch(deleteAvatarRequest(actor));
-    return new Promise((resolve, reject) => {
-      api.editAvatar(actor)
-        .then((result) => {
-          dispatch(deleteAvatarSuccess(result));
-          return resolve();
-        }, (response) => {
-          dispatch(deleteAvatarFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
 // -- Add Cover
 
 function addCoverRequest(actor) {
@@ -396,8 +314,6 @@ export default {
   edit,
   add,
   deleteActor,
-  addAvatar,
-  deleteAvatar,
   addCover,
   deleteCover,
 };

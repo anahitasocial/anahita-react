@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 
+import actors from './actors';
 import app from './app';
 import auth from './auth';
-import actors from './actors';
+import avatar from './avatar';
 import likes from './likes';
 import media from './media';
 import people from './people';
@@ -11,9 +12,10 @@ import socialgraph from './socialgraph';
 import stories from './stories';
 
 export default combineReducers({
+  actors,
   app,
   auth,
-  actors,
+  avatar,
   likes,
   media,
   people,

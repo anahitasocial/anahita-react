@@ -32,10 +32,7 @@ const ActorAvatarForm = (props) => {
     avatar,
     anchorEl,
     isFetching,
-    isAvatarLoaded,
-    isWaiting,
     canEdit,
-    hasAvatar,
     handleOpen,
     handleClose,
     handleFieldChange,
@@ -51,33 +48,19 @@ const ActorAvatarForm = (props) => {
         disabled={!canEdit || isFetching}
         onClick={handleOpen}
       >
-        {hasAvatar &&
-          <Avatar
-            aria-label={name}
-            className={classes.avatar}
-            alt={name}
-            src={isAvatarLoaded ? avatar.src : ''}
-          >
-            {isWaiting &&
-              <CircularProgress />
-            }
-          </Avatar>
-        }
-        {!hasAvatar &&
-          <Avatar
-            aria-label={name}
-            className={classes.avatar}
-            alt={name}
-            src={isAvatarLoaded ? avatar.src : ''}
-          >
-            {!isWaiting &&
-              name.charAt(0)
-            }
-            {isWaiting &&
-              <CircularProgress />
-            }
-          </Avatar>
-        }
+        <Avatar
+          aria-label={name}
+          className={classes.avatar}
+          alt={name}
+          src={isFetching ? '' : avatar}
+        >
+          {!isFetching &&
+            name.charAt(0)
+          }
+          {isFetching &&
+            <CircularProgress />
+          }
+        </Avatar>
       </IconButton>
 
       <Menu
@@ -110,12 +93,9 @@ const ActorAvatarForm = (props) => {
 ActorAvatarForm.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string,
-  avatar: PropTypes.object,
+  avatar: PropTypes.string,
   anchorEl: PropTypes.object,
   isFetching: PropTypes.bool,
-  isAvatarLoaded: PropTypes.bool,
-  isWaiting: PropTypes.bool,
-  hasAvatar: PropTypes.bool,
   canEdit: PropTypes.bool,
   handleOpen: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
@@ -126,13 +106,8 @@ ActorAvatarForm.propTypes = {
 ActorAvatarForm.defaultProps = {
   isFetching: false,
   canEdit: false,
-  hasAvatar: false,
   name: '',
-  avatar: {
-    src: '',
-  },
-  isAvatarLoaded: false,
-  isWaiting: false,
+  avatar: '',
   anchorEl: null,
 };
 

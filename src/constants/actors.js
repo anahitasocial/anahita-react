@@ -13,10 +13,6 @@ export default {
   EDIT: actors('edit'),
   ADD: actors('add'),
   DELETE: actors('delete'),
-  FOLLOW: actors('follow'),
-  UNFOLLOW: actors('unfollow'),
-  BLOCK: actors('block'),
-  UNBLOCK: actors('unblock'),
   AVATAR: {
     ADD: avatar('add'),
     DELETE: avatar('delete'),

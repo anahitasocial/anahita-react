@@ -5,6 +5,7 @@ import {
 
 import PersonDefault from '../proptypes/PersonDefault';
 
+/* global localStorage */
 const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : PersonDefault;
 
 export default (state = {

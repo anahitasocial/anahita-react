@@ -39,6 +39,11 @@ class FollowAction extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { reset } = this.props;
+    reset();
+  }
+
   handleFollow(event) {
     event.preventDefault();
 
@@ -98,6 +103,7 @@ class FollowAction extends React.Component {
 FollowAction.propTypes = {
   followActor: PropTypes.func.isRequired,
   unfollowActor: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
   actors: ActorsType.isRequired,
   viewer: PersonType.isRequired,
@@ -134,6 +140,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     unfollowActor: (viewer, actor) => {
       dispatch(actions.unfollow(viewer, actor));
+    },
+    reset: () => {
+      dispatch(actions.reset());
     },
   };
 };
