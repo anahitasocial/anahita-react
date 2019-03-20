@@ -37,11 +37,6 @@ class ActorsAvatar extends React.Component {
     this.loadAvatar(actors.byId[actor.id] || actor);
   }
 
-  componentWillUnmount() {
-    const { reset } = this.props;
-    reset();
-  }
-
   loadAvatar(actor) {
     const src = actor.imageURL &&
     actor.imageURL.large &&
@@ -137,7 +132,6 @@ class ActorsAvatar extends React.Component {
 ActorsAvatar.propTypes = {
   addAvatar: PropTypes.func.isRequired,
   deleteAvatar: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   actors: ActorsType.isRequired,
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
@@ -172,9 +166,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteAvatar: (actor) => {
       dispatch(actions.deleteAvatar(actor));
-    },
-    reset: () => {
-      dispatch(actions.reset());
     },
   };
 };

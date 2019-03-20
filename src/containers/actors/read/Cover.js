@@ -37,11 +37,6 @@ class ActorsCover extends React.Component {
     this.loadCover(actors.byId[actor.id] || actor);
   }
 
-  componentWillUnmount() {
-    const { reset } = this.props;
-    reset();
-  }
-
   loadCover(actor) {
     const src = actor.coverURL &&
     actor.coverURL.large &&
@@ -137,7 +132,6 @@ class ActorsCover extends React.Component {
 ActorsCover.propTypes = {
   addCover: PropTypes.func.isRequired,
   deleteCover: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   actors: ActorsType.isRequired,
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
@@ -172,9 +166,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteCover: (actor) => {
       dispatch(actions.deleteCover(actor));
-    },
-    reset: () => {
-      dispatch(actions.reset());
     },
   };
 };
