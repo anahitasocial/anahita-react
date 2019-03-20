@@ -2,7 +2,7 @@ import axios from 'axios';
 import { singularize } from 'inflected';
 import { constructURLSearchParams } from './utils';
 
-function browse(params, namespace) {
+const browse = (params, namespace) => {
   return axios.get(`/${namespace}.json`, {
     params: {
       start: params.offset,
@@ -10,13 +10,13 @@ function browse(params, namespace) {
       ...params,
     },
   });
-}
+};
 
-function read(id, namespace) {
+const read = (id, namespace) => {
   return axios.get(`/${namespace}/${id}.json`);
-}
+};
 
-function edit(actor) {
+const edit = (actor) => {
   const {
     name,
     body,
@@ -26,9 +26,9 @@ function edit(actor) {
     name,
     body,
   }));
-}
+};
 
-function add(params, namespace) {
+const add = (params, namespace) => {
   const {
     name,
     body,
@@ -41,56 +41,12 @@ function add(params, namespace) {
     enabled,
     access,
   }));
-}
+};
 
-function deleteActor(actor) {
+const deleteActor = (actor) => {
   const namespace = actor.objectType.split('.')[1];
   return axios.delete(`/${namespace}/${actor.id}.json`);
-}
-
-// @todo the editAvatar and editCover code is wet. Make it DRY!
-
-function editAvatar(actor, file) {
-  const namespace = actor.objectType.split('.')[1];
-  const { id } = actor;
-  const formData = new FormData();
-
-  if (!file) {
-    const newFile = new File([], '');
-    formData.append('portrait', newFile);
-  } else {
-    formData.append('portrait', file);
-  }
-
-  const config = {
-    headers: {
-      'content-type': 'multipart/form-data',
-    },
-  };
-
-  return axios.post(`/${namespace}/${id}.json?edit=avatar`, formData, config);
-}
-
-function editCover(actor, file) {
-  const namespace = actor.objectType.split('.')[1];
-  const { id } = actor;
-  const formData = new FormData();
-
-  if (!file) {
-    const newFile = new File([], '');
-    formData.append('cover', newFile);
-  } else {
-    formData.append('cover', file);
-  }
-
-  const config = {
-    headers: {
-      'content-type': 'multipart/form-data',
-    },
-  };
-
-  return axios.post(`/${namespace}/${id}.json?edit=cover`, formData, config);
-}
+};
 
 export {
   browse,
@@ -98,6 +54,4 @@ export {
   edit,
   add,
   deleteActor,
-  editAvatar,
-  editCover,
 };

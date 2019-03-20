@@ -1,25 +1,25 @@
-import { avatar as api } from '../api';
-import { Avatar as AVATAR } from '../constants';
+import { cover as api } from '../api';
+import { Cover as COVER } from '../constants';
 
 // -- Add Avatar
 
 function addRequest(actor) {
   return {
-    type: AVATAR.ADD.REQUEST,
+    type: COVER.ADD.REQUEST,
     actor,
   };
 }
 
 function addSuccess(result) {
   return {
-    type: AVATAR.ADD.SUCCESS,
+    type: COVER.ADD.SUCCESS,
     actor: result.data,
   };
 }
 
 function addFailure(response) {
   return {
-    type: AVATAR.ADD.FAILURE,
+    type: COVER.ADD.FAILURE,
     error: response.message,
   };
 }
@@ -46,26 +46,26 @@ function add(actor, file) {
 
 function deleteRequest(actor) {
   return {
-    type: AVATAR.DELETE.REQUEST,
+    type: COVER.DELETE.REQUEST,
     actor,
   };
 }
 
 function deleteSuccess(result) {
   return {
-    type: AVATAR.DELETE.SUCCESS,
+    type: COVER.DELETE.SUCCESS,
     actor: result.data,
   };
 }
 
 function deleteFailure(response) {
   return {
-    type: AVATAR.DELETE.FAILURE,
+    type: COVER.DELETE.FAILURE,
     error: response.message,
   };
 }
 
-function deleteAvatar(actor) {
+function deleteCover(actor) {
   return (dispatch) => {
     dispatch(deleteRequest(actor));
     return new Promise((resolve, reject) => {
@@ -85,5 +85,5 @@ function deleteAvatar(actor) {
 
 export default {
   add,
-  deleteAvatar,
+  deleteCover,
 };

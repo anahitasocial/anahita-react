@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import actions from '../../../actions/actor';
-import { Person as PERSON } from '../../../constants';
+import actions from '../../../actions/cover';
 import CoverForm from '../../../components/actor/CoverForm';
 
+import ActorsType from '../../../proptypes/Actors';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
+import permissions from '../../../permissions/actor';
 
 class ActorsCover extends React.Component {
   constructor(props) {
@@ -14,49 +15,57 @@ class ActorsCover extends React.Component {
 
     this.state = {
       anchorEl: null,
-      coverLoaded: false,
+      isLoaded: false,
     };
 
-    this.cover = new Image();
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+
+    /* global Image */
+    this.cover = new Image();
   }
 
   componentDidMount() {
-    this.loadCover(this.props.actor);
+    const { actor } = this.props;
+    this.loadCover(actor);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.loadCover(nextProps.actor);
+    const { actor, actors } = nextProps;
+    this.loadCover(actors.byId[actor.id] || actor);
   }
 
   componentWillUnmount() {
-    this.cover.onload = null;
-    this.cover.onerror = null;
+    const { reset } = this.props;
+    reset();
   }
 
   loadCover(actor) {
-    this.cover.onload = () => {
-      this.setState({
-        coverLoaded: true,
-      });
-    };
-    this.cover.onError = () => {
-      this.setState({
-        coverLoaded: false,
-      });
-    };
-
-    this.cover.src = actor.coverURL &&
+    const src = actor.coverURL &&
     actor.coverURL.large &&
     actor.coverURL.large.url;
+
+    if (!src) {
+      this.setState({ isLoaded: false });
+      return;
+    }
+
+    this.cover.src = src;
+
+    this.cover.onload = () => {
+      this.setState({ isLoaded: true });
+    };
+
+    this.cover.onError = () => {
+      this.setState({ isLoaded: false });
+    };
   }
 
-  addCover() {
+  addCover(file) {
     const { actor, addCover } = this.props;
-    addCover(actor, this.file);
+    addCover(actor, file);
   }
 
   deleteCover() {
@@ -66,18 +75,22 @@ class ActorsCover extends React.Component {
 
   handleFieldChange(event) {
     const file = event.target.files[0];
-    this.file = file;
-    this.addCover();
+
     this.setState({
       anchorEl: null,
+      isLoaded: false,
     });
+
+    this.addCover(file);
   }
 
   handleDelete() {
-    this.deleteCover();
     this.setState({
       anchorEl: null,
+      isLoaded: false,
     });
+
+    this.deleteCover();
   }
 
   handleOpen(event) {
@@ -87,64 +100,31 @@ class ActorsCover extends React.Component {
   }
 
   handleClose() {
-    this.setState({
-      anchorEl: null,
-    });
-  }
-
-  canEdit() {
-    const { viewer, actor } = this.props;
-
-    if (viewer.id === actor.id) {
-      return true;
-    }
-
-    if (actor.administratorIds) {
-      if (actor.administratorIds.indexOf(String(viewer.id)) > -1) {
-        return true;
-      }
-    }
-
-    if ([
-      PERSON.TYPE.ADMIN,
-      PERSON.TYPE.SUPER_ADMIN,
-    ].includes(viewer.usertype)) {
-      return true;
-    }
-
-    return false;
-  }
-
-  hasCover() {
-    const { actor } = this.props;
-    return Boolean(actor.coverURL && actor.coverURL.large);
-  }
-
-  isWaiting() {
-    return (this.hasCover() && !this.state.coverLoaded) || this.props.isFetching;
+    this.setState({ anchorEl: null });
   }
 
   render() {
     const {
       isFetching,
       actor,
+      viewer,
     } = this.props;
 
-    const { anchorEl, coverLoaded } = this.state;
-    const canEdit = this.canEdit();
-    const hasCover = this.hasCover();
-    const isWaiting = this.isWaiting();
+    const {
+      anchorEl,
+      isLoaded,
+    } = this.state;
+
+    const canEdit = permissions.canEdit(viewer, actor);
+    const cover = isLoaded ? this.cover.src : null;
 
     return (
       <CoverForm
         isFetching={isFetching}
         name={actor.name}
-        cover={this.cover}
+        cover={cover}
         anchorEl={anchorEl}
         canEdit={canEdit}
-        hasCover={hasCover}
-        isWaiting={isWaiting}
-        isCoverLoaded={coverLoaded}
         handleOpen={this.handleOpen}
         handleClose={this.handleClose}
         handleFieldChange={this.handleFieldChange}
@@ -157,13 +137,11 @@ class ActorsCover extends React.Component {
 ActorsCover.propTypes = {
   addCover: PropTypes.func.isRequired,
   deleteCover: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  actors: ActorsType.isRequired,
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
-  isFetching: PropTypes.bool,
-};
-
-ActorsCover.defaultProps = {
-  isFetching: false,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -171,7 +149,18 @@ const mapStateToProps = (state) => {
     viewer,
   } = state.auth;
 
+  const {
+    actors,
+    isFetching,
+    success,
+    error,
+  } = state.cover;
+
   return {
+    actors,
+    isFetching,
+    success,
+    error,
     viewer,
   };
 };
@@ -179,10 +168,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addCover: (actor, file) => {
-      dispatch(actions.addCover(actor, file));
+      dispatch(actions.add(actor, file));
     },
     deleteCover: (actor) => {
       dispatch(actions.deleteCover(actor));
+    },
+    reset: () => {
+      dispatch(actions.reset());
     },
   };
 };

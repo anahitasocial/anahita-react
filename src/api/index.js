@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as actors from './actors';
+import * as avatar from './avatar';
 import * as auth from './auth';
+import * as cover from './cover';
 import * as likes from './likes';
 import * as media from './media';
 import * as person from './person';
@@ -19,7 +21,9 @@ axios.interceptors.request.use((config) => {
 
 export {
   actors,
+  avatar,
   auth,
+  cover,
   likes,
   media,
   person,

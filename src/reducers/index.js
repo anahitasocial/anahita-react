@@ -4,6 +4,7 @@ import actors from './actors';
 import app from './app';
 import auth from './auth';
 import avatar from './avatar';
+import cover from './cover';
 import likes from './likes';
 import media from './media';
 import people from './people';
@@ -16,6 +17,7 @@ export default combineReducers({
   app,
   auth,
   avatar,
+  cover,
   likes,
   media,
   people,

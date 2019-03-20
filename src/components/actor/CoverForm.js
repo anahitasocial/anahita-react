@@ -43,10 +43,7 @@ const ActorCoverForm = (props) => {
     cover,
     anchorEl,
     isFetching,
-    isCoverLoaded,
-    isWaiting,
     canEdit,
-    hasCover,
     handleOpen,
     handleClose,
     handleFieldChange,
@@ -60,16 +57,16 @@ const ActorCoverForm = (props) => {
         disabled={!canEdit || isFetching}
         onClick={handleOpen}
       >
-        {hasCover && isCoverLoaded &&
+        {!isFetching && cover &&
           <Fade in>
             <CardMedia
               className={classes.cover}
               title={name}
-              image={cover.src}
+              image={cover}
             />
           </Fade>
         }
-        {!hasCover &&
+        {!cover &&
           <div className={classes.coverPlaceholder}>
             <CoverIcon
               className={classes.coverIcon}
@@ -77,7 +74,7 @@ const ActorCoverForm = (props) => {
             />
           </div>
         }
-        {isWaiting &&
+        {isFetching &&
           <CircularProgress />
         }
       </ButtonBase>
@@ -111,12 +108,9 @@ const ActorCoverForm = (props) => {
 ActorCoverForm.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string,
-  cover: PropTypes.object,
+  cover: PropTypes.string,
   anchorEl: PropTypes.object,
   isFetching: PropTypes.bool,
-  isCoverLoaded: PropTypes.bool,
-  isWaiting: PropTypes.bool,
-  hasCover: PropTypes.bool,
   canEdit: PropTypes.bool,
   handleOpen: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
@@ -127,13 +121,8 @@ ActorCoverForm.propTypes = {
 ActorCoverForm.defaultProps = {
   isFetching: false,
   canEdit: false,
-  hasCover: false,
   name: '',
-  cover: {
-    src: '',
-  },
-  isCoverLoaded: false,
-  isWaiting: false,
+  cover: '',
   anchorEl: null,
 };
 
