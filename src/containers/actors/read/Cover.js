@@ -23,6 +23,7 @@ class ActorsCover extends React.Component {
 
     /* global Image */
     this.cover = new Image();
+    this.hasCover = false;
   }
 
   componentDidMount() {
@@ -42,10 +43,12 @@ class ActorsCover extends React.Component {
 
     if (!src) {
       this.setState({ isLoaded: false });
+      this.hasCover = false;
       return;
     }
 
     this.cover.src = src;
+    this.hasCover = true;
 
     this.cover.onload = () => {
       this.setState({ isLoaded: true });
@@ -112,7 +115,7 @@ class ActorsCover extends React.Component {
 
     return (
       <CoverForm
-        isFetching={isFetching}
+        isFetching={isFetching || (this.hasCover && !isLoaded)}
         name={node.name}
         cover={cover}
         anchorEl={anchorEl}

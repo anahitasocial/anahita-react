@@ -23,6 +23,7 @@ class ActorsAvatar extends React.Component {
 
     /* global Image */
     this.avatar = new Image();
+    this.hasAvatar = false;
   }
 
   componentDidMount() {
@@ -42,10 +43,12 @@ class ActorsAvatar extends React.Component {
 
     if (!src) {
       this.setState({ isLoaded: false });
+      this.hasAvatar = false;
       return;
     }
 
     this.avatar.src = src;
+    this.hasAvatar = true;
 
     this.avatar.onload = () => {
       this.setState({ isLoaded: true });
@@ -112,7 +115,7 @@ class ActorsAvatar extends React.Component {
 
     return (
       <AvatarForm
-        isFetching={isFetching}
+        isFetching={isFetching || (this.hasAvatar && !isLoaded)}
         name={node.name}
         avatar={avatar}
         anchorEl={anchorEl}
