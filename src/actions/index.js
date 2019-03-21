@@ -1,6 +1,8 @@
+import actor from './actor';
 import app from './app';
 import auth from './auth';
-import actor from './actor';
+import avatar from './avatar';
+import cover from './cover';
 import likes from './likes';
 import media from './media';
 import person from './person';
@@ -9,9 +11,11 @@ import stories from './stories';
 
 
 export default {
+  actor,
   app,
   auth,
-  actor,
+  avatar,
+  cover,
   likes,
   media,
   person,

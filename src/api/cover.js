@@ -1,9 +1,9 @@
 /* global FormData, File */
 import axios from 'axios';
 
-const edit = (actor, file) => {
-  const namespace = actor.objectType.split('.')[1];
-  const { id } = actor;
+const edit = (node, file) => {
+  const { id, objectType } = node;
+  const namespace = objectType.split('.')[1];
   const formData = new FormData();
 
   if (!file) {

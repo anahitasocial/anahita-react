@@ -3,17 +3,17 @@ import { Cover as COVER } from '../constants';
 
 // -- Add Avatar
 
-function addRequest(actor) {
+function addRequest(node) {
   return {
     type: COVER.ADD.REQUEST,
-    actor,
+    node,
   };
 }
 
 function addSuccess(result) {
   return {
     type: COVER.ADD.SUCCESS,
-    actor: result.data,
+    node: result.data,
   };
 }
 
@@ -24,11 +24,11 @@ function addFailure(response) {
   };
 }
 
-function add(actor, file) {
+function add(node, file) {
   return (dispatch) => {
-    dispatch(addRequest(actor));
+    dispatch(addRequest(node));
     return new Promise((resolve, reject) => {
-      api.edit(actor, file)
+      api.edit(node, file)
         .then((result) => {
           dispatch(addSuccess(result));
           return resolve();
@@ -44,17 +44,17 @@ function add(actor, file) {
 
 // -- Delete Avatar
 
-function deleteRequest(actor) {
+function deleteRequest(node) {
   return {
     type: COVER.DELETE.REQUEST,
-    actor,
+    node,
   };
 }
 
 function deleteSuccess(result) {
   return {
     type: COVER.DELETE.SUCCESS,
-    actor: result.data,
+    node: result.data,
   };
 }
 
@@ -65,11 +65,11 @@ function deleteFailure(response) {
   };
 }
 
-function deleteCover(actor) {
+function deleteCover(node) {
   return (dispatch) => {
-    dispatch(deleteRequest(actor));
+    dispatch(deleteRequest(node));
     return new Promise((resolve, reject) => {
-      api.edit(actor)
+      api.edit(node)
         .then((result) => {
           dispatch(deleteSuccess(result));
           return resolve();

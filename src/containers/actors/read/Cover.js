@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import actions from '../../../actions/cover';
 import CoverForm from '../../../components/actor/CoverForm';
 
-import ActorsType from '../../../proptypes/Actors';
-import ActorType from '../../../proptypes/Actor';
-import PersonType from '../../../proptypes/Person';
-import permissions from '../../../permissions/actor';
+import NodesType from '../../../proptypes/Nodes';
+import NodeType from '../../../proptypes/Node';
 
 class ActorsCover extends React.Component {
   constructor(props) {
@@ -28,19 +26,19 @@ class ActorsCover extends React.Component {
   }
 
   componentDidMount() {
-    const { actor } = this.props;
-    this.loadCover(actor);
+    const { node } = this.props;
+    this.loadCover(node);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { actor, actors } = nextProps;
-    this.loadCover(actors.byId[actor.id] || actor);
+    const { node, nodes } = nextProps;
+    this.loadCover(nodes.byId[node.id] || node);
   }
 
-  loadCover(actor) {
-    const src = actor.coverURL &&
-    actor.coverURL.large &&
-    actor.coverURL.large.url;
+  loadCover(node) {
+    const src = node.coverURL &&
+    node.coverURL.large &&
+    node.coverURL.large.url;
 
     if (!src) {
       this.setState({ isLoaded: false });
@@ -59,13 +57,13 @@ class ActorsCover extends React.Component {
   }
 
   addCover(file) {
-    const { actor, addCover } = this.props;
-    addCover(actor, file);
+    const { node, addCover } = this.props;
+    addCover(node, file);
   }
 
   deleteCover() {
-    const { actor, deleteCover } = this.props;
-    deleteCover(actor);
+    const { node, deleteCover } = this.props;
+    deleteCover(node);
   }
 
   handleFieldChange(event) {
@@ -101,8 +99,8 @@ class ActorsCover extends React.Component {
   render() {
     const {
       isFetching,
-      actor,
-      viewer,
+      node,
+      canEdit,
     } = this.props;
 
     const {
@@ -110,13 +108,16 @@ class ActorsCover extends React.Component {
       isLoaded,
     } = this.state;
 
-    const canEdit = permissions.canEdit(viewer, actor);
     const cover = isLoaded ? this.cover.src : null;
+
+    // console.log('----');
+    // console.log('cover', cover);
+    // console.log('isFetching', isFetching);
 
     return (
       <CoverForm
         isFetching={isFetching}
-        name={actor.name}
+        name={node.name}
         cover={cover}
         anchorEl={anchorEl}
         canEdit={canEdit}
@@ -132,10 +133,10 @@ class ActorsCover extends React.Component {
 ActorsCover.propTypes = {
   addCover: PropTypes.func.isRequired,
   deleteCover: PropTypes.func.isRequired,
-  actors: ActorsType.isRequired,
-  actor: ActorType.isRequired,
-  viewer: PersonType.isRequired,
+  nodes: NodesType.isRequired,
+  node: NodeType.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  canEdit: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -144,14 +145,14 @@ const mapStateToProps = (state) => {
   } = state.auth;
 
   const {
-    actors,
+    nodes,
     isFetching,
     success,
     error,
   } = state.cover;
 
   return {
-    actors,
+    nodes,
     isFetching,
     success,
     error,
@@ -161,11 +162,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addCover: (actor, file) => {
-      dispatch(actions.add(actor, file));
+    addCover: (node, file) => {
+      dispatch(actions.add(node, file));
     },
-    deleteCover: (actor) => {
-      dispatch(actions.deleteCover(actor));
+    deleteCover: (node) => {
+      dispatch(actions.deleteCover(node));
     },
   };
 };

@@ -7,7 +7,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CardMedia from '@material-ui/core/CardMedia';
 import Fade from '@material-ui/core/Fade';
-import CoverIcon from '@material-ui/icons/Panorama';
 
 const styles = (theme) => {
   return {
@@ -18,7 +17,7 @@ const styles = (theme) => {
     coverPlaceholder: {
       width: '100%',
       height: theme.spacing.unit * 45,
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: theme.palette.grey[200],
     },
     coverIcon: {
       width: theme.spacing.unit * 10,
@@ -32,6 +31,9 @@ const styles = (theme) => {
     },
     input: {
       display: 'none',
+    },
+    progress: {
+      position: 'absolute',
     },
   };
 };
@@ -57,7 +59,7 @@ const ActorCoverForm = (props) => {
         disabled={!canEdit || isFetching}
         onClick={handleOpen}
       >
-        {!isFetching && cover &&
+        {cover &&
           <Fade in>
             <CardMedia
               className={classes.cover}
@@ -67,15 +69,10 @@ const ActorCoverForm = (props) => {
           </Fade>
         }
         {!cover &&
-          <div className={classes.coverPlaceholder}>
-            <CoverIcon
-              className={classes.coverIcon}
-              color="disabled"
-            />
-          </div>
+          <div className={classes.coverPlaceholder} />
         }
         {isFetching &&
-          <CircularProgress />
+          <CircularProgress className={classes.progress} />
         }
       </ButtonBase>
       <Menu

@@ -75,12 +75,12 @@ class ActorsRead extends React.Component {
       classes,
       isAuthenticated,
       viewer,
-      isFetchingCover,
     } = this.props;
 
     const { actor } = this.state;
 
     const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
+    const canEdit = permissions.canEdit(viewer, actor);
 
     return (
       <React.Fragment>
@@ -93,13 +93,15 @@ class ActorsRead extends React.Component {
         <ActorProfile
           cover={
             <Cover
-              actor={actor}
-              viewer={viewer}
-              isFetching={isFetchingCover}
+              node={actor}
+              canEdit={canEdit}
             />
           }
           avatar={
-            <Avatar actor={actor} />
+            <Avatar
+              node={actor}
+              canEdit={canEdit}
+            />
           }
           name={actor.name}
           description={actor.body}

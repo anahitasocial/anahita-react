@@ -1,24 +1,21 @@
-import { Avatar as COVER } from '../constants';
-import ACTOR_DEFAULT from '../proptypes/ActorDefault';
+import { Cover as COVER } from '../constants';
+import NODE_DEFAULT from '../proptypes/NodeDefault';
 import utils from './utils';
 
 const DEFAULT_STATE = {
   isFetching: false,
-  actors: {
+  nodes: {
     byId: {},
     allIds: [],
-    current: ACTOR_DEFAULT,
+    current: NODE_DEFAULT,
   },
   error: '',
   success: false,
 };
 
-export default function (higherOrderState, action) {
-  const state = {
-    ...DEFAULT_STATE,
-    ...higherOrderState,
-  };
-
+export default function (state = {
+  ...DEFAULT_STATE,
+}, action) {
   switch (action.type) {
     case COVER.ADD.REQUEST:
     case COVER.DELETE.REQUEST:
@@ -29,13 +26,20 @@ export default function (higherOrderState, action) {
         error: '',
       };
     case COVER.ADD.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        success: true,
+        error: '',
+        nodes: utils.editItem(state.nodes, action.node),
+      };
     case COVER.DELETE.SUCCESS:
       return {
         ...state,
         isFetching: false,
         success: true,
         error: '',
-        actors: utils.editItem(state.actors, action.actor),
+        nodes: utils.deleteItem(state.nodes, action.node),
       };
     case COVER.ADD.FAILURE:
     case COVER.DELETE.FAILURE:

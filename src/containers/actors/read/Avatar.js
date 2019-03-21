@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import actions from '../../../actions/avatar';
 import AvatarForm from '../../../components/actor/AvatarForm';
 
-import ActorsType from '../../../proptypes/Actors';
-import ActorType from '../../../proptypes/Actor';
-import PersonType from '../../../proptypes/Person';
-import permissions from '../../../permissions/actor';
+import NodesType from '../../../proptypes/Nodes';
+import NodeType from '../../../proptypes/Node';
 
 class ActorsAvatar extends React.Component {
   constructor(props) {
@@ -28,13 +26,13 @@ class ActorsAvatar extends React.Component {
   }
 
   componentDidMount() {
-    const { actor } = this.props;
-    this.loadAvatar(actor);
+    const { node } = this.props;
+    this.loadAvatar(node);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { actor, actors } = nextProps;
-    this.loadAvatar(actors.byId[actor.id] || actor);
+    const { node, nodes } = nextProps;
+    this.loadAvatar(nodes.byId[node.id] || node);
   }
 
   loadAvatar(actor) {
@@ -59,13 +57,13 @@ class ActorsAvatar extends React.Component {
   }
 
   addAvatar(file) {
-    const { actor, addAvatar } = this.props;
-    addAvatar(actor, file);
+    const { node, addAvatar } = this.props;
+    addAvatar(node, file);
   }
 
   deleteAvatar() {
-    const { actor, deleteAvatar } = this.props;
-    deleteAvatar(actor);
+    const { node, deleteAvatar } = this.props;
+    deleteAvatar(node);
   }
 
   handleFieldChange(event) {
@@ -101,8 +99,8 @@ class ActorsAvatar extends React.Component {
   render() {
     const {
       isFetching,
-      actor,
-      viewer,
+      node,
+      canEdit,
     } = this.props;
 
     const {
@@ -110,13 +108,12 @@ class ActorsAvatar extends React.Component {
       isLoaded,
     } = this.state;
 
-    const canEdit = permissions.canEdit(viewer, actor);
     const avatar = isLoaded ? this.avatar.src : null;
 
     return (
       <AvatarForm
         isFetching={isFetching}
-        name={actor.name}
+        name={node.name}
         avatar={avatar}
         anchorEl={anchorEl}
         canEdit={canEdit}
@@ -132,40 +129,35 @@ class ActorsAvatar extends React.Component {
 ActorsAvatar.propTypes = {
   addAvatar: PropTypes.func.isRequired,
   deleteAvatar: PropTypes.func.isRequired,
-  actors: ActorsType.isRequired,
-  actor: ActorType.isRequired,
-  viewer: PersonType.isRequired,
+  nodes: NodesType.isRequired,
+  node: NodeType.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  canEdit: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
-    viewer,
-  } = state.auth;
-
-  const {
-    actors,
+    nodes,
     isFetching,
     success,
     error,
   } = state.avatar;
 
   return {
-    actors,
+    nodes,
     isFetching,
     success,
     error,
-    viewer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addAvatar: (actor, file) => {
-      dispatch(actions.add(actor, file));
+    addAvatar: (node, file) => {
+      dispatch(actions.add(node, file));
     },
-    deleteAvatar: (actor) => {
-      dispatch(actions.deleteAvatar(actor));
+    deleteAvatar: (node) => {
+      dispatch(actions.deleteAvatar(node));
     },
   };
 };

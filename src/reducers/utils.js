@@ -15,6 +15,7 @@ const deleteItem = (list, item) => {
   items.allIds = _.remove(items.allIds, (n) => {
     return n !== item.id;
   });
+  items.current = null;
 
   return items;
 };

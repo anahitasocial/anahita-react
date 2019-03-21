@@ -47,14 +47,6 @@ export default function (higherOrderState, action) {
         success: false,
         error: '',
       };
-    case ACTORS.COVER.ADD.REQUEST:
-    case ACTORS.COVER.DELETE.REQUEST:
-      return {
-        ...state,
-        isFetchingCover: true,
-        success: false,
-        error: '',
-      };
     case ACTORS.BROWSE.SUCCESS:
       return {
         ...state,
@@ -91,14 +83,6 @@ export default function (higherOrderState, action) {
         isFetching: false,
         actors: utils.deleteItem(state.actors, state.current),
         success: true,
-      };
-    case ACTORS.COVER.ADD.SUCCESS:
-      return {
-        ...state,
-        isFetchingCover: false,
-        success: true,
-        error: '',
-        actors: utils.editItem(state.actors, action.actor),
       };
     case ACTORS.BROWSE.FAILURE:
     case ACTORS.READ.FAILURE:
