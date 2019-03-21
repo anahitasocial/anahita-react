@@ -110,10 +110,6 @@ class ActorsCover extends React.Component {
 
     const cover = isLoaded ? this.cover.src : null;
 
-    // console.log('----');
-    // console.log('cover', cover);
-    // console.log('isFetching', isFetching);
-
     return (
       <CoverForm
         isFetching={isFetching}
