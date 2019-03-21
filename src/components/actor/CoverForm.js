@@ -17,7 +17,7 @@ const styles = (theme) => {
     coverPlaceholder: {
       width: '100%',
       height: theme.spacing.unit * 45,
-      backgroundColor: theme.palette.grey[200],
+      backgroundColor: theme.palette.grey[400],
     },
     coverIcon: {
       width: theme.spacing.unit * 10,
