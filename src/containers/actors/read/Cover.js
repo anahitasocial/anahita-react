@@ -165,7 +165,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.add(node, file));
     },
     deleteCover: (node) => {
-      dispatch(actions.deleteCover(node));
+      dispatch(actions.deleteItem(node));
     },
   };
 };

@@ -70,7 +70,7 @@ function browse(params) {
 function deleteRequest(story) {
   return {
     type: STORIES.DELETE.REQUEST,
-    current: story,
+    story,
   };
 }
 
@@ -88,11 +88,11 @@ function deleteFailure(response) {
   };
 }
 
-function deleteStory(story) {
+function deleteItem(story) {
   return (dispatch) => {
     dispatch(deleteRequest(story));
     return new Promise((resolve, reject) => {
-      api.deleteStory(story)
+      api.deleteItem(story)
         .then((result) => {
           dispatch(deleteSuccess(result));
           return resolve();
@@ -109,5 +109,5 @@ function deleteStory(story) {
 export default {
   reset,
   browse,
-  deleteStory,
+  deleteItem,
 };

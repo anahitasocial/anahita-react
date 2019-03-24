@@ -207,98 +207,16 @@ function deleteFailure(response) {
   };
 }
 
-function deleteActor(actor) {
+function deleteItem(actor) {
   return (dispatch) => {
     dispatch(deleteRequest(actor));
     return new Promise((resolve, reject) => {
-      api.deleteActor(actor)
+      api.deleteItem(actor)
         .then((result) => {
           dispatch(deleteSuccess(result));
           return resolve();
         }, (response) => {
           dispatch(deleteFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
-// -- Add Cover
-
-function addCoverRequest(actor) {
-  return {
-    type: ACTORS.COVER.ADD.REQUEST,
-    actor,
-  };
-}
-
-function addCoverSuccess(result) {
-  return {
-    type: ACTORS.COVER.ADD.SUCCESS,
-    actor: result.data,
-  };
-}
-
-function addCoverFailure(response) {
-  return {
-    type: ACTORS.COVER.ADD.FAILURE,
-    error: response.message,
-  };
-}
-
-function addCover(actor, file) {
-  return (dispatch) => {
-    dispatch(addCoverRequest(actor));
-    return new Promise((resolve, reject) => {
-      api.editCover(actor, file)
-        .then((result) => {
-          dispatch(addCoverSuccess(result));
-          return resolve();
-        }, (response) => {
-          dispatch(addCoverFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
-// -- Delete Cover
-
-function deleteCoverRequest(actor) {
-  return {
-    type: ACTORS.COVER.DELETE.REQUEST,
-    actor,
-  };
-}
-
-function deleteCoverSuccess(result) {
-  return {
-    type: ACTORS.COVER.DELETE.SUCCESS,
-    actor: result.data,
-  };
-}
-
-function deleteCoverFailure(response) {
-  return {
-    type: ACTORS.COVER.DELETE.FAILURE,
-    error: response.message,
-  };
-}
-
-function deleteCover(actor) {
-  return (dispatch) => {
-    dispatch(deleteCoverRequest(actor));
-    return new Promise((resolve, reject) => {
-      api.editCover(actor)
-        .then((result) => {
-          dispatch(deleteCoverSuccess(result));
-          return resolve();
-        }, (response) => {
-          dispatch(deleteCoverFailure(response));
           return reject(response);
         }).catch((error) => {
           throw new Error(error);
@@ -313,7 +231,5 @@ export default {
   read,
   edit,
   add,
-  deleteActor,
-  addCover,
-  deleteCover,
+  deleteItem,
 };

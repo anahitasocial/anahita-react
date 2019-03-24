@@ -98,7 +98,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.add(medium));
     },
     unlikeMedium: (medium) => {
-      dispatch(actions.deleteLike(medium));
+      dispatch(actions.deleteItem(medium));
     },
   };
 };

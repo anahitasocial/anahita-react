@@ -1,39 +1,38 @@
-import { cover as api } from '../api';
-import { Cover as COVER } from '../constants';
+import { node as api } from '../api';
+import { Node as NODE } from '../constants';
 
-// -- Add Avatar
+// -- Read
 
-function addRequest(node) {
+function readRequest() {
   return {
-    type: COVER.ADD.REQUEST,
-    node,
+    type: NODE.READ.REQUEST,
   };
 }
 
-function addSuccess(result) {
+function readSuccess(result) {
   return {
-    type: COVER.ADD.SUCCESS,
+    type: NODE.READ.SUCCESS,
     node: result.data,
   };
 }
 
-function addFailure(response) {
+function readFailure(response) {
   return {
-    type: COVER.ADD.FAILURE,
+    type: NODE.READ.FAILURE,
     error: response.message,
   };
 }
 
-function add(node, file) {
+function read(id, namespace) {
   return (dispatch) => {
-    dispatch(addRequest(node));
+    dispatch(readRequest());
     return new Promise((resolve, reject) => {
-      api.edit(node, file)
+      api.read(id, namespace)
         .then((result) => {
-          dispatch(addSuccess(result));
+          dispatch(readSuccess(result));
           return resolve();
         }, (response) => {
-          dispatch(addFailure(response));
+          dispatch(readFailure(response));
           return reject(response);
         }).catch((error) => {
           throw new Error(error);
@@ -42,25 +41,26 @@ function add(node, file) {
   };
 }
 
-// -- Delete Avatar
+// -- Delete
 
 function deleteRequest(node) {
   return {
-    type: COVER.DELETE.REQUEST,
+    type: NODE.DELETE.REQUEST,
     node,
   };
 }
 
 function deleteSuccess(result) {
   return {
-    type: COVER.DELETE.SUCCESS,
-    node: result.data,
+    type: NODE.DELETE.SUCCESS,
+    status: result.status,
+    node: null,
   };
 }
 
 function deleteFailure(response) {
   return {
-    type: COVER.DELETE.FAILURE,
+    type: NODE.DELETE.FAILURE,
     error: response.message,
   };
 }
@@ -69,7 +69,7 @@ function deleteItem(node) {
   return (dispatch) => {
     dispatch(deleteRequest(node));
     return new Promise((resolve, reject) => {
-      api.edit(node)
+      api.deleteItem(node)
         .then((result) => {
           dispatch(deleteSuccess(result));
           return resolve();
@@ -84,6 +84,6 @@ function deleteItem(node) {
 }
 
 export default {
-  add,
+  read,
   deleteItem,
 };

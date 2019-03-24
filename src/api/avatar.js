@@ -22,6 +22,4 @@ const edit = (node, file) => {
   return axios.post(`/${namespace}/${id}.json?edit=avatar`, formData, config);
 };
 
-export {
-  edit,
-};
+export { edit };

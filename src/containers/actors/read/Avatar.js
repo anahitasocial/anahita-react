@@ -160,7 +160,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.add(node, file));
     },
     deleteAvatar: (node) => {
-      dispatch(actions.deleteAvatar(node));
+      dispatch(actions.deleteItem(node));
     },
   };
 };

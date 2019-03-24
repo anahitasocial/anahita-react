@@ -44,7 +44,7 @@ function add(params, namespace) {
   }));
 }
 
-function deleteMedium(medium) {
+function deleteItem(medium) {
   const namespace = medium.objectType.split('.')[1];
   return axios.delete(`/${namespace}/${medium.id}.json`);
 }
@@ -54,5 +54,5 @@ export {
   read,
   edit,
   add,
-  deleteMedium,
+  deleteItem,
 };

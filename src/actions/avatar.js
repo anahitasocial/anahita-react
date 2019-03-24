@@ -65,7 +65,7 @@ function deleteFailure(response) {
   };
 }
 
-function deleteAvatar(node) {
+function deleteItem(node) {
   return (dispatch) => {
     dispatch(deleteRequest(node));
     return new Promise((resolve, reject) => {
@@ -85,5 +85,5 @@ function deleteAvatar(node) {
 
 export default {
   add,
-  deleteAvatar,
+  deleteItem,
 };

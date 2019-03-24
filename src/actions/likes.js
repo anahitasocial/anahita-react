@@ -108,11 +108,11 @@ function deleteFailure(error) {
   };
 }
 
-function deleteLike(node) {
+function deleteItem(node) {
   return (dispatch) => {
     dispatch(deleteRequest());
     return new Promise((resolve, reject) => {
-      api.deleteLike(node)
+      api.deleteItem(node)
         .then(() => {
           dispatch(deleteSuccess());
           return resolve();
@@ -129,5 +129,5 @@ function deleteLike(node) {
 export default {
   browse,
   add,
-  deleteLike,
+  deleteItem,
 };

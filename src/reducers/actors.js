@@ -42,7 +42,10 @@ export default function (higherOrderState, action) {
     case ACTORS.DELETE.REQUEST:
       return {
         ...state,
-        current: action.current,
+        actors: {
+          ...state.actors,
+          current: action.actor,
+        },
         isFetching: true,
         success: false,
         error: '',
@@ -81,7 +84,7 @@ export default function (higherOrderState, action) {
       return {
         ...state,
         isFetching: false,
-        actors: utils.deleteItem(state.actors, state.current),
+        actors: utils.deleteItem(state.actors, state.actors.current),
         success: true,
       };
     case ACTORS.BROWSE.FAILURE:

@@ -61,7 +61,49 @@ function browse(params, namespace) {
   };
 }
 
+// -- Delete
+
+function deleteRequest(medium) {
+  return {
+    type: MEDIA.DELETE.REQUEST,
+    medium,
+  };
+}
+
+function deleteSuccess(result) {
+  return {
+    type: MEDIA.DELETE.SUCCESS,
+    status: result.status,
+  };
+}
+
+function deleteFailure(response) {
+  return {
+    type: MEDIA.DELETE.FAILURE,
+    error: response.message,
+  };
+}
+
+function deleteItem(medium) {
+  return (dispatch) => {
+    dispatch(deleteRequest(medium));
+    return new Promise((resolve, reject) => {
+      api.deleteItem(medium)
+        .then((result) => {
+          dispatch(deleteSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(deleteFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
 export default {
   reset,
   browse,
+  deleteItem,
 };

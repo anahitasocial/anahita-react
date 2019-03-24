@@ -37,7 +37,10 @@ export default function (state = {
     case STORIES.DELETE.REQUEST:
       return {
         ...state,
-        current: action.current,
+        stories: {
+          ...state.stories,
+          current: action.story,
+        },
         isFetching: true,
         success: false,
         error: '',
@@ -61,7 +64,7 @@ export default function (state = {
       return {
         ...state,
         isFetching: false,
-        stories: utils.deleteItem(state.stories, state.current),
+        stories: utils.deleteItem(state.stories, state.stories.current),
         success: true,
       };
     case STORIES.BROWSE.FAILURE:

@@ -43,7 +43,7 @@ const add = (params, namespace) => {
   }));
 };
 
-const deleteActor = (actor) => {
+const deleteItem = (actor) => {
   const namespace = actor.objectType.split('.')[1];
   return axios.delete(`/${namespace}/${actor.id}.json`);
 };
@@ -53,5 +53,5 @@ export {
   read,
   edit,
   add,
-  deleteActor,
+  deleteItem,
 };

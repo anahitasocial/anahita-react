@@ -9,6 +9,8 @@ export default {
     like: 'Like',
     unlike: 'Unlike',
     delete: 'Delete',
+    subscribe: 'Get Notifications',
+    unsubscribe: 'Stop Notifications',
   },
   translation: {
     stories,

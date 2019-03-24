@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { Media as MEDIA } from '../constants';
 import MediumDefault from '../proptypes/MediumDefault';
+import utils from './utils';
 
 export default function (higherOrderState, action) {
   const state = {
@@ -35,6 +36,17 @@ export default function (higherOrderState, action) {
         ...state,
         isFetching: true,
       };
+    case MEDIA.DELETE.REQUEST:
+      return {
+        ...state,
+        media: {
+          ...state.media,
+          current: action.medium,
+        },
+        isFetching: true,
+        success: false,
+        error: '',
+      };
     case MEDIA.BROWSE.SUCCESS:
       return {
         ...state,
@@ -50,7 +62,15 @@ export default function (higherOrderState, action) {
         hasMore: action.hasMore,
         isFetching: false,
       };
+    case MEDIA.DELETE.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        media: utils.deleteItem(state.media, state.media.current),
+        success: true,
+      };
     case MEDIA.BROWSE.FAILURE:
+    case MEDIA.DELETE.FAILURE:
       return {
         ...state,
         hasMore: false,

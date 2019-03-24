@@ -7,6 +7,8 @@ import avatar from './avatar';
 import cover from './cover';
 import likes from './likes';
 import media from './media';
+import node from './node';
+import notifications from './notifications';
 import people from './people';
 import person from './person';
 import socialgraph from './socialgraph';
@@ -20,6 +22,8 @@ export default combineReducers({
   cover,
   likes,
   media,
+  node,
+  notifications,
   people,
   person,
   socialgraph,

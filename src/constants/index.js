@@ -5,6 +5,8 @@ import Avatar from './avatar';
 import Cover from './cover';
 import Likes from './likes';
 import Media from './media';
+import Node from './node';
+import Notifications from './notifications';
 import Person from './person';
 import Socialgraph from './socialgraph';
 import Storage from './storage';
@@ -18,6 +20,8 @@ export {
   Cover,
   Likes,
   Media,
+  Node,
+  Notifications,
   Person,
   Socialgraph,
   Storage,

@@ -14,12 +14,12 @@ function read(id) {
   return axios.get(`/stories/${id}.json`);
 }
 
-function deleteStory(story) {
+function deleteItem(story) {
   return axios.delete(`/stories/${story.id}.json`);
 }
 
 export {
   browse,
   read,
-  deleteStory,
+  deleteItem,
 };

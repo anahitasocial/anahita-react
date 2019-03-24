@@ -7,6 +7,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import actions from '../../actions/stories';
 
 import LikeAction from '../actions/Like';
+import NotificationAction from '../actions/medium/Notification';
 import DeleteAction from '../actions/story/Delete';
 import FollowAction from '../actions/Follow';
 
@@ -15,9 +16,9 @@ import StoriesType from '../../proptypes/Stories';
 import PersonType from '../../proptypes/Person';
 
 import i18n from '../../languages';
+import utils from '../utils';
 
 const LIMIT = 20;
-const OWNER_NAME_CHAR_LIMIT = 16;
 
 const isLikeable = (node) => {
   const likeables = [
@@ -32,12 +33,17 @@ const isLikeable = (node) => {
   return likeables.includes(node.objectType);
 };
 
-const getOwnerName = (story) => {
-  const { owner: { name } } = story;
-  if (name.length > OWNER_NAME_CHAR_LIMIT) {
-    return `${name.substring(0, OWNER_NAME_CHAR_LIMIT)}...`;
-  }
-  return name;
+const isSubscribable = (node) => {
+  const subscribables = [
+    'com.articles.article',
+    'com.notes.note',
+    'com.photos.photo',
+    'com.sets.set',
+    'com.topics.topic',
+    'com.todos.todo',
+  ];
+
+  return subscribables.includes(node.objectType);
 };
 
 class StoriesBrowse extends React.Component {
@@ -115,7 +121,7 @@ class StoriesBrowse extends React.Component {
             {stories.allIds.map((storyId) => {
               const story = stories.byId[storyId];
               const key = `story_${story.id}`;
-              const ownerName = getOwnerName(story);
+              const ownerName = utils.getOwnerName(story);
               return (
                 <StoryCard
                   story={story}
@@ -132,6 +138,12 @@ class StoriesBrowse extends React.Component {
                       unfollowLabel={i18n.t('stories:actions.unfollowOwner', {
                         name: ownerName,
                       })}
+                    />,
+                    story.object && isSubscribable(story.object) &&
+                    <NotificationAction
+                      medium={story.object}
+                      isSubscribed={story.object.isSubscribed}
+                      key={`story-notification-${story.id}`}
                     />,
                     <DeleteAction
                       story={story}

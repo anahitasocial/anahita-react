@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import actions from '../../../actions/stories';
-import StoryType from '../../../proptypes/Story';
+import actions from '../../../actions/media';
+import MediumType from '../../../proptypes/Medium';
 import i18n from '../../../languages';
 
-class ActionsStoryDelete extends React.Component {
+class ActionsMediumDelete extends React.Component {
   constructor(props) {
     super(props);
 
@@ -31,9 +31,9 @@ class ActionsStoryDelete extends React.Component {
   handleDelete(event) {
     event.preventDefault();
 
-    const { story, deleteItem } = this.props;
+    const { medium, deleteItem } = this.props;
 
-    deleteItem(story);
+    deleteItem(medium);
 
     this.setState({ isDeleted: true });
   }
@@ -57,13 +57,13 @@ class ActionsStoryDelete extends React.Component {
   }
 }
 
-ActionsStoryDelete.propTypes = {
+ActionsMediumDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,
-  story: StoryType.isRequired,
+  medium: MediumType.isRequired,
   isDeleted: PropTypes.bool,
 };
 
-ActionsStoryDelete.defaultProps = {
+ActionsMediumDelete.defaultProps = {
   isDeleted: false,
 };
 
@@ -74,8 +74,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: (story) => {
-      dispatch(actions.deleteItem(story));
+    deleteItem: (medium) => {
+      dispatch(actions.deleteItem(medium));
     },
   };
 };
@@ -83,4 +83,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActionsStoryDelete);
+)(ActionsMediumDelete);

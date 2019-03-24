@@ -236,7 +236,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.reset());
     },
     deleteActor: (actor) => {
-      dispatch(actions.deleteActor(actor));
+      dispatch(actions.deleteItem(actor));
     },
   };
 };
