@@ -13,13 +13,22 @@ import i18n from '../languages';
 
 const StoryMessage = (props) => {
   const { story } = props;
-  const subject = getStorySubject(story);
-  const subjectName = story.subject ? story.subject.name : i18n.t('actor:unknown');
+
+  const subject = story.subjects ?
+    story.subjects[story.subjects.length - 1] :
+    getStorySubject(story);
+
+  const subjectName = subject.id ? subject.name : i18n.t('actor:unknown');
   const subjectURL = getURL(subject);
   const objectName = getStoryObjectName(story) ? getStoryObjectName(story) : 'object';
   const objectURL = story.object ? getURL(story.object) : '';
-  const targetName = story.target ? story.target.name : i18n.t('actor:unknown');
-  const targetURL = story.target ? getURL(story.target) : '/';
+
+  const target = story.targets ?
+    story.targets[story.targets.length - 1] :
+    story.target;
+  const targetName = target.id ? target.name : i18n.t('actor:unknown');
+  const targetURL = target.id ? getURL(target) : '/';
+
   const i18nKey = _.camelCase(`${story.name}`);
 
   return (

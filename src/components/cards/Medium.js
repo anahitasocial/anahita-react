@@ -27,7 +27,7 @@ import {
 
 const styles = (theme) => {
   return {
-    media: {
+    cover: {
       height: theme.spacing.unit * 20,
     },
     title: {
@@ -40,7 +40,7 @@ const styles = (theme) => {
       color: theme.palette.text.primary,
     },
     portrait: {
-      minHeight: theme.spacing.unit * 30,
+      minHeight: theme.spacing.unit * 40,
     },
     authorName: {
       fontSize: 16,
@@ -94,7 +94,7 @@ class MediumCard extends React.Component {
           {cover &&
             <Link href={url}>
               <CardMedia
-                className={classes.media}
+                className={classes.cover}
                 image={cover}
                 title={medium.name}
               />
