@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import InfiniteScroll from 'react-infinite-scroller';
+
+import CommentsBrowse from '../comments/Browse';
+
 import actions from '../../actions/stories';
 
 import LikeAction from '../actions/Like';
@@ -122,16 +125,18 @@ class StoriesBrowse extends React.Component {
               const story = stories.byId[storyId];
               const key = `story_${story.id}`;
               const ownerName = utils.getOwnerName(story);
+              const { id, owner } = story;
+
               return (
                 <StoryCard
                   story={story}
                   key={key}
                   menuItems={[
-                    story.owner.id !== viewer.id &&
+                    owner.id !== viewer.id &&
                     <FollowAction
-                      actor={story.owner}
+                      actor={owner}
                       component="menuitem"
-                      key={`story-follow-${story.id}`}
+                      key={`story-follow-${id}`}
                       followLabel={i18n.t('stories:actions.followOwner', {
                         name: ownerName,
                       })}
@@ -143,11 +148,11 @@ class StoriesBrowse extends React.Component {
                     <NotificationAction
                       medium={story.object}
                       isSubscribed={story.object.isSubscribed}
-                      key={`story-notification-${story.id}`}
+                      key={`story-notification-${id}`}
                     />,
                     <DeleteAction
                       story={story}
-                      key={`story-delete-${story.id}`}
+                      key={`story-delete-${id}`}
                     />,
                   ]}
                   actions={[
@@ -158,6 +163,9 @@ class StoriesBrowse extends React.Component {
                       key={`story-like-${story.id}`}
                     />,
                   ]}
+                  comments={
+                    <CommentsBrowse comments={story.comments} />
+                  }
                 />
               );
             })

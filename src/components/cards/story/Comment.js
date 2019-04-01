@@ -6,6 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import Menu from '@material-ui/core/Menu';
@@ -84,6 +85,7 @@ class StoryCardDefault extends React.Component {
       story,
       actions,
       menuItems,
+      comments,
     } = this.props;
 
     const { menuAnchorEl } = this.state;
@@ -171,6 +173,8 @@ class StoryCardDefault extends React.Component {
             {actions}
           </CardActions>
         }
+        <Divider />
+        {comments}
       </Card>
     );
   }
@@ -180,6 +184,7 @@ StoryCardDefault.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node.isRequired,
   menuItems: PropTypes.node.isRequired,
+  comments: PropTypes.node.isRequired,
   story: PropTypes.object.isRequired,
 };
 

@@ -21,7 +21,7 @@ import i18n from '../../languages';
 import permissions from '../../permissions/actor';
 
 import PersonType from '../../proptypes/Person';
-import ActorsListType from '../../proptypes/Actors';
+import ActorsType from '../../proptypes/Actors';
 import ActorCard from '../../components/cards/Actor';
 
 const styles = (theme) => {
@@ -206,7 +206,7 @@ ActorsBrowse.propTypes = {
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  actors: ActorsListType.isRequired,
+  actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,

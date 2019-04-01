@@ -2,25 +2,25 @@ import {
   shape,
   number,
   string,
-  object,
   oneOf,
   arrayOf,
 } from 'prop-types';
 
 import ActorType from './Actor';
+import CommentType from './Comment';
 import PersonType from './Person';
 import ImageURL from './ImageURL';
 
 export default shape({
   id: number,
   objectType: oneOf([
+    'com.articles.article',
     'com.media.medium',
+    'com.notes.note',
     'com.photos.photo',
     'com.photos.set',
     'com.topics.topic',
     'com.todos.todo',
-    'com.notes.note',
-    'com.articles.article',
   ]),
   name: string,
   alias: string,
@@ -34,7 +34,7 @@ export default shape({
   creationTime: string,
   editor: PersonType,
   updateTime: string,
-  lastComment: object,
+  lastComment: CommentType,
   lastCommenter: PersonType,
   lastCommentTime: string,
   voteUpCount: number,

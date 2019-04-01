@@ -1,7 +1,6 @@
 import ActorDefault from './ActorDefault';
-import PersonType from './Person';
 import PersonDefault from './PersonDefault';
-import ImageURL from './ImageURL';
+import ImageURLDefault from './ImageURLDefault';
 
 export default {
   id: null,
@@ -9,8 +8,8 @@ export default {
   name: '',
   alias: '',
   body: '',
-  imageURL: ImageURL,
-  coverURL: ImageURL,
+  imageURL: ImageURLDefault,
+  coverURL: ImageURLDefault,
   commands: [],
   subscriberCount: 0,
   owner: ActorDefault,
@@ -19,7 +18,7 @@ export default {
   editor: PersonDefault,
   updateTime: '0000-00-00 00:00:00',
   lastComment: {},
-  lastCommenter: PersonType,
+  lastCommenter: PersonDefault,
   lastCommentTime: '0000-00-00 00:00:00',
   voteUpCount: 0,
 };

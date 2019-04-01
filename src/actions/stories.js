@@ -1,8 +1,5 @@
 import { normalize, schema } from 'normalizr';
-import {
-  stories as api,
-  // likes as likesApi,
-} from '../api';
+import { stories as api } from '../api';
 
 import { Stories as STORIES } from '../constants';
 
@@ -22,13 +19,39 @@ function browseRequest() {
   };
 }
 
+// @todo move these to utils
+
+const normalizeNodes = (data, namespace) => {
+  const node = new schema.Entity(namespace);
+  const nodes = [node];
+  return normalize(data, nodes);
+};
+
+const normalizeNodesComments = (nodes) => {
+  return [...nodes].map((n) => {
+    const node = { ...n };
+    if (node.comments) {
+      const normalized = normalizeNodes(node.comments, 'comments');
+      node.comments = {
+        byId: normalized.entities.comments,
+        allIds: normalized.result,
+      };
+    } else {
+      node.comments = {
+        byId: {},
+        allIds: [],
+      };
+    }
+    return node;
+  });
+};
+
 function browseSuccess(results) {
   const { data } = results;
   const { pagination } = data;
 
-  const story = new schema.Entity('stories');
-  const stories = [story];
-  const normalized = normalize(data.data, stories);
+  const stories = normalizeNodesComments(data.data);
+  const normalized = normalizeNodes(stories, 'stories');
   const hasMore = data.data.length >= pagination.limit;
 
   return {

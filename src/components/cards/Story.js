@@ -5,8 +5,15 @@ import StoryCardDefault from './story/Default';
 import StoryCardComment from './story/Comment';
 import StoryCardPhotoAdd from './story/PhotoAdd';
 
+import StoryType from '../../proptypes/Story';
+
 const StoryCard = (props) => {
-  const { story, actions, menuItems } = props;
+  const {
+    story,
+    actions,
+    menuItems,
+    comments,
+  } = props;
 
   switch (story.name) {
     case 'article_comment':
@@ -20,6 +27,7 @@ const StoryCard = (props) => {
           story={story}
           actions={actions}
           menuItems={menuItems}
+          comments={comments}
         />
       );
     case 'photo_add':
@@ -28,6 +36,7 @@ const StoryCard = (props) => {
           story={story}
           actions={actions}
           menuItems={menuItems}
+          comments={comments}
         />
       );
     default:
@@ -36,6 +45,7 @@ const StoryCard = (props) => {
           story={story}
           actions={actions}
           menuItems={menuItems}
+          comments={comments}
         />
       );
   }
@@ -44,7 +54,8 @@ const StoryCard = (props) => {
 StoryCard.propTypes = {
   actions: PropTypes.node.isRequired,
   menuItems: PropTypes.node.isRequired,
-  story: PropTypes.object.isRequired,
+  comments: PropTypes.node.isRequired,
+  story: StoryType.isRequired,
 };
 
 export default StoryCard;

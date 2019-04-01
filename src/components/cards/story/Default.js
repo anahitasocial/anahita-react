@@ -6,6 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import Menu from '@material-ui/core/Menu';
@@ -17,6 +18,7 @@ import ReadMore from '../../ReadMore';
 import StoryMessage from '../../StoryMessage';
 import ActorTitle from '../../actor/Title';
 import ActorAvatar from '../../actor/Avatar';
+import StoryType from '../../../proptypes/Story';
 
 import {
   getURL,
@@ -77,6 +79,7 @@ class StoryCardDefault extends React.Component {
       story,
       actions,
       menuItems,
+      comments,
     } = this.props;
 
     const { menuAnchorEl } = this.state;
@@ -172,6 +175,8 @@ class StoryCardDefault extends React.Component {
             {actions}
           </CardActions>
         }
+        <Divider />
+        {comments}
       </Card>
     );
   }
@@ -181,7 +186,8 @@ StoryCardDefault.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node.isRequired,
   menuItems: PropTypes.node.isRequired,
-  story: PropTypes.object.isRequired,
+  comments: PropTypes.node.isRequired,
+  story: StoryType.isRequired,
 };
 
 export default withStyles(styles)(StoryCardDefault);
