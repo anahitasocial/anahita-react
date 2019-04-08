@@ -2,6 +2,7 @@ import actor from './actor';
 import app from './app';
 import auth from './auth';
 import avatar from './avatar';
+import comments from './comments';
 import cover from './cover';
 import likes from './likes';
 import media from './media';
@@ -17,6 +18,7 @@ export default {
   app,
   auth,
   avatar,
+  comments,
   cover,
   likes,
   media,

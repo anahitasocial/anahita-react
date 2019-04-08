@@ -85,13 +85,13 @@ LikeAction.propTypes = {
   node: NodeType.isRequired,
   comment: CommentType,
   isLiked: PropTypes.bool,
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
 };
 
 LikeAction.defaultProps = {
   isLiked: false,
   comment: CommentDefault,
-  size: 'medium',
+  size: 'default',
 };
 
 

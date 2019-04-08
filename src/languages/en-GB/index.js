@@ -19,6 +19,16 @@ export default {
     actions: {
       followOwner: 'Follow {{name}}',
       unfollowOwner: 'Unfollow {{name}}',
+      blockOwner: 'Block {{name}}',
+      unblockOwner: 'Unblock {{name}}',
+    },
+  },
+  comments: {
+    actions: {
+      followAuthor: 'Follow {{name}}',
+      unfollowAuthor: 'Unfollow {{name}}',
+      blockAuthor: 'Block {{name}}',
+      unblockAuthor: 'Unblock {{name}}',
     },
   },
   auth: {

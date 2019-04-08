@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as actors from './actors';
 import * as avatar from './avatar';
 import * as auth from './auth';
+import * as comments from './comments';
 import * as cover from './cover';
 import * as likes from './likes';
 import * as media from './media';
@@ -28,6 +29,7 @@ export {
   actors,
   avatar,
   auth,
+  comments,
   cover,
   likes,
   media,
