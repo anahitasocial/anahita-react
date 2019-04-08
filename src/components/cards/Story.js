@@ -13,6 +13,7 @@ const StoryCard = (props) => {
     actions,
     menuItems,
     comments,
+    showOwner,
   } = props;
 
   switch (story.name) {
@@ -28,6 +29,7 @@ const StoryCard = (props) => {
           actions={actions}
           menuItems={menuItems}
           comments={comments}
+          showOwner={showOwner}
         />
       );
     case 'photo_add':
@@ -37,6 +39,7 @@ const StoryCard = (props) => {
           actions={actions}
           menuItems={menuItems}
           comments={comments}
+          showOwner={showOwner}
         />
       );
     default:
@@ -46,16 +49,24 @@ const StoryCard = (props) => {
           actions={actions}
           menuItems={menuItems}
           comments={comments}
+          showOwner={showOwner}
         />
       );
   }
 };
 
 StoryCard.propTypes = {
-  actions: PropTypes.node.isRequired,
-  menuItems: PropTypes.node.isRequired,
+  actions: PropTypes.node,
+  menuItems: PropTypes.node,
   comments: PropTypes.node.isRequired,
   story: StoryType.isRequired,
+  showOwner: PropTypes.bool,
+};
+
+StoryCard.defaultProps = {
+  showOwner: false,
+  actions: null,
+  menuItems: null,
 };
 
 export default StoryCard;

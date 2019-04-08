@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import ActorType from '../../proptypes/Actor';
 
 import {
@@ -11,10 +11,44 @@ import {
   getActorInitials,
 } from '../utils';
 
+const styles = (theme) => {
+  return {
+    largeAvatar: {
+      width: theme.spacing.unit * 20,
+      height: theme.spacing.unit * 20,
+    },
+    smallAvatar: {
+      width: theme.spacing.unit * 3,
+      height: theme.spacing.unit * 3,
+    },
+    defaultAvatar: {
+      width: theme.spacing.unit * 5,
+      height: theme.spacing.unit * 5,
+    },
+    largeInitials: {
+      fontSize: 48,
+    },
+    smallInitials: {
+      fontSize: 12,
+    },
+    defaultInitials: {
+      fontSize: 20,
+    },
+    link: {
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'none',
+      },
+    },
+  };
+};
+
 const ActorAvatar = (props) => {
   const {
+    classes,
     actor,
     linked,
+    size,
   } = props;
 
   const url = getURL(actor);
@@ -24,18 +58,21 @@ const ActorAvatar = (props) => {
   return (
     <React.Fragment>
       {linked &&
-        <ButtonBase
-          component={Link}
-          to={url}
+        <Link
+          href={url}
+          className={classes.link}
         >
           <Avatar
             aria-label={actor.name}
             alt={actor.name}
             src={portrait}
+            className={classes[`${size}Avatar`]}
           >
-            {!portrait && initials}
+            <span className={classes[`${size}Initials`]}>
+              {!portrait && initials}
+            </span>
           </Avatar>
-        </ButtonBase>
+        </Link>
       }
       {!linked &&
         <Avatar
@@ -51,12 +88,15 @@ const ActorAvatar = (props) => {
 };
 
 ActorAvatar.propTypes = {
+  classes: PropTypes.object.isRequired,
   actor: ActorType.isRequired,
   linked: PropTypes.bool,
+  size: PropTypes.oneOf(['small', 'large', 'default']),
 };
 
 ActorAvatar.defaultProps = {
   linked: false,
+  size: 'default',
 };
 
-export default ActorAvatar;
+export default withStyles(styles)(ActorAvatar);

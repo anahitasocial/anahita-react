@@ -19,7 +19,7 @@ import actions from '../../actions/media';
 import permissions from '../../permissions/medium';
 import i18n from '../../languages';
 
-import LikeAction from '../actions/Like';
+import LikeAction from '../actions/node/Like';
 import NotificationAction from '../actions/medium/Notification';
 import DeleteAction from '../actions/medium/Delete';
 import FollowAction from '../actions/Follow';
@@ -208,7 +208,7 @@ class MediaBrowse extends React.Component {
                   actions={
                     <React.Fragment>
                       <LikeAction
-                        medium={medium}
+                        node={medium}
                         isLiked={medium.commands.includes('unvote')}
                       />
                     </React.Fragment>

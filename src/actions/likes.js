@@ -1,6 +1,7 @@
 import { normalize, schema } from 'normalizr';
 import { likes as api } from '../api';
 import { Likes as LIKES } from '../constants';
+import CommentDefault from '../proptypes/CommentDefault';
 
 // -- browse likers
 
@@ -69,11 +70,11 @@ function addFailure(error) {
   };
 }
 
-function add(node) {
+function add(node, comment = CommentDefault) {
   return (dispatch) => {
     dispatch(addRequest());
     return new Promise((resolve, reject) => {
-      api.add(node)
+      api.add(node, comment)
         .then(() => {
           dispatch(addSuccess());
           return resolve();
@@ -108,11 +109,11 @@ function deleteFailure(error) {
   };
 }
 
-function deleteItem(node) {
+function deleteItem(node, comment = CommentDefault) {
   return (dispatch) => {
     dispatch(deleteRequest());
     return new Promise((resolve, reject) => {
-      api.deleteItem(node)
+      api.deleteItem(node, comment)
         .then(() => {
           dispatch(deleteSuccess());
           return resolve();

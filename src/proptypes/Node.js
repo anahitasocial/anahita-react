@@ -6,11 +6,14 @@ import {
   bool,
 } from 'prop-types';
 
+import ActorType from './Actor';
 import PersonType from './Person';
 import ImageURL from './ImageURL';
+import CommentsType from './Comments';
 
 export default shape({
   id: number,
+  owner: ActorType,
   objectType: string,
   name: string,
   alias: string,
@@ -26,4 +29,5 @@ export default shape({
   updateTime: string,
   isAdministrated: bool,
   isLeader: bool,
+  comments: CommentsType,
 });

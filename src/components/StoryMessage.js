@@ -32,7 +32,7 @@ const StoryMessage = (props) => {
   const i18nKey = _.camelCase(`${story.name}`);
 
   return (
-    <Typography variant="body2">
+    <Typography variant="body1">
       <Trans
         i18nKey={`stories.${i18nKey}`}
         values={{

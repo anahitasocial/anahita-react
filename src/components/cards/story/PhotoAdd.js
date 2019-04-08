@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactTimeAgo from 'react-time-ago';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -15,9 +16,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import ReadMore from '../../ReadMore';
 import StoryMessage from '../../StoryMessage';
-import ActorTitle from '../../actor/Title';
 import ActorAvatar from '../../actor/Avatar';
 import GridList from './GridList';
+import StoryCardOwner from '../Owner';
 
 import {
   getURL,
@@ -46,7 +47,7 @@ const styles = (theme) => {
   };
 };
 
-class StoryCardDefault extends React.Component {
+class StoryCardPhotoAdd extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -74,6 +75,7 @@ class StoryCardDefault extends React.Component {
       story,
       actions,
       menuItems,
+      showOwner,
     } = this.props;
 
     const { menuAnchorEl } = this.state;
@@ -87,9 +89,13 @@ class StoryCardDefault extends React.Component {
     const title = story.object && story.object.name;
     const body = story.object && story.object.body;
     const url = title && story.object ? getURL(story.object) : '';
+    const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
     return (
       <Card square className={classes.card}>
+        {showOwnerHeader &&
+          <StoryCardOwner node={story} />
+        }
         <CardHeader
           avatar={
             <ActorAvatar
@@ -99,6 +105,11 @@ class StoryCardDefault extends React.Component {
           }
           title={
             <StoryMessage story={story} />
+          }
+          subheader={
+            <ReactTimeAgo
+              date={new Date(story.creationTime)}
+            />
           }
           action={
             <React.Fragment>
@@ -110,7 +121,7 @@ class StoryCardDefault extends React.Component {
                 <MoreVertIcon />
               </IconButton>
               <Menu
-                id="simple-menu"
+                id="story-menu"
                 anchorEl={menuAnchorEl}
                 open={Boolean(menuAnchorEl)}
                 onClose={this.handleCloseMenu}
@@ -118,16 +129,6 @@ class StoryCardDefault extends React.Component {
                 {menuItems}
               </Menu>
             </React.Fragment>
-          }
-          subheader={
-            <ActorTitle
-              actor={story.owner}
-              typographyProps={{
-                  variant: 'subtitle1',
-                  className: classes.ownerName,
-              }}
-              linked
-            />
           }
         />
         {portraits &&
@@ -169,11 +170,18 @@ class StoryCardDefault extends React.Component {
   }
 }
 
-StoryCardDefault.propTypes = {
+StoryCardPhotoAdd.propTypes = {
   classes: PropTypes.object.isRequired,
-  actions: PropTypes.node.isRequired,
-  menuItems: PropTypes.node.isRequired,
+  actions: PropTypes.node,
+  menuItems: PropTypes.node,
   story: PropTypes.object.isRequired,
+  showOwner: PropTypes.bool,
 };
 
-export default withStyles(styles)(StoryCardDefault);
+StoryCardPhotoAdd.defaultProps = {
+  showOwner: false,
+  actions: null,
+  menuItems: null,
+};
+
+export default withStyles(styles)(StoryCardPhotoAdd);

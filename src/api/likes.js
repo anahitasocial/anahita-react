@@ -1,24 +1,37 @@
 import axios from 'axios';
 import { constructURLSearchParams } from './utils';
+import CommentDefault from '../proptypes/CommentDefault';
 
-function browse(node) {
+const browse = (node) => {
   const namespace = node.objectType.split('.')[1];
   return axios.get(`/${namespace}/${node.id}.json?get=voters&avatar=1`);
-}
+};
 
-function add(node) {
+const add = (node, comment = CommentDefault) => {
   const namespace = node.objectType.split('.')[1];
-  return axios.post(`/${namespace}/${node.id}.json`, constructURLSearchParams({
-    action: 'vote',
-  }));
-}
+  let url = `/${namespace}/${node.id}.json`;
+  let action = 'vote';
 
-function deleteItem(node) {
+  if (comment.id) {
+    url += `?cid=${comment.id}`;
+    action += 'comment';
+  }
+
+  return axios.post(url, constructURLSearchParams({ action }));
+};
+
+const deleteItem = (node, comment = CommentDefault) => {
   const namespace = node.objectType.split('.')[1];
-  return axios.post(`/${namespace}/${node.id}.json`, constructURLSearchParams({
-    action: 'unvote',
-  }));
-}
+  let url = `/${namespace}/${node.id}.json`;
+  let action = 'unvote';
+
+  if (comment.id) {
+    url += `?cid=${comment.id}`;
+    action += 'comment';
+  }
+
+  return axios.post(url, constructURLSearchParams({ action }));
+};
 
 export {
   browse,

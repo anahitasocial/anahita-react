@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
-
 import CommentCard from '../../components/cards/Comment';
-import EntityBody from '../../components/EntityBody';
+import NodeType from '../../proptypes/Node';
 import CommentsType from '../../proptypes/Comments';
+import LikeAction from '../actions/node/Like';
 
 class CommentsBrowse extends React.Component {
   constructor(props, context) {
@@ -32,7 +30,7 @@ class CommentsBrowse extends React.Component {
 
   render() {
     const { comments } = this.state;
-    const { canAdd } = this.props;
+    const { canAdd, node } = this.props;
     return (
       <React.Fragment>
         {comments.allIds.map((commentId) => {
@@ -42,6 +40,15 @@ class CommentsBrowse extends React.Component {
             <CommentCard
               comment={comment}
               key={key}
+              actions={[
+                <LikeAction
+                  node={node}
+                  comment={comment}
+                  isLiked={comment.isVotedUp}
+                  key={`comment-like-${comment.id}`}
+                  size="small"
+                />,
+              ]}
             />
           );
         })}
@@ -51,6 +58,7 @@ class CommentsBrowse extends React.Component {
 }
 
 CommentsBrowse.propTypes = {
+  node: NodeType.isRequired,
   comments: CommentsType.isRequired,
   canAdd: PropTypes.bool,
 };

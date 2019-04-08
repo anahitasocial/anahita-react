@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactTimeAgo from 'react-time-ago';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -17,6 +18,7 @@ import MediumType from '../../proptypes/Medium';
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import EntityBody from '../EntityBody';
+import CardHeaderOwner from './Owner';
 
 import {
   getAuthor,
@@ -34,10 +36,6 @@ const styles = (theme) => {
       fontSize: 16,
       fontWeight: 500,
       marginBottom: theme.spacing.unit * 2,
-    },
-    titleLink: {
-      textDecoration: 'none',
-      color: theme.palette.text.primary,
     },
     portrait: {
       minHeight: theme.spacing.unit * 40,
@@ -91,6 +89,9 @@ class MediumCard extends React.Component {
     return (
       <React.Fragment>
         <Card square>
+          {medium.owner.id !== medium.author.id &&
+            <CardHeaderOwner node={medium} />
+          }
           {cover &&
             <Link href={url}>
               <CardMedia
@@ -110,21 +111,12 @@ class MediumCard extends React.Component {
             title={
               <ActorTitle
                 actor={author}
-                typographyProps={{
-                    variant: 'h6',
-                    className: classes.authorName,
-                }}
                 linked={Boolean(author.id)}
               />
             }
             subheader={
-              <ActorTitle
-                actor={medium.owner}
-                typographyProps={{
-                    variant: 'subtitle1',
-                    className: classes.ownerName,
-                }}
-                linked
+              <ReactTimeAgo
+                date={new Date(medium.creationTime)}
               />
             }
             action={

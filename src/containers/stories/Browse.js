@@ -9,7 +9,7 @@ import CommentsBrowse from '../comments/Browse';
 
 import actions from '../../actions/stories';
 
-import LikeAction from '../actions/Like';
+import LikeAction from '../actions/node/Like';
 import NotificationAction from '../actions/medium/Notification';
 import DeleteAction from '../actions/story/Delete';
 import FollowAction from '../actions/Follow';
@@ -97,7 +97,7 @@ class StoriesBrowse extends React.Component {
       hasMore,
     } = this.state;
 
-    const { viewer } = this.props;
+    const { viewer, queryFilters } = this.props;
 
     return (
       <Grid
@@ -158,14 +158,15 @@ class StoriesBrowse extends React.Component {
                   actions={[
                     story.object && isLikeable(story.object) &&
                     <LikeAction
-                      medium={story.object}
-                      isLiked={story.commands.includes('unvote')}
+                      node={story.object}
+                      isLiked={story.isVotedUp}
                       key={`story-like-${story.id}`}
                     />,
                   ]}
-                  comments={
-                    <CommentsBrowse comments={story.comments} />
+                  comments={story.object &&
+                    <CommentsBrowse node={story.object} comments={story.comments} />
                   }
+                  showOwner={queryFilters.filter === 'leaders'}
                 />
               );
             })
