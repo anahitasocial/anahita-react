@@ -16,6 +16,7 @@ const CommentForm = (props) => {
     comment,
     bodyError,
     bodyHelperText,
+    autoFocus,
   } = props;
 
   const { body } = comment;
@@ -33,22 +34,24 @@ const CommentForm = (props) => {
           value={body}
           disabled={disabled}
           fullWidth
-          autoFocus
+          autoFocus={autoFocus}
           error={bodyError}
           helperText={bodyHelperText}
           multiline
         />
       </CardContent>
       <CardActions>
-        <Button
-          onClick={handleAdd}
-          color="primary"
-          disabled={disabled}
-          variant="contained"
-          size="small"
-        >
-          {i18n.t('comments:comment.reply')}
-        </Button>
+        {!comment.id &&
+          <Button
+            onClick={handleAdd}
+            color="primary"
+            disabled={disabled}
+            variant="contained"
+            size="small"
+          >
+            {i18n.t('actions:add')}
+          </Button>
+        }
       </CardActions>
     </Card>
   );
@@ -61,11 +64,13 @@ CommentForm.propTypes = {
   comment: CommentType.isRequired,
   bodyError: PropTypes.bool.isRequired,
   bodyHelperText: PropTypes.string,
+  autoFocus: PropTypes.bool,
 };
 
 CommentForm.defaultProps = {
-  disabled: true,
+  disabled: false,
   bodyHelperText: '',
+  autoFocus: false,
 };
 
 export default CommentForm;

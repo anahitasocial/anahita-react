@@ -11,6 +11,7 @@ export default {
     delete: 'Delete',
     subscribe: 'Get Notifications',
     unsubscribe: 'Stop Notifications',
+    add: 'Add',
   },
   translation: {
     stories,
@@ -24,6 +25,10 @@ export default {
     },
   },
   comments: {
+    comment: {
+      placeholder: 'Comment ...',
+      bodyErrorHelperText: 'Comment box is empty!',
+    },
     actions: {
       followAuthor: 'Follow {{name}}',
       unfollowAuthor: 'Unfollow {{name}}',

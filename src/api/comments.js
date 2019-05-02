@@ -29,7 +29,7 @@ function add(comment, node) {
   }));
 }
 
-function deleteItem(node, comment) {
+function deleteItem(comment, node) {
   const namespace = node.objectType.split('.')[1];
   return axios.delete(`/${namespace}/${node.id}.json?cid=${comment.id}`, constructURLSearchParams({
     action: 'deletecomment',

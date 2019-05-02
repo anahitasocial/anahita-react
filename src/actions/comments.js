@@ -2,6 +2,16 @@ import { normalize, schema } from 'normalizr';
 import { comments as api } from '../api';
 import { Comments as COMMENTS } from '../constants';
 
+// --- setList
+
+function setList(parent, comments) {
+  return {
+    type: COMMENTS.BROWSE.SET,
+    parent,
+    comments,
+  };
+}
+
 // -- reset
 
 function reset() {
@@ -79,11 +89,11 @@ function addFailure(error) {
   };
 }
 
-function add(comment, ticket) {
+function add(comment, parent) {
   return (dispatch) => {
     dispatch(addRequest(comment));
     return new Promise((resolve, reject) => {
-      api.add(comment, ticket)
+      api.add(comment, parent)
         .then((result) => {
           dispatch(addSuccess(result));
           return resolve();
@@ -97,8 +107,51 @@ function add(comment, ticket) {
   };
 }
 
+// -- Delete
+
+function deleteRequest(comment) {
+  return {
+    type: COMMENTS.DELETE.REQUEST,
+    comment,
+  };
+}
+
+function deleteSuccess(comment) {
+  return {
+    type: COMMENTS.DELETE.SUCCESS,
+    comment,
+  };
+}
+
+function deleteFailure(response) {
+  return {
+    type: COMMENTS.DELETE.FAILURE,
+    error: response.message,
+  };
+}
+
+function deleteItem(comment, node) {
+  return (dispatch) => {
+    dispatch(deleteRequest(comment));
+    return new Promise((resolve, reject) => {
+      api.deleteItem(comment, node)
+        .then((result) => {
+          dispatch(deleteSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(deleteFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
 export default {
+  setList,
   reset,
   browse,
   add,
+  deleteItem,
 };

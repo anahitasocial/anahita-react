@@ -39,9 +39,9 @@ class LikeAction extends React.Component {
 
     const { node, comment, likeNode } = this.props;
 
-    likeNode(node, comment);
-
-    this.setState({ isLiked: true });
+    likeNode(node, comment).then(() => {
+      this.setState({ isLiked: true });
+    });
   }
 
   handleUnlike(event) {
@@ -49,9 +49,9 @@ class LikeAction extends React.Component {
 
     const { node, comment, unlikeNode } = this.props;
 
-    unlikeNode(node, comment);
-
-    this.setState({ isLiked: false });
+    unlikeNode(node, comment).then(() => {
+      this.setState({ isLiked: false });
+    });
   }
 
   render() {
@@ -102,10 +102,10 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch) => {
   return {
     likeNode: (node, comment = CommentDefault) => {
-      dispatch(actions.add(node, comment));
+      return dispatch(actions.add(node, comment));
     },
     unlikeNode: (node, comment = CommentDefault) => {
-      dispatch(actions.deleteItem(node, comment));
+      return dispatch(actions.deleteItem(node, comment));
     },
   };
 };

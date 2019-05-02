@@ -33,9 +33,9 @@ class ActionsNodeDelete extends React.Component {
 
     const { node, deleteItem } = this.props;
 
-    deleteItem(node);
-
-    this.setState({ isDeleted: true });
+    deleteItem(node).then(() => {
+      this.setState({ isDeleted: true });
+    });
   }
 
   render() {
@@ -75,7 +75,7 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (node) => {
-      dispatch(actions.deleteItem(node));
+      return dispatch(actions.deleteItem(node));
     },
   };
 };

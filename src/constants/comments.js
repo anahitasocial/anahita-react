@@ -5,6 +5,7 @@ const comments = async('comments');
 export default {
   BROWSE: {
     ...comments('browse'),
+    SET: 'COMMENTS_BROWSE_SET',
     RESET: 'COMMENTS_BROWSE_RESET',
   },
   READ: comments('read'),

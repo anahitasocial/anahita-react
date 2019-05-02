@@ -17,7 +17,7 @@ import FollowAction from '../actions/Follow';
 import StoryCard from '../../components/cards/Story';
 import StoriesType from '../../proptypes/Stories';
 import PersonType from '../../proptypes/Person';
-
+import commentPerms from '../../permissions/comment';
 import i18n from '../../languages';
 import utils from '../utils';
 
@@ -126,6 +126,7 @@ class StoriesBrowse extends React.Component {
               const key = `story_${story.id}`;
               const ownerName = utils.getOwnerName(story);
               const { id, owner } = story;
+              const canAddComment = commentPerms.canAdd(story);
 
               return (
                 <StoryCard
@@ -164,7 +165,11 @@ class StoriesBrowse extends React.Component {
                     />,
                   ]}
                   comments={story.object &&
-                    <CommentsBrowse node={story.object} comments={story.comments} />
+                    <CommentsBrowse
+                      parent={story.object}
+                      comments={story.comments}
+                      canAdd={canAddComment}
+                    />
                   }
                   showOwner={queryFilters.filter === 'leaders'}
                 />
@@ -218,10 +223,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseStories: (params) => {
-      dispatch(actions.browse(params));
+      return dispatch(actions.browse(params));
     },
     resetStories: () => {
-      dispatch(actions.reset());
+      return dispatch(actions.reset());
     },
   };
 };

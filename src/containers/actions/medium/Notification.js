@@ -36,9 +36,9 @@ class ActionsMediumNotification extends React.Component {
 
     const { medium, subscribe } = this.props;
 
-    subscribe(medium);
-
-    this.setState({ isSubscribed: true });
+    subscribe(medium).then(() => {
+      this.setState({ isSubscribed: true });
+    });
   }
 
   handleUnsubscribe(event) {
@@ -46,9 +46,9 @@ class ActionsMediumNotification extends React.Component {
 
     const { medium, unsubscribe } = this.props;
 
-    unsubscribe(medium);
-
-    this.setState({ isSubscribed: false });
+    unsubscribe(medium).then(() => {
+      this.setState({ isSubscribed: false });
+    });
   }
 
   render() {
@@ -119,10 +119,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     subscribe: (medium) => {
-      dispatch(actions.add(medium));
+      return dispatch(actions.add(medium));
     },
     unsubscribe: (medium) => {
-      dispatch(actions.deleteItem(medium));
+      return dispatch(actions.deleteItem(medium));
     },
   };
 };

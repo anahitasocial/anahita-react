@@ -33,9 +33,9 @@ class ActionsMediumDelete extends React.Component {
 
     const { medium, deleteItem } = this.props;
 
-    deleteItem(medium);
-
-    this.setState({ isDeleted: true });
+    deleteItem(medium).then(() => {
+      this.setState({ isDeleted: true });
+    });
   }
 
   render() {
@@ -75,7 +75,7 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (medium) => {
-      dispatch(actions.deleteItem(medium));
+      return dispatch(actions.deleteItem(medium));
     },
   };
 };

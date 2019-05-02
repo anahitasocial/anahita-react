@@ -187,7 +187,7 @@ StoryCardDefault.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node,
   menuItems: PropTypes.node,
-  comments: PropTypes.node.isRequired,
+  comments: PropTypes.node,
   story: StoryType.isRequired,
   showOwner: PropTypes.bool,
 };
@@ -196,6 +196,7 @@ StoryCardDefault.defaultProps = {
   showOwner: false,
   actions: null,
   menuItems: null,
+  comments: null,
 };
 
 export default withStyles(styles)(StoryCardDefault);

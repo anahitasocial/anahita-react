@@ -1,16 +1,77 @@
+import _ from 'lodash';
 import { Comments as COMMENTS } from '../constants';
+import CommentDefault from '../proptypes/CommentDefault';
+import NodeDefault from '../proptypes/NodeDefault';
+import utils from './utils';
 
-export default (state = {
-  comments: {
+const CommentsDefault = {
+  byId: {},
+  allIds: [],
+  current: { ...CommentDefault },
+};
+
+const setComments = (action, state) => {
+  const { parent, comments } = action;
+  const parents = { ...state.parents };
+
+  parents.allIds = _.union(parents.allIds, [parent.id]);
+  parents.byId[parent.id] = { comments };
+
+  return parents;
+};
+
+const updateComments = (action, state) => {
+  const { comment } = action;
+  const { parentId } = comment;
+  const parents = { ...state.parents };
+
+  parents.byId[parentId].comments = utils.editItem(
+    parents.byId[parentId].comments,
+    comment,
+  );
+
+  return parents;
+};
+
+const deleteComment = (action, state) => {
+  const { comment } = action;
+  const { parentId } = comment;
+  const parents = { ...state.parents };
+
+  parents.byId[parentId].comments = utils.deleteItem(
+    parents.byId[parentId].comments,
+    comment,
+  );
+
+  return parents;
+};
+
+const initState = {
+  parents: {
     byId: {},
     allIds: [],
-    current: null,
+    current: { ...NodeDefault },
   },
   error: '',
   isFetching: false,
-}, action) => {
+};
+
+export default (state = initState, action) => {
   switch (action.type) {
-    case COMMENTS.READ.REQUEST:
+    case COMMENTS.BROWSE.SET:
+      return {
+        ...state,
+        parents: setComments(action, state),
+      };
+    case COMMENTS.BROWSE.RESET:
+      return {
+        ...initState,
+        parents: setComments({
+          parent: action.parent,
+          comments: { ...CommentsDefault },
+        }, state),
+      };
+    case COMMENTS.BROWSE.REQUEST:
     case COMMENTS.EDIT.REQUEST:
     case COMMENTS.ADD.REQUEST:
     case COMMENTS.DELETE.REQUEST:
@@ -19,16 +80,29 @@ export default (state = {
         isFetching: true,
         error: '',
       };
-    case COMMENTS.READ.SUCCESS:
-    case COMMENTS.EDIT.SUCCESS:
-    case COMMENTS.ADD.SUCCESS:
-    case COMMENTS.DELETE.SUCCESS:
+    case COMMENTS.BROWSE.SUCCESS:
       return {
         ...state,
+        parents: setComments(action, state),
         isFetching: false,
         error: '',
       };
-    case COMMENTS.READ.FAILURE:
+    case COMMENTS.EDIT.SUCCESS:
+    case COMMENTS.ADD.SUCCESS:
+      return {
+        ...state,
+        parents: updateComments(action, state),
+        isFetching: false,
+        error: '',
+      };
+    case COMMENTS.DELETE.SUCCESS:
+      return {
+        ...state,
+        parents: deleteComment(action, state),
+        isFetching: false,
+        error: '',
+      };
+    case COMMENTS.BROWSE.FAILURE:
     case COMMENTS.EDIT.FAILURE:
     case COMMENTS.ADD.FAILURE:
     case COMMENTS.DELETE.FAILURE:

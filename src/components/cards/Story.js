@@ -58,7 +58,7 @@ const StoryCard = (props) => {
 StoryCard.propTypes = {
   actions: PropTypes.node,
   menuItems: PropTypes.node,
-  comments: PropTypes.node.isRequired,
+  comments: PropTypes.node,
   story: StoryType.isRequired,
   showOwner: PropTypes.bool,
 };
@@ -67,6 +67,7 @@ StoryCard.defaultProps = {
   showOwner: false,
   actions: null,
   menuItems: null,
+  comments: null,
 };
 
 export default StoryCard;

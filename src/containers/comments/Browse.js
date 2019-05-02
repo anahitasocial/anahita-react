@@ -7,8 +7,10 @@ import CommentForm from '../../components/comment/Form';
 import actions from '../../actions/comments';
 import NodeType from '../../proptypes/Node';
 import CommentsType from '../../proptypes/Comments';
+import NodesType from '../../proptypes/Nodes';
 import CommentDefault from '../../proptypes/CommentDefault';
 import PersonType from '../../proptypes/Person';
+
 import LikeAction from '../actions/node/Like';
 import FollowAction from '../actions/Follow';
 import BlockAction from '../actions/Block';
@@ -19,37 +21,49 @@ const MAX_CHAR_LIMIT = 5000;
 class CommentsBrowse extends React.Component {
   constructor(props, context) {
     super(props, context);
+
     this.state = {
       comment: { ...CommentDefault },
+      comments: props.comments,
       bodyError: false,
-      bodyHelperText: i18n.t('comments:comment.bodyHelperText'),
-      comments: {
-        byId: {},
-        allIds: [],
-      },
+      bodyHelperText: '',
     };
 
     this.offset = 0;
-
     this.handleAdd = this.handleAdd.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
   componentWillMount() {
-    const { comments } = this.props;
-    this.setState({ comments });
+    const {
+      parent,
+      comments,
+      setComments,
+    } = this.props;
+
+    setComments(parent, comments);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { comments } = nextProps;
-    this.setState({ comments });
+    const { parent: { id } } = this.props;
+    const { parents } = nextProps;
+    const { comments } = parents.byId[id];
+
+    if (comments) {
+      this.setState({ comments });
+    }
   }
 
+
   handleAdd() {
-    const { node, addComment } = this.props;
+    const { parent, addComment } = this.props;
     const { comment } = this.state;
     if (this.validate()) {
-      addComment(comment, node);
+      addComment(comment, parent).then(() => {
+        this.setState({
+          comment: { ...CommentDefault },
+        });
+      });
     }
   }
 
@@ -101,13 +115,18 @@ class CommentsBrowse extends React.Component {
 
   render() {
     const {
-      comments,
       comment,
+      comments,
       bodyError,
       bodyHelperText,
     } = this.state;
 
-    const { canAdd, node, viewer } = this.props;
+    const {
+      canAdd,
+      parent,
+      viewer,
+      // isFetching,
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -117,14 +136,14 @@ class CommentsBrowse extends React.Component {
           const { author } = item;
           return (
             <CommentCard
-              comment={comment}
+              comment={item}
               key={key}
               menuItems={[
                 author.id !== viewer.id &&
                 <FollowAction
                   actor={author}
                   component="menuitem"
-                  key={`comment-follow-${comment.id}`}
+                  key={`comment-follow-${item.id}`}
                   followLabel={i18n.t('comments:actions.followAuthor', {
                     name: author.name,
                   })}
@@ -136,7 +155,7 @@ class CommentsBrowse extends React.Component {
                 <BlockAction
                   actor={author}
                   component="menuitem"
-                  key={`comment-block-${comment.id}`}
+                  key={`comment-block-${item.id}`}
                   blockLabel={i18n.t('comments:actions.blockAuthor', {
                     name: author.name,
                   })}
@@ -147,10 +166,10 @@ class CommentsBrowse extends React.Component {
               ]}
               actions={[
                 <LikeAction
-                  node={node}
-                  comment={comment}
-                  isLiked={comment.isVotedUp}
-                  key={`comment-like-${comment.id}`}
+                  node={parent}
+                  comment={item}
+                  isLiked={item.isVotedUp}
+                  key={`comment-like-${item.id}`}
                   size="small"
                 />,
               ]}
@@ -160,7 +179,6 @@ class CommentsBrowse extends React.Component {
         {canAdd &&
           <CommentForm
             comment={comment}
-            // disabled
             handleFieldChange={this.handleFieldChange}
             handleAdd={this.handleAdd}
             bodyError={bodyError}
@@ -176,14 +194,14 @@ const mapStateToProps = (state) => {
   const { viewer } = state.auth;
 
   const {
-    comments,
+    parents,
     error,
     isFetching,
   } = state.comments;
 
   return {
     viewer,
-    comments,
+    parents,
     error,
     isFetching,
   };
@@ -191,18 +209,27 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setComments: (parent, comments) => {
+      return dispatch(actions.setList(parent, comments));
+    },
     addComment: (comment, node) => {
-      dispatch(actions.add(comment, node));
+      return dispatch(actions.add(comment, node));
+    },
+    deleteComment: (comment, node) => {
+      return dispatch(actions.deleteItem(comment, node));
     },
   };
 };
 
 CommentsBrowse.propTypes = {
-  node: NodeType.isRequired,
+  parent: NodeType.isRequired,
+  parents: NodesType.isRequired,
   comments: CommentsType.isRequired,
   canAdd: PropTypes.bool,
   viewer: PersonType.isRequired,
+  setComments: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
   // isFetching: PropTypes.bool.isRequired,
 };
 
