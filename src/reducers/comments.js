@@ -12,12 +12,15 @@ const CommentsDefault = {
 
 const setComments = (action, state) => {
   const { parent, comments } = action;
-  const parents = { ...state.parents };
+  const { parents } = state;
 
-  parents.allIds = _.union(parents.allIds, [parent.id]);
-  parents.byId[parent.id] = { comments };
-
-  return parents;
+  return {
+    allIds: _.union(parents.allIds, [parent.id]),
+    byId: {
+      [parent.id]: comments,
+      ...parents.byId,
+    },
+  };
 };
 
 const updateComments = (action, state) => {
@@ -25,8 +28,8 @@ const updateComments = (action, state) => {
   const { parentId } = comment;
   const parents = { ...state.parents };
 
-  parents.byId[parentId].comments = utils.editItem(
-    parents.byId[parentId].comments,
+  parents.byId[parentId] = utils.editItem(
+    parents.byId[parentId] ? parents.byId[parentId] : CommentsDefault,
     comment,
   );
 
@@ -38,8 +41,8 @@ const deleteComment = (action, state) => {
   const { parentId } = comment;
   const parents = { ...state.parents };
 
-  parents.byId[parentId].comments = utils.deleteItem(
-    parents.byId[parentId].comments,
+  parents.byId[parentId] = utils.deleteItem(
+    parents.byId[parentId],
     comment,
   );
 

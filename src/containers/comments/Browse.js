@@ -47,7 +47,7 @@ class CommentsBrowse extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { parent: { id } } = this.props;
     const { parents } = nextProps;
-    const { comments } = parents.byId[id];
+    const comments = parents.byId[id];
 
     if (comments) {
       this.setState({ comments });
