@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Badge from '@material-ui/core/Badge';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InfiniteScroll from 'react-infinite-scroller';
-
 import CommentIcon from '@material-ui/icons/Comment';
 
 import CommentsBrowse from '../comments/Browse';
@@ -192,7 +192,12 @@ class StoriesBrowse extends React.Component {
                       aria-label="Show Comments"
                       key={`story-comment-${story.id}`}
                     >
-                      <CommentIcon fontSize="small" />
+                      <Badge
+                        badgeContent={story.comments.allIds.length}
+                        color="primary"
+                      >
+                        <CommentIcon fontSize="small" />
+                      </Badge>
                     </IconButton>,
                   ]}
                   comments={story.object && showComments &&
