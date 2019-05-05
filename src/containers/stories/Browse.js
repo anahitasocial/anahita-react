@@ -39,6 +39,19 @@ const isLikeable = (node) => {
   return likeables.includes(node.objectType);
 };
 
+const isCommentable = (node) => {
+  const commentables = [
+    'com.articles.article',
+    'com.notes.note',
+    'com.photos.photo',
+    'com.sets.set',
+    'com.topics.topic',
+    'com.todos.todo',
+  ];
+
+  return commentables.includes(node.objectType);
+};
+
 const isSubscribable = (node) => {
   const subscribables = [
     'com.articles.article',
@@ -169,6 +182,7 @@ class StoriesBrowse extends React.Component {
                       isLiked={story.isVotedUp}
                       key={`story-like-${story.id}`}
                     />,
+                    story.object && isCommentable(story.object) &&
                     <IconButton
                       onClick={() => {
                         openComments.push(id);
