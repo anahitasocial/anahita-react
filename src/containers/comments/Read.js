@@ -139,73 +139,69 @@ class CommentsRead extends React.Component {
 
     if (isEditing) {
       return (
-        <React.Fragment>
-          <CommentForm
-            comment={comment}
-            handleFieldChange={this.handleFieldChange}
-            handleSave={this.handleSave}
-            handleCancel={this.handleCancel}
-            bodyError={bodyError}
-            bodyHelperText={bodyHelperText}
-          />
-        </React.Fragment>
+        <CommentForm
+          comment={comment}
+          handleFieldChange={this.handleFieldChange}
+          handleSave={this.handleSave}
+          handleCancel={this.handleCancel}
+          bodyError={bodyError}
+          bodyHelperText={bodyHelperText}
+        />
       );
     }
 
     return (
-      <React.Fragment>
-        <CommentCard
-          comment={comment}
-          menuItems={[
-            canEdit &&
-              <MenuItem
-                onClick={this.handleEdit}
-                key={`comment-edit-${comment.id}`}
-              >
-                {i18n.t('actions:edit')}
-              </MenuItem>,
-            author.id !== viewer.id &&
-            <FollowAction
-              actor={author}
-              component="menuitem"
-              key={`comment-follow-${comment.id}`}
-              followLabel={i18n.t('comments:actions.followAuthor', {
-                name: author.name,
-              })}
-              unfollowLabel={i18n.t('comments:actions.unfollowAuthor', {
-                name: author.name,
-              })}
-            />,
-            author.id !== viewer.id &&
-            <BlockAction
-              actor={author}
-              component="menuitem"
-              key={`comment-block-${comment.id}`}
-              blockLabel={i18n.t('comments:actions.blockAuthor', {
-                name: author.name,
-              })}
-              unblockLabel={i18n.t('comments:actions.unblockAuthor', {
-                name: author.name,
-              })}
-            />,
-            canDelete &&
-            <DeleteAction
-              node={parent}
-              comment={comment}
-              key={`comment-delete-${comment.id}`}
-            />,
-          ]}
-          actions={[
-            <LikeAction
-              node={parent}
-              comment={comment}
-              isLiked={comment.isVotedUp}
-              key={`comment-like-${comment.id}`}
-              size="small"
-            />,
-          ]}
-        />
-      </React.Fragment>
+      <CommentCard
+        comment={comment}
+        menuItems={[
+          canEdit &&
+            <MenuItem
+              onClick={this.handleEdit}
+              key={`comment-edit-${comment.id}`}
+            >
+              {i18n.t('actions:edit')}
+            </MenuItem>,
+          author.id !== viewer.id &&
+          <FollowAction
+            actor={author}
+            component="menuitem"
+            key={`comment-follow-${comment.id}`}
+            followLabel={i18n.t('comments:actions.followAuthor', {
+              name: author.name,
+            })}
+            unfollowLabel={i18n.t('comments:actions.unfollowAuthor', {
+              name: author.name,
+            })}
+          />,
+          author.id !== viewer.id &&
+          <BlockAction
+            actor={author}
+            component="menuitem"
+            key={`comment-block-${comment.id}`}
+            blockLabel={i18n.t('comments:actions.blockAuthor', {
+              name: author.name,
+            })}
+            unblockLabel={i18n.t('comments:actions.unblockAuthor', {
+              name: author.name,
+            })}
+          />,
+          canDelete &&
+          <DeleteAction
+            node={parent}
+            comment={comment}
+            key={`comment-delete-${comment.id}`}
+          />,
+        ]}
+        actions={[
+          <LikeAction
+            node={parent}
+            comment={comment}
+            isLiked={comment.isVotedUp}
+            key={`comment-like-${comment.id}`}
+            size="small"
+          />,
+        ]}
+      />
     );
   }
 }
