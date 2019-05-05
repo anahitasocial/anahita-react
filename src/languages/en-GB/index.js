@@ -15,6 +15,7 @@ export default {
     edit: 'Edit',
     update: 'Update',
     cancel: 'Cancel',
+    post: 'Post',
   },
   translation: {
     stories,
@@ -29,7 +30,7 @@ export default {
   },
   comments: {
     comment: {
-      placeholder: 'Comment ...',
+      placeholder: 'Add a comment ...',
       bodyErrorHelperText: 'Comment box is empty!',
     },
     actions: {

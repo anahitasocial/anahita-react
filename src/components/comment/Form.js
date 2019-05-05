@@ -58,7 +58,7 @@ const CommentForm = (props) => {
           variant="contained"
           size="small"
         >
-          {comment.id ? i18n.t('actions:update') : i18n.t('actions:add')}
+          {comment.id ? i18n.t('actions:update') : i18n.t('actions:post')}
         </Button>
       </CardActions>
     </Card>

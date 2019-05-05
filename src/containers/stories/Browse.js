@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import InfiniteScroll from 'react-infinite-scroller';
+
+import CommentIcon from '@material-ui/icons/Comment';
 
 import CommentsBrowse from '../comments/Browse';
 
@@ -59,6 +62,7 @@ class StoriesBrowse extends React.Component {
         byId: {},
         allIds: [],
       },
+      openComments: [],
     };
 
     this.offset = 0;
@@ -95,6 +99,7 @@ class StoriesBrowse extends React.Component {
     const {
       stories,
       hasMore,
+      openComments,
     } = this.state;
 
     const { viewer, queryFilters } = this.props;
@@ -127,6 +132,7 @@ class StoriesBrowse extends React.Component {
               const ownerName = utils.getOwnerName(story);
               const { id, owner } = story;
               const canAddComment = commentPerms.canAdd(story);
+              const showComments = openComments.includes(id);
 
               return (
                 <StoryCard
@@ -163,8 +169,19 @@ class StoriesBrowse extends React.Component {
                       isLiked={story.isVotedUp}
                       key={`story-like-${story.id}`}
                     />,
+                    <IconButton
+                      onClick={() => {
+                        openComments.push(id);
+                        this.setState({ openComments });
+                      }}
+                      disabled={showComments}
+                      aria-label="Show Comments"
+                      key={`story-comment-${story.id}`}
+                    >
+                      <CommentIcon fontSize="small" />
+                    </IconButton>,
                   ]}
-                  comments={story.object &&
+                  comments={story.object && showComments &&
                     <CommentsBrowse
                       parent={story.object}
                       comments={story.comments}
