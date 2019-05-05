@@ -12,6 +12,9 @@ export default {
     subscribe: 'Get Notifications',
     unsubscribe: 'Stop Notifications',
     add: 'Add',
+    edit: 'Edit',
+    update: 'Update',
+    cancel: 'Cancel',
   },
   translation: {
     stories,

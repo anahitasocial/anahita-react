@@ -66,6 +66,47 @@ function browse(params) {
   };
 }
 
+// -- Edit
+
+function editRequest(comment) {
+  return {
+    type: COMMENTS.EDIT.REQUEST,
+    comment,
+  };
+}
+
+function editSuccess(result) {
+  return {
+    type: COMMENTS.EDIT.SUCCESS,
+    comment: result.data,
+  };
+}
+
+function editFailure(error) {
+  return {
+    type: COMMENTS.EDIT.FAILURE,
+    error: error.message,
+  };
+}
+
+function edit(comment, parent) {
+  return (dispatch) => {
+    dispatch(editRequest(comment));
+    return new Promise((resolve, reject) => {
+      api.edit(comment, parent)
+        .then((result) => {
+          dispatch(editSuccess(result));
+          return resolve();
+        }, (response) => {
+          dispatch(editFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
 // -- Add
 
 function addRequest(comment) {
@@ -152,6 +193,7 @@ export default {
   setList,
   reset,
   browse,
+  edit,
   add,
   deleteItem,
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import CommentCard from '../../components/cards/Comment';
+import CommentRead from './Read';
 import CommentForm from '../../components/comment/Form';
 
 import actions from '../../actions/comments';
@@ -9,12 +9,6 @@ import NodeType from '../../proptypes/Node';
 import CommentsType from '../../proptypes/Comments';
 import NodesType from '../../proptypes/Nodes';
 import CommentDefault from '../../proptypes/CommentDefault';
-import PersonType from '../../proptypes/Person';
-
-import LikeAction from '../actions/node/Like';
-import FollowAction from '../actions/Follow';
-import BlockAction from '../actions/Block';
-import DeleteAction from '../actions/comment/Delete';
 import i18n from '../../languages';
 
 const MAX_CHAR_LIMIT = 5000;
@@ -125,7 +119,6 @@ class CommentsBrowse extends React.Component {
     const {
       canAdd,
       parent,
-      viewer,
       // isFetching,
     } = this.props;
 
@@ -134,53 +127,11 @@ class CommentsBrowse extends React.Component {
         {comments.allIds.map((itemId) => {
           const item = comments.byId[itemId];
           const key = `comment_${item.id}`;
-          const { author } = item;
-          const canDelete = Boolean(item.authorized.delete);
           return (
-            <CommentCard
-              comment={item}
+            <CommentRead
               key={key}
-              menuItems={[
-                author.id !== viewer.id &&
-                <FollowAction
-                  actor={author}
-                  component="menuitem"
-                  key={`comment-follow-${item.id}`}
-                  followLabel={i18n.t('comments:actions.followAuthor', {
-                    name: author.name,
-                  })}
-                  unfollowLabel={i18n.t('comments:actions.unfollowAuthor', {
-                    name: author.name,
-                  })}
-                />,
-                author.id !== viewer.id &&
-                <BlockAction
-                  actor={author}
-                  component="menuitem"
-                  key={`comment-block-${item.id}`}
-                  blockLabel={i18n.t('comments:actions.blockAuthor', {
-                    name: author.name,
-                  })}
-                  unblockLabel={i18n.t('comments:actions.unblockAuthor', {
-                    name: author.name,
-                  })}
-                />,
-                canDelete &&
-                <DeleteAction
-                  node={parent}
-                  comment={item}
-                  key={`comment-delete-${item.id}`}
-                />,
-              ]}
-              actions={[
-                <LikeAction
-                  node={parent}
-                  comment={item}
-                  isLiked={item.isVotedUp}
-                  key={`comment-like-${item.id}`}
-                  size="small"
-                />,
-              ]}
+              parent={parent}
+              comment={item}
             />
           );
         })}
@@ -188,7 +139,7 @@ class CommentsBrowse extends React.Component {
           <CommentForm
             comment={comment}
             handleFieldChange={this.handleFieldChange}
-            handleAdd={this.handleAdd}
+            handleSave={this.handleAdd}
             bodyError={bodyError}
             bodyHelperText={bodyHelperText}
           />
@@ -223,9 +174,6 @@ const mapDispatchToProps = (dispatch) => {
     addComment: (comment, node) => {
       return dispatch(actions.add(comment, node));
     },
-    deleteComment: (comment, node) => {
-      return dispatch(actions.deleteItem(comment, node));
-    },
   };
 };
 
@@ -234,10 +182,8 @@ CommentsBrowse.propTypes = {
   parents: NodesType.isRequired,
   comments: CommentsType.isRequired,
   canAdd: PropTypes.bool,
-  viewer: PersonType.isRequired,
   setComments: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
-  deleteComment: PropTypes.func.isRequired,
   // isFetching: PropTypes.bool.isRequired,
 };
 

@@ -12,7 +12,8 @@ const CommentForm = (props) => {
   const {
     disabled,
     handleFieldChange,
-    handleAdd,
+    handleSave,
+    handleCancel,
     comment,
     bodyError,
     bodyHelperText,
@@ -41,17 +42,24 @@ const CommentForm = (props) => {
         />
       </CardContent>
       <CardActions>
-        {!comment.id &&
+        {comment.id > 0 &&
           <Button
-            onClick={handleAdd}
-            color="primary"
+            onClick={handleCancel}
             disabled={disabled}
-            variant="contained"
             size="small"
           >
-            {i18n.t('actions:add')}
+            {i18n.t('actions:cancel')}
           </Button>
         }
+        <Button
+          onClick={handleSave}
+          color="primary"
+          disabled={disabled}
+          variant="contained"
+          size="small"
+        >
+          {comment.id ? i18n.t('actions:update') : i18n.t('actions:add')}
+        </Button>
       </CardActions>
     </Card>
   );
@@ -59,7 +67,8 @@ const CommentForm = (props) => {
 
 CommentForm.propTypes = {
   handleFieldChange: PropTypes.func.isRequired,
-  handleAdd: PropTypes.func.isRequired,
+  handleSave: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func,
   disabled: PropTypes.bool,
   comment: CommentType.isRequired,
   bodyError: PropTypes.bool.isRequired,
@@ -71,6 +80,7 @@ CommentForm.defaultProps = {
   disabled: false,
   bodyHelperText: '',
   autoFocus: false,
+  handleCancel: null,
 };
 
 export default CommentForm;

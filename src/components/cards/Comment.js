@@ -13,7 +13,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
-import EntityBody from '../../components/EntityBody';
+import EntityBody from '../EntityBody';
 import CommentType from '../../proptypes/Comment';
 
 const styles = (theme) => {
