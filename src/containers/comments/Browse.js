@@ -14,6 +14,7 @@ import PersonType from '../../proptypes/Person';
 import LikeAction from '../actions/node/Like';
 import FollowAction from '../actions/Follow';
 import BlockAction from '../actions/Block';
+import DeleteAction from '../actions/comment/Delete';
 import i18n from '../../languages';
 
 const MAX_CHAR_LIMIT = 5000;
@@ -134,6 +135,7 @@ class CommentsBrowse extends React.Component {
           const item = comments.byId[itemId];
           const key = `comment_${item.id}`;
           const { author } = item;
+          const canDelete = Boolean(item.authorized.delete);
           return (
             <CommentCard
               comment={item}
@@ -162,6 +164,12 @@ class CommentsBrowse extends React.Component {
                   unblockLabel={i18n.t('comments:actions.unblockAuthor', {
                     name: author.name,
                   })}
+                />,
+                canDelete &&
+                <DeleteAction
+                  node={parent}
+                  comment={item}
+                  key={`comment-delete-${item.id}`}
                 />,
               ]}
               actions={[

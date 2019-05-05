@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import actions from '../../../actions/node';
+import actions from '../../../actions/comments';
+import CommentType from '../../../proptypes/Comment';
 import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';
 
-class ActionsNodeDelete extends React.Component {
+class ActionsCommentDelete extends React.Component {
   constructor(props) {
     super(props);
 
@@ -31,9 +32,9 @@ class ActionsNodeDelete extends React.Component {
   handleDelete(event) {
     event.preventDefault();
 
-    const { node, deleteItem } = this.props;
+    const { comment, node, deleteItem } = this.props;
 
-    deleteItem(node);
+    deleteItem(comment, node);
   }
 
   render() {
@@ -55,13 +56,14 @@ class ActionsNodeDelete extends React.Component {
   }
 }
 
-ActionsNodeDelete.propTypes = {
+ActionsCommentDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,
+  comment: CommentType.isRequired,
   node: NodeType.isRequired,
   isDeleted: PropTypes.bool,
 };
 
-ActionsNodeDelete.defaultProps = {
+ActionsCommentDelete.defaultProps = {
   isDeleted: false,
 };
 
@@ -72,8 +74,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: (node) => {
-      return dispatch(actions.deleteItem(node));
+    deleteItem: (comment, node) => {
+      return dispatch(actions.deleteItem(comment, node));
     },
   };
 };
@@ -81,4 +83,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActionsDelete);
+)(ActionsCommentDelete);

@@ -135,8 +135,8 @@ function deleteItem(comment, node) {
     dispatch(deleteRequest(comment));
     return new Promise((resolve, reject) => {
       api.deleteItem(comment, node)
-        .then((result) => {
-          dispatch(deleteSuccess(result));
+        .then(() => {
+          dispatch(deleteSuccess(comment));
           return resolve();
         }, (response) => {
           dispatch(deleteFailure(response));

@@ -33,9 +33,7 @@ class ActionsMediumDelete extends React.Component {
 
     const { medium, deleteItem } = this.props;
 
-    deleteItem(medium).then(() => {
-      this.setState({ isDeleted: true });
-    });
+    deleteItem(medium);
   }
 
   render() {
