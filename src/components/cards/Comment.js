@@ -63,6 +63,8 @@ class CommentCard extends React.Component {
       classes,
       actions,
       menuItems,
+      isEditing,
+      commentForm,
     } = this.props;
 
     const { author, creationTime } = comment;
@@ -109,11 +111,18 @@ class CommentCard extends React.Component {
             </React.Fragment>
           }
         />
-        <CardContent className={classes.content}>
-          <EntityBody size="small">
-            {comment.body}
-          </EntityBody>
-        </CardContent>
+        {!isEditing &&
+          <CardContent className={classes.content}>
+            <EntityBody size="small">
+              {comment.body}
+            </EntityBody>
+          </CardContent>
+        }
+        {isEditing &&
+          <React.Fragment>
+            {commentForm}
+          </React.Fragment>
+        }
         {actions &&
           <CardActions>
             {actions}
@@ -129,11 +138,15 @@ CommentCard.propTypes = {
   actions: PropTypes.node,
   menuItems: PropTypes.node,
   comment: CommentType.isRequired,
+  commentForm: PropTypes.node,
+  isEditing: PropTypes.bool,
 };
 
 CommentCard.defaultProps = {
   actions: null,
   menuItems: null,
+  commentForm: null,
+  isEditing: false,
 };
 
 export default withStyles(styles)(CommentCard);

@@ -137,19 +137,6 @@ class CommentsRead extends React.Component {
     const canDelete = Boolean(comment.authorized.delete);
     const { author } = comment;
 
-    if (isEditing) {
-      return (
-        <CommentForm
-          comment={comment}
-          handleFieldChange={this.handleFieldChange}
-          handleSave={this.handleSave}
-          handleCancel={this.handleCancel}
-          bodyError={bodyError}
-          bodyHelperText={bodyHelperText}
-        />
-      );
-    }
-
     return (
       <CommentCard
         comment={comment}
@@ -201,6 +188,17 @@ class CommentsRead extends React.Component {
             size="small"
           />,
         ]}
+        commentForm={
+          <CommentForm
+            comment={comment}
+            handleFieldChange={this.handleFieldChange}
+            handleSave={this.handleSave}
+            handleCancel={this.handleCancel}
+            bodyError={bodyError}
+            bodyHelperText={bodyHelperText}
+          />
+        }
+        isEditing={isEditing}
       />
     );
   }

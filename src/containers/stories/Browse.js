@@ -145,7 +145,9 @@ class StoriesBrowse extends React.Component {
               const ownerName = utils.getOwnerName(story);
               const { id, owner } = story;
               const canAddComment = commentPerms.canAdd(story);
-              const showComments = openComments.includes(id);
+
+              const commentsCount = story.comments.allIds.length;
+              const isCommentsOpen = openComments.includes(id);
 
               return (
                 <StoryCard
@@ -188,19 +190,20 @@ class StoriesBrowse extends React.Component {
                         openComments.push(id);
                         this.setState({ openComments });
                       }}
-                      disabled={showComments}
+                      disabled={isCommentsOpen}
                       aria-label="Show Comments"
                       key={`story-comment-${story.id}`}
                     >
                       <Badge
-                        badgeContent={story.comments.allIds.length}
+                        badgeContent={commentsCount}
                         color="primary"
+                        invisible={isCommentsOpen || commentsCount === 0}
                       >
                         <CommentIcon fontSize="small" />
                       </Badge>
                     </IconButton>,
                   ]}
-                  comments={story.object && showComments &&
+                  comments={story.object && isCommentsOpen &&
                     <CommentsBrowse
                       parent={story.object}
                       comments={story.comments}
