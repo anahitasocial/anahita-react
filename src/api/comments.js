@@ -36,7 +36,7 @@ function deleteItem(comment, node) {
   }));
 }
 
-export {
+export default {
   browse,
   read,
   edit,

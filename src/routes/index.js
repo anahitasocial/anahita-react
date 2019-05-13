@@ -31,6 +31,8 @@ import PhotosBrowse from '../containers/photos/Browse';
 import TopicsBrowse from '../containers/topics/Browse';
 import ArticlesBrowse from '../containers/articles/Browse';
 
+import HashtagsBrowse from '../containers/hashtags/Browse';
+
 import DashboardPage from '../containers/Dashboard';
 import NotFoundPage from '../containers/NotFound';
 
@@ -177,6 +179,11 @@ const Routes = (props) => {
         exact
         path="/articles/"
         component={ArticlesBrowse}
+      />
+      <Route
+        exact
+        path="/hashtags/"
+        component={HashtagsBrowse}
       />
       <Route component={NotFoundPage} />
     </Switch>

@@ -33,7 +33,7 @@ const deleteItem = (node, comment = CommentDefault) => {
   return axios.post(url, constructURLSearchParams({ action }));
 };
 
-export {
+export default {
   browse,
   add,
   deleteItem,

@@ -95,6 +95,16 @@ const LeftMenu = (props) => {
         </ListItemIcon>
         <ListItemText primary={i18n.t('articles:cTitle')} />
       </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/hashtags/"
+      >
+        <ListItemIcon>
+          <ArticlesIcon />
+        </ListItemIcon>
+        <ListItemText primary={i18n.t('hashtags:cTitle')} />
+      </ListItem>
       {isAuthenticated &&
         <ListItem
           button

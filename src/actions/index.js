@@ -4,6 +4,7 @@ import auth from './auth';
 import avatar from './avatar';
 import comments from './comments';
 import cover from './cover';
+import hashtag from './hashtag';
 import likes from './likes';
 import media from './media';
 import node from './node';
@@ -20,6 +21,7 @@ export default {
   avatar,
   comments,
   cover,
+  hashtag,
   likes,
   media,
   node,

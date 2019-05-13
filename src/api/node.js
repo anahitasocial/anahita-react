@@ -10,7 +10,7 @@ const deleteItem = (node) => {
   return axios.delete(`/${namespace}/${node.id}.json`);
 };
 
-export {
+export default {
   read,
   deleteItem,
 };

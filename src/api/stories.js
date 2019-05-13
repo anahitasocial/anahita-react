@@ -18,7 +18,7 @@ function deleteItem(story) {
   return axios.delete(`/stories/${story.id}.json`);
 }
 
-export {
+export default {
   browse,
   read,
   deleteItem,

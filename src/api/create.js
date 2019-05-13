@@ -1,11 +1,7 @@
-/*
-* DO NOT USE this module yet. It is an experiment.
-*/
-
 import axios from 'axios';
 import { constructURLSearchParams } from './utils';
 
-const createBrowseApi = (namespace) => {
+const browse = (namespace) => {
   return (params) => {
     return axios.get(`/${namespace}.json`, {
       params: {
@@ -17,34 +13,34 @@ const createBrowseApi = (namespace) => {
   };
 };
 
-const createReadApi = (namespace) => {
+const read = (namespace) => {
   return (id) => {
     return axios.get(`/${namespace}/${id}.json`);
   };
 };
 
-const createEditApi = (namespace) => {
+const edit = (namespace) => {
   return (node) => {
     return axios.put(`/${namespace}/${node.id}.json`, constructURLSearchParams(node));
   };
 };
 
-const createAddApi = (namespace) => {
+const add = (namespace) => {
   return (node) => {
     return axios.post(`/${namespace}/${node.id}.json`, constructURLSearchParams(node));
   };
 };
 
-const createDeleteApi = (namespace) => {
+const deleteItem = (namespace) => {
   return (node) => {
     return axios.delete(`/${namespace}/${node.id}.json`);
   };
 };
 
 export default {
-  createBrowseApi,
-  createReadApi,
-  createEditApi,
-  createAddApi,
-  createDeleteApi,
+  browse,
+  read,
+  edit,
+  add,
+  deleteItem,
 };

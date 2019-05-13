@@ -51,7 +51,7 @@ function validateField(key, value) {
   }));
 }
 
-export {
+export default {
   readSession,
   addSession,
   deleteSession,

@@ -1,16 +1,17 @@
 import axios from 'axios';
-import * as actors from './actors';
-import * as avatar from './avatar';
-import * as auth from './auth';
-import * as comments from './comments';
-import * as cover from './cover';
-import * as likes from './likes';
-import * as media from './media';
-import * as node from './node';
-import * as notifications from './notifications';
-import * as person from './person';
-import * as socialgraph from './socialgraph';
-import * as stories from './stories';
+import actors from './actors';
+import avatar from './avatar';
+import auth from './auth';
+import comments from './comments';
+import cover from './cover';
+import hashtags from './hashtags';
+import likes from './likes';
+import media from './media';
+import node from './node';
+import notifications from './notifications';
+import person from './person';
+import socialgraph from './socialgraph';
+import stories from './stories';
 
 // @todo move this to webpack.config.prod and webpack.config.dev files
 // axios.defaults.baseURL = "https://www.GetAnahita.com"
@@ -31,6 +32,7 @@ export {
   auth,
   comments,
   cover,
+  hashtags,
   likes,
   media,
   node,

@@ -16,7 +16,7 @@ function deleteItem(node) {
   }));
 }
 
-export {
+export default {
   add,
   deleteItem,
 };

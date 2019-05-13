@@ -49,7 +49,7 @@ function deleteItem(medium) {
   return axios.delete(`/${namespace}/${medium.id}.json`);
 }
 
-export {
+export default {
   browse,
   read,
   edit,

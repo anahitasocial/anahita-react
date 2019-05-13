@@ -78,6 +78,10 @@ export default {
     cTitle: 'Articles',
     mTitle: 'Articles',
   },
+  hashtags: {
+    cTitle: 'Hashtags',
+    mTitle: 'Hashtags',
+  },
   commons: {
     readMore: 'Read more',
     close: 'Close',

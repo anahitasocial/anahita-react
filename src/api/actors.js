@@ -48,7 +48,7 @@ const deleteItem = (actor) => {
   return axios.delete(`/${namespace}/${actor.id}.json`);
 };
 
-export {
+export default {
   browse,
   read,
   edit,

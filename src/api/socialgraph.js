@@ -33,7 +33,7 @@ function unblock(viewer, actor) {
   }));
 }
 
-export {
+export default {
   follow,
   unfollow,
   block,

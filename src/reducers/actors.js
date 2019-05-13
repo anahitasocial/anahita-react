@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
   actors: {
     byId: {},
     allIds: [],
-    current: ACTOR_DEFAULT,
+    current: { ...ACTOR_DEFAULT },
   },
   error: '',
   total: 0,

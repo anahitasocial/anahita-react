@@ -1,53 +1,57 @@
-/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-
-/*
-* DO NOT USE this module yet. It is an experiment.
-*/
-
 import { normalize, schema } from 'normalizr';
 
-const createResetAction = (namespace) => {
+// -- Reset
+
+const reset = (namespace) => {
   return {
     type: `${namespace.toUpperCase()}_BROWSE_RESET`,
   };
 };
 
-const createBrowseAction = (namespace, api) => {
+// -- Browse
+
+const browseRequest = (namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_BROWSE_REQUEST`,
+  };
+};
+
+const browseSuccess = (results, namespace) => {
+  const { data } = results;
+  const { pagination } = data;
+
+  const node = new schema.Entity(namespace);
+  const nodes = [node];
+  const normalized = normalize(data.data, nodes);
+  const hasMore = data.data.length >= pagination.limit;
+
+  return {
+    type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
+    nodes: normalized.entities[namespace],
+    ids: normalized.result,
+    total: data.pagination.total,
+    hasMore,
+  };
+};
+
+const browseFailure = (response, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_BROWSE_FAILURE`,
+    error: response.message,
+  };
+};
+
+const browse = (namespace, api) => {
   return (params) => {
     return (dispatch) => {
-      dispatch(() => {
-        return {
-          type: `${namespace.toUpperCase()}_BROWSE_REQUEST`,
-        };
-      });
+      dispatch(browseRequest(namespace));
       return new Promise((resolve, reject) => {
         api.browse(params)
           .then((results) => {
-            dispatch(() => {
-              const { data } = results;
-              const { pagination } = data;
-
-              const actor = new schema.Entity('actors');
-              const actors = [actor];
-              const normalized = normalize(data.data, actors);
-              const hasMore = data.data.length >= pagination.limit;
-
-              return {
-                type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
-                actors: normalized.entities.actors,
-                ids: normalized.result,
-                total: results.data.pagination.total,
-                hasMore,
-              };
-            });
+            dispatch(browseSuccess(results, namespace));
             return resolve();
           }, (response) => {
-            dispatch(() => {
-              return {
-                type: `${namespace.toUpperCase()}_BROWSE_FAILURE`,
-                error: response.message,
-              };
-            });
+            dispatch(browseFailure(response, namespace));
             return reject(response);
           }).catch((error) => {
             console.error(error);
@@ -57,31 +61,39 @@ const createBrowseAction = (namespace, api) => {
   };
 };
 
-const createReadAction = (namespace, api) => {
+// -- Read
+
+const readRequest = (namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_READ_REQUEST`,
+  };
+};
+
+const readSuccess = (result, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_READ_SUCCESS`,
+    node: result.data,
+  };
+};
+
+const readFailure = (response, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_READ_FAILURE`,
+    error: response.message,
+  };
+};
+
+const read = (namespace, api) => {
   return (id) => {
     return (dispatch) => {
-      dispatch(() => {
-        return {
-          type: `${namespace.toUpperCase()}_READ_REQUEST`,
-        };
-      });
+      dispatch(readRequest(namespace));
       return new Promise((resolve, reject) => {
         api.read(id)
           .then((result) => {
-            dispatch(() => {
-              return {
-                type: `${namespace.toUpperCase()}_READ_SUCCESS`,
-                node: result.data,
-              };
-            });
+            dispatch(readSuccess(result, namespace));
             return resolve();
           }, (response) => {
-            dispatch(() => {
-              return {
-                type: `${namespace.toUpperCase()}_READ_FAILURE`,
-                error: response.message,
-              };
-            });
+            dispatch(readFailure(response, namespace));
             return reject(response);
           }).catch((error) => {
             console.error(error);
@@ -91,31 +103,39 @@ const createReadAction = (namespace, api) => {
   };
 };
 
-const createEditAction = (namespace, api) => {
+// -- Edit
+
+const editRequest = (namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_EDIT_REQUEST`,
+  };
+};
+
+const editSuccess = (result, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_EDIT_SUCCESS`,
+    node: result.data,
+  };
+};
+
+const editFailure = (response, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_EDIT_FAILURE`,
+    error: response.message,
+  };
+};
+
+const edit = (namespace, api) => {
   return (node) => {
     return (dispatch) => {
-      dispatch(() => {
-        return {
-          type: `${namespace.toUpperCase()}_EDIT_REQUEST`,
-        };
-      });
+      dispatch(editRequest(namespace));
       return new Promise((resolve, reject) => {
         api.edit(node)
           .then((result) => {
-            dispatch(() => {
-              return {
-                type: `${namespace.toUpperCase()}_EDIT_SUCCESS`,
-                node: result.data,
-              };
-            });
+            dispatch(editSuccess(result, namespace));
             return resolve();
           }, (response) => {
-            dispatch(() => {
-              return {
-                type: `${namespace.toUpperCase()}_EDIT_FAILURE`,
-                error: response.message,
-              };
-            });
+            dispatch(editFailure(response, namespace));
             return reject(response);
           }).catch((error) => {
             console.error(error);
@@ -125,31 +145,39 @@ const createEditAction = (namespace, api) => {
   };
 };
 
-const createAddAction = (namespace, api) => {
+// -- Add
+
+const addRequest = (namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_ADD_REQUEST`,
+  };
+};
+
+const addSuccess = (result, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_ADD_SUCCESS`,
+    node: result.data,
+  };
+};
+
+const addFailure = (response, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_ADD_FAILURE`,
+    error: response.message,
+  };
+};
+
+const add = (namespace, api) => {
   return (node) => {
     return (dispatch) => {
-      dispatch(() => {
-        return {
-          type: `${namespace.toUpperCase()}_ADD_REQUEST`,
-        };
-      });
+      dispatch(addRequest(namespace));
       return new Promise((resolve, reject) => {
         api.add(node)
           .then((result) => {
-            dispatch(() => {
-              return {
-                type: `${namespace.toUpperCase()}_ADD_SUCCESS`,
-                node: result.data,
-              };
-            });
+            dispatch(addSuccess(result, namespace));
             return resolve();
           }, (response) => {
-            dispatch(() => {
-              return {
-                type: `${namespace.toUpperCase()}_ADD_FAILURE`,
-                error: response.message,
-              };
-            });
+            dispatch(addFailure(response, namespace));
             return reject(response);
           }).catch((error) => {
             console.error(error);
@@ -159,33 +187,40 @@ const createAddAction = (namespace, api) => {
   };
 };
 
-const createDeleteAction = (namespace, api) => {
+// -- Delete
+
+const deleteRequest = (node, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_DELETE_REQUEST`,
+    node,
+  };
+};
+
+const deleteSuccess = (node, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_DELETE_SUCCESS`,
+    node,
+  };
+};
+
+const deleteFailure = (response, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_DELETE_FAILURE`,
+    error: response.message,
+  };
+};
+
+const deleteItem = (namespace, api) => {
   return (node) => {
     return (dispatch) => {
-      dispatch(() => {
-        return {
-          type: `${namespace.toUpperCase()}_DELETE_REQUEST`,
-          node,
-        };
-      });
+      dispatch(deleteRequest(node, namespace));
       return new Promise((resolve, reject) => {
         api.deleteItem(node)
-          .then((result) => {
-            dispatch(() => {
-              return {
-                type: `${namespace.toUpperCase()}_DELETE_SUCCESS`,
-                status: result.status,
-                node,
-              };
-            });
+          .then(() => {
+            dispatch(deleteSuccess(node, namespace));
             return resolve();
           }, (response) => {
-            dispatch(() => {
-              return {
-                type: `${namespace.toUpperCase()}_DELETE_FAILURE`,
-                error: response.message,
-              };
-            });
+            dispatch(deleteFailure(response, namespace));
             return reject(response);
           }).catch((error) => {
             console.error(error);
@@ -196,10 +231,10 @@ const createDeleteAction = (namespace, api) => {
 };
 
 export default {
-  createResetAction,
-  createBrowseAction,
-  createReadAction,
-  createEditAction,
-  createAddAction,
-  createDeleteAction,
+  reset,
+  browse,
+  read,
+  edit,
+  add,
+  deleteItem,
 };
