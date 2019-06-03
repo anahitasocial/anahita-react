@@ -178,9 +178,14 @@ class MediumCard extends React.Component {
 
 MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  actions: PropTypes.node.isRequired,
-  menuItems: PropTypes.node.isRequired,
+  actions: PropTypes.node,
+  menuItems: PropTypes.node,
   medium: MediumType.isRequired,
+};
+
+MediumCard.defaultProps = {
+  actions: null,
+  menuItems: null,
 };
 
 export default withStyles(styles)(MediumCard);

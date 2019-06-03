@@ -161,7 +161,7 @@ class MediaBrowse extends React.Component {
               key="actors-progress"
             >
               <Grid item>
-                <CircularProgress className={classes.progress} />
+                <CircularProgress />
               </Grid>
             </Grid>
           }

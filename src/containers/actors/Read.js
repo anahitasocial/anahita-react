@@ -39,7 +39,7 @@ class ActorsRead extends React.Component {
     super(props);
 
     this.state = {
-      actor: ActorDefault,
+      actor: { ...ActorDefault },
     };
 
     const {

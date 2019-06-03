@@ -15,6 +15,7 @@ import people from './people';
 import person from './person';
 import socialgraph from './socialgraph';
 import stories from './stories';
+import taggables from './taggables';
 
 export default combineReducers({
   actors,
@@ -32,4 +33,5 @@ export default combineReducers({
   person,
   socialgraph,
   stories,
+  taggables,
 });

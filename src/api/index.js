@@ -12,6 +12,7 @@ import notifications from './notifications';
 import person from './person';
 import socialgraph from './socialgraph';
 import stories from './stories';
+import taggables from './taggables';
 
 // @todo move this to webpack.config.prod and webpack.config.dev files
 // axios.defaults.baseURL = "https://www.GetAnahita.com"
@@ -40,4 +41,5 @@ export {
   person,
   socialgraph,
   stories,
+  taggables,
 };

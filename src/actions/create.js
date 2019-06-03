@@ -27,7 +27,7 @@ const browseSuccess = (results, namespace) => {
 
   return {
     type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
-    nodes: normalized.entities[namespace],
+    [namespace]: normalized.entities[namespace],
     ids: normalized.result,
     total: data.pagination.total,
     hasMore,

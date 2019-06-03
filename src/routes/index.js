@@ -32,6 +32,7 @@ import TopicsBrowse from '../containers/topics/Browse';
 import ArticlesBrowse from '../containers/articles/Browse';
 
 import HashtagsBrowse from '../containers/hashtags/Browse';
+import HashtagsRead from '../containers/hashtags/Read';
 
 import DashboardPage from '../containers/Dashboard';
 import NotFoundPage from '../containers/NotFound';
@@ -184,6 +185,11 @@ const Routes = (props) => {
         exact
         path="/hashtags/"
         component={HashtagsBrowse}
+      />
+      <Route
+        exact
+        path="/hashtags/:alias/"
+        component={HashtagsRead}
       />
       <Route component={NotFoundPage} />
     </Switch>

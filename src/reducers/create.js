@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import utils from './utils';
 
 export default (namespace, defaultNode) => {
   const DEFAULT_STATE = {
@@ -22,6 +23,9 @@ export default (namespace, defaultNode) => {
           ...DEFAULT_STATE,
         };
       case `${namespace.toUpperCase()}_BROWSE_REQUEST`:
+      case `${namespace.toUpperCase()}_READ_REQUEST`:
+      case `${namespace.toUpperCase()}_EDIT_REQUEST`:
+      case `${namespace.toUpperCase()}_ADD_REQUEST`:
         return {
           ...state,
           isFetching: true,
@@ -34,7 +38,7 @@ export default (namespace, defaultNode) => {
           [namespace]: {
             byId: {
               ...state[namespace].byId,
-              ...action.nodes,
+              ...action[namespace],
             },
             allIds: _.union(state[namespace].allIds, action.ids),
             current: null,
@@ -43,7 +47,33 @@ export default (namespace, defaultNode) => {
           hasMore: action.hasMore,
           isFetching: false,
         };
+      case `${namespace.toUpperCase()}_READ_SUCCESS`:
+        return {
+          ...state,
+          isFetching: false,
+          [namespace]: utils.editItem(state[namespace], action.node),
+          success: false,
+        };
+      case `${namespace.toUpperCase()}_EDIT_SUCCESS`:
+      case `${namespace.toUpperCase()}_ADD_SUCCESS`:
+        return {
+          ...state,
+          isFetching: false,
+          [namespace]: utils.editItem(state[namespace], action.node),
+          success: true,
+        };
+      case `${namespace.toUpperCase()}_DELETE_SUCCESS`:
+        return {
+          ...state,
+          isFetching: false,
+          [namespace]: utils.deleteItem(state[namespace], state[namespace].current),
+          success: true,
+        };
       case `${namespace.toUpperCase()}_BROWSE_FAILURE`:
+      case `${namespace.toUpperCase()}_READ_FAILURE`:
+      case `${namespace.toUpperCase()}_EDIT_FAILURE`:
+      case `${namespace.toUpperCase()}_ADD_FAILURE`:
+      case `${namespace.toUpperCase()}_DELETE_FAILURE`:
         return {
           ...state,
           hasMore: false,
