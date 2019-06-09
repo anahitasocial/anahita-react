@@ -30,14 +30,14 @@ import {
 const styles = (theme) => {
   return {
     card: {
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     portrait: {
-      height: theme.spacing.unit * 40,
+      height: theme.spacing(40),
     },
     title: {
       textTransform: 'capitalize',
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     authorName: {
       fontSize: 16,

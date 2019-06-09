@@ -28,22 +28,22 @@ import {
 const styles = (theme) => {
   return {
     card: {
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     cover: {
-      height: theme.spacing.unit * 20,
-      marginBottom: theme.spacing.unit * 2,
+      height: theme.spacing(20),
+      marginBottom: theme.spacing(2),
     },
     portrait: {
-      height: theme.spacing.unit * 40,
-      marginBottom: theme.spacing.unit * 2,
+      height: theme.spacing(40),
+      marginBottom: theme.spacing(2),
     },
     title: {
       textTransform: 'capitalize',
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     content: {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
       backgroundColor: theme.palette.grey[100],
       borderLeft: 2,
       borderLeftStyle: 'solid',

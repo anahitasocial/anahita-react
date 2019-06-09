@@ -28,7 +28,7 @@ const styles = (theme) => {
   return {
     title: {
       textTransform: 'capitalize',
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     actorTitle: {
       fontSize: 16,
@@ -37,13 +37,13 @@ const styles = (theme) => {
       fontSize: 12,
     },
     progress: {
-      marginTop: theme.spacing.unit * 2,
-      marginBottom: theme.spacing.unit * 2,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
     },
     addButton: {
       position: 'fixed',
-      bottom: theme.spacing.unit * 3,
-      right: theme.spacing.unit * 3,
+      bottom: theme.spacing(3),
+      right: theme.spacing(3),
       zIndex: 10,
     },
   };

@@ -1,35 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withStyles from '@material-ui/core/styles/withStyles';
 
-import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import InfiniteScroll from 'react-infinite-scroller';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
 
 import appActions from '../../actions/app';
 import actions from '../../actions/hashtag';
 import i18n from '../../languages';
 import HashtagsType from '../../proptypes/Hashtags';
-
-const styles = (theme) => {
-  return {
-    progress: {
-      marginLeft: '48%',
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit,
-    },
-    button: {
-      margin: 2,
-    },
-    tabs: {
-      marginBottom: theme.spacing.unit,
-    },
-  };
-};
 
 const LIMIT = 20;
 const SORT_TRENDING = 'trending';
@@ -49,7 +38,6 @@ class HashtagsBrowse extends React.Component {
       },
       sort: 'trending',
       error: '',
-      isFetching: false,
       hasMore: true,
       selectedTab: 0,
     };
@@ -68,14 +56,12 @@ class HashtagsBrowse extends React.Component {
     const {
       hashtags,
       error,
-      isFetching,
       hasMore,
     } = nextProps;
 
     this.setState({
       hashtags,
       error,
-      isFetching,
       hasMore,
     });
   }
@@ -101,24 +87,30 @@ class HashtagsBrowse extends React.Component {
   changeTab(event, value) {
     const { resetHashtags } = this.props;
 
+    this.offset = 0;
+    resetHashtags();
+
     this.setState({
       selectedTab: value,
       sort: TABS[value],
     });
-
-    this.offset = 0;
-    resetHashtags();
   }
 
   render() {
-    const { classes } = this.props;
     const {
       hashtags,
       error,
-      isFetching,
       hasMore,
       selectedTab,
     } = this.state;
+
+    if (error) {
+      return (
+        <Typography variant="body1" color="error" align="center">
+          {error}
+        </Typography>
+      );
+    }
 
     return (
       <React.Fragment>
@@ -126,57 +118,68 @@ class HashtagsBrowse extends React.Component {
           value={selectedTab}
           onChange={this.changeTab}
           centered
-          className={classes.tabs}
+          variant="fullWidth"
         >
           <Tab label="Trending" />
           <Tab label="Top" />
           <Tab label="Recent" />
         </Tabs>
-        <InfiniteScroll
-          loadMore={this.fetchList}
-          hasMore={hasMore}
-          useWindow
-          loader={
-            <Grid
-              container
-              justify="center"
-              alignItems="center"
-              key="actors-progress"
-            >
-              <Grid item>
-                <CircularProgress className={classes.progress} />
-              </Grid>
-            </Grid>
-          }
-        >
-          {hashtags.allIds.map((hashtagId) => {
-            const hashtag = hashtags.byId[hashtagId];
-            const key = `medium_${hashtag.id}`;
-            return (
-              <Button
-                key={key}
-                href={`/hashtags/${hashtag.alias}/`}
-                color="primary"
-                className={classes.button}
+        <List>
+          <InfiniteScroll
+            loadMore={this.fetchList}
+            hasMore={hasMore}
+            useWindow
+            loader={
+              <Grid
+                container
+                justify="center"
+                alignItems="center"
+                key="actors-progress"
               >
-                {`#${hashtag.name}`}
-              </Button>
-            );
-          })}
-        </InfiniteScroll>
+                <Grid item>
+                  <CircularProgress />
+                </Grid>
+              </Grid>
+            }
+          >
+            {hashtags.allIds.map((hashtagId) => {
+              const hashtag = hashtags.byId[hashtagId];
+              return (
+                <React.Fragment key={`hashtag_list_item_container_${hashtag.id}`}>
+                  <ListItem
+                    key={`hashtag_list_item_${hashtag.id}`}
+                    href={`/hashtags/${hashtag.alias}/`}
+                    button
+                    component="a"
+                  >
+                    <ListItemAvatar>
+                      <Avatar>
+                        #
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={hashtag.name} />
+                  </ListItem>
+                  <Divider
+                    component="li"
+                    light
+                    key={`hashtag_list_divider_${hashtag.id}`}
+                  />
+                </React.Fragment>
+              );
+            })}
+          </InfiniteScroll>
+        </List>
       </React.Fragment>
     );
   }
 }
 
 HashtagsBrowse.propTypes = {
-  classes: PropTypes.object.isRequired,
   setAppTitle: PropTypes.func.isRequired,
   browseHashtags: PropTypes.func.isRequired,
   resetHashtags: PropTypes.func.isRequired,
   hashtags: HashtagsType.isRequired,
   error: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
 
@@ -210,7 +213,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withStyles(styles)(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(HashtagsBrowse));
+)(HashtagsBrowse);

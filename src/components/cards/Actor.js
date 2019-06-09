@@ -31,7 +31,7 @@ const styles = (theme) => {
       fontSize: 12,
     },
     media: {
-      height: theme.spacing.unit * 20,
+      height: theme.spacing(20),
     },
   };
 };

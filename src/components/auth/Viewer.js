@@ -12,7 +12,7 @@ const styles = (theme) => {
   return {
     content: {
       flex: '0 0 auto',
-      marginRight: theme.spacing.unit * 2,
+      marginRight: theme.spacing(2),
       [theme.breakpoints.down('md')]: {
         display: 'none',
       },

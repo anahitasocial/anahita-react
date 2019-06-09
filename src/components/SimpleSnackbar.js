@@ -12,12 +12,12 @@ import WarningIcon from '@material-ui/icons/Warning';
 const styles = (theme) => {
   return {
     close: {
-      width: theme.spacing.unit * 4,
-      height: theme.spacing.unit * 4,
+      width: theme.spacing(4),
+      height: theme.spacing(4),
     },
     message: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+      marginLeft: theme.spacing(),
+      marginRight: theme.spacing(),
     },
     icon: {
       verticalAlign: 'middle',

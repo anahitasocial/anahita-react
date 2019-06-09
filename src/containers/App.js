@@ -38,7 +38,7 @@ const styles = (theme) => {
     root: {
       width: '100%',
       height: 430,
-      marginTop: theme.spacing.unit * 3,
+      marginTop: theme.spacing(3),
       zIndex: 1,
       overflow: 'hidden',
     },
@@ -57,7 +57,7 @@ const styles = (theme) => {
       }),
     },
     appToolbar: {
-      paddingRight: theme.spacing.unit,
+      paddingRight: theme.spacing(),
     },
     grow: {
       flex: '1 1 auto',
@@ -71,8 +71,8 @@ const styles = (theme) => {
       }),
     },
     menuButton: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+      marginLeft: theme.spacing(),
+      marginRight: theme.spacing(),
     },
     hide: {
       display: 'none',
@@ -115,11 +115,11 @@ const styles = (theme) => {
       height: 'calc(100% - 64px)',
       [theme.breakpoints.up('md')]: {
         height: 'calc(100% - 64px)',
-        marginTop: theme.spacing.unit * 8,
-        padding: theme.spacing.unit * 2,
+        marginTop: theme.spacing(8),
+        padding: theme.spacing(2),
       },
-      marginTop: theme.spacing.unit * 6,
-      paddingTop: theme.spacing.unit,
+      marginTop: theme.spacing(6),
+      paddingTop: theme.spacing(),
     },
   };
 };
@@ -170,7 +170,7 @@ class App extends React.Component {
 
     return (
       <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
-        <MuiThemeProvider theme={context.theme} sheetsManager={context.sheetsManager}>
+        <MuiThemeProvider theme={context.theme}>
           <div className={classes.appFrame}>
             <AppBar
               className={classNames(

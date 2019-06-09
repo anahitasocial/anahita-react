@@ -30,15 +30,15 @@ import {
 const styles = (theme) => {
   return {
     cover: {
-      height: theme.spacing.unit * 20,
+      height: theme.spacing(20),
     },
     title: {
       fontSize: 16,
       fontWeight: 500,
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     portrait: {
-      minHeight: theme.spacing.unit * 40,
+      minHeight: theme.spacing(40),
     },
     authorName: {
       fontSize: 16,

@@ -34,17 +34,17 @@ const styles = (theme) => {
   return {
     title: {
       textTransform: 'capitalize',
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     progress: {
       marginLeft: '48%',
-      marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit,
+      marginTop: theme.spacing(),
+      marginBottom: theme.spacing(),
     },
     addButton: {
       position: 'fixed',
-      bottom: theme.spacing.unit * 3,
-      right: theme.spacing.unit * 3,
+      bottom: theme.spacing(3),
+      right: theme.spacing(3),
       zIndex: 10,
     },
   };

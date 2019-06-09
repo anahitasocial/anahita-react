@@ -1,6 +1,5 @@
 import jss, { SheetsRegistry } from 'react-jss/lib/jss';
 import { createMuiTheme } from '@material-ui/core/styles';
-import createGenerateClassName from '@material-ui/core/styles/createGenerateClassName';
 import { red } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
@@ -14,9 +13,6 @@ const theme = createMuiTheme({
     error: red,
   },
 });
-
-// const jss = create(preset());
-jss.options.createGenerateClassName = createGenerateClassName;
 
 // export const sheetsManager: Map<*, *> = new Map();
 export const sheetsManager = new Map();

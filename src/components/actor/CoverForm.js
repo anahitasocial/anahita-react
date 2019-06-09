@@ -12,22 +12,22 @@ const styles = (theme) => {
   return {
     cover: {
       width: '100%',
-      height: theme.spacing.unit * 45,
+      height: theme.spacing(45),
     },
     coverPlaceholder: {
       width: '100%',
-      height: theme.spacing.unit * 45,
+      height: theme.spacing(45),
       backgroundColor: theme.palette.grey[400],
     },
     coverIcon: {
-      width: theme.spacing.unit * 10,
-      height: theme.spacing.unit * 10,
+      width: theme.spacing(10),
+      height: theme.spacing(10),
       margin: '10% auto',
     },
     button: {
       position: 'relative',
       width: '100%',
-      height: theme.spacing.unit * 45,
+      height: theme.spacing(45),
     },
     input: {
       display: 'none',

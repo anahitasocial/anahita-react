@@ -24,7 +24,7 @@ const styles = (theme) => {
     title: {
       fontSize: 16,
       fontWeight: 500,
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     authorName: {
       fontSize: 16,

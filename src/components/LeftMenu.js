@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -13,6 +14,8 @@ import PhotosIcon from '@material-ui/icons/Photo';
 import TopicsIcon from '@material-ui/icons/QuestionAnswer';
 import ArticlesIcon from '@material-ui/icons/LibraryBooks';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import LabelIcon from '@material-ui/icons/Label';
+
 import { Link } from 'react-router-dom';
 
 import i18n from '../languages';
@@ -101,7 +104,7 @@ const LeftMenu = (props) => {
         to="/hashtags/"
       >
         <ListItemIcon>
-          <ArticlesIcon />
+          <LabelIcon />
         </ListItemIcon>
         <ListItemText primary={i18n.t('hashtags:cTitle')} />
       </ListItem>

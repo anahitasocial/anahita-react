@@ -14,16 +14,16 @@ import {
 const styles = (theme) => {
   return {
     largeAvatar: {
-      width: theme.spacing.unit * 20,
-      height: theme.spacing.unit * 20,
+      width: theme.spacing(20),
+      height: theme.spacing(20),
     },
     smallAvatar: {
-      width: theme.spacing.unit * 3,
-      height: theme.spacing.unit * 3,
+      width: theme.spacing(3),
+      height: theme.spacing(3),
     },
     defaultAvatar: {
-      width: theme.spacing.unit * 5,
-      height: theme.spacing.unit * 5,
+      width: theme.spacing(5),
+      height: theme.spacing(5),
     },
     largeInitials: {
       fontSize: 48,

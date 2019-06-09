@@ -24,12 +24,12 @@ import PersonType from '../../proptypes/Person';
 const styles = (theme) => {
   return {
     progress: {
-      marginTop: theme.spacing.unit * 2,
-      marginBottom: theme.spacing.unit * 2,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
     },
     divider: {
-      marginTop: theme.spacing.unit * 2,
-      marginBottom: theme.spacing.unit * 2,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
     },
   };
 };

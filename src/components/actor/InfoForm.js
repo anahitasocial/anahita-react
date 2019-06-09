@@ -16,8 +16,8 @@ const styles = (theme) => {
       textTransform: 'capitalize',
     },
     button: {
-      marginTop: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+      marginTop: theme.spacing(),
+      marginRight: theme.spacing(),
     },
   };
 };

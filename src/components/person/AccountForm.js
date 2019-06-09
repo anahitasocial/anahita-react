@@ -12,15 +12,15 @@ import TextFieldEmail from '../textfields/TextFieldEmail';
 const styles = (theme) => {
   return {
     formPaper: {
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
     },
     formControl: {
-      marginTop: theme.spacing.unit * 3,
+      marginTop: theme.spacing(3),
       display: 'block',
     },
     button: {
-      marginTop: theme.spacing.unit * 3,
-      marginRight: theme.spacing.unit,
+      marginTop: theme.spacing(3),
+      marginRight: theme.spacing(),
     },
   };
 };

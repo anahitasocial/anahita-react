@@ -14,8 +14,8 @@ const styles = (theme) => {
       padding: '20px',
     },
     button: {
-      marginTop: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+      marginTop: theme.spacing,
+      marginRight: theme.spacing,
     },
     title: {
       marginBottom: 10,
