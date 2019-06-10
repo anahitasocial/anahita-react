@@ -148,7 +148,6 @@ class TaggablesBrowse extends React.Component {
           {taggables.allIds.map((nodeId) => {
               const taggable = taggables.byId[nodeId];
               const key = `taggable_${taggable.id}`;
-
               return (
                 <React.Fragment key={key}>
                   {utils.isActor(taggable) &&

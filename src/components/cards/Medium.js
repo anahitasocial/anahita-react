@@ -88,7 +88,7 @@ class MediumCard extends React.Component {
 
     return (
       <React.Fragment>
-        <Card square>
+        <Card>
           {medium.author && medium.owner.id !== medium.author.id &&
             <CardHeaderOwner node={medium} />
           }

@@ -100,7 +100,7 @@ class StoryCardComment extends React.Component {
     const url = title && story.object ? getURL(story.object) : '';
 
     return (
-      <Card square className={classes.card}>
+      <Card className={classes.card}>
         {showOwner &&
           <StoryCardOwner node={story} />
         }

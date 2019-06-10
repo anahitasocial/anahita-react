@@ -9,7 +9,7 @@ const mediumObjectTypes = [
   'com.topics.topic',
   'com.photos.photo',
   'com.photos.set',
-  'com.articles.aritcle',
+  'com.articles.article',
   'com.todos.todo',
 ];
 

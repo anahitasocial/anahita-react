@@ -23,7 +23,7 @@ const CommentForm = (props) => {
   const { body } = comment;
 
   return (
-    <Card square>
+    <Card>
       <CardContent>
         <TextField
           id="comment-text-box"

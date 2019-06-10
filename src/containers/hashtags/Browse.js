@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
@@ -26,6 +27,15 @@ const SORT_TOP = 'top';
 const SROT_RECENT = 'recent';
 
 const TABS = [SORT_TRENDING, SORT_TOP, SROT_RECENT];
+
+const styles = {
+  appBar: {
+    marginBottom: 8 * 2,
+    position: 'sticky',
+    top: 8 * 7,
+    zIndex: 8,
+  },
+};
 
 class HashtagsBrowse extends React.Component {
   constructor(props, context) {
@@ -114,16 +124,23 @@ class HashtagsBrowse extends React.Component {
 
     return (
       <React.Fragment>
-        <Tabs
-          value={selectedTab}
-          onChange={this.changeTab}
-          centered
-          variant="fullWidth"
+        <AppBar
+          position="sticky"
+          color="inherit"
+          style={styles.appBar}
+          elevation={1}
         >
-          <Tab label="Trending" />
-          <Tab label="Top" />
-          <Tab label="Recent" />
-        </Tabs>
+          <Tabs
+            value={selectedTab}
+            onChange={this.changeTab}
+            centered
+            variant="fullWidth"
+          >
+            <Tab label="Trending" />
+            <Tab label="Top" />
+            <Tab label="Recent" />
+          </Tabs>
+        </AppBar>
         <List>
           <InfiniteScroll
             loadMore={this.fetchList}

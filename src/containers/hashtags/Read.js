@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import ToolBar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -24,6 +26,15 @@ const SROT_RECENT = 'recent';
 
 const TABS = [SORT_TOP, SROT_RECENT];
 
+const styles = {
+  card: {
+    marginBottom: 8 * 2,
+    position: 'sticky',
+    top: 8 * 7,
+    zIndex: 8,
+  },
+};
+
 class HashtagsRead extends React.Component {
   constructor(props) {
     super(props);
@@ -34,6 +45,7 @@ class HashtagsRead extends React.Component {
       error: '',
       sort: 'top',
       selectedTab: 0,
+      taggablesCount: 0,
     };
 
     const {
@@ -57,12 +69,14 @@ class HashtagsRead extends React.Component {
   componentWillReceiveProps(nextProps) {
     const {
       hashtags,
+      taggablesCount,
       isFetching,
       error,
     } = nextProps;
 
     this.setState({
       hashtag: hashtags.current,
+      taggablesCount,
       isFetching,
       error,
     });
@@ -78,6 +92,7 @@ class HashtagsRead extends React.Component {
   render() {
     const {
       hashtag,
+      taggablesCount,
       isFetching,
       error,
       selectedTab,
@@ -109,21 +124,36 @@ class HashtagsRead extends React.Component {
 
     return (
       <React.Fragment>
-        <ToolBar>
-          <Typography variant="h4" color="inherit">
-            {`#${hashtag.name}`}
-          </Typography>
-        </ToolBar>
-        <Divider />
-        <Tabs
-          value={selectedTab}
-          onChange={this.changeTab}
-          centered
-          variant="fullWidth"
+        <Card
+          square
+          style={styles.card}
         >
-          <Tab label="Top" />
-          <Tab label="Recent" />
-        </Tabs>
+          <CardHeader
+            avatar={
+              <Avatar>
+                #
+              </Avatar>
+            }
+            title={
+              <Typography variant="h6">
+                {hashtag.name}
+              </Typography>
+            }
+            subheader={i18n.t('taggables:count', {
+              count: taggablesCount,
+            })}
+          />
+          <Divider light />
+          <Tabs
+            value={selectedTab}
+            onChange={this.changeTab}
+            centered
+            variant="fullWidth"
+          >
+            <Tab label="Top" />
+            <Tab label="Recent" />
+          </Tabs>
+        </Card>
         {hashtag.id && selectedTab === 0 &&
           <TaggablesBrowse tag={hashtag} sorting={sort} />
         }
@@ -142,8 +172,15 @@ const mapStateToProps = (state) => {
     isFetching,
   } = state.hashtags;
 
+  const {
+    total,
+  } = state.taggables;
+
+  const taggablesCount = total;
+
   return {
     hashtags,
+    taggablesCount,
     error,
     isFetching,
   };
@@ -153,6 +190,7 @@ HashtagsRead.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   readHashtag: PropTypes.func.isRequired,
   hashtags: HashtagsType.isRequired,
+  taggablesCount: PropTypes.number.isRequired,
   error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   match: PropTypes.object.isRequired,

@@ -86,4 +86,7 @@ export default {
     readMore: 'Read more',
     close: 'Close',
   },
+  taggables: {
+    count: '{{count}} nodes',
+  },
 };

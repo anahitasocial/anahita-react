@@ -97,7 +97,7 @@ class StoryCardDefault extends React.Component {
     const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
     return (
-      <Card square className={classes.card}>
+      <Card className={classes.card}>
         {showOwnerHeader &&
           <StoryCardOwner node={story} />
         }
