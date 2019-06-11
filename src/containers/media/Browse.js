@@ -85,32 +85,6 @@ class MediaBrowse extends React.Component {
     resetMedia();
   }
 
-  getColumnWidth() {
-    let columnWidth = '100%';
-
-    switch (this.props.width) {
-      case 'md': {
-        columnWidth = '50%';
-        break;
-      }
-      case 'lg': {
-        columnWidth = '33.33%';
-        break;
-      }
-      case 'xl': {
-        columnWidth = '25%';
-        break;
-      }
-      case 'xs':
-      case 'sm':
-      default: {
-        break;
-      }
-    }
-
-    return columnWidth;
-  }
-
   fetchMedia() {
     const { ownerId, filter } = this.state;
     const { namespace, browseMedia } = this.props;
@@ -130,11 +104,12 @@ class MediaBrowse extends React.Component {
       classes,
       namespace,
       viewer,
+      width,
     } = this.props;
 
     const { hasMore, media } = this.state;
 
-    const columnWidth = this.getColumnWidth();
+    const columnWidth = utils.getColumnWidthPercentage(width);
 
     return (
       <React.Fragment>

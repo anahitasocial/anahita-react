@@ -18,6 +18,7 @@ import ActorCard from '../../components/cards/Actor';
 import MediumCard from '../../components/cards/Medium';
 import CommentCard from '../../components/cards/Comment';
 import utils from '../../utils';
+import containersUtils from '../utils';
 
 const LIMIT = 20;
 
@@ -58,33 +59,6 @@ class TaggablesBrowse extends React.Component {
     resetTaggables();
   }
 
-  getColumnWidth() {
-    let columnWidth = '100%';
-    const { width } = this.props;
-
-    switch (width) {
-      case 'md': {
-        columnWidth = '50%';
-        break;
-      }
-      case 'lg': {
-        columnWidth = '33.33%';
-        break;
-      }
-      case 'xl': {
-        columnWidth = '25%';
-        break;
-      }
-      case 'xs':
-      case 'sm':
-      default: {
-        break;
-      }
-    }
-
-    return columnWidth;
-  }
-
   fetchList() {
     const { sort } = this.state;
     const { browseTaggables, tag } = this.props;
@@ -107,7 +81,9 @@ class TaggablesBrowse extends React.Component {
       hasMore,
     } = this.state;
 
-    const columnWidth = this.getColumnWidth();
+    const { width } = this.props;
+
+    const columnWidth = containersUtils.getColumnWidthPercentage(width);
 
     if (error) {
       return (

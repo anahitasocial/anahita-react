@@ -9,6 +9,21 @@ const getOwnerName = (node) => {
   return name;
 };
 
+const getColumnWidthPercentage = (width) => {
+  let columnWidth = '100%';
+
+  if (width === 'md') {
+    columnWidth = '50%';
+  } else if (width === 'lg') {
+    columnWidth = '33.33%';
+  } else if (width === 'xl') {
+    columnWidth = '25%';
+  }
+
+  return columnWidth;
+};
+
 export default {
   getOwnerName,
+  getColumnWidthPercentage,
 };

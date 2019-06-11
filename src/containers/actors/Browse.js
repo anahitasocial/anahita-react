@@ -19,6 +19,7 @@ import appActions from '../../actions/app';
 import actions from '../../actions/actor';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
+import containersUtils from '../utils';
 
 import PersonType from '../../proptypes/Person';
 import ActorsType from '../../proptypes/Actors';
@@ -84,32 +85,6 @@ class ActorsBrowse extends React.Component {
     resetActors();
   }
 
-  getColumnWidth() {
-    let columnWidth = '100%';
-
-    switch (this.props.width) {
-      case 'md': {
-        columnWidth = '50%';
-        break;
-      }
-      case 'lg': {
-        columnWidth = '33.33%';
-        break;
-      }
-      case 'xl': {
-        columnWidth = '25%';
-        break;
-      }
-      case 'xs':
-      case 'sm':
-      default: {
-        break;
-      }
-    }
-
-    return columnWidth;
-  }
-
   fetchActors() {
     const { disabledFilter, keywordFilter } = this.state;
     const {
@@ -135,11 +110,12 @@ class ActorsBrowse extends React.Component {
       namespace,
       isAuthenticated,
       viewer,
+      width,
     } = this.props;
 
     const { hasMore, actors } = this.state;
 
-    const columnWidth = this.getColumnWidth();
+    const columnWidth = containersUtils.getColumnWidthPercentage(width);
     const canAdd = permissions.canAdd(viewer);
 
     return (
