@@ -13,7 +13,6 @@ import AddIcon from '@material-ui/icons/Add';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import Link from 'react-router-dom/Link';
-import FollowAction from '../actions/Follow';
 
 import appActions from '../../actions/app';
 import actions from '../../actions/actor';
@@ -23,7 +22,7 @@ import containersUtils from '../utils';
 
 import PersonType from '../../proptypes/Person';
 import ActorsType from '../../proptypes/Actors';
-import ActorCard from '../../components/cards/Actor';
+import ActorsCard from './Card';
 
 const styles = (theme) => {
   return {
@@ -108,7 +107,6 @@ class ActorsBrowse extends React.Component {
     const {
       classes,
       namespace,
-      isAuthenticated,
       viewer,
       width,
     } = this.props;
@@ -156,16 +154,10 @@ class ActorsBrowse extends React.Component {
             {actors.allIds.map((actorId) => {
               const actor = actors.byId[actorId];
               const key = `actor_${actor.id}`;
-              const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
               return (
-                <ActorCard
+                <ActorsCard
                   key={key}
                   actor={actor}
-                  action={canFollow &&
-                    <FollowAction
-                      actor={actor}
-                    />
-                  }
                 />
               );
             })
@@ -181,7 +173,6 @@ ActorsBrowse.propTypes = {
   classes: PropTypes.object.isRequired,
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
   actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
@@ -206,7 +197,6 @@ const mapStateToProps = (state) => {
   } = state.actors;
 
   const {
-    isAuthenticated,
     viewer,
   } = state.auth;
 
@@ -217,7 +207,6 @@ const mapStateToProps = (state) => {
     offset,
     limit,
     hasMore,
-    isAuthenticated,
     viewer,
   };
 };

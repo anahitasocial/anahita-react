@@ -21,7 +21,12 @@ const isMedium = (node) => {
   return node.objectType ? mediumObjectTypes.includes(node.objectType) : false;
 };
 
+const isComment = (node) => {
+  return node.objectType.split('.')[2] === 'comment';
+};
+
 export default {
   isActor,
   isMedium,
+  isComment,
 };

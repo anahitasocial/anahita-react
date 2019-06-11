@@ -19,12 +19,7 @@ import actions from '../../actions/media';
 import permissions from '../../permissions/medium';
 import i18n from '../../languages';
 
-import LikeAction from '../actions/node/Like';
-import NotificationAction from '../actions/medium/Notification';
-import DeleteAction from '../actions/medium/Delete';
-import FollowAction from '../actions/Follow';
-
-import MediumCard from '../../components/cards/Medium';
+import MediaCard from './Card';
 import PersonType from '../../proptypes/Person';
 import MediaListType from '../../proptypes/Media';
 
@@ -150,44 +145,10 @@ class MediaBrowse extends React.Component {
             {media.allIds.map((mediumId) => {
               const medium = media.byId[mediumId];
               const key = `medium_${medium.id}`;
-              const ownerName = utils.getOwnerName(medium);
-              const canDelete = permissions.canDelete(viewer, medium);
               return (
-                <MediumCard
+                <MediaCard
                   key={key}
                   medium={medium}
-                  menuItems={[
-                    medium.owner.id !== viewer.id &&
-                    <FollowAction
-                      actor={medium.owner}
-                      component="menuitem"
-                      key={`medium-follow-${medium.id}`}
-                      followLabel={i18n.t('stories:actions.followOwner', {
-                        name: ownerName,
-                      })}
-                      unfollowLabel={i18n.t('stories:actions.unfollowOwner', {
-                        name: ownerName,
-                      })}
-                    />,
-                    <NotificationAction
-                      medium={medium}
-                      isSubscribed={medium.isSubscribed}
-                      key={`medium-notification-${medium.id}`}
-                    />,
-                    canDelete &&
-                    <DeleteAction
-                      medium={medium}
-                      key={`medium-delete-${medium.id}`}
-                    />,
-                  ]}
-                  actions={
-                    <React.Fragment>
-                      <LikeAction
-                        node={medium}
-                        isLiked={medium.commands.includes('unvote')}
-                      />
-                    </React.Fragment>
-                  }
                 />
               );
             })

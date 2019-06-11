@@ -14,9 +14,10 @@ import taggableActions from '../../actions/taggable';
 import NodeType from '../../proptypes/Node';
 import NodesType from '../../proptypes/Nodes';
 
-import ActorCard from '../../components/cards/Actor';
-import MediumCard from '../../components/cards/Medium';
 import CommentCard from '../../components/cards/Comment';
+import ActorsCard from '../actors/Card';
+import MediaCard from '../media/Card';
+
 import utils from '../../utils';
 import containersUtils from '../utils';
 
@@ -81,7 +82,9 @@ class TaggablesBrowse extends React.Component {
       hasMore,
     } = this.state;
 
-    const { width } = this.props;
+    const {
+      width,
+    } = this.props;
 
     const columnWidth = containersUtils.getColumnWidthPercentage(width);
 
@@ -127,16 +130,12 @@ class TaggablesBrowse extends React.Component {
               return (
                 <React.Fragment key={key}>
                   {utils.isActor(taggable) &&
-                    <ActorCard
-                      actor={taggable}
-                    />
+                    <ActorsCard actor={taggable} />
                   }
                   {utils.isMedium(taggable) &&
-                    <MediumCard
-                      medium={taggable}
-                    />
+                    <MediaCard medium={taggable} />
                   }
-                  {taggable.objectType.split('.')[2] === 'comment' &&
+                  {utils.isComment(taggable) &&
                     <CommentCard
                       comment={taggable}
                     />
