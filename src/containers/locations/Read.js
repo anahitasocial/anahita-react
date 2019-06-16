@@ -156,7 +156,7 @@ class LocationsRead extends React.Component {
           >
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: 'AIzaSyA4gEnpCYFl_ZuFVVAf0O6a2eMVwN65PS0',
+                key: '',
               }}
               defaultCenter={{
                 lat: location.latitude,
