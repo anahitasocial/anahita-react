@@ -15,6 +15,7 @@ import TopicsIcon from '@material-ui/icons/QuestionAnswer';
 import ArticlesIcon from '@material-ui/icons/LibraryBooks';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LabelIcon from '@material-ui/icons/Label';
+import LocationIcon from '@material-ui/icons/LocationOn';
 
 import { Link } from 'react-router-dom';
 
@@ -107,6 +108,16 @@ const LeftMenu = (props) => {
           <LabelIcon />
         </ListItemIcon>
         <ListItemText primary={i18n.t('hashtags:cTitle')} />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/locations/"
+      >
+        <ListItemIcon>
+          <LocationIcon />
+        </ListItemIcon>
+        <ListItemText primary={i18n.t('locations:cTitle')} />
       </ListItem>
       {isAuthenticated &&
         <ListItem

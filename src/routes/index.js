@@ -34,6 +34,9 @@ import ArticlesBrowse from '../containers/articles/Browse';
 import HashtagsBrowse from '../containers/hashtags/Browse';
 import HashtagsRead from '../containers/hashtags/Read';
 
+import LocationsBrowse from '../containers/locations/Browse';
+import LocationsRead from '../containers/locations/Read';
+
 import DashboardPage from '../containers/Dashboard';
 import NotFoundPage from '../containers/NotFound';
 
@@ -190,6 +193,16 @@ const Routes = (props) => {
         exact
         path="/hashtags/:alias/"
         component={HashtagsRead}
+      />
+      <Route
+        exact
+        path="/locations/"
+        component={LocationsBrowse}
+      />
+      <Route
+        exact
+        path="/locations/:id/"
+        component={LocationsRead}
       />
       <Route component={NotFoundPage} />
     </Switch>

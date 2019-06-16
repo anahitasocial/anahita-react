@@ -7,6 +7,7 @@ import avatar from './avatar';
 import comments from './comments';
 import cover from './cover';
 import likes from './likes';
+import locations from './locations';
 import hashtags from './hashtags';
 import media from './media';
 import node from './node';
@@ -25,6 +26,7 @@ export default combineReducers({
   comments,
   cover,
   likes,
+  locations,
   hashtags,
   media,
   node,

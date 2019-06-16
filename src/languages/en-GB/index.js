@@ -82,11 +82,15 @@ export default {
     cTitle: 'Hashtags',
     mTitle: 'Hashtags',
   },
-  commons: {
-    readMore: 'Read more',
-    close: 'Close',
+  locations: {
+    cTitle: 'Locations',
+    mTitle: 'Locations',
   },
   taggables: {
     count: '{{count}} nodes',
+  },
+  commons: {
+    readMore: 'Read more',
+    close: 'Close',
   },
 };

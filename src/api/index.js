@@ -6,6 +6,7 @@ import comments from './comments';
 import cover from './cover';
 import hashtags from './hashtags';
 import likes from './likes';
+import locations from './locations';
 import media from './media';
 import node from './node';
 import notifications from './notifications';
@@ -35,6 +36,7 @@ export {
   cover,
   hashtags,
   likes,
+  locations,
   media,
   node,
   notifications,

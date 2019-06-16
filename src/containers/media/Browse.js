@@ -128,7 +128,7 @@ class MediaBrowse extends React.Component {
               container
               justify="center"
               alignItems="center"
-              key="actors-progress"
+              key="circular-progress"
             >
               <Grid item>
                 <CircularProgress />

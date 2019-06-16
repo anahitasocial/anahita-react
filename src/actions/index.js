@@ -12,7 +12,7 @@ import notifications from './notifications';
 import person from './person';
 import socialgraph from './socialgraph';
 import stories from './stories';
-import taggables from './taggables';
+import taggables from './taggable';
 
 export default {
   actor,
