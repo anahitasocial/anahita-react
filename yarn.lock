@@ -2222,6 +2222,11 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
+country-list@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/country-list/-/country-list-2.1.1.tgz#4cbccad6e10aa44d82f3e85caad18fcf5a439e64"
+  integrity sha512-MuPW7rwPBlND9iHXg73gO7O3kTGVCDXzW06KXXPYrUdXVc2JF3E4w9YiHm0I5GiOIm6VAhEUDZFWmiVBNyonlw==
+
 create-ecdh@^4.0.0:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.3.tgz#c9111b6f33045c4697f144787f9254cdc77c45ff"

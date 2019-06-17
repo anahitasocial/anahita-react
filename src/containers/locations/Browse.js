@@ -21,6 +21,7 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 import appActions from '../../actions/app';
 import actions from '../../actions/location';
 import i18n from '../../languages';
+import locationUtils from './utils';
 import LocationsType from '../../proptypes/Locations';
 
 const LIMIT = 20;
@@ -176,7 +177,10 @@ class LocationsBrowse extends React.Component {
                         <LocationIcon />
                       </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary={location.name} />
+                    <ListItemText
+                      primary={location.name}
+                      secondary={locationUtils.getAddress(location)}
+                    />
                   </ListItem>
                   <Divider
                     component="li"

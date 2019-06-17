@@ -6,6 +6,7 @@ import GoogleMapReact from 'google-map-react';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -20,6 +21,7 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 import appActions from '../../actions/app';
 import actions from '../../actions/location';
 import i18n from '../../languages';
+import locationUtils from './utils';
 import LocationsType from '../../proptypes/Locations';
 import LocationDefault from '../../proptypes/LocationDefault';
 
@@ -156,7 +158,8 @@ class LocationsRead extends React.Component {
           >
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: '',
+                key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+                language: i18n.language,
               }}
               defaultCenter={{
                 lat: location.latitude,
@@ -178,6 +181,12 @@ class LocationsRead extends React.Component {
               </Tooltip>
             </GoogleMapReact>
           </div>
+          <Divider light />
+          <CardContent>
+            <Typography variant="caption">
+              {locationUtils.getAddress(location)}
+            </Typography>
+          </CardContent>
           <Divider light />
           <Tabs
             value={selectedTab}
