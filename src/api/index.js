@@ -15,9 +15,7 @@ import socialgraph from './socialgraph';
 import stories from './stories';
 import taggables from './taggables';
 
-// @todo move this to webpack.config.prod and webpack.config.dev files
-// axios.defaults.baseURL = "https://www.GetAnahita.com"
-axios.defaults.baseURL = 'http://localhost';
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use((config) => {
