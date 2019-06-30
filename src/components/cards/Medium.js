@@ -166,6 +166,7 @@ class MediumCard extends React.Component {
                   text: medium.body,
                   filters: [
                     'hashtag',
+                    'mention',
                     'url',
                   ],
                 })}

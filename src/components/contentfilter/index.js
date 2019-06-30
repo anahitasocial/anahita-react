@@ -1,4 +1,5 @@
 import hashtagFilter from './hashtag';
+import mentionFilter from './mention';
 import urlFilter from './url';
 
 const styleClasses = 'MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-colorPrimary';
@@ -16,6 +17,13 @@ const contentfilter = (props) => {
 
   if (filters.includes('hashtag')) {
     result = hashtagFilter({
+      text: result,
+      classes: styleClasses,
+    });
+  }
+
+  if (filters.includes('mention')) {
+    result = mentionFilter({
       text: result,
       classes: styleClasses,
     });
