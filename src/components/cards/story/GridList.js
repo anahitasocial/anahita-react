@@ -73,7 +73,7 @@ function SingleLineGridList(props) {
 
 SingleLineGridList.propTypes = {
   classes: PropTypes.object.isRequired,
-  photos: MediaType.isRequired,
+  photos: PropTypes.arrayOf(MediaType.isRequired).isRequired,
 };
 
 export default withStyles(styles)(SingleLineGridList);
