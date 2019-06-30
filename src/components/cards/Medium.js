@@ -19,6 +19,7 @@ import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import EntityBody from '../EntityBody';
 import CardHeaderOwner from './Owner';
+import contentfilter from '../contentfilter';
 
 import {
   getAuthor,
@@ -161,7 +162,13 @@ class MediumCard extends React.Component {
             }
             {medium.body &&
               <EntityBody>
-                {medium.body}
+                {contentfilter({
+                  text: medium.body,
+                  filters: [
+                    'hashtag',
+                    'url',
+                  ],
+                })}
               </EntityBody>
             }
           </CardContent>
