@@ -13,6 +13,7 @@ import ActorType from '../../proptypes/Actor';
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import EntityBody from '../EntityBody';
+import contentfilter from '../contentfilter';
 
 import {
   getURL,
@@ -87,7 +88,14 @@ const ActorCard = (props) => {
         {actor.body &&
         <CardContent>
           <EntityBody>
-            {actor.body}
+            {contentfilter({
+              text: actor.body,
+              filters: [
+                'hashtag',
+                'mention',
+                'url',
+              ],
+            })}
           </EntityBody>
         </CardContent>
         }
