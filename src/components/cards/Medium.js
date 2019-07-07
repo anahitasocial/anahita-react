@@ -19,6 +19,7 @@ import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import EntityBody from '../EntityBody';
 import CardHeaderOwner from './Owner';
+import Player from '../Player';
 import contentfilter from '../contentfilter';
 
 import {
@@ -148,6 +149,9 @@ class MediumCard extends React.Component {
                 image={portrait}
               />
             </Link>
+          }
+          {medium.body &&
+            <Player text={medium.body} />
           }
           <CardContent>
             {medium.name &&

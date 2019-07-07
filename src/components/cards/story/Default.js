@@ -21,6 +21,7 @@ import StoryMessage from '../../StoryMessage';
 import ActorAvatar from '../../actor/Avatar';
 import StoryType from '../../../proptypes/Story';
 import StoryCardOwner from '../Owner';
+import Player from '../../Player';
 
 import {
   getURL,
@@ -154,6 +155,9 @@ class StoryCardDefault extends React.Component {
               image={portrait}
             />
           </Link>
+        }
+        {body &&
+          <Player text={body} />
         }
         <CardContent>
           {title &&

@@ -5919,6 +5919,11 @@ load-json-file@^2.0.0:
     pify "^2.0.0"
     strip-bom "^3.0.0"
 
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
+  integrity sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ=
+
 loader-fs-cache@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/loader-fs-cache/-/loader-fs-cache-1.0.1.tgz#56e0bf08bd9708b26a765b68509840c8dec9fdbc"
@@ -7930,6 +7935,15 @@ react-modal@^3.8.1:
     prop-types "^15.5.10"
     react-lifecycles-compat "^3.0.0"
     warning "^3.0.0"
+
+react-player@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/react-player/-/react-player-1.11.1.tgz#81d89151889b70b2d9cc2ed526fdb47fe636563c"
+  integrity sha512-bS4qls4eICdwklCm/jqjSvYZt1dl07biT8aAiXG9dMZ2s789cZtCDiHdwKP2FH82jHYk5oFfHXy7EL9lMjUfxA==
+  dependencies:
+    deepmerge "^3.0.0"
+    load-script "^1.0.0"
+    prop-types "^15.5.6"
 
 react-pure-render@^1.0.2:
   version "1.0.2"

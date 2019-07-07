@@ -1,6 +1,6 @@
 const contentfilterURL = (props) => {
   const { text, classes } = props;
-  const regext = /(\(.*?)?\b((?:https?|ftp|file):\/\/[-a-z0-9+&@#/%?=~_()|!:,.;]*[-a-z0-9+&@#/%=~_()|])/ig;
+  const regext = /(\(.*?)?\b((?:https?|http?):\/\/[-a-z0-9+&@#/%?=~_()|!:,.;]*[-a-z0-9+&@#/%=~_()|])/ig;
   return text.replace(regext, (match, leftParens, url) => {
     let rParens = '';
     const lParens = leftParens || '';

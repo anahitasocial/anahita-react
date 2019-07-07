@@ -18,6 +18,7 @@ import contentfilter from '../../contentfilter';
 import ReadMore from '../../ReadMore';
 import StoryMessage from '../../StoryMessage';
 import StoryCardOwner from '../Owner';
+import Player from '../../Player';
 
 import {
   getURL,
@@ -150,6 +151,9 @@ class StoryCardComment extends React.Component {
               image={portrait}
             />
           </Link>
+        }
+        {body &&
+          <Player text={body} />
         }
         <CardContent className={classes.content}>
           {title &&
