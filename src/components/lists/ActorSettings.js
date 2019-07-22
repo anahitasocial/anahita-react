@@ -10,7 +10,7 @@ import PermissionsIcon from '@material-ui/icons/Settings';
 import AppsIcon from '@material-ui/icons/Apps';
 import ConnectIcon from '@material-ui/icons/Share';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import Link from 'react-router-dom/Link';
+import { Link } from 'react-router-dom';
 import ActorSettingCard from '../cards/ActorSetting';
 
 const ActorSettingsList = (props) => {

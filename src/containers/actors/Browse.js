@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
-import Link from 'react-router-dom/Link';
+import { Link } from 'react-router-dom';
 
 import appActions from '../../actions/app';
 import actions from '../../actions/actor';
@@ -98,9 +98,9 @@ class ActorsBrowse extends React.Component {
       start: this.offset,
       limit: LIMIT,
       ...queryFilters,
-    }, namespace);
-
-    this.offset += LIMIT;
+    }, namespace).then(() => {
+      this.offset += LIMIT;
+    });
   }
 
   render() {
@@ -214,13 +214,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseActors: (params, namespace) => {
-      dispatch(actions.browse(params, namespace));
+      return dispatch(actions.browse(params, namespace));
     },
     resetActors: () => {
-      dispatch(actions.reset());
+      return dispatch(actions.reset());
     },
     setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
+      return dispatch(appActions.setAppTitle(title));
     },
   };
 };

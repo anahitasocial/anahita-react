@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
-import Link from 'react-router-dom/Link';
+import { Link } from 'react-router-dom';
 
 import appActions from '../../actions/app';
 import actions from '../../actions/media';
@@ -89,9 +89,9 @@ class MediaBrowse extends React.Component {
       filter,
       start: this.offset,
       limit: LIMIT,
-    }, namespace);
-
-    this.offset += LIMIT;
+    }, namespace).then(() => {
+      this.offset += LIMIT;
+    });
   }
 
   render() {
@@ -197,13 +197,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseMedia: (params, namespace) => {
-      dispatch(actions.browse(params, namespace));
+      return dispatch(actions.browse(params, namespace));
     },
     resetMedia: () => {
-      dispatch(actions.reset());
+      return dispatch(actions.reset());
     },
     setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
+      return dispatch(appActions.setAppTitle(title));
     },
   };
 };

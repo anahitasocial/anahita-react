@@ -69,9 +69,9 @@ class TaggablesBrowse extends React.Component {
       sort,
       start: this.offset,
       limit: LIMIT,
+    }).then(() => {
+      this.offset += LIMIT;
     });
-
-    this.offset += LIMIT;
   }
 
   render() {

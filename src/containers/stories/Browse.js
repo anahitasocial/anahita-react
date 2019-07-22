@@ -103,9 +103,9 @@ class StoriesBrowse extends React.Component {
       filter: queryFilters.filter,
       start: this.offset,
       limit: LIMIT,
+    }).then(() => {
+      this.offset += LIMIT;
     });
-
-    this.offset += LIMIT;
   }
 
   render() {

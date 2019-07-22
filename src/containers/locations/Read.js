@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import GoogleMapReact from 'google-map-react';
 
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
@@ -12,7 +11,6 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import withWidth from '@material-ui/core/withWidth';
 
@@ -25,6 +23,7 @@ import locationUtils from './utils';
 import LocationsType from '../../proptypes/Locations';
 import LocationDefault from '../../proptypes/LocationDefault';
 
+import AnahitaMap from '../../components/Map';
 import TaggablesBrowse from '../taggables/Browse';
 
 const SORT_TOP = 'top';
@@ -38,6 +37,10 @@ const styles = {
   },
   pin: {
     fontSize: 48,
+  },
+  mapContainer: {
+    height: 320,
+    width: '100%',
   },
 };
 
@@ -105,6 +108,8 @@ class LocationsRead extends React.Component {
       sort,
     } = this.state;
 
+    const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
     if (error) {
       return (
         <Typography variant="body1" color="error" align="center">
@@ -150,37 +155,17 @@ class LocationsRead extends React.Component {
             })}
           />
           <Divider light />
-          <div
-            style={{
-              height: 320,
-              width: '100%',
+          <AnahitaMap
+            defaultCenter={{
+              lat: location.latitude,
+              lng: location.longitude,
             }}
-          >
-            <GoogleMapReact
-              bootstrapURLKeys={{
-                key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-                language: i18n.language,
-              }}
-              defaultCenter={{
-                lat: location.latitude,
-                lng: location.longitude,
-              }}
-              defaultZoom={18}
-            >
-              <Tooltip
-                title={location.name}
-                placement="top"
-                lat={location.latitude}
-                lng={location.longitude}
-                open
-              >
-                <LocationIcon
-                  color="primary"
-                  style={styles.pin}
-                />
-              </Tooltip>
-            </GoogleMapReact>
-          </div>
+            locations={[location]}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
+            loadingElement={<div style={{ height: '100%' }} />}
+            containerElement={<div style={styles.mapContainer} />}
+            mapElement={<div style={{ height: '100%' }} />}
+          />
           <Divider light />
           <CardContent>
             <Typography variant="caption">

@@ -89,9 +89,9 @@ class HashtagsBrowse extends React.Component {
       sort,
       start: this.offset,
       limit: LIMIT,
+    }).then(() => {
+      this.offset += LIMIT;
     });
-
-    this.offset += LIMIT;
   }
 
   changeTab(event, value) {
