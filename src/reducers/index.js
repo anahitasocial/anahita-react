@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import actors from './actors';
 import app from './app';
 import auth from './auth';
 import avatar from './avatar';
 import comments from './comments';
 import cover from './cover';
+import groups from './groups';
 import likes from './likes';
 import locations from './locations';
 import hashtags from './hashtags';
@@ -19,12 +19,12 @@ import stories from './stories';
 import taggables from './taggables';
 
 export default combineReducers({
-  actors,
   app,
   auth,
   avatar,
   comments,
   cover,
+  groups,
   likes,
   locations,
   hashtags,

@@ -15,7 +15,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 
 import appActions from '../../actions/app';
-import actions from '../../actions/actor';
+import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
 import containersUtils from '../utils';
@@ -111,7 +111,7 @@ class ActorsBrowse extends React.Component {
       width,
     } = this.props;
 
-    const { hasMore, actors } = this.state;
+    const { actors, hasMore } = this.state;
 
     const columnWidth = containersUtils.getColumnWidthPercentage(width);
     const canAdd = permissions.canAdd(viewer);
@@ -153,7 +153,7 @@ class ActorsBrowse extends React.Component {
           >
             {actors.allIds.map((actorId) => {
               const actor = actors.byId[actorId];
-              const key = `actor_${actor.id}`;
+              const key = `${namespace}_${actor.id}`;
               return (
                 <ActorsCard
                   key={key}
@@ -186,46 +186,50 @@ ActorsBrowse.defaultProps = {
   queryFilters: {},
 };
 
-const mapStateToProps = (state) => {
-  const {
-    actors,
-    actorIds,
-    error,
-    offset,
-    limit,
-    hasMore,
-  } = state.actors;
+const mapStateToProps = (namespace) => {
+  return (state) => {
+    const {
+      error,
+      offset,
+      limit,
+      hasMore,
+    } = state[namespace];
 
-  const {
-    viewer,
-  } = state.auth;
+    const {
+      viewer,
+    } = state.auth;
 
-  return {
-    actors,
-    actorIds,
-    error,
-    offset,
-    limit,
-    hasMore,
-    viewer,
+    return {
+      actors: state[namespace][namespace],
+      namespace,
+      error,
+      offset,
+      limit,
+      hasMore,
+      viewer,
+    };
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    browseActors: (params, namespace) => {
-      return dispatch(actions.browse(params, namespace));
-    },
-    resetActors: () => {
-      return dispatch(actions.reset());
-    },
-    setAppTitle: (title) => {
-      return dispatch(appActions.setAppTitle(title));
-    },
+const mapDispatchToProps = (namespace) => {
+  return (dispatch) => {
+    return {
+      browseActors: (params) => {
+        return dispatch(actions[namespace].browse(params, namespace));
+      },
+      resetActors: () => {
+        return dispatch(actions[namespace].reset());
+      },
+      setAppTitle: (title) => {
+        return dispatch(appActions.setAppTitle(title));
+      },
+    };
   };
 };
 
-export default withStyles(styles)(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withWidth()(ActorsBrowse)));
+export default (namespace) => {
+  return withStyles(styles)(connect(
+    mapStateToProps(namespace),
+    mapDispatchToProps(namespace),
+  )(withWidth()(ActorsBrowse)));
+};

@@ -99,7 +99,7 @@ class StoriesBrowse extends React.Component {
     } = this.props;
 
     browseStories({
-      ownerId: queryFilters.oid,
+      oid: queryFilters.oid,
       filter: queryFilters.filter,
       start: this.offset,
       limit: LIMIT,

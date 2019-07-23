@@ -1,8 +1,6 @@
-import actorsReducer from './actors';
+import createReducer from './create';
+import PERSON_DEFAULT from '../proptypes/PersonDefault';
 
-export default function (state = {
-  usertypeFilter: '',
-  disabledFilter: false,
-}, action) {
-  return actorsReducer(state, action);
-}
+export default (state, action) => {
+  return createReducer('people', PERSON_DEFAULT)(state, action);
+};

@@ -21,7 +21,6 @@ import ActorsSettings from '../containers/actors/Settings';
 import ActorsSettingsInfo from '../containers/actors/settings/Info';
 import ActorsSettingsDelete from '../containers/actors/settings/Delete';
 
-import PeopleBrowse from '../containers/people/Browse';
 import PeopleAdd from '../containers/people/Add';
 import PersonSettingsInfo from '../containers/people/settings/Info';
 import PersonSettingsAccount from '../containers/people/settings/Account';
@@ -39,6 +38,12 @@ import LocationsRead from '../containers/locations/Read';
 
 import DashboardPage from '../containers/Dashboard';
 import NotFoundPage from '../containers/NotFound';
+
+const GroupsBrowse = ActorsBrowse('groups');
+const GroupsRead = ActorsRead('groups');
+
+const PeopleBrowse = ActorsBrowse('people');
+const PeopleRead = ActorsRead('people');
 
 const scrollUp = () => {
   window.scrollTo(0, 0);
@@ -106,7 +111,9 @@ const Routes = (props) => {
       <Route
         exact
         path="/people/"
-        component={PeopleBrowse}
+        component={(params) => {
+          return <PeopleBrowse {...params} />;
+        }}
       />
       <AuthenticatedRoute
         exact
@@ -119,14 +126,14 @@ const Routes = (props) => {
         exact
         path="/people/:id/"
         component={(params) => {
-          return <ActorsRead namespace="people" {...params} />;
+          return <PeopleRead {...params} />;
         }}
       />
       <Route
         exact
         path="/groups/"
         component={(params) => {
-          return <ActorsBrowse namespace="groups" {...params} />;
+          return <GroupsBrowse {...params} />;
         }}
       />
       <AuthenticatedRoute
@@ -140,7 +147,7 @@ const Routes = (props) => {
         exact
         path="/groups/:id/"
         component={(params) => {
-          return <ActorsRead namespace="groups" {...params} />;
+          return <GroupsRead {...params} />;
         }}
       />
       <AuthenticatedRoute

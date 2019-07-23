@@ -3,8 +3,10 @@ import { normalize, schema } from 'normalizr';
 // -- Reset
 
 const reset = (namespace) => {
-  return {
-    type: `${namespace.toUpperCase()}_BROWSE_RESET`,
+  return () => {
+    return {
+      type: `${namespace.toUpperCase()}_BROWSE_RESET`,
+    };
   };
 };
 
@@ -230,11 +232,15 @@ const deleteItem = (namespace, api) => {
   };
 };
 
-export default {
-  reset,
-  browse,
-  read,
-  edit,
-  add,
-  deleteItem,
+export default (namespace) => {
+  return (api) => {
+    return {
+      reset: reset(namespace),
+      browse: browse(namespace, api),
+      read: read(namespace, api),
+      edit: edit(namespace, api),
+      add: add(namespace, api),
+      deleteItem: deleteItem(namespace, api),
+    };
+  };
 };

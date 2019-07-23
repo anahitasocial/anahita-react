@@ -37,10 +37,12 @@ const deleteItem = (namespace) => {
   };
 };
 
-export default {
-  browse,
-  read,
-  edit,
-  add,
-  deleteItem,
+export default (namespace) => {
+  return {
+    browse: browse(namespace),
+    read: read(namespace),
+    edit: edit(namespace),
+    add: add(namespace),
+    deleteItem: deleteItem(namespace),
+  };
 };
