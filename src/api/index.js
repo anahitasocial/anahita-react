@@ -25,14 +25,20 @@ axios.interceptors.request.use((config) => {
   };
 }, (error) => { return Promise.reject(error); });
 
+const articles = createApi('articles');
 const groups = createApi('groups');
 const hashtags = createApi('hashtags');
 const locations = createApi('locations');
+const notes = createApi('notes');
 const people = createApi('people');
+const photos = createApi('photos');
 const stories = createApi('stories');
+const todos = createApi('todos');
+const topics = createApi('topics');
 
 export {
   actors,
+  articles,
   avatar,
   auth,
   comments,
@@ -43,10 +49,14 @@ export {
   locations,
   media,
   node,
+  notes,
   notifications,
   person,
   people,
+  photos,
   socialgraph,
   stories,
   taggables,
+  todos,
+  topics,
 };

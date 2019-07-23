@@ -1,9 +1,4 @@
-import {
-  groups as groupsApi,
-  hashtags as hashtagsApi,
-  locations as locationsApi,
-  people as peopleApi,
-} from '../api';
+import * as api from '../api';
 
 import createAction from './create';
 import actor from './actor';
@@ -21,14 +16,20 @@ import socialgraph from './socialgraph';
 import stories from './stories';
 import taggables from './taggable';
 
-const groups = createAction('groups')(groupsApi);
-const hashtags = createAction('hashtags')(hashtagsApi);
-const locations = createAction('locations')(locationsApi);
-const people = createAction('people')(peopleApi);
+const articles = createAction('articles')(api.articles);
+const groups = createAction('groups')(api.groups);
+const hashtags = createAction('hashtags')(api.hashtags);
+const locations = createAction('locations')(api.locations);
+const notes = createAction('notes')(api.notes);
+const people = createAction('people')(api.people);
+const photos = createAction('photos')(api.photos);
+const todos = createAction('todos')(api.todos);
+const topics = createAction('topics')(api.topics);
 
 export {
   actor,
   app,
+  articles,
   auth,
   avatar,
   comments,
@@ -39,10 +40,14 @@ export {
   locations,
   media,
   node,
+  notes,
   notifications,
   people,
   person,
+  photos,
   socialgraph,
   stories,
   taggables,
+  todos,
+  topics,
 };
