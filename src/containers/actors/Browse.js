@@ -191,7 +191,6 @@ const mapStateToProps = (namespace) => {
     const {
       error,
       offset,
-      limit,
       hasMore,
     } = state[namespace];
 
@@ -204,7 +203,6 @@ const mapStateToProps = (namespace) => {
       namespace,
       error,
       offset,
-      limit,
       hasMore,
       viewer,
     };

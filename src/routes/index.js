@@ -25,10 +25,7 @@ import PeopleAdd from '../containers/people/Add';
 import PersonSettingsInfo from '../containers/people/settings/Info';
 import PersonSettingsAccount from '../containers/people/settings/Account';
 
-import NotesBrowse from '../containers/notes/Browse';
-import PhotosBrowse from '../containers/photos/Browse';
-import TopicsBrowse from '../containers/topics/Browse';
-import ArticlesBrowse from '../containers/articles/Browse';
+import MediaBrowse from '../containers/media/Browse';
 
 import HashtagsBrowse from '../containers/hashtags/Browse';
 import HashtagsRead from '../containers/hashtags/Read';
@@ -44,6 +41,12 @@ const GroupsRead = ActorsRead('groups');
 
 const PeopleBrowse = ActorsBrowse('people');
 const PeopleRead = ActorsRead('people');
+
+const ArticlesBrowse = MediaBrowse('articles');
+const NotesBrowse = MediaBrowse('notes');
+const PhotosBrowse = MediaBrowse('photos');
+const TopicsBrowse = MediaBrowse('topics');
+const TodosBrowse = MediaBrowse('todos');
 
 const scrollUp = () => {
   window.scrollTo(0, 0);
@@ -180,6 +183,11 @@ const Routes = (props) => {
         exact
         path="/photos/"
         component={PhotosBrowse}
+      />
+      <Route
+        exact
+        path="/todos/"
+        component={TodosBrowse}
       />
       <Route
         exact

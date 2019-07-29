@@ -15,7 +15,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 
 import appActions from '../../actions/app';
-import actions from '../../actions/media';
+import * as actions from '../../actions';
 import permissions from '../../permissions/medium';
 import i18n from '../../languages';
 
@@ -32,9 +32,8 @@ const styles = (theme) => {
       marginBottom: theme.spacing(2),
     },
     progress: {
-      marginLeft: '48%',
-      marginTop: theme.spacing(),
-      marginBottom: theme.spacing(),
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
     },
     addButton: {
       position: 'fixed',
@@ -131,7 +130,7 @@ class MediaBrowse extends React.Component {
               key="circular-progress"
             >
               <Grid item>
-                <CircularProgress />
+                <CircularProgress className={classes.progress} />
               </Grid>
             </Grid>
           }
@@ -177,38 +176,44 @@ MediaBrowse.defaultProps = {
   // queryFilters: {},
 };
 
-const mapStateToProps = (state) => {
-  const {
-    media,
-    error,
-    hasMore,
-  } = state.media;
+const mapStateToProps = (namespace) => {
+  return (state) => {
+    const {
+      error,
+      hasMore,
+    } = state[namespace];
 
-  const { viewer } = state.auth;
+    const { viewer } = state.auth;
 
-  return {
-    media,
-    error,
-    hasMore,
-    viewer,
+    return {
+      media: state[namespace][namespace],
+      namespace,
+      error,
+      hasMore,
+      viewer,
+    };
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    browseMedia: (params, namespace) => {
-      return dispatch(actions.browse(params, namespace));
-    },
-    resetMedia: () => {
-      return dispatch(actions.reset());
-    },
-    setAppTitle: (title) => {
-      return dispatch(appActions.setAppTitle(title));
-    },
+const mapDispatchToProps = (namespace) => {
+  return (dispatch) => {
+    return {
+      browseMedia: (params) => {
+        return dispatch(actions[namespace].browse(params, namespace));
+      },
+      resetMedia: () => {
+        return dispatch(actions[namespace].reset());
+      },
+      setAppTitle: (title) => {
+        return dispatch(appActions.setAppTitle(title));
+      },
+    };
   };
 };
 
-export default withStyles(styles)(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withWidth()(MediaBrowse)));
+export default (namespace) => {
+  return withStyles(styles)(connect(
+    mapStateToProps(namespace),
+    mapDispatchToProps(namespace),
+  )(withWidth()(MediaBrowse)));
+};

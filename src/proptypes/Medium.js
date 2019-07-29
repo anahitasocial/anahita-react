@@ -15,7 +15,6 @@ export default shape({
   id: number,
   objectType: oneOf([
     'com.articles.article',
-    'com.media.medium',
     'com.notes.note',
     'com.photos.photo',
     'com.photos.set',
