@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import actions from '../../../actions/media';
+import * as actions from '../../../actions';
 import MediumType from '../../../proptypes/Medium';
 import i18n from '../../../languages';
 
@@ -65,20 +65,16 @@ ActionsMediumDelete.defaultProps = {
   isDeleted: false,
 };
 
-
-const mapStateToProps = () => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteItem: (medium) => {
-      return dispatch(actions.deleteItem(medium));
-    },
+const mapDispatchToProps = (namespace) => {
+  return (dispatch) => {
+    return {
+      deleteItem: (medium) => {
+        return dispatch(actions[namespace].deleteItem(medium));
+      },
+    };
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ActionsMediumDelete);
+export default (namespace) => {
+  return connect(mapDispatchToProps(namespace))(ActionsMediumDelete);
+};

@@ -14,7 +14,6 @@ const styles = (theme) => {
   return {
     navlink: {
       width: '100%',
-      padding: '20px 0',
       textDecoration: 'none',
       color: theme.palette.text.primary,
     },

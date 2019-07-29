@@ -8,7 +8,6 @@ import cover from './cover';
 import likes from './likes';
 import locations from './locations';
 import hashtags from './hashtags';
-import media from './media';
 import node from './node';
 import notifications from './notifications';
 import person from './person';
@@ -41,7 +40,6 @@ export default combineReducers({
   likes,
   locations,
   hashtags,
-  media,
   node,
   notes,
   notifications,

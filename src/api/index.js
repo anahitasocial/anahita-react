@@ -7,7 +7,6 @@ import auth from './auth';
 import comments from './comments';
 import cover from './cover';
 import likes from './likes';
-import media from './media';
 import node from './node';
 import notifications from './notifications';
 import person from './person';
@@ -47,7 +46,6 @@ export {
   hashtags,
   likes,
   locations,
-  media,
   node,
   notes,
   notifications,

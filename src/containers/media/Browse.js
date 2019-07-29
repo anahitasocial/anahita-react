@@ -148,6 +148,7 @@ class MediaBrowse extends React.Component {
                 <MediaCard
                   key={key}
                   medium={medium}
+                  namespace={namespace}
                 />
               );
             })

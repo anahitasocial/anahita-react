@@ -5,7 +5,7 @@ import { singularize } from 'inflected';
 import ActorInfoForm from '../../../components/actor/InfoForm';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
-import actions from '../../../actions/actor';
+import * as actions from '../../../actions';
 
 import ActorsType from '../../../proptypes/Actors';
 import ActorDefault from '../../../proptypes/ActorDefault';
@@ -17,7 +17,7 @@ class ActorsSettingsInfo extends React.Component {
     super(props);
 
     this.state = {
-      actor: ActorDefault,
+      actor: { ...ActorDefault },
       nameError: false,
       nameHelperText: '',
       bodyError: false,
@@ -101,10 +101,9 @@ class ActorsSettingsInfo extends React.Component {
   }
 
   saveActor() {
-    const { actor } = this.state;
     const { editActor } = this.props;
-
-    editActor(actor);
+    const { actor: { id, name, body } } = this.state;
+    editActor({ id, name, body });
   }
 
   handleFormSubmit(event) {
@@ -175,43 +174,45 @@ ActorsSettingsInfo.propTypes = {
   actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   computedMatch: PropTypes.object.isRequired,
 };
 
-ActorsSettingsInfo.defaultProps = {
-  error: '',
-};
+const mapStateToProps = (namespace) => {
+  return (state) => {
+    const {
+      isFetching,
+      success,
+      error,
+    } = state[namespace];
 
-const mapStateToProps = (state) => {
-  const {
-    actors,
-    success,
-    error,
-    isFetching,
-  } = state.actors;
-
-  return {
-    actors,
-    error,
-    success,
-    isFetching,
+    return {
+      actors: state[namespace][namespace],
+      namespace,
+      isFetching,
+      success,
+      error,
+    };
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    readActor: (id, namespace) => {
-      dispatch(actions.read(id, namespace));
-    },
-    editActor: (actor) => {
-      dispatch(actions.edit(actor));
-    },
+const mapDispatchToProps = (namespace) => {
+  return (dispatch) => {
+    return {
+      readActor: (id) => {
+        dispatch(actions[namespace].read(id));
+      },
+      editActor: (actor) => {
+        dispatch(actions[namespace].edit(actor));
+      },
+    };
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ActorsSettingsInfo);
+export default (namespace) => {
+  return connect(
+    mapStateToProps(namespace),
+    mapDispatchToProps(namespace),
+  )(ActorsSettingsInfo);
+};

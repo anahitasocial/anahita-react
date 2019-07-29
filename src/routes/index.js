@@ -38,6 +38,7 @@ import NotFoundPage from '../containers/NotFound';
 
 const GroupsBrowse = ActorsBrowse('groups');
 const GroupsRead = ActorsRead('groups');
+const GroupsSettings = ActorsSettings('groups');
 
 const PeopleBrowse = ActorsBrowse('people');
 const PeopleRead = ActorsRead('people');
@@ -136,6 +137,11 @@ const Routes = (props) => {
         component={GroupsBrowse}
       />
       <AuthenticatedRoute
+        path="/groups/:id/settings/"
+        exact
+        component={GroupsSettings}
+      />
+      <AuthenticatedRoute
         exact
         path="/groups/add/"
         component={(params) => {
@@ -160,7 +166,8 @@ const Routes = (props) => {
         exact
         path="/groups/:id/settings/info/"
         component={(params) => {
-          return <ActorsSettingsInfo namespace="groups" {...params} />;
+          const GroupsSettingsInfo = ActorsSettingsInfo('groups');
+          return <GroupsSettingsInfo {...params} />;
         }}
       />
       <AuthenticatedRoute
