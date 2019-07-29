@@ -79,11 +79,6 @@ class ActorsBrowse extends React.Component {
     this.setState({ actors, hasMore });
   }
 
-  componentWillUnmount() {
-    const { resetActors } = this.props;
-    resetActors();
-  }
-
   fetchActors() {
     const { disabledFilter, keywordFilter } = this.state;
     const {
@@ -132,6 +127,7 @@ class ActorsBrowse extends React.Component {
         <InfiniteScroll
           loadMore={this.fetchActors}
           hasMore={hasMore}
+          useWindow
           loader={
             <Grid
               container
@@ -172,7 +168,6 @@ class ActorsBrowse extends React.Component {
 ActorsBrowse.propTypes = {
   classes: PropTypes.object.isRequired,
   browseActors: PropTypes.func.isRequired,
-  resetActors: PropTypes.func.isRequired,
   actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
@@ -190,7 +185,6 @@ const mapStateToProps = (namespace) => {
   return (state) => {
     const {
       error,
-      offset,
       hasMore,
     } = state[namespace];
 
@@ -202,7 +196,6 @@ const mapStateToProps = (namespace) => {
       actors: state[namespace][namespace],
       namespace,
       error,
-      offset,
       hasMore,
       viewer,
     };
@@ -214,9 +207,6 @@ const mapDispatchToProps = (namespace) => {
     return {
       browseActors: (params) => {
         return dispatch(actions[namespace].browse(params, namespace));
-      },
-      resetActors: () => {
-        return dispatch(actions[namespace].reset());
       },
       setAppTitle: (title) => {
         return dispatch(appActions.setAppTitle(title));

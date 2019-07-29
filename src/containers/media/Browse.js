@@ -52,7 +52,7 @@ class MediaBrowse extends React.Component {
 
     this.state = {
       ownerId: 0,
-      filter: '',
+      keywordFilter: '',
       hasMore: true,
       media: {
         byId: {},
@@ -74,20 +74,20 @@ class MediaBrowse extends React.Component {
     this.setState({ media, hasMore });
   }
 
-  componentWillUnmount() {
-    const { resetMedia } = this.props;
-    resetMedia();
-  }
-
   fetchMedia() {
-    const { ownerId, filter } = this.state;
-    const { namespace, browseMedia } = this.props;
+    const { ownerId, keywordFilter } = this.state;
+    const {
+      namespace,
+      browseMedia,
+      queryFilters,
+    } = this.props;
 
     browseMedia({
       ownerId,
-      filter,
+      q: keywordFilter,
       start: this.offset,
       limit: LIMIT,
+      ...queryFilters,
     }, namespace).then(() => {
       this.offset += LIMIT;
     });
@@ -162,18 +162,17 @@ class MediaBrowse extends React.Component {
 MediaBrowse.propTypes = {
   classes: PropTypes.object.isRequired,
   browseMedia: PropTypes.func.isRequired,
-  resetMedia: PropTypes.func.isRequired,
   media: MediaListType.isRequired,
   namespace: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
-  // queryFilters: PropTypes.object,
+  queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
   setAppTitle: PropTypes.func.isRequired,
 };
 
 MediaBrowse.defaultProps = {
-  // queryFilters: {},
+  queryFilters: {},
 };
 
 const mapStateToProps = (namespace) => {
@@ -200,9 +199,6 @@ const mapDispatchToProps = (namespace) => {
     return {
       browseMedia: (params) => {
         return dispatch(actions[namespace].browse(params, namespace));
-      },
-      resetMedia: () => {
-        return dispatch(actions[namespace].reset());
       },
       setAppTitle: (title) => {
         return dispatch(appActions.setAppTitle(title));

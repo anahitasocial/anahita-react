@@ -114,9 +114,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/people/"
-        component={(params) => {
-          return <PeopleBrowse {...params} />;
-        }}
+        component={PeopleBrowse}
       />
       <AuthenticatedRoute
         exact
@@ -135,9 +133,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/groups/"
-        component={(params) => {
-          return <GroupsBrowse {...params} />;
-        }}
+        component={GroupsBrowse}
       />
       <AuthenticatedRoute
         exact
