@@ -10,7 +10,6 @@ import locations from './locations';
 import hashtags from './hashtags';
 import node from './node';
 import notifications from './notifications';
-import person from './person';
 import socialgraph from './socialgraph';
 import stories from './stories';
 import taggables from './taggables';
@@ -44,7 +43,6 @@ export default combineReducers({
   notes,
   notifications,
   people,
-  person,
   photos,
   socialgraph,
   stories,

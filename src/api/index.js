@@ -8,7 +8,6 @@ import cover from './cover';
 import likes from './likes';
 import node from './node';
 import notifications from './notifications';
-import person from './person';
 import socialgraph from './socialgraph';
 import taggables from './taggables';
 
@@ -47,7 +46,6 @@ export {
   node,
   notes,
   notifications,
-  person,
   people,
   photos,
   socialgraph,

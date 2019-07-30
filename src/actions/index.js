@@ -9,7 +9,6 @@ import cover from './cover';
 import likes from './likes';
 import node from './node';
 import notifications from './notifications';
-import person from './person';
 import socialgraph from './socialgraph';
 import stories from './stories';
 import taggables from './taggable';
@@ -39,7 +38,6 @@ export {
   notes,
   notifications,
   people,
-  person,
   photos,
   socialgraph,
   stories,

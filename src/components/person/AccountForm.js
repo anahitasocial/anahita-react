@@ -25,11 +25,11 @@ const styles = (theme) => {
   };
 };
 
-const PersonInfoForm = (props) => {
+const PersonAccountForm = (props) => {
   const {
     classes,
     handleFieldChange,
-    handleFormSubmit,
+    handleEdit,
     username,
     usernameHelperText,
     usernameError,
@@ -48,57 +48,56 @@ const PersonInfoForm = (props) => {
       <Typography variant="h6" color="primary">
         {'Account Information'}
       </Typography>
-      <form onSubmit={handleFormSubmit}>
-        <TextFieldUsername
-          value={username}
-          onChange={handleFieldChange}
-          error={usernameError}
-          helperText={usernameHelperText}
-        />
-        <TextFieldEmail
-          value={email}
-          onChange={handleFieldChange}
-          error={emailError}
-          helperText={emailHelperText}
-        />
-        <TextField
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleFieldChange}
-          label="Password"
-          error={passwordError}
-          helperText={passwordHelperText}
-          fullWidth
-          margin="normal"
-        />
-        {dismissPath &&
-        <Button
-          className={classes.button}
-          component={Link}
-          to={dismissPath}
-        >
-          {'Dismiss'}
-        </Button>
-        }
-        <Button
-          variant="contained"
-          type="submit"
-          color="primary"
-          className={classes.button}
-          disabled={isFetching}
-        >
-          {'Save'}
-        </Button>
-      </form>
+      <TextFieldUsername
+        value={username}
+        onChange={handleFieldChange}
+        error={usernameError}
+        helperText={usernameHelperText}
+      />
+      <TextFieldEmail
+        value={email}
+        onChange={handleFieldChange}
+        error={emailError}
+        helperText={emailHelperText}
+      />
+      <TextField
+        type="password"
+        name="password"
+        value={password}
+        onChange={handleFieldChange}
+        label="Password"
+        error={passwordError}
+        helperText={passwordHelperText}
+        fullWidth
+        margin="normal"
+      />
+      {dismissPath &&
+      <Button
+        className={classes.button}
+        component={Link}
+        to={dismissPath}
+      >
+        {'Dismiss'}
+      </Button>
+      }
+      <Button
+        variant="contained"
+        type="submit"
+        color="primary"
+        className={classes.button}
+        disabled={isFetching}
+        onClick={handleEdit}
+      >
+        {'Save'}
+      </Button>
     </Paper>
   );
 };
 
-PersonInfoForm.propTypes = {
+PersonAccountForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
-  handleFormSubmit: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
   username: PropTypes.string,
   usernameHelperText: PropTypes.string,
   usernameError: PropTypes.bool,
@@ -108,11 +107,11 @@ PersonInfoForm.propTypes = {
   password: PropTypes.string,
   passwordHelperText: PropTypes.string,
   passwordError: PropTypes.bool,
-  isFetching: PropTypes.bool,
+  isFetching: PropTypes.bool.isRequired,
   dismissPath: PropTypes.string,
 };
 
-PersonInfoForm.defaultProps = {
+PersonAccountForm.defaultProps = {
   username: '',
   usernameError: false,
   usernameHelperText: '',
@@ -122,8 +121,7 @@ PersonInfoForm.defaultProps = {
   password: '',
   passwordError: false,
   passwordHelperText: '',
-  isFetching: false,
   dismissPath: '',
 };
 
-export default withStyles(styles)(PersonInfoForm);
+export default withStyles(styles)(PersonAccountForm);
