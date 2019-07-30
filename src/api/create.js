@@ -27,7 +27,7 @@ const edit = (namespace) => {
 
 const add = (namespace) => {
   return (node) => {
-    return axios.post(`/${namespace}/${node.id}.json`, constructURLSearchParams(node));
+    return axios.post(`/${namespace}.json`, constructURLSearchParams(node));
   };
 };
 

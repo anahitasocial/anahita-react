@@ -26,6 +26,7 @@ export default (namespace, defaultNode) => {
       case `${namespace.toUpperCase()}_READ_REQUEST`:
       case `${namespace.toUpperCase()}_EDIT_REQUEST`:
       case `${namespace.toUpperCase()}_ADD_REQUEST`:
+      case `${namespace.toUpperCase()}_DELETE_REQUEST`:
         return {
           ...state,
           isFetching: true,
@@ -41,7 +42,7 @@ export default (namespace, defaultNode) => {
               ...action[namespace],
             },
             allIds: _.union(state[namespace].allIds, action.ids),
-            current: null,
+            current: { ...defaultNode },
           },
           total: action.total,
           hasMore: action.hasMore,

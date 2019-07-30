@@ -1,7 +1,6 @@
 import * as api from '../api';
 
 import createAction from './create';
-import actor from './actor';
 import app from './app';
 import auth from './auth';
 import avatar from './avatar';
@@ -26,7 +25,6 @@ const todos = createAction('todos')(api.todos);
 const topics = createAction('topics')(api.topics);
 
 export {
-  actor,
   app,
   articles,
   auth,

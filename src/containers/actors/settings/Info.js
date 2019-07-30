@@ -37,8 +37,8 @@ class ActorsSettingsInfo extends React.Component {
   }
 
   componentWillMount() {
-    const { namespace, readActor } = this.props;
-    readActor(this.id, namespace);
+    const { readActor } = this.props;
+    readActor(this.id);
   }
 
   componentWillReceiveProps(nextProps) {

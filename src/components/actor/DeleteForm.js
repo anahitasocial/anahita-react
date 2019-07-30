@@ -14,8 +14,8 @@ const styles = (theme) => {
       padding: '20px',
     },
     button: {
-      marginTop: theme.spacing,
-      marginRight: theme.spacing,
+      marginTop: theme.spacing(1),
+      marginRight: theme.spacing(1),
     },
     title: {
       marginBottom: 10,
@@ -23,11 +23,11 @@ const styles = (theme) => {
   };
 };
 
-const ActorInfoForm = (props) => {
+const ActorDeleteForm = (props) => {
   const {
     classes,
     handleFieldChange,
-    handleFormSubmit,
+    handleDelete,
     referenceAlias,
     alias,
     aliasError,
@@ -40,7 +40,7 @@ const ActorInfoForm = (props) => {
 
   return (
     <React.Fragment>
-      <Paper className={classes.formPaper} elevation={0}>
+      <Paper className={classes.formPaper}>
         <Typography
           variant="h6"
           color="primary"
@@ -51,73 +51,68 @@ const ActorInfoForm = (props) => {
         {isFetching &&
           <LinearProgress className={classes.progress} />
         }
-        <form className={classes.container} onSubmit={handleFormSubmit}>
-          { error &&
-            <Typography
-              variant="h4"
-              color="error"
-              paragraph
-            >
-                {error}
-            </Typography>
-          }
-          <TextField
-            name="alias"
-            value={alias}
-            onChange={handleFieldChange}
-            label={`Type the exact alias: ${referenceAlias}`}
-            error={aliasError}
-            helperText={aliasHelperText}
-            margin="normal"
-            fullWidth
-            disabled={!canDelete}
-          />
-          {dismissPath &&
-          <Button
-            className={classes.button}
-            component={Link}
-            to={dismissPath}
+        { error &&
+          <Typography
+            variant="h4"
+            color="error"
+            paragraph
           >
-            {'Dismiss'}
-          </Button>
-          }
-          <Button
-            type="submit"
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-            disabled={isFetching || !canDelete}
-          >
-            {'Delete'}
-          </Button>
-        </form>
+              {error}
+          </Typography>
+        }
+        <TextField
+          name="alias"
+          value={alias}
+          onChange={handleFieldChange}
+          label={`Type the exact alias: ${referenceAlias}`}
+          error={aliasError}
+          helperText={aliasHelperText}
+          margin="normal"
+          fullWidth
+          disabled={!canDelete}
+        />
+        {dismissPath &&
+        <Button
+          component={Link}
+          className={classes.button}
+          to={dismissPath}
+        >
+          {'Dismiss'}
+        </Button>
+        }
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          onClick={handleDelete}
+          disabled={isFetching || !canDelete}
+        >
+          {'Delete'}
+        </Button>
       </Paper>
     </React.Fragment>
   );
 };
 
-ActorInfoForm.propTypes = {
+ActorDeleteForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
-  handleFormSubmit: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
   referenceAlias: PropTypes.string.isRequired,
   alias: PropTypes.string,
   aliasError: PropTypes.bool,
   aliasHelperText: PropTypes.string,
-  isFetching: PropTypes.bool,
-  error: PropTypes.string,
-  canDelete: PropTypes.bool,
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  canDelete: PropTypes.bool.isRequired,
   dismissPath: PropTypes.string,
 };
 
-ActorInfoForm.defaultProps = {
+ActorDeleteForm.defaultProps = {
   alias: '',
   aliasError: false,
   aliasHelperText: '',
-  isFetching: false,
-  error: '',
-  canDelete: false,
   dismissPath: '',
 };
 
-export default withStyles(styles)(ActorInfoForm);
+export default withStyles(styles)(ActorDeleteForm);

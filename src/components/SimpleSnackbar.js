@@ -16,8 +16,8 @@ const styles = (theme) => {
       height: theme.spacing(4),
     },
     message: {
-      marginLeft: theme.spacing(),
-      marginRight: theme.spacing(),
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
     },
     icon: {
       verticalAlign: 'middle',

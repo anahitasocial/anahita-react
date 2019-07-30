@@ -15,10 +15,10 @@ const styles = (theme) => {
       margin: '64px auto',
     },
     title: {
-      marginBottom: theme.spacing(),
+      marginBottom: theme.spacing(1),
     },
     button: {
-      marginTop: theme.spacing(),
+      marginTop: theme.spacing(1),
       width: '100%',
     },
   };

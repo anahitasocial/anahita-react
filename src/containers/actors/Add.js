@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ActorInfoForm from '../../components/actor/InfoForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import actions from '../../actions/actor';
+import * as actions from '../../actions';
 
 import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';
@@ -21,11 +21,14 @@ class ActorsAdd extends React.Component {
     super(props);
 
     this.state = {
-      actor: ActorDefault,
+      actor: { ...ActorDefault },
       nameError: false,
       nameHelperText: '',
       bodyError: false,
       bodyHelperText: '',
+      isFetching: false,
+      success: false,
+      error: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -33,9 +36,18 @@ class ActorsAdd extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { actors } = nextProps;
+    const {
+      actors,
+      isFetching,
+      success,
+      error,
+    } = nextProps;
+
     this.setState({
       actor: actors.current,
+      isFetching,
+      success,
+      error,
     });
   }
 
@@ -92,10 +104,9 @@ class ActorsAdd extends React.Component {
   }
 
   saveActor() {
-    const { actor } = this.state;
-    const { namespace, addActor } = this.props;
-
-    addActor(actor, namespace);
+    const { addActor } = this.props;
+    const { actor: { name, body } } = this.state;
+    addActor({ name, body });
   }
 
   handleFormSubmit(event) {
@@ -106,19 +117,23 @@ class ActorsAdd extends React.Component {
   }
 
   render() {
-    const {
-      namespace,
-      error,
-      isFetching,
-    } = this.props;
-
+    const { namespace } = this.props;
     const {
       actor,
       nameError,
       nameHelperText,
       bodyError,
       bodyHelperText,
+      isFetching,
+      success,
+      error,
     } = this.state;
+
+    if (success) {
+      return (
+        <Redirect to={`/${namespace}/${actor.id}/`} />
+      );
+    }
 
     return (
       <React.Fragment>
@@ -127,8 +142,8 @@ class ActorsAdd extends React.Component {
             title={actor.name}
             avatar={
               <Avatar
-                aria-label={actor.name || ''}
-                alt={actor.name || ''}
+                aria-label={actor.name}
+                alt={actor.name}
               >
                 {actor.name ? actor.name.charAt(0).toUpperCase() : <GroupAddIcon />}
               </Avatar>
@@ -155,9 +170,6 @@ class ActorsAdd extends React.Component {
             type="error"
           />
         }
-        {actor.id &&
-          <Redirect to={`/${namespace}/${actor.id}/`} />
-        }
       </React.Fragment>
     );
   }
@@ -167,38 +179,42 @@ ActorsAdd.propTypes = {
   addActor: PropTypes.func.isRequired,
   actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
-  error: PropTypes.string,
-  isFetching: PropTypes.bool,
+  isFetching: PropTypes.bool.isRequired,
+  success: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const {
-    actors,
-    error,
-    isFetching,
-  } = state.actors;
+const mapStateToProps = (namespace) => {
+  return (state) => {
+    const {
+      isFetching,
+      success,
+      error,
+    } = state[namespace];
 
-  return {
-    actors,
-    error,
-    isFetching,
+    return {
+      actors: state[namespace][namespace],
+      namespace,
+      isFetching,
+      success,
+      error,
+    };
   };
 };
 
-ActorsAdd.defaultProps = {
-  isFetching: false,
-  error: '',
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addActor: (actor, namespace) => {
-      dispatch(actions.add(actor, namespace));
-    },
+const mapDispatchToProps = (namespace) => {
+  return (dispatch) => {
+    return {
+      addActor: (actor) => {
+        return dispatch(actions[namespace].add(actor));
+      },
+    };
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ActorsAdd);
+export default (namespace) => {
+  return connect(
+    mapStateToProps(namespace),
+    mapDispatchToProps(namespace),
+  )(ActorsAdd);
+};

@@ -20,7 +20,7 @@ const styles = (theme) => {
     },
     button: {
       marginTop: theme.spacing(3),
-      marginRight: theme.spacing(),
+      marginRight: theme.spacing(1),
     },
   };
 };

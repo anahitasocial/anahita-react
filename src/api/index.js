@@ -1,7 +1,6 @@
 import axios from 'axios';
 import createApi from './create';
 
-import actors from './actors';
 import avatar from './avatar';
 import auth from './auth';
 import comments from './comments';
@@ -36,7 +35,6 @@ const todos = createApi('todos');
 const topics = createApi('topics');
 
 export {
-  actors,
   articles,
   avatar,
   auth,

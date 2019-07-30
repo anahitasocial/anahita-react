@@ -25,7 +25,7 @@ const styles = (theme) => {
     group: {},
     button: {
       marginTop: theme.spacing(3),
-      marginRight: theme.spacing(),
+      marginRight: theme.spacing(1),
     },
   };
 };
