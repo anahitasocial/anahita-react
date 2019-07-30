@@ -46,6 +46,7 @@ const GroupsSettings = ActorsSettings('groups');
 const PeopleBrowse = ActorsBrowse('people');
 const PeopleRead = ActorsRead('people');
 const PeopleDelete = ActorsDelete('people');
+const PeopleSettings = ActorsSettings('people');
 
 const ArticlesBrowse = MediaBrowse('articles');
 const NotesBrowse = MediaBrowse('notes');
@@ -91,9 +92,7 @@ const Routes = (props) => {
       <AuthenticatedRoute
         path="/people/:id/settings/"
         exact
-        component={(params) => {
-          return <ActorsSettings namespace="people" {...params} />;
-        }}
+        component={PeopleSettings}
       />
       <AuthenticatedRoute
         path="/people/:id/settings/info/"
