@@ -1,8 +1,11 @@
 import { normalize, schema } from 'normalizr';
-import createAction from './create';
 import { taggables as api } from '../api';
 
-const namespace = 'taggables';
+function reset() {
+  return {
+    type: 'TAGGABLES_BROWSE_RESET',
+  };
+}
 
 function browseRequest() {
   return {
@@ -54,8 +57,6 @@ function browse(params) {
 }
 
 export default {
-  reset: () => {
-    return createAction.reset(namespace);
-  },
+  reset,
   browse,
 };

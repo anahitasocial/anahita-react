@@ -25,7 +25,10 @@ const AuthenticatedRoute = ({
 
 AuthenticatedRoute.propTypes = {
   isAuthenticated: PropTypes.bool,
-  component: PropTypes.func.isRequired,
+  component: PropTypes.oneOfType([
+    PropTypes.func.isRequired,
+    PropTypes.object.isRequired,
+  ]).isRequired,
 };
 
 AuthenticatedRoute.defaultProps = {

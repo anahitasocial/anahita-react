@@ -99,7 +99,7 @@ class StoriesBrowse extends React.Component {
     } = this.props;
 
     browseStories({
-      ownerId: queryFilters.oid,
+      oid: queryFilters.oid,
       filter: queryFilters.filter,
       start: this.offset,
       limit: LIMIT,
@@ -181,7 +181,7 @@ class StoriesBrowse extends React.Component {
                     story.object && isLikeable(story.object) &&
                     <LikeAction
                       node={story.object}
-                      isLiked={story.isVotedUp}
+                      isLiked={story.commands.includes('unvote')}
                       key={`story-like-${story.id}`}
                     />,
                     story.object && isCommentable(story.object) &&

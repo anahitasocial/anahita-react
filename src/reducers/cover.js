@@ -7,7 +7,7 @@ const DEFAULT_STATE = {
   nodes: {
     byId: {},
     allIds: [],
-    current: NODE_DEFAULT,
+    current: { ...NODE_DEFAULT },
   },
   error: '',
   success: false,

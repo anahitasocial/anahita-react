@@ -19,7 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import LocationIcon from '@material-ui/icons/LocationOn';
 
 import appActions from '../../actions/app';
-import actions from '../../actions/location';
+import { locations as actions } from '../../actions';
 import i18n from '../../languages';
 import locationUtils from './utils';
 import LocationsType from '../../proptypes/Locations';

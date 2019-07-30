@@ -127,13 +127,17 @@ class TaggablesBrowse extends React.Component {
           {taggables.allIds.map((nodeId) => {
               const taggable = taggables.byId[nodeId];
               const key = `taggable_${taggable.id}`;
+              const namespace = taggable.objectType.split('.')[1];
               return (
                 <React.Fragment key={key}>
                   {utils.isActor(taggable) &&
                     <ActorsCard actor={taggable} />
                   }
                   {utils.isMedium(taggable) &&
-                    <MediaCard medium={taggable} />
+                    <MediaCard
+                      medium={taggable}
+                      namespace={namespace}
+                    />
                   }
                   {utils.isComment(taggable) &&
                     <CommentCard

@@ -13,7 +13,7 @@ import Cover from './read/Cover';
 import Commands from './read/Commands';
 import FollowAction from '../actions/Follow';
 import appActions from '../../actions/app';
-import actions from '../../actions/actor';
+import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
 
@@ -143,46 +143,52 @@ ActorsRead.defaultProps = {
   isFetchingCover: false,
 };
 
-const mapStateToProps = (state) => {
-  const {
-    actors,
-    error,
-    isLeader,
-    isFetching,
-    isFetchingCover,
-  } = state.actors;
+const mapStateToProps = (namespace) => {
+  return (state) => {
+    const {
+      error,
+      isLeader,
+      isFetching,
+      isFetchingCover,
+    } = state[namespace];
 
-  const {
-    isAuthenticated,
-    viewer,
-  } = state.auth;
+    const {
+      isAuthenticated,
+      viewer,
+    } = state.auth;
 
-  return {
-    actors,
-    isLeader,
-    error,
-    isAuthenticated,
-    viewer,
-    isFetching,
-    isFetchingCover,
+    return {
+      actors: state[namespace][namespace],
+      namespace,
+      isLeader,
+      error,
+      isAuthenticated,
+      viewer,
+      isFetching,
+      isFetchingCover,
+    };
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    readActor: (id, namespace) => {
-      dispatch(actions.read(id, namespace));
-    },
-    resetActors: () => {
-      dispatch(actions.reset());
-    },
-    setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
-    },
+const mapDispatchToProps = (namespace) => {
+  return (dispatch) => {
+    return {
+      readActor: (id) => {
+        dispatch(actions[namespace].read(id, namespace));
+      },
+      resetActors: () => {
+        dispatch(actions[namespace].reset());
+      },
+      setAppTitle: (title) => {
+        dispatch(appActions.setAppTitle(title));
+      },
+    };
   };
 };
 
-export default withStyles(styles)(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ActorsRead));
+export default (namespace) => {
+  return withStyles(styles)(connect(
+    mapStateToProps(namespace),
+    mapDispatchToProps(namespace),
+  )(ActorsRead));
+};

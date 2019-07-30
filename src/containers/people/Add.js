@@ -8,19 +8,20 @@ import Avatar from '@material-ui/core/Avatar';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonAddForm from '../../components/person/AddForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import actions from '../../actions/person';
+import * as actions from '../../actions';
 import { Person as PERSON } from '../../constants';
 import * as validate from './validate';
 
 import PersonType from '../../proptypes/Person';
 import PersonDefault from '../../proptypes/PersonDefault';
+import PeopleType from '../../proptypes/People';
 
 class PeopleAdd extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      person: PersonDefault,
+      person: { ...PersonDefault },
       givenNameError: false,
       givenNameHelperText: '',
       familyNameError: false,
@@ -30,6 +31,9 @@ class PeopleAdd extends React.Component {
       emailError: false,
       emailHelperText: '',
       usertypeError: false,
+      isFetching: false,
+      success: false,
+      error: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -37,8 +41,18 @@ class PeopleAdd extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const {
+      people,
+      isFetching,
+      success,
+      error,
+    } = nextProps;
+
     this.setState({
-      person: { ...nextProps.person },
+      person: people.current,
+      isFetching,
+      success,
+      error,
     });
   }
 
@@ -153,10 +167,24 @@ class PeopleAdd extends React.Component {
   }
 
   savePerson() {
-    const { person } = this.state;
     const { addPerson } = this.props;
+    const {
+      person: {
+        givenName,
+        familyName,
+        username,
+        email,
+        usertype,
+      },
+    } = this.state;
 
-    addPerson(person);
+    addPerson({
+      givenName,
+      familyName,
+      username,
+      email,
+      usertype,
+    });
   }
 
   handleFormSubmit(event) {
@@ -167,13 +195,7 @@ class PeopleAdd extends React.Component {
   }
 
   render() {
-    const {
-      success,
-      error,
-      isFetching,
-      viewer,
-    } = this.props;
-
+    const { viewer } = this.props;
     const {
       person,
       givenNameError,
@@ -185,7 +207,16 @@ class PeopleAdd extends React.Component {
       emailHelperText,
       emailError,
       usertypeError,
+      isFetching,
+      success,
+      error,
     } = this.state;
+
+    if (success) {
+      return (
+        <Redirect to={`/people/${person.id}/`} />
+      );
+    }
 
     return (
       <React.Fragment>
@@ -243,33 +274,26 @@ class PeopleAdd extends React.Component {
 PeopleAdd.propTypes = {
   addPerson: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
-  person: PersonType,
-  success: PropTypes.bool,
-  isFetching: PropTypes.bool,
-  error: PropTypes.string,
-};
-
-PeopleAdd.defaultProps = {
-  person: PersonDefault,
-  isFetching: false,
-  success: false,
-  error: '',
+  people: PeopleType.isRequired,
+  success: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
-    person,
+    people,
     success,
     error,
     isFetching,
-  } = state.person;
+  } = state.people;
 
   const {
     viewer,
   } = state.auth;
 
   return {
-    person,
+    people,
     viewer,
     error,
     success,
@@ -280,7 +304,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addPerson: (person) => {
-      dispatch(actions.add(person));
+      dispatch(actions.people.add(person));
     },
   };
 };

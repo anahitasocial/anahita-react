@@ -5,10 +5,6 @@ const person = async('person');
 export default {
   VALIDATE_EMAIL: person('validate_email'),
   VALIDATE_USERNAME: person('validate_USERNAME'),
-  READ: person('read'),
-  EDIT: person('edit'),
-  EDIT_ACCOUNT: person('account'),
-  ADD: person('add'),
   TYPE: {
     GUEST: 'guest',
     REGISTERED: 'registered',

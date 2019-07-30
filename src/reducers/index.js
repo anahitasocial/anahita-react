@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 
-import actors from './actors';
 import app from './app';
 import auth from './auth';
 import avatar from './avatar';
@@ -9,31 +8,45 @@ import cover from './cover';
 import likes from './likes';
 import locations from './locations';
 import hashtags from './hashtags';
-import media from './media';
 import node from './node';
 import notifications from './notifications';
-import people from './people';
-import person from './person';
 import socialgraph from './socialgraph';
 import stories from './stories';
 import taggables from './taggables';
 
+import createMediaReducer from './createMedia';
+import createActorsReducer from './createActors';
+
+// create actors reducers
+const people = createActorsReducer('people');
+const groups = createActorsReducer('groups');
+
+// create media reducers
+const notes = createMediaReducer('notes');
+const topics = createMediaReducer('topics');
+const todos = createMediaReducer('todos');
+const photos = createMediaReducer('photos');
+const articles = createMediaReducer('articles');
+
 export default combineReducers({
-  actors,
   app,
+  articles,
   auth,
   avatar,
   comments,
   cover,
+  groups,
   likes,
   locations,
   hashtags,
-  media,
   node,
+  notes,
   notifications,
   people,
-  person,
+  photos,
   socialgraph,
   stories,
   taggables,
+  topics,
+  todos,
 });

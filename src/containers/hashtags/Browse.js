@@ -17,7 +17,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import appActions from '../../actions/app';
-import actions from '../../actions/hashtag';
+import { hashtags as actions } from '../../actions';
 import i18n from '../../languages';
 import HashtagsType from '../../proptypes/Hashtags';
 

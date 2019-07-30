@@ -57,7 +57,7 @@ const styles = (theme) => {
       }),
     },
     appToolbar: {
-      paddingRight: theme.spacing(),
+      paddingRight: theme.spacing(1),
     },
     grow: {
       flex: '1 1 auto',
@@ -71,8 +71,8 @@ const styles = (theme) => {
       }),
     },
     menuButton: {
-      marginLeft: theme.spacing(),
-      marginRight: theme.spacing(),
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
     },
     hide: {
       display: 'none',
@@ -119,7 +119,7 @@ const styles = (theme) => {
         padding: theme.spacing(2),
       },
       marginTop: theme.spacing(6),
-      paddingTop: theme.spacing(),
+      paddingTop: theme.spacing(1),
     },
   };
 };

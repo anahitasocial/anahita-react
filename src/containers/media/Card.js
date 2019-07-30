@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import permissions from '../../permissions/medium';
@@ -19,10 +20,12 @@ const MediaCard = (props) => {
   const {
     medium,
     viewer,
+    namespace,
   } = props;
 
   const ownerName = utils.getOwnerName(medium);
   const canDelete = permissions.canDelete(viewer, medium);
+  const MediumDeleteAction = DeleteAction(namespace);
 
   return (
     <MediumCard
@@ -46,7 +49,7 @@ const MediaCard = (props) => {
           key={`medium-notification-${medium.id}`}
         />,
         canDelete &&
-        <DeleteAction
+        <MediumDeleteAction
           medium={medium}
           key={`medium-delete-${medium.id}`}
         />,
@@ -66,6 +69,7 @@ const MediaCard = (props) => {
 MediaCard.propTypes = {
   medium: MediumType.isRequired,
   viewer: PersonType.isRequired,
+  namespace: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {

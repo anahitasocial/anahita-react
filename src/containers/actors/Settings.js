@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ActorSettingsList from '../../components/lists/ActorSettings';
-import actions from '../../actions/actor';
+import * as actions from '../../actions';
 
 import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';
@@ -13,7 +13,8 @@ class ActorSettings extends React.Component {
     super(props);
 
     this.state = {
-      actor: ActorDefault,
+      actor: { ...ActorDefault },
+      isFetching: false,
     };
 
     const {
@@ -31,9 +32,10 @@ class ActorSettings extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { actors } = nextProps;
+    const { actors, isFetching } = nextProps;
     this.setState({
       actor: actors.current,
+      isFetching,
     });
   }
 
@@ -48,13 +50,14 @@ class ActorSettings extends React.Component {
       namespace,
     } = this.props;
 
-    const { actor } = this.state;
+    const { actor, isFetching } = this.state;
 
     return (
       <ActorSettingsList
         actor={actor}
         viewer={viewer}
         namespace={namespace}
+        isFetching={isFetching}
       />
     );
   }
@@ -67,40 +70,46 @@ ActorSettings.propTypes = {
   viewer: PersonType.isRequired,
   namespace: PropTypes.string.isRequired,
   computedMatch: PropTypes.object.isRequired,
-  // isFetching: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const {
-    actors,
-    error,
-    isFetching,
-  } = state.actors;
+const mapStateToProps = (namespace) => {
+  return (state) => {
+    const {
+      isFetching,
+      error,
+    } = state[namespace];
 
-  const {
-    viewer,
-  } = state.auth;
+    const {
+      viewer,
+    } = state.auth;
 
-  return {
-    actors,
-    isFetching,
-    error,
-    viewer,
+    return {
+      actors: state[namespace][namespace],
+      namespace,
+      isFetching,
+      error,
+      viewer,
+    };
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    readActor: (id, namespace) => {
-      dispatch(actions.read(id, namespace));
-    },
-    resetActors: () => {
-      dispatch(actions.reset());
-    },
+const mapDispatchToProps = (namespace) => {
+  return (dispatch) => {
+    return {
+      readActor: (id) => {
+        dispatch(actions[namespace].read(id, namespace));
+      },
+      resetActors: () => {
+        dispatch(actions[namespace].reset());
+      },
+    };
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ActorSettings);
+export default (namespace) => {
+  return connect(
+    mapStateToProps(namespace),
+    mapDispatchToProps(namespace),
+  )(ActorSettings);
+};

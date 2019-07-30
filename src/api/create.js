@@ -21,13 +21,13 @@ const read = (namespace) => {
 
 const edit = (namespace) => {
   return (node) => {
-    return axios.put(`/${namespace}/${node.id}.json`, constructURLSearchParams(node));
+    return axios.post(`/${namespace}/${node.id}.json`, constructURLSearchParams(node));
   };
 };
 
 const add = (namespace) => {
   return (node) => {
-    return axios.post(`/${namespace}/${node.id}.json`, constructURLSearchParams(node));
+    return axios.post(`/${namespace}.json`, constructURLSearchParams(node));
   };
 };
 
@@ -37,10 +37,12 @@ const deleteItem = (namespace) => {
   };
 };
 
-export default {
-  browse,
-  read,
-  edit,
-  add,
-  deleteItem,
+export default (namespace) => {
+  return {
+    browse: browse(namespace),
+    read: read(namespace),
+    edit: edit(namespace),
+    add: add(namespace),
+    deleteItem: deleteItem(namespace),
+  };
 };

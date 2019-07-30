@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import AccountForm from '../../../components/person/AccountForm';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
-import actions from '../../../actions/person';
+import * as actions from '../../../actions';
 import * as validate from '../validate';
 
 import PersonType from '../../../proptypes/Person';
 import PersonDefault from '../../../proptypes/PersonDefault';
+import PeopleType from '../../../proptypes/People';
 
 class PeopleSettingsAccount extends React.Component {
   constructor(props) {
@@ -22,22 +23,46 @@ class PeopleSettingsAccount extends React.Component {
       emailHelperText: '',
       passwordError: false,
       passwordHelperText: '',
+      isFetching: false,
+      success: false,
+      error: '',
     };
 
+    const {
+      computedMatch: {
+        params: {
+          id,
+        },
+      },
+    } = props;
+    this.id = id;
+
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   componentWillMount() {
-    const { id } = this.props.computedMatch.params;
     const { readPerson } = this.props;
-
-    readPerson(id);
+    readPerson(this.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { person } = nextProps;
-    this.setState({ person });
+    const {
+      people,
+      isFetching,
+      success,
+      error,
+    } = nextProps;
+
+    const person = { ...people.current };
+    delete person.password;
+
+    this.setState({
+      person,
+      isFetching,
+      success,
+      error,
+    });
   }
 
   handleFieldChange(event) {
@@ -112,25 +137,30 @@ class PeopleSettingsAccount extends React.Component {
   }
 
   editPerson() {
-    const { person } = this.state;
-    this.props.editPersonAccount(person);
-    delete person.password;
+    const {
+      person: {
+        id,
+        email,
+        username,
+        password,
+      },
+    } = this.state;
+
+    this.props.editPerson({
+      id,
+      email,
+      username,
+      password,
+    });
   }
 
-  handleFormSubmit(event) {
-    event.preventDefault();
+  handleEdit() {
     if (this.validate()) {
       this.editPerson();
     }
   }
 
   render() {
-    const {
-      isFetching,
-      success,
-      error,
-    } = this.props;
-
     const {
       person,
       usernameHelperText,
@@ -139,6 +169,9 @@ class PeopleSettingsAccount extends React.Component {
       emailError,
       passwordError,
       passwordHelperText,
+      isFetching,
+      success,
+      error,
     } = this.state;
 
     return (
@@ -158,7 +191,7 @@ class PeopleSettingsAccount extends React.Component {
             email={person.email}
             password={person.password}
             handleFieldChange={this.handleFieldChange}
-            handleFormSubmit={this.handleFormSubmit}
+            handleEdit={this.handleEdit}
             dismissPath={`/people/${person.id}/settings/`}
             isFetching={isFetching}
             success={success}
@@ -186,30 +219,24 @@ class PeopleSettingsAccount extends React.Component {
 
 PeopleSettingsAccount.propTypes = {
   readPerson: PropTypes.func.isRequired,
-  editPersonAccount: PropTypes.func.isRequired,
-  person: PersonType.isRequired,
-  success: PropTypes.bool,
-  isFetching: PropTypes.bool,
-  error: PropTypes.string,
+  editPerson: PropTypes.func.isRequired,
+  people: PeopleType.isRequired,
+  success: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
   computedMatch: PropTypes.object.isRequired,
-};
-
-PeopleSettingsAccount.defaultProps = {
-  isFetching: false,
-  success: false,
-  error: '',
 };
 
 const mapStateToProps = (state) => {
   const {
-    person,
+    people,
     isFetching,
     success,
     error,
-  } = state.person;
+  } = state.people;
 
   return {
-    person,
+    people,
     error,
     success,
     isFetching,
@@ -219,10 +246,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readPerson: (id) => {
-      dispatch(actions.read(id));
+      dispatch(actions.people.read(id));
     },
-    editPersonAccount: (person) => {
-      dispatch(actions.editAccount(person));
+    editPerson: (person) => {
+      dispatch(actions.people.edit(person));
     },
   };
 };
