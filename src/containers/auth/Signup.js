@@ -151,6 +151,12 @@ class SignupPage extends React.Component {
       passwordHelperText,
     } = this.state;
 
+    if (isAuthenticated) {
+      return (
+        <Redirect push to="/dashboard/" />
+      );
+    }
+
     return (
       <React.Fragment>
         <SignupForm
@@ -189,9 +195,6 @@ class SignupPage extends React.Component {
             type="success"
             autoHideDuration={null}
           />
-        }
-        {isAuthenticated &&
-          <Redirect push to="/dashboard/" />
         }
       </React.Fragment>
     );

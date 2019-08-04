@@ -83,7 +83,7 @@ class PasswordResetPage extends React.Component {
     } = this.state;
 
     return (
-      <div>
+      <React.Fragment>
         <PasswordResetForm
           handleFormSubmit={this.handleFormSubmit}
           handleFieldChange={this.handleFieldChange}
@@ -109,7 +109,7 @@ class PasswordResetPage extends React.Component {
             autoHideDuration={null}
           />
         }
-      </div>
+      </React.Fragment>
     );
   }
 }

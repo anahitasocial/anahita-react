@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-import LoginPage from '../containers/auth/Login';
+import AuthPage from '../containers/auth';
 
 const AuthenticatedRoute = ({
   component: Component,
@@ -16,7 +16,7 @@ const AuthenticatedRoute = ({
         return isAuthenticated ? (
           <Component {...props} />
         ) : (
-          <Route component={LoginPage} />
+          <Route component={AuthPage} />
         );
       }}
     />

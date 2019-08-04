@@ -8,8 +8,7 @@ import {
 } from 'react-router-dom';
 import AuthenticatedRoute from './AuthenticatedRoute';
 
-import LoginPage from '../containers/auth/Login';
-import SignupPage from '../containers/auth/Signup';
+import AuthPage from '../containers/auth';
 import PasswordResetPage from '../containers/auth/PasswordReset';
 
 import HomePage from '../containers/Home';
@@ -72,13 +71,18 @@ const Routes = (props) => {
       />
       <Route
         exact
-        path="/login/"
-        component={LoginPage}
+        path="/auth/"
+        component={AuthPage}
       />
       <Route
         exact
-        path="/signup/"
-        component={SignupPage}
+        path="/auth/:tab/"
+        component={AuthPage}
+      />
+      <Route
+        exact
+        path="/auth/:tab/"
+        component={AuthPage}
       />
       <Route
         exact

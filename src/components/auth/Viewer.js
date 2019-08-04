@@ -48,7 +48,7 @@ const Viewer = (props) => {
       {!isAuthenticated &&
       <Button
         component={Link}
-        to="/login/"
+        to="/auth"
         color="inherit"
       >
         {'Login'}

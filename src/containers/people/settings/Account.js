@@ -7,7 +7,6 @@ import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';
 import * as validate from '../validate';
 
-import PersonType from '../../../proptypes/Person';
 import PersonDefault from '../../../proptypes/PersonDefault';
 import PeopleType from '../../../proptypes/People';
 

@@ -21,7 +21,7 @@ class LoginPage extends React.Component {
       passwordHelperText: '',
     };
 
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
@@ -79,7 +79,7 @@ class LoginPage extends React.Component {
     return usernameValidated && passwordValidated;
   }
 
-  handleFormSubmit(event) {
+  handleLogin(event) {
     event.preventDefault();
     const { credentials } = this.state;
     if (this.validate()) {
@@ -109,10 +109,16 @@ class LoginPage extends React.Component {
 
     const canSignup = true;
 
+    if (isAuthenticated && success) {
+      return (
+        <Redirect push to="/dashboard/" />
+      );
+    }
+
     return (
-      <div>
+      <React.Fragment>
         <LoginForm
-          handleFormSubmit={this.handleFormSubmit}
+          handleLogin={this.handleLogin}
           handleFieldChange={this.handleFieldChange}
           username={username}
           usernameError={usernameError}
@@ -130,27 +136,17 @@ class LoginPage extends React.Component {
             type="error"
           />
         }
-        {success && isAuthenticated &&
-          <Redirect push to="/dashboard/" />
-        }
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 LoginPage.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-  isFetching: PropTypes.bool,
-  success: PropTypes.bool,
-  error: PropTypes.string,
-};
-
-LoginPage.defaultProps = {
-  error: '',
-  success: false,
-  isFetching: false,
-  isAuthenticated: false,
+  isAuthenticated: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  success: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {

@@ -1,3 +1,4 @@
+/* global localStorage */
 import { auth as api } from '../api';
 import { Auth as AUTH } from '../constants';
 
@@ -105,10 +106,12 @@ function loginRequest() {
   };
 }
 
-function loginSuccess(viewer) {
+function loginSuccess(response) {
+  const { data } = response;
+  localStorage.setItem('viewer', JSON.stringify(data));
   return {
     type: AUTH.LOGIN.SUCCESS,
-    viewer,
+    viewer: data,
   };
 }
 
@@ -125,8 +128,7 @@ function login(credentials) {
     return new Promise((resolve, reject) => {
       api.addSession(credentials)
         .then((response) => {
-          localStorage.setItem('viewer', JSON.stringify(response.data));
-          dispatch(loginSuccess(response.data));
+          dispatch(loginSuccess(response));
           return resolve();
         }, (response) => {
           dispatch(loginFailure(response));
@@ -148,6 +150,7 @@ function logoutRequest() {
 }
 
 function logoutSuccess() {
+  localStorage.removeItem('viewer');
   return {
     type: AUTH.LOGOUT.SUCCESS,
   };
@@ -160,7 +163,6 @@ function logout() {
       api.deleteSession()
         .then(() => {
           dispatch(logoutSuccess());
-          localStorage.removeItem('viewer');
           return resolve();
         }, (response) => {
           return reject(response);

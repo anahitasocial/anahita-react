@@ -6,14 +6,14 @@ import {
 import PersonDefault from '../proptypes/PersonDefault';
 
 /* global localStorage */
-const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : PersonDefault;
+const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : { ...PersonDefault };
 
-export default (state = {
+const INIT_STATE = {
   emailAvailable: true,
   usernameAvailable: true,
   isFetching: false,
   isValidating: false,
-  isAuthenticated: viewer.id && (
+  isAuthenticated: viewer.id > 0 && (
     viewer.usertype === PERSON.TYPE.REGISTERED ||
     viewer.usertype === PERSON.TYPE.ADMIN ||
     viewer.usertype === PERSON.TYPE.SUPER_ADMIN
@@ -21,7 +21,9 @@ export default (state = {
   viewer,
   success: false,
   error: '',
-}, action) => {
+};
+
+export default (state = { ...INIT_STATE }, action) => {
   switch (action.type) {
     case AUTH.VALIDATE.USERNAME.RESET:
       return {
@@ -47,7 +49,7 @@ export default (state = {
         isFetching: true,
         isAuthenticated: false,
         success: false,
-        viewer: PersonDefault,
+        viewer: { ...PersonDefault },
       };
     case AUTH.VALIDATE.USERNAME.SUCCESS:
       return {
@@ -107,6 +109,7 @@ export default (state = {
     case AUTH.PASSWORD.RESET.REQUEST:
       return {
         ...state,
+        isAuthenticated: false,
         isFetching: true,
         success: false,
         error: '',
@@ -123,6 +126,7 @@ export default (state = {
     case AUTH.PASSWORD.RESET.FAILURE:
       return {
         ...state,
+        isAuthenticated: false,
         isFetching: false,
         success: false,
         error: action.error,
