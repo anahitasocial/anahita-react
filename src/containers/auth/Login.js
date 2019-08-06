@@ -161,7 +161,7 @@ const mapStateToProps = (state) => {
     success,
     error,
     isFetching,
-  } = state.sessions;
+  } = state.session;
 
   return {
     isAuthenticated,
@@ -174,10 +174,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     reset: () => {
-      return dispatch(actions.sessions.reset());
+      return dispatch(actions.session.reset());
     },
     login: (credentials) => {
-      return dispatch(actions.sessions.add(credentials));
+      return dispatch(actions.session.add(credentials));
     },
   };
 };

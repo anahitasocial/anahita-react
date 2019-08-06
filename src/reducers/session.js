@@ -1,13 +1,13 @@
 import {
   Person as PERSON,
-  Sessions as SESSIONS,
+  Session as SESSION,
 } from '../constants';
 import PersonDefault from '../proptypes/PersonDefault';
 
 /* global localStorage */
 const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : { ...PersonDefault };
 
-const INIT_STATE = {
+const initState = {
   viewer,
   isAuthenticated: (
     viewer.usertype === PERSON.TYPE.REGISTERED ||
@@ -19,26 +19,26 @@ const INIT_STATE = {
   error: '',
 };
 
-export default (state = { ...INIT_STATE }, action) => {
+export default (state = { ...initState }, action) => {
   switch (action.type) {
-    case SESSIONS.RESET:
+    case SESSION.RESET:
       return {
         ...state,
         isFetching: false,
         success: false,
         error: '',
       };
-    case SESSIONS.READ.REQUEST:
-    case SESSIONS.ADD.REQUEST:
-    case SESSIONS.DELETE.REQUEST:
+    case SESSION.READ.REQUEST:
+    case SESSION.ADD.REQUEST:
+    case SESSION.DELETE.REQUEST:
       return {
         ...state,
         isFetching: true,
         success: false,
         error: '',
       };
-    case SESSIONS.READ.SUCCESS:
-    case SESSIONS.ADD.SUCCESS:
+    case SESSION.READ.SUCCESS:
+    case SESSION.ADD.SUCCESS:
       return {
         ...state,
         viewer: action.viewer,
@@ -47,7 +47,7 @@ export default (state = { ...INIT_STATE }, action) => {
         success: true,
         error: '',
       };
-    case SESSIONS.DELETE.SUCCESS:
+    case SESSION.DELETE.SUCCESS:
       return {
         ...state,
         viewer: { ...PersonDefault },
@@ -56,8 +56,8 @@ export default (state = { ...INIT_STATE }, action) => {
         success: true,
         error: '',
       };
-    case SESSIONS.READ.FAILURE:
-    case SESSIONS.ADD.FAILURE:
+    case SESSION.READ.FAILURE:
+    case SESSION.ADD.FAILURE:
       return {
         ...state,
         viewer: { ...PersonDefault },
@@ -66,7 +66,7 @@ export default (state = { ...INIT_STATE }, action) => {
         success: false,
         error: action.error,
       };
-    case SESSIONS.DELETE.FAILURE:
+    case SESSION.DELETE.FAILURE:
       return {
         ...state,
         isFetching: false,

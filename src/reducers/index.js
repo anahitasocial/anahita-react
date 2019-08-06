@@ -1,16 +1,18 @@
 import { combineReducers } from 'redux';
 
 import app from './app';
-import auth from './auth';
 import avatar from './avatar';
 import comments from './comments';
 import cover from './cover';
+import is from './is';
 import likes from './likes';
 import locations from './locations';
 import hashtags from './hashtags';
 import node from './node';
 import notifications from './notifications';
-import sessions from './sessions';
+import password from './password';
+import session from './session';
+import signup from './signup';
 import socialgraph from './socialgraph';
 import stories from './stories';
 import taggables from './taggables';
@@ -32,20 +34,22 @@ const articles = createMediaReducer('articles');
 export default combineReducers({
   app,
   articles,
-  auth,
   avatar,
   comments,
   cover,
   groups,
+  is,
   likes,
   locations,
   hashtags,
   node,
   notes,
   notifications,
+  password,
   people,
   photos,
-  sessions,
+  session,
+  signup,
   socialgraph,
   stories,
   taggables,

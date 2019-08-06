@@ -82,7 +82,7 @@ const mapStateToProps = (namespace) => {
 
     const {
       viewer,
-    } = state.sessions;
+    } = state.session;
 
     return {
       actors: state[namespace][namespace],

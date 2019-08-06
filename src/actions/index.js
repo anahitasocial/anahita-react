@@ -2,14 +2,16 @@ import * as api from '../api';
 
 import createAction from './create';
 import app from './app';
-import auth from './auth';
 import avatar from './avatar';
 import comments from './comments';
 import cover from './cover';
+import is from './is';
 import likes from './likes';
 import node from './node';
 import notifications from './notifications';
-import sessions from './sessions';
+import password from './password';
+import session from './session';
+import signup from './signup';
 import socialgraph from './socialgraph';
 import stories from './stories';
 import taggables from './taggable';
@@ -27,10 +29,10 @@ const topics = createAction('topics')(api.topics);
 export {
   app,
   articles,
-  auth,
   avatar,
   comments,
   cover,
+  is,
   groups,
   hashtags,
   likes,
@@ -38,9 +40,11 @@ export {
   node,
   notes,
   notifications,
+  password,
   people,
   photos,
-  sessions,
+  session,
+  signup,
   socialgraph,
   stories,
   taggables,

@@ -280,7 +280,7 @@ const mapStateToProps = (state) => {
 
   const {
     viewer,
-  } = state.sessions;
+  } = state.session;
 
   return {
     people,

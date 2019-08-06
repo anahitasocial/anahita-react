@@ -238,7 +238,7 @@ Routes.propTypes = {
 function mapStateToProps(state) {
   const {
     isAuthenticated,
-  } = state.sessions;
+  } = state.session;
 
   return {
     isAuthenticated,

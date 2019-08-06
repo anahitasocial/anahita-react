@@ -276,7 +276,7 @@ const mapStateToProps = (state) => {
   const {
     isAuthenticated,
     viewer,
-  } = state.sessions;
+  } = state.session;
 
   return {
     appBarTitle,
@@ -288,7 +288,7 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
   return {
     logout: () => {
-      return dispatch(actions.sessions.deleteItem());
+      return dispatch(actions.session.deleteItem());
     },
   };
 }

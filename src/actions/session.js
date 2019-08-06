@@ -1,10 +1,10 @@
 /* global localStorage */
-import { sessions as api } from '../api';
-import { Sessions as SESSIONS } from '../constants';
+import { session as api } from '../api';
+import { Session as SESSION } from '../constants';
 
 function reset() {
   return {
-    type: SESSIONS.RESET,
+    type: SESSION.RESET,
   };
 }
 
@@ -12,7 +12,7 @@ function reset() {
 
 function readRequest() {
   return {
-    type: SESSIONS.READ.REQUEST,
+    type: SESSION.READ.REQUEST,
   };
 }
 
@@ -20,14 +20,14 @@ function readSuccess(response) {
   const { data } = response;
   localStorage.setItem('viewer', JSON.stringify(data));
   return {
-    type: SESSIONS.READ.SUCCESS,
+    type: SESSION.READ.SUCCESS,
     viewer: data,
   };
 }
 
 function readFailure(error) {
   return {
-    type: SESSIONS.READ.FAILURE,
+    type: SESSION.READ.FAILURE,
     error: error.message,
   };
 }
@@ -54,7 +54,7 @@ function read(credentials) {
 
 function addRequest() {
   return {
-    type: SESSIONS.ADD.REQUEST,
+    type: SESSION.ADD.REQUEST,
   };
 }
 
@@ -62,14 +62,14 @@ function addSuccess(response) {
   const { data } = response;
   localStorage.setItem('viewer', JSON.stringify(data));
   return {
-    type: SESSIONS.ADD.SUCCESS,
+    type: SESSION.ADD.SUCCESS,
     viewer: data,
   };
 }
 
 function addFailure(error) {
   return {
-    type: SESSIONS.ADD.FAILURE,
+    type: SESSION.ADD.FAILURE,
     error: error.message,
   };
 }
@@ -96,7 +96,7 @@ function add(credentials) {
 
 function deleteRequest() {
   return {
-    type: SESSIONS.DELETE.REQUEST,
+    type: SESSION.DELETE.REQUEST,
   };
 }
 
@@ -104,14 +104,14 @@ function deleteSuccess(response) {
   const { data } = response;
   localStorage.removeItem('viewer');
   return {
-    type: SESSIONS.DELETE.SUCCESS,
+    type: SESSION.DELETE.SUCCESS,
     viewer: data,
   };
 }
 
 function deleteFailure(error) {
   return {
-    type: SESSIONS.DELETE.FAILURE,
+    type: SESSION.DELETE.FAILURE,
     error: error.message,
   };
 }

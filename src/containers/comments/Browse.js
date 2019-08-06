@@ -150,7 +150,7 @@ class CommentsBrowse extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { viewer } = state.sessions;
+  const { viewer } = state.session;
 
   const {
     parents,

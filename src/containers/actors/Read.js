@@ -147,7 +147,7 @@ const mapStateToProps = (namespace) => {
     const {
       isAuthenticated,
       viewer,
-    } = state.sessions;
+    } = state.session;
 
     return {
       actors: state[namespace][namespace],

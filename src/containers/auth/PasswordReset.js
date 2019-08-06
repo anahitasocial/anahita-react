@@ -13,18 +13,13 @@ class PasswordResetPage extends React.Component {
     super(props);
 
     this.state = {
-      person: PersonDefault,
+      person: { ...PersonDefault },
       emailError: false,
       emailHelperText: '',
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
-  }
-
-  componentWillUnmount() {
-    const { reset } = this.props;
-    reset();
   }
 
   handleFieldChange(event) {
@@ -69,8 +64,8 @@ class PasswordResetPage extends React.Component {
     event.preventDefault();
     const { person } = this.state;
     if (this.validate()) {
-      const { resetPassword } = this.props;
-      resetPassword(person);
+      const { reset } = this.props;
+      reset(person);
     }
   }
 
@@ -101,14 +96,14 @@ class PasswordResetPage extends React.Component {
         />
         {error &&
           <SimpleSnackbar
-            isOpen={Boolean(error)}
+            isOpen={error !== ''}
             message="Something went wrong!"
             type="error"
           />
         }
         {success &&
           <SimpleSnackbar
-            isOpen={Boolean(success)}
+            isOpen={success}
             message="We emailed you a link. Please click on that link and follow the instructions!"
             type="success"
             autoHideDuration={null}
@@ -120,24 +115,17 @@ class PasswordResetPage extends React.Component {
 }
 
 PasswordResetPage.propTypes = {
-  resetPassword: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
-  success: PropTypes.bool,
-  isFetching: PropTypes.bool,
-  error: PropTypes.string,
-};
-
-PasswordResetPage.defaultProps = {
-  isFetching: false,
-  success: false,
-  error: '',
+  success: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
+    isFetching,
     success,
     error,
-    isFetching,
   } = state.auth;
 
   return {
@@ -149,11 +137,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    reset: () => {
-      dispatch(actions.auth.reset());
-    },
-    resetPassword: (person) => {
-      dispatch(actions.auth.resetPassword(person));
+    reset: (person) => {
+      dispatch(actions.password.reset(person));
     },
   };
 };

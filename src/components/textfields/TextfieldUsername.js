@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import actions from '../../actions/auth';
+import * as actions from '../../actions';
 import * as validate from '../../containers/people/validate';
 
 class TextFieldUsername extends React.Component {
@@ -10,32 +10,31 @@ class TextFieldUsername extends React.Component {
     super(props);
 
     this.state = {
+      isFetching: false,
       error: false,
-      helperText: '',
+      helperText: props.helperText,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { usernameAvailable } = nextProps;
+    const { isUsername, isFetching, error } = nextProps;
+    const helperText = isUsername ? 'Good username!' : 'Username already taken!';
 
     this.setState({
-      error: !usernameAvailable,
-      helperText: usernameAvailable ? 'Good username!' : 'Username already taken!',
+      isFetching,
+      helperText,
+      error,
     });
-  }
-
-  componentWillUnmount() {
-    this.props.reset();
   }
 
   handleFieldChange(event) {
     const { value } = event.target;
-    const { isUsernameTaken, onChange } = this.props;
+    const { isUsernameAvailable, onChange } = this.props;
 
-    if (validate.username(value)) {
-      isUsernameTaken(value);
+    if (value !== '' && validate.username(value)) {
+      isUsernameAvailable(value);
     }
 
     onChange(event);
@@ -43,6 +42,7 @@ class TextFieldUsername extends React.Component {
 
   render() {
     const {
+      isFetching,
       error,
       helperText,
     } = this.state;
@@ -73,9 +73,11 @@ TextFieldUsername.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  isUsernameTaken: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-  usernameAvailable: PropTypes.bool.isRequired,
+  isUsername: PropTypes.bool.isRequired,
+  isUsernameAvailable: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  helperText: PropTypes.string.isRequired,
+  error: PropTypes.bool.isRequired,
 };
 
 TextFieldUsername.defaultProps = {
@@ -85,21 +87,20 @@ TextFieldUsername.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    usernameAvailable,
-  } = state.auth;
+    isUsername,
+    isFetching,
+  } = state.is;
 
   return {
-    usernameAvailable,
+    isUsername,
+    isFetching,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    isUsernameTaken: (username) => {
-      dispatch(actions.validateUsername(username));
-    },
-    reset: () => {
-      dispatch(actions.validateUsernameReset());
+    isUsernameAvailable: (username) => {
+      dispatch(actions.is.username(username));
     },
   };
 };

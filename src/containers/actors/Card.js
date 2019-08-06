@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
   const {
     isAuthenticated,
     viewer,
-  } = state.sessions;
+  } = state.session;
 
   return {
     isAuthenticated,

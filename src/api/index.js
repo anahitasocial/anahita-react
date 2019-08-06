@@ -2,13 +2,15 @@ import axios from 'axios';
 import createApi from './create';
 
 import avatar from './avatar';
-import auth from './auth';
 import comments from './comments';
 import cover from './cover';
+import is from './is';
 import likes from './likes';
 import node from './node';
 import notifications from './notifications';
-import sessions from './sessions';
+import password from './password';
+import session from './session';
+import signup from './signup';
 import socialgraph from './socialgraph';
 import taggables from './taggables';
 
@@ -37,19 +39,21 @@ const topics = createApi('topics');
 export {
   articles,
   avatar,
-  auth,
   comments,
   cover,
   groups,
   hashtags,
+  is,
   likes,
   locations,
   node,
   notes,
   notifications,
+  password,
   people,
   photos,
-  sessions,
+  session,
+  signup,
   socialgraph,
   stories,
   taggables,

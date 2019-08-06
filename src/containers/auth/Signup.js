@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SignupForm from '../../components/auth/SignupForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import actions from '../../actions/auth';
+import * as actions from '../../actions';
 import * as validate from '../people/validate';
 
 import PersonDefault from '../../proptypes/PersonDefault';
@@ -14,7 +14,7 @@ class SignupPage extends React.Component {
     super(props);
 
     this.state = {
-      person: PersonDefault,
+      person: { ...PersonDefault },
       givenNameError: false,
       givenNameHelperText: '',
       familyNameError: false,
@@ -118,7 +118,6 @@ class SignupPage extends React.Component {
   signup() {
     const { person } = this.state;
     const { signup } = this.props;
-
     signup(person);
   }
 
@@ -131,9 +130,9 @@ class SignupPage extends React.Component {
 
   render() {
     const {
+      isFetching,
       success,
       error,
-      isFetching,
       isAuthenticated,
     } = this.props;
 
@@ -203,42 +202,35 @@ class SignupPage extends React.Component {
 
 SignupPage.propTypes = {
   signup: PropTypes.func.isRequired,
-  success: PropTypes.bool,
-  isFetching: PropTypes.bool,
-  error: PropTypes.string,
-  isAuthenticated: PropTypes.bool,
-};
-
-SignupPage.defaultProps = {
-  isFetching: false,
-  success: false,
-  error: '',
-  isAuthenticated: false,
+  success: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
-    error,
-    success,
     isFetching,
-  } = state.auth;
+    success,
+    error,
+  } = state.signup;
 
   const {
     isAuthenticated,
-  } = state.sessions;
+  } = state.session;
 
   return {
-    error,
-    success,
-    isFetching,
     isAuthenticated,
+    isFetching,
+    success,
+    error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     signup: (person) => {
-      dispatch(actions.signup(person));
+      dispatch(actions.signup.add(person));
     },
   };
 };

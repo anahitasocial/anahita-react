@@ -242,7 +242,7 @@ const mapStateToProps = (state) => {
   const {
     isAuthenticated,
     viewer,
-  } = state.sessions;
+  } = state.session;
 
   const {
     stories,

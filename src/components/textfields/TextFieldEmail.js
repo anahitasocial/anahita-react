@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import actions from '../../actions/auth';
+import * as actions from '../../actions';
 import * as validate from '../../containers/people/validate';
 
 class TextFieldEmail extends React.Component {
@@ -10,32 +10,31 @@ class TextFieldEmail extends React.Component {
     super(props);
 
     this.state = {
+      isFetching: false,
       error: false,
-      helperText: '',
+      helperText: props.helperText,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { emailAvailable } = nextProps;
+    const { isEmail, isFetching, error } = nextProps;
+    const helperText = isEmail ? 'Good email!' : 'Email already taken!';
 
     this.setState({
-      error: !emailAvailable,
-      helperText: emailAvailable ? 'Good email!' : 'Email already taken!',
+      isFetching,
+      helperText,
+      error,
     });
-  }
-
-  componentWillUnmount() {
-    this.props.reset();
   }
 
   handleFieldChange(event) {
     const { value } = event.target;
-    const { isEmailTaken, onChange } = this.props;
+    const { isEmailAvailable, onChange } = this.props;
 
-    if (validate.email(value)) {
-      isEmailTaken(value);
+    if (value !== '' && validate.email(value)) {
+      isEmailAvailable(value);
     }
 
     onChange(event);
@@ -43,6 +42,7 @@ class TextFieldEmail extends React.Component {
 
   render() {
     const {
+      isFetching,
       error,
       helperText,
     } = this.state;
@@ -73,9 +73,11 @@ TextFieldEmail.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  isEmailTaken: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-  emailAvailable: PropTypes.bool.isRequired,
+  isEmail: PropTypes.bool.isRequired,
+  isEmailAvailable: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  helperText: PropTypes.string.isRequired,
+  error: PropTypes.bool.isRequired,
 };
 
 TextFieldEmail.defaultProps = {
@@ -85,21 +87,20 @@ TextFieldEmail.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    emailAvailable,
-  } = state.auth;
+    isEmail,
+    isFetching,
+  } = state.is;
 
   return {
-    emailAvailable,
+    isEmail,
+    isFetching,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    isEmailTaken: (email) => {
-      dispatch(actions.validateEmail(email));
-    },
-    reset: () => {
-      dispatch(actions.validateEmailReset());
+    isEmailAvailable: (email) => {
+      dispatch(actions.is.email(email));
     },
   };
 };
