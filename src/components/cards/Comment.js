@@ -71,7 +71,7 @@ class CommentCard extends React.Component {
     const { menuAnchorEl } = this.state;
 
     return (
-      <Card className={classes.root}>
+      <Card square className={classes.root}>
         <CardHeader
           avatar={
             <ActorAvatar

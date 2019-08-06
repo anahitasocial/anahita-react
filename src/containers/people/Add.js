@@ -220,7 +220,7 @@ class PeopleAdd extends React.Component {
 
     return (
       <React.Fragment>
-        <Card>
+        <Card square>
           <CardHeader
             title={this.getName()}
             subheader={person.username ? `@${person.username}` : ''}

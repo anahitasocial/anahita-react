@@ -32,7 +32,7 @@ const ActorProfile = (props) => {
 
   return (
     <React.Fragment>
-      <Card>
+      <Card square>
         {cover}
         <CardHeader
           avatar={avatar}
