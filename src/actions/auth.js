@@ -2,6 +2,12 @@
 import { auth as api } from '../api';
 import { Auth as AUTH } from '../constants';
 
+function reset() {
+  return {
+    type: AUTH.RESET,
+  };
+}
+
 // -- Validate Username Reset
 
 function validateUsernameReset() {
@@ -98,87 +104,6 @@ function validateEmail(email) {
   };
 }
 
-// - Login Action -
-
-function loginRequest() {
-  return {
-    type: AUTH.LOGIN.REQUEST,
-  };
-}
-
-function loginSuccess(response) {
-  const { data } = response;
-  localStorage.setItem('viewer', JSON.stringify(data));
-  return {
-    type: AUTH.LOGIN.SUCCESS,
-    viewer: data,
-  };
-}
-
-function loginFailure(error) {
-  return {
-    type: AUTH.LOGIN.FAILURE,
-    error: error.message,
-  };
-}
-
-function login(credentials) {
-  return (dispatch) => {
-    dispatch(loginRequest());
-    return new Promise((resolve, reject) => {
-      api.addSession(credentials)
-        .then((response) => {
-          dispatch(loginSuccess(response));
-          return resolve();
-        }, (response) => {
-          dispatch(loginFailure(response));
-          return reject(response);
-        });
-    }).catch((error) => {
-      console.error(error);
-      // throw new Error(error);
-    });
-  };
-}
-
-// - Logout Action
-
-function logoutRequest() {
-  return {
-    type: AUTH.LOGOUT.REQUEST,
-  };
-}
-
-function logoutSuccess() {
-  localStorage.removeItem('viewer');
-  return {
-    type: AUTH.LOGOUT.SUCCESS,
-  };
-}
-
-function logout() {
-  return (dispatch) => {
-    dispatch(logoutRequest());
-    return new Promise((resolve, reject) => {
-      api.deleteSession()
-        .then(() => {
-          dispatch(logoutSuccess());
-          return resolve();
-        }, (response) => {
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
-const unauthorized = () => {
-  return (dispatch) => {
-    dispatch(logout());
-  };
-};
-
 // - Signup Action -
 
 function signupRequest() {
@@ -261,13 +186,11 @@ function resetPassword(person) {
 }
 
 export default {
+  reset,
   validateUsernameReset,
   validateUsername,
   validateEmailReset,
   validateEmail,
-  login,
-  logout,
-  unauthorized,
   signup,
   resetPassword,
 };

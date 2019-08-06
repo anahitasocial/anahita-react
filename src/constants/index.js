@@ -7,6 +7,7 @@ import Likes from './likes';
 import Node from './node';
 import Notifications from './notifications';
 import Person from './person';
+import Sessions from './sessions';
 import Socialgraph from './socialgraph';
 import Storage from './storage';
 import Stories from './stories';
@@ -21,6 +22,7 @@ export {
   Node,
   Notifications,
   Person,
+  Sessions,
   Socialgraph,
   Storage,
   Stories,

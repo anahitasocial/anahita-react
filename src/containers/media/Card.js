@@ -75,7 +75,7 @@ MediaCard.propTypes = {
 const mapStateToProps = (state) => {
   const {
     viewer,
-  } = state.auth;
+  } = state.sessions;
 
   return {
     viewer,

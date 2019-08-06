@@ -290,7 +290,7 @@ const mapStateToProps = (state) => {
 
   const {
     viewer,
-  } = state.auth;
+  } = state.sessions;
 
   return {
     people,

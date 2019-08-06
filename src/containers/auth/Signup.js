@@ -221,8 +221,11 @@ const mapStateToProps = (state) => {
     error,
     success,
     isFetching,
-    isAuthenticated,
   } = state.auth;
+
+  const {
+    isAuthenticated,
+  } = state.sessions;
 
   return {
     error,

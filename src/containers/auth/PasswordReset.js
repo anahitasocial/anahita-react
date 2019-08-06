@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PasswordResetForm from '../../components/auth/PasswordResetForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import actions from '../../actions/auth';
+import * as actions from '../../actions';
 import * as validate from '../people/validate';
 
 import PersonDefault from '../../proptypes/PersonDefault';
@@ -20,6 +20,11 @@ class PasswordResetPage extends React.Component {
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
+  }
+
+  componentWillUnmount() {
+    const { reset } = this.props;
+    reset();
   }
 
   handleFieldChange(event) {
@@ -116,6 +121,7 @@ class PasswordResetPage extends React.Component {
 
 PasswordResetPage.propTypes = {
   resetPassword: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
   success: PropTypes.bool,
   isFetching: PropTypes.bool,
   error: PropTypes.string,
@@ -143,8 +149,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    reset: () => {
+      dispatch(actions.auth.reset());
+    },
     resetPassword: (person) => {
-      dispatch(actions.resetPassword(person));
+      dispatch(actions.auth.resetPassword(person));
     },
   };
 };

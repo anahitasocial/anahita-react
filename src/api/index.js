@@ -8,6 +8,7 @@ import cover from './cover';
 import likes from './likes';
 import node from './node';
 import notifications from './notifications';
+import sessions from './sessions';
 import socialgraph from './socialgraph';
 import taggables from './taggables';
 
@@ -48,6 +49,7 @@ export {
   notifications,
   people,
   photos,
+  sessions,
   socialgraph,
   stories,
   taggables,

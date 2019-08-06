@@ -5,6 +5,7 @@ const password = async('password');
 const validate = async('validate');
 
 export default {
+  RESET: 'AUTH_RESET',
   LOGIN: auth('login'),
   LOGOUT: auth('logout'),
   SIGNUP: auth('signup'),

@@ -24,21 +24,17 @@ const AuthenticatedRoute = ({
 };
 
 AuthenticatedRoute.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool.isRequired,
   component: PropTypes.oneOfType([
     PropTypes.func.isRequired,
     PropTypes.object.isRequired,
   ]).isRequired,
 };
 
-AuthenticatedRoute.defaultProps = {
-  isAuthenticated: false,
-};
-
 function mapStateToProps(state) {
   const {
     isAuthenticated,
-  } = state.auth;
+  } = state.sessions;
 
   return {
     isAuthenticated,

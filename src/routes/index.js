@@ -232,17 +232,13 @@ const Routes = (props) => {
 };
 
 Routes.propTypes = {
-  isAuthenticated: PropTypes.bool,
-};
-
-Routes.defaultProps = {
-  isAuthenticated: false,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
   const {
     isAuthenticated,
-  } = state.auth;
+  } = state.sessions;
 
   return {
     isAuthenticated,

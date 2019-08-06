@@ -1,30 +1,26 @@
-import {
-  Auth as AUTH,
-  Person as PERSON,
-} from '../constants';
-
-import PersonDefault from '../proptypes/PersonDefault';
-
-/* global localStorage */
-const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : { ...PersonDefault };
+import { Auth as AUTH } from '../constants';
 
 const INIT_STATE = {
   emailAvailable: true,
   usernameAvailable: true,
   isFetching: false,
   isValidating: false,
-  isAuthenticated: viewer.id > 0 && (
-    viewer.usertype === PERSON.TYPE.REGISTERED ||
-    viewer.usertype === PERSON.TYPE.ADMIN ||
-    viewer.usertype === PERSON.TYPE.SUPER_ADMIN
-  ),
-  viewer,
   success: false,
   error: '',
 };
 
 export default (state = { ...INIT_STATE }, action) => {
   switch (action.type) {
+    case AUTH.RESET:
+      return {
+        ...state,
+        emailAvailable: true,
+        usernameAvailable: true,
+        isFetching: false,
+        isValidating: false,
+        success: false,
+        error: '',
+      };
     case AUTH.VALIDATE.USERNAME.RESET:
       return {
         ...state,
@@ -43,14 +39,6 @@ export default (state = { ...INIT_STATE }, action) => {
         usernameAvailable: true,
         emailAvailable: true,
       };
-    case AUTH.LOGIN.REQUEST:
-      return {
-        ...state,
-        isFetching: true,
-        isAuthenticated: false,
-        success: false,
-        viewer: { ...PersonDefault },
-      };
     case AUTH.VALIDATE.USERNAME.SUCCESS:
       return {
         ...state,
@@ -63,15 +51,6 @@ export default (state = { ...INIT_STATE }, action) => {
         isValidating: false,
         emailAvailable: action.isAvailable,
       };
-    case AUTH.LOGIN.SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        isAuthenticated: true,
-        success: true,
-        error: '',
-        viewer: action.viewer,
-      };
     case AUTH.VALIDATE.USERNAME.FAILURE:
       return {
         ...state,
@@ -83,27 +62,6 @@ export default (state = { ...INIT_STATE }, action) => {
         ...state,
         isValidating: false,
         emailAvailable: false,
-      };
-    case AUTH.LOGIN.FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        isAuthenticated: false,
-        success: false,
-        error: action.error,
-      };
-    case AUTH.LOGOUT.REQUEST:
-      return {
-        ...state,
-        isFetching: true,
-        isAuthenticated: true,
-      };
-    case AUTH.LOGOUT.SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        isAuthenticated: false,
-        error: '',
       };
     case AUTH.SIGNUP.REQUEST:
     case AUTH.PASSWORD.RESET.REQUEST:

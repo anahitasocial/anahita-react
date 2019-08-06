@@ -137,11 +137,7 @@ const LeftMenu = (props) => {
 
 LeftMenu.propTypes = {
   onLogoutClick: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-};
-
-LeftMenu.defaultProps = {
-  isAuthenticated: false,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default LeftMenu;

@@ -140,10 +140,6 @@ ActorsCover.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    viewer,
-  } = state.auth;
-
-  const {
     nodes,
     isFetching,
     success,
@@ -155,7 +151,6 @@ const mapStateToProps = (state) => {
     isFetching,
     success,
     error,
-    viewer,
   };
 };
 

@@ -22,7 +22,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import createContext from '../styles/createContext';
 import Viewer from '../components/auth/Viewer';
 import LeftMenu from '../components/LeftMenu';
-import actions from '../actions/auth';
+import * as actions from '../actions';
 
 const drawerWidth = 200;
 
@@ -147,12 +147,18 @@ class App extends React.Component {
     };
 
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleDrawerToggle() {
     this.setState({
       open: !this.state.open,
     });
+  }
+
+  handleLogout() {
+    const { logout } = this.props;
+    logout();
   }
 
   render() {
@@ -232,7 +238,7 @@ class App extends React.Component {
                 <Divider />
                 <List className={classes.list}>
                   <LeftMenu
-                    onLogoutClick={this.props.logout}
+                    onLogoutClick={this.handleLogout}
                     isAuthenticated={isAuthenticated}
                     classNames={classes}
                   />
@@ -270,7 +276,7 @@ const mapStateToProps = (state) => {
   const {
     isAuthenticated,
     viewer,
-  } = state.auth;
+  } = state.sessions;
 
   return {
     appBarTitle,
@@ -282,7 +288,7 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
   return {
     logout: () => {
-      return dispatch(actions.logout());
+      return dispatch(actions.sessions.deleteItem());
     },
   };
 }

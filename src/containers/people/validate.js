@@ -4,7 +4,7 @@ function username(value) {
 }
 
 function email(value) {
-  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]*$/;
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{5,}$/;
   return regex.test(String(value).toLowerCase());
 }
 

@@ -205,7 +205,7 @@ class CommentsRead extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { viewer } = state.auth;
+  const { viewer } = state.sessions;
 
   return {
     viewer,

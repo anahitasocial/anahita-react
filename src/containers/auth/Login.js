@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/auth/LoginForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
-import actions from '../../actions/auth';
+import * as actions from '../../actions';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -23,6 +23,11 @@ class LoginPage extends React.Component {
 
     this.handleLogin = this.handleLogin.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
+  }
+
+  componentWillUnmount() {
+    const { reset } = this.props;
+    reset();
   }
 
   handleFieldChange(event) {
@@ -143,6 +148,7 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   login: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   success: PropTypes.bool.isRequired,
@@ -155,7 +161,7 @@ const mapStateToProps = (state) => {
     success,
     error,
     isFetching,
-  } = state.auth;
+  } = state.sessions;
 
   return {
     isAuthenticated,
@@ -167,8 +173,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    reset: () => {
+      return dispatch(actions.sessions.reset());
+    },
     login: (credentials) => {
-      dispatch(actions.login(credentials));
+      return dispatch(actions.sessions.add(credentials));
     },
   };
 };

@@ -121,7 +121,7 @@ FollowAction.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     viewer,
-  } = state.auth;
+  } = state.sessions;
 
   const {
     actors,

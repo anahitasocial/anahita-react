@@ -183,7 +183,7 @@ const mapStateToProps = (namespace) => {
       hasMore,
     } = state[namespace];
 
-    const { viewer } = state.auth;
+    const { viewer } = state.sessions;
 
     return {
       media: state[namespace][namespace],

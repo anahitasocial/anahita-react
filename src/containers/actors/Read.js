@@ -130,42 +130,32 @@ ActorsRead.propTypes = {
   resetActors: PropTypes.func.isRequired,
   actors: ActorsType.isRequired,
   viewer: PersonType.isRequired,
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  isFetchingCover: PropTypes.bool,
   match: PropTypes.object.isRequired,
   setAppTitle: PropTypes.func.isRequired,
-};
-
-ActorsRead.defaultProps = {
-  isAuthenticated: false,
-  isFetchingCover: false,
 };
 
 const mapStateToProps = (namespace) => {
   return (state) => {
     const {
-      error,
-      isLeader,
       isFetching,
-      isFetchingCover,
+      error,
     } = state[namespace];
 
     const {
       isAuthenticated,
       viewer,
-    } = state.auth;
+    } = state.sessions;
 
     return {
       actors: state[namespace][namespace],
       namespace,
-      isLeader,
       error,
       isAuthenticated,
       viewer,
       isFetching,
-      isFetchingCover,
     };
   };
 };
