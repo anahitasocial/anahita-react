@@ -9,6 +9,7 @@ export default {
   name: '',
   alias: '',
   username: '',
+  email: '',
   usertype: TYPE.GUEST,
   givenName: '',
   familyName: '',

@@ -9,30 +9,42 @@ const initState = {
 
 export default (state = { ...initState }, action) => {
   switch (action.type) {
-    case IS.EMAIL.REQUEST:
     case IS.USERNAME.REQUEST:
       return {
         ...state,
-        ...initState,
+        isUsername: false,
+        isFetching: true,
+      };
+    case IS.USERNAME.SUCCESS:
+      return {
+        ...state,
+        isUsername: action.isUsername,
+        isFetching: false,
+      };
+    case IS.USERNAME.FAILURE:
+      return {
+        ...state,
+        isUsername: false,
+        isFetching: false,
+        error: action.error,
+      };
+    case IS.EMAIL.REQUEST:
+      return {
+        ...state,
+        isEmail: false,
         isFetching: true,
       };
     case IS.EMAIL.SUCCESS:
       return {
         ...state,
-        ...initState,
-        isEmail: true,
-      };
-    case IS.USERNAME.SUCCESS:
-      return {
-        ...state,
-        ...initState,
-        isUsername: true,
+        isEmail: action.isEmail,
+        isFetching: false,
       };
     case IS.EMAIL.FAILURE:
-    case IS.USERNAME.FAILURE:
       return {
         ...state,
-        ...initState,
+        isEmail: false,
+        isFetching: false,
         error: action.error,
       };
     default:

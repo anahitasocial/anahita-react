@@ -10,8 +10,6 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import TextFieldUsername from '../textfields/TextFieldUsername';
-import TextFieldEmail from '../textfields/TextFieldEmail';
 import { Person as PERSON } from '../../constants';
 
 const styles = (theme) => {
@@ -66,7 +64,7 @@ const PersonAddForm = (props) => {
           {formTitle}
         </Typography>
       }
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} autoComplete="off">
         <TextField
           name="givenName"
           value={givenName}
@@ -88,17 +86,25 @@ const PersonAddForm = (props) => {
           fullWidth
           margin="normal"
         />
-        <TextFieldUsername
+        <TextField
+          name="username"
           value={username}
           onChange={handleFieldChange}
+          label="Username"
           error={usernameError}
           helperText={usernameHelperText}
+          fullWidth
+          margin="normal"
         />
-        <TextFieldEmail
+        <TextField
+          name="email"
           value={email}
           onChange={handleFieldChange}
+          label="Email"
           error={emailError}
           helperText={emailHelperText}
+          fullWidth
+          margin="normal"
         />
         <FormControl className={classes.formControl}>
           <InputLabel

@@ -12,9 +12,6 @@ import TextField from '@material-ui/core/TextField';
 
 import SignUpIcon from '@material-ui/icons/PersonAdd';
 
-import TextFieldUsername from '../textfields/TextFieldUsername';
-import TextFieldEmail from '../textfields/TextFieldEmail';
-
 const SignupForm = (props) => {
   const {
     handleFieldChange,
@@ -35,11 +32,11 @@ const SignupForm = (props) => {
     passwordError,
     passwordHelperText,
     isFetching,
-    success,
+    canSubmit,
   } = props;
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={handleFormSubmit} autoComplete="off">
       <Card square>
         <CardHeader
           avatar={
@@ -64,8 +61,6 @@ const SignupForm = (props) => {
             autoFocus
             fullWidth
             margin="normal"
-            disabled={success}
-            autoComplete="off"
           />
           <TextField
             name="familyName"
@@ -76,22 +71,26 @@ const SignupForm = (props) => {
             helperText={familyNameHelperText}
             fullWidth
             margin="normal"
-            disabled={success}
-            autoComplete="off"
           />
-          <TextFieldUsername
+          <TextField
+            name="username"
             value={username}
             onChange={handleFieldChange}
+            label="Username"
             error={usernameError}
             helperText={usernameHelperText}
-            disabled={success}
+            fullWidth
+            margin="normal"
           />
-          <TextFieldEmail
+          <TextField
+            name="email"
             value={email}
             onChange={handleFieldChange}
-            disabled={success}
+            label="Email"
             error={emailError}
             helperText={emailHelperText}
+            fullWidth
+            margin="normal"
           />
           <TextField
             type="password"
@@ -103,8 +102,6 @@ const SignupForm = (props) => {
             helperText={passwordHelperText}
             fullWidth
             margin="normal"
-            disabled={success}
-            autoComplete="off"
           />
         </CardContent>
         <CardActions>
@@ -112,7 +109,7 @@ const SignupForm = (props) => {
             variant="contained"
             type="submit"
             color="primary"
-            disabled={isFetching || success}
+            disabled={isFetching || !canSubmit}
             fullWidth
           >
             {'Signup'}
@@ -142,7 +139,7 @@ SignupForm.propTypes = {
   passwordError: PropTypes.bool.isRequired,
   passwordHelperText: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
-  success: PropTypes.bool.isRequired,
+  canSubmit: PropTypes.bool.isRequired,
 };
 
 SignupForm.defaultProps = {

@@ -9,6 +9,10 @@ import * as validate from '../people/validate';
 
 import PersonDefault from '../../proptypes/PersonDefault';
 
+const STATE_VALIDATING_NEW = 'new';
+const STATE_VALIDATING_IN_PROGRESS = 'in_progress';
+const STATE_VALIDATING_READY = 'ready';
+
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +29,7 @@ class SignupPage extends React.Component {
       emailHelperText: '',
       passwordError: false,
       passwordHelperText: '',
+      validationState: STATE_VALIDATING_NEW,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -52,17 +57,43 @@ class SignupPage extends React.Component {
       helperText: '',
     };
 
+    const { isUsernameAvailable, isEmailAvailable } = this.props;
+
     switch (name) {
       case 'username':
         if (!validate.username(value)) {
           fieldError.error = true;
-          fieldError.helperText = 'A username of at least 6 characters is required!';
+          fieldError.helperText = 'A valid username of at least 6 characters is required!';
+        } else {
+          isUsernameAvailable(value).then().then(() => {
+            this.setState({
+              [`${name}Error`]: false,
+              [`${name}HelperText`]: 'This is a good username!',
+            });
+          }).catch(() => {
+            this.setState({
+              [`${name}Error`]: true,
+              [`${name}HelperText`]: 'Someone has already signed up using this username!',
+            });
+          });
         }
         break;
       case 'email':
         if (!validate.email(value)) {
           fieldError.error = true;
           fieldError.helperText = 'A valid email address is required!';
+        } else {
+          isEmailAvailable(value).then().then(() => {
+            this.setState({
+              [`${name}Error`]: false,
+              [`${name}HelperText`]: 'This is a good email!',
+            });
+          }).catch(() => {
+            this.setState({
+              [`${name}Error`]: true,
+              [`${name}HelperText`]: 'Someone has already signed up using this email!',
+            });
+          });
         }
         break;
       case 'givenName':
@@ -88,31 +119,26 @@ class SignupPage extends React.Component {
     this.setState({
       [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
+      validationState: this.canSubmit() ? STATE_VALIDATING_READY : STATE_VALIDATING_IN_PROGRESS,
     });
-
-    return !fieldError.error;
   }
 
-  validate() {
+  canSubmit() {
     const {
-      givenName,
-      familyName,
-      username,
-      email,
-      password,
-    } = this.state.person;
+      validationState,
+    } = this.state;
 
-    const givenNameValidated = this.validateField('givenName', givenName);
-    const familyNameValidated = this.validateField('familyName', familyName);
-    const usernameValidated = this.validateField('username', username);
-    const emailValidated = this.validateField('email', email);
-    const passwordValidated = this.validateField('password', password);
+    if (validationState === STATE_VALIDATING_NEW) {
+      return false;
+    }
 
-    return givenNameValidated &&
-    familyNameValidated &&
-    usernameValidated &&
-    emailValidated &&
-    passwordValidated;
+    const fields = ['givenName', 'familyName', 'username', 'email', 'password'];
+
+    const readyFields = fields.map((field) => {
+      return this.state.person[field] !== '' && !this.state[`${field}Error`];
+    });
+
+    return !readyFields.includes(false);
   }
 
   signup() {
@@ -123,9 +149,7 @@ class SignupPage extends React.Component {
 
   handleFormSubmit(event) {
     event.preventDefault();
-    if (this.validate()) {
-      this.signup();
-    }
+    this.signup();
   }
 
   render() {
@@ -148,6 +172,7 @@ class SignupPage extends React.Component {
       emailError,
       passwordError,
       passwordHelperText,
+      validationState,
     } = this.state;
 
     if (isAuthenticated) {
@@ -177,8 +202,8 @@ class SignupPage extends React.Component {
           handleFieldChange={this.handleFieldChange}
           handleFormSubmit={this.handleFormSubmit}
           isFetching={isFetching}
-          success={success}
           error={error}
+          canSubmit={validationState === STATE_VALIDATING_READY}
         />
         {error &&
           <SimpleSnackbar
@@ -202,6 +227,8 @@ class SignupPage extends React.Component {
 
 SignupPage.propTypes = {
   signup: PropTypes.func.isRequired,
+  isUsernameAvailable: PropTypes.func.isRequired,
+  isEmailAvailable: PropTypes.func.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
@@ -230,7 +257,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     signup: (person) => {
-      dispatch(actions.signup.add(person));
+      return dispatch(actions.signup.add(person));
+    },
+    isUsernameAvailable: (username) => {
+      return dispatch(actions.is.username(username));
+    },
+    isEmailAvailable: (email) => {
+      return dispatch(actions.is.email(email));
     },
   };
 };

@@ -52,7 +52,7 @@ function isUsernameRequest() {
 function isUsernameSuccess() {
   return {
     type: IS.USERNAME.SUCCESS,
-    isEmail: true,
+    isUsername: true,
   };
 }
 
