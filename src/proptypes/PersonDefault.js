@@ -10,6 +10,7 @@ export default {
   alias: '',
   username: '',
   email: '',
+  password: '',
   usertype: TYPE.GUEST,
   givenName: '',
   familyName: '',

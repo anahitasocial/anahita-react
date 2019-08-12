@@ -9,10 +9,6 @@ import * as validate from '../people/validate';
 
 import PersonDefault from '../../proptypes/PersonDefault';
 
-const STATE_VALIDATING_NEW = 'new';
-const STATE_VALIDATING_IN_PROGRESS = 'in_progress';
-const STATE_VALIDATING_READY = 'ready';
-
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +25,6 @@ class SignupPage extends React.Component {
       emailHelperText: '',
       passwordError: false,
       passwordHelperText: '',
-      validationState: STATE_VALIDATING_NEW,
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -119,19 +114,10 @@ class SignupPage extends React.Component {
     this.setState({
       [`${name}Error`]: fieldError.error,
       [`${name}HelperText`]: fieldError.helperText,
-      validationState: this.canSubmit() ? STATE_VALIDATING_READY : STATE_VALIDATING_IN_PROGRESS,
     });
   }
 
   canSubmit() {
-    const {
-      validationState,
-    } = this.state;
-
-    if (validationState === STATE_VALIDATING_NEW) {
-      return false;
-    }
-
     const fields = ['givenName', 'familyName', 'username', 'email', 'password'];
 
     const readyFields = fields.map((field) => {
@@ -142,9 +128,24 @@ class SignupPage extends React.Component {
   }
 
   signup() {
-    const { person } = this.state;
+    const {
+      person: {
+        givenName,
+        familyName,
+        username,
+        email,
+        password,
+      },
+    } = this.state;
+
     const { signup } = this.props;
-    signup(person);
+    signup({
+      givenName,
+      familyName,
+      username,
+      email,
+      password,
+    });
   }
 
   handleFormSubmit(event) {
@@ -172,7 +173,6 @@ class SignupPage extends React.Component {
       emailError,
       passwordError,
       passwordHelperText,
-      validationState,
     } = this.state;
 
     if (isAuthenticated) {
@@ -180,6 +180,8 @@ class SignupPage extends React.Component {
         <Redirect push to="/dashboard/" />
       );
     }
+
+    const canSubmit = this.canSubmit();
 
     return (
       <React.Fragment>
@@ -202,8 +204,9 @@ class SignupPage extends React.Component {
           handleFieldChange={this.handleFieldChange}
           handleFormSubmit={this.handleFormSubmit}
           isFetching={isFetching}
+          success={success}
           error={error}
-          canSubmit={validationState === STATE_VALIDATING_READY}
+          canSubmit={canSubmit}
         />
         {error &&
           <SimpleSnackbar
