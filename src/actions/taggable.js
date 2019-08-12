@@ -50,7 +50,8 @@ function browse(params) {
           dispatch(browseFailure(response));
           return reject(response);
         }).catch((error) => {
-          throw new Error(error);
+          // throw new Error(error);
+          console.error(error);
         });
     });
   };

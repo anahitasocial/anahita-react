@@ -35,7 +35,8 @@ function read(id, namespace) {
           dispatch(readFailure(response));
           return reject(response);
         }).catch((error) => {
-          throw new Error(error);
+          // throw new Error(error);
+          console.error(error);
         });
     });
   };
@@ -77,7 +78,8 @@ function deleteItem(node) {
           dispatch(deleteFailure(response));
           return reject(response);
         }).catch((error) => {
-          throw new Error(error);
+          // throw new Error(error);
+          console.error(error);
         });
     });
   };

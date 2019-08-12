@@ -43,7 +43,8 @@ function browse(node) {
           dispatch(browseFailure(response));
           return reject(response);
         }).catch((error) => {
-          throw new Error(error);
+          // throw new Error(error);
+          console.error(error);
         });
     });
   };
@@ -82,7 +83,8 @@ function add(node, comment = CommentDefault) {
           dispatch(addFailure(response));
           return reject(response);
         }).catch((error) => {
-          throw new Error(error);
+          // throw new Error(error);
+          console.error(error);
         });
     });
   };
@@ -121,7 +123,8 @@ function deleteItem(node, comment = CommentDefault) {
           dispatch(deleteFailure(response));
           return reject(response);
         }).catch((error) => {
-          throw new Error(error);
+          // throw new Error(error);
+          console.error(error);
         });
     });
   };
