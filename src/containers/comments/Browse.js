@@ -27,14 +27,12 @@ class CommentsBrowse extends React.Component {
     this.offset = 0;
     this.handleAdd = this.handleAdd.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
-  }
 
-  componentWillMount() {
     const {
       parent,
       comments,
       setComments,
-    } = this.props;
+    } = props;
 
     setComments(parent, comments);
   }

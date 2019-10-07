@@ -27,25 +27,22 @@ class PeopleSettingsAccount extends React.Component {
       error: '',
     };
 
+    this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+
     const {
+      readPerson,
       computedMatch: {
         params: {
           id,
         },
       },
     } = props;
-    this.id = id;
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
+    readPerson(id);
   }
 
-  componentWillMount() {
-    const { readPerson } = this.props;
-    readPerson(this.id);
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       people,
       isFetching,
@@ -56,12 +53,12 @@ class PeopleSettingsAccount extends React.Component {
     const person = { ...people.current };
     delete person.password;
 
-    this.setState({
+    return {
       person,
       isFetching,
       success,
       error,
-    });
+    };
   }
 
   handleFieldChange(event) {

@@ -13,8 +13,11 @@ class BlockAction extends React.Component {
   constructor(props) {
     super(props);
 
+    const { actor, actors } = props;
+    const isBlocked = actors.byId[actor.id] ? actors.byId[actor.id].isBlocked : actor.isBlocked;
+
     this.state = {
-      isBlocked: false,
+      isBlocked,
       isWaiting: false,
     };
 
@@ -22,21 +25,17 @@ class BlockAction extends React.Component {
     this.handleUnblock = this.handleUnblock.bind(this);
   }
 
-  componentWillMount() {
-    const { actor, actors } = this.props;
-    const isBlocked = actors.byId[actor.id] ? actors.byId[actor.id].isBlocked : actor.isBlocked;
-    this.setState({ isBlocked });
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { actors, actor } = nextProps;
 
     if (actors.byId[actor.id]) {
-      this.setState({
+      return {
         isBlocked: actors.byId[actor.id].isBlocked,
         isWaiting: false,
-      });
+      };
     }
+
+    return null;
   }
 
   componentWillUnmount() {

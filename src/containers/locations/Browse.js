@@ -58,25 +58,23 @@ class LocationsBrowse extends React.Component {
     this.offset = 0;
     this.fetchList = this.fetchList.bind(this);
     this.changeTab = this.changeTab.bind(this);
-  }
 
-  componentWillMount() {
-    const { setAppTitle } = this.props;
+    const { setAppTitle } = props;
     setAppTitle(i18n.t('locations:cTitle'));
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       locations,
       error,
       hasMore,
     } = nextProps;
 
-    this.setState({
+    return {
       locations,
       error,
       hasMore,
-    });
+    };
   }
 
   componentWillUnmount() {

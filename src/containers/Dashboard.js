@@ -7,8 +7,10 @@ import appActions from '../actions/app';
 import i18n from '../languages';
 
 class DashboardPage extends React.Component {
-  componentWillMount() {
-    const { setAppTitle } = this.props;
+  constructor(props, context) {
+    super(props, context);
+
+    const { setAppTitle } = props;
     setAppTitle(i18n.t('dashboard:cTitle'));
   }
 

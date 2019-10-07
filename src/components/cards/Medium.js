@@ -124,15 +124,16 @@ class MediumCard extends React.Component {
             action={
               <React.Fragment>
                 <IconButton
-                  aria-owns={menuAnchorEl ? 'story-menu' : undefined}
+                  aria-owns={menuAnchorEl ? `medium-card-menu-${medium.id}` : undefined}
                   aria-haspopup="true"
                   onClick={this.handleOpenMenu}
                 >
                   <MoreVertIcon />
                 </IconButton>
                 <Menu
-                  id="simple-menu"
+                  id={`medium-card-menu-${medium.id}`}
                   anchorEl={menuAnchorEl}
+                  keepMounted
                   open={Boolean(menuAnchorEl)}
                   onClose={this.handleCloseMenu}
                 >

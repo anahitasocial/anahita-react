@@ -18,15 +18,15 @@ class TextFieldUsername extends React.Component {
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { isUsername, isFetching, error } = nextProps;
     const helperText = isUsername ? 'Good username!' : 'Username already taken!';
 
-    this.setState({
+    return {
       isFetching,
       helperText,
       error,
-    });
+    };
   }
 
   handleFieldChange(event) {

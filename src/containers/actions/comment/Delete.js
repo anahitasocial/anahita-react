@@ -12,21 +12,24 @@ class ActionsCommentDelete extends React.Component {
   constructor(props) {
     super(props);
 
+    const { isDeleted } = props;
+
     this.state = {
-      isDeleted: false,
+      isDeleted,
       isFetching: false,
     };
 
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  componentWillMount() {
-    const { isDeleted } = this.props;
-    this.setState({ isDeleted });
-  }
+  static getDerivedStateFromProps(nextProps, state) {
+    const { isFetching } = nextProps;
 
-  componentWillReceiveProps() {
-    this.setState({ isFetching: false });
+    if (isFetching !== state.isFetching) {
+      return { isFetching };
+    }
+
+    return null;
   }
 
   handleDelete(event) {

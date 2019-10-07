@@ -67,16 +67,14 @@ class ActorsBrowse extends React.Component {
 
     this.offset = 0;
     this.fetchActors = this.fetchActors.bind(this);
-  }
 
-  componentWillMount() {
-    const { setAppTitle, namespace } = this.props;
+    const { setAppTitle, namespace } = props;
     setAppTitle(i18n.t(`${namespace}:cTitle`));
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { actors, hasMore } = nextProps;
-    this.setState({ actors, hasMore });
+    return { actors, hasMore };
   }
 
   fetchActors() {

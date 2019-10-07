@@ -31,6 +31,11 @@ const MediaCard = (props) => {
     <MediumCard
       medium={medium}
       menuItems={[
+        <NotificationAction
+          medium={medium}
+          isSubscribed={medium.isSubscribed}
+          key={`medium-notification-${medium.id}`}
+        />,
         medium.owner.id !== viewer.id &&
         <FollowAction
           actor={medium.owner}
@@ -43,11 +48,6 @@ const MediaCard = (props) => {
             name: ownerName,
           })}
         />,
-        <NotificationAction
-          medium={medium}
-          isSubscribed={medium.isSubscribed}
-          key={`medium-notification-${medium.id}`}
-        />,
         canDelete &&
         <MediumDeleteAction
           medium={medium}
@@ -55,12 +55,10 @@ const MediaCard = (props) => {
         />,
       ]}
       actions={
-        <React.Fragment>
-          <LikeAction
-            node={medium}
-            isLiked={medium.isVotedUp}
-          />
-        </React.Fragment>
+        <LikeAction
+          node={medium}
+          isLiked={medium.isVotedUp}
+        />
       }
     />
   );

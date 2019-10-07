@@ -24,28 +24,26 @@ class ActorsSettingsInfo extends React.Component {
       bodyHelperText: '',
     };
 
+    this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+
     const {
+      readActor,
       computedMatch: {
         params,
       },
     } = props;
+
     const [id] = params.id.split('-');
-    this.id = id;
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    readActor(id);
   }
 
-  componentWillMount() {
-    const { readActor } = this.props;
-    readActor(this.id);
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { actors } = nextProps;
-    this.setState({
+    return {
       actor: actors.current,
-    });
+    };
   }
 
   handleFieldChange(event) {

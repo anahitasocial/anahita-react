@@ -43,26 +43,25 @@ class ActorsRead extends React.Component {
     };
 
     const {
+      namespace,
+      readActor,
+      setAppTitle,
       match: {
         params: {
           id,
         },
       },
     } = props;
-    this.id = id;
-  }
 
-  componentWillMount() {
-    const { namespace, readActor, setAppTitle } = this.props;
-    readActor(this.id, namespace);
+    readActor(id, namespace);
     setAppTitle(i18n.t(`${namespace}:cTitle`));
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { actors } = nextProps;
-    this.setState({
+    return {
       actor: actors.current,
-    });
+    };
   }
 
   componentWillUnmount() {

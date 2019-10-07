@@ -18,15 +18,15 @@ class TextFieldEmail extends React.Component {
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { isEmail, isFetching, error } = nextProps;
     const helperText = isEmail ? 'Good email!' : 'Email already taken!';
 
-    this.setState({
+    return {
       isFetching,
       helperText,
       error,
-    });
+    };
   }
 
   handleFieldChange(event) {

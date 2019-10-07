@@ -12,8 +12,10 @@ class ActionsMediumNotification extends React.Component {
   constructor(props) {
     super(props);
 
+    const { isSubscribed } = props;
+
     this.state = {
-      isSubscribed: false,
+      isSubscribed,
       isFetching: false,
     };
 
@@ -21,14 +23,14 @@ class ActionsMediumNotification extends React.Component {
     this.handleUnsubscribe = this.handleUnsubscribe.bind(this);
   }
 
-  componentWillMount() {
-    const { isSubscribed } = this.props;
-    this.setState({ isSubscribed });
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps, state) {
     const { isFetching } = nextProps;
-    this.setState({ isFetching });
+
+    if (isFetching !== state.isFetching) {
+      return { isFetching };
+    }
+
+    return null;
   }
 
   handleSubscribe(event) {
@@ -95,7 +97,6 @@ ActionsMediumNotification.propTypes = {
   component: PropTypes.oneOf(['button', 'menuitem']),
   subscribeLabel: PropTypes.string,
   unsubscribeLabel: PropTypes.string,
-  isFetching: PropTypes.bool.isRequired,
 };
 
 ActionsMediumNotification.defaultProps = {

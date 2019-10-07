@@ -25,25 +25,22 @@ class ActorsSettingsDelete extends React.Component {
       error: '',
     };
 
+    this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+
     const {
+      readActor,
       computedMatch: {
         params: {
           id,
         },
       },
     } = props;
-    this.id = id;
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    readActor(id);
   }
 
-  componentWillMount() {
-    const { readActor } = this.props;
-    readActor(this.id);
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       actors,
       isFetching,
@@ -51,12 +48,12 @@ class ActorsSettingsDelete extends React.Component {
       error,
     } = nextProps;
 
-    this.setState({
+    return {
       actor: actors.current,
       isFetching,
       success,
       error,
-    });
+    };
   }
 
   componentWillUnmount() {

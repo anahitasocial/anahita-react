@@ -35,7 +35,7 @@ class ActorsAdd extends React.Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       actors,
       isFetching,
@@ -43,12 +43,12 @@ class ActorsAdd extends React.Component {
       error,
     } = nextProps;
 
-    this.setState({
+    return {
       actor: actors.current,
       isFetching,
       success,
       error,
-    });
+    };
   }
 
   handleFieldChange(event) {

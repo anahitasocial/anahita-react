@@ -16,8 +16,10 @@ class LikeAction extends React.Component {
   constructor(props) {
     super(props);
 
+    const { isLiked } = props;
+
     this.state = {
-      isLiked: false,
+      isLiked,
       isFetching: false,
     };
 
@@ -25,13 +27,14 @@ class LikeAction extends React.Component {
     this.handleUnlike = this.handleUnlike.bind(this);
   }
 
-  componentWillMount() {
-    const { isLiked } = this.props;
-    this.setState({ isLiked });
-  }
+  static getDerivedStateFromProps(nextProps, state) {
+    const { isFetching } = nextProps;
 
-  componentWillReceiveProps() {
-    this.setState({ isFetching: false });
+    if (isFetching !== state.isFetching) {
+      return { isFetching };
+    }
+
+    return null;
   }
 
   handleLike(event) {

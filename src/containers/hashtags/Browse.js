@@ -55,25 +55,23 @@ class HashtagsBrowse extends React.Component {
     this.offset = 0;
     this.fetchList = this.fetchList.bind(this);
     this.changeTab = this.changeTab.bind(this);
-  }
 
-  componentWillMount() {
-    const { setAppTitle } = this.props;
+    const { setAppTitle } = props;
     setAppTitle(i18n.t('hashtags:cTitle'));
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       hashtags,
       error,
       hasMore,
     } = nextProps;
 
-    this.setState({
+    return {
       hashtags,
       error,
       hasMore,
-    });
+    };
   }
 
   componentWillUnmount() {

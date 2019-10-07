@@ -48,7 +48,11 @@ class HashtagsRead extends React.Component {
       taggablesCount: 0,
     };
 
+    this.changeTab = this.changeTab.bind(this);
+
     const {
+      readHashtag,
+      setAppTitle,
       match: {
         params: {
           alias,
@@ -56,17 +60,11 @@ class HashtagsRead extends React.Component {
       },
     } = props;
 
-    this.alias = alias;
-    this.changeTab = this.changeTab.bind(this);
-  }
-
-  componentWillMount() {
-    const { readHashtag, setAppTitle } = this.props;
-    readHashtag(this.alias);
+    readHashtag(alias);
     setAppTitle(i18n.t('hashtags:cTitle'));
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       hashtags,
       taggablesCount,
@@ -74,12 +72,12 @@ class HashtagsRead extends React.Component {
       error,
     } = nextProps;
 
-    this.setState({
+    return {
       hashtag: hashtags.current,
       taggablesCount,
       isFetching,
       error,
-    });
+    };
   }
 
   changeTab(event, value) {

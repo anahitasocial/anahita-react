@@ -41,18 +41,18 @@ class TaggablesBrowse extends React.Component {
     this.fetchList = this.fetchList.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       taggables,
       error,
       hasMore,
     } = nextProps;
 
-    this.setState({
+    return {
       taggables,
       error,
       hasMore,
-    });
+    };
   }
 
   componentWillUnmount() {

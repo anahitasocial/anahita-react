@@ -82,9 +82,9 @@ class StoriesBrowse extends React.Component {
     this.fetchStories = this.fetchStories.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { stories, hasMore } = nextProps;
-    this.setState({ hasMore, stories });
+    return { hasMore, stories };
   }
 
   componentWillUnmount() {

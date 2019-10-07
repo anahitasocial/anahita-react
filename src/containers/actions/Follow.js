@@ -13,8 +13,11 @@ class FollowAction extends React.Component {
   constructor(props) {
     super(props);
 
+    const { actor, actors } = props;
+    const isLeader = actors.byId[actor.id] ? actors.byId[actor.id].isLeader : actor.isLeader;
+
     this.state = {
-      isLeader: false,
+      isLeader,
       isWaiting: false,
     };
 
@@ -22,21 +25,17 @@ class FollowAction extends React.Component {
     this.handleUnfollow = this.handleUnfollow.bind(this);
   }
 
-  componentWillMount() {
-    const { actor, actors } = this.props;
-    const isLeader = actors.byId[actor.id] ? actors.byId[actor.id].isLeader : actor.isLeader;
-    this.setState({ isLeader });
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { actors, actor } = nextProps;
 
     if (actors.byId[actor.id]) {
-      this.setState({
+      return {
         isLeader: actors.byId[actor.id].isLeader,
         isWaiting: false,
-      });
+      };
     }
+
+    return null;
   }
 
   componentWillUnmount() {

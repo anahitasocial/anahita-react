@@ -29,25 +29,22 @@ class PersonSettingsInfo extends React.Component {
       error: '',
     };
 
+    this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+
     const {
+      readPerson,
       computedMatch: {
         params: {
           id,
         },
       },
     } = props;
-    this.id = id;
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
+    readPerson(id);
   }
 
-  componentWillMount() {
-    const { readPerson } = this.props;
-    readPerson(this.id);
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       people,
       isFetching,
@@ -55,12 +52,12 @@ class PersonSettingsInfo extends React.Component {
       error,
     } = nextProps;
 
-    this.setState({
+    return {
       person: people.current,
       isFetching,
       success,
       error,
-    });
+    };
   }
 
   handleFieldChange(event) {

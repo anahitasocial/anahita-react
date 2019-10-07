@@ -18,25 +18,23 @@ class ActorSettings extends React.Component {
     };
 
     const {
+      namespace,
+      readActor,
       computedMatch: {
         params,
       },
     } = props;
     const [id] = params.id.split('-');
-    this.id = id;
+
+    readActor(id, namespace);
   }
 
-  componentWillMount() {
-    const { namespace, readActor } = this.props;
-    readActor(this.id, namespace);
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { actors, isFetching } = nextProps;
-    this.setState({
+    return {
       actor: actors.current,
       isFetching,
-    });
+    };
   }
 
   componentWillUnmount() {

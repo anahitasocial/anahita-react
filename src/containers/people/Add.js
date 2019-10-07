@@ -40,7 +40,7 @@ class PeopleAdd extends React.Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       people,
       isFetching,
@@ -48,12 +48,12 @@ class PeopleAdd extends React.Component {
       error,
     } = nextProps;
 
-    this.setState({
+    return {
       person: people.current,
       isFetching,
       success,
       error,
-    });
+    };
   }
 
   getInitials() {

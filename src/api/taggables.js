@@ -4,16 +4,14 @@ const browse = (params) => {
   const {
     tag: {
       id,
-      name,
       objectType,
     },
   } = params;
 
   const namespace = objectType.split('.')[1];
-  const alias = namespace === 'hashtags' ? name.toLowerCase() : `${id}-${name.toLowerCase()}`;
   const { start, limit, sort } = params;
 
-  return axios.get(`/${namespace}/${alias}.json?`, {
+  return axios.get(`/${namespace}/${id}.json?`, {
     params: {
       start,
       limit,

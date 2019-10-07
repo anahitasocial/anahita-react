@@ -62,16 +62,14 @@ class MediaBrowse extends React.Component {
 
     this.offset = 0;
     this.fetchMedia = this.fetchMedia.bind(this);
-  }
 
-  componentWillMount() {
-    const { setAppTitle, namespace } = this.props;
+    const { setAppTitle, namespace } = props;
     setAppTitle(i18n.t(`${namespace}:cTitle`));
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { media, hasMore } = nextProps;
-    this.setState({ media, hasMore });
+    return { media, hasMore };
   }
 
   fetchMedia() {

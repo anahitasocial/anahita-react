@@ -7,7 +7,6 @@ import {
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import JssProvider from 'react-jss/lib/JssProvider';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -175,85 +174,83 @@ class App extends React.Component {
     const context = createContext();
 
     return (
-      <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
-        <MuiThemeProvider theme={context.theme}>
-          <div className={classes.appFrame}>
-            <AppBar
-              className={classNames(
-                classes.appBar,
-                open && classes.appBarShift,
-              )}
+      <MuiThemeProvider theme={context.theme}>
+        <div className={classes.appFrame}>
+          <AppBar
+            className={classNames(
+              classes.appBar,
+              open && classes.appBarShift,
+            )}
+          >
+            <Toolbar
+              disableGutters={!open}
+              className={classes.appToolbar}
             >
-              <Toolbar
-                disableGutters={!open}
-                className={classes.appToolbar}
+              <IconButton
+                className={classNames(
+                  classes.menuButton,
+                  open && classes.hide,
+                )}
+                color="inherit"
+                aria-label="toggle drawer"
+                onClick={this.handleDrawerToggle}
               >
-                <IconButton
-                  className={classNames(
-                    classes.menuButton,
-                    open && classes.hide,
-                  )}
+                <MenuIcon />
+              </IconButton>
+              {appBarTitle && !open &&
+                <Typography
+                  variant="h6"
                   color="inherit"
-                  aria-label="toggle drawer"
-                  onClick={this.handleDrawerToggle}
+                  noWrap
                 >
-                  <MenuIcon />
+                  {appBarTitle}
+                </Typography>
+              }
+              <div className={classes.grow} />
+              <Viewer
+                viewer={viewer}
+                isAuthenticated={isAuthenticated}
+              />
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            variant="temporary"
+            classes={{
+              paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
+            }}
+            open={open}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            onClose={this.handleDrawerToggle}
+          >
+            <div className={classes.drawerInner}>
+              <div className={classes.drawerHeader}>
+                <Typography variant="h6" color="inherit" noWrap>
+                  {'Anahita'}
+                </Typography>
+                <IconButton onClick={this.handleDrawerToggle}>
+                  {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                 </IconButton>
-                {appBarTitle && !open &&
-                  <Typography
-                    variant="h6"
-                    color="inherit"
-                    noWrap
-                  >
-                    {appBarTitle}
-                  </Typography>
-                }
-                <div className={classes.grow} />
-                <Viewer
-                  viewer={viewer}
-                  isAuthenticated={isAuthenticated}
-                />
-              </Toolbar>
-            </AppBar>
-            <Drawer
-              variant="temporary"
-              classes={{
-                paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
-              }}
-              open={open}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-              onClose={this.handleDrawerToggle}
-            >
-              <div className={classes.drawerInner}>
-                <div className={classes.drawerHeader}>
-                  <Typography variant="h6" color="inherit" noWrap>
-                    {'Anahita'}
-                  </Typography>
-                  <IconButton onClick={this.handleDrawerToggle}>
-                    {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                  </IconButton>
-                </div>
-                <Divider />
-                <List className={classes.list}>
-                  <LeftMenu
-                    onLogoutClick={this.handleLogout}
-                    isAuthenticated={isAuthenticated}
-                    classNames={classes}
-                  />
-                </List>
-                <Divider />
               </div>
-            </Drawer>
-            <main className={classes.content}>
-              <AppWrapper>
-                {children}
-              </AppWrapper>
-            </main>
-          </div>
-        </MuiThemeProvider>
-      </JssProvider>
+              <Divider />
+              <List className={classes.list}>
+                <LeftMenu
+                  onLogoutClick={this.handleLogout}
+                  isAuthenticated={isAuthenticated}
+                  classNames={classes}
+                />
+              </List>
+              <Divider />
+            </div>
+          </Drawer>
+          <main className={classes.content}>
+            <AppWrapper>
+              {children}
+            </AppWrapper>
+          </main>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

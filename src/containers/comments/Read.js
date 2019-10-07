@@ -9,7 +9,6 @@ import CommentForm from '../../components/comment/Form';
 import actions from '../../actions/comments';
 import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
-import CommentDefault from '../../proptypes/CommentDefault';
 import PersonType from '../../proptypes/Person';
 
 import LikeAction from '../actions/node/Like';
@@ -24,9 +23,11 @@ class CommentsRead extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    const { comment } = props;
+
     this.state = {
       isEditing: false,
-      comment: { ...CommentDefault },
+      comment,
       bodyError: false,
       bodyHelperText: '',
     };
@@ -39,14 +40,9 @@ class CommentsRead extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
   }
 
-  componentWillMount() {
-    const { comment } = this.props;
-    this.setState({ comment });
-  }
-
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const { comment } = nextProps;
-    this.setState({ comment });
+    return { comment };
   }
 
   handleCancel() {

@@ -57,7 +57,11 @@ class LocationsRead extends React.Component {
       taggablesCount: 0,
     };
 
+    this.changeTab = this.changeTab.bind(this);
+
     const {
+      readLocation,
+      setAppTitle,
       match: {
         params: {
           id,
@@ -65,17 +69,11 @@ class LocationsRead extends React.Component {
       },
     } = props;
 
-    this.id = id;
-    this.changeTab = this.changeTab.bind(this);
-  }
-
-  componentWillMount() {
-    const { readLocation, setAppTitle } = this.props;
-    readLocation(this.id);
+    readLocation(id);
     setAppTitle(i18n.t('locations:cTitle'));
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const {
       locations,
       taggablesCount,
@@ -83,12 +81,12 @@ class LocationsRead extends React.Component {
       error,
     } = nextProps;
 
-    this.setState({
+    return {
       location: locations.current,
       taggablesCount,
       isFetching,
       error,
-    });
+    };
   }
 
   changeTab(event, value) {
