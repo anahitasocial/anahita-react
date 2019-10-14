@@ -8,7 +8,6 @@ import is from './is';
 import likes from './likes';
 import locations from './locations';
 import hashtags from './hashtags';
-import node from './node';
 import notifications from './notifications';
 import password from './password';
 import session from './session';
@@ -42,7 +41,6 @@ export default combineReducers({
   likes,
   locations,
   hashtags,
-  node,
   notes,
   notifications,
   password,

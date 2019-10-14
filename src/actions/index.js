@@ -7,7 +7,6 @@ import comments from './comments';
 import cover from './cover';
 import is from './is';
 import likes from './likes';
-import node from './node';
 import notifications from './notifications';
 import password from './password';
 import session from './session';
@@ -37,7 +36,6 @@ export {
   hashtags,
   likes,
   locations,
-  node,
   notes,
   notifications,
   password,
