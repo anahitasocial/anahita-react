@@ -39,7 +39,7 @@ export default function (state = {
         isFetching: false,
         success: true,
         error: '',
-        nodes: utils.deleteItem(state.nodes, action.node),
+        nodes: utils.deleteItem(state.nodes, action.node, NODE_DEFAULT),
       };
     case COVER.ADD.FAILURE:
     case COVER.DELETE.FAILURE:

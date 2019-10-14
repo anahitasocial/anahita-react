@@ -35,8 +35,9 @@ class ActionsMediumDelete extends React.Component {
     event.preventDefault();
 
     const { medium, deleteItem } = this.props;
+    const namespace = medium.objectType.split('.')[1];
 
-    deleteItem(medium);
+    deleteItem(medium, namespace);
   }
 
   render() {
@@ -68,16 +69,19 @@ ActionsMediumDelete.defaultProps = {
   isDeleted: false,
 };
 
-const mapDispatchToProps = (namespace) => {
-  return (dispatch) => {
-    return {
-      deleteItem: (medium) => {
-        return dispatch(actions[namespace].deleteItem(medium));
-      },
-    };
+const mapStateToProps = () => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteItem: (medium, namespace) => {
+      return dispatch(actions[namespace].deleteItem(medium));
+    },
   };
 };
 
-export default (namespace) => {
-  return connect(mapDispatchToProps(namespace))(ActionsMediumDelete);
-};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ActionsMediumDelete);

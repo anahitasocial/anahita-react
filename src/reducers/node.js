@@ -7,7 +7,7 @@ const DEFAULT_STATE = {
   nodes: {
     byId: {},
     allIds: [],
-    current: NODE_DEFAULT,
+    current: { ...NODE_DEFAULT },
   },
   error: '',
   success: false,
@@ -46,7 +46,7 @@ export default function (state = {
       return {
         ...state,
         isFetching: false,
-        nodes: utils.deleteItem(state.nodes, state.nodes.current),
+        nodes: utils.deleteItem(state.nodes, state.nodes.current, NODE_DEFAULT),
         success: true,
       };
     case NODE.READ.FAILURE:

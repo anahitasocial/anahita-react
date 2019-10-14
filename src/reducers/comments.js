@@ -44,6 +44,7 @@ const deleteComment = (action, state) => {
   parents.byId[parentId] = utils.deleteItem(
     parents.byId[parentId],
     comment,
+    NodeDefault,
   );
 
   return parents;

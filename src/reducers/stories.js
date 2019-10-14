@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { Stories as STORIES } from '../constants';
+import storyDefault from '../proptypes/StoryDefault';
 import utils from './utils';
 
 export default function (state = {
@@ -7,7 +8,7 @@ export default function (state = {
   stories: {
     byId: {},
     allIds: [],
-    current: null,
+    current: { ...storyDefault },
   },
   error: '',
   total: 0,
@@ -20,7 +21,7 @@ export default function (state = {
         stories: {
           byId: {},
           allIds: [],
-          current: null,
+          current: { ...storyDefault },
         },
         total: 0,
         isFetching: false,
@@ -54,7 +55,7 @@ export default function (state = {
             ...action.stories,
           },
           allIds: _.union(state.stories.allIds, action.ids),
-          current: null,
+          current: { ...storyDefault },
         },
         total: action.total,
         hasMore: action.hasMore,
@@ -64,7 +65,7 @@ export default function (state = {
       return {
         ...state,
         isFetching: false,
-        stories: utils.deleteItem(state.stories, state.stories.current),
+        stories: utils.deleteItem(state.stories, state.stories.current, storyDefault),
         success: true,
       };
     case STORIES.BROWSE.FAILURE:

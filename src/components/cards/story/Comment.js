@@ -128,6 +128,7 @@ class StoryCardComment extends React.Component {
                 anchorEl={menuAnchorEl}
                 open={Boolean(menuAnchorEl)}
                 onClose={this.handleCloseMenu}
+                keepMounted
               >
                 {menuItems}
               </Menu>

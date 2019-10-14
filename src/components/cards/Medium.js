@@ -89,102 +89,100 @@ class MediumCard extends React.Component {
     const author = getAuthor(medium);
 
     return (
-      <React.Fragment>
-        <Card square>
-          {medium.author && medium.owner.id !== medium.author.id &&
-            <CardHeaderOwner node={medium} />
+      <Card square>
+        {medium.author && medium.owner.id !== medium.author.id &&
+          <CardHeaderOwner node={medium} />
+        }
+        {cover &&
+          <Link href={url}>
+            <CardMedia
+              className={classes.cover}
+              image={cover}
+              title={medium.name}
+            />
+          </Link>
+        }
+        <CardHeader
+          avatar={
+            <ActorAvatar
+              actor={author}
+              linked={Boolean(author.id)}
+            />
           }
-          {cover &&
-            <Link href={url}>
-              <CardMedia
-                className={classes.cover}
-                image={cover}
-                title={medium.name}
-              />
-            </Link>
+          title={
+            <ActorTitle
+              actor={author}
+              linked={Boolean(author.id)}
+            />
           }
-          <CardHeader
-            avatar={
-              <ActorAvatar
-                actor={author}
-                linked={Boolean(author.id)}
-              />
-            }
-            title={
-              <ActorTitle
-                actor={author}
-                linked={Boolean(author.id)}
-              />
-            }
-            subheader={
-              <ReactTimeAgo
-                date={new Date(medium.creationTime)}
-              />
-            }
-            action={
-              <React.Fragment>
-                <IconButton
-                  aria-owns={menuAnchorEl ? `medium-card-menu-${medium.id}` : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleOpenMenu}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-                <Menu
-                  id={`medium-card-menu-${medium.id}`}
-                  anchorEl={menuAnchorEl}
-                  keepMounted
-                  open={Boolean(menuAnchorEl)}
-                  onClose={this.handleCloseMenu}
-                >
-                  {menuItems}
-                </Menu>
-              </React.Fragment>
-            }
-          />
-          {portrait &&
-            <Link href={url}>
-              <CardMedia
-                className={classes.portrait}
-                title={medium.name}
-                image={portrait}
-              />
-            </Link>
+          subheader={
+            <ReactTimeAgo
+              date={new Date(medium.creationTime)}
+            />
+          }
+          action={
+            <React.Fragment>
+              <IconButton
+                aria-owns={menuAnchorEl ? `medium-card-menu-${medium.id}` : undefined}
+                aria-haspopup="true"
+                onClick={this.handleOpenMenu}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                id={`medium-card-menu-${medium.id}`}
+                anchorEl={menuAnchorEl}
+                keepMounted
+                open={Boolean(menuAnchorEl)}
+                onClose={this.handleCloseMenu}
+              >
+                {menuItems}
+              </Menu>
+            </React.Fragment>
+          }
+        />
+        {portrait &&
+          <Link href={url}>
+            <CardMedia
+              className={classes.portrait}
+              title={medium.name}
+              image={portrait}
+            />
+          </Link>
+        }
+        {medium.body &&
+          <Player text={medium.body} />
+        }
+        <CardContent>
+          {medium.name &&
+            <Typography
+              variant="h6"
+              className={classes.title}
+            >
+              <Link href={url}>
+                {medium.name}
+              </Link>
+            </Typography>
           }
           {medium.body &&
-            <Player text={medium.body} />
+            <EntityBody>
+              {contentfilter({
+                text: medium.body,
+                filters: [
+                  'hashtag',
+                  'mention',
+                  'url',
+                ],
+              })}
+            </EntityBody>
           }
-          <CardContent>
-            {medium.name &&
-              <Typography
-                variant="h6"
-                className={classes.title}
-              >
-                <Link href={url}>
-                  {medium.name}
-                </Link>
-              </Typography>
-            }
-            {medium.body &&
-              <EntityBody>
-                {contentfilter({
-                  text: medium.body,
-                  filters: [
-                    'hashtag',
-                    'mention',
-                    'url',
-                  ],
-                })}
-              </EntityBody>
-            }
-          </CardContent>
-          {actions &&
-            <CardActions>
-              {actions}
-            </CardActions>
-          }
-        </Card>
-      </React.Fragment>
+        </CardContent>
+        {actions &&
+          <CardActions>
+            {actions}
+          </CardActions>
+        }
+      </Card>
     );
   }
 }

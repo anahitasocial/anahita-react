@@ -26,9 +26,19 @@ export default (namespace, defaultNode) => {
       case `${namespace.toUpperCase()}_READ_REQUEST`:
       case `${namespace.toUpperCase()}_EDIT_REQUEST`:
       case `${namespace.toUpperCase()}_ADD_REQUEST`:
+        return {
+          ...state,
+          isFetching: true,
+          success: false,
+          error: '',
+        };
       case `${namespace.toUpperCase()}_DELETE_REQUEST`:
         return {
           ...state,
+          [namespace]: {
+            ...state[namespace],
+            current: action.node,
+          },
           isFetching: true,
           success: false,
           error: '',
@@ -67,7 +77,11 @@ export default (namespace, defaultNode) => {
         return {
           ...state,
           isFetching: false,
-          [namespace]: utils.deleteItem(state[namespace], state[namespace].current),
+          [namespace]: utils.deleteItem(
+            state[namespace],
+            state[namespace].current,
+            defaultNode,
+          ),
           success: true,
         };
       case `${namespace.toUpperCase()}_BROWSE_FAILURE`:
