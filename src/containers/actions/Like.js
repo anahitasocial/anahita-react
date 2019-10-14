@@ -6,13 +6,13 @@ import IconButton from '@material-ui/core/IconButton';
 import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import UnlikeIcon from '@material-ui/icons/Favorite';
 
-import actions from '../../../actions/likes';
-import NodeType from '../../../proptypes/Node';
-import CommentType from '../../../proptypes/Comment';
-import CommentDefault from '../../../proptypes/CommentDefault';
-import i18n from '../../../languages';
+import actions from '../../actions/likes';
+import NodeType from '../../proptypes/Node';
+import CommentType from '../../proptypes/Comment';
+import CommentDefault from '../../proptypes/CommentDefault';
+import i18n from '../../languages';
 
-class LikeAction extends React.Component {
+class ActionLike extends React.Component {
   constructor(props) {
     super(props);
 
@@ -27,14 +27,9 @@ class LikeAction extends React.Component {
     this.handleUnlike = this.handleUnlike.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps, state) {
+  static getDerivedStateFromProps(nextProps) {
     const { isFetching } = nextProps;
-
-    if (isFetching !== state.isFetching) {
-      return { isFetching };
-    }
-
-    return null;
+    return { isFetching };
   }
 
   handleLike(event) {
@@ -82,7 +77,7 @@ class LikeAction extends React.Component {
   }
 }
 
-LikeAction.propTypes = {
+ActionLike.propTypes = {
   likeNode: PropTypes.func.isRequired,
   unlikeNode: PropTypes.func.isRequired,
   node: NodeType.isRequired,
@@ -91,7 +86,7 @@ LikeAction.propTypes = {
   size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
 };
 
-LikeAction.defaultProps = {
+ActionLike.defaultProps = {
   isLiked: false,
   comment: CommentDefault,
   size: 'default',
@@ -116,4 +111,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LikeAction);
+)(ActionLike);

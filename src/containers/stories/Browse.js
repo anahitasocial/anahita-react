@@ -12,9 +12,9 @@ import CommentsBrowse from '../comments/Browse';
 
 import actions from '../../actions/stories';
 
-import LikeAction from '../actions/node/Like';
+import LikeAction from '../actions/Like';
 import NotificationAction from '../actions/medium/Notification';
-import DeleteAction from '../actions/story/Delete';
+import DeleteAction from '../actions/Delete';
 import FollowAction from '../actions/Follow';
 
 import StoryCard from '../../components/cards/Story';
@@ -173,7 +173,7 @@ class StoriesBrowse extends React.Component {
                       key={`story-notification-${id}`}
                     />,
                     <DeleteAction
-                      story={story}
+                      node={story}
                       key={`story-delete-${id}`}
                     />,
                   ]}

@@ -6,9 +6,9 @@ import utils from '../utils';
 import i18n from '../../languages';
 import MediumCard from '../../components/cards/Medium';
 
-import LikeAction from '../actions/node/Like';
+import LikeAction from '../actions/Like';
 import NotificationAction from '../actions/medium/Notification';
-import DeleteAction from '../actions/medium/Delete';
+import DeleteAction from '../actions/Delete';
 import FollowAction from '../actions/Follow';
 
 import PersonType from '../../proptypes/Person';
@@ -47,7 +47,7 @@ const MediaCard = (props) => {
         />,
         canDelete &&
         <DeleteAction
-          medium={medium}
+          node={medium}
           key={`medium-delete-${medium.id}`}
         />,
       ]}

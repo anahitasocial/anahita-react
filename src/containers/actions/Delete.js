@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import * as actions from '../../../actions';
-import MediumType from '../../../proptypes/Medium';
-import i18n from '../../../languages';
+import * as actions from '../../actions';
+import NodeType from '../../proptypes/Node';
+import i18n from '../../languages';
 
-class ActionsMediumDelete extends React.Component {
+class ActionsDelete extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,23 +21,17 @@ class ActionsMediumDelete extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps, state) {
+  static getDerivedStateFromProps(nextProps) {
     const { isFetching } = nextProps;
-
-    if (isFetching !== state.isFetching) {
-      return { isFetching };
-    }
-
-    return null;
+    return { isFetching };
   }
 
   handleDelete(event) {
     event.preventDefault();
 
-    const { medium, deleteItem } = this.props;
-    const namespace = medium.objectType.split('.')[1];
+    const { node, deleteItem } = this.props;
 
-    deleteItem(medium, namespace);
+    deleteItem(node);
   }
 
   render() {
@@ -59,13 +53,13 @@ class ActionsMediumDelete extends React.Component {
   }
 }
 
-ActionsMediumDelete.propTypes = {
+ActionsDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,
-  medium: MediumType.isRequired,
+  node: NodeType.isRequired,
   isDeleted: PropTypes.bool,
 };
 
-ActionsMediumDelete.defaultProps = {
+ActionsDelete.defaultProps = {
   isDeleted: false,
 };
 
@@ -75,8 +69,9 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: (medium, namespace) => {
-      return dispatch(actions[namespace].deleteItem(medium));
+    deleteItem: (node) => {
+      const namespace = node.objectType.split('.')[1];
+      return dispatch(actions[namespace].deleteItem(node));
     },
   };
 };
@@ -84,4 +79,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActionsMediumDelete);
+)(ActionsDelete);

@@ -11,7 +11,7 @@ import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
 import PersonType from '../../proptypes/Person';
 
-import LikeAction from '../actions/node/Like';
+import LikeAction from '../actions/Like';
 import FollowAction from '../actions/Follow';
 import BlockAction from '../actions/Block';
 import DeleteAction from '../actions/comment/Delete';
