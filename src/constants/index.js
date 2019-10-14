@@ -4,7 +4,6 @@ import Comments from './comments';
 import Cover from './cover';
 import Is from './is';
 import Likes from './likes';
-import Node from './node';
 import Notifications from './notifications';
 import Password from './password';
 import Person from './person';
@@ -21,7 +20,6 @@ export {
   Cover,
   Is,
   Likes,
-  Node,
   Notifications,
   Password,
   Person,
