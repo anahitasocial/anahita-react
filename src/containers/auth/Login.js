@@ -19,7 +19,6 @@ class LoginPage extends React.Component {
       usernameHelperText: '',
       passwordError: false,
       passwordHelperText: '',
-      isNew: true,
     };
 
     this.handleLogin = this.handleLogin.bind(this);

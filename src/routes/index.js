@@ -25,6 +25,7 @@ import PersonSettingsInfo from '../containers/people/settings/Info';
 import PersonSettingsAccount from '../containers/people/settings/Account';
 
 import MediaBrowse from '../containers/media/Browse';
+import MediaRead from '../containers/media/Read';
 
 import HashtagsBrowse from '../containers/hashtags/Browse';
 import HashtagsRead from '../containers/hashtags/Read';
@@ -48,10 +49,19 @@ const PeopleDelete = ActorsDelete('people');
 const PeopleSettings = ActorsSettings('people');
 
 const ArticlesBrowse = MediaBrowse('articles');
+const ArticlesRead = MediaRead('articles');
+
 const NotesBrowse = MediaBrowse('notes');
+const NotesRead = MediaRead('notes');
+
 const PhotosBrowse = MediaBrowse('photos');
+const PhotosRead = MediaRead('photos');
+
 const TopicsBrowse = MediaBrowse('topics');
+const TopicsRead = MediaRead('topics');
+
 const TodosBrowse = MediaBrowse('todos');
+const TodosRead = MediaRead('todos');
 
 const scrollUp = () => {
   window.scrollTo(0, 0);
@@ -188,8 +198,22 @@ const Routes = (props) => {
       />
       <Route
         exact
+        path="/notes/:id/"
+        component={(params) => {
+          return <NotesRead {...params} />;
+        }}
+      />
+      <Route
+        exact
         path="/photos/"
         component={PhotosBrowse}
+      />
+      <Route
+        exact
+        path="/photos/:id/"
+        component={(params) => {
+          return <PhotosRead {...params} />;
+        }}
       />
       <Route
         exact
@@ -198,13 +222,34 @@ const Routes = (props) => {
       />
       <Route
         exact
+        path="/todos/:id/"
+        component={(params) => {
+          return <TodosRead {...params} />;
+        }}
+      />
+      <Route
+        exact
         path="/topics/"
         component={TopicsBrowse}
       />
       <Route
         exact
+        path="/topics/:id/"
+        component={(params) => {
+          return <TopicsRead {...params} />;
+        }}
+      />
+      <Route
+        exact
         path="/articles/"
         component={ArticlesBrowse}
+      />
+      <Route
+        exact
+        path="/articles/:id/"
+        component={(params) => {
+          return <ArticlesRead {...params} />;
+        }}
       />
       <Route
         exact
