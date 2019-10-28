@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import InfiniteScroll from 'react-infinite-scroller';
-
 import CommentRead from './Read';
-import CommentForm from '../../components/comment/Form';
+import CommentForm from '../../../components/comment/Form';
 
-import * as actions from '../../actions';
-import NodeType from '../../proptypes/Node';
-import CommentsType from '../../proptypes/Comments';
-import CommentDefault from '../../proptypes/CommentDefault';
-import i18n from '../../languages';
+import actions from '../../../actions/inline_comments';
+import NodeType from '../../../proptypes/Node';
+import CommentsType from '../../../proptypes/Comments';
+import NodesType from '../../../proptypes/Nodes';
+import CommentDefault from '../../../proptypes/CommentDefault';
+import i18n from '../../../languages';
 
-const LIMIT = 20;
 const MAX_CHAR_LIMIT = 5000;
 
 class CommentsBrowse extends React.Component {
@@ -21,56 +18,41 @@ class CommentsBrowse extends React.Component {
     super(props, context);
 
     this.state = {
-      comments: {
-        byId: {},
-        allIds: [],
-      },
       comment: { ...CommentDefault },
+      comments: props.comments,
       bodyError: false,
       bodyHelperText: '',
-      hasMore: true,
     };
 
     this.offset = 0;
     this.handleAdd = this.handleAdd.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.fetchComments = this.fetchComments.bind(this);
-  }
 
-  static getDerivedStateFromProps(nextProps) {
-    const { comments, hasMore } = nextProps;
-    return { comments, hasMore };
-  }
-
-  componentWillUnmount() {
-    const { resetComments } = this.props;
-    resetComments();
-  }
-
-  fetchComments() {
     const {
-      parent: {
-        id,
-        objectType,
-      },
-      browseComments,
-    } = this.props;
+      parent,
+      comments,
+      setComments,
+    } = props;
 
-    const namespace = objectType.split('.')[1];
+    const namespace = parent.objectType.split('.')[1];
 
-    browseComments({
-      node: { id, objectType },
-      start: this.offset,
-      limit: LIMIT,
-    }, namespace).then(() => {
-      this.offset += LIMIT;
-    });
+    setComments(comments, parent, namespace);
   }
+
+  componentWillReceiveProps(nextProps) {
+    const { parent: { id } } = this.props;
+    const { parents } = nextProps;
+    const comments = parents.byId[id];
+
+    if (comments) {
+      this.setState({ comments });
+    }
+  }
+
 
   handleAdd() {
     const { parent: { objectType }, addComment } = this.props;
     const { comment } = this.state;
-
     if (this.validate()) {
       const namespace = objectType.split('.')[1];
       addComment(comment, namespace).then(() => {
@@ -135,7 +117,6 @@ class CommentsBrowse extends React.Component {
       comments,
       bodyError,
       bodyHelperText,
-      hasMore,
     } = this.state;
 
     const {
@@ -146,26 +127,17 @@ class CommentsBrowse extends React.Component {
 
     return (
       <React.Fragment>
-        <InfiniteScroll
-          loadMore={this.fetchComments}
-          hasMore={hasMore}
-          useWindow
-          loader={
-            <CircularProgress key={`comments-progress-${parent.id}`} />
-          }
-        >
-          {comments.allIds.map((itemId) => {
-            const item = comments.byId[itemId];
-            const key = `comment_${item.id}`;
-            return (
-              <CommentRead
-                key={key}
-                parent={parent}
-                comment={item}
-              />
-            );
-          })}
-        </InfiniteScroll>
+        {comments.allIds.map((itemId) => {
+          const item = comments.byId[itemId];
+          const key = `comment_${item.id}`;
+          return (
+            <CommentRead
+              key={key}
+              parent={parent}
+              comment={item}
+            />
+          );
+        })}
         {canAdd &&
           <CommentForm
             comment={comment}
@@ -184,41 +156,38 @@ const mapStateToProps = (state) => {
   const { viewer } = state.session;
 
   const {
-    comments,
+    parents,
     error,
-    hasMore,
-  } = state.comments;
+    isFetching,
+  } = state.inlineComments;
 
   return {
     viewer,
-    comments,
+    parents,
     error,
-    hasMore,
+    isFetching,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    resetComments: (namespace) => {
-      return dispatch(actions.comments(namespace).reset());
-    },
-    browseComments: (params, namespace) => {
-      return dispatch(actions.comments(namespace).browse(params));
+    setComments: (comments, parent, namespace) => {
+      return dispatch(actions(namespace).setList(comments, parent));
     },
     addComment: (comment, namespace) => {
-      return dispatch(actions.comments(namespace).add(comment));
+      return dispatch(actions(namespace).add(comment));
     },
   };
 };
 
 CommentsBrowse.propTypes = {
   parent: NodeType.isRequired,
+  parents: NodesType.isRequired,
   comments: CommentsType.isRequired,
   canAdd: PropTypes.bool,
+  setComments: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
-  browseComments: PropTypes.func.isRequired,
-  resetComments: PropTypes.func.isRequired,
-  hasMore: PropTypes.bool.isRequired,
+  // isFetching: PropTypes.bool.isRequired,
 };
 
 CommentsBrowse.defaultProps = {

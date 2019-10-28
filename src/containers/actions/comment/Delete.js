@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import actions from '../../../actions/comments';
+import * as actions from '../../../actions';
 import CommentType from '../../../proptypes/Comment';
 import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';
@@ -30,9 +30,9 @@ class ActionsCommentDelete extends React.Component {
   handleDelete(event) {
     event.preventDefault();
 
-    const { comment, node, deleteItem } = this.props;
-
-    deleteItem(comment, node);
+    const { comment, node: { objectType }, deleteItem } = this.props;
+    const namespace = objectType.split('.')[1];
+    deleteItem(comment, namespace);
   }
 
   render() {
@@ -72,8 +72,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: (comment, node) => {
-      return dispatch(actions.deleteItem(comment, node));
+    deleteItem: (comment, namespace) => {
+      return dispatch(actions.comments(namespace).deleteItem(comment));
     },
   };
 };

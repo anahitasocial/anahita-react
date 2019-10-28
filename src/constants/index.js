@@ -2,6 +2,7 @@ import App from './app';
 import Avatar from './avatar';
 import Comments from './comments';
 import Cover from './cover';
+import InlineComments from './inline_comments';
 import Is from './is';
 import Likes from './likes';
 import Notifications from './notifications';
@@ -18,6 +19,7 @@ export {
   Avatar,
   Comments,
   Cover,
+  InlineComments,
   Is,
   Likes,
   Notifications,

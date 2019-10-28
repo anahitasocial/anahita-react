@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import app from './app';
 import avatar from './avatar';
-import comments from './comments';
+import inlineComments from './inline_comments';
 import cover from './cover';
 import is from './is';
 import likes from './likes';
@@ -16,8 +16,10 @@ import socialgraph from './socialgraph';
 import stories from './stories';
 import taggables from './taggables';
 
-import createMediaReducer from './createMedia';
+// creators
 import createActorsReducer from './createActors';
+import createCommentReducer from './createComment';
+import createMediaReducer from './createMedia';
 
 // create actors reducers
 const people = createActorsReducer('people');
@@ -30,6 +32,9 @@ const todos = createMediaReducer('todos');
 const photos = createMediaReducer('photos');
 const articles = createMediaReducer('articles');
 
+// behaviours
+const comments = createCommentReducer('comments');
+
 export default combineReducers({
   app,
   articles,
@@ -37,6 +42,7 @@ export default combineReducers({
   comments,
   cover,
   groups,
+  inlineComments,
   is,
   likes,
   locations,

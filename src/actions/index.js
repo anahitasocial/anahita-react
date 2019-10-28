@@ -3,7 +3,7 @@ import * as api from '../api';
 import createAction from './create';
 import app from './app';
 import avatar from './avatar';
-import comments from './comments';
+import inlineComments from './inline_comments';
 import cover from './cover';
 import is from './is';
 import likes from './likes';
@@ -25,12 +25,17 @@ const photos = createAction('photos')(api.photos);
 const todos = createAction('todos')(api.todos);
 const topics = createAction('topics')(api.topics);
 
+const comments = (namespace) => {
+  return createAction('comments')(api.comments(namespace));
+};
+
 export {
   app,
   articles,
   avatar,
   comments,
   cover,
+  inlineComments,
   is,
   groups,
   hashtags,

@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InfiniteScroll from 'react-infinite-scroller';
 import CommentIcon from '@material-ui/icons/Comment';
 
-import CommentsBrowse from '../comments/Browse';
+import CommentsBrowse from './comments/Browse';
 
 import actions from '../../actions/stories';
 
@@ -82,8 +82,8 @@ class StoriesBrowse extends React.Component {
     this.fetchStories = this.fetchStories.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps) {
-    const { stories, hasMore } = nextProps;
+  static getDerivedStateFromProps(props) {
+    const { stories, hasMore } = props;
     return { hasMore, stories };
   }
 
@@ -121,8 +121,9 @@ class StoriesBrowse extends React.Component {
       <Grid
         container
         justify="center"
+        alignItems="center"
       >
-        <Grid item xs={12} md={4}>
+        <Grid item>
           <InfiniteScroll
             loadMore={this.fetchStories}
             hasMore={hasMore}
@@ -131,7 +132,7 @@ class StoriesBrowse extends React.Component {
                 container
                 justify="center"
                 alignItems="center"
-                key="stories-progress"
+                key="stories-infinit-scroller"
               >
                 <Grid item>
                   <CircularProgress />

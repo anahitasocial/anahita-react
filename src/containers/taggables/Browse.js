@@ -106,14 +106,9 @@ class TaggablesBrowse extends React.Component {
             container
             justify="center"
             alignItems="center"
-            key="taggables-progress"
           >
             <Grid item>
-              <CircularProgress
-                style={{
-                  margin: '16px 0',
-                }}
-              />
+              <CircularProgress />
             </Grid>
           </Grid>
         }

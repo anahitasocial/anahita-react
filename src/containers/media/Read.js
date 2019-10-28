@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
 
-import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 
 import appActions from '../../actions/app';
@@ -13,6 +13,8 @@ import i18n from '../../languages';
 
 import MediaCard from './Card';
 import MediumDefault from '../../proptypes/MediumDefault';
+import MediumComments from '../comments/Browse';
+import permissions from '../../permissions/comment';
 
 class MediaRead extends React.Component {
   constructor(props) {
@@ -47,6 +49,7 @@ class MediaRead extends React.Component {
   render() {
     const { medium } = this.state;
     const { isFetching } = this.props;
+    const canAdd = permissions.canAdd(medium);
 
     return (
       <React.Fragment>
@@ -61,15 +64,22 @@ class MediaRead extends React.Component {
         <Grid
           container
           justify="center"
+          alignItems="center"
         >
-          <Grid item xs={12} md={6}>
+          <Grid item>
             {isFetching &&
-              <LinearProgress />
+              <CircularProgress />
             }
             {medium.id > 0 &&
-              <MediaCard
-                medium={medium}
-              />
+              <React.Fragment>
+                <MediaCard
+                  medium={medium}
+                />
+                <MediumComments
+                  parent={medium}
+                  canAdd
+                />
+              </React.Fragment>
             }
           </Grid>
         </Grid>

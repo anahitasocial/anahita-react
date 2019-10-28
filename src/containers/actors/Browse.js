@@ -36,10 +36,6 @@ const styles = (theme) => {
     actorAlias: {
       fontSize: 12,
     },
-    progress: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
     addButton: {
       position: 'fixed',
       bottom: theme.spacing(3),
@@ -131,10 +127,9 @@ class ActorsBrowse extends React.Component {
               container
               justify="center"
               alignItems="center"
-              key="circular-progress"
             >
               <Grid item>
-                <CircularProgress className={classes.progress} />
+                <CircularProgress />
               </Grid>
             </Grid>
           }

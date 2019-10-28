@@ -31,10 +31,6 @@ const styles = (theme) => {
       textTransform: 'capitalize',
       marginBottom: theme.spacing(2),
     },
-    progress: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
     addButton: {
       position: 'fixed',
       bottom: theme.spacing(3),
@@ -125,10 +121,10 @@ class MediaBrowse extends React.Component {
               container
               justify="center"
               alignItems="center"
-              key="circular-progress"
+              key="media-progress"
             >
               <Grid item>
-                <CircularProgress className={classes.progress} />
+                <CircularProgress />
               </Grid>
             </Grid>
           }

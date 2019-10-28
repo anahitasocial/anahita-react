@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import CommentCard from '../../components/cards/Comment';
-import CommentForm from '../../components/comment/Form';
+import CommentCard from '../../../components/cards/Comment';
+import CommentForm from '../../../components/comment/Form';
 
-import * as actions from '../../actions';
-import NodeType from '../../proptypes/Node';
-import CommentType from '../../proptypes/Comment';
-import PersonType from '../../proptypes/Person';
+import actions from '../../../actions/inline_comments';
+import NodeType from '../../../proptypes/Node';
+import CommentType from '../../../proptypes/Comment';
+import PersonType from '../../../proptypes/Person';
 
-import LikeAction from '../actions/Like';
-import FollowAction from '../actions/Follow';
-import BlockAction from '../actions/Block';
-import DeleteAction from '../actions/comment/Delete';
-import i18n from '../../languages';
+import LikeAction from '../../actions/Like';
+import FollowAction from '../../actions/Follow';
+import BlockAction from '../../actions/Block';
+import DeleteAction from '../../actions/comment/Delete';
+import i18n from '../../../languages';
 
 const MAX_CHAR_LIMIT = 5000;
 
@@ -139,12 +139,12 @@ class CommentsRead extends React.Component {
         comment={comment}
         menuItems={[
           canEdit &&
-            <MenuItem
-              onClick={this.handleEdit}
-              key={`comment-edit-${comment.id}`}
-            >
-              {i18n.t('actions:edit')}
-            </MenuItem>,
+          <MenuItem
+            onClick={this.handleEdit}
+            key={`comment-edit-${comment.id}`}
+          >
+            {i18n.t('actions:edit')}
+          </MenuItem>,
           author.id !== viewer.id &&
           <FollowAction
             actor={author}
@@ -212,7 +212,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editComment: (comment, namespace) => {
-      return dispatch(actions.comments(namespace).edit(comment));
+      return dispatch(actions(namespace).edit(comment));
     },
   };
 };

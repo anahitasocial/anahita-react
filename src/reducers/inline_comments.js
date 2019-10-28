@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Comments as COMMENTS } from '../constants';
+import { InlineComments as INLINE_COMMENTS } from '../constants';
 import CommentDefault from '../proptypes/CommentDefault';
 import NodeDefault from '../proptypes/NodeDefault';
 import utils from './utils';
@@ -62,12 +62,12 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case COMMENTS.BROWSE.SET:
+    case INLINE_COMMENTS.BROWSE.SET:
       return {
         ...state,
         parents: setComments(action, state),
       };
-    case COMMENTS.BROWSE.RESET:
+    case INLINE_COMMENTS.BROWSE.RESET:
       return {
         ...initState,
         parents: setComments({
@@ -75,41 +75,41 @@ export default (state = initState, action) => {
           comments: { ...CommentsDefault },
         }, state),
       };
-    case COMMENTS.BROWSE.REQUEST:
-    case COMMENTS.EDIT.REQUEST:
-    case COMMENTS.ADD.REQUEST:
-    case COMMENTS.DELETE.REQUEST:
+    case INLINE_COMMENTS.BROWSE.REQUEST:
+    case INLINE_COMMENTS.EDIT.REQUEST:
+    case INLINE_COMMENTS.ADD.REQUEST:
+    case INLINE_COMMENTS.DELETE.REQUEST:
       return {
         ...state,
         isFetching: true,
         error: '',
       };
-    case COMMENTS.BROWSE.SUCCESS:
+    case INLINE_COMMENTS.BROWSE.SUCCESS:
       return {
         ...state,
         parents: setComments(action, state),
         isFetching: false,
         error: '',
       };
-    case COMMENTS.EDIT.SUCCESS:
-    case COMMENTS.ADD.SUCCESS:
+    case INLINE_COMMENTS.EDIT.SUCCESS:
+    case INLINE_COMMENTS.ADD.SUCCESS:
       return {
         ...state,
         parents: updateComments(action, state),
         isFetching: false,
         error: '',
       };
-    case COMMENTS.DELETE.SUCCESS:
+    case INLINE_COMMENTS.DELETE.SUCCESS:
       return {
         ...state,
         parents: deleteComment(action, state),
         isFetching: false,
         error: '',
       };
-    case COMMENTS.BROWSE.FAILURE:
-    case COMMENTS.EDIT.FAILURE:
-    case COMMENTS.ADD.FAILURE:
-    case COMMENTS.DELETE.FAILURE:
+    case INLINE_COMMENTS.BROWSE.FAILURE:
+    case INLINE_COMMENTS.EDIT.FAILURE:
+    case INLINE_COMMENTS.ADD.FAILURE:
+    case INLINE_COMMENTS.DELETE.FAILURE:
       return {
         ...state,
         isFetching: false,

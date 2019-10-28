@@ -95,7 +95,7 @@ class StoryCardDefault extends React.Component {
     const cover = story.object && getCoverURL(story.object);
     const title = story.object && story.object.name;
     const body = story.object && story.object.body;
-    const url = title && story.object ? getURL(story.object) : '';
+    const url = story.object ? getURL(story.object) : '';
     const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
     return (
@@ -114,9 +114,11 @@ class StoryCardDefault extends React.Component {
             <StoryMessage story={story} />
           }
           subheader={
-            <ReactTimeAgo
-              date={new Date(story.creationTime)}
-            />
+            <Link href={url}>
+              <ReactTimeAgo
+                date={new Date(story.creationTime)}
+              />
+            </Link>
           }
           action={
             <React.Fragment>

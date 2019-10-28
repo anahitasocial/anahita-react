@@ -116,9 +116,11 @@ class MediumCard extends React.Component {
             />
           }
           subheader={
-            <ReactTimeAgo
-              date={new Date(medium.creationTime)}
-            />
+            <Link href={url}>
+              <ReactTimeAgo
+                date={new Date(medium.creationTime)}
+              />
+            </Link>
           }
           action={
             <React.Fragment>
