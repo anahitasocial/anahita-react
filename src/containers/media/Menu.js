@@ -15,9 +15,15 @@ import FollowAction from '../actions/Follow';
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
 
-const NotificationActionWithRef = React.forwardRef((props, ref) => {
-  return <NotificationAction {...props} forwardedRef={ref} />;
-});
+const actionWithRef = (Component) => {
+  return React.forwardRef((props, ref) => {
+    return <Component {...props} forwardedRef={ref} />;
+  });
+};
+
+const FollowActionWithRef = actionWithRef(FollowAction);
+const NotificationActionWithRef = actionWithRef(NotificationAction);
+const DeleteActionWithRef = actionWithRef(DeleteAction);
 
 const MediaMenu = (props) => {
   const {
@@ -60,7 +66,7 @@ const MediaMenu = (props) => {
           key={`medium-notification-${medium.id}`}
         />
         {medium.owner.id !== viewer.id &&
-          <FollowAction
+          <FollowActionWithRef
             actor={medium.owner}
             component="menuitem"
             key={`medium-follow-${medium.id}`}
@@ -73,7 +79,7 @@ const MediaMenu = (props) => {
           />
         }
         {canDelete &&
-          <DeleteAction
+          <DeleteActionWithRef
             node={medium}
             key={`medium-delete-${medium.id}`}
           />

@@ -106,6 +106,7 @@ class TaggablesBrowse extends React.Component {
             container
             justify="center"
             alignItems="center"
+            key="taggable-circular-progress"
           >
             <Grid item>
               <CircularProgress />
@@ -168,9 +169,6 @@ TaggablesBrowse.propTypes = {
   browseTaggables: PropTypes.func.isRequired,
   tag: NodeType.isRequired,
   sorting: PropTypes.oneOf(['top', 'recent']),
-  taggables: NodesType.isRequired,
-  error: PropTypes.string.isRequired,
-  hasMore: PropTypes.bool.isRequired,
   width: PropTypes.string.isRequired,
 };
 

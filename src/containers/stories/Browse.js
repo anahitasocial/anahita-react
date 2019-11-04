@@ -13,59 +13,15 @@ import CommentsBrowse from './comments/Browse';
 import actions from '../../actions/stories';
 
 import LikeAction from '../actions/Like';
-// import NotificationAction from '../actions/medium/Notification';
-// import DeleteAction from '../actions/Delete';
-// import FollowAction from '../actions/Follow';
+import StoryMenu from './Menu';
 
 import StoryCard from '../../components/cards/Story';
 import StoriesType from '../../proptypes/Stories';
 import PersonType from '../../proptypes/Person';
 import commentPerms from '../../permissions/comment';
-// import i18n from '../../languages';
 import utils from '../utils';
 
-import StoryMenu from './Menu';
-
 const LIMIT = 20;
-
-const isLikeable = (node) => {
-  const likeables = [
-    'com.articles.article',
-    'com.notes.note',
-    'com.photos.photo',
-    'com.sets.set',
-    'com.topics.topic',
-    'com.todos.todo',
-  ];
-
-  return likeables.includes(node.objectType);
-};
-
-const isCommentable = (node) => {
-  const commentables = [
-    'com.articles.article',
-    'com.notes.note',
-    'com.photos.photo',
-    'com.sets.set',
-    'com.topics.topic',
-    'com.todos.todo',
-  ];
-
-  return commentables.includes(node.objectType);
-};
-
-const isSubscribable = (node) => {
-  const subscribables = [
-    'com.articles.article',
-    'com.notes.note',
-    'com.photos.photo',
-    'com.sets.set',
-    'com.topics.topic',
-    'com.todos.todo',
-  ];
-
-  return subscribables.includes(node.objectType);
-};
 
 class StoriesBrowse extends React.Component {
   constructor(props, context) {
@@ -145,12 +101,9 @@ class StoriesBrowse extends React.Component {
             {stories.allIds.map((storyId) => {
               const story = stories.byId[storyId];
               const key = `story_${story.id}`;
-              const ownerName = utils.getOwnerName(story);
-              const { id, owner } = story;
               const canAddComment = commentPerms.canAdd(story);
-
               const commentsCount = story.comments.allIds.length;
-              const isCommentsOpen = openComments.includes(id);
+              const isCommentsOpen = openComments.includes(story.id);
 
               return (
                 <StoryCard
@@ -162,43 +115,17 @@ class StoriesBrowse extends React.Component {
                       viewer={viewer}
                     />
                   }
-                  /*
-                  menuItems={[
-                    owner.id !== viewer.id &&
-                    <FollowAction
-                      actor={owner}
-                      component="menuitem"
-                      key={`story-follow-${id}`}
-                      followLabel={i18n.t('stories:actions.followOwner', {
-                        name: ownerName,
-                      })}
-                      unfollowLabel={i18n.t('stories:actions.unfollowOwner', {
-                        name: ownerName,
-                      })}
-                    />,
-                    story.object && isSubscribable(story.object) &&
-                    <NotificationAction
-                      medium={story.object}
-                      isSubscribed={story.object.isSubscribed}
-                      key={`story-notification-${id}`}
-                    />,
-                    <DeleteAction
-                      node={story}
-                      key={`story-delete-${id}`}
-                    />,
-                  ]}
-                  */
                   actions={[
-                    story.object && isLikeable(story.object) &&
+                    story.object && utils.isLikeable(story.object) &&
                     <LikeAction
                       node={story.object}
                       isLiked={story.commands && story.commands.includes('unvote')}
                       key={`story-like-${story.id}`}
                     />,
-                    story.object && isCommentable(story.object) &&
+                    story.object && utils.isCommentable(story.object) &&
                     <IconButton
                       onClick={() => {
-                        openComments.push(id);
+                        openComments.push(story.id);
                         this.setState({ openComments });
                       }}
                       disabled={isCommentsOpen}

@@ -1,5 +1,12 @@
-
 const OWNER_NAME_CHAR_LIMIT = 16;
+const MEDIA_NODE_OBJECT_TYPES = [
+  'com.articles.article',
+  'com.notes.note',
+  'com.photos.photo',
+  'com.sets.set',
+  'com.topics.topic',
+  'com.todos.todo',
+];
 
 const getOwnerName = (node) => {
   const { owner: { name } } = node;
@@ -23,7 +30,22 @@ const getColumnWidthPercentage = (width) => {
   return columnWidth;
 };
 
+const isCommentable = (node) => {
+  return MEDIA_NODE_OBJECT_TYPES.includes(node.objectType);
+};
+
+const isLikeable = (node) => {
+  return MEDIA_NODE_OBJECT_TYPES.includes(node.objectType);
+};
+
+const isSubscribable = (node) => {
+  return MEDIA_NODE_OBJECT_TYPES.includes(node.objectType);
+};
+
 export default {
   getOwnerName,
   getColumnWidthPercentage,
+  isCommentable,
+  isLikeable,
+  isSubscribable,
 };

@@ -14,26 +14,14 @@ import FollowAction from '../actions/Follow';
 import PersonType from '../../proptypes/Person';
 import StoryType from '../../proptypes/Story';
 
-const FollowActionWithRef = React.forwardRef((props, ref) => {
-  return <FollowAction {...props} forwardedRef={ref} />;
-});
-
-const NotificationActionWithRef = React.forwardRef((props, ref) => {
-  return <NotificationAction {...props} forwardedRef={ref} />;
-});
-
-const isSubscribable = (node) => {
-  const subscribables = [
-    'com.articles.article',
-    'com.notes.note',
-    'com.photos.photo',
-    'com.sets.set',
-    'com.topics.topic',
-    'com.todos.todo',
-  ];
-
-  return subscribables.includes(node.objectType);
+const actionWithRef = (Component) => {
+  return React.forwardRef((props, ref) => {
+    return <Component {...props} forwardedRef={ref} />;
+  });
 };
+
+const FollowActionWithRef = actionWithRef(FollowAction);
+const NotificationActionWithRef = actionWithRef(NotificationAction);
 
 const StoryMenu = (props) => {
   const {
@@ -53,6 +41,8 @@ const StoryMenu = (props) => {
 
   const ownerName = utils.getOwnerName(story);
   const { id, owner } = story;
+  const showSubscriptionAction = story.object && utils.isSubscribable(story.object);
+  const showFollowAction = owner.id !== viewer.id;
 
   return (
     <React.Fragment>
@@ -70,7 +60,7 @@ const StoryMenu = (props) => {
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
-        {owner.id !== viewer.id &&
+        {showFollowAction &&
           <FollowActionWithRef
             actor={owner}
             component="menuitem"
@@ -83,7 +73,7 @@ const StoryMenu = (props) => {
             })}
           />
         }
-        {story.object && isSubscribable(story.object) &&
+        {showSubscriptionAction &&
           <NotificationActionWithRef
             medium={story.object}
             isSubscribed={story.object.isSubscribed}
