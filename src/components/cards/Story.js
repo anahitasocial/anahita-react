@@ -11,7 +11,7 @@ const StoryCard = (props) => {
   const {
     story,
     actions,
-    menuItems,
+    menu,
     comments,
     showOwner,
   } = props;
@@ -27,7 +27,7 @@ const StoryCard = (props) => {
         <StoryCardComment
           story={story}
           actions={actions}
-          menuItems={menuItems}
+          menu={menu}
           comments={comments}
           showOwner={showOwner}
         />
@@ -37,7 +37,7 @@ const StoryCard = (props) => {
         <StoryCardPhotoAdd
           story={story}
           actions={actions}
-          menuItems={menuItems}
+          menu={menu}
           comments={comments}
           showOwner={showOwner}
         />
@@ -47,7 +47,7 @@ const StoryCard = (props) => {
         <StoryCardDefault
           story={story}
           actions={actions}
-          menuItems={menuItems}
+          menu={menu}
           comments={comments}
           showOwner={showOwner}
         />
@@ -57,7 +57,7 @@ const StoryCard = (props) => {
 
 StoryCard.propTypes = {
   actions: PropTypes.node,
-  menuItems: PropTypes.node,
+  menu: PropTypes.node,
   comments: PropTypes.node,
   story: StoryType.isRequired,
   showOwner: PropTypes.bool,
@@ -66,7 +66,7 @@ StoryCard.propTypes = {
 StoryCard.defaultProps = {
   showOwner: false,
   actions: null,
-  menuItems: null,
+  menu: null,
   comments: null,
 };
 

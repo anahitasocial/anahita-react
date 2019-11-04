@@ -1,19 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import permissions from '../../permissions/medium';
-import utils from '../utils';
-import i18n from '../../languages';
 import MediumCard from '../../components/cards/Medium';
-
 import LikeAction from '../actions/Like';
-import NotificationAction from '../actions/medium/Notification';
-import DeleteAction from '../actions/Delete';
-import FollowAction from '../actions/Follow';
-
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
 
+import MediumMenu from './Menu';
 
 const MediaCard = (props) => {
   const {
@@ -21,36 +13,15 @@ const MediaCard = (props) => {
     viewer,
   } = props;
 
-  const ownerName = utils.getOwnerName(medium);
-  const canDelete = permissions.canDelete(viewer, medium);
-
   return (
     <MediumCard
       medium={medium}
-      menuItems={[
-        <NotificationAction
+      menu={
+        <MediumMenu
           medium={medium}
-          isSubscribed={medium.isSubscribed}
-          key={`medium-notification-${medium.id}`}
-        />,
-        medium.owner.id !== viewer.id &&
-        <FollowAction
-          actor={medium.owner}
-          component="menuitem"
-          key={`medium-follow-${medium.id}`}
-          followLabel={i18n.t('stories:actions.followOwner', {
-            name: ownerName,
-          })}
-          unfollowLabel={i18n.t('stories:actions.unfollowOwner', {
-            name: ownerName,
-          })}
-        />,
-        canDelete &&
-        <DeleteAction
-          node={medium}
-          key={`medium-delete-${medium.id}`}
-        />,
-      ]}
+          viewer={viewer}
+        />
+      }
       actions={
         <LikeAction
           node={medium}

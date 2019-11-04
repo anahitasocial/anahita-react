@@ -7,12 +7,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Menu from '@material-ui/core/Menu';
-
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import MediumType from '../../proptypes/Medium';
 import ActorTitle from '../actor/Title';
@@ -51,154 +47,110 @@ const styles = (theme) => {
   };
 };
 
-class MediumCard extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+const MediumCard = (props) => {
+  const {
+    classes,
+    medium,
+    actions,
+    menu,
+  } = props;
 
-    this.state = {
-      menuAnchorEl: null,
-    };
+  const portrait = getPortraitURL(medium);
+  const cover = getCoverURL(medium);
+  const url = getURL(medium);
+  const author = getAuthor(medium);
 
-    this.handleOpenMenu = this.handleOpenMenu.bind(this);
-    this.handleCloseMenu = this.handleCloseMenu.bind(this);
-  }
-
-  handleOpenMenu(event) {
-    this.setState({
-      menuAnchorEl: event.currentTarget,
-    });
-  }
-
-  handleCloseMenu() {
-    this.setState({ menuAnchorEl: null });
-  }
-
-  render() {
-    const {
-      classes,
-      medium,
-      actions,
-      menuItems,
-    } = this.props;
-
-    const { menuAnchorEl } = this.state;
-
-    const portrait = getPortraitURL(medium);
-    const cover = getCoverURL(medium);
-    const url = getURL(medium);
-    const author = getAuthor(medium);
-
-    return (
-      <Card square>
-        {medium.author && medium.owner.id !== medium.author.id &&
-          <CardHeaderOwner node={medium} />
+  return (
+    <Card square>
+      {medium.author && medium.owner.id !== medium.author.id &&
+        <CardHeaderOwner node={medium} />
+      }
+      {cover &&
+        <Link href={url}>
+          <CardMedia
+            className={classes.cover}
+            image={cover}
+            title={medium.name}
+          />
+        </Link>
+      }
+      <CardHeader
+        avatar={
+          <ActorAvatar
+            actor={author}
+            linked={Boolean(author.id)}
+          />
         }
-        {cover &&
+        title={
+          <ActorTitle
+            actor={author}
+            linked={Boolean(author.id)}
+          />
+        }
+        subheader={
           <Link href={url}>
-            <CardMedia
-              className={classes.cover}
-              image={cover}
-              title={medium.name}
+            <ReactTimeAgo
+              date={new Date(medium.creationTime)}
             />
           </Link>
         }
-        <CardHeader
-          avatar={
-            <ActorAvatar
-              actor={author}
-              linked={Boolean(author.id)}
-            />
-          }
-          title={
-            <ActorTitle
-              actor={author}
-              linked={Boolean(author.id)}
-            />
-          }
-          subheader={
+        action={menu}
+      />
+      {portrait &&
+        <Link href={url}>
+          <CardMedia
+            className={classes.portrait}
+            title={medium.name}
+            image={portrait}
+          />
+        </Link>
+      }
+      {medium.body &&
+        <Player text={medium.body} />
+      }
+      <CardContent>
+        {medium.name &&
+          <Typography
+            variant="h6"
+            className={classes.title}
+          >
             <Link href={url}>
-              <ReactTimeAgo
-                date={new Date(medium.creationTime)}
-              />
+              {medium.name}
             </Link>
-          }
-          action={
-            <React.Fragment>
-              <IconButton
-                aria-owns={menuAnchorEl ? `medium-card-menu-${medium.id}` : undefined}
-                aria-haspopup="true"
-                onClick={this.handleOpenMenu}
-              >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id={`medium-card-menu-${medium.id}`}
-                anchorEl={menuAnchorEl}
-                keepMounted
-                open={Boolean(menuAnchorEl)}
-                onClose={this.handleCloseMenu}
-              >
-                {menuItems}
-              </Menu>
-            </React.Fragment>
-          }
-        />
-        {portrait &&
-          <Link href={url}>
-            <CardMedia
-              className={classes.portrait}
-              title={medium.name}
-              image={portrait}
-            />
-          </Link>
+          </Typography>
         }
         {medium.body &&
-          <Player text={medium.body} />
+          <EntityBody>
+            {contentfilter({
+              text: medium.body,
+              filters: [
+                'hashtag',
+                'mention',
+                'url',
+              ],
+            })}
+          </EntityBody>
         }
-        <CardContent>
-          {medium.name &&
-            <Typography
-              variant="h6"
-              className={classes.title}
-            >
-              <Link href={url}>
-                {medium.name}
-              </Link>
-            </Typography>
-          }
-          {medium.body &&
-            <EntityBody>
-              {contentfilter({
-                text: medium.body,
-                filters: [
-                  'hashtag',
-                  'mention',
-                  'url',
-                ],
-              })}
-            </EntityBody>
-          }
-        </CardContent>
-        {actions &&
-          <CardActions>
-            {actions}
-          </CardActions>
-        }
-      </Card>
-    );
-  }
-}
+      </CardContent>
+      {actions &&
+        <CardActions>
+          {actions}
+        </CardActions>
+      }
+    </Card>
+  );
+};
 
 MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node,
-  menuItems: PropTypes.node,
+  menu: PropTypes.node,
   medium: MediumType.isRequired,
 };
 
 MediumCard.defaultProps = {
   actions: null,
-  menuItems: null,
+  menu: null,
 };
 
 export default withStyles(styles)(MediumCard);

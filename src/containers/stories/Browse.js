@@ -13,16 +13,18 @@ import CommentsBrowse from './comments/Browse';
 import actions from '../../actions/stories';
 
 import LikeAction from '../actions/Like';
-import NotificationAction from '../actions/medium/Notification';
-import DeleteAction from '../actions/Delete';
-import FollowAction from '../actions/Follow';
+// import NotificationAction from '../actions/medium/Notification';
+// import DeleteAction from '../actions/Delete';
+// import FollowAction from '../actions/Follow';
 
 import StoryCard from '../../components/cards/Story';
 import StoriesType from '../../proptypes/Stories';
 import PersonType from '../../proptypes/Person';
 import commentPerms from '../../permissions/comment';
-import i18n from '../../languages';
+// import i18n from '../../languages';
 import utils from '../utils';
+
+import StoryMenu from './Menu';
 
 const LIMIT = 20;
 
@@ -154,6 +156,13 @@ class StoriesBrowse extends React.Component {
                 <StoryCard
                   story={story}
                   key={key}
+                  menu={
+                    <StoryMenu
+                      story={story}
+                      viewer={viewer}
+                    />
+                  }
+                  /*
                   menuItems={[
                     owner.id !== viewer.id &&
                     <FollowAction
@@ -178,6 +187,7 @@ class StoriesBrowse extends React.Component {
                       key={`story-delete-${id}`}
                     />,
                   ]}
+                  */
                   actions={[
                     story.object && isLikeable(story.object) &&
                     <LikeAction

@@ -8,12 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
-import Menu from '@material-ui/core/Menu';
 import Typography from '@material-ui/core/Typography';
-
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import contentfilter from '../../contentfilter';
 import ReadMore from '../../ReadMore';
@@ -54,154 +50,110 @@ const styles = (theme) => {
   };
 };
 
-class StoryCardDefault extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+const StoryCardDefault = (props) => {
+  const {
+    classes,
+    story,
+    actions,
+    menu,
+    comments,
+    showOwner,
+  } = props;
 
-    this.state = {
-      menuAnchorEl: null,
-    };
+  const subject = getStorySubject(story);
 
-    this.handleOpenMenu = this.handleOpenMenu.bind(this);
-    this.handleCloseMenu = this.handleCloseMenu.bind(this);
-  }
+  // @Todo add support for array objects
+  const portrait = story.object && getPortraitURL(story.object);
+  const cover = story.object && getCoverURL(story.object);
+  const title = story.object && story.object.name;
+  const body = story.object && story.object.body;
+  const url = story.object ? getURL(story.object) : '';
+  const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
-  handleOpenMenu(event) {
-    this.setState({
-      menuAnchorEl: event.currentTarget,
-    });
-  }
-
-  handleCloseMenu() {
-    this.setState({ menuAnchorEl: null });
-  }
-
-  render() {
-    const {
-      classes,
-      story,
-      actions,
-      menuItems,
-      comments,
-      showOwner,
-    } = this.props;
-
-    const { menuAnchorEl } = this.state;
-
-    const subject = getStorySubject(story);
-
-    // @Todo add support for array objects
-    const portrait = story.object && getPortraitURL(story.object);
-    const cover = story.object && getCoverURL(story.object);
-    const title = story.object && story.object.name;
-    const body = story.object && story.object.body;
-    const url = story.object ? getURL(story.object) : '';
-    const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
-
-    return (
-      <Card square className={classes.card}>
-        {showOwnerHeader &&
-          <StoryCardOwner node={story} />
+  return (
+    <Card square className={classes.card}>
+      {showOwnerHeader &&
+        <StoryCardOwner node={story} />
+      }
+      <CardHeader
+        avatar={
+          <ActorAvatar
+            actor={subject}
+            linked={Boolean(subject.id)}
+          />
         }
-        <CardHeader
-          avatar={
-            <ActorAvatar
-              actor={subject}
-              linked={Boolean(subject.id)}
+        title={
+          <StoryMessage story={story} />
+        }
+        subheader={
+          <Link href={url}>
+            <ReactTimeAgo
+              date={new Date(story.creationTime)}
             />
-          }
-          title={
-            <StoryMessage story={story} />
-          }
-          subheader={
+          </Link>
+        }
+        action={menu}
+      />
+      {cover &&
+        <Link href={url}>
+          <CardMedia
+            className={classes.media}
+            image={cover}
+            title={title}
+          />
+        </Link>
+      }
+      {portrait &&
+        <Link href={url}>
+          <CardMedia
+            className={classes.portrait}
+            title={title}
+            image={portrait}
+          />
+        </Link>
+      }
+      {body &&
+        <Player text={body} />
+      }
+      <CardContent>
+        {title &&
+          <Typography
+            variant="h6"
+            className={classes.title}
+          >
             <Link href={url}>
-              <ReactTimeAgo
-                date={new Date(story.creationTime)}
-              />
+              {title}
             </Link>
-          }
-          action={
-            <React.Fragment>
-              <IconButton
-                aria-owns={menuAnchorEl ? 'story-menu' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleOpenMenu}
-              >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id="story-menu"
-                anchorEl={menuAnchorEl}
-                open={Boolean(menuAnchorEl)}
-                onClose={this.handleCloseMenu}
-                keepMounted
-              >
-                {menuItems}
-              </Menu>
-            </React.Fragment>
-          }
-        />
-        {cover &&
-          <Link href={url}>
-            <CardMedia
-              className={classes.media}
-              image={cover}
-              title={title}
-            />
-          </Link>
-        }
-        {portrait &&
-          <Link href={url}>
-            <CardMedia
-              className={classes.portrait}
-              title={title}
-              image={portrait}
-            />
-          </Link>
+          </Typography>
         }
         {body &&
-          <Player text={body} />
+          <ReadMore>
+            {contentfilter({
+              text: body,
+              filters: [
+                'hashtag',
+                'mention',
+                'url',
+              ],
+            })}
+          </ReadMore>
         }
-        <CardContent>
-          {title &&
-            <Typography
-              variant="h6"
-              className={classes.title}
-            >
-              <Link href={url}>
-                {title}
-              </Link>
-            </Typography>
-          }
-          {body &&
-            <ReadMore>
-              {contentfilter({
-                text: body,
-                filters: [
-                  'hashtag',
-                  'mention',
-                  'url',
-                ],
-              })}
-            </ReadMore>
-          }
-        </CardContent>
-        {actions &&
-          <CardActions>
-            {actions}
-          </CardActions>
-        }
-        <Divider />
-        {comments}
-      </Card>
-    );
-  }
-}
+      </CardContent>
+      {actions &&
+        <CardActions>
+          {actions}
+        </CardActions>
+      }
+      <Divider />
+      {comments}
+    </Card>
+  );
+};
 
 StoryCardDefault.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node,
-  menuItems: PropTypes.node,
+  menu: PropTypes.node,
   comments: PropTypes.node,
   story: StoryType.isRequired,
   showOwner: PropTypes.bool,
@@ -210,7 +162,7 @@ StoryCardDefault.propTypes = {
 StoryCardDefault.defaultProps = {
   showOwner: false,
   actions: null,
-  menuItems: null,
+  menu: null,
   comments: null,
 };
 

@@ -7,13 +7,9 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
-import Menu from '@material-ui/core/Menu';
 import Typography from '@material-ui/core/Typography';
 
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import contentfilter from '../../contentfilter';
 import ReadMore from '../../ReadMore';
 import StoryMessage from '../../StoryMessage';
@@ -48,147 +44,99 @@ const styles = (theme) => {
   };
 };
 
-class StoryCardPhotoAdd extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+const StoryCardPhotoAdd = (props) => {
+  const {
+    classes,
+    story,
+    actions,
+    menu,
+    showOwner,
+  } = props;
 
-    this.state = {
-      menuAnchorEl: null,
-    };
+  const subject = getStorySubject(story);
 
-    this.handleOpenMenu = this.handleOpenMenu.bind(this);
-    this.handleCloseMenu = this.handleCloseMenu.bind(this);
-  }
+  // @Todo add support for array objects
+  const portrait = story.object && getPortraitURL(story.object);
+  const portraits = story.objects;
 
-  handleOpenMenu(event) {
-    this.setState({
-      menuAnchorEl: event.currentTarget,
-    });
-  }
+  const title = story.object && story.object.name;
+  const body = story.object && story.object.body;
+  const url = story.object ? getURL(story.object) : '';
+  const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
-  handleCloseMenu() {
-    this.setState({ menuAnchorEl: null });
-  }
-
-  render() {
-    const {
-      classes,
-      story,
-      actions,
-      menuItems,
-      comments,
-      showOwner,
-    } = this.props;
-
-    const { menuAnchorEl } = this.state;
-
-    const subject = getStorySubject(story);
-
-    // @Todo add support for array objects
-    const portrait = story.object && getPortraitURL(story.object);
-    const portraits = story.objects;
-
-    const title = story.object && story.object.name;
-    const body = story.object && story.object.body;
-    const url = story.object ? getURL(story.object) : '';
-    const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
-
-    return (
-      <Card square className={classes.card}>
-        {showOwnerHeader &&
-          <StoryCardOwner node={story} />
+  return (
+    <Card square className={classes.card}>
+      {showOwnerHeader &&
+        <StoryCardOwner node={story} />
+      }
+      <CardHeader
+        avatar={
+          <ActorAvatar
+            actor={subject}
+            linked={Boolean(subject.id)}
+          />
         }
-        <CardHeader
-          avatar={
-            <ActorAvatar
-              actor={subject}
-              linked={Boolean(subject.id)}
-            />
-          }
-          title={
-            <StoryMessage story={story} />
-          }
-          subheader={
-            <Link href={url}>
-              <ReactTimeAgo
-                date={new Date(story.creationTime)}
-              />
-            </Link>
-          }
-          action={
-            <React.Fragment>
-              <IconButton
-                aria-owns={menuAnchorEl ? 'story-menu' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleOpenMenu}
-              >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id="story-menu"
-                anchorEl={menuAnchorEl}
-                open={Boolean(menuAnchorEl)}
-                onClose={this.handleCloseMenu}
-                keepMounted
-              >
-                {menuItems}
-              </Menu>
-            </React.Fragment>
-          }
-        />
-        {portraits &&
-          <GridList photos={portraits} />
+        title={
+          <StoryMessage story={story} />
         }
-        {!portraits && portrait &&
+        subheader={
           <Link href={url}>
-            <CardMedia
-              className={classes.portrait}
-              title={title}
-              image={portrait}
+            <ReactTimeAgo
+              date={new Date(story.creationTime)}
             />
           </Link>
         }
-        <CardContent>
-          {title &&
-            <Typography
-              variant="h6"
-              className={classes.title}
-            >
-              <Link href={url}>
-                {title}
-              </Link>
-            </Typography>
-          }
-          {body &&
-            <ReadMore>
-              {contentfilter({
-                text: body,
-                filters: [
-                  'hashtag',
-                  'mention',
-                  'url',
-                ],
-              })}
-            </ReadMore>
-          }
-        </CardContent>
-        {actions &&
-          <CardActions>
-            {actions}
-          </CardActions>
+        action={menu}
+      />
+      {portraits &&
+        <GridList photos={portraits} />
+      }
+      {!portraits && portrait &&
+        <Link href={url}>
+          <CardMedia
+            className={classes.portrait}
+            title={title}
+            image={portrait}
+          />
+        </Link>
+      }
+      <CardContent>
+        {title &&
+          <Typography
+            variant="h6"
+            className={classes.title}
+          >
+            <Link href={url}>
+              {title}
+            </Link>
+          </Typography>
         }
-        <Divider />
-        {comments}
-      </Card>
-    );
-  }
-}
+        {body &&
+          <ReadMore>
+            {contentfilter({
+              text: body,
+              filters: [
+                'hashtag',
+                'mention',
+                'url',
+              ],
+            })}
+          </ReadMore>
+        }
+      </CardContent>
+      {actions &&
+        <CardActions>
+          {actions}
+        </CardActions>
+      }
+    </Card>
+  );
+};
 
 StoryCardPhotoAdd.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node,
-  menuItems: PropTypes.node,
-  comments: PropTypes.node,
+  menu: PropTypes.node,
   story: PropTypes.object.isRequired,
   showOwner: PropTypes.bool,
 };
@@ -196,7 +144,7 @@ StoryCardPhotoAdd.propTypes = {
 StoryCardPhotoAdd.defaultProps = {
   showOwner: false,
   actions: null,
-  menuItems: null,
+  menu: null,
 };
 
 export default withStyles(styles)(StoryCardPhotoAdd);
