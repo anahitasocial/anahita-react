@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 
 import appActions from '../../actions/app';
@@ -15,7 +14,7 @@ import i18n from '../../languages';
 import MediaCard from './Card';
 import MediumDefault from '../../proptypes/MediumDefault';
 import MediumComments from '../comments/Browse';
-import permissions from '../../permissions/comment';
+// import permissions from '../../permissions/comment';
 
 class MediaRead extends React.Component {
   constructor(props) {
