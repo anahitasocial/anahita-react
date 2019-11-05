@@ -21,15 +21,10 @@ import permissions from '../../permissions/actor';
 import containersUtils from '../utils';
 
 import PersonType from '../../proptypes/Person';
-import ActorsType from '../../proptypes/Actors';
 import ActorsCard from './Card';
 
 const styles = (theme) => {
   return {
-    title: {
-      textTransform: 'capitalize',
-      marginBottom: theme.spacing(2),
-    },
     actorTitle: {
       fontSize: 16,
     },
@@ -127,6 +122,7 @@ class ActorsBrowse extends React.Component {
               container
               justify="center"
               alignItems="center"
+              key="actors-circular-progress"
             >
               <Grid item>
                 <CircularProgress />
@@ -161,9 +157,7 @@ class ActorsBrowse extends React.Component {
 ActorsBrowse.propTypes = {
   classes: PropTypes.object.isRequired,
   browseActors: PropTypes.func.isRequired,
-  actors: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
-  hasMore: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,

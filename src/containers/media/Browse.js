@@ -21,7 +21,6 @@ import i18n from '../../languages';
 
 import MediaCard from './Card';
 import PersonType from '../../proptypes/Person';
-import MediaListType from '../../proptypes/Media';
 
 import utils from '../utils';
 
@@ -156,9 +155,7 @@ class MediaBrowse extends React.Component {
 MediaBrowse.propTypes = {
   classes: PropTypes.object.isRequired,
   browseMedia: PropTypes.func.isRequired,
-  media: MediaListType.isRequired,
   namespace: PropTypes.string.isRequired,
-  hasMore: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,

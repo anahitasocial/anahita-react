@@ -123,20 +123,6 @@ const styles = (theme) => {
   };
 };
 
-let AppWrapper = ({ children }) => {
-  return (
-    <div>
-      {children}
-    </div>
-  );
-};
-
-AppWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-AppWrapper = withStyles(styles)(AppWrapper);
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -245,9 +231,7 @@ class App extends React.Component {
             </div>
           </Drawer>
           <main className={classes.content}>
-            <AppWrapper>
-              {children}
-            </AppWrapper>
+            {children}
           </main>
         </div>
       </MuiThemeProvider>

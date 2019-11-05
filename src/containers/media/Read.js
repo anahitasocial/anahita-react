@@ -6,6 +6,7 @@ import striptags from 'striptags';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 
 import appActions from '../../actions/app';
 import * as actions from '../../actions';
@@ -49,7 +50,8 @@ class MediaRead extends React.Component {
   render() {
     const { medium } = this.state;
     const { isFetching } = this.props;
-    const canAdd = permissions.canAdd(medium);
+    // const canAdd = permissions.canAdd(medium);
+    const maxWidth = ['article', 'topic'].includes(medium.objectType.split('.')[2]) ? 'md' : 'sm';
 
     return (
       <React.Fragment>
@@ -61,28 +63,22 @@ class MediaRead extends React.Component {
           <meta name="description" content={striptags(medium.body)} />
         </Helmet>
         }
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-        >
-          <Grid item>
-            {isFetching &&
-              <CircularProgress />
-            }
-            {medium.id > 0 &&
-              <React.Fragment>
-                <MediaCard
-                  medium={medium}
-                />
-                <MediumComments
-                  parent={medium}
-                  canAdd
-                />
-              </React.Fragment>
-            }
-          </Grid>
-        </Grid>
+        <Container maxWidth={maxWidth}>
+          {isFetching &&
+            <CircularProgress />
+          }
+          {medium.id > 0 &&
+            <React.Fragment>
+              <MediaCard
+                medium={medium}
+              />
+              <MediumComments
+                parent={medium}
+                canAdd
+              />
+            </React.Fragment>
+          }
+        </Container>
       </React.Fragment>
     );
   }

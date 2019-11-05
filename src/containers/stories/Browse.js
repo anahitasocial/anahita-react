@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Badge from '@material-ui/core/Badge';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -76,86 +77,80 @@ class StoriesBrowse extends React.Component {
     const { viewer, queryFilters } = this.props;
 
     return (
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-      >
-        <Grid item>
-          <InfiniteScroll
-            loadMore={this.fetchStories}
-            hasMore={hasMore}
-            loader={
-              <Grid
-                container
-                justify="center"
-                alignItems="center"
-                key="stories-infinit-scroller"
-              >
-                <Grid item>
-                  <CircularProgress />
-                </Grid>
+      <Container maxWidth="sm">
+        <InfiniteScroll
+          loadMore={this.fetchStories}
+          hasMore={hasMore}
+          loader={
+            <Grid
+              container
+              justify="center"
+              alignItems="center"
+              key="stories-infinit-scroller"
+            >
+              <Grid item>
+                <CircularProgress />
               </Grid>
-            }
-          >
-            {stories.allIds.map((storyId) => {
-              const story = stories.byId[storyId];
-              const key = `story_${story.id}`;
-              const canAddComment = commentPerms.canAdd(story);
-              const commentsCount = story.comments.allIds.length;
-              const isCommentsOpen = openComments.includes(story.id);
+            </Grid>
+          }
+        >
+          {stories.allIds.map((storyId) => {
+            const story = stories.byId[storyId];
+            const key = `story_${story.id}`;
+            const canAddComment = commentPerms.canAdd(story);
+            const commentsCount = story.comments.allIds.length;
+            const isCommentsOpen = openComments.includes(story.id);
 
-              return (
-                <StoryCard
-                  story={story}
-                  key={key}
-                  menu={
-                    <StoryMenu
-                      story={story}
-                      viewer={viewer}
-                    />
-                  }
-                  actions={[
-                    story.object && utils.isLikeable(story.object) &&
-                    <LikeAction
-                      node={story.object}
-                      isLiked={story.commands && story.commands.includes('unvote')}
-                      key={`story-like-${story.id}`}
-                    />,
-                    story.object && utils.isCommentable(story.object) &&
-                    <IconButton
-                      onClick={() => {
-                        openComments.push(story.id);
-                        this.setState({ openComments });
-                      }}
-                      disabled={isCommentsOpen}
-                      aria-label="Show Comments"
-                      key={`story-comment-${story.id}`}
+            return (
+              <StoryCard
+                story={story}
+                key={key}
+                menu={
+                  <StoryMenu
+                    story={story}
+                    viewer={viewer}
+                  />
+                }
+                actions={[
+                  story.object && utils.isLikeable(story.object) &&
+                  <LikeAction
+                    node={story.object}
+                    isLiked={story.commands && story.commands.includes('unvote')}
+                    key={`story-like-${story.id}`}
+                  />,
+                  story.object && utils.isCommentable(story.object) &&
+                  <IconButton
+                    onClick={() => {
+                      openComments.push(story.id);
+                      this.setState({ openComments });
+                    }}
+                    disabled={isCommentsOpen}
+                    aria-label="Show Comments"
+                    key={`story-comment-${story.id}`}
+                  >
+                    <Badge
+                      badgeContent={commentsCount}
+                      color="primary"
+                      invisible={isCommentsOpen || commentsCount === 0}
                     >
-                      <Badge
-                        badgeContent={commentsCount}
-                        color="primary"
-                        invisible={isCommentsOpen || commentsCount === 0}
-                      >
-                        <CommentIcon fontSize="small" />
-                      </Badge>
-                    </IconButton>,
-                  ]}
-                  comments={story.object && isCommentsOpen &&
-                    <CommentsBrowse
-                      parent={story.object}
-                      comments={story.comments}
-                      canAdd={canAddComment}
-                    />
-                  }
-                  showOwner={queryFilters.filter === 'leaders'}
-                />
-              );
-            })
-            }
-          </InfiniteScroll>
-        </Grid>
-      </Grid>
+                      <CommentIcon fontSize="small" />
+                    </Badge>
+                  </IconButton>,
+                ]}
+                comments={story.object && isCommentsOpen &&
+                  <CommentsBrowse
+                    parent={story.object}
+                    comments={story.comments}
+                    canAdd={canAddComment}
+                  />
+                }
+                showOwner={queryFilters.filter === 'leaders'}
+              />
+            );
+          })
+          }
+        </InfiniteScroll>
+      </Container>
     );
   }
 }
