@@ -31,7 +31,8 @@ const styles = (theme) => {
       height: theme.spacing(20),
     },
     title: {
-      fontSize: 32,
+      fontSize: 24,
+      marginBottom: theme.spacing(2),
     },
     portrait: {
       minHeight: theme.spacing(40),
