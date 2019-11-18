@@ -141,8 +141,8 @@ class SignupPage extends React.Component {
     const { signup } = this.props;
 
     signup({
-      // givenName,
-      // familyName,
+      givenName,
+      familyName,
       username,
       email,
       password,

@@ -6,10 +6,6 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
@@ -35,109 +31,67 @@ const styles = (theme) => {
   };
 };
 
-class CommentCard extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+const CommentCard = (props) => {
+  const {
+    comment,
+    classes,
+    actions,
+    menu,
+    isEditing,
+    commentForm,
+  } = props;
 
-    this.state = {
-      menuAnchorEl: null,
-    };
+  const { author, creationTime } = comment;
 
-    this.handleOpenMenu = this.handleOpenMenu.bind(this);
-    this.handleCloseMenu = this.handleCloseMenu.bind(this);
-  }
-
-  handleOpenMenu(event) {
-    this.setState({
-      menuAnchorEl: event.currentTarget,
-    });
-  }
-
-  handleCloseMenu() {
-    this.setState({ menuAnchorEl: null });
-  }
-
-  render() {
-    const {
-      comment,
-      classes,
-      actions,
-      menuItems,
-      isEditing,
-      commentForm,
-    } = this.props;
-
-    const { author, creationTime } = comment;
-    const { menuAnchorEl } = this.state;
-
+  if (isEditing) {
     return (
-      <Card square className={classes.root}>
-        <CardHeader
-          avatar={
-            <ActorAvatar
-              actor={author}
-              linked={Boolean(author.id)}
-              size="small"
-            />
-          }
-          title={
-            <ActorTitle
-              actor={author}
-              linked={Boolean(author.id)}
-            />
-          }
-          subheader={
-            <ReactTimeAgo
-              date={new Date(creationTime)}
-            />
-          }
-          action={
-            <React.Fragment>
-              <IconButton
-                aria-owns={menuAnchorEl ? 'comment-menu' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleOpenMenu}
-              >
-                <MoreVertIcon fontSize="small" />
-              </IconButton>
-              <Menu
-                id="comment-menu"
-                anchorEl={menuAnchorEl}
-                open={Boolean(menuAnchorEl)}
-                onClose={this.handleCloseMenu}
-                keepMounted
-              >
-                {menuItems}
-              </Menu>
-            </React.Fragment>
-          }
-        />
-        {!isEditing &&
-          <CardContent className={classes.content}>
-            <EntityBody size="small">
-              {comment.body}
-            </EntityBody>
-          </CardContent>
-        }
-        {isEditing &&
-          <React.Fragment>
-            {commentForm}
-          </React.Fragment>
-        }
-        {actions &&
-          <CardActions>
-            {actions}
-          </CardActions>
-        }
-      </Card>
+      <React.Fragment>
+        {commentForm}
+      </React.Fragment>
     );
   }
-}
+
+  return (
+    <Card square className={classes.root}>
+      <CardHeader
+        avatar={
+          <ActorAvatar
+            actor={author}
+            linked={Boolean(author.id)}
+            size="small"
+          />
+        }
+        title={
+          <ActorTitle
+            actor={author}
+            linked={Boolean(author.id)}
+          />
+        }
+        subheader={
+          <ReactTimeAgo
+            date={new Date(creationTime)}
+          />
+        }
+        action={menu}
+      />
+      <CardContent className={classes.content}>
+        <EntityBody size="small">
+          {comment.body}
+        </EntityBody>
+      </CardContent>
+      {actions &&
+        <CardActions>
+          {actions}
+        </CardActions>
+      }
+    </Card>
+  );
+};
 
 CommentCard.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node,
-  menuItems: PropTypes.node,
+  menu: PropTypes.node,
   comment: CommentType.isRequired,
   commentForm: PropTypes.node,
   isEditing: PropTypes.bool,
@@ -145,7 +99,7 @@ CommentCard.propTypes = {
 
 CommentCard.defaultProps = {
   actions: null,
-  menuItems: null,
+  menu: null,
   commentForm: null,
   isEditing: false,
 };

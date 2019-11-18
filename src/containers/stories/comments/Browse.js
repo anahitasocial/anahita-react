@@ -5,11 +5,14 @@ import CommentRead from './Read';
 import CommentForm from '../../../components/comment/Form';
 
 import actions from '../../../actions/inline_comments';
-import NodeType from '../../../proptypes/Node';
-import CommentsType from '../../../proptypes/Comments';
-import NodesType from '../../../proptypes/Nodes';
-import CommentDefault from '../../../proptypes/CommentDefault';
 import i18n from '../../../languages';
+
+import CommentsType from '../../../proptypes/Comments';
+import CommentDefault from '../../../proptypes/CommentDefault';
+import NodeType from '../../../proptypes/Node';
+import NodesType from '../../../proptypes/Nodes';
+import PersonType from '../../../proptypes/Person';
+
 
 const MAX_CHAR_LIMIT = 5000;
 
@@ -18,7 +21,10 @@ class CommentsBrowse extends React.Component {
     super(props, context);
 
     this.state = {
-      comment: { ...CommentDefault },
+      comment: {
+        ...CommentDefault,
+        author: props.viewer,
+      },
       comments: props.comments,
       bodyError: false,
       bodyHelperText: '',
@@ -129,7 +135,7 @@ class CommentsBrowse extends React.Component {
       <React.Fragment>
         {comments.allIds.map((itemId) => {
           const item = comments.byId[itemId];
-          const key = `comment_${item.id}`;
+          const key = `comment-${item.id}`;
           return (
             <CommentRead
               key={key}
@@ -187,6 +193,7 @@ CommentsBrowse.propTypes = {
   canAdd: PropTypes.bool,
   setComments: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
+  viewer: PersonType.isRequired,
   // isFetching: PropTypes.bool.isRequired,
 };
 

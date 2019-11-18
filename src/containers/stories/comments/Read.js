@@ -1,21 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import CommentCard from '../../../components/cards/Comment';
 import CommentForm from '../../../components/comment/Form';
+import CommentMenu from './Menu';
 
+import i18n from '../../../languages';
 import actions from '../../../actions/inline_comments';
+
 import NodeType from '../../../proptypes/Node';
 import CommentType from '../../../proptypes/Comment';
 import PersonType from '../../../proptypes/Person';
 
 import LikeAction from '../../actions/Like';
-import FollowAction from '../../actions/Follow';
-import BlockAction from '../../actions/Block';
-import DeleteAction from '../../actions/comment/Delete';
-import i18n from '../../../languages';
 
 const MAX_CHAR_LIMIT = 5000;
 
@@ -130,52 +128,17 @@ class CommentsRead extends React.Component {
       viewer,
     } = this.props;
 
-    const canEdit = Boolean(comment.authorized.edit);
-    const canDelete = Boolean(comment.authorized.delete);
-    const { author } = comment;
-
     return (
       <CommentCard
         comment={comment}
-        menuItems={[
-          canEdit &&
-          <MenuItem
-            onClick={this.handleEdit}
-            key={`comment-edit-${comment.id}`}
-          >
-            {i18n.t('actions:edit')}
-          </MenuItem>,
-          author.id !== viewer.id &&
-          <FollowAction
-            actor={author}
-            component="menuitem"
-            key={`comment-follow-${comment.id}`}
-            followLabel={i18n.t('comments:actions.followAuthor', {
-              name: author.name,
-            })}
-            unfollowLabel={i18n.t('comments:actions.unfollowAuthor', {
-              name: author.name,
-            })}
-          />,
-          author.id !== viewer.id &&
-          <BlockAction
-            actor={author}
-            component="menuitem"
-            key={`comment-block-${comment.id}`}
-            blockLabel={i18n.t('comments:actions.blockAuthor', {
-              name: author.name,
-            })}
-            unblockLabel={i18n.t('comments:actions.unblockAuthor', {
-              name: author.name,
-            })}
-          />,
-          canDelete &&
-          <DeleteAction
+        menu={
+          <CommentMenu
             node={parent}
             comment={comment}
-            key={`comment-delete-${comment.id}`}
-          />,
-        ]}
+            viewer={viewer}
+            handleEdit={this.handleEdit}
+          />
+        }
         actions={[
           <LikeAction
             node={parent}

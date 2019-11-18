@@ -30,9 +30,18 @@ class ActionsCommentDelete extends React.Component {
   handleDelete(event) {
     event.preventDefault();
 
-    const { comment, node: { objectType }, deleteItem } = this.props;
+    const {
+      comment,
+      node: { objectType },
+      deleteItem,
+      deleteItemInline,
+      inline,
+    } = this.props;
+
     const namespace = objectType.split('.')[1];
-    deleteItem(comment, namespace);
+    const deleteFunc = inline ? deleteItemInline : deleteItem;
+
+    deleteFunc(comment, namespace);
   }
 
   render() {
@@ -56,13 +65,16 @@ class ActionsCommentDelete extends React.Component {
 
 ActionsCommentDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,
+  deleteItemInline: PropTypes.func.isRequired,
   comment: CommentType.isRequired,
   node: NodeType.isRequired,
   isDeleted: PropTypes.bool,
+  inline: PropTypes.bool,
 };
 
 ActionsCommentDelete.defaultProps = {
   isDeleted: false,
+  inline: false,
 };
 
 
@@ -74,6 +86,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (comment, namespace) => {
       return dispatch(actions.comments(namespace).deleteItem(comment));
+    },
+    deleteItemInline: (comment, namespace) => {
+      return dispatch(actions.inlineComments(namespace).deleteItem(comment));
     },
   };
 };

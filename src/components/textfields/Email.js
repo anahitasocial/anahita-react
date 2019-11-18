@@ -19,8 +19,18 @@ class TextFieldEmail extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps) {
-    const { isEmail, isFetching, error } = nextProps;
-    const helperText = isEmail ? 'Good email!' : 'Email already taken!';
+    const {
+      isEmail,
+      isFetching,
+      error,
+      value,
+    } = nextProps;
+
+    let helperText = '';
+
+    if (value) {
+      helperText = isEmail ? 'Good email!' : 'Email already taken!';
+    }
 
     return {
       isFetching,

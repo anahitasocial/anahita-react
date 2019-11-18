@@ -19,8 +19,18 @@ class TextFieldUsername extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps) {
-    const { isUsername, isFetching, error } = nextProps;
-    const helperText = isUsername ? 'Good username!' : 'Username already taken!';
+    const {
+      isUsername,
+      isFetching,
+      error,
+      value,
+    } = nextProps;
+
+    let helperText = '';
+
+    if (value) {
+      helperText = isUsername ? 'Good username!' : 'Username already taken!';
+    }
 
     return {
       isFetching,

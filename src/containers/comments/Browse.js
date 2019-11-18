@@ -9,8 +9,8 @@ import CommentForm from '../../components/comment/Form';
 
 import * as actions from '../../actions';
 import NodeType from '../../proptypes/Node';
-import CommentsType from '../../proptypes/Comments';
 import CommentDefault from '../../proptypes/CommentDefault';
+import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
 const LIMIT = 20;
@@ -25,7 +25,10 @@ class CommentsBrowse extends React.Component {
         byId: {},
         allIds: [],
       },
-      comment: { ...CommentDefault },
+      comment: {
+        ...CommentDefault,
+        author: props.viewer,
+      },
       bodyError: false,
       bodyHelperText: '',
       hasMore: true,
@@ -213,12 +216,11 @@ const mapDispatchToProps = (dispatch) => {
 
 CommentsBrowse.propTypes = {
   parent: NodeType.isRequired,
-  comments: CommentsType.isRequired,
   canAdd: PropTypes.bool,
   addComment: PropTypes.func.isRequired,
   browseComments: PropTypes.func.isRequired,
   resetComments: PropTypes.func.isRequired,
-  hasMore: PropTypes.bool.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 CommentsBrowse.defaultProps = {

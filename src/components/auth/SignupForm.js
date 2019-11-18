@@ -12,6 +12,9 @@ import TextField from '@material-ui/core/TextField';
 
 import SignUpIcon from '@material-ui/icons/PersonAdd';
 
+import TextFieldUsername from '../textfields/Username';
+import TextFieldEmail from '../textfields/Email';
+
 const SignupForm = (props) => {
   const {
     handleFieldChange,
@@ -75,26 +78,18 @@ const SignupForm = (props) => {
             margin="normal"
             disabled={success}
           />
-          <TextField
-            name="username"
+          <TextFieldUsername
             value={username}
             onChange={handleFieldChange}
-            label="Username"
             error={usernameError}
             helperText={usernameHelperText}
-            fullWidth
-            margin="normal"
             disabled={success}
           />
-          <TextField
-            name="email"
+          <TextFieldEmail
             value={email}
             onChange={handleFieldChange}
-            label="Email"
             error={emailError}
             helperText={emailHelperText}
-            fullWidth
-            margin="normal"
             disabled={success}
           />
           <TextField

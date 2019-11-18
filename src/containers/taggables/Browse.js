@@ -12,7 +12,6 @@ import StackGrid from 'react-stack-grid';
 
 import taggableActions from '../../actions/taggable';
 import NodeType from '../../proptypes/Node';
-import NodesType from '../../proptypes/Nodes';
 
 import CommentCard from '../../components/cards/Comment';
 import ActorsCard from '../actors/Card';
