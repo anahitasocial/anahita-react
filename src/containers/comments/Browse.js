@@ -12,9 +12,10 @@ import NodeType from '../../proptypes/Node';
 import CommentDefault from '../../proptypes/CommentDefault';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
-
-const LIMIT = 20;
-const MAX_CHAR_LIMIT = 5000;
+import {
+  App as APP,
+  Comments as COMMENT,
+} from '../../constants';
 
 class CommentsBrowse extends React.Component {
   constructor(props, context) {
@@ -60,6 +61,7 @@ class CommentsBrowse extends React.Component {
     } = this.props;
 
     const namespace = objectType.split('.')[1];
+    const { LIMIT } = APP.BROWSE;
 
     browseComments({
       node: { id, objectType },
@@ -71,14 +73,17 @@ class CommentsBrowse extends React.Component {
   }
 
   handleAdd() {
-    const { parent: { objectType }, addComment } = this.props;
+    const { parent: { objectType }, addComment, viewer } = this.props;
     const { comment } = this.state;
 
     if (this.validate()) {
       const namespace = objectType.split('.')[1];
       addComment(comment, namespace).then(() => {
         this.setState({
-          comment: { ...CommentDefault },
+          comment: {
+            ...CommentDefault,
+            author: viewer,
+          },
         });
       });
     }
@@ -103,11 +108,13 @@ class CommentsBrowse extends React.Component {
       helperText: '',
     };
 
+    const { BODY } = COMMENT.FIELDS;
+
     if (name === 'body') {
-      if (value.length === 0 || value.length > MAX_CHAR_LIMIT) {
+      if (value.length === 0 || value.length > BODY.MAX_LENGTH) {
         fieldError.error = true;
         fieldError.helperText = i18n.t('comments:comment.bodyErrorHelperText', {
-          max: MAX_CHAR_LIMIT,
+          max: BODY.MAX_LENGTH,
         });
       }
     }

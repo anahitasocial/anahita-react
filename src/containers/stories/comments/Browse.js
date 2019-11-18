@@ -57,13 +57,16 @@ class CommentsBrowse extends React.Component {
 
 
   handleAdd() {
-    const { parent: { objectType }, addComment } = this.props;
+    const { parent: { objectType }, addComment, viewer } = this.props;
     const { comment } = this.state;
     if (this.validate()) {
       const namespace = objectType.split('.')[1];
       addComment(comment, namespace).then(() => {
         this.setState({
-          comment: { ...CommentDefault },
+          comment: {
+            ...CommentDefault,
+            author: viewer,
+          },
         });
       });
     }
