@@ -20,6 +20,9 @@ import containersUtils from '../utils';
 import PersonType from '../../proptypes/Person';
 import ActorsCard from './Card';
 import Progress from '../../components/Progress';
+import { App as APP } from '../../constants';
+
+const { LIMIT } = APP.BROWSE;
 
 const styles = (theme) => {
   return {
@@ -37,8 +40,6 @@ const styles = (theme) => {
     },
   };
 };
-
-const LIMIT = 20;
 
 class ActorsBrowse extends React.Component {
   constructor(props, context) {

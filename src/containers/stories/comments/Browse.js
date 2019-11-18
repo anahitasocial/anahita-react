@@ -12,9 +12,7 @@ import CommentDefault from '../../../proptypes/CommentDefault';
 import NodeType from '../../../proptypes/Node';
 import NodesType from '../../../proptypes/Nodes';
 import PersonType from '../../../proptypes/Person';
-
-
-const MAX_CHAR_LIMIT = 5000;
+import { Comments as COMMENT } from '../../../constants';
 
 class CommentsBrowse extends React.Component {
   constructor(props, context) {
@@ -91,11 +89,13 @@ class CommentsBrowse extends React.Component {
       helperText: '',
     };
 
+    const { BODY } = COMMENT.FIELDS;
+
     if (name === 'body') {
-      if (value.length === 0 || value.length > MAX_CHAR_LIMIT) {
+      if (value.length === 0 || value.length > BODY.MAX_LENGTH) {
         fieldError.error = true;
         fieldError.helperText = i18n.t('comments:comment.bodyErrorHelperText', {
-          max: MAX_CHAR_LIMIT,
+          max: BODY.MAX_LENGTH,
         });
       }
     }

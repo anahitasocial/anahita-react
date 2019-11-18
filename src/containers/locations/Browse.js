@@ -22,14 +22,17 @@ import appActions from '../../actions/app';
 import { locations as actions } from '../../actions';
 import i18n from '../../languages';
 import locationUtils from './utils';
-import LocationsType from '../../proptypes/Locations';
+import { App as APP } from '../../constants';
 
-const LIMIT = 20;
-const SORT_TRENDING = 'trending';
-const SORT_TOP = 'top';
-const SROT_RECENT = 'recent';
-
-const TABS = [SORT_TRENDING, SORT_TOP, SROT_RECENT];
+const {
+  LIMIT,
+  SORTING: {
+    TRENDING,
+    TOP,
+    RECENT,
+  },
+} = APP.BROWSE;
+const TABS = [TRENDING, TOP, RECENT];
 
 const styles = {
   appBar: {
@@ -190,9 +193,6 @@ LocationsBrowse.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   browseLocations: PropTypes.func.isRequired,
   resetLocations: PropTypes.func.isRequired,
-  locations: LocationsType.isRequired,
-  error: PropTypes.string.isRequired,
-  hasMore: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {

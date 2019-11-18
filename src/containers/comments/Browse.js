@@ -17,6 +17,8 @@ import {
   Comments as COMMENT,
 } from '../../constants';
 
+const { LIMIT } = APP.BROWSE;
+
 class CommentsBrowse extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -61,7 +63,6 @@ class CommentsBrowse extends React.Component {
     } = this.props;
 
     const namespace = objectType.split('.')[1];
-    const { LIMIT } = APP.BROWSE;
 
     browseComments({
       node: { id, objectType },

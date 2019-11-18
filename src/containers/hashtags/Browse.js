@@ -19,13 +19,17 @@ import Progress from '../../components/Progress';
 import appActions from '../../actions/app';
 import { hashtags as actions } from '../../actions';
 import i18n from '../../languages';
+import { App as APP } from '../../constants';
 
-const LIMIT = 20;
-const SORT_TRENDING = 'trending';
-const SORT_TOP = 'top';
-const SROT_RECENT = 'recent';
-
-const TABS = [SORT_TRENDING, SORT_TOP, SROT_RECENT];
+const {
+  LIMIT,
+  SORTING: {
+    TRENDING,
+    TOP,
+    RECENT,
+  },
+} = APP.BROWSE;
+const TABS = [TRENDING, TOP, RECENT];
 
 const styles = {
   appBar: {

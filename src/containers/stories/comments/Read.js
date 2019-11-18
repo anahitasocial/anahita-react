@@ -15,7 +15,7 @@ import PersonType from '../../../proptypes/Person';
 
 import LikeAction from '../../actions/Like';
 
-const MAX_CHAR_LIMIT = 5000;
+import { Comments as COMMENT } from '../../../constants';
 
 class CommentsRead extends React.Component {
   constructor(props, context) {
@@ -86,11 +86,13 @@ class CommentsRead extends React.Component {
       helperText: '',
     };
 
+    const { BODY } = COMMENT.FIELDS;
+
     if (name === 'body') {
-      if (value.length === 0 || value.length > MAX_CHAR_LIMIT) {
+      if (value.length === 0 || value.length > BODY.MAX_LENGTH) {
         fieldError.error = true;
         fieldError.helperText = i18n.t('comments:comment.bodyErrorHelperText', {
-          max: MAX_CHAR_LIMIT,
+          max: BODY.MAX_LENGTH,
         });
       }
     }

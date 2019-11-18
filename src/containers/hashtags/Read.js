@@ -18,11 +18,10 @@ import HashtagDefault from '../../proptypes/HashtagDefault';
 
 import Progress from '../../components/Progress';
 import TaggablesBrowse from '../taggables/Browse';
+import { App as APP } from '../../constants';
 
-const SORT_TOP = 'top';
-const SROT_RECENT = 'recent';
-
-const TABS = [SORT_TOP, SROT_RECENT];
+const { TOP, RECENT } = APP.BROWSE.SORTING;
+const TABS = [TOP, RECENT];
 
 const styles = {
   card: {

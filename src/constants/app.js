@@ -4,5 +4,10 @@ export default {
   },
   BROWSE: {
     LIMIT: 20,
+    SORTING: {
+      TRENDING: 'trending',
+      TOP: 'top',
+      RECENT: 'recent',
+    },
   },
 };

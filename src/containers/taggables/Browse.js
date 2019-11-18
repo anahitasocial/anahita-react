@@ -15,11 +15,12 @@ import CommentCard from '../../components/cards/Comment';
 import ActorsCard from '../actors/Card';
 import MediaCard from '../media/Card';
 import Progress from '../../components/Progress';
+import { App as APP } from '../../constants';
 
 import utils from '../../utils';
 import containersUtils from '../utils';
 
-const LIMIT = 20;
+const { LIMIT } = APP.BROWSE;
 
 class TaggablesBrowse extends React.Component {
   constructor(props) {

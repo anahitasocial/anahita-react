@@ -18,17 +18,15 @@ import appActions from '../../actions/app';
 import { locations as actions } from '../../actions';
 import i18n from '../../languages';
 import locationUtils from './utils';
-import LocationsType from '../../proptypes/Locations';
 import LocationDefault from '../../proptypes/LocationDefault';
 
 import AnahitaMap from '../../components/Map';
 import TaggablesBrowse from '../taggables/Browse';
 import Progress from '../../components/Progress';
+import { App as APP } from '../../constants';
 
-const SORT_TOP = 'top';
-const SROT_RECENT = 'recent';
-
-const TABS = [SORT_TOP, SROT_RECENT];
+const { TOP, RECENT } = APP.BROWSE.SORTING;
+const TABS = [TOP, RECENT];
 
 const styles = {
   card: {
@@ -206,10 +204,6 @@ const mapStateToProps = (state) => {
 LocationsRead.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   readLocation: PropTypes.func.isRequired,
-  locations: LocationsType.isRequired,
-  taggablesCount: PropTypes.number.isRequired,
-  error: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   match: PropTypes.object.isRequired,
 };
 
