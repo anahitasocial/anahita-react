@@ -12,4 +12,9 @@ export default {
   EDIT: comments('edit'),
   ADD: comments('add'),
   DELETE: comments('delete'),
+  FIELDS: {
+    BODY: {
+      MAX_LENGTH: 5000,
+    },
+  },
 };
