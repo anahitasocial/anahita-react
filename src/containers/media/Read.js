@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
-
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
+
+import MediaCard from './Card';
+import MediumDefault from '../../proptypes/MediumDefault';
+import MediumComments from '../comments/Browse';
+import Progress from '../../components/Progress';
 
 import appActions from '../../actions/app';
 import * as actions from '../../actions';
 import i18n from '../../languages';
 
-import MediaCard from './Card';
-import MediumDefault from '../../proptypes/MediumDefault';
-import MediumComments from '../comments/Browse';
 // import permissions from '../../permissions/comment';
 
 class MediaRead extends React.Component {
@@ -64,7 +64,7 @@ class MediaRead extends React.Component {
         }
         <Container maxWidth={maxWidth}>
           {isFetching &&
-            <CircularProgress />
+            <Progress />
           }
           {medium.id > 0 &&
             <React.Fragment>

@@ -6,8 +6,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';
 
 import Fab from '@material-ui/core/Fab';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
 
 import AddIcon from '@material-ui/icons/Add';
 import StackGrid from 'react-stack-grid';
@@ -21,6 +19,7 @@ import i18n from '../../languages';
 
 import MediaCard from './Card';
 import PersonType from '../../proptypes/Person';
+import Progress from '../../components/Progress';
 
 import utils from '../utils';
 
@@ -116,16 +115,7 @@ class MediaBrowse extends React.Component {
           hasMore={hasMore}
           useWindow
           loader={
-            <Grid
-              container
-              justify="center"
-              alignItems="center"
-              key="media-progress"
-            >
-              <Grid item>
-                <CircularProgress />
-              </Grid>
-            </Grid>
+            <Progress key={`${namespace}-progress`} />
           }
         >
           <StackGrid

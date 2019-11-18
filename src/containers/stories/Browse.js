@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Badge from '@material-ui/core/Badge';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InfiniteScroll from 'react-infinite-scroller';
 import CommentIcon from '@material-ui/icons/Comment';
@@ -16,6 +14,7 @@ import actions from '../../actions/stories';
 import LikeAction from '../actions/Like';
 import StoryMenu from './Menu';
 
+import Progress from '../../components/Progress';
 import StoryCard from '../../components/cards/Story';
 import StoriesType from '../../proptypes/Stories';
 import PersonType from '../../proptypes/Person';
@@ -82,16 +81,7 @@ class StoriesBrowse extends React.Component {
           loadMore={this.fetchStories}
           hasMore={hasMore}
           loader={
-            <Grid
-              container
-              justify="center"
-              alignItems="center"
-              key="stories-infinit-scroller"
-            >
-              <Grid item>
-                <CircularProgress />
-              </Grid>
-            </Grid>
+            <Progress key="stories-progress" />
           }
         >
           {stories.allIds.map((storyId) => {

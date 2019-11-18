@@ -32,7 +32,6 @@ const styles = (theme) => {
     },
     title: {
       fontSize: 32,
-      marginBottom: theme.spacing(2),
     },
     portrait: {
       minHeight: theme.spacing(40),
@@ -110,7 +109,7 @@ const MediumCard = (props) => {
       <CardContent>
         {medium.name &&
           <Typography
-            variant="h1"
+            variant="h2"
             className={classes.title}
           >
             <Link href={url}>

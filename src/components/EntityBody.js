@@ -8,18 +8,18 @@ const styles = (theme) => {
     root: {
       fontFamily: theme.typography.fontFamily,
       fontWeight: 400,
-      letterSpacing: 0.1,
-      lineHeight: 1.5,
+      letterSpacing: 0,
+      lineHeight: 1.4,
       color: theme.palette.text.primary,
     },
     largeSize: {
-      fontSize: 16,
+      fontSize: 21,
     },
     smallSize: {
-      fontSize: 13,
+      fontSize: 14,
     },
     defaultSize: {
-      fontSize: 14,
+      fontSize: 16,
     },
   };
 };

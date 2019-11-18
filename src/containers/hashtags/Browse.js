@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,10 +14,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
+import Progress from '../../components/Progress';
+
 import appActions from '../../actions/app';
 import { hashtags as actions } from '../../actions';
 import i18n from '../../languages';
-import HashtagsType from '../../proptypes/Hashtags';
 
 const LIMIT = 20;
 const SORT_TRENDING = 'trending';
@@ -145,16 +144,7 @@ class HashtagsBrowse extends React.Component {
             hasMore={hasMore}
             useWindow
             loader={
-              <Grid
-                container
-                justify="center"
-                alignItems="center"
-                key="actors-progress"
-              >
-                <Grid item>
-                  <CircularProgress />
-                </Grid>
-              </Grid>
+              <Progress key="hashtags-progress" />
             }
           >
             {hashtags.allIds.map((hashtagId) => {
@@ -193,9 +183,6 @@ HashtagsBrowse.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   browseHashtags: PropTypes.func.isRequired,
   resetHashtags: PropTypes.func.isRequired,
-  hashtags: HashtagsType.isRequired,
-  error: PropTypes.string.isRequired,
-  hasMore: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {

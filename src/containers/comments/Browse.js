@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import CommentRead from './Read';
 import CommentForm from '../../components/comment/Form';
+import Progress from '../../components/Progress';
 
 import * as actions from '../../actions';
 import NodeType from '../../proptypes/Node';
@@ -154,7 +154,7 @@ class CommentsBrowse extends React.Component {
           hasMore={hasMore}
           useWindow
           loader={
-            <CircularProgress key={`comments-progress-${parent.id}`} />
+            <Progress key={`comments-progress-${parent.id}`} />
           }
         >
           {comments.allIds.map((itemId) => {

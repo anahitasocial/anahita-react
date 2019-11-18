@@ -6,9 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -25,6 +23,7 @@ import LocationDefault from '../../proptypes/LocationDefault';
 
 import AnahitaMap from '../../components/Map';
 import TaggablesBrowse from '../taggables/Browse';
+import Progress from '../../components/Progress';
 
 const SORT_TOP = 'top';
 const SROT_RECENT = 'recent';
@@ -118,16 +117,7 @@ class LocationsRead extends React.Component {
 
     if (isFetching) {
       return (
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          key="actors-progress"
-        >
-          <Grid item>
-            <CircularProgress />
-          </Grid>
-        </Grid>
+        <Progress key="location-progress" />
       );
     }
 

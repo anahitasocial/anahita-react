@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -17,6 +15,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import LocationIcon from '@material-ui/icons/LocationOn';
+
+import Progress from '../../components/Progress';
 
 import appActions from '../../actions/app';
 import { locations as actions } from '../../actions';
@@ -148,16 +148,7 @@ class LocationsBrowse extends React.Component {
             hasMore={hasMore}
             useWindow
             loader={
-              <Grid
-                container
-                justify="center"
-                alignItems="center"
-                key="circular-progress"
-              >
-                <Grid item>
-                  <CircularProgress />
-                </Grid>
-              </Grid>
+              <Progress key="locations-progress" />
             }
           >
             {locations.allIds.map((locationId) => {

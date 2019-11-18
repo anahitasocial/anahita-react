@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -16,9 +14,9 @@ import withWidth from '@material-ui/core/withWidth';
 import appActions from '../../actions/app';
 import { hashtags as actions } from '../../actions';
 import i18n from '../../languages';
-import HashtagsType from '../../proptypes/Hashtags';
 import HashtagDefault from '../../proptypes/HashtagDefault';
 
+import Progress from '../../components/Progress';
 import TaggablesBrowse from '../taggables/Browse';
 
 const SORT_TOP = 'top';
@@ -107,16 +105,7 @@ class HashtagsRead extends React.Component {
 
     if (isFetching) {
       return (
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          key="actors-progress"
-        >
-          <Grid item>
-            <CircularProgress />
-          </Grid>
-        </Grid>
+        <Progress />
       );
     }
 
@@ -187,10 +176,6 @@ const mapStateToProps = (state) => {
 HashtagsRead.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   readHashtag: PropTypes.func.isRequired,
-  hashtags: HashtagsType.isRequired,
-  taggablesCount: PropTypes.number.isRequired,
-  error: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   match: PropTypes.object.isRequired,
 };
 

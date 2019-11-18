@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import withWidth from '@material-ui/core/withWidth';
 
@@ -16,6 +14,7 @@ import NodeType from '../../proptypes/Node';
 import CommentCard from '../../components/cards/Comment';
 import ActorsCard from '../actors/Card';
 import MediaCard from '../media/Card';
+import Progress from '../../components/Progress';
 
 import utils from '../../utils';
 import containersUtils from '../utils';
@@ -101,16 +100,7 @@ class TaggablesBrowse extends React.Component {
         hasMore={hasMore}
         useWindow
         loader={
-          <Grid
-            container
-            justify="center"
-            alignItems="center"
-            key="taggable-circular-progress"
-          >
-            <Grid item>
-              <CircularProgress />
-            </Grid>
-          </Grid>
+          <Progress key="taggables-progress" />
         }
       >
         <StackGrid
