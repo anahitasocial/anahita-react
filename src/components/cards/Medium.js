@@ -107,7 +107,7 @@ const MediumCard = (props) => {
       {medium.body &&
         <Player text={medium.body} />
       }
-      <CardContent>
+      <CardContent component="article">
         {medium.name &&
           <Typography
             variant="h2"

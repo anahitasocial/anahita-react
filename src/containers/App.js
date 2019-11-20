@@ -48,6 +48,8 @@ const styles = (theme) => {
       height: '100%',
     },
     appBar: {
+      color: theme.palette.type === 'dark' ? '#fff' : null,
+      backgroundColor: theme.palette.type === 'dark' ? theme.palette.background.level2 : null,
       position: 'fixed',
       zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(['width', 'margin'], {
@@ -110,7 +112,7 @@ const styles = (theme) => {
     content: {
       width: '100%',
       flexGrow: 1,
-      backgroundColor: theme.palette.background.default,
+      // backgroundColor: theme.palette.background.default,
       height: 'calc(100% - 64px)',
       [theme.breakpoints.up('md')]: {
         height: 'calc(100% - 64px)',

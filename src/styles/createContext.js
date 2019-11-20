@@ -6,6 +6,7 @@ const theme = createMuiTheme({
     useNextVariants: true,
   },
   palette: {
+    type: 'light',
     primary: {
       main: '#098ED1',
     },
