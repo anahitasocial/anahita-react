@@ -55,11 +55,17 @@ class CommentsRead extends React.Component {
   }
 
   handleSave() {
-    const { parent: { objectType }, editComment } = this.props;
+    const {
+      parent: { objectType },
+      inline,
+    } = this.props;
+
     const { comment } = this.state;
+
     if (this.validate()) {
       const namespace = objectType.split('.')[1];
-      editComment(comment, namespace).then(() => {
+      const editMethod = inline ? 'editCommentInline' : 'editComment';
+      this.props[editMethod](comment, namespace).then(() => {
         this.setState({
           isEditing: false,
         });
@@ -126,6 +132,7 @@ class CommentsRead extends React.Component {
     const {
       parent,
       viewer,
+      inline,
     } = this.props;
 
     return (
@@ -137,6 +144,7 @@ class CommentsRead extends React.Component {
             comment={comment}
             viewer={viewer}
             handleEdit={this.handleEdit}
+            inline={inline}
           />
         }
         actions={[
@@ -174,6 +182,9 @@ const mapDispatchToProps = (dispatch) => {
     editComment: (comment, namespace) => {
       return dispatch(actions.comments(namespace).edit(comment));
     },
+    editCommentInline: (comment, namespace) => {
+      return dispatch(actions.inlineComments(namespace).edit(comment));
+    },
   };
 };
 
@@ -181,8 +192,11 @@ CommentsRead.propTypes = {
   parent: NodeType.isRequired,
   comment: CommentType.isRequired,
   viewer: PersonType.isRequired,
-  editComment: PropTypes.func.isRequired,
-  // isFetching: PropTypes.bool.isRequired,
+  inline: PropTypes.bool,
+};
+
+CommentsRead.defaultProps = {
+  inline: false,
 };
 
 export default (connect(

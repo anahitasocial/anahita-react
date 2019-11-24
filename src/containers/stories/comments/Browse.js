@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import CommentRead from './Read';
+import CommentRead from '../../comments/Read';
 import CommentForm from '../../../components/comment/Form';
 
 import actions from '../../../actions/inline_comments';
@@ -144,6 +144,7 @@ class CommentsBrowse extends React.Component {
               key={key}
               parent={parent}
               comment={item}
+              inline
             />
           );
         })}

@@ -31,6 +31,7 @@ const CommentMenu = (props) => {
     viewer,
     node,
     handleEdit,
+    inline,
   } = props;
 
   const canEdit = Boolean(comment.authorized.edit);
@@ -102,6 +103,7 @@ const CommentMenu = (props) => {
             comment={comment}
             node={node}
             key={`comment-delete-${comment.id}`}
+            inline={inline}
           />
         }
       </Menu>
@@ -114,6 +116,11 @@ CommentMenu.propTypes = {
   comment: CommentType.isRequired,
   viewer: PersonType.isRequired,
   handleEdit: PropTypes.func.isRequired,
+  inline: PropTypes.bool,
+};
+
+CommentMenu.defaultProps = {
+  inline: false,
 };
 
 export default CommentMenu;
