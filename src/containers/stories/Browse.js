@@ -104,7 +104,7 @@ class StoriesBrowse extends React.Component {
                   story.object && utils.isLikeable(story.object) &&
                   <LikeAction
                     node={story.object}
-                    isLiked={story.commands && story.commands.includes('unvote')}
+                    liked={story.commands && story.commands.includes('unvote')}
                     key={`story-like-${story.id}`}
                   />,
                   story.object && utils.isCommentable(story.object) &&

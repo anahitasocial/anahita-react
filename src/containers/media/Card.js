@@ -27,7 +27,7 @@ const MediaCard = (props) => {
       actions={isAuthenticated &&
         <LikeAction
           node={medium}
-          isLiked={medium.isVotedUp}
+          liked={medium.isVotedUp}
         />
       }
     />

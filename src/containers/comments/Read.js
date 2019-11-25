@@ -152,7 +152,7 @@ class CommentsRead extends React.Component {
           <LikeAction
             node={parent}
             comment={comment}
-            isLiked={comment.isVotedUp}
+            liked={comment.isVotedUp}
             key={`comment-like-${comment.id}`}
             size="small"
           />,

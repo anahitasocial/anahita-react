@@ -12,82 +12,73 @@ import CommentType from '../../proptypes/Comment';
 import CommentDefault from '../../proptypes/CommentDefault';
 import i18n from '../../languages';
 
-class ActionLike extends React.Component {
-  constructor(props) {
-    super(props);
+const ActionLike = (props) => {
+  const {
+    node,
+    comment,
+    likeNode,
+    unlikeNode,
+    liked,
+  } = props;
 
-    const { isLiked } = props;
+  const [isLiked, setIsLiked] = React.useState(liked);
+  const [isWaiting, setIsWaiting] = React.useState(false);
 
-    this.state = {
-      isLiked,
-      isFetching: false,
-    };
-
-    this.handleLike = this.handleLike.bind(this);
-    this.handleUnlike = this.handleUnlike.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { isFetching } = nextProps;
-    return { isFetching };
-  }
-
-  handleLike(event) {
+  const handleLike = (event) => {
     event.preventDefault();
 
-    const { node, comment, likeNode } = this.props;
+    setIsWaiting(true);
 
     likeNode(node, comment).then(() => {
-      this.setState({ isLiked: true });
+      setIsLiked(true);
+      setIsWaiting(false);
     });
-  }
+  };
 
-  handleUnlike(event) {
+  const handleUnlike = (event) => {
     event.preventDefault();
 
-    const { node, comment, unlikeNode } = this.props;
+    setIsWaiting(true);
 
     unlikeNode(node, comment).then(() => {
-      this.setState({ isLiked: false });
+      setIsLiked(false);
+      setIsWaiting(false);
     });
-  }
+  };
 
-  render() {
-    const { size } = this.props;
-    const { isLiked, isFetching } = this.state;
-    const label = isLiked ? i18n.t('actions:unlike') : i18n.t('actions:like');
-    const onClick = isLiked ? this.handleUnlike : this.handleLike;
-    const color = isLiked ? 'primary' : 'inherit';
+  const { size } = props;
+  const label = isLiked ? i18n.t('actions:unlike') : i18n.t('actions:like');
+  const onClick = isLiked ? handleUnlike : handleLike;
+  const color = isLiked ? 'primary' : 'inherit';
 
-    return (
-      <IconButton
-        onClick={onClick}
-        disabled={isFetching}
-        color={color}
-        aria-label={label}
-      >
-        {isLiked &&
-          <UnlikeIcon fontSize={size} />
-        }
-        {!isLiked &&
-          <LikeIcon fontSize={size} />
-        }
-      </IconButton>
-    );
-  }
-}
+  return (
+    <IconButton
+      onClick={onClick}
+      disabled={isWaiting}
+      color={color}
+      aria-label={label}
+    >
+      {isLiked &&
+        <UnlikeIcon fontSize={size} />
+      }
+      {!isLiked &&
+        <LikeIcon fontSize={size} />
+      }
+    </IconButton>
+  );
+};
 
 ActionLike.propTypes = {
   likeNode: PropTypes.func.isRequired,
   unlikeNode: PropTypes.func.isRequired,
   node: NodeType.isRequired,
   comment: CommentType,
-  isLiked: PropTypes.bool,
+  liked: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
 };
 
 ActionLike.defaultProps = {
-  isLiked: false,
+  liked: false,
   comment: CommentDefault,
   size: 'default',
 };

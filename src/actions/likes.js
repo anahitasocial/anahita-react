@@ -1,3 +1,5 @@
+/* eslint no-console: ["error", { allow: ["log", "error"] }] */
+
 import { normalize, schema } from 'normalizr';
 import { likes as api } from '../api';
 import { Likes as LIKES } from '../constants';
@@ -43,7 +45,6 @@ function browse(node) {
           dispatch(browseFailure(response));
           return reject(response);
         }).catch((error) => {
-          // throw new Error(error);
           console.error(error);
         });
     });
@@ -83,7 +84,6 @@ function add(node, comment = CommentDefault) {
           dispatch(addFailure(response));
           return reject(response);
         }).catch((error) => {
-          // throw new Error(error);
           console.error(error);
         });
     });
@@ -123,7 +123,6 @@ function deleteItem(node, comment = CommentDefault) {
           dispatch(deleteFailure(response));
           return reject(response);
         }).catch((error) => {
-          // throw new Error(error);
           console.error(error);
         });
     });
