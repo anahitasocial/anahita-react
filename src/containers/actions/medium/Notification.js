@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import actions from '../../../actions/notifications';
@@ -50,7 +49,6 @@ class ActionsMediumNotification extends React.Component {
 
   render() {
     const {
-      component,
       subscribeLabel,
       unsubscribeLabel,
     } = this.props;
@@ -59,27 +57,14 @@ class ActionsMediumNotification extends React.Component {
 
     const title = isSubscribed ? unsubscribeLabel : subscribeLabel;
     const onClick = isSubscribed ? this.handleUnsubscribe : this.handleSubscribe;
-    const color = isSubscribed ? 'inherit' : 'primary';
-
-    if (component === 'menuitem') {
-      return (
-        <MenuItem
-          onClick={onClick}
-          disabled={isFetching}
-        >
-          {title}
-        </MenuItem>
-      );
-    }
 
     return (
-      <Button
+      <MenuItem
         onClick={onClick}
         disabled={isFetching}
-        color={color}
       >
         {title}
-      </Button>
+      </MenuItem>
     );
   }
 }
@@ -89,13 +74,11 @@ ActionsMediumNotification.propTypes = {
   unsubscribe: PropTypes.func.isRequired,
   medium: MediumType.isRequired,
   isSubscribed: PropTypes.bool,
-  component: PropTypes.oneOf(['button', 'menuitem']),
   subscribeLabel: PropTypes.string,
   unsubscribeLabel: PropTypes.string,
 };
 
 ActionsMediumNotification.defaultProps = {
-  component: 'menuitem',
   isSubscribed: false,
   subscribeLabel: i18n.t('actions:subscribe'),
   unsubscribeLabel: i18n.t('actions:unsubscribe'),

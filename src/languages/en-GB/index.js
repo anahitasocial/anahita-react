@@ -16,6 +16,8 @@ export default {
     update: 'Update',
     cancel: 'Cancel',
     post: 'Post',
+    openComments: 'Open Comments',
+    closeComments: 'Close Comments',
   },
   translation: {
     stories,

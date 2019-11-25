@@ -11,7 +11,6 @@ import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 
-import appActions from '../../actions/app';
 import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
@@ -186,7 +185,7 @@ const mapDispatchToProps = (namespace) => {
         return dispatch(actions[namespace].browse(params, namespace));
       },
       setAppTitle: (title) => {
-        return dispatch(appActions.setAppTitle(title));
+        return dispatch(actions.app.setAppTitle(title));
       },
     };
   };

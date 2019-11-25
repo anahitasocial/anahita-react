@@ -3,6 +3,7 @@ import createApi from './create';
 
 import avatar from './avatar';
 import comments from './comments';
+import commentStatus from './comments_status';
 import cover from './cover';
 import is from './is';
 import likes from './likes';
@@ -40,6 +41,7 @@ export {
   articles,
   avatar,
   comments,
+  commentStatus,
   cover,
   groups,
   hashtags,

@@ -11,10 +11,7 @@ class ActionsDelete extends React.Component {
   constructor(props) {
     super(props);
 
-    const { isDeleted } = props;
-
     this.state = {
-      isDeleted,
       isFetching: false,
     };
 
@@ -35,16 +32,14 @@ class ActionsDelete extends React.Component {
   }
 
   render() {
-    const { isDeleted, isFetching } = this.state;
+    const { isFetching } = this.state;
     const label = i18n.t('actions:delete');
     const onClick = this.handleDelete;
-    const color = isDeleted ? 'primary' : 'inherit';
 
     return (
       <MenuItem
         onClick={onClick}
         disabled={isFetching}
-        color={color}
         aria-label={label}
       >
         {label}
@@ -56,11 +51,6 @@ class ActionsDelete extends React.Component {
 ActionsDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,
   node: NodeType.isRequired,
-  isDeleted: PropTypes.bool,
-};
-
-ActionsDelete.defaultProps = {
-  isDeleted: false,
 };
 
 const mapStateToProps = () => {

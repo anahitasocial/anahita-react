@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MediumCard from '../../components/cards/Medium';
 import LikeAction from '../actions/Like';
@@ -11,18 +12,19 @@ const MediaCard = (props) => {
   const {
     medium,
     viewer,
+    isAuthenticated,
   } = props;
 
   return (
     <MediumCard
       medium={medium}
-      menu={
+      menu={isAuthenticated &&
         <MediumMenu
           medium={medium}
           viewer={viewer}
         />
       }
-      actions={
+      actions={isAuthenticated &&
         <LikeAction
           node={medium}
           isLiked={medium.isVotedUp}
@@ -35,15 +37,18 @@ const MediaCard = (props) => {
 MediaCard.propTypes = {
   medium: MediumType.isRequired,
   viewer: PersonType.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
     viewer,
+    isAuthenticated,
   } = state.session;
 
   return {
     viewer,
+    isAuthenticated,
   };
 };
 

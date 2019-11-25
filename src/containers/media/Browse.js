@@ -12,12 +12,11 @@ import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 
-import appActions from '../../actions/app';
 import * as actions from '../../actions';
 import permissions from '../../permissions/medium';
 import i18n from '../../languages';
 
-import MediaCard from './Card';
+import MediumCard from './Card';
 import PersonType from '../../proptypes/Person';
 import Progress from '../../components/Progress';
 
@@ -128,9 +127,10 @@ class MediaBrowse extends React.Component {
               const medium = media.byId[mediumId];
               const key = `medium_${medium.id}`;
               return (
-                <MediaCard
+                <MediumCard
                   key={key}
                   medium={medium}
+                  viewer={viewer}
                 />
               );
             })
@@ -182,7 +182,7 @@ const mapDispatchToProps = (namespace) => {
         return dispatch(actions[namespace].browse(params, namespace));
       },
       setAppTitle: (title) => {
-        return dispatch(appActions.setAppTitle(title));
+        return dispatch(actions.app.setAppTitle(title));
       },
     };
   };

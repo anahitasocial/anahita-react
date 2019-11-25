@@ -29,11 +29,16 @@ const comments = (namespace) => {
   return createAction('comments')(api.comments(namespace));
 };
 
+const commentStatus = (namespace) => {
+  return createAction('commentStatus')(api.commentStatus(namespace));
+};
+
 export {
   app,
   articles,
   avatar,
   comments,
+  commentStatus,
   cover,
   inlineComments,
   is,

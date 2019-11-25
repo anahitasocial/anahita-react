@@ -133,12 +133,13 @@ class CommentsRead extends React.Component {
       parent,
       viewer,
       inline,
+      isAuthenticated,
     } = this.props;
 
     return (
       <CommentCard
         comment={comment}
-        menu={
+        menu={isAuthenticated &&
           <CommentMenu
             node={parent}
             comment={comment}
@@ -173,8 +174,8 @@ class CommentsRead extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { viewer } = state.session;
-  return { viewer };
+  const { viewer, isAuthenticated } = state.session;
+  return { viewer, isAuthenticated };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -192,6 +193,7 @@ CommentsRead.propTypes = {
   parent: NodeType.isRequired,
   comment: CommentType.isRequired,
   viewer: PersonType.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   inline: PropTypes.bool,
 };
 

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -9,6 +8,7 @@ import utils from '../utils';
 import i18n from '../../languages';
 
 import NotificationAction from '../actions/medium/Notification';
+import CommentStatusAction from '../actions/medium/CommentStatus';
 import DeleteAction from '../actions/Delete';
 import FollowAction from '../actions/Follow';
 
@@ -21,6 +21,7 @@ const actionWithRef = (Component) => {
   });
 };
 
+const CommentStatusActionWithRef = actionWithRef(CommentStatusAction);
 const FollowActionWithRef = actionWithRef(FollowAction);
 const NotificationActionWithRef = actionWithRef(NotificationAction);
 const DeleteActionWithRef = actionWithRef(DeleteAction);
@@ -64,6 +65,10 @@ const MediaMenu = (props) => {
           medium={medium}
           isSubscribed={medium.isSubscribed}
           key={`medium-notification-${medium.id}`}
+        />
+        <CommentStatusActionWithRef
+          medium={medium}
+          key={`medium-comment-status-${medium.id}`}
         />
         {medium.owner.id !== viewer.id &&
           <FollowActionWithRef

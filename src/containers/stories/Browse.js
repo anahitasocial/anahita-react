@@ -16,7 +16,6 @@ import StoryMenu from './Menu';
 
 import Progress from '../../components/Progress';
 import StoryCard from '../../components/cards/Story';
-import StoriesType from '../../proptypes/Stories';
 import PersonType from '../../proptypes/Person';
 import commentPerms from '../../permissions/comment';
 import utils from '../utils';
@@ -148,9 +147,7 @@ class StoriesBrowse extends React.Component {
 StoriesBrowse.propTypes = {
   browseStories: PropTypes.func.isRequired,
   resetStories: PropTypes.func.isRequired,
-  stories: StoriesType.isRequired,
   queryFilters: PropTypes.object,
-  hasMore: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
 };
 

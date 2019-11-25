@@ -5,16 +5,14 @@ import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
 import Container from '@material-ui/core/Container';
 
-import MediaCard from './Card';
+import PersonType from '../../proptypes/Person';
 import MediumDefault from '../../proptypes/MediumDefault';
 import MediumComments from '../comments/Browse';
 import Progress from '../../components/Progress';
+import MediumCard from './Card';
 
-import appActions from '../../actions/app';
 import * as actions from '../../actions';
 import i18n from '../../languages';
-
-// import permissions from '../../permissions/comment';
 
 class MediaRead extends React.Component {
   constructor(props) {
@@ -48,8 +46,13 @@ class MediaRead extends React.Component {
 
   render() {
     const { medium } = this.state;
-    const { isFetching } = this.props;
-    // const canAdd = permissions.canAdd(medium);
+    const {
+      isFetching,
+      viewer,
+      isAuthenticated,
+    } = this.props;
+
+    const canComment = isAuthenticated && medium.openToComment;
     const maxWidth = ['article', 'topic'].includes(medium.objectType.split('.')[2]) ? 'md' : 'sm';
 
     return (
@@ -63,18 +66,21 @@ class MediaRead extends React.Component {
         </Helmet>
         }
         <Container maxWidth={maxWidth}>
-          {isFetching &&
+          {isFetching && !medium.id &&
             <Progress />
           }
           {medium.id > 0 &&
             <React.Fragment>
-              <MediaCard
+              <MediumCard
                 medium={medium}
+                viewer={viewer}
               />
-              <MediumComments
-                parent={medium}
-                canAdd
-              />
+              {canComment &&
+                <MediumComments
+                  parent={medium}
+                  canAdd
+                />
+              }
             </React.Fragment>
           }
         </Container>
@@ -89,6 +95,8 @@ MediaRead.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   match: PropTypes.object.isRequired,
   setAppTitle: PropTypes.func.isRequired,
+  viewer: PersonType.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (namespace) => {
@@ -98,17 +106,14 @@ const mapStateToProps = (namespace) => {
       error,
     } = state[namespace];
 
-    const {
-      isAuthenticated,
-      viewer,
-    } = state.session;
+    const { viewer, isAuthenticated } = state.session;
 
     return {
       media: state[namespace][namespace],
       namespace,
       error,
-      isAuthenticated,
       viewer,
+      isAuthenticated,
       isFetching,
     };
   };
@@ -121,7 +126,7 @@ const mapDispatchToProps = (namespace) => {
         dispatch(actions[namespace].read(id, namespace));
       },
       setAppTitle: (title) => {
-        dispatch(appActions.setAppTitle(title));
+        dispatch(actions.app.setAppTitle(title));
       },
     };
   };
