@@ -160,7 +160,6 @@ class CommentsBrowse extends React.Component {
         <InfiniteScroll
           loadMore={this.fetchComments}
           hasMore={hasMore}
-          useWindow
           loader={
             <Progress key={`comments-progress-${parent.id}`} />
           }

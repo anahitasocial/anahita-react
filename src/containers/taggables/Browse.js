@@ -99,7 +99,6 @@ class TaggablesBrowse extends React.Component {
       <InfiniteScroll
         loadMore={this.fetchList}
         hasMore={hasMore}
-        useWindow
         loader={
           <Progress key="taggables-progress" />
         }

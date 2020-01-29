@@ -42,10 +42,8 @@ const styles = (theme) => {
     },
     content: {
       marginLeft: theme.spacing(2),
-      backgroundColor: theme.palette.grey[100],
-      borderLeft: 2,
+      borderLeft: 1,
       borderLeftStyle: 'solid',
-      borderLeftColor: theme.palette.grey[200],
     },
     authorName: {
       fontSize: 16,

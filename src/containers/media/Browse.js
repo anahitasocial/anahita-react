@@ -112,7 +112,6 @@ class MediaBrowse extends React.Component {
         <InfiniteScroll
           loadMore={this.fetchMedia}
           hasMore={hasMore}
-          useWindow
           loader={
             <Progress key={`${namespace}-progress`} />
           }

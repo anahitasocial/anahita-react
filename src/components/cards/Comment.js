@@ -14,9 +14,6 @@ import CommentType from '../../proptypes/Comment';
 
 const styles = (theme) => {
   return {
-    root: {
-      backgroundColor: theme.palette.grey[100],
-    },
     title: {
       fontSize: 16,
       fontWeight: 500,

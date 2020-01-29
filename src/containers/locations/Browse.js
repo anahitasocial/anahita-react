@@ -149,7 +149,6 @@ class LocationsBrowse extends React.Component {
           <InfiniteScroll
             loadMore={this.fetchList}
             hasMore={hasMore}
-            useWindow
             loader={
               <Progress key="locations-progress" />
             }

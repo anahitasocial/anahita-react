@@ -114,7 +114,6 @@ class ActorsBrowse extends React.Component {
         <InfiniteScroll
           loadMore={this.fetchActors}
           hasMore={hasMore}
-          useWindow
           loader={
             <Progress key={`${namespace}-progress`} />
           }
