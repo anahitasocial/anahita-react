@@ -124,6 +124,7 @@ class ActorsAvatar extends React.Component {
         handleClose={this.handleClose}
         handleFieldChange={this.handleFieldChange}
         handleDelete={this.handleDelete}
+        size="large"
       />
     );
   }

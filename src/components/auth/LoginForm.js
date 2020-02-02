@@ -27,7 +27,7 @@ const LoginForm = (props) => {
 
   return (
     <form onSubmit={handleLogin}>
-      <Card square>
+      <Card>
         <CardHeader
           avatar={
             <Avatar>

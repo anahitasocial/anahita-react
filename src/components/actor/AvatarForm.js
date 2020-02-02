@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
@@ -9,9 +10,22 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = (theme) => {
   return {
+    largeAvatar: {
+      width: theme.spacing(20),
+      height: theme.spacing(20),
+    },
+    smallAvatar: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
+    defaultAvatar: {
+      width: theme.spacing(6),
+      height: theme.spacing(6),
+    },
     avatar: {
-      width: theme.spacing(15),
-      height: theme.spacing(15),
+      borderSize: 3,
+      borderStyle: 'solid',
+      borderColor: theme.palette.background.paper,
     },
     button: {
       position: 'relative',
@@ -37,6 +51,7 @@ const ActorAvatarForm = (props) => {
     handleClose,
     handleFieldChange,
     handleDelete,
+    size,
   } = props;
 
   return (
@@ -50,7 +65,7 @@ const ActorAvatarForm = (props) => {
       >
         <Avatar
           aria-label={name}
-          className={classes.avatar}
+          className={clsx(classes[`${size}Avatar`], classes.avatar)}
           alt={name}
           src={isFetching ? '' : avatar}
         >
@@ -79,11 +94,11 @@ const ActorAvatarForm = (props) => {
               disabled={!canEdit || isFetching}
               onChange={handleFieldChange}
             />
-            {'Upload Avatar'}
+            Upload Avatar
           </label>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
-          {'Delete'}
+          Delete
         </MenuItem>
       </Menu>
     </React.Fragment>
@@ -101,6 +116,7 @@ ActorAvatarForm.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['small', 'large', 'default']),
 };
 
 ActorAvatarForm.defaultProps = {
@@ -109,6 +125,7 @@ ActorAvatarForm.defaultProps = {
   name: '',
   avatar: '',
   anchorEl: null,
+  size: 'default',
 };
 
 export default withStyles(styles)(ActorAvatarForm);

@@ -22,8 +22,8 @@ const styles = (theme) => {
       height: theme.spacing(3),
     },
     defaultAvatar: {
-      width: theme.spacing(5),
-      height: theme.spacing(5),
+      width: theme.spacing(6),
+      height: theme.spacing(6),
     },
     largeInitials: {
       fontSize: 48,

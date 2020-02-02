@@ -25,7 +25,7 @@ const CommentForm = (props) => {
   const { author, body } = comment;
 
   return (
-    <Card square>
+    <Card>
       <CardHeader
         avatar={
           <ActorAvatar

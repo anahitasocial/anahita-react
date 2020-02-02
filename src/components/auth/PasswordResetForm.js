@@ -24,7 +24,7 @@ const PasswordResetForm = (props) => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <Card square>
+      <Card>
         <CardHeader
           avatar={
             <Avatar>

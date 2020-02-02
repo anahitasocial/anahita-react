@@ -137,7 +137,7 @@ class ActorsAdd extends React.Component {
 
     return (
       <React.Fragment>
-        <Card square>
+        <Card>
           <CardHeader
             title={actor.name}
             avatar={

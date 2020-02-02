@@ -41,7 +41,7 @@ const SignupForm = (props) => {
 
   return (
     <form onSubmit={handleFormSubmit} autoComplete="off">
-      <Card square>
+      <Card>
         <CardHeader
           avatar={
             <Avatar>

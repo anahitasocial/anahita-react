@@ -49,7 +49,7 @@ const ActorCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card square>
+      <Card>
         {cover &&
           <Link href={url}>
             <CardMedia

@@ -10,14 +10,13 @@ import Fade from '@material-ui/core/Fade';
 
 const styles = (theme) => {
   return {
+    coverPlaceholder: {
+      height: theme.spacing(40),
+      backgroundColor: theme.palette.grey[400],
+    },
     cover: {
       width: '100%',
-      height: theme.spacing(45),
-    },
-    coverPlaceholder: {
-      width: '100%',
-      height: theme.spacing(45),
-      backgroundColor: theme.palette.grey[400],
+      height: theme.spacing(40),
     },
     coverIcon: {
       width: theme.spacing(10),
@@ -27,7 +26,7 @@ const styles = (theme) => {
     button: {
       position: 'relative',
       width: '100%',
-      height: theme.spacing(45),
+      height: theme.spacing(40),
     },
     input: {
       display: 'none',

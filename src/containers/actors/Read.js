@@ -102,14 +102,12 @@ class ActorsRead extends React.Component {
               canEdit={canEdit}
             />
           }
-          name={actor.name}
-          description={actor.body}
-          alias={actor.alias}
+          actor={actor}
           followAction={canFollow && actor.id && <FollowAction actor={actor} />}
           headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
         />
         <Divider className={classes.divider} />
-        {actor.id &&
+        {actor.id && false &&
           <StoriesBrowse
             key="com:stories.story"
             queryFilters={{

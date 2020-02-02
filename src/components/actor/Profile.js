@@ -1,21 +1,36 @@
 import React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
+import ActorType from '../../proptypes/Actor';
 
-const styles = {
-  titleContainer: {
-    marginBottom: 24,
-  },
-  title: {
-    marginBottom: 4,
-  },
-  alias: {
-    fontSize: 16,
-  },
+const styles = (theme) => {
+  return {
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    avatar: {
+      marginTop: -theme.spacing(15),
+    },
+    content: {
+      marginTop: theme.spacing(4),
+    },
+    action: {
+      position: 'absolute',
+      alignSelf: 'flex-end',
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 600,
+    },
+    subheader: {
+      fontSize: 18,
+    },
+  };
 };
 
 const ActorProfile = (props) => {
@@ -23,38 +38,36 @@ const ActorProfile = (props) => {
     classes,
     cover,
     avatar,
-    name,
-    alias,
-    description,
+    actor,
     followAction,
     headerActions,
   } = props;
 
   return (
     <React.Fragment>
-      <Card square>
+      <Card>
         {cover}
         <CardHeader
+          classes={classes}
           avatar={avatar}
           title={
-            <div className={classes.titleContainer}>
-              <Typography variant="h6" className={classes.title}>
-                {name}
-              </Typography>
-              <Typography
-                component="p"
-                className={classes.alias}
-              >
-                {`@${alias}`}
-              </Typography>
-            </div>
-          }
-          subheader={
-            <Typography component="p">
-              {description || ''}
+            <Typography
+              variant="h2"
+              className={classes.title}
+              align="center"
+            >
+              {actor.name}
             </Typography>
           }
-          className={classes.header}
+          subheader={
+            <Typography
+              variant="h3"
+              className={classes.subheader}
+              align="center"
+            >
+              {actor.alias && `@${actor.alias}`}
+            </Typography>
+          }
           action={headerActions}
         />
         <CardActions>
@@ -69,16 +82,12 @@ ActorProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   cover: PropTypes.node.isRequired,
   avatar: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired,
-  alias: PropTypes.string,
-  description: PropTypes.string,
+  actor: ActorType.isRequired,
   followAction: PropTypes.node,
   headerActions: PropTypes.node,
 };
 
 ActorProfile.defaultProps = {
-  description: '',
-  alias: '',
   followAction: null,
   headerActions: null,
 };
