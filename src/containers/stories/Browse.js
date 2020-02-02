@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import InfiniteScroll from 'react-infinite-scroller';
 import CommentIcon from '@material-ui/icons/Comment';
@@ -75,7 +74,7 @@ class StoriesBrowse extends React.Component {
     const { viewer, queryFilters } = this.props;
 
     return (
-      <Container maxWidth="sm">
+      <React.Fragment>
         <InfiniteScroll
           loadMore={this.fetchStories}
           hasMore={hasMore}
@@ -139,7 +138,7 @@ class StoriesBrowse extends React.Component {
           })
           }
         </InfiniteScroll>
-      </Container>
+      </React.Fragment>
     );
   }
 }

@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -89,7 +90,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     overflow: 'auto',
-    margin: theme.spacing(2),
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -175,7 +176,9 @@ const App = (props) => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        {children}
+        <Container fixed>
+          {children}
+        </Container>
       </main>
     </div>
   );

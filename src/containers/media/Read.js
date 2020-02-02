@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
-import Container from '@material-ui/core/Container';
+// import Container from '@material-ui/core/Container';
 
 import PersonType from '../../proptypes/Person';
 import MediumDefault from '../../proptypes/MediumDefault';
@@ -53,7 +53,7 @@ class MediaRead extends React.Component {
     } = this.props;
 
     const canComment = isAuthenticated && medium.openToComment;
-    const maxWidth = ['article', 'topic'].includes(medium.objectType.split('.')[2]) ? 'md' : 'sm';
+    // const maxWidth = ['article', 'topic'].includes(medium.objectType.split('.')[2]) ? 'md' : 'sm';
 
     return (
       <React.Fragment>
@@ -65,25 +65,23 @@ class MediaRead extends React.Component {
           <meta name="description" content={striptags(medium.body)} />
         </Helmet>
         }
-        <Container maxWidth={maxWidth}>
-          {isFetching && !medium.id &&
-            <Progress />
-          }
-          {medium.id > 0 &&
-            <React.Fragment>
-              <MediumCard
-                medium={medium}
-                viewer={viewer}
+        {isFetching && !medium.id &&
+          <Progress />
+        }
+        {medium.id > 0 &&
+          <React.Fragment>
+            <MediumCard
+              medium={medium}
+              viewer={viewer}
+            />
+            {canComment &&
+              <MediumComments
+                parent={medium}
+                canAdd
               />
-              {canComment &&
-                <MediumComments
-                  parent={medium}
-                  canAdd
-                />
-              }
-            </React.Fragment>
-          }
-        </Container>
+            }
+          </React.Fragment>
+        }
       </React.Fragment>
     );
   }

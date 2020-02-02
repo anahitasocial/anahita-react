@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
 import { Helmet } from 'react-helmet';
 import StoriesBrowse from './stories/Browse';
 import appActions from '../actions/app';
@@ -24,11 +25,15 @@ class DashboardPage extends React.Component {
         <Helmet>
           <title>{i18n.t('dashboard:cTitle')}</title>
         </Helmet>
-        <StoriesBrowse
-          key="com:stories.story"
-          queryFilters={filters}
-          {...this.params}
-        />
+        <Grid container justify="center">
+          <Grid item lg={6} md={12}>
+            <StoriesBrowse
+              key="com:stories.story"
+              queryFilters={filters}
+              {...this.params}
+            />
+          </Grid>
+        </Grid>
       </React.Fragment>
     );
   }
