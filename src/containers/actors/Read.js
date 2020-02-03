@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import withStyles from '@material-ui/core/styles/withStyles';
 import striptags from 'striptags';
 
 import ActorHeader from '../../components/actor/Header';
 import ActorBody from '../../components/actor/Body';
 import StoriesBrowse from '../stories/Browse';
+import MediaBrowse from '../media/Browse';
 import Avatar from './read/Avatar';
 import Cover from './read/Cover';
 import Commands from './read/Commands';
@@ -20,18 +20,11 @@ import permissions from '../../permissions/actor';
 import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
 
-const styles = (theme) => {
-  return {
-    progress: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
-    divider: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
-  };
-};
+const NotesBrowse = MediaBrowse('notes');
+const PhotosBrowse = MediaBrowse('photos');
+const ArticlesBrowse = MediaBrowse('articles');
+const TopicsBrowse = MediaBrowse('topics');
+const TodosBrowse = MediaBrowse('todos');
 
 class ActorsRead extends React.Component {
   constructor(props) {
@@ -70,7 +63,6 @@ class ActorsRead extends React.Component {
 
   render() {
     const {
-      classes,
       isAuthenticated,
       viewer,
     } = this.props;
@@ -117,6 +109,41 @@ class ActorsRead extends React.Component {
                 {...this.params}
               />
             }
+            notes={
+              <NotesBrowse
+                queryFilters={{
+                  oid: actor.id,
+                }}
+              />
+            }
+            photos={
+              <PhotosBrowse
+                queryFilters={{
+                  oid: actor.id,
+                }}
+              />
+            }
+            articles={
+              <ArticlesBrowse
+                queryFilters={{
+                  oid: actor.id,
+                }}
+              />
+            }
+            topics={
+              <TopicsBrowse
+                queryFilters={{
+                  oid: actor.id,
+                }}
+              />
+            }
+            todos={
+              <TodosBrowse
+                queryFilters={{
+                  oid: actor.id,
+                }}
+              />
+            }
           />
         }
       </React.Fragment>
@@ -125,7 +152,6 @@ class ActorsRead extends React.Component {
 }
 
 ActorsRead.propTypes = {
-  classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
@@ -176,8 +202,8 @@ const mapDispatchToProps = (namespace) => {
 };
 
 export default (namespace) => {
-  return withStyles(styles)(connect(
+  return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(ActorsRead));
+  )(ActorsRead);
 };

@@ -30,6 +30,7 @@ const ActorBody = (props) => {
     socialgraph,
     locations,
     notes,
+    photos,
     topics,
     articles,
     todos,
@@ -45,7 +46,11 @@ const ActorBody = (props) => {
 
   return (
     <Box className={classes.root}>
-      <AppBar position="static" color="default" className={classes.appBar}>
+      <AppBar
+        position="sticky"
+        color="default"
+        className={classes.appBar}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
@@ -66,10 +71,10 @@ const ActorBody = (props) => {
           {gadgets.articles &&
             <Tab label="Articles" value="articles" id="actor-tab-articles" />
           }
-          {gadgets.topics &&
+          {gadgets['topics-gadget'] &&
             <Tab label="Topics" value="topics" id="actor-tab-topics" />
           }
-          {gadgets.todos &&
+          {gadgets['todos-gadget-profile-todos'] &&
             <Tab label="Todos" value="todos" id="actor-tab-todos" />
           }
         </Tabs>
@@ -82,6 +87,11 @@ const ActorBody = (props) => {
         <Grid item sm={8}>{stories}</Grid>
       </Grid>
       }
+      {value === 'notes' && notes}
+      {gadgets.photos && value === 'photos' && photos}
+      {gadgets.articles && value === 'articles' && articles}
+      {gadgets['topics-gadget'] && value === 'topics' && topics}
+      {gadgets['todos-gadget-profile-todos'] && value === 'todos' && todos}
     </Box>
   );
 };
@@ -93,6 +103,7 @@ ActorBody.propTypes = {
   socialgraph: PropTypes.node,
   locations: PropTypes.node,
   notes: PropTypes.node,
+  photos: PropTypes.node,
   topics: PropTypes.node,
   articles: PropTypes.node,
   todos: PropTypes.node,
@@ -103,6 +114,7 @@ ActorBody.defaultProps = {
   socialgraph: null,
   locations: null,
   notes: null,
+  photos: null,
   topics: null,
   articles: null,
   todos: null,
