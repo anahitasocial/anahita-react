@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -96,6 +96,7 @@ const useStyles = makeStyles(theme => ({
 
 const App = (props) => {
   const classes = useStyles();
+  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -117,7 +118,10 @@ const App = (props) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar className={clsx(classes.appBar, open && classes.appBarShift)} color="default">
+      <AppBar
+        className={clsx(classes.appBar, open && classes.appBarShift)}
+        color="inherit"
+      >
         <Toolbar disableGutters={!open} className={classes.toolbar}>
           <IconButton
             className={clsx(classes.menuButton, open && classes.hide)}
@@ -145,6 +149,7 @@ const App = (props) => {
       </AppBar>
       <Drawer
         variant="temporary"
+        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}

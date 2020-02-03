@@ -72,7 +72,7 @@ const StoryCardComment = (props) => {
   const url = story.object ? getURL(story.object) : '';
 
   return (
-    <Card square className={classes.card}>
+    <Card className={classes.card}>
       {showOwner &&
         <StoryCardOwner node={story} />
       }

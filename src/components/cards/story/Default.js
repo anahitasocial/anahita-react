@@ -32,7 +32,7 @@ const styles = (theme) => {
       marginBottom: theme.spacing(2),
     },
     media: {
-      height: theme.spacing(20),
+      height: theme.spacing(30),
     },
     title: {
       textTransform: 'capitalize',
@@ -71,7 +71,7 @@ const StoryCardDefault = (props) => {
   const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
   return (
-    <Card square className={classes.card}>
+    <Card className={classes.card}>
       {showOwnerHeader &&
         <StoryCardOwner node={story} />
       }

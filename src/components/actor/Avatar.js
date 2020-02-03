@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,23 +17,20 @@ const styles = (theme) => {
     largeAvatar: {
       width: theme.spacing(20),
       height: theme.spacing(20),
+      fontSize: 48,
     },
     smallAvatar: {
       width: theme.spacing(3),
       height: theme.spacing(3),
+      fontSize: 12,
     },
     defaultAvatar: {
       width: theme.spacing(6),
       height: theme.spacing(6),
-    },
-    largeInitials: {
-      fontSize: 48,
-    },
-    smallInitials: {
-      fontSize: 12,
-    },
-    defaultInitials: {
       fontSize: 20,
+    },
+    avatar: {
+      // color: theme.palette.text.primary,
     },
     link: {
       textDecoration: 'none',
@@ -66,11 +64,9 @@ const ActorAvatar = (props) => {
             aria-label={actor.name}
             alt={actor.name}
             src={portrait}
-            className={classes[`${size}Avatar`]}
+            className={clsx(classes[`${size}Avatar`], classes.avatar)}
           >
-            <span className={classes[`${size}Initials`]}>
-              {!portrait && initials}
-            </span>
+            {!portrait && initials}
           </Avatar>
         </Link>
       }

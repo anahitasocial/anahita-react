@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Divider from '@material-ui/core/Divider';
 import striptags from 'striptags';
 
-import ActorProfile from '../../components/actor/Profile';
+import ActorHeader from '../../components/actor/Header';
+import ActorBody from '../../components/actor/Body';
 import StoriesBrowse from '../stories/Browse';
 import Avatar from './read/Avatar';
 import Cover from './read/Cover';
@@ -17,7 +17,6 @@ import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
 
-import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
 
@@ -89,7 +88,7 @@ class ActorsRead extends React.Component {
           </title>
           <meta name="description" content={striptags(actor.body)} />
         </Helmet>
-        <ActorProfile
+        <ActorHeader
           cover={
             <Cover
               node={actor}
@@ -106,14 +105,18 @@ class ActorsRead extends React.Component {
           followAction={canFollow && actor.id && <FollowAction actor={actor} />}
           headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
         />
-        <Divider className={classes.divider} />
-        {actor.id && false &&
-          <StoriesBrowse
-            key="com:stories.story"
-            queryFilters={{
-              oid: actor.id,
-            }}
-            {...this.params}
+        {actor.id &&
+          <ActorBody
+            actor={actor}
+            stories={
+              <StoriesBrowse
+                key="com:stories.story"
+                queryFilters={{
+                  oid: actor.id,
+                }}
+                {...this.params}
+              />
+            }
           />
         }
       </React.Fragment>
@@ -125,7 +128,6 @@ ActorsRead.propTypes = {
   classes: PropTypes.object.isRequired,
   readActor: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
-  actors: ActorsType.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,

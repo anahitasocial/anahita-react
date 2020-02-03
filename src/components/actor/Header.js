@@ -1,10 +1,13 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
+
+import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
+import Typography from '@material-ui/core/Typography';
+
 import ActorType from '../../proptypes/Actor';
 
 const styles = (theme) => {
@@ -12,6 +15,7 @@ const styles = (theme) => {
     root: {
       display: 'flex',
       flexDirection: 'column',
+      backgroundColor: theme.palette.background.paper,
     },
     avatar: {
       marginTop: -theme.spacing(15),
@@ -30,10 +34,13 @@ const styles = (theme) => {
     subheader: {
       fontSize: 18,
     },
+    grow: {
+      flex: '1 1 auto',
+    },
   };
 };
 
-const ActorProfile = (props) => {
+const ActorHeader = (props) => {
   const {
     classes,
     cover,
@@ -70,15 +77,18 @@ const ActorProfile = (props) => {
           }
           action={headerActions}
         />
-        <CardActions>
-          {followAction}
-        </CardActions>
+        {followAction &&
+          <CardActions>
+            <Box className={classes.grow} />
+            {followAction}
+          </CardActions>
+        }
       </Card>
     </React.Fragment>
   );
 };
 
-ActorProfile.propTypes = {
+ActorHeader.propTypes = {
   classes: PropTypes.object.isRequired,
   cover: PropTypes.node.isRequired,
   avatar: PropTypes.node.isRequired,
@@ -87,9 +97,9 @@ ActorProfile.propTypes = {
   headerActions: PropTypes.node,
 };
 
-ActorProfile.defaultProps = {
+ActorHeader.defaultProps = {
   followAction: null,
   headerActions: null,
 };
 
-export default withStyles(styles)(ActorProfile);
+export default withStyles(styles)(ActorHeader);

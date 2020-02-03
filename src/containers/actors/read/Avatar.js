@@ -116,7 +116,7 @@ class ActorsAvatar extends React.Component {
     return (
       <AvatarForm
         isFetching={isFetching || (this.hasAvatar && !isLoaded)}
-        name={node.name}
+        node={node}
         avatar={avatar}
         anchorEl={anchorEl}
         canEdit={canEdit}

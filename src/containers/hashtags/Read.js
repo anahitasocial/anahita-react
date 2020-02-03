@@ -135,6 +135,8 @@ class HashtagsRead extends React.Component {
             onChange={this.changeTab}
             centered
             variant="fullWidth"
+            indicatorColor="primary"
+            textColor="primary"
           >
             <Tab label="Top" />
             <Tab label="Recent" />

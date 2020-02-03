@@ -29,6 +29,8 @@ const Auth = (props) => {
           onChange={handleChangeTab}
           centered
           variant="fullWidth"
+          indicatorColor="primary"
+          textColor="primary"
         >
           <Tab label="Login" />
           <Tab label="Signup" />

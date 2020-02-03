@@ -7,25 +7,31 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import NodeType from '../../proptypes/Node';
+import { getActorInitials } from '../utils';
 
 const styles = (theme) => {
   return {
     largeAvatar: {
       width: theme.spacing(20),
       height: theme.spacing(20),
+      fontSize: 48,
     },
     smallAvatar: {
       width: theme.spacing(3),
       height: theme.spacing(3),
+      fontSize: 12,
     },
     defaultAvatar: {
       width: theme.spacing(6),
       height: theme.spacing(6),
+      fontSize: 20,
     },
     avatar: {
       borderSize: 3,
       borderStyle: 'solid',
       borderColor: theme.palette.background.paper,
+      // backgroundColor: theme.palette.background.default,
     },
     button: {
       position: 'relative',
@@ -42,7 +48,7 @@ const styles = (theme) => {
 const ActorAvatarForm = (props) => {
   const {
     classes,
-    name,
+    node,
     avatar,
     anchorEl,
     isFetching,
@@ -54,6 +60,8 @@ const ActorAvatarForm = (props) => {
     size,
   } = props;
 
+  const initials = getActorInitials(node);
+
   return (
     <React.Fragment>
       <IconButton
@@ -64,17 +72,13 @@ const ActorAvatarForm = (props) => {
         onClick={handleOpen}
       >
         <Avatar
-          aria-label={name}
+          aria-label={node.name}
           className={clsx(classes[`${size}Avatar`], classes.avatar)}
-          alt={name}
+          alt={node.name}
           src={isFetching ? '' : avatar}
         >
-          {!isFetching &&
-            name.charAt(0)
-          }
-          {isFetching &&
-            <CircularProgress />
-          }
+          {!isFetching && initials}
+          {isFetching && <CircularProgress />}
         </Avatar>
       </IconButton>
 
@@ -107,7 +111,7 @@ const ActorAvatarForm = (props) => {
 
 ActorAvatarForm.propTypes = {
   classes: PropTypes.object.isRequired,
-  name: PropTypes.string,
+  node: NodeType.isRequired,
   avatar: PropTypes.string,
   anchorEl: PropTypes.object,
   isFetching: PropTypes.bool,
@@ -122,7 +126,6 @@ ActorAvatarForm.propTypes = {
 ActorAvatarForm.defaultProps = {
   isFetching: false,
   canEdit: false,
-  name: '',
   avatar: '',
   anchorEl: null,
   size: 'default',

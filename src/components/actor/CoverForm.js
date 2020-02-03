@@ -12,7 +12,6 @@ const styles = (theme) => {
   return {
     coverPlaceholder: {
       height: theme.spacing(40),
-      backgroundColor: theme.palette.grey[400],
     },
     cover: {
       width: '100%',
@@ -27,6 +26,7 @@ const styles = (theme) => {
       position: 'relative',
       width: '100%',
       height: theme.spacing(40),
+      backgroundColor: theme.palette.background.default,
     },
     input: {
       display: 'none',
@@ -90,11 +90,11 @@ const ActorCoverForm = (props) => {
               disabled={!canEdit || isFetching}
               onChange={handleFieldChange}
             />
-            {'Upload Cover'}
+            Upload Cover
           </label>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
-          {'Delete'}
+          Delete
         </MenuItem>
       </Menu>
     </React.Fragment>
