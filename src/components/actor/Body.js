@@ -8,6 +8,7 @@ import Tab from '@material-ui/core/Tab';
 
 import PropTypes from 'prop-types';
 import ActorType from '../../proptypes/Actor';
+import PersonType from '../../proptypes/Person';
 import ActorBodyAbout from './body/About';
 
 const styles = (theme) => {
@@ -26,14 +27,14 @@ const ActorBody = (props) => {
   const {
     classes,
     actor,
+    viewer,
     stories,
-    socialgraph,
-    locations,
     notes,
     photos,
     topics,
     articles,
     todos,
+    mentions,
   } = props;
 
   const [value, setValue] = React.useState('stories');
@@ -61,9 +62,6 @@ const ActorBody = (props) => {
           aria-label="Profile Tabs"
         >
           <Tab label="Stories" value="stories" id="actor-tab-stories" />
-          <Tab label="Social Graph" value="socialgraph" id="actor-tab-socialgraph" />
-          <Tab label="Locations" value="locations" id="actor-tab-locations" />
-          <Tab label="Mentions" value="mentions" id="actor-tab-mentions" />
           <Tab label="Notes" value="notes" id="actor-tab-notes" />
           {gadgets.photos &&
             <Tab label="Photos" value="photos" id="actor-tab-photos" />
@@ -77,6 +75,7 @@ const ActorBody = (props) => {
           {gadgets['todos-gadget-profile-todos'] &&
             <Tab label="Todos" value="todos" id="actor-tab-todos" />
           }
+          {actor.id === viewer.id && <Tab label="Mentions" value="mentions" id="actor-tab-mentions" />}
         </Tabs>
       </AppBar>
       {value === 'stories' &&
@@ -92,6 +91,7 @@ const ActorBody = (props) => {
       {gadgets.articles && value === 'articles' && articles}
       {gadgets['topics-gadget'] && value === 'topics' && topics}
       {gadgets['todos-gadget-profile-todos'] && value === 'todos' && todos}
+      {actor.id === viewer.id && value === 'mentions' && mentions}
     </Box>
   );
 };
@@ -99,25 +99,24 @@ const ActorBody = (props) => {
 ActorBody.propTypes = {
   classes: PropTypes.object.isRequired,
   actor: ActorType.isRequired,
+  viewer: PersonType.isRequired,
   stories: PropTypes.node,
-  socialgraph: PropTypes.node,
-  locations: PropTypes.node,
   notes: PropTypes.node,
   photos: PropTypes.node,
   topics: PropTypes.node,
   articles: PropTypes.node,
   todos: PropTypes.node,
+  mentions: PropTypes.node,
 };
 
 ActorBody.defaultProps = {
   stories: null,
-  socialgraph: null,
-  locations: null,
   notes: null,
   photos: null,
   topics: null,
   articles: null,
   todos: null,
+  mentions: null,
 };
 
 export default withStyles(styles)(ActorBody);

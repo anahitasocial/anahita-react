@@ -2,18 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import withStyles from '@material-ui/core/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';
-
-import Fab from '@material-ui/core/Fab';
-
-import AddIcon from '@material-ui/icons/Add';
 import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Link } from 'react-router-dom';
 
 import * as actions from '../../actions';
-import permissions from '../../permissions/medium';
 import i18n from '../../languages';
 
 import MediumCard from './Card';
@@ -21,21 +14,6 @@ import PersonType from '../../proptypes/Person';
 import Progress from '../../components/Progress';
 
 import utils from '../utils';
-
-const styles = (theme) => {
-  return {
-    title: {
-      textTransform: 'capitalize',
-      marginBottom: theme.spacing(2),
-    },
-    addButton: {
-      position: 'fixed',
-      bottom: theme.spacing(3),
-      right: theme.spacing(3),
-      zIndex: 10,
-    },
-  };
-};
 
 const LIMIT = 20;
 
@@ -89,7 +67,6 @@ class MediaBrowse extends React.Component {
 
   render() {
     const {
-      classes,
       namespace,
       viewer,
       width,
@@ -100,52 +77,38 @@ class MediaBrowse extends React.Component {
     const columnWidth = utils.getColumnWidthPercentage(width);
 
     return (
-      <React.Fragment>
-        {permissions.canAdd(viewer) &&
-          <Fab
-            aria-label="Add"
-            color="secondary"
-            className={classes.addButton}
-            component={Link}
-            to={`/${namespace}/add/`}
-          >
-            <AddIcon />
-          </Fab>
+      <InfiniteScroll
+        loadMore={this.fetchMedia}
+        hasMore={hasMore}
+        loader={
+          <Progress key={`${namespace}-progress`} />
         }
-        <InfiniteScroll
-          loadMore={this.fetchMedia}
-          hasMore={hasMore}
-          loader={
-            <Progress key={`${namespace}-progress`} />
-          }
+      >
+        <StackGrid
+          columnWidth={columnWidth}
+          duration={50}
+          gutterWidth={16}
+          gutterHeight={16}
         >
-          <StackGrid
-            columnWidth={columnWidth}
-            duration={50}
-            gutterWidth={16}
-            gutterHeight={16}
-          >
-            {media.allIds.map((mediumId) => {
-              const medium = media.byId[mediumId];
-              const key = `medium_${medium.id}`;
-              return (
-                <MediumCard
-                  key={key}
-                  medium={medium}
-                  viewer={viewer}
-                />
-              );
-            })
-            }
-          </StackGrid>
-        </InfiniteScroll>
-      </React.Fragment>
+          {media.allIds.map((mediumId) => {
+            const medium = media.byId[mediumId];
+            const key = `medium_${medium.id}`;
+            return (
+              <MediumCard
+                key={key}
+                medium={medium}
+                viewer={viewer}
+              />
+            );
+          })
+          }
+        </StackGrid>
+      </InfiniteScroll>
     );
   }
 }
 
 MediaBrowse.propTypes = {
-  classes: PropTypes.object.isRequired,
   browseMedia: PropTypes.func.isRequired,
   resetMedia: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -195,8 +158,8 @@ const mapDispatchToProps = (namespace) => {
 };
 
 export default (namespace) => {
-  return withStyles(styles)(connect(
+  return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(withWidth()(MediaBrowse)));
+  )(withWidth()(MediaBrowse));
 };

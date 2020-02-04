@@ -100,6 +100,7 @@ class ActorsRead extends React.Component {
         {actor.id &&
           <ActorBody
             actor={actor}
+            viewer={viewer}
             stories={
               <StoriesBrowse
                 key="com:stories.story"
