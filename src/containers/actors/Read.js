@@ -19,6 +19,8 @@ import permissions from '../../permissions/actor';
 
 import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
+import SocialgraphTabs from '../../components/actor/SocialgraphTabs';
+import ActorsSocialgraph from './Socialgraph';
 
 const NotesBrowse = MediaBrowse('notes');
 const PhotosBrowse = MediaBrowse('photos');
@@ -71,6 +73,8 @@ class ActorsRead extends React.Component {
 
     const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
     const canEdit = permissions.canEdit(viewer, actor);
+    const isPerson = actor.objectType.split('.')[1] === 'people';
+    const isViewer = actor.id === viewer.id;
 
     return (
       <React.Fragment>
@@ -108,6 +112,34 @@ class ActorsRead extends React.Component {
                   oid: actor.id,
                 }}
                 {...this.params}
+              />
+            }
+            socialgraph={
+              <SocialgraphTabs
+                followers={
+                  <ActorsSocialgraph
+                    actor={actor}
+                    filter="followers"
+                  />
+                }
+                leaders={isPerson &&
+                  <ActorsSocialgraph
+                    actor={actor}
+                    filter="leaders"
+                  />
+                }
+                blocked={isViewer &&
+                  <ActorsSocialgraph
+                    actor={actor}
+                    filter="blocked"
+                  />
+                }
+                mutuals={!isViewer && isPerson &&
+                  <ActorsSocialgraph
+                    actor={actor}
+                    filter="mutuals"
+                  />
+                }
               />
             }
             notes={

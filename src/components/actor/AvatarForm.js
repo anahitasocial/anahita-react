@@ -28,10 +28,7 @@ const styles = (theme) => {
       fontSize: 20,
     },
     avatar: {
-      borderSize: 3,
-      borderStyle: 'solid',
-      borderColor: theme.palette.background.paper,
-      // backgroundColor: theme.palette.background.default,
+      backgroundColor: theme.palette.background.paper,
     },
     button: {
       position: 'relative',

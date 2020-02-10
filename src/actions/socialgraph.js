@@ -1,13 +1,8 @@
 import { socialgraph as api } from '../api';
 import { Socialgraph as SOCIALGRAPH } from '../constants';
+import createAction from './create';
 
-// -- reset
-
-function reset() {
-  return {
-    type: SOCIALGRAPH.BROWSE.RESET,
-  };
-}
+const sgActions = createAction('socialgraph')(api);
 
 // -- Follow
 
@@ -174,7 +169,12 @@ function unblock(viewer, actor) {
 }
 
 export default {
-  reset,
+  reset: () => {
+    return sgActions.reset();
+  },
+  browse: (params) => {
+    return sgActions.browse(params);
+  },
   follow,
   unfollow,
   block,

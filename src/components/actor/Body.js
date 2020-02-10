@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
@@ -6,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import PropTypes from 'prop-types';
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
 import ActorBodyAbout from './body/About';
@@ -29,6 +29,7 @@ const ActorBody = (props) => {
     actor,
     viewer,
     stories,
+    socialgraph,
     notes,
     photos,
     topics,
@@ -62,6 +63,7 @@ const ActorBody = (props) => {
           aria-label="Profile Tabs"
         >
           <Tab label="Stories" value="stories" id="actor-tab-stories" />
+          <Tab label="Socialgraph" value="socialgraph" id="actor-tab-socialgraph" />
           <Tab label="Notes" value="notes" id="actor-tab-notes" />
           {gadgets.photos &&
             <Tab label="Photos" value="photos" id="actor-tab-photos" />
@@ -86,6 +88,7 @@ const ActorBody = (props) => {
         <Grid item sm={8}>{stories}</Grid>
       </Grid>
       }
+      {value === 'socialgraph' && socialgraph}
       {value === 'notes' && notes}
       {gadgets.photos && value === 'photos' && photos}
       {gadgets.articles && value === 'articles' && articles}
@@ -100,7 +103,8 @@ ActorBody.propTypes = {
   classes: PropTypes.object.isRequired,
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
-  stories: PropTypes.node,
+  stories: PropTypes.node.isRequired,
+  socialgraph: PropTypes.node.isRequired,
   notes: PropTypes.node,
   photos: PropTypes.node,
   topics: PropTypes.node,
@@ -110,7 +114,6 @@ ActorBody.propTypes = {
 };
 
 ActorBody.defaultProps = {
-  stories: null,
   notes: null,
   photos: null,
   topics: null,

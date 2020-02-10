@@ -9,9 +9,9 @@ export default (namespace, defaultNode) => {
       allIds: [],
       current: { ...defaultNode },
     },
-    error: '',
     total: 0,
     hasMore: true,
+    error: '',
     success: false,
   };
 
