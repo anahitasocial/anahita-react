@@ -34,6 +34,10 @@ const styles = (theme) => {
     subheader: {
       fontSize: 18,
     },
+    meta: {
+      margin: theme.spacing(2),
+      fontSize: 14,
+    },
     grow: {
       flex: '1 1 auto',
     },
@@ -49,6 +53,8 @@ const ActorHeader = (props) => {
     followAction,
     headerActions,
   } = props;
+
+  const isPerson = actor.objectType.split('.')[1] === 'people';
 
   return (
     <React.Fragment>
@@ -67,13 +73,22 @@ const ActorHeader = (props) => {
             </Typography>
           }
           subheader={
-            <Typography
-              variant="h3"
-              className={classes.subheader}
-              align="center"
-            >
-              {actor.alias && `@${actor.alias}`}
-            </Typography>
+            <React.Fragment>
+              <Typography
+                variant="h3"
+                className={classes.subheader}
+                align="center"
+              >
+                {actor.alias && `@${actor.alias}`}
+              </Typography>
+              <Typography
+                variant="h4"
+                className={classes.meta}
+                align="center"
+              >
+                <b>Followers:</b> {actor.followerCount} {isPerson && <b>Leaders:</b>} {actor.leaderCount}
+              </Typography>
+            </React.Fragment>
           }
           action={headerActions}
         />
