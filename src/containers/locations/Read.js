@@ -142,10 +142,6 @@ class LocationsRead extends React.Component {
           />
           <Divider light />
           <AnahitaMap
-            defaultCenter={{
-              lat: location.latitude,
-              lng: location.longitude,
-            }}
             locations={[location]}
             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
             loadingElement={<div style={{ height: '100%' }} />}

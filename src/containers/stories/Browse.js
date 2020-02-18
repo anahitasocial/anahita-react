@@ -74,71 +74,69 @@ class StoriesBrowse extends React.Component {
     const { viewer, queryFilters } = this.props;
 
     return (
-      <React.Fragment>
-        <InfiniteScroll
-          loadMore={this.fetchStories}
-          hasMore={hasMore}
-          loader={
-            <Progress key="stories-progress" />
-          }
-        >
-          {stories.allIds.map((storyId) => {
-            const story = stories.byId[storyId];
-            const key = `story_${story.id}`;
-            const canAddComment = commentPerms.canAdd(story);
-            const commentsCount = story.comments.allIds.length;
-            const isCommentsOpen = openComments.includes(story.id);
+      <InfiniteScroll
+        loadMore={this.fetchStories}
+        hasMore={hasMore}
+        loader={
+          <Progress key="stories-progress" />
+        }
+      >
+        {stories.allIds.map((storyId) => {
+          const story = stories.byId[storyId];
+          const key = `story_${story.id}`;
+          const canAddComment = commentPerms.canAdd(story);
+          const commentsCount = story.comments.allIds.length;
+          const isCommentsOpen = openComments.includes(story.id);
 
-            return (
-              <StoryCard
-                story={story}
-                key={key}
-                menu={
-                  <StoryMenu
-                    story={story}
-                    viewer={viewer}
-                  />
-                }
-                actions={[
-                  story.object && utils.isLikeable(story.object) &&
-                  <LikeAction
-                    node={story.object}
-                    liked={story.commands && story.commands.includes('unvote')}
-                    key={`story-like-${story.id}`}
-                  />,
-                  story.object && utils.isCommentable(story.object) &&
-                  <IconButton
-                    onClick={() => {
-                      openComments.push(story.id);
-                      this.setState({ openComments });
-                    }}
-                    disabled={isCommentsOpen}
-                    aria-label="Show Comments"
-                    key={`story-comment-${story.id}`}
+          return (
+            <StoryCard
+              story={story}
+              key={key}
+              menu={
+                <StoryMenu
+                  story={story}
+                  viewer={viewer}
+                />
+              }
+              actions={[
+                story.object && utils.isLikeable(story.object) &&
+                <LikeAction
+                  node={story.object}
+                  liked={story.commands && story.commands.includes('unvote')}
+                  key={`story-like-${story.id}`}
+                />,
+                story.object && utils.isCommentable(story.object) &&
+                <IconButton
+                  onClick={() => {
+                    openComments.push(story.id);
+                    this.setState({ openComments });
+                  }}
+                  disabled={isCommentsOpen}
+                  aria-label="Show Comments"
+                  key={`story-comment-${story.id}`}
+                >
+                  <Badge
+                    badgeContent={commentsCount}
+                    color="primary"
+                    invisible={isCommentsOpen || commentsCount === 0}
                   >
-                    <Badge
-                      badgeContent={commentsCount}
-                      color="primary"
-                      invisible={isCommentsOpen || commentsCount === 0}
-                    >
-                      <CommentIcon fontSize="small" />
-                    </Badge>
-                  </IconButton>,
-                ]}
-                comments={story.object && isCommentsOpen &&
-                  <CommentsBrowse
-                    parent={story.object}
-                    comments={story.comments}
-                    canAdd={canAddComment}
-                  />
-                }
-                showOwner={queryFilters.filter === 'leaders'}
-              />
-            );
-          })
-          }
-        </InfiniteScroll>
-      </React.Fragment>
+                    <CommentIcon fontSize="small" />
+                  </Badge>
+                </IconButton>,
+              ]}
+              comments={story.object && isCommentsOpen &&
+                <CommentsBrowse
+                  parent={story.object}
+                  comments={story.comments}
+                  canAdd={canAddComment}
+                />
+              }
+              showOwner={queryFilters.filter === 'leaders'}
+            />
+          );
+        })
+        }
+      </InfiniteScroll>
     );
   }
 }

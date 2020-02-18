@@ -1,0 +1,60 @@
+import React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
+import PropTypes from 'prop-types';
+// import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+import ActorType from '../../../proptypes/Actor';
+import { getURL } from '../../utils';
+
+const styles = (theme) => {
+  return {
+    root: {
+      margin: theme.spacing(2),
+      fontSize: 16,
+    },
+    space: {
+      marginLeft: theme.spacing(),
+      marginRight: theme.spacing(),
+    },
+  };
+};
+
+const SocialgraphMeta = (props) => {
+  const { actor, classes } = props;
+  const isPerson = actor.objectType.split('.')[1] === 'people';
+  const actorURL = getURL(actor);
+
+  return (
+    <Typography
+      variant="h4"
+      align="center"
+      className={classes.root}
+    >
+      <b>Followers: </b>
+      <Link
+        href={`${actorURL}socialgraph/followers/`}
+        underline="none"
+      >
+        {actor.followerCount}
+      </Link>
+      {isPerson && <span className={classes.space} />}
+      {isPerson && <b>Leaders: </b>}
+      {isPerson &&
+        <Link
+          href={`${actorURL}socialgraph/leaders/`}
+          underline="none"
+        >
+          {actor.followerCount}
+        </Link>
+      }
+    </Typography>
+  );
+};
+
+SocialgraphMeta.propTypes = {
+  classes: PropTypes.object.isRequired,
+  actor: ActorType.isRequired,
+};
+
+export default withStyles(styles)(SocialgraphMeta);

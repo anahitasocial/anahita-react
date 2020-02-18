@@ -2,28 +2,28 @@ import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
-import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 
+import SocialgraphMeta from './socialgraph/Meta';
 import ActorType from '../../proptypes/Actor';
 
 const styles = (theme) => {
   return {
-    root: {
+    hRoot: {
       display: 'flex',
       flexDirection: 'column',
       backgroundColor: theme.palette.background.paper,
     },
-    avatar: {
+    hAvatar: {
       marginTop: -theme.spacing(15),
     },
-    content: {
+    hContent: {
       marginTop: theme.spacing(4),
     },
-    action: {
+    hAction: {
       position: 'absolute',
       alignSelf: 'flex-end',
     },
@@ -33,10 +33,6 @@ const styles = (theme) => {
     },
     subheader: {
       fontSize: 18,
-    },
-    meta: {
-      margin: theme.spacing(2),
-      fontSize: 14,
     },
     grow: {
       flex: '1 1 auto',
@@ -54,14 +50,17 @@ const ActorHeader = (props) => {
     headerActions,
   } = props;
 
-  const isPerson = actor.objectType.split('.')[1] === 'people';
-
   return (
     <React.Fragment>
       <Card>
         {cover}
         <CardHeader
-          classes={classes}
+          classes={{
+            root: classes.hRoot,
+            avatar: classes.hAvatar,
+            content: classes.hContent,
+            action: classes.hAction,
+          }}
           avatar={avatar}
           title={
             <Typography
@@ -81,20 +80,14 @@ const ActorHeader = (props) => {
               >
                 {actor.alias && `@${actor.alias}`}
               </Typography>
-              <Typography
-                variant="h4"
-                className={classes.meta}
-                align="center"
-              >
-                <b>Followers:</b> {actor.followerCount} {isPerson && <b>Leaders:</b>} {actor.leaderCount}
-              </Typography>
+              <SocialgraphMeta actor={actor} />
             </React.Fragment>
           }
           action={headerActions}
         />
         {followAction &&
           <CardActions>
-            <Box className={classes.grow} />
+            <div className={classes.grow} />
             {followAction}
           </CardActions>
         }

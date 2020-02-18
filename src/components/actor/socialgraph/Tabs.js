@@ -25,9 +25,10 @@ const SocialgraphTabs = (props) => {
     leaders,
     mutuals,
     blocked,
+    selectedTab,
   } = props;
 
-  const [value, setValue] = React.useState('followers');
+  const [value, setValue] = React.useState(selectedTab);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -68,6 +69,7 @@ SocialgraphTabs.propTypes = {
   leaders: PropTypes.node,
   mutuals: PropTypes.node,
   blocked: PropTypes.node,
+  selectedTab: PropTypes.oneOf(['followers', 'leaders']),
 };
 
 SocialgraphTabs.defaultProps = {
@@ -75,6 +77,7 @@ SocialgraphTabs.defaultProps = {
   leaders: null,
   mutuals: null,
   blocked: null,
+  selectedTab: 'followers',
 };
 
 export default withStyles(styles)(SocialgraphTabs);

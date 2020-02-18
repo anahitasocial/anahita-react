@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   withScriptjs,
@@ -8,13 +9,28 @@ import {
 } from 'react-google-maps';
 import i18n from '../languages';
 import LocationType from '../proptypes/Location';
+import { getURL } from './utils';
+
+const getBounds = (locations) => {
+  const { maps } = window.google;
+  const bounds = new maps.LatLngBounds();
+
+  locations.forEach((loc) => {
+    const latLng = new maps.LatLng(loc.latitude, loc.longitude);
+    bounds.extend(latLng);
+  });
+
+  return bounds;
+};
 
 const AnahitaMap = (props) => {
   const {
-    defaultCenter,
     locations,
-    defaultZoom,
+    ...other
   } = props;
+
+  const bounds = getBounds(locations);
+  const history = useHistory();
 
   return (
     <GoogleMap
@@ -22,8 +38,10 @@ const AnahitaMap = (props) => {
         key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         language: i18n.language,
       }}
-      defaultCenter={defaultCenter}
-      defaultZoom={defaultZoom}
+      ref={(map) => {
+        return map && map.fitBounds(bounds);
+      }}
+      {...other}
     >
       {locations.map((location) => {
         const key = `map-marker-${location.id}`;
@@ -36,6 +54,9 @@ const AnahitaMap = (props) => {
               lat: latitude,
             }}
             title={name}
+            onClick={() => {
+              history.push(getURL(location));
+            }}
           />
         );
       })}
@@ -44,21 +65,11 @@ const AnahitaMap = (props) => {
 };
 
 AnahitaMap.propTypes = {
-  defaultCenter: PropTypes.shape({
-    lng: PropTypes.number.isRequired,
-    lat: PropTypes.number.isRequired,
-  }),
   locations: PropTypes.arrayOf(LocationType),
-  defaultZoom: PropTypes.number,
 };
 
 AnahitaMap.defaultProps = {
-  defaultZoom: 18,
   locations: [],
-  defaultCenter: {
-    lng: 0,
-    lat: 0,
-  },
 };
 
 export default withScriptjs(withGoogleMap(AnahitaMap));

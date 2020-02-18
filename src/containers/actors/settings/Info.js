@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { singularize } from 'inflected';
-import ActorInfoForm from '../../../components/actor/InfoForm';
+import ActorInfoForm from '../../../components/actor/forms/Info';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';

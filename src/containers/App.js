@@ -231,7 +231,7 @@ const App = (props) => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container fixed>
+        <Container>
           {children}
         </Container>
       </main>

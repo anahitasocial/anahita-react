@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
 
+import Progress from '../../components/Progress';
 import ActorHeader from '../../components/actor/Header';
 import ActorBody from '../../components/actor/Body';
 import StoriesBrowse from '../stories/Browse';
@@ -19,8 +20,9 @@ import permissions from '../../permissions/actor';
 
 import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
-import SocialgraphTabs from '../../components/actor/SocialgraphTabs';
+import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
 import ActorsSocialgraph from './Socialgraph';
+import Locations from './read/Locations';
 
 const NotesBrowse = MediaBrowse('notes');
 const PhotosBrowse = MediaBrowse('photos');
@@ -75,6 +77,7 @@ class ActorsRead extends React.Component {
     const canEdit = permissions.canEdit(viewer, actor);
     const isPerson = actor.objectType.split('.')[1] === 'people';
     const isViewer = actor.id === viewer.id;
+    const metaDesc = striptags(actor.body).substr(0, 160);
 
     return (
       <React.Fragment>
@@ -82,26 +85,28 @@ class ActorsRead extends React.Component {
           <title>
             {actor.name}
           </title>
-          <meta name="description" content={striptags(actor.body)} />
+          <meta name="description" content={metaDesc} />
         </Helmet>
-        <ActorHeader
-          cover={
-            <Cover
-              node={actor}
-              canEdit={canEdit}
-            />
-          }
-          avatar={
-            <Avatar
-              node={actor}
-              canEdit={canEdit}
-            />
-          }
-          actor={actor}
-          followAction={canFollow && actor.id && <FollowAction actor={actor} />}
-          headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
-        />
+        {!actor.id && <Progress />}
         {actor.id &&
+        <React.Fragment>
+          <ActorHeader
+            cover={
+              <Cover
+                node={actor}
+                canEdit={canEdit}
+              />
+            }
+            avatar={
+              <Avatar
+                node={actor}
+                canEdit={canEdit}
+              />
+            }
+            actor={actor}
+            followAction={canFollow && actor.id && <FollowAction actor={actor} />}
+            headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
+          />
           <ActorBody
             actor={actor}
             viewer={viewer}
@@ -113,6 +118,9 @@ class ActorsRead extends React.Component {
                 }}
                 {...this.params}
               />
+            }
+            locations={
+              <Locations actor={actor} />
             }
             socialgraph={
               <SocialgraphTabs
@@ -178,6 +186,7 @@ class ActorsRead extends React.Component {
               />
             }
           />
+        </React.Fragment>
         }
       </React.Fragment>
     );

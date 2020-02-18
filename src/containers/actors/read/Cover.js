@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../../actions/cover';
-import CoverForm from '../../../components/actor/CoverForm';
+import CoverForm from '../../../components/actor/forms/Cover';
 
 import NodesType from '../../../proptypes/Nodes';
 import NodeType from '../../../proptypes/Node';

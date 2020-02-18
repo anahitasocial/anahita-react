@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../../actions/avatar';
-import AvatarForm from '../../../components/actor/AvatarForm';
+import AvatarForm from '../../../components/actor/forms/Avatar';
 
 import NodesType from '../../../proptypes/Nodes';
 import NodeType from '../../../proptypes/Node';

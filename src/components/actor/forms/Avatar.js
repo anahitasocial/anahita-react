@@ -7,8 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import NodeType from '../../proptypes/Node';
-import { getActorInitials } from '../utils';
+import NodeType from '../../../proptypes/Node';
+import { getActorInitials } from '../../utils';
 
 const styles = (theme) => {
   return {
@@ -74,7 +74,7 @@ const ActorAvatarForm = (props) => {
           alt={node.name}
           src={isFetching ? '' : avatar}
         >
-          {!isFetching && initials}
+          {!isFetching && !avatar && initials}
           {isFetching && <CircularProgress />}
         </Avatar>
       </IconButton>

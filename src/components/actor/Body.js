@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -29,6 +30,7 @@ const ActorBody = (props) => {
     actor,
     viewer,
     stories,
+    locations,
     socialgraph,
     notes,
     photos,
@@ -81,12 +83,29 @@ const ActorBody = (props) => {
         </Tabs>
       </AppBar>
       {value === 'stories' &&
-      <Grid container spacing={2}>
-        <Grid item sm={4}>
-          {actor.body && <ActorBodyAbout actor={actor} />}
+        <Grid
+          container
+          spacing={2}
+          alignItems="flex-start"
+        >
+          <Grid
+            container
+            item
+            sm={4}
+          >
+            {actor.body &&
+              <Grid item sm={12}>
+                <ActorBodyAbout actor={actor} />
+              </Grid>
+            }
+            <Grid item sm={12}>
+              {locations}
+            </Grid>
+          </Grid>
+          <Grid item sm={8} zeroMinWidth>
+            {stories}
+          </Grid>
         </Grid>
-        <Grid item sm={8}>{stories}</Grid>
-      </Grid>
       }
       {value === 'socialgraph' && socialgraph}
       {value === 'notes' && notes}
@@ -104,6 +123,7 @@ ActorBody.propTypes = {
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
   stories: PropTypes.node.isRequired,
+  locations: PropTypes.node.isRequired,
   socialgraph: PropTypes.node.isRequired,
   notes: PropTypes.node,
   photos: PropTypes.node,

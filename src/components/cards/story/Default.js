@@ -28,7 +28,7 @@ import {
 
 const styles = (theme) => {
   return {
-    card: {
+    root: {
       marginBottom: theme.spacing(2),
     },
     media: {
@@ -71,7 +71,7 @@ const StoryCardDefault = (props) => {
   const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.root}>
       {showOwnerHeader &&
         <StoryCardOwner node={story} />
       }

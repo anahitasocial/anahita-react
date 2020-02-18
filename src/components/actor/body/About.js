@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,11 +10,19 @@ import EntityBody from '../../EntityBody';
 import ActorType from '../../../proptypes/Actor';
 import contentfilter from '../../contentfilter';
 
+const styles = (theme) => {
+  return {
+    root: {
+      marginBottom: theme.spacing(2),
+    },
+  };
+};
+
 const ActorBodyAbout = (props) => {
-  const { actor: { body } } = props;
+  const { actor: { body }, classes } = props;
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardHeader
         title={
           <Typography
@@ -42,7 +52,8 @@ const ActorBodyAbout = (props) => {
 };
 
 ActorBodyAbout.propTypes = {
+  classes: PropTypes.object.isRequired,
   actor: ActorType.isRequired,
 };
 
-export default ActorBodyAbout;
+export default withStyles(styles)(ActorBodyAbout);
