@@ -7,8 +7,8 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
-import AnahitaMap from '../../../components/Map';
-import LocationsType from '../../../proptypes/Locations';
+import AnahitaMap from '../../components/Map';
+import LocationsType from '../../proptypes/Locations';
 
 const styles = (theme) => {
   return {
@@ -22,7 +22,7 @@ const styles = (theme) => {
   };
 };
 
-const ActorBodyLocations = (props) => {
+const LocationsGadget = (props) => {
   const { locations, classes } = props;
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -57,9 +57,9 @@ const ActorBodyLocations = (props) => {
   );
 };
 
-ActorBodyLocations.propTypes = {
+LocationsGadget.propTypes = {
   classes: PropTypes.object.isRequired,
   locations: LocationsType.isRequired,
 };
 
-export default withStyles(styles)(ActorBodyLocations);
+export default withStyles(styles)(LocationsGadget);

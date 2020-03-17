@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -86,6 +85,8 @@ const ActorBody = (props) => {
         <Grid
           container
           spacing={2}
+          direction="row"
+          justify="flex-start"
           alignItems="flex-start"
         >
           <Grid

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -18,11 +18,12 @@ import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
 
+import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
 import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
 import ActorsSocialgraph from './Socialgraph';
-import Locations from './read/Locations';
+import LocationsGadget from '../locations/Gadget';
 
 const NotesBrowse = MediaBrowse('notes');
 const PhotosBrowse = MediaBrowse('photos');
@@ -30,172 +31,156 @@ const ArticlesBrowse = MediaBrowse('articles');
 const TopicsBrowse = MediaBrowse('topics');
 const TodosBrowse = MediaBrowse('todos');
 
-class ActorsRead extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      actor: { ...ActorDefault },
-    };
-
-    const {
-      namespace,
-      readActor,
-      setAppTitle,
-      match: {
-        params: {
-          id,
-        },
+const ActorsRead = (props) => {
+  const {
+    namespace,
+    readActor,
+    resetActors,
+    setAppTitle,
+    actors,
+    viewer,
+    isAuthenticated,
+    match: {
+      params: {
+        id,
       },
-    } = props;
+    },
+  } = props;
 
-    readActor(id, namespace);
+  useEffect(() => {
     setAppTitle(i18n.t(`${namespace}:cTitle`));
-  }
+    readActor(id, namespace);
 
-  static getDerivedStateFromProps(nextProps) {
-    const { actors } = nextProps;
-    return {
-      actor: actors.current,
+    return () => {
+      resetActors();
     };
-  }
+  }, []);
 
-  componentWillUnmount() {
-    const { resetActors } = this.props;
-    resetActors();
-  }
+  const actor = actors.current || { ...ActorDefault };
 
-  render() {
-    const {
-      isAuthenticated,
-      viewer,
-    } = this.props;
+  const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
+  const canEdit = permissions.canEdit(viewer, actor);
+  const isPerson = actor.objectType.split('.')[1] === 'people';
+  const isViewer = actor.id === viewer.id;
+  const metaDesc = striptags(actor.body).substr(0, 160);
 
-    const { actor } = this.state;
-
-    const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
-    const canEdit = permissions.canEdit(viewer, actor);
-    const isPerson = actor.objectType.split('.')[1] === 'people';
-    const isViewer = actor.id === viewer.id;
-    const metaDesc = striptags(actor.body).substr(0, 160);
-
-    return (
+  return (
+    <React.Fragment>
+      <Helmet>
+        <title>
+          {actor.name}
+        </title>
+        <meta name="description" content={metaDesc} />
+      </Helmet>
+      {!actor.id && <Progress />}
+      {actor.id &&
       <React.Fragment>
-        <Helmet>
-          <title>
-            {actor.name}
-          </title>
-          <meta name="description" content={metaDesc} />
-        </Helmet>
-        {!actor.id && <Progress />}
-        {actor.id &&
-        <React.Fragment>
-          <ActorHeader
-            cover={
-              <Cover
-                node={actor}
-                canEdit={canEdit}
-              />
-            }
-            avatar={
-              <Avatar
-                node={actor}
-                canEdit={canEdit}
-              />
-            }
-            actor={actor}
-            followAction={canFollow && actor.id && <FollowAction actor={actor} />}
-            headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
-          />
-          <ActorBody
-            actor={actor}
-            viewer={viewer}
-            stories={
-              <StoriesBrowse
-                key="com:stories.story"
-                queryFilters={{
-                  oid: actor.id,
-                }}
-                {...this.params}
-              />
-            }
-            locations={
-              <Locations actor={actor} />
-            }
-            socialgraph={
-              <SocialgraphTabs
-                followers={
-                  <ActorsSocialgraph
-                    actor={actor}
-                    filter="followers"
-                  />
-                }
-                leaders={isPerson &&
-                  <ActorsSocialgraph
-                    actor={actor}
-                    filter="leaders"
-                  />
-                }
-                blocked={isViewer &&
-                  <ActorsSocialgraph
-                    actor={actor}
-                    filter="blocked"
-                  />
-                }
-                mutuals={!isViewer && isPerson &&
-                  <ActorsSocialgraph
-                    actor={actor}
-                    filter="mutuals"
-                  />
-                }
-              />
-            }
-            notes={
-              <NotesBrowse
-                queryFilters={{
-                  oid: actor.id,
-                }}
-              />
-            }
-            photos={
-              <PhotosBrowse
-                queryFilters={{
-                  oid: actor.id,
-                }}
-              />
-            }
-            articles={
-              <ArticlesBrowse
-                queryFilters={{
-                  oid: actor.id,
-                }}
-              />
-            }
-            topics={
-              <TopicsBrowse
-                queryFilters={{
-                  oid: actor.id,
-                }}
-              />
-            }
-            todos={
-              <TodosBrowse
-                queryFilters={{
-                  oid: actor.id,
-                }}
-              />
-            }
-          />
-        </React.Fragment>
-        }
+        <ActorHeader
+          cover={
+            <Cover
+              node={actor}
+              canEdit={canEdit}
+            />
+          }
+          avatar={
+            <Avatar
+              node={actor}
+              canEdit={canEdit}
+            />
+          }
+          actor={actor}
+          followAction={canFollow && actor.id && <FollowAction actor={actor} />}
+          headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
+        />
+        <ActorBody
+          actor={actor}
+          viewer={viewer}
+          stories={
+            <StoriesBrowse
+              key="com:stories.story"
+              queryFilters={{
+                oid: actor.id,
+              }}
+              {...this.params}
+            />
+          }
+          locations={
+            <LocationsGadget node={actor} />
+          }
+          socialgraph={
+            <SocialgraphTabs
+              followers={
+                <ActorsSocialgraph
+                  actor={actor}
+                  filter="followers"
+                />
+              }
+              leaders={isPerson &&
+                <ActorsSocialgraph
+                  actor={actor}
+                  filter="leaders"
+                />
+              }
+              blocked={isViewer &&
+                <ActorsSocialgraph
+                  actor={actor}
+                  filter="blocked"
+                />
+              }
+              mutuals={!isViewer && isPerson &&
+                <ActorsSocialgraph
+                  actor={actor}
+                  filter="mutuals"
+                />
+              }
+            />
+          }
+          notes={
+            <NotesBrowse
+              queryFilters={{
+                oid: actor.id,
+              }}
+            />
+          }
+          photos={
+            <PhotosBrowse
+              queryFilters={{
+                oid: actor.id,
+              }}
+            />
+          }
+          articles={
+            <ArticlesBrowse
+              queryFilters={{
+                oid: actor.id,
+              }}
+            />
+          }
+          topics={
+            <TopicsBrowse
+              queryFilters={{
+                oid: actor.id,
+              }}
+            />
+          }
+          todos={
+            <TodosBrowse
+              queryFilters={{
+                oid: actor.id,
+              }}
+            />
+          }
+        />
       </React.Fragment>
-    );
-  }
-}
+      }
+    </React.Fragment>
+  );
+};
 
 ActorsRead.propTypes = {
   readActor: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
+  actors: ActorsType.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -231,13 +216,13 @@ const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
       readActor: (id) => {
-        dispatch(actions[namespace].read(id, namespace));
+        return dispatch(actions[namespace].read(id, namespace));
       },
       resetActors: () => {
-        dispatch(actions[namespace].reset());
+        return dispatch(actions[namespace].reset());
       },
       setAppTitle: (title) => {
-        dispatch(appActions.setAppTitle(title));
+        return dispatch(appActions.setAppTitle(title));
       },
     };
   };
