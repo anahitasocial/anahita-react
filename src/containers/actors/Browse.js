@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -17,6 +17,8 @@ import permissions from '../../permissions/actor';
 import containersUtils from '../utils';
 
 import PersonType from '../../proptypes/Person';
+import ActorsType from '../../proptypes/Actors';
+
 import ActorsCard from './Card';
 import Progress from '../../components/Progress';
 import { App as APP } from '../../constants';
@@ -40,120 +42,104 @@ const styles = (theme) => {
   };
 };
 
-class ActorsBrowse extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+const ActorsBrowse = (props) => {
+  const {
+    setAppTitle,
+    browseActors,
+    resetActors,
+    namespace,
+    classes,
+    viewer,
+    width,
+    actors,
+    hasMore,
+    queryFilters,
+  } = props;
 
-    this.state = {
-      disabledFilter: false,
-      keywordFilter: '',
-      hasMore: true,
-      actors: {
-        byId: {},
-        allIds: [],
-      },
-    };
-
-    this.offset = 0;
-    this.fetchActors = this.fetchActors.bind(this);
-
-    const { setAppTitle, namespace } = props;
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { actors, hasMore } = nextProps;
-    return { actors, hasMore };
-  }
-
-  fetchActors() {
-    const { disabledFilter, keywordFilter } = this.state;
-    const {
-      queryFilters,
-      namespace,
-      browseActors,
-    } = this.props;
-
+  const fetchList = (page) => {
+    const { disabled, q } = queryFilters;
     browseActors({
-      q: keywordFilter,
-      disabled: disabledFilter,
-      start: this.offset,
+      q,
+      disabled,
+      start: page * LIMIT,
       limit: LIMIT,
       ...queryFilters,
-    }, namespace).then(() => {
-      this.offset += LIMIT;
-    });
-  }
+    }, namespace);
+  };
 
-  render() {
-    const {
-      classes,
-      namespace,
-      viewer,
-      width,
-    } = this.props;
+  useEffect(() => {
+    setAppTitle(i18n.t(`${namespace}:cTitle`));
 
-    const { actors, hasMore } = this.state;
+    return () => {
+      resetActors();
+    };
+  }, []);
 
-    const columnWidth = containersUtils.getColumnWidthPercentage(width);
-    const canAdd = permissions.canAdd(viewer);
+  const columnWidth = containersUtils.getColumnWidthPercentage(width);
+  const canAdd = permissions.canAdd(viewer);
 
-    return (
-      <React.Fragment>
-        {canAdd &&
-          <Fab
-            aria-label="Add"
-            color="secondary"
-            className={classes.addButton}
-            component={Link}
-            to={`/${namespace}/add/`}
-          >
-            <AddIcon />
-          </Fab>
-        }
-        <InfiniteScroll
-          loadMore={this.fetchActors}
-          hasMore={hasMore}
-          loader={
-            <Progress key={`${namespace}-progress`} />
-          }
+  return (
+    <React.Fragment>
+      {canAdd &&
+        <Fab
+          aria-label="Add"
+          color="secondary"
+          className={classes.addButton}
+          component={Link}
+          to={`/${namespace}/add/`}
         >
-          <StackGrid
-            columnWidth={columnWidth}
-            duration={50}
-            gutterWidth={16}
-            gutterHeight={16}
-          >
-            {actors.allIds.map((actorId) => {
-              const actor = actors.byId[actorId];
-              const key = `${namespace}_${actor.id}`;
-              return (
-                <ActorsCard
-                  key={key}
-                  actor={actor}
-                />
-              );
-            })
-            }
-          </StackGrid>
-        </InfiniteScroll>
-      </React.Fragment>
-    );
-  }
-}
+          <AddIcon />
+        </Fab>
+      }
+      <InfiniteScroll
+        loadMore={fetchList}
+        hasMore={hasMore}
+        pageStart={-1}
+        loader={
+          <Progress key={`${namespace}-progress`} />
+        }
+      >
+        <StackGrid
+          columnWidth={columnWidth}
+          duration={50}
+          gutterWidth={16}
+          gutterHeight={16}
+        >
+          {actors.allIds.map((actorId) => {
+            const actor = actors.byId[actorId];
+            const key = `${namespace}_${actor.id}`;
+            return (
+              <ActorsCard
+                key={key}
+                actor={actor}
+              />
+            );
+          })
+          }
+        </StackGrid>
+      </InfiniteScroll>
+    </React.Fragment>
+  );
+};
 
 ActorsBrowse.propTypes = {
   classes: PropTypes.object.isRequired,
   browseActors: PropTypes.func.isRequired,
+  resetActors: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
   setAppTitle: PropTypes.func.isRequired,
+  actors: ActorsType.isRequired,
+  hasMore: PropTypes.bool.isRequired,
 };
 
 ActorsBrowse.defaultProps = {
-  queryFilters: {},
+  queryFilters: {
+    q: '',
+    disabled: false,
+  },
 };
 
 const mapStateToProps = (namespace) => {
@@ -182,6 +168,9 @@ const mapDispatchToProps = (namespace) => {
     return {
       browseActors: (params) => {
         return dispatch(actions[namespace].browse(params, namespace));
+      },
+      resetActors: () => {
+        return dispatch(actions[namespace].reset(namespace));
       },
       setAppTitle: (title) => {
         return dispatch(actions.app.setAppTitle(title));
