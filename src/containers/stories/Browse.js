@@ -87,7 +87,7 @@ const StoriesBrowse = (props) => {
               <IconButton
                 onClick={() => {
                   openComments.push(story.id);
-                  setOpenComments(openComments);
+                  setOpenComments([...openComments]);
                 }}
                 disabled={isCommentsOpen}
                 aria-label="Show Comments"
