@@ -33,10 +33,9 @@ const MediaBrowse = (props) => {
   } = props;
 
   const fetchList = (page) => {
-    const { q } = queryFilters;
+    const start = (page - 1) * LIMIT;
     browseMedia({
-      q,
-      start: page * LIMIT,
+      start,
       limit: LIMIT,
       ...queryFilters,
     }, namespace);
@@ -56,7 +55,6 @@ const MediaBrowse = (props) => {
     <InfiniteScroll
       loadMore={fetchList}
       hasMore={hasMore}
-      pageStart={-1}
       loader={
         <Progress key={`${namespace}-progress`} />
       }

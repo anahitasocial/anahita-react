@@ -30,7 +30,7 @@ import MediaRead from '../containers/media/Read';
 import HashtagsBrowse from '../containers/hashtags/Browse';
 import HashtagsRead from '../containers/hashtags/Read';
 
-import LocationsBrowse from '../containers/locations/Browse';
+import Locations from '../containers/locations';
 import LocationsRead from '../containers/locations/Read';
 
 import DashboardPage from '../containers/Dashboard';
@@ -264,7 +264,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/locations/"
-        component={LocationsBrowse}
+        component={Locations}
       />
       <Route
         exact

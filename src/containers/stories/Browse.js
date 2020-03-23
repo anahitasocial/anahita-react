@@ -42,10 +42,11 @@ const StoriesBrowse = (props) => {
   }, []);
 
   const fetchList = (page) => {
+    const start = (page - 1) * LIMIT;
     browseStories({
       oid: queryFilters.oid,
       filter: queryFilters.filter,
-      start: page * LIMIT,
+      start,
       limit: LIMIT,
     });
   };
@@ -54,7 +55,6 @@ const StoriesBrowse = (props) => {
     <InfiniteScroll
       loadMore={fetchList}
       hasMore={hasMore}
-      pageStart={-1}
       loader={
         <Progress key="stories-progress" />
       }

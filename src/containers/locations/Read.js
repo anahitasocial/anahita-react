@@ -170,7 +170,6 @@ const mapStateToProps = (state) => {
 LocationsRead.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   readLocation: PropTypes.func.isRequired,
-  resetLocations: PropTypes.func.isRequired,
   locations: LocationsType.isRequired,
   match: PropTypes.object.isRequired,
   taggablesCount: PropTypes.number.isRequired,

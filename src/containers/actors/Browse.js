@@ -58,10 +58,11 @@ const ActorsBrowse = (props) => {
 
   const fetchList = (page) => {
     const { disabled, q } = queryFilters;
+    const start = (page - 1) * LIMIT;
     browseActors({
       q,
       disabled,
-      start: page * LIMIT,
+      start,
       limit: LIMIT,
       ...queryFilters,
     }, namespace);
@@ -94,7 +95,6 @@ const ActorsBrowse = (props) => {
       <InfiniteScroll
         loadMore={fetchList}
         hasMore={hasMore}
-        pageStart={-1}
         loader={
           <Progress key={`${namespace}-progress`} />
         }
