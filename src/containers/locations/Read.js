@@ -137,10 +137,16 @@ const LocationsRead = (props) => {
         </Tabs>
       </Card>
       {location.id && selectedTab === 0 &&
-        <TaggablesBrowse tag={location} sorting={sort} />
+        <TaggablesBrowse
+          tag={location}
+          sort={sort}
+        />
       }
       {location.id && selectedTab === 1 &&
-        <TaggablesBrowse tag={location} sorting={sort} />
+        <TaggablesBrowse
+          tag={location}
+          sort={sort}
+        />
       }
     </React.Fragment>
   );

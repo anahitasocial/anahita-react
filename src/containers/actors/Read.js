@@ -111,25 +111,25 @@ const ActorsRead = (props) => {
             <SocialgraphTabs
               followers={
                 <ActorsSocialgraph
-                  actor={actor}
+                  actorNode={actor}
                   filter="followers"
                 />
               }
               leaders={isPerson &&
                 <ActorsSocialgraph
-                  actor={actor}
+                  actorNode={actor}
                   filter="leaders"
                 />
               }
               blocked={isViewer &&
                 <ActorsSocialgraph
-                  actor={actor}
+                  actorNode={actor}
                   filter="blocked"
                 />
               }
               mutuals={!isViewer && isPerson &&
                 <ActorsSocialgraph
-                  actor={actor}
+                  actorNode={actor}
                   filter="mutuals"
                 />
               }

@@ -143,10 +143,16 @@ class HashtagsRead extends React.Component {
           </Tabs>
         </Card>
         {hashtag.id && selectedTab === 0 &&
-          <TaggablesBrowse tag={hashtag} sorting={sort} />
+          <TaggablesBrowse
+            tag={hashtag}
+            sort={sort}
+          />
         }
         {hashtag.id && selectedTab === 1 &&
-          <TaggablesBrowse tag={hashtag} sorting={sort} />
+          <TaggablesBrowse
+            tag={hashtag}
+            sort={sort}
+          />
         }
       </React.Fragment>
     );

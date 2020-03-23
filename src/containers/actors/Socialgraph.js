@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import withWidth from '@material-ui/core/withWidth';
@@ -10,94 +10,81 @@ import * as actions from '../../actions';
 import containersUtils from '../utils';
 
 import ActorType from '../../proptypes/Actor';
+import ActorsType from '../../proptypes/Actors';
 import ActorsCard from './Card';
 import Progress from '../../components/Progress';
 import { App as APP } from '../../constants';
 
 const { LIMIT } = APP.BROWSE;
 
-class ActorsSocialgraph extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+const ActorsSocialgraph = (props) => {
+  const {
+    browseActors,
+    resetActors,
+    actors,
+    actorNode,
+    hasMore,
+    width,
+    filter,
+    queryFilters,
+  } = props;
 
-    this.state = {
-      keywordFilter: '',
-      hasMore: true,
-      actors: {
-        byId: {},
-        allIds: [],
-      },
-    };
-
-    this.offset = 0;
-    this.fetchActors = this.fetchActors.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { actors, hasMore } = nextProps;
-    return { actors, hasMore };
-  }
-
-  componentWillUnmount() {
-    const { resetActors } = this.props;
-    resetActors();
-  }
-
-  fetchActors() {
-    const { keywordFilter } = this.state;
-    const { actor, browseActors, filter } = this.props;
-
+  const fetchList = (page) => {
+    const start = (page - 1) * LIMIT;
+    const { q } = queryFilters;
     browseActors({
-      q: keywordFilter,
+      q,
       filter,
-      actor,
-      start: this.offset,
+      actor: actorNode,
+      start,
       limit: LIMIT,
-    }).then(() => {
-      this.offset += LIMIT;
+      ...queryFilters,
     });
-  }
+  };
 
-  render() {
-    const { width } = this.props;
-    const { actors, hasMore } = this.state;
-    const columnWidth = containersUtils.getColumnWidthPercentage(width);
+  useEffect(() => {
+    return () => {
+      resetActors();
+    };
+  }, []);
 
-    return (
-      <React.Fragment>
-        <InfiniteScroll
-          loadMore={this.fetchActors}
-          hasMore={hasMore}
-          loader={
-            <Progress key="socialgragh-progress" />
-          }
+  const columnWidth = containersUtils.getColumnWidthPercentage(width);
+
+  return (
+    <React.Fragment>
+      <InfiniteScroll
+        loadMore={fetchList}
+        hasMore={hasMore}
+        loader={
+          <Progress key="socialgragh-progress" />
+        }
+      >
+        <StackGrid
+          columnWidth={columnWidth}
+          duration={50}
+          gutterWidth={16}
+          gutterHeight={16}
         >
-          <StackGrid
-            columnWidth={columnWidth}
-            duration={50}
-            gutterWidth={16}
-            gutterHeight={16}
-          >
-            {actors.allIds.map((actorId) => {
-              const actor = actors.byId[actorId];
-              const key = `socialgraph_${actor.id}`;
-              return (
-                <ActorsCard
-                  key={key}
-                  actor={actor}
-                />
-              );
-            })
-            }
-          </StackGrid>
-        </InfiniteScroll>
-      </React.Fragment>
-    );
-  }
-}
+          {actors.allIds.map((actorId) => {
+            const actor = actors.byId[actorId];
+            const key = `socialgraph_${actor.id}`;
+            return (
+              <ActorsCard
+                key={key}
+                actor={actor}
+              />
+            );
+          })
+          }
+        </StackGrid>
+      </InfiniteScroll>
+    </React.Fragment>
+  );
+};
 
 ActorsSocialgraph.propTypes = {
-  actor: ActorType.isRequired,
+  actors: ActorsType.isRequired,
+  actorNode: ActorType.isRequired,
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
   width: PropTypes.string.isRequired,
@@ -107,6 +94,14 @@ ActorsSocialgraph.propTypes = {
     'mutual',
     'blocked',
   ]).isRequired,
+  queryFilters: PropTypes.object,
+  hasMore: PropTypes.bool.isRequired,
+};
+
+ActorsSocialgraph.defaultProps = {
+  queryFilters: {
+    q: '',
+  },
 };
 
 const mapStateToProps = () => {

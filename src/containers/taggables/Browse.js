@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -10,6 +10,7 @@ import StackGrid from 'react-stack-grid';
 
 import taggableActions from '../../actions/taggable';
 import NodeType from '../../proptypes/Node';
+import NodesType from '../../proptypes/Nodes';
 
 import CommentCard from '../../components/cards/Comment';
 import ActorsCard from '../actors/Card';
@@ -20,124 +21,94 @@ import { App as APP } from '../../constants';
 import utils from '../../utils';
 import containersUtils from '../utils';
 
-const { LIMIT } = APP.BROWSE;
+const {
+  LIMIT,
+  SORTING: {
+    TOP,
+    RECENT,
+  },
+} = APP.BROWSE;
 
-class TaggablesBrowse extends React.Component {
-  constructor(props) {
-    super(props);
+const TaggablesBrowse = (props) => {
+  const {
+    browseTaggables,
+    resetTaggables,
+    tag,
+    taggables,
+    error,
+    hasMore,
+    sort,
+    width,
+  } = props;
 
-    this.state = {
-      taggables: {
-        allIds: [],
-        byId: {},
-      },
-      error: '',
-      hasMore: true,
-      sort: props.sorting,
+  useEffect(() => {
+    return () => {
+      resetTaggables();
     };
+  }, []);
 
-    this.offset = 0;
-    this.fetchList = this.fetchList.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const {
-      taggables,
-      error,
-      hasMore,
-    } = nextProps;
-
-    return {
-      taggables,
-      error,
-      hasMore,
-    };
-  }
-
-  componentWillUnmount() {
-    const { resetTaggables } = this.props;
-    resetTaggables();
-  }
-
-  fetchList() {
-    const { sort } = this.state;
-    const { browseTaggables, tag } = this.props;
-
+  const fetchList = (page) => {
+    const start = (page - 1) * LIMIT;
     browseTaggables({
       tag,
       sort,
-      start: this.offset,
+      start,
       limit: LIMIT,
-    }).then(() => {
-      this.offset += LIMIT;
     });
-  }
+  };
 
-  render() {
-    const {
-      taggables,
-      // isFetching,
-      error,
-      hasMore,
-    } = this.state;
+  const columnWidth = containersUtils.getColumnWidthPercentage(width);
 
-    const {
-      width,
-    } = this.props;
-
-    const columnWidth = containersUtils.getColumnWidthPercentage(width);
-
-    if (error) {
-      return (
-        <Typography variant="body1" color="error" align="center">
-          {error}
-        </Typography>
-      );
-    }
-
+  if (error) {
     return (
-      <InfiniteScroll
-        loadMore={this.fetchList}
-        hasMore={hasMore}
-        loader={
-          <Progress key="taggables-progress" />
-        }
-      >
-        <StackGrid
-          columnWidth={columnWidth}
-          duration={50}
-          gutterWidth={16}
-          gutterHeight={16}
-        >
-          {taggables.allIds.map((nodeId) => {
-              const taggable = taggables.byId[nodeId];
-              const key = `taggable_${taggable.id}`;
-              const namespace = taggable.objectType.split('.')[1];
-              return (
-                <React.Fragment key={key}>
-                  {utils.isActor(taggable) &&
-                    <ActorsCard actor={taggable} />
-                  }
-                  {utils.isMedium(taggable) &&
-                    <MediaCard
-                      medium={taggable}
-                      namespace={namespace}
-                    />
-                  }
-                  {utils.isComment(taggable) &&
-                    <CommentCard
-                      comment={taggable}
-                    />
-                  }
-                </React.Fragment>
-              );
-            })
-          }
-        </StackGrid>
-      </InfiniteScroll>
+      <Typography variant="body1" color="error" align="center">
+        {error}
+      </Typography>
     );
   }
-}
+
+  return (
+    <InfiniteScroll
+      loadMore={fetchList}
+      hasMore={hasMore}
+      loader={
+        <Progress key="taggables-progress" />
+      }
+    >
+      <StackGrid
+        columnWidth={columnWidth}
+        duration={50}
+        gutterWidth={16}
+        gutterHeight={16}
+      >
+        {taggables.allIds.map((nodeId) => {
+            const taggable = taggables.byId[nodeId];
+            const key = `taggable_${taggable.id}`;
+            const namespace = taggable.objectType.split('.')[1];
+            return (
+              <React.Fragment key={key}>
+                {utils.isActor(taggable) &&
+                  <ActorsCard actor={taggable} />
+                }
+                {utils.isMedium(taggable) &&
+                  <MediaCard
+                    medium={taggable}
+                    namespace={namespace}
+                  />
+                }
+                {utils.isComment(taggable) &&
+                  <CommentCard
+                    comment={taggable}
+                  />
+                }
+              </React.Fragment>
+            );
+          })
+        }
+      </StackGrid>
+    </InfiniteScroll>
+  );
+};
 
 const mapStateToProps = (state) => {
   const {
@@ -157,12 +128,15 @@ TaggablesBrowse.propTypes = {
   resetTaggables: PropTypes.func.isRequired,
   browseTaggables: PropTypes.func.isRequired,
   tag: NodeType.isRequired,
-  sorting: PropTypes.oneOf(['top', 'recent']),
+  taggables: NodesType.isRequired,
+  sort: PropTypes.oneOf([TOP, RECENT]),
   width: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
+  hasMore: PropTypes.bool.isRequired,
 };
 
 TaggablesBrowse.defaultProps = {
-  sorting: 'top',
+  sort: TOP,
 };
 
 const mapDispatchToProps = (dispatch) => {
