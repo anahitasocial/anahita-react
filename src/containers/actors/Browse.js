@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import withStyles from '@material-ui/core/styles/withStyles';
+import { makeStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
 
 import Fab from '@material-ui/core/Fab';
@@ -25,7 +25,7 @@ import { App as APP } from '../../constants';
 
 const { LIMIT } = APP.BROWSE;
 
-const styles = (theme) => {
+const useStyles = makeStyles((theme) => {
   return {
     actorTitle: {
       fontSize: 16,
@@ -40,15 +40,15 @@ const styles = (theme) => {
       zIndex: 10,
     },
   };
-};
+});
 
 const ActorsBrowse = (props) => {
+  const classes = useStyles();
   const {
     setAppTitle,
     browseActors,
     resetActors,
     namespace,
-    classes,
     viewer,
     width,
     actors,
@@ -123,7 +123,6 @@ const ActorsBrowse = (props) => {
 };
 
 ActorsBrowse.propTypes = {
-  classes: PropTypes.object.isRequired,
   browseActors: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -180,8 +179,8 @@ const mapDispatchToProps = (namespace) => {
 };
 
 export default (namespace) => {
-  return withStyles(styles)(connect(
+  return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(withWidth()(ActorsBrowse)));
+  )(withWidth()(ActorsBrowse));
 };

@@ -2,7 +2,7 @@ import PersonDefault from './PersonDefault';
 import ImageURLDefault from './ImageURLDefault';
 
 export default {
-  id: null,
+  id: 0,
   objectType: 'com.nodes.node',
   name: '',
   alias: '',

@@ -1,7 +1,7 @@
 import PersonDefault from './PersonDefault';
 
 export default {
-  id: null,
+  id: 0,
   objectType: 'com.media.medium',
   body: '',
   author: PersonDefault,

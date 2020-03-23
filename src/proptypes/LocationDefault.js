@@ -1,7 +1,7 @@
 import PersonDefault from './PersonDefault';
 
 export default {
-  id: '',
+  id: 0,
   objectType: 'com.locations.location',
   name: '',
   alias: '',

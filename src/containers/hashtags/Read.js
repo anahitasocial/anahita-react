@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -6,8 +6,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import withWidth from '@material-ui/core/withWidth';
 
@@ -18,20 +16,7 @@ import HashtagDefault from '../../proptypes/HashtagDefault';
 import HashtagsType from '../../proptypes/Hashtags';
 
 import Progress from '../../components/Progress';
-import TaggablesBrowse from '../taggables/Browse';
-import { App as APP } from '../../constants';
-
-const { TOP, RECENT } = APP.BROWSE.SORTING;
-const TABS = [TOP, RECENT];
-
-const styles = {
-  card: {
-    marginBottom: 8 * 2,
-    position: 'sticky',
-    top: 8 * 7,
-    zIndex: 8,
-  },
-};
+import Taggables from '../taggables';
 
 const HashtagsRead = (props) => {
   const {
@@ -47,14 +32,6 @@ const HashtagsRead = (props) => {
       },
     },
   } = props;
-
-  const [selectedTab, setSelectedTab] = useState(0);
-  const [sort, setSort] = useState(TOP);
-
-  const changeTab = (event, value) => {
-    setSelectedTab(value);
-    setSort(TABS[value]);
-  };
 
   useEffect(() => {
     readHashtag(alias);
@@ -79,10 +56,7 @@ const HashtagsRead = (props) => {
 
   return (
     <React.Fragment>
-      <Card
-        square
-        style={styles.card}
-      >
+      <Card square>
         <CardHeader
           avatar={
             <Avatar>
@@ -98,31 +72,9 @@ const HashtagsRead = (props) => {
             count: taggablesCount,
           })}
         />
-        <Divider light />
-        <Tabs
-          value={selectedTab}
-          onChange={changeTab}
-          centered
-          variant="fullWidth"
-          indicatorColor="primary"
-          textColor="primary"
-        >
-          <Tab label="Top" />
-          <Tab label="Recent" />
-        </Tabs>
       </Card>
-      {hashtag.id && selectedTab === 0 &&
-        <TaggablesBrowse
-          tag={hashtag}
-          sort={sort}
-        />
-      }
-      {hashtag.id && selectedTab === 1 &&
-        <TaggablesBrowse
-          tag={hashtag}
-          sort={sort}
-        />
-      }
+      <Divider light />
+      <Taggables tag={hashtag} />
     </React.Fragment>
   );
 };

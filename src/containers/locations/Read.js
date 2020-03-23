@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import withWidth from '@material-ui/core/withWidth';
 
@@ -23,28 +22,20 @@ import LocationsType from '../../proptypes/Locations';
 import LocationDefault from '../../proptypes/LocationDefault';
 
 import AnahitaMap from '../../components/Map';
-import TaggablesBrowse from '../taggables/Browse';
+import Taggables from '../taggables';
 import Progress from '../../components/Progress';
-import { App as APP } from '../../constants';
 
-const { TOP, RECENT } = APP.BROWSE.SORTING;
-const TABS = [TOP, RECENT];
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-const styles = {
-  card: {
-    marginBottom: 8 * 2,
-  },
-  pin: {
-    fontSize: 48,
-  },
+const useStyles = makeStyles({
   mapContainer: {
     height: 320,
     width: '100%',
   },
-};
+});
 
 const LocationsRead = (props) => {
+  const classes = useStyles();
   const {
     readLocation,
     setAppTitle,
@@ -58,14 +49,6 @@ const LocationsRead = (props) => {
       },
     },
   } = props;
-
-  const [selectedTab, setSelectedTab] = useState(0);
-  const [sort, setSort] = useState(TOP);
-
-  const changeTab = (event, value) => {
-    setSelectedTab(value);
-    setSort(TABS[value]);
-  };
 
   useEffect(() => {
     readLocation(id);
@@ -90,10 +73,7 @@ const LocationsRead = (props) => {
 
   return (
     <React.Fragment>
-      <Card
-        square
-        style={styles.card}
-      >
+      <Card square>
         <CardHeader
           avatar={
             <Avatar>
@@ -114,7 +94,7 @@ const LocationsRead = (props) => {
           locations={[location]}
           googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
           loadingElement={<div style={{ height: '100%' }} />}
-          containerElement={<div style={styles.mapContainer} />}
+          containerElement={<div className={classes.mapContainer} />}
           mapElement={<div style={{ height: '100%' }} />}
         />
         <Divider light />
@@ -123,31 +103,9 @@ const LocationsRead = (props) => {
             {locationUtils.getAddress(location)}
           </Typography>
         </CardContent>
-        <Divider light />
-        <Tabs
-          value={selectedTab}
-          onChange={changeTab}
-          centered
-          variant="fullWidth"
-          indicatorColor="primary"
-          textColor="primary"
-        >
-          <Tab label="Top" />
-          <Tab label="Recent" />
-        </Tabs>
       </Card>
-      {location.id && selectedTab === 0 &&
-        <TaggablesBrowse
-          tag={location}
-          sort={sort}
-        />
-      }
-      {location.id && selectedTab === 1 &&
-        <TaggablesBrowse
-          tag={location}
-          sort={sort}
-        />
-      }
+      <Divider light />
+      <Taggables tag={location} />
     </React.Fragment>
   );
 };

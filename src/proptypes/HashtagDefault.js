@@ -1,5 +1,5 @@
 export default {
-  id: null,
+  id: 0,
   objectType: 'com.hashtags.hashtag',
   name: '',
   alias: '',
