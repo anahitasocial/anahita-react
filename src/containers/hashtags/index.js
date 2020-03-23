@@ -6,7 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import LocationsBrowse from './Browse';
+import HashtagsBrowse from './Browse';
 import appActions from '../../actions/app';
 import { App as APP } from '../../constants';
 import i18n from '../../languages';
@@ -28,10 +28,10 @@ const useStyles = makeStyles({
   },
 });
 
-const LocationsPanel = (props) => {
+const HashtagsPanel = (props) => {
   const { sort } = props;
   return (
-    <LocationsBrowse
+    <HashtagsBrowse
       queryFilters={{
         q: '',
         sort,
@@ -40,7 +40,7 @@ const LocationsPanel = (props) => {
   );
 };
 
-LocationsPanel.propTypes = {
+HashtagsPanel.propTypes = {
   sort: PropTypes.oneOf([
     TRENDING,
     TOP,
@@ -48,7 +48,7 @@ LocationsPanel.propTypes = {
   ]).isRequired,
 };
 
-const Locations = (props) => {
+const Hashtags = (props) => {
   const classes = useStyles();
   const {
     setAppTitle,
@@ -62,7 +62,7 @@ const Locations = (props) => {
   };
 
   useEffect(() => {
-    setAppTitle(i18n.t('locations:cTitle'));
+    setAppTitle(i18n.t('hashtags:cTitle'));
   }, []);
 
   return (
@@ -87,19 +87,19 @@ const Locations = (props) => {
         </Tabs>
       </AppBar>
       {tab === TRENDING &&
-        <LocationsPanel sort={tab} />
+        <HashtagsPanel sort={tab} />
       }
       {tab === TOP &&
-        <LocationsPanel sort={tab} />
+        <HashtagsPanel sort={tab} />
       }
       {tab === RECENT &&
-        <LocationsPanel sort={tab} />
+        <HashtagsPanel sort={tab} />
       }
     </React.Fragment>
   );
 };
 
-Locations.propTypes = {
+Hashtags.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   selectedTab: PropTypes.oneOf([
     TRENDING,
@@ -108,7 +108,7 @@ Locations.propTypes = {
   ]),
 };
 
-Locations.defaultProps = {
+Hashtags.defaultProps = {
   selectedTab: TRENDING,
 };
 
@@ -127,4 +127,4 @@ const mapStateToProps = () => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Locations);
+)(Hashtags);

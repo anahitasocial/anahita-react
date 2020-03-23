@@ -27,7 +27,7 @@ import PersonSettingsAccount from '../containers/people/settings/Account';
 import MediaBrowse from '../containers/media/Browse';
 import MediaRead from '../containers/media/Read';
 
-import HashtagsBrowse from '../containers/hashtags/Browse';
+import Hashtags from '../containers/hashtags';
 import HashtagsRead from '../containers/hashtags/Read';
 
 import Locations from '../containers/locations';
@@ -254,7 +254,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/hashtags/"
-        component={HashtagsBrowse}
+        component={Hashtags}
       />
       <Route
         exact
