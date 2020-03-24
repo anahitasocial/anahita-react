@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -14,86 +14,108 @@ const CommentForm = (props) => {
   const {
     disabled,
     handleFieldChange,
-    handleSave,
+    onSubmit,
     handleCancel,
     comment,
-    bodyError,
-    bodyHelperText,
-    autoFocus,
   } = props;
 
   const { author, body } = comment;
 
+  const [enable, setEnable] = useState(false);
+  const [errors, setErrors] = useState({
+    body: '',
+  });
+
+  const validateField = (field) => {
+    const errs = {
+      ...errors,
+      [field.name]: field.validationMessage,
+    };
+
+    setErrors(errs);
+
+    const isValid = Boolean(field.value && errs[field.name] === '');
+
+    setEnable(isValid);
+  };
+
+  const onChange = (event) => {
+    const { target } = event;
+
+    setTimeout(() => {
+      return validateField(target);
+    }, 500);
+
+    handleFieldChange(event);
+  };
+
   return (
-    <Card>
-      <CardHeader
-        avatar={
-          <ActorAvatar
-            actor={author}
-            linked={Boolean(author.id)}
-            size="small"
-          />
-        }
-        title={
-          <TextField
-            id="comment-text-box"
-            margin="normal"
-            variant="outlined"
-            placeholder={i18n.t('comments:comment.placeholder')}
-            onChange={handleFieldChange}
-            name="body"
-            value={body}
-            disabled={disabled}
-            fullWidth
-            autoFocus={autoFocus}
-            error={bodyError}
-            helperText={bodyHelperText}
-            multiline
-          />
-        }
-      />
-      <CardActions>
-        {comment.id > 0 &&
+    <form onSubmit={onSubmit}>
+      <Card>
+        <CardHeader
+          avatar={
+            <ActorAvatar
+              actor={author}
+              linked={Boolean(author.id)}
+              size="small"
+            />
+          }
+          title={
+            <TextField
+              id="comment-text-box"
+              margin="normal"
+              variant="outlined"
+              placeholder={i18n.t('comments:comment.placeholder')}
+              onChange={onChange}
+              name="body"
+              value={body}
+              disabled={disabled}
+              fullWidth
+              autoFocus
+              error={errors.body !== ''}
+              helperText={errors.body}
+              multiline
+            />
+          }
+        />
+        <CardActions>
+          {comment.id > 0 &&
+            <Button
+              onClick={handleCancel}
+              disabled={disabled}
+              size="small"
+              fullWidth
+            >
+              {i18n.t('actions:cancel')}
+            </Button>
+          }
           <Button
-            onClick={handleCancel}
-            disabled={disabled}
+            type="submit"
+            color="primary"
+            disabled={disabled || !enable}
+            variant="contained"
             size="small"
             fullWidth
           >
-            {i18n.t('actions:cancel')}
+            {comment.id ? i18n.t('actions:update') : i18n.t('actions:post')}
           </Button>
-        }
-        <Button
-          onClick={handleSave}
-          color="primary"
-          disabled={disabled}
-          variant="contained"
-          size="small"
-          fullWidth
-        >
-          {comment.id ? i18n.t('actions:update') : i18n.t('actions:post')}
-        </Button>
-      </CardActions>
-    </Card>
+        </CardActions>
+      </Card>
+    </form>
   );
 };
 
 CommentForm.propTypes = {
   handleFieldChange: PropTypes.func.isRequired,
-  handleSave: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func,
   disabled: PropTypes.bool,
   comment: CommentType.isRequired,
-  bodyError: PropTypes.bool.isRequired,
-  bodyHelperText: PropTypes.string,
-  autoFocus: PropTypes.bool,
 };
 
 CommentForm.defaultProps = {
-  disabled: false,
-  bodyHelperText: '',
-  autoFocus: false,
   handleCancel: null,
+  disabled: false,
 };
 
 export default CommentForm;

@@ -8,72 +8,48 @@ import CommentType from '../../../proptypes/Comment';
 import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';
 
-class ActionsCommentDelete extends React.Component {
-  constructor(props) {
-    super(props);
+const ActionsCommentDelete = React.forwardRef((props, ref) => {
+  const {
+    deleteItem,
+    deleteItemInline,
+    comment,
+    node: {
+      objectType,
+    },
+    inline,
+    ...other
+  } = props;
 
-    const { isDeleted } = props;
+  const label = i18n.t('actions:delete');
+  const namespace = objectType.split('.')[1];
+  const deleteFunc = inline ? deleteItemInline : deleteItem;
 
-    this.state = {
-      isDeleted,
-      isFetching: false,
-    };
-
-    this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { isFetching } = nextProps;
-    return { isFetching };
-  }
-
-  handleDelete(event) {
+  const handleDelete = (event) => {
     event.preventDefault();
-
-    const {
-      comment,
-      node: { objectType },
-      deleteItem,
-      deleteItemInline,
-      inline,
-    } = this.props;
-
-    const namespace = objectType.split('.')[1];
-    const deleteFunc = inline ? deleteItemInline : deleteItem;
-
     deleteFunc(comment, namespace);
-  }
+  };
 
-  render() {
-    const { isDeleted, isFetching } = this.state;
-    const label = i18n.t('actions:delete');
-    const onClick = this.handleDelete;
-    const color = isDeleted ? 'primary' : 'inherit';
-
-    return (
-      <MenuItem
-        onClick={onClick}
-        disabled={isFetching}
-        color={color}
-        aria-label={label}
-      >
-        {label}
-      </MenuItem>
-    );
-  }
-}
+  return (
+    <MenuItem
+      onClick={handleDelete}
+      aria-label={i18n.t('actions:delete')}
+      ref={ref}
+      {...other}
+    >
+      {label}
+    </MenuItem>
+  );
+});
 
 ActionsCommentDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,
   deleteItemInline: PropTypes.func.isRequired,
   comment: CommentType.isRequired,
   node: NodeType.isRequired,
-  isDeleted: PropTypes.bool,
   inline: PropTypes.bool,
 };
 
 ActionsCommentDelete.defaultProps = {
-  isDeleted: false,
   inline: false,
 };
 

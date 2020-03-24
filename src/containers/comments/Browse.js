@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -9,186 +9,107 @@ import Progress from '../../components/Progress';
 
 import * as actions from '../../actions';
 import NodeType from '../../proptypes/Node';
+import CommentsType from '../../proptypes/Comments';
 import CommentDefault from '../../proptypes/CommentDefault';
 import PersonType from '../../proptypes/Person';
-import i18n from '../../languages';
-import {
-  App as APP,
-  Comments as COMMENT,
-} from '../../constants';
+import { App as APP } from '../../constants';
 
 const { LIMIT } = APP.BROWSE;
 
-class CommentsBrowse extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+const CommentsBrowse = (props) => {
+  const {
+    browseComments,
+    resetComments,
+    addComment,
+    comments,
+    hasMore,
+    canAdd,
+    parent,
+    viewer,
+  } = props;
 
-    this.state = {
-      comments: {
-        byId: {},
-        allIds: [],
-      },
-      comment: {
-        ...CommentDefault,
-        author: props.viewer,
-      },
-      bodyError: false,
-      bodyHelperText: '',
-      hasMore: true,
+  const namespace = parent.objectType.split('.')[1];
+
+  const [comment, setComment] = useState({
+    ...CommentDefault,
+    author: viewer,
+    parentId: parent.id,
+  });
+
+  useEffect(() => {
+    return () => {
+      resetComments();
     };
+  }, []);
 
-    this.offset = 0;
-    this.handleAdd = this.handleAdd.bind(this);
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.fetchComments = this.fetchComments.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { comments, hasMore } = nextProps;
-    return { comments, hasMore };
-  }
-
-  componentWillUnmount() {
-    const { resetComments } = this.props;
-    resetComments();
-  }
-
-  fetchComments() {
-    const {
-      parent: {
-        id,
-        objectType,
-      },
-      browseComments,
-    } = this.props;
-
-    const namespace = objectType.split('.')[1];
+  const fetchList = (page) => {
+    const { id, objectType } = parent;
+    const start = (page - 1) * LIMIT;
 
     browseComments({
       node: { id, objectType },
-      start: this.offset,
+      start,
       limit: LIMIT,
-    }, namespace).then(() => {
-      this.offset += LIMIT;
-    });
-  }
+    }, namespace);
+  };
 
-  handleAdd() {
-    const { parent: { objectType }, addComment, viewer } = this.props;
-    const { comment } = this.state;
+  const handleFieldChange = (event) => {
+    const { name, value } = event.target;
+    setComment({ ...comment, [name]: value });
+  };
 
-    if (this.validate()) {
-      const namespace = objectType.split('.')[1];
+  const validate = (form) => {
+    const { body } = form;
+    return body.checkValidity();
+  };
+
+  const handleAdd = (event) => {
+    event.preventDefault();
+    const { target } = event;
+
+    if (validate(target)) {
       addComment(comment, namespace).then(() => {
-        this.setState({
-          comment: {
-            ...CommentDefault,
-            author: viewer,
-          },
+        setComment({
+          ...CommentDefault,
+          author: viewer,
         });
       });
     }
-  }
+  };
 
-  handleFieldChange(event) {
-    const { comment } = this.state;
-    const { parent } = this.props;
-    const { target } = event;
-    const { name, value } = target;
+  const hasComments = parent.numOfComments > 0;
 
-    this.validateField(name, value);
-    comment[name] = value;
-    comment.parentId = parent.id;
-
-    this.setState({ comment });
-  }
-
-  validateField(name, value) {
-    const fieldError = {
-      error: false,
-      helperText: '',
-    };
-
-    const { BODY } = COMMENT.FIELDS;
-
-    if (name === 'body') {
-      if (value.length === 0 || value.length > BODY.MAX_LENGTH) {
-        fieldError.error = true;
-        fieldError.helperText = i18n.t('comments:comment.bodyErrorHelperText', {
-          max: BODY.MAX_LENGTH,
-        });
-      }
-    }
-
-    this.setState({
-      [`${name}Error`]: fieldError.error,
-      [`${name}HelperText`]: fieldError.helperText,
-    });
-
-    return !fieldError.error;
-  }
-
-  validate() {
-    const {
-      comment: {
-        body,
-      },
-    } = this.state;
-
-    const bodyValidate = this.validateField('body', body);
-
-    return bodyValidate;
-  }
-
-  render() {
-    const {
-      comment,
-      comments,
-      bodyError,
-      bodyHelperText,
-      hasMore,
-    } = this.state;
-
-    const {
-      canAdd,
-      parent,
-      // isFetching,
-    } = this.props;
-
-    return (
-      <React.Fragment>
-        <InfiniteScroll
-          loadMore={this.fetchComments}
-          hasMore={hasMore}
-          loader={
-            <Progress key={`comments-progress-${parent.id}`} />
-          }
-        >
-          {comments.allIds.map((itemId) => {
-            const item = comments.byId[itemId];
-            const key = `comment_${item.id}`;
-            return (
-              <CommentRead
-                key={key}
-                parent={parent}
-                comment={item}
-              />
-            );
-          })}
-        </InfiniteScroll>
-        {canAdd &&
-          <CommentForm
-            comment={comment}
-            handleFieldChange={this.handleFieldChange}
-            handleSave={this.handleAdd}
-            bodyError={bodyError}
-            bodyHelperText={bodyHelperText}
-          />
+  return (
+    <React.Fragment>
+      <InfiniteScroll
+        loadMore={fetchList}
+        hasMore={hasComments && hasMore}
+        loader={
+          <Progress key={`comments-progress-${parent.id}`} />
         }
-      </React.Fragment>
-    );
-  }
-}
+      >
+        {comments.allIds.map((itemId) => {
+          const item = comments.byId[itemId];
+          const key = `comment_${item.id}`;
+          return (
+            <CommentRead
+              key={key}
+              parent={parent}
+              comment={item}
+            />
+          );
+        })}
+      </InfiniteScroll>
+      {canAdd &&
+        <CommentForm
+          comment={comment}
+          handleFieldChange={handleFieldChange}
+          onSubmit={handleAdd}
+        />
+      }
+    </React.Fragment>
+  );
+};
 
 const mapStateToProps = (state) => {
   const { viewer } = state.session;
@@ -222,12 +143,14 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 CommentsBrowse.propTypes = {
+  comments: CommentsType.isRequired,
   parent: NodeType.isRequired,
   canAdd: PropTypes.bool,
   addComment: PropTypes.func.isRequired,
   browseComments: PropTypes.func.isRequired,
   resetComments: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
+  hasMore: PropTypes.bool.isRequired,
 };
 
 CommentsBrowse.defaultProps = {

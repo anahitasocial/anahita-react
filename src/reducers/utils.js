@@ -12,8 +12,8 @@ const editItem = (list, item) => {
 const deleteItem = (list, item, defaultItem) => {
   const items = { ...list };
   _.unset(items.byId, item.id);
-  items.allIds = _.remove(items.allIds, (n) => {
-    return n !== item.id;
+  _.remove(items.allIds, (n) => {
+    return n === item.id;
   });
   items.current = { ...defaultItem };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -12,170 +12,102 @@ import PersonType from '../../proptypes/Person';
 
 import LikeAction from '../actions/Like';
 import CommentMenu from './Menu';
-import i18n from '../../languages';
-import { Comments as COMMENT } from '../../constants';
+import CommentDefault from '../../proptypes/CommentDefault';
 
-class CommentsRead extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+const CommentsRead = (props) => {
+  const {
+    editCommentInline,
+    editComment,
+    parent,
+    comment,
+    isAuthenticated,
+    viewer,
+    inline,
+  } = props;
 
-    const { comment } = props;
+  const [isEditing, setIsEditing] = useState(false);
+  const [currComment, setCurrComment] = useState(comment);
+  let oldComment = { ...CommentDefault };
 
-    this.state = {
-      isEditing: false,
-      comment,
-      bodyError: false,
-      bodyHelperText: '',
-    };
+  const handleCancel = () => {
+    setCurrComment(oldComment);
+    setIsEditing(false);
+  };
 
-    this.oldComment = null;
-    this.offset = 0;
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-  }
+  const handleEdit = () => {
+    oldComment = { ...currComment };
+    setIsEditing(true);
+  };
 
-  static getDerivedStateFromProps(nextProps) {
-    const { comment } = nextProps;
-    return { comment };
-  }
+  const validate = (form) => {
+    const { body } = form;
+    return body.checkValidity();
+  };
 
-  handleCancel() {
-    this.setState({
-      comment: this.oldComment,
-      isEditing: false,
-    });
-  }
+  const handleSave = (event) => {
+    event.preventDefault();
+    const { target } = event;
 
-  handleEdit() {
-    const { comment } = this.state;
-    this.oldComment = { ...comment };
-    this.setState({ isEditing: true });
-  }
-
-  handleSave() {
-    const {
-      parent: { objectType },
-      inline,
-    } = this.props;
-
-    const { comment } = this.state;
-
-    if (this.validate()) {
+    if (validate(target)) {
+      const { objectType } = parent;
       const namespace = objectType.split('.')[1];
-      const editMethod = inline ? 'editCommentInline' : 'editComment';
-      this.props[editMethod](comment, namespace).then(() => {
-        this.setState({
-          isEditing: false,
-        });
+      const editMethod = inline ? editCommentInline : editComment;
+
+      editMethod(currComment, namespace).then(() => {
+        setIsEditing(false);
       });
     }
-  }
+  };
 
-  handleFieldChange(event) {
-    const { comment } = this.state;
-    const { target } = event;
-    const { name, value } = target;
+  const handleFieldChange = (event) => {
+    const { name, value } = event.target;
+    setCurrComment({ ...currComment, [name]: value });
+  };
 
-    this.validateField(name, value);
-    comment[name] = value;
-
-    this.setState({ comment });
-  }
-
-  validateField(name, value) {
-    const fieldError = {
-      error: false,
-      helperText: '',
-    };
-
-    const { BODY } = COMMENT.FIELDS;
-
-    if (name === 'body') {
-      if (value.length === 0 || value.length > BODY.MAX_LENGTH) {
-        fieldError.error = true;
-        fieldError.helperText = i18n.t('comments:comment.bodyErrorHelperText', {
-          max: BODY.MAX_LENGTH,
-        });
+  return (
+    <CommentCard
+      comment={comment}
+      menu={isAuthenticated &&
+        <CommentMenu
+          node={parent}
+          comment={comment}
+          viewer={viewer}
+          handleEdit={handleEdit}
+          inline={inline}
+        />
       }
-    }
-
-    this.setState({
-      [`${name}Error`]: fieldError.error,
-      [`${name}HelperText`]: fieldError.helperText,
-    });
-
-    return !fieldError.error;
-  }
-
-  validate() {
-    const {
-      comment: {
-        body,
-      },
-    } = this.state;
-
-    const bodyValidate = this.validateField('body', body);
-
-    return bodyValidate;
-  }
-
-  render() {
-    const {
-      comment,
-      bodyError,
-      bodyHelperText,
-      isEditing,
-    } = this.state;
-
-    const {
-      parent,
-      viewer,
-      inline,
-      isAuthenticated,
-    } = this.props;
-
-    return (
-      <CommentCard
-        comment={comment}
-        menu={isAuthenticated &&
-          <CommentMenu
-            node={parent}
-            comment={comment}
-            viewer={viewer}
-            handleEdit={this.handleEdit}
-            inline={inline}
-          />
-        }
-        actions={[
-          <LikeAction
-            node={parent}
-            comment={comment}
-            liked={comment.isVotedUp}
-            key={`comment-like-${comment.id}`}
-            size="small"
-          />,
-        ]}
-        commentForm={
-          <CommentForm
-            comment={comment}
-            handleFieldChange={this.handleFieldChange}
-            handleSave={this.handleSave}
-            handleCancel={this.handleCancel}
-            bodyError={bodyError}
-            bodyHelperText={bodyHelperText}
-          />
-        }
-        isEditing={isEditing}
-      />
-    );
-  }
-}
+      actions={[
+        <LikeAction
+          node={parent}
+          comment={comment}
+          liked={comment.isVotedUp}
+          key={`comment-like-${comment.id}`}
+          size="small"
+        />,
+      ]}
+      commentForm={
+        <CommentForm
+          comment={currComment}
+          handleFieldChange={handleFieldChange}
+          handleCancel={handleCancel}
+          onSubmit={handleSave}
+        />
+      }
+      isEditing={isEditing}
+    />
+  );
+};
 
 const mapStateToProps = (state) => {
-  const { viewer, isAuthenticated } = state.session;
-  return { viewer, isAuthenticated };
+  const {
+    viewer,
+    isAuthenticated,
+  } = state.session;
+
+  return {
+    viewer,
+    isAuthenticated,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -190,6 +122,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 CommentsRead.propTypes = {
+  editCommentInline: PropTypes.func.isRequired,
+  editComment: PropTypes.func.isRequired,
   parent: NodeType.isRequired,
   comment: CommentType.isRequired,
   viewer: PersonType.isRequired,
