@@ -1,3 +1,5 @@
+import React from 'react';
+
 const OWNER_NAME_CHAR_LIMIT = 16;
 const MEDIA_NODE_OBJECT_TYPES = [
   'com.articles.article',
@@ -42,10 +44,17 @@ const isSubscribable = (node) => {
   return MEDIA_NODE_OBJECT_TYPES.includes(node.objectType);
 };
 
+const withRef = (Component) => {
+  return React.forwardRef((props, ref) => {
+    return <Component {...props} forwardedRef={ref} />;
+  });
+};
+
 export default {
   getOwnerName,
   getColumnWidthPercentage,
   isCommentable,
   isLikeable,
   isSubscribable,
+  withRef,
 };

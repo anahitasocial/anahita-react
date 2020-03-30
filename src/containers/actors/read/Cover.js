@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../../actions/cover';
@@ -7,127 +7,83 @@ import CoverForm from '../../../components/actor/forms/Cover';
 import NodesType from '../../../proptypes/Nodes';
 import NodeType from '../../../proptypes/Node';
 
-class ActorsCover extends React.Component {
-  constructor(props) {
-    super(props);
+const ActorsCover = (props) => {
+  const {
+    addCover,
+    deleteCover,
+    nodes,
+    node,
+    isFetching,
+    canEdit,
+  } = props;
 
-    this.state = {
-      anchorEl: null,
-      isLoaded: false,
-    };
+  const getCoverSrc = (newNode) => {
+    const src = newNode.coverURL &&
+    newNode.coverURL.large &&
+    newNode.coverURL.large.url;
 
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    return src || null;
+  };
 
+  const src = getCoverSrc(node);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [cover, setCover] = useState(src);
+  const [isLoaded, setIsLoaded] = useState(!src);
+
+  if (cover) {
     /* global Image */
-    this.cover = new Image();
-    this.hasCover = false;
-  }
+    const image = new Image();
 
-  componentDidMount() {
-    const { node } = this.props;
-    this.loadCover(node);
-  }
+    image.src = cover;
 
-  componentWillReceiveProps(nextProps) {
-    const { node, nodes } = nextProps;
-    this.loadCover(nodes.byId[node.id] || node);
-  }
-
-  loadCover(node) {
-    const src = node.coverURL &&
-    node.coverURL.large &&
-    node.coverURL.large.url;
-
-    if (!src) {
-      this.setState({ isLoaded: false });
-      this.hasCover = false;
-      return;
-    }
-
-    this.cover.src = src;
-    this.hasCover = true;
-
-    this.cover.onload = () => {
-      this.setState({ isLoaded: true });
+    image.onload = () => {
+      setIsLoaded(true);
     };
 
-    this.cover.onError = () => {
-      this.setState({ isLoaded: false });
+    image.onError = () => {
+      setIsLoaded(false);
     };
   }
 
-  addCover(file) {
-    const { node, addCover } = this.props;
-    addCover(node, file);
-  }
+  const handleFieldChange = (event) => {
+    const { files } = event.target;
 
-  deleteCover() {
-    const { node, deleteCover } = this.props;
+    setAnchorEl(null);
+    addCover(node, files[0]).then(() => {
+      const newSrc = getCoverSrc(nodes.byId[node.id]);
+      setCover(newSrc);
+    });
+  };
+
+  const handleDelete = () => {
+    setAnchorEl(null);
+    setCover(null);
     deleteCover(node);
-  }
+  };
 
-  handleFieldChange(event) {
-    const file = event.target.files[0];
+  const handleOpen = (event) => {
+    const { currentTarget } = event;
+    setAnchorEl(currentTarget);
+  };
 
-    this.setState({
-      anchorEl: null,
-      isLoaded: false,
-    });
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    this.addCover(file);
-  }
-
-  handleDelete() {
-    this.setState({
-      anchorEl: null,
-      isLoaded: false,
-    });
-
-    this.deleteCover();
-  }
-
-  handleOpen(event) {
-    this.setState({
-      anchorEl: event.currentTarget,
-    });
-  }
-
-  handleClose() {
-    this.setState({ anchorEl: null });
-  }
-
-  render() {
-    const {
-      isFetching,
-      node,
-      canEdit,
-    } = this.props;
-
-    const {
-      anchorEl,
-      isLoaded,
-    } = this.state;
-
-    const cover = isLoaded ? this.cover.src : null;
-
-    return (
-      <CoverForm
-        isFetching={isFetching || (this.hasCover && !isLoaded)}
-        name={node.name}
-        cover={cover}
-        anchorEl={anchorEl}
-        canEdit={canEdit}
-        handleOpen={this.handleOpen}
-        handleClose={this.handleClose}
-        handleFieldChange={this.handleFieldChange}
-        handleDelete={this.handleDelete}
-      />
-    );
-  }
-}
+  return (
+    <CoverForm
+      isFetching={isFetching || !isLoaded}
+      node={node}
+      cover={cover}
+      anchorEl={anchorEl}
+      canEdit={canEdit}
+      handleOpen={handleOpen}
+      handleClose={handleClose}
+      handleFieldChange={handleFieldChange}
+      handleDelete={handleDelete}
+    />
+  );
+};
 
 ActorsCover.propTypes = {
   addCover: PropTypes.func.isRequired,
@@ -157,10 +113,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addCover: (node, file) => {
-      dispatch(actions.add(node, file));
+      return dispatch(actions.add(node, file));
     },
     deleteCover: (node) => {
-      dispatch(actions.deleteItem(node));
+      return dispatch(actions.deleteItem(node));
     },
   };
 };

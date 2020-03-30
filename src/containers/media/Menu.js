@@ -15,16 +15,12 @@ import FollowAction from '../actions/Follow';
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
 
-const actionWithRef = (Component) => {
-  return React.forwardRef((props, ref) => {
-    return <Component {...props} forwardedRef={ref} />;
-  });
-};
+const { withRef, getOwnerName } = utils;
 
-const CommentStatusActionWithRef = actionWithRef(CommentStatusAction);
-const FollowActionWithRef = actionWithRef(FollowAction);
-const NotificationActionWithRef = actionWithRef(NotificationAction);
-const DeleteActionWithRef = actionWithRef(DeleteAction);
+const NotificationActionWithRef = withRef(NotificationAction);
+const CommentStatusActionWithRef = withRef(CommentStatusAction);
+const FollowActionWithRef = withRef(FollowAction);
+const DeleteActionWithRef = withRef(DeleteAction);
 
 const MediaMenu = (props) => {
   const {
@@ -32,7 +28,7 @@ const MediaMenu = (props) => {
     viewer,
   } = props;
 
-  const ownerName = utils.getOwnerName(medium);
+  const ownerName = getOwnerName(medium);
   const canDelete = permissions.canDelete(viewer, medium);
 
   const [menuAnchorEl, setAnchorEl] = React.useState(null);

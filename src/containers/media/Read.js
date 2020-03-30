@@ -23,7 +23,9 @@ const MediaRead = (props) => {
     isFetching,
     viewer,
     isAuthenticated,
-    media,
+    media: {
+      current: medium = { ...MediumDefault },
+    },
     match: {
       params: {
         id,
@@ -36,8 +38,7 @@ const MediaRead = (props) => {
     setAppTitle(i18n.t(`${namespace}:cTitle`));
   }, []);
 
-  const medium = media.current || { ...MediumDefault };
-  const canComment = isAuthenticated && medium.openToComment;
+  const canAdd = isAuthenticated && medium.openToComment;
   // const maxWidth = ['article', 'topic'].includes(medium.objectType.split('.')[2]) ? 'md' : 'sm';
 
   return (
@@ -59,12 +60,10 @@ const MediaRead = (props) => {
             medium={medium}
             viewer={viewer}
           />
-          {canComment &&
-            <MediumComments
-              parent={medium}
-              canAdd
-            />
-          }
+          <MediumComments
+            parent={medium}
+            canAdd={canAdd}
+          />
         </React.Fragment>
       }
     </React.Fragment>

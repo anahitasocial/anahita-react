@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import i18n from '../../languages';
+import utils from '../utils';
 
 import FollowAction from '../actions/Follow';
 import BlockAction from '../actions/Block';
@@ -15,15 +16,11 @@ import PersonType from '../../proptypes/Person';
 import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
 
-const actionWithRef = (Component) => {
-  return React.forwardRef((props, ref) => {
-    return <Component {...props} forwardedRef={ref} />;
-  });
-};
+const { withRef } = utils;
 
-const FollowActionWithRef = actionWithRef(FollowAction);
-const BlockActionActionWithRef = actionWithRef(BlockAction);
-const DeleteActionWithRef = actionWithRef(DeleteAction);
+const FollowActionWithRef = withRef(FollowAction);
+const BlockActionActionWithRef = withRef(BlockAction);
+const DeleteActionWithRef = withRef(DeleteAction);
 
 const CommentMenu = (props) => {
   const {

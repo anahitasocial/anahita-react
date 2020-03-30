@@ -22,7 +22,9 @@ const HashtagsRead = (props) => {
   const {
     readHashtag,
     setAppTitle,
-    hashtags,
+    hashtags: {
+      current: hashtag = { ...HashtagDefault },
+    },
     taggablesCount,
     isFetching,
     error,
@@ -37,8 +39,6 @@ const HashtagsRead = (props) => {
     readHashtag(alias);
     setAppTitle(i18n.t('hashtags:cTitle'));
   }, []);
-
-  const hashtag = hashtags.current || { ...HashtagDefault };
 
   if (error) {
     return (

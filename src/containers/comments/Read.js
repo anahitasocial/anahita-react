@@ -19,7 +19,7 @@ const CommentsRead = (props) => {
     editCommentInline,
     editComment,
     parent,
-    comment,
+    comment = { ...CommentDefault },
     isAuthenticated,
     viewer,
     inline,

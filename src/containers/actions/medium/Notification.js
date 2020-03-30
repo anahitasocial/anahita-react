@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,67 +7,48 @@ import actions from '../../../actions/notifications';
 import MediumType from '../../../proptypes/Medium';
 import i18n from '../../../languages';
 
-class ActionsMediumNotification extends React.Component {
-  constructor(props) {
-    super(props);
+const ActionsMediumNotification = React.forwardRef((props, ref) => {
+  const {
+    subscribe,
+    unsubscribe,
+    medium,
+    isSubscribed,
+    subscribeLabel,
+    unsubscribeLabel,
+    isFetching,
+    ...other
+  } = props;
 
-    const { isSubscribed } = props;
+  const [subscribed, setSubscribed] = useState(isSubscribed);
 
-    this.state = {
-      isSubscribed,
-      isFetching: false,
-    };
-
-    this.handleSubscribe = this.handleSubscribe.bind(this);
-    this.handleUnsubscribe = this.handleUnsubscribe.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { isFetching } = nextProps;
-    return { isFetching };
-  }
-
-  handleSubscribe(event) {
+  const handleSubscribe = (event) => {
     event.preventDefault();
-
-    const { medium, subscribe } = this.props;
-
     subscribe(medium).then(() => {
-      this.setState({ isSubscribed: true });
+      setSubscribed(true);
     });
-  }
+  };
 
-  handleUnsubscribe(event) {
+  const handleUnsubscribe = (event) => {
     event.preventDefault();
-
-    const { medium, unsubscribe } = this.props;
-
     unsubscribe(medium).then(() => {
-      this.setState({ isSubscribed: false });
+      setSubscribed(false);
     });
-  }
+  };
 
-  render() {
-    const {
-      subscribeLabel,
-      unsubscribeLabel,
-    } = this.props;
+  const title = subscribed ? unsubscribeLabel : subscribeLabel;
+  const onClick = subscribed ? handleUnsubscribe : handleSubscribe;
 
-    const { isSubscribed, isFetching } = this.state;
-
-    const title = isSubscribed ? unsubscribeLabel : subscribeLabel;
-    const onClick = isSubscribed ? this.handleUnsubscribe : this.handleSubscribe;
-
-    return (
-      <MenuItem
-        onClick={onClick}
-        disabled={isFetching}
-      >
-        {title}
-      </MenuItem>
-    );
-  }
-}
+  return (
+    <MenuItem
+      onClick={onClick}
+      disabled={isFetching}
+      ref={ref}
+      {...other}
+    >
+      {title}
+    </MenuItem>
+  );
+});
 
 ActionsMediumNotification.propTypes = {
   subscribe: PropTypes.func.isRequired,
@@ -76,6 +57,7 @@ ActionsMediumNotification.propTypes = {
   isSubscribed: PropTypes.bool,
   subscribeLabel: PropTypes.string,
   unsubscribeLabel: PropTypes.string,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 ActionsMediumNotification.defaultProps = {

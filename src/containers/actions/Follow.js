@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -9,95 +9,78 @@ import ActorsType from '../../proptypes/Actors';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
-class FollowAction extends React.Component {
-  constructor(props) {
-    super(props);
+const FollowAction = React.forwardRef((props, ref) => {
+  const {
+    followActor,
+    unfollowActor,
+    reset,
+    actor,
+    actors,
+    viewer,
+    component,
+    followLabel,
+    unfollowLabel,
+  } = props;
 
-    const { actor, actors } = props;
-    const isLeader = actors.byId[actor.id] ? actors.byId[actor.id].isLeader : actor.isLeader;
+  const isLeader = actors.byId[actor.id] ? actors.byId[actor.id].isLeader : actor.isLeader;
 
-    this.state = {
-      isLeader,
-      isWaiting: false,
+  const [leader, setLeader] = useState(isLeader);
+
+  const [waiting, setWaiting] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      reset();
     };
+  }, []);
 
-    this.handleFollow = this.handleFollow.bind(this);
-    this.handleUnfollow = this.handleUnfollow.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { actors, actor } = nextProps;
-
-    if (actors.byId[actor.id]) {
-      return {
-        isLeader: actors.byId[actor.id].isLeader,
-        isWaiting: false,
-      };
-    }
-
-    return null;
-  }
-
-  componentWillUnmount() {
-    const { reset } = this.props;
-    reset();
-  }
-
-  handleFollow(event) {
+  const handleFollow = (event) => {
     event.preventDefault();
 
-    const { viewer, actor, followActor } = this.props;
+    setWaiting(true);
+    followActor(viewer, actor).then(() => {
+      setWaiting(false);
+      setLeader(true);
+    });
+  };
 
-    followActor(viewer, actor);
-
-    this.setState({ isWaiting: true });
-  }
-
-  handleUnfollow(event) {
+  const handleUnfollow = (event) => {
     event.preventDefault();
 
-    const { viewer, actor, unfollowActor } = this.props;
+    setWaiting(true);
+    unfollowActor(viewer, actor).then(() => {
+      setWaiting(false);
+      setLeader(false);
+    });
+  };
 
-    unfollowActor(viewer, actor);
+  const title = leader ? unfollowLabel : followLabel;
+  const onClick = leader ? handleUnfollow : handleFollow;
+  const color = leader ? 'inherit' : 'primary';
 
-    this.setState({ isWaiting: true });
-  }
-
-  render() {
-    const {
-      component,
-      followLabel,
-      unfollowLabel,
-    } = this.props;
-
-    const { isLeader, isWaiting } = this.state;
-    const title = isLeader ? unfollowLabel : followLabel;
-    const onClick = isLeader ? this.handleUnfollow : this.handleFollow;
-    const color = isLeader ? 'inherit' : 'primary';
-
-    if (component === 'menuitem') {
-      return (
-        <MenuItem
-          onClick={onClick}
-          disabled={isWaiting}
-          color={color}
-        >
-          {title}
-        </MenuItem>
-      );
-    }
-
+  if (component === 'menuitem') {
     return (
-      <Button
+      <MenuItem
         onClick={onClick}
-        disabled={isWaiting}
-        color={color}
+        disabled={waiting}
+        ref={ref}
       >
         {title}
-      </Button>
+      </MenuItem>
     );
   }
-}
+
+  return (
+    <Button
+      onClick={onClick}
+      disabled={waiting}
+      color={color}
+      ref={ref}
+    >
+      {title}
+    </Button>
+  );
+});
 
 FollowAction.propTypes = {
   followActor: PropTypes.func.isRequired,
@@ -135,13 +118,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     followActor: (viewer, actor) => {
-      dispatch(actions.follow(viewer, actor));
+      return dispatch(actions.follow(viewer, actor));
     },
     unfollowActor: (viewer, actor) => {
-      dispatch(actions.unfollow(viewer, actor));
+      return dispatch(actions.unfollow(viewer, actor));
     },
     reset: () => {
-      dispatch(actions.reset());
+      return dispatch(actions.reset());
     },
   };
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,46 +7,36 @@ import * as actions from '../../actions';
 import NodeType from '../../proptypes/Node';
 import i18n from '../../languages';
 
-class ActionsDelete extends React.Component {
-  constructor(props) {
-    super(props);
+const ActionsDelete = React.forwardRef((props, ref) => {
+  const {
+    deleteItem,
+    node,
+  } = props;
 
-    this.state = {
-      isFetching: false,
-    };
+  const [waiting, setWaiting] = useState(false);
 
-    this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { isFetching } = nextProps;
-    return { isFetching };
-  }
-
-  handleDelete(event) {
+  const handleDelete = (event) => {
     event.preventDefault();
 
-    const { node, deleteItem } = this.props;
+    setWaiting(true);
+    deleteItem(node).then(() => {
+      setWaiting(false);
+    });
+  };
 
-    deleteItem(node);
-  }
+  const label = i18n.t('actions:delete');
 
-  render() {
-    const { isFetching } = this.state;
-    const label = i18n.t('actions:delete');
-    const onClick = this.handleDelete;
-
-    return (
-      <MenuItem
-        onClick={onClick}
-        disabled={isFetching}
-        aria-label={label}
-      >
-        {label}
-      </MenuItem>
-    );
-  }
-}
+  return (
+    <MenuItem
+      onClick={handleDelete}
+      disabled={waiting}
+      aria-label={label}
+      ref={ref}
+    >
+      {label}
+    </MenuItem>
+  );
+});
 
 ActionsDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,

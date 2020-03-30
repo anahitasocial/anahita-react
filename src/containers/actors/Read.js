@@ -37,7 +37,9 @@ const ActorsRead = (props) => {
     readActor,
     resetActors,
     setAppTitle,
-    actors,
+    actors: {
+      current: actor = { ...ActorDefault },
+    },
     viewer,
     isAuthenticated,
     match: {
@@ -55,8 +57,6 @@ const ActorsRead = (props) => {
       resetActors();
     };
   }, []);
-
-  const actor = actors.current || { ...ActorDefault };
 
   const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
   const canEdit = permissions.canEdit(viewer, actor);

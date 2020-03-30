@@ -17,7 +17,6 @@ const ActionsCommentDelete = React.forwardRef((props, ref) => {
       objectType,
     },
     inline,
-    ...other
   } = props;
 
   const label = i18n.t('actions:delete');
@@ -32,9 +31,8 @@ const ActionsCommentDelete = React.forwardRef((props, ref) => {
   return (
     <MenuItem
       onClick={handleDelete}
-      aria-label={i18n.t('actions:delete')}
+      aria-label={label}
       ref={ref}
-      {...other}
     >
       {label}
     </MenuItem>

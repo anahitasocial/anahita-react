@@ -12,13 +12,14 @@ import CommentType from '../../proptypes/Comment';
 import CommentDefault from '../../proptypes/CommentDefault';
 import i18n from '../../languages';
 
-const ActionLike = (props) => {
+const ActionLike = React.forwardRef((props, ref) => {
   const {
     node,
     comment,
     likeNode,
     unlikeNode,
     liked,
+    size,
   } = props;
 
   const [isLiked, setIsLiked] = React.useState(liked);
@@ -46,7 +47,6 @@ const ActionLike = (props) => {
     });
   };
 
-  const { size } = props;
   const label = isLiked ? i18n.t('actions:unlike') : i18n.t('actions:like');
   const onClick = isLiked ? handleUnlike : handleLike;
   const color = isLiked ? 'primary' : 'inherit';
@@ -57,6 +57,7 @@ const ActionLike = (props) => {
       disabled={isWaiting}
       color={color}
       aria-label={label}
+      ref={ref}
     >
       {isLiked &&
         <UnlikeIcon fontSize={size} />
@@ -66,7 +67,7 @@ const ActionLike = (props) => {
       }
     </IconButton>
   );
-};
+});
 
 ActionLike.propTypes = {
   likeNode: PropTypes.func.isRequired,

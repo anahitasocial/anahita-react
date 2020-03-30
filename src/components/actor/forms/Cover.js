@@ -8,6 +8,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CardMedia from '@material-ui/core/CardMedia';
 import Fade from '@material-ui/core/Fade';
 
+import NodeType from '../../../proptypes/Node';
+
 const styles = (theme) => {
   return {
     coverPlaceholder: {
@@ -40,7 +42,7 @@ const styles = (theme) => {
 const ActorCoverForm = (props) => {
   const {
     classes,
-    name,
+    node,
     cover,
     anchorEl,
     isFetching,
@@ -62,7 +64,7 @@ const ActorCoverForm = (props) => {
           <Fade in>
             <CardMedia
               className={classes.cover}
-              title={name}
+              title={node.name}
               image={cover}
             />
           </Fade>
@@ -103,7 +105,7 @@ const ActorCoverForm = (props) => {
 
 ActorCoverForm.propTypes = {
   classes: PropTypes.object.isRequired,
-  name: PropTypes.string,
+  node: NodeType.isRequired,
   cover: PropTypes.string,
   anchorEl: PropTypes.object,
   isFetching: PropTypes.bool,
@@ -117,7 +119,6 @@ ActorCoverForm.propTypes = {
 ActorCoverForm.defaultProps = {
   isFetching: false,
   canEdit: false,
-  name: '',
   cover: '',
   anchorEl: null,
 };

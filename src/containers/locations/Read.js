@@ -13,10 +13,9 @@ import withWidth from '@material-ui/core/withWidth';
 
 import LocationIcon from '@material-ui/icons/LocationOn';
 
-import appActions from '../../actions/app';
-import { locations as actions } from '../../actions';
+import * as actions from '../../actions';
 import i18n from '../../languages';
-import locationUtils from './utils';
+import utils from './utils';
 
 import LocationsType from '../../proptypes/Locations';
 import LocationDefault from '../../proptypes/LocationDefault';
@@ -39,7 +38,9 @@ const LocationsRead = (props) => {
   const {
     readLocation,
     setAppTitle,
-    locations,
+    locations: {
+      current: location = { ...LocationDefault },
+    },
     taggablesCount,
     isFetching,
     error,
@@ -54,8 +55,6 @@ const LocationsRead = (props) => {
     readLocation(id);
     setAppTitle(i18n.t('locations:cTitle'));
   }, []);
-
-  const location = locations.current || { ...LocationDefault };
 
   if (error) {
     return (
@@ -100,7 +99,7 @@ const LocationsRead = (props) => {
         <Divider light />
         <CardContent>
           <Typography variant="caption">
-            {locationUtils.getAddress(location)}
+            {utils.getAddress(location)}
           </Typography>
         </CardContent>
       </Card>
@@ -144,10 +143,10 @@ LocationsRead.propTypes = {
 const mapDispatchToProps = (dispatch) => {
   return {
     readLocation: (id) => {
-      return dispatch(actions.read(id));
+      return dispatch(actions.locations.read(id));
     },
     setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
+      dispatch(actions.app.setAppTitle(title));
     },
   };
 };

@@ -1,6 +1,6 @@
 /* eslint no-console: ["error", { allow: ["log", "error"] }] */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,10 +10,13 @@ import * as api from '../../../api';
 import MediumType from '../../../proptypes/Medium';
 import i18n from '../../../languages';
 
-const ActionsMediumCommentStatus = (props) => {
-  const { medium, read } = props;
+const ActionsMediumCommentStatus = React.forwardRef((props, ref) => {
+  const {
+    medium,
+    read,
+  } = props;
 
-  const [isFetching, setIsFetching] = React.useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const handleAction = (event) => {
     event.preventDefault();
@@ -41,11 +44,12 @@ const ActionsMediumCommentStatus = (props) => {
       onClick={handleAction}
       aria-label={label}
       disabled={isFetching}
+      ref={ref}
     >
       {label}
     </MenuItem>
   );
-};
+});
 
 ActionsMediumCommentStatus.propTypes = {
   read: PropTypes.func.isRequired,

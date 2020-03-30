@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -14,14 +14,15 @@ import FollowAction from '../actions/Follow';
 import PersonType from '../../proptypes/Person';
 import StoryType from '../../proptypes/Story';
 
-const actionWithRef = (Component) => {
-  return React.forwardRef((props, ref) => {
-    return <Component {...props} forwardedRef={ref} />;
-  });
-};
+const {
+  withRef,
+  getOwnerName,
+  isSubscribable,
+} = utils;
 
-const FollowActionWithRef = actionWithRef(FollowAction);
-const NotificationActionWithRef = actionWithRef(NotificationAction);
+const FollowActionWithRef = withRef(FollowAction);
+const NotificationActionWithRef = withRef(NotificationAction);
+const DeleteActionWithRef = withRef(DeleteAction);
 
 const StoryMenu = (props) => {
   const {
@@ -29,7 +30,7 @@ const StoryMenu = (props) => {
     viewer,
   } = props;
 
-  const [menuAnchorEl, setAnchorEl] = React.useState(null);
+  const [menuAnchorEl, setAnchorEl] = useState(null);
 
   const handleOpenMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,9 +40,9 @@ const StoryMenu = (props) => {
     setAnchorEl(null);
   };
 
-  const ownerName = utils.getOwnerName(story);
+  const ownerName = getOwnerName(story);
   const { id, owner } = story;
-  const showSubscriptionAction = story.object && utils.isSubscribable(story.object);
+  const showSubscriptionAction = story.object && isSubscribable(story.object);
   const showFollowAction = owner.id !== viewer.id;
 
   return (
@@ -80,7 +81,7 @@ const StoryMenu = (props) => {
             key={`story-notification-${id}`}
           />
         }
-        <DeleteAction
+        <DeleteActionWithRef
           node={story}
           key={`story-delete-${id}`}
         />

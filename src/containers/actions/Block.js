@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -9,95 +9,78 @@ import ActorsType from '../../proptypes/Actors';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
-class BlockAction extends React.Component {
-  constructor(props) {
-    super(props);
+const BlockAction = React.forwardRef((props, ref) => {
+  const {
+    blockPerson,
+    unblockPerson,
+    reset,
+    actor,
+    actors,
+    viewer,
+    component,
+    blockLabel,
+    unblockLabel,
+  } = props;
 
-    const { actor, actors } = props;
-    const isBlocked = actors.byId[actor.id] ? actors.byId[actor.id].isBlocked : actor.isBlocked;
+  const isBlocked = actors.byId[actor.id] ? actors.byId[actor.id].isBlocked : actor.isBlocked;
 
-    this.state = {
-      isBlocked,
-      isWaiting: false,
+  const [blocked, setBlocked] = useState(isBlocked);
+
+  const [waiting, setWaiting] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      reset();
     };
+  }, []);
 
-    this.handleBlock = this.handleBlock.bind(this);
-    this.handleUnblock = this.handleUnblock.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { actors, actor } = nextProps;
-
-    if (actors.byId[actor.id]) {
-      return {
-        isBlocked: actors.byId[actor.id].isBlocked,
-        isWaiting: false,
-      };
-    }
-
-    return null;
-  }
-
-  componentWillUnmount() {
-    const { reset } = this.props;
-    reset();
-  }
-
-  handleBlock(event) {
+  const handleBlock = (event) => {
     event.preventDefault();
 
-    const { viewer, actor, blockPerson } = this.props;
+    setWaiting(true);
+    blockPerson(viewer, actor).then(() => {
+      setWaiting(false);
+      setBlocked(true);
+    });
+  };
 
-    blockPerson(viewer, actor);
-
-    this.setState({ isBlocked: true });
-  }
-
-  handleUnblock(event) {
+  const handleUnblock = (event) => {
     event.preventDefault();
 
-    const { viewer, actor, unblockPerson } = this.props;
+    setWaiting(true);
+    unblockPerson(viewer, actor).then(() => {
+      setWaiting(false);
+      setBlocked(false);
+    });
+  };
 
-    unblockPerson(viewer, actor);
+  const title = blocked ? unblockLabel : blockLabel;
+  const onClick = blocked ? handleUnblock : handleBlock;
+  const color = blocked ? 'secondary' : 'inherit';
 
-    this.setState({ isBlocked: false });
-  }
-
-  render() {
-    const {
-      component,
-      blockLabel,
-      unblockLabel,
-    } = this.props;
-
-    const { isBlocked, isWaiting } = this.state;
-    const title = isBlocked ? unblockLabel : blockLabel;
-    const onClick = isBlocked ? this.handleUnblock : this.handleBlock;
-    const color = isBlocked ? 'secondary' : 'inherit';
-
-    if (component === 'menuitem') {
-      return (
-        <MenuItem
-          onClick={onClick}
-          disabled={isWaiting}
-          color={color}
-        >
-          {title}
-        </MenuItem>
-      );
-    }
-
+  if (component === 'menuitem') {
     return (
-      <Button
+      <MenuItem
         onClick={onClick}
-        disabled={isWaiting}
-        color={color}
+        disabled={waiting}
+        ref={ref}
       >
         {title}
-      </Button>
+      </MenuItem>
     );
   }
-}
+
+  return (
+    <Button
+      onClick={onClick}
+      disabled={waiting}
+      color={color}
+      ref={ref}
+    >
+      {title}
+    </Button>
+  );
+});
 
 BlockAction.propTypes = {
   blockPerson: PropTypes.func.isRequired,
@@ -135,13 +118,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     blockPerson: (viewer, actor) => {
-      dispatch(actions.block(viewer, actor));
+      return dispatch(actions.block(viewer, actor));
     },
     unblockPerson: (viewer, actor) => {
-      dispatch(actions.unblock(viewer, actor));
+      return dispatch(actions.unblock(viewer, actor));
     },
     reset: () => {
-      dispatch(actions.reset());
+      return dispatch(actions.reset());
     },
   };
 };
