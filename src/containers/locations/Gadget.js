@@ -30,6 +30,10 @@ const LocationsGadget = (props) => {
     };
   }, []);
 
+  const handleDelete = (event, id) => {
+    console.log(id);
+  };
+
   if (isFetching) {
     return (
       <Progress />

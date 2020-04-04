@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
+import GadgetList from './gadget/List';
 import AnahitaMap from '../../components/Map';
 import LocationsType from '../../proptypes/Locations';
 
@@ -23,7 +24,12 @@ const styles = (theme) => {
 };
 
 const LocationsGadget = (props) => {
-  const { locations, classes } = props;
+  const {
+    locations,
+    handleDelete,
+    classes,
+  } = props;
+
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
   if (locations.allIds.length === 0) {
@@ -53,6 +59,10 @@ const LocationsGadget = (props) => {
         containerElement={<Box className={classes.mapContainer} />}
         mapElement={<Box style={{ height: '100%' }} />}
       />
+      <GadgetList
+        locations={locations}
+        handleDelete={handleDelete}
+      />
     </Card>
   );
 };
@@ -60,6 +70,7 @@ const LocationsGadget = (props) => {
 LocationsGadget.propTypes = {
   classes: PropTypes.object.isRequired,
   locations: LocationsType.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(LocationsGadget);
