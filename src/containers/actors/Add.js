@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { singularize } from 'inflected';
@@ -16,52 +16,30 @@ import ActorDefault from '../../proptypes/ActorDefault';
 
 const BODY_CHARACTER_LIMIT = 350;
 
-class ActorsAdd extends React.Component {
-  constructor(props) {
-    super(props);
+const ActorsAdd = (props) => {
+  const {
+    addActor,
+    actors: {
+      current: actor = { ...ActorDefault },
+    },
+    namespace,
+    isFetching,
+    success,
+    error,
+  } = props;
 
-    this.state = {
-      actor: { ...ActorDefault },
-      nameError: false,
-      nameHelperText: '',
-      bodyError: false,
-      bodyHelperText: '',
-      isFetching: false,
-      success: false,
-      error: '',
-    };
+  const [fieldParams, setFieldParams] = useState({
+    name: {
+      error: false,
+      helperText: '',
+    },
+    body: {
+      error: false,
+      helperText: '',
+    },
+  });
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const {
-      actors,
-      isFetching,
-      success,
-      error,
-    } = nextProps;
-
-    return {
-      actor: actors.current,
-      isFetching,
-      success,
-      error,
-    };
-  }
-
-  handleFieldChange(event) {
-    const { actor } = this.state;
-    const { name, value } = event.target;
-
-    this.validateField(name, value.trim());
-    actor[name] = value;
-
-    this.setState({ actor });
-  }
-
-  validateField(name, value) {
+  const validateField = (name, value) => {
     const fieldError = {
       error: false,
       helperText: '',
@@ -87,93 +65,85 @@ class ActorsAdd extends React.Component {
         }
     }
 
-    this.setState({
-      [`${name}Error`]: fieldError.error,
-      [`${name}HelperText`]: fieldError.helperText,
+    setFieldParams({
+      ...fieldParams,
+      [name]: { ...fieldError },
     });
 
     return !fieldError.error;
-  }
+  };
 
-  validate() {
-    const { name, body } = this.state.actor;
-    const nameValidated = this.validateField('name', name);
-    const bodyValidated = this.validateField('body', body);
+  const validate = () => {
+    const { name, body } = actor;
+    const nameValidated = validateField('name', name);
+    const bodyValidated = validateField('body', body);
 
     return nameValidated && bodyValidated;
-  }
+  };
 
-  saveActor() {
-    const { addActor } = this.props;
-    const { actor: { name, body } } = this.state;
+  const handleFieldChange = (event) => {
+    const { name, value } = event.target;
+
+    validateField(name, value.trim());
+    actor[name] = value;
+  };
+
+  const saveActor = () => {
+    const { name, body } = actor;
     addActor({ name, body });
-  }
+  };
 
-  handleFormSubmit(event) {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
-    if (this.validate()) {
-      this.saveActor();
+    if (validate()) {
+      saveActor();
     }
-  }
+  };
 
-  render() {
-    const { namespace } = this.props;
-    const {
-      actor,
-      nameError,
-      nameHelperText,
-      bodyError,
-      bodyHelperText,
-      isFetching,
-      success,
-      error,
-    } = this.state;
-
-    if (success) {
-      return (
-        <Redirect to={`/${namespace}/${actor.id}/`} />
-      );
-    }
-
+  if (success) {
     return (
-      <React.Fragment>
-        <Card>
-          <CardHeader
-            title={actor.name}
-            avatar={
-              <Avatar
-                aria-label={actor.name}
-                alt={actor.name}
-              >
-                {actor.name ? actor.name.charAt(0).toUpperCase() : <GroupAddIcon />}
-              </Avatar>
-            }
-          />
-          <ActorInfoForm
-            formTitle={`Add new ${singularize(namespace)}`}
-            name={actor.name}
-            nameError={nameError}
-            nameHelperText={nameHelperText}
-            body={actor.body}
-            bodyError={bodyError}
-            bodyHelperText={bodyHelperText}
-            handleFieldChange={this.handleFieldChange}
-            handleFormSubmit={this.handleFormSubmit}
-            isFetching={isFetching}
-            dismissPath={`/${namespace}/`}
-          />
-        </Card>
-        {error &&
-          <SimpleSnackbar
-            isOpen={Boolean(error)}
-            message="Something went wrong!"
-            type="error"
-          />
-        }
-      </React.Fragment>
+      <Redirect to={`/${namespace}/${actor.id}/`} />
     );
   }
-}
+
+  return (
+    <React.Fragment>
+      <Card>
+        <CardHeader
+          title={actor.name}
+          avatar={
+            <Avatar
+              aria-label={actor.name}
+              alt={actor.name}
+            >
+              {actor.name ? actor.name.charAt(0).toUpperCase() : <GroupAddIcon />}
+            </Avatar>
+          }
+        />
+        <ActorInfoForm
+          formTitle={`Add new ${singularize(namespace)}`}
+          name={actor.name}
+          nameError={fieldParams.name.error}
+          nameHelperText={fieldParams.name.helperText}
+          body={actor.body}
+          bodyError={fieldParams.body.error}
+          bodyHelperText={fieldParams.body.helperText}
+          handleFieldChange={handleFieldChange}
+          handleFormSubmit={handleFormSubmit}
+          isFetching={isFetching}
+          dismissPath={`/${namespace}/`}
+        />
+      </Card>
+      {error &&
+        <SimpleSnackbar
+          isOpen={Boolean(error)}
+          message="Something went wrong!"
+          type="error"
+        />
+      }
+    </React.Fragment>
+  );
+};
 
 ActorsAdd.propTypes = {
   addActor: PropTypes.func.isRequired,

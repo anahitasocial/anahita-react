@@ -15,6 +15,7 @@ export default {
   givenName: '',
   familyName: '',
   body: '',
+  gadgets: {},
   gender: GENDER.NEUTRAL,
   imageURL: ImageURLDefault,
   coverURL: ImageURLDefault,

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { singularize } from 'inflected';
 import ActorInfoForm from '../../../components/actor/forms/Info';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
+import Progress from '../../../components/Progress';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';
 
@@ -12,51 +13,40 @@ import ActorDefault from '../../../proptypes/ActorDefault';
 
 const BODY_CHARACTER_LIMIT = 1000;
 
-class ActorsSettingsInfo extends React.Component {
-  constructor(props) {
-    super(props);
+const ActorsSettingsInfo = (props) => {
+  const {
+    readActor,
+    editActor,
+    actors: {
+      current: actor = { ...ActorDefault },
+    },
+    namespace,
+    success,
+    error,
+    isFetching,
+    computedMatch: {
+      params,
+    },
+  } = props;
 
-    this.state = {
-      actor: { ...ActorDefault },
-      nameError: false,
-      nameHelperText: '',
-      bodyError: false,
-      bodyHelperText: '',
-    };
+  const [fieldParams, setFieldParams] = useState({
+    name: {
+      error: false,
+      helperText: '',
+    },
+    body: {
+      error: false,
+      helperText: '',
+    },
+  });
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  const [id] = params.id.split('-');
 
-    const {
-      readActor,
-      computedMatch: {
-        params,
-      },
-    } = props;
-
-    const [id] = params.id.split('-');
-
+  useEffect(() => {
     readActor(id);
-  }
+  }, []);
 
-  static getDerivedStateFromProps(nextProps) {
-    const { actors } = nextProps;
-    return {
-      actor: actors.current,
-    };
-  }
-
-  handleFieldChange(event) {
-    const { actor } = this.state;
-    const { name, value } = event.target;
-
-    this.validateField(name, value.trim());
-    actor[name] = value;
-
-    this.setState({ actor });
-  }
-
-  validateField(name, value) {
+  const validateField = (name, value) => {
     const fieldError = {
       error: false,
       helperText: '',
@@ -82,89 +72,85 @@ class ActorsSettingsInfo extends React.Component {
         }
     }
 
-    this.setState({
-      [`${name}Error`]: fieldError.error,
-      [`${name}HelperText`]: fieldError.helperText,
+    setFieldParams({
+      ...fieldParams,
+      [name]: { ...fieldError },
     });
 
     return !fieldError.error;
-  }
+  };
 
-  validate() {
-    const { name, body } = this.state.actor;
-    const nameValidated = this.validateField('name', name);
-    const bodyValidated = this.validateField('body', body);
+  const validate = () => {
+    const { name, body } = actor;
+    const nameValidated = validateField('name', name);
+    const bodyValidated = validateField('body', body);
 
     return nameValidated && bodyValidated;
-  }
+  };
 
-  saveActor() {
-    const { editActor } = this.props;
-    const { actor: { id, name, body } } = this.state;
-    editActor({ id, name, body });
-  }
+  const handleFieldChange = (event) => {
+    const { name, value } = event.target;
 
-  handleFormSubmit(event) {
+    validateField(name, value.trim());
+
+    actor[name] = value;
+  };
+
+  const saveActor = () => {
+    const { name, body } = actor;
+    editActor({ id: actor.id, name, body });
+  };
+
+  const handleFormSubmit = (event) => {
     event.preventDefault();
-    if (this.validate()) {
-      this.saveActor();
+    if (validate()) {
+      saveActor();
     }
-  }
+  };
 
-  render() {
-    const {
-      namespace,
-      isFetching,
-      success,
-      error,
-    } = this.props;
-
-    const {
-      actor,
-      nameError,
-      nameHelperText,
-      bodyError,
-      bodyHelperText,
-    } = this.state;
-
+  if (!actor.id && isFetching) {
     return (
-      <React.Fragment>
-        <ActorSettingCard
-          namespace={namespace}
-          actor={actor}
-        >
-          <ActorInfoForm
-            formTitle={`${singularize(namespace)} Information`}
-            name={actor.name}
-            nameError={nameError}
-            nameHelperText={nameHelperText}
-            body={actor.body}
-            bodyError={bodyError}
-            bodyHelperText={bodyHelperText}
-            handleFieldChange={this.handleFieldChange}
-            handleFormSubmit={this.handleFormSubmit}
-            isFetching={isFetching}
-            dismissPath={`/${namespace}/${actor.id}/settings/`}
-          />
-        </ActorSettingCard>
-        {error &&
-          <SimpleSnackbar
-            isOpen={Boolean(error)}
-            message="Something went wrong!"
-            type="error"
-          />
-        }
-        {success &&
-          <SimpleSnackbar
-            isOpen={Boolean(success)}
-            message="Information Updated!"
-            type="success"
-          />
-        }
-      </React.Fragment>
+      <Progress />
     );
   }
-}
+
+  return (
+    <React.Fragment>
+      <ActorSettingCard
+        namespace={namespace}
+        actor={actor}
+      >
+        <ActorInfoForm
+          formTitle={`${singularize(namespace)} Information`}
+          name={actor.name}
+          nameError={fieldParams.name.error}
+          nameHelperText={fieldParams.name.helperText}
+          body={actor.body}
+          bodyError={fieldParams.body.error}
+          bodyHelperText={fieldParams.body.helperText}
+          handleFieldChange={handleFieldChange}
+          handleFormSubmit={handleFormSubmit}
+          isFetching={isFetching}
+          dismissPath={`/${namespace}/${actor.id}/settings/`}
+        />
+      </ActorSettingCard>
+      {error &&
+        <SimpleSnackbar
+          isOpen={Boolean(error)}
+          message="Something went wrong!"
+          type="error"
+        />
+      }
+      {success &&
+        <SimpleSnackbar
+          isOpen={Boolean(success)}
+          message="Information Updated!"
+          type="success"
+        />
+      }
+    </React.Fragment>
+  );
+};
 
 ActorsSettingsInfo.propTypes = {
   readActor: PropTypes.func.isRequired,
@@ -199,10 +185,10 @@ const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
       readActor: (id) => {
-        dispatch(actions[namespace].read(id));
+        return dispatch(actions[namespace].read(id));
       },
       editActor: (actor) => {
-        dispatch(actions[namespace].edit(actor));
+        return dispatch(actions[namespace].edit(actor));
       },
     };
   };

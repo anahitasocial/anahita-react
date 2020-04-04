@@ -46,7 +46,7 @@ const ActorDeleteForm = (props) => {
           color="primary"
           className={classes.title}
         >
-          {'Delete Forever!'}
+          Delete Forever!
         </Typography>
         {isFetching &&
           <LinearProgress className={classes.progress} />
@@ -77,7 +77,7 @@ const ActorDeleteForm = (props) => {
           className={classes.button}
           to={dismissPath}
         >
-          {'Dismiss'}
+          Dismiss
         </Button>
         }
         <Button
@@ -87,7 +87,7 @@ const ActorDeleteForm = (props) => {
           onClick={handleDelete}
           disabled={isFetching || !canDelete}
         >
-          {'Delete'}
+          Delete
         </Button>
       </Paper>
     </React.Fragment>

@@ -42,6 +42,7 @@ const ActorsRead = (props) => {
     },
     viewer,
     isAuthenticated,
+    isFetching,
     match: {
       params: {
         id,
@@ -64,6 +65,12 @@ const ActorsRead = (props) => {
   const isViewer = actor.id === viewer.id;
   const metaDesc = striptags(actor.body).substr(0, 160);
 
+  if (!actor.id && isFetching) {
+    return (
+      <Progress />
+    );
+  }
+
   return (
     <React.Fragment>
       <Helmet>
@@ -72,107 +79,102 @@ const ActorsRead = (props) => {
         </title>
         <meta name="description" content={metaDesc} />
       </Helmet>
-      {!actor.id && <Progress />}
-      {actor.id &&
-      <React.Fragment>
-        <ActorHeader
-          cover={
-            <Cover
-              node={actor}
-              canEdit={canEdit}
-            />
-          }
-          avatar={
-            <Avatar
-              node={actor}
-              canEdit={canEdit}
-            />
-          }
-          actor={actor}
-          followAction={canFollow && actor.id && <FollowAction actor={actor} />}
-          headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
-        />
-        <ActorBody
-          actor={actor}
-          viewer={viewer}
-          stories={
-            <StoriesBrowse
-              key="com:stories.story"
-              queryFilters={{
-                oid: actor.id,
-              }}
-              {...this.params}
-            />
-          }
-          locations={
-            <LocationsGadget node={actor} />
-          }
-          socialgraph={
-            <SocialgraphTabs
-              followers={
-                <ActorsSocialgraph
-                  actorNode={actor}
-                  filter="followers"
-                />
-              }
-              leaders={isPerson &&
-                <ActorsSocialgraph
-                  actorNode={actor}
-                  filter="leaders"
-                />
-              }
-              blocked={isViewer &&
-                <ActorsSocialgraph
-                  actorNode={actor}
-                  filter="blocked"
-                />
-              }
-              mutuals={!isViewer && isPerson &&
-                <ActorsSocialgraph
-                  actorNode={actor}
-                  filter="mutuals"
-                />
-              }
-            />
-          }
-          notes={
-            <NotesBrowse
-              queryFilters={{
-                oid: actor.id,
-              }}
-            />
-          }
-          photos={
-            <PhotosBrowse
-              queryFilters={{
-                oid: actor.id,
-              }}
-            />
-          }
-          articles={
-            <ArticlesBrowse
-              queryFilters={{
-                oid: actor.id,
-              }}
-            />
-          }
-          topics={
-            <TopicsBrowse
-              queryFilters={{
-                oid: actor.id,
-              }}
-            />
-          }
-          todos={
-            <TodosBrowse
-              queryFilters={{
-                oid: actor.id,
-              }}
-            />
-          }
-        />
-      </React.Fragment>
-      }
+      <ActorHeader
+        cover={
+          <Cover
+            node={actor}
+            canEdit={canEdit}
+          />
+        }
+        avatar={
+          <Avatar
+            node={actor}
+            canEdit={canEdit}
+          />
+        }
+        actor={actor}
+        followAction={canFollow && actor.id && <FollowAction actor={actor} />}
+        headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
+      />
+      <ActorBody
+        actor={actor}
+        viewer={viewer}
+        stories={
+          <StoriesBrowse
+            key="com:stories.story"
+            queryFilters={{
+              oid: actor.id,
+            }}
+            {...this.params}
+          />
+        }
+        locations={
+          <LocationsGadget node={actor} />
+        }
+        socialgraph={
+          <SocialgraphTabs
+            followers={
+              <ActorsSocialgraph
+                actorNode={actor}
+                filter="followers"
+              />
+            }
+            leaders={isPerson &&
+              <ActorsSocialgraph
+                actorNode={actor}
+                filter="leaders"
+              />
+            }
+            blocked={isViewer &&
+              <ActorsSocialgraph
+                actorNode={actor}
+                filter="blocked"
+              />
+            }
+            mutuals={!isViewer && isPerson &&
+              <ActorsSocialgraph
+                actorNode={actor}
+                filter="mutuals"
+              />
+            }
+          />
+        }
+        notes={
+          <NotesBrowse
+            queryFilters={{
+              oid: actor.id,
+            }}
+          />
+        }
+        photos={
+          <PhotosBrowse
+            queryFilters={{
+              oid: actor.id,
+            }}
+          />
+        }
+        articles={
+          <ArticlesBrowse
+            queryFilters={{
+              oid: actor.id,
+            }}
+          />
+        }
+        topics={
+          <TopicsBrowse
+            queryFilters={{
+              oid: actor.id,
+            }}
+          />
+        }
+        todos={
+          <TodosBrowse
+            queryFilters={{
+              oid: actor.id,
+            }}
+          />
+        }
+      />
     </React.Fragment>
   );
 };

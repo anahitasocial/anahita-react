@@ -3,6 +3,8 @@ import {
   number,
   string,
   oneOf,
+  objectOf,
+  any,
 } from 'prop-types';
 
 import PERSON from '../constants/person';
@@ -32,6 +34,7 @@ export default shape({
     GENDER.OTHER,
     '',
   ]),
+  gadgets: objectOf(any),
   imageURL: ImageURL,
   coverURL: ImageURL,
   followerCount: number,

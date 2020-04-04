@@ -1,81 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Person as PERSON } from '../../../constants';
 import ActorDeleteForm from '../../../components/actor/forms/Delete';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
+import Progress from '../../../components/Progress';
 import * as actions from '../../../actions';
 
 import ActorsType from '../../../proptypes/Actors';
 import ActorDefault from '../../../proptypes/ActorDefault';
 import PersonType from '../../../proptypes/Person';
 
-class ActorsSettingsDelete extends React.Component {
-  constructor(props) {
-    super(props);
+const ActorsSettingsDelete = (props) => {
+  const {
+    readActor,
+    resetActors,
+    deleteActor,
+    actors: {
+      current: actor = { ...ActorDefault },
+    },
+    namespace,
+    error,
+    isFetching,
+    success,
+    viewer,
+    computedMatch: {
+      params,
+    },
+  } = props;
 
-    this.state = {
-      actor: { ...ActorDefault },
-      alias: '',
-      aliasError: false,
-      aliasHelperText: '',
-      isFetching: false,
-      success: false,
-      error: '',
-    };
+  const [field, setField] = useState({
+    alias: {
+      value: '',
+      error: false,
+      helperText: '',
+    },
+  });
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+  const [id] = params.id.split('-');
 
-    const {
-      readActor,
-      computedMatch: {
-        params: {
-          id,
-        },
-      },
-    } = props;
-
+  useEffect(() => {
     readActor(id);
-  }
 
-  static getDerivedStateFromProps(nextProps) {
-    const {
-      actors,
-      isFetching,
-      success,
-      error,
-    } = nextProps;
-
-    return {
-      actor: actors.current,
-      isFetching,
-      success,
-      error,
+    return () => {
+      resetActors();
     };
-  }
+  }, []);
 
-  componentWillUnmount() {
-    const { resetActors } = this.props;
-    resetActors();
-  }
-
-  handleFieldChange(event) {
-    const { name, value } = event.target;
-    this.validateField(name, value);
-    this.setState({
-      alias: value,
-    });
-  }
-
-  validateField(name, value) {
+  const validateField = (name, value) => {
     const fieldError = {
       error: false,
       helperText: '',
     };
 
-    const { alias } = this.state.actor;
+    const { alias } = actor;
 
     if (value === '' || value !== alias) {
       fieldError.error = true;
@@ -87,37 +66,38 @@ class ActorsSettingsDelete extends React.Component {
       fieldError.helperText = 'This is the correct alias!';
     }
 
-    this.setState({
-      [`${name}Error`]: fieldError.error,
-      [`${name}HelperText`]: fieldError.helperText,
+    setField({
+      ...field,
+      [name]: { ...fieldError },
     });
 
     return !fieldError.error;
-  }
+  };
 
-  validate() {
-    const { alias } = this.state;
-    const aliasValidated = this.validateField('alias', alias);
-    return aliasValidated;
-  }
+  const validate = () => {
+    const { alias } = field;
+    return validateField('alias', alias.value);
+  };
 
-  deleteActor() {
-    const { actor } = this.state;
-    const { deleteActor } = this.props;
+  const handleFieldChange = (event) => {
+    const { name, value } = event.target;
+    validateField(name, value);
+    setField({
+      ...field,
+      alias: {
+        ...field.alias,
+        value,
+      },
+    });
+  };
 
-    deleteActor(actor);
-  }
-
-  handleDelete() {
-    if (this.validate()) {
-      this.deleteActor();
+  const handleDelete = () => {
+    if (validate()) {
+      deleteActor(actor);
     }
-  }
+  };
 
-  canDelete() {
-    const { viewer } = this.props;
-    const { actor } = this.state;
-
+  const canDelete = () => {
     if (viewer.type !== PERSON.TYPE.SUPER_ADMIN) {
       if (viewer.id === actor.id) {
         return true;
@@ -146,47 +126,40 @@ class ActorsSettingsDelete extends React.Component {
     }
 
     return false;
-  }
+  };
 
-  render() {
-    const { namespace } = this.props;
-    const {
-      actor,
-      alias,
-      aliasError,
-      aliasHelperText,
-      isFetching,
-      success,
-      error,
-    } = this.state;
-
-    if (success) {
-      return (
-        <Redirect to={`/${namespace}/`} />
-      );
-    }
-
+  if (!actor.id && isFetching) {
     return (
-      <ActorSettingCard
-        namespace={namespace}
-        actor={actor}
-      >
-        <ActorDeleteForm
-          referenceAlias={actor.alias}
-          alias={alias}
-          aliasError={aliasError}
-          aliasHelperText={aliasHelperText}
-          canDelete={this.canDelete()}
-          isFetching={isFetching}
-          error={error}
-          handleFieldChange={this.handleFieldChange}
-          handleDelete={this.handleDelete}
-          dismissPath={`/${namespace}/${actor.id}/settings/`}
-        />
-      </ActorSettingCard>
+      <Progress />
     );
   }
-}
+
+  if (success) {
+    return (
+      <Redirect to={`/${namespace}/`} />
+    );
+  }
+
+  return (
+    <ActorSettingCard
+      namespace={namespace}
+      actor={actor}
+    >
+      <ActorDeleteForm
+        referenceAlias={actor.alias}
+        alias={field.alias.value}
+        aliasError={field.alias.error}
+        aliasHelperText={field.alias.helperText}
+        canDelete={canDelete()}
+        isFetching={isFetching}
+        error={error}
+        handleFieldChange={handleFieldChange}
+        handleDelete={handleDelete}
+        dismissPath={`/${namespace}/${actor.id}/settings/`}
+      />
+    </ActorSettingCard>
+  );
+};
 
 ActorsSettingsDelete.propTypes = {
   readActor: PropTypes.func.isRequired,

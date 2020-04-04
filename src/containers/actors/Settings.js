@@ -1,65 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ActorSettingsList from '../../components/lists/ActorSettings';
+import Progress from '../../components/Progress';
 import * as actions from '../../actions';
-
 import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
 
-class ActorSettings extends React.Component {
-  constructor(props) {
-    super(props);
+const ActorSettings = (props) => {
+  const {
+    readActor,
+    actors: {
+      current: actor = { ...ActorDefault },
+    },
+    resetActors,
+    viewer,
+    namespace,
+    computedMatch: {
+      params,
+    },
+    isFetching,
+  } = props;
 
-    this.state = {
-      actor: { ...ActorDefault },
-      isFetching: false,
-    };
+  const [id] = params.id.split('-');
 
-    const {
-      namespace,
-      readActor,
-      computedMatch: {
-        params,
-      },
-    } = props;
-    const [id] = params.id.split('-');
-
+  useEffect(() => {
     readActor(id, namespace);
-  }
 
-  static getDerivedStateFromProps(nextProps) {
-    const { actors, isFetching } = nextProps;
-    return {
-      actor: actors.current,
-      isFetching,
+    return () => {
+      resetActors();
     };
-  }
+  }, []);
 
-  componentWillUnmount() {
-    const { resetActors } = this.props;
-    resetActors();
-  }
-
-  render() {
-    const {
-      viewer,
-      namespace,
-    } = this.props;
-
-    const { actor, isFetching } = this.state;
-
+  if (!actor.id && isFetching) {
     return (
-      <ActorSettingsList
-        actor={actor}
-        viewer={viewer}
-        namespace={namespace}
-        isFetching={isFetching}
-      />
+      <Progress />
     );
   }
-}
+  return (
+    <ActorSettingsList
+      actor={actor}
+      viewer={viewer}
+      namespace={namespace}
+      isFetching={isFetching}
+    />
+  );
+};
 
 ActorSettings.propTypes = {
   readActor: PropTypes.func.isRequired,
@@ -96,10 +83,10 @@ const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
       readActor: (id) => {
-        dispatch(actions[namespace].read(id, namespace));
+        return dispatch(actions[namespace].read(id, namespace));
       },
       resetActors: () => {
-        dispatch(actions[namespace].reset());
+        return dispatch(actions[namespace].reset());
       },
     };
   };

@@ -7,6 +7,7 @@ export default {
   name: '',
   alias: '',
   body: '',
+  gadgets: {},
   commands: [],
   imageURL: ImageURLDefault,
   coverURL: ImageURLDefault,
