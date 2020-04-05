@@ -1,152 +1,89 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/auth/LoginForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
+import formFields from '../../formfields/login';
 
-class LoginPage extends React.Component {
-  constructor(props) {
-    super(props);
+const AuthLogin = (props) => {
+  const {
+    login,
+    reset,
+    isAuthenticated,
+    isFetching,
+    success,
+    error,
+  } = props;
 
-    this.state = {
-      credentials: {
-        username: '',
-        password: '',
+  const [fields, setFields] = useState(formFields);
+
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, []);
+
+  const handleFieldChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+
+    setFields({
+      ...fields,
+      [name]: {
+        value: value.trim(),
+        isValid: target.willValidate && target.checkValidity(),
+        error: target.validationMessage,
       },
-      usernameError: false,
-      usernameHelperText: '',
-      passwordError: false,
-      passwordHelperText: '',
-    };
-
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-  }
-
-  componentWillUnmount() {
-    const { reset } = this.props;
-    reset();
-  }
-
-  handleFieldChange(event) {
-    const { credentials } = this.state;
-    const { name, value } = event.target;
-
-    this.validateField(name, value.trim());
-    credentials[name] = value.trim();
-
-    this.setState({ credentials });
-  }
-
-  validateField(name, value) {
-    const fieldError = {
-      error: false,
-      helperText: '',
-    };
-
-    switch (name) {
-      case 'username':
-        if (value === '') {
-          fieldError.error = true;
-          fieldError.helperText = 'Please enter your email or username.';
-        }
-        break;
-      case 'password':
-        if (value === '') {
-          fieldError.error = true;
-          fieldError.helperText = 'Please enter your password.';
-        }
-        break;
-      default:
-        fieldError.error = false;
-        fieldError.helperText = '';
-    }
-
-    this.setState({
-      [`${name}Error`]: fieldError.error,
-      [`${name}HelperText`]: fieldError.helperText,
     });
+  };
 
-    return !fieldError.error;
-  }
+  const isValid = () => {
+    const keys = Object.keys(fields);
+    return keys.filter((f) => {
+      return f.isValid === false;
+    }).length === 0;
+  };
 
-  validate() {
-    const {
-      username,
-      password,
-    } = this.state.credentials;
-
-    const usernameValidated = this.validateField('username', username);
-    const passwordValidated = this.validateField('password', password);
-
-    return usernameValidated && passwordValidated;
-  }
-
-  handleLogin(event) {
+  const handleLogin = (event) => {
     event.preventDefault();
-    const { credentials } = this.state;
-    if (this.validate()) {
-      const { login } = this.props;
-      login(credentials);
+    const { username, password } = fields;
+    if (isValid) {
+      login({
+        username: username.value,
+        password: password.value,
+      });
     }
-  }
+  };
 
-  render() {
-    const {
-      usernameError,
-      usernameHelperText,
-      passwordError,
-      passwordHelperText,
-      credentials: {
-        username,
-        password,
-      },
-    } = this.state;
-
-    const {
-      isAuthenticated,
-      isFetching,
-      success,
-      error,
-    } = this.props;
-
-    const canSignup = true;
-
-    if (isAuthenticated && success) {
-      return (
-        <Redirect push to="/dashboard/" />
-      );
-    }
-
+  if (isAuthenticated && success) {
     return (
-      <React.Fragment>
-        <LoginForm
-          handleLogin={this.handleLogin}
-          handleFieldChange={this.handleFieldChange}
-          username={username}
-          usernameError={usernameError}
-          usernameHelperText={usernameHelperText}
-          password={password}
-          passwordError={passwordError}
-          passwordHelperText={passwordHelperText}
-          canSignup={canSignup}
-          isFetching={isFetching}
-        />
-        {error &&
-          <SimpleSnackbar
-            isOpen={Boolean(error)}
-            message="Authentication failed! Please check your username and password!"
-            type="error"
-          />
-        }
-      </React.Fragment>
+      <Redirect push to="/dashboard/" />
     );
   }
-}
 
-LoginPage.propTypes = {
+  return (
+    <React.Fragment>
+      <LoginForm
+        handleLogin={handleLogin}
+        handleFieldChange={handleFieldChange}
+        fields={fields}
+        canSignup
+        isFetching={isFetching}
+      />
+      {error &&
+        <SimpleSnackbar
+          isOpen={Boolean(error)}
+          message="Authentication failed! Please check your username and password!"
+          type="error"
+        />
+      }
+    </React.Fragment>
+  );
+};
+
+AuthLogin.propTypes = {
   login: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -185,4 +122,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LoginPage);
+)(AuthLogin);

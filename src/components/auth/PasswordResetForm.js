@@ -12,15 +12,21 @@ import Button from '@material-ui/core/Button';
 
 import HelpIcon from '@material-ui/icons/Help';
 
+import { Password as PASSWORD } from '../../constants';
+
 const PasswordResetForm = (props) => {
   const {
     handleFieldChange,
     handleFormSubmit,
-    email,
-    emailError,
-    emailHelperText,
     isFetching,
+    fields: {
+      email,
+    },
   } = props;
+
+  const { EMAIL } = PASSWORD.FIELDS;
+
+  const enableSubmit = email.isValid;
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -33,21 +39,26 @@ const PasswordResetForm = (props) => {
           }
           title={
             <Typography variant="h6">
-              {'Forgot Password?'}
+              Forgot Password?
             </Typography>
           }
         />
         <CardContent>
           <TextField
             name="email"
-            value={email}
+            value={email.value}
             onChange={handleFieldChange}
             label="What is your email?"
-            error={emailError}
-            helperText={emailHelperText}
+            error={email.error !== ''}
+            helperText={email.error}
             autoFocus
             fullWidth
             margin="normal"
+            inputProps={{
+              maxLength: EMAIL.MAX_LENGTH,
+              minLength: EMAIL.MIN_LENGTH,
+            }}
+            required
           />
         </CardContent>
         <CardActions>
@@ -55,10 +66,10 @@ const PasswordResetForm = (props) => {
             variant="contained"
             type="submit"
             color="primary"
-            disabled={isFetching}
+            disabled={isFetching || !enableSubmit}
             fullWidth
           >
-            {'Reset Password'}
+            Reset Password
           </Button>
         </CardActions>
       </Card>
@@ -69,16 +80,8 @@ const PasswordResetForm = (props) => {
 PasswordResetForm.propTypes = {
   handleFieldChange: PropTypes.func.isRequired,
   handleFormSubmit: PropTypes.func.isRequired,
-  email: PropTypes.string,
-  emailError: PropTypes.bool,
-  emailHelperText: PropTypes.string,
+  fields: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
-};
-
-PasswordResetForm.defaultProps = {
-  email: '',
-  emailError: false,
-  emailHelperText: '',
 };
 
 export default PasswordResetForm;

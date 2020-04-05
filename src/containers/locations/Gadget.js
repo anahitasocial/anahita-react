@@ -49,7 +49,10 @@ const LocationsGadget = (props) => {
   }
 
   return (
-    <Gadget locations={locations} />
+    <Gadget
+      locations={locations}
+      handleDelete={handleDelete}
+    />
   );
 };
 

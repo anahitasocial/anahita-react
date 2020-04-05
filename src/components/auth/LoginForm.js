@@ -12,18 +12,22 @@ import TextField from '@material-ui/core/TextField';
 
 import LoginIcon from '@material-ui/icons/Person';
 
+import { Auth as AUTH } from '../../constants';
+
 const LoginForm = (props) => {
   const {
     handleFieldChange,
     handleLogin,
-    username,
-    usernameError,
-    usernameHelperText,
-    password,
-    passwordError,
-    passwordHelperText,
+    fields: {
+      username,
+      password,
+    },
     isFetching,
   } = props;
+
+  const { IDENTIFIER, PASSWORD } = AUTH.FIELDS;
+
+  const enableSubmit = username.isValid && password.isValid;
 
   return (
     <form onSubmit={handleLogin}>
@@ -36,32 +40,40 @@ const LoginForm = (props) => {
           }
           title={
             <Typography variant="h6">
-              {'Please Log In'}
+              Please Log In
             </Typography>
           }
         />
         <CardContent>
           <TextField
             name="username"
-            value={username}
+            value={username.value}
             onChange={handleFieldChange}
             label="Email or username"
-            error={usernameError}
-            helperText={usernameHelperText}
+            error={username.error !== ''}
+            helperText={username.error}
             autoFocus
             fullWidth
             margin="normal"
+            inputProps={{
+              maxLength: IDENTIFIER.MAX_LENGTH,
+            }}
+            required
           />
           <TextField
             type="password"
             name="password"
-            value={password}
+            value={password.value}
             onChange={handleFieldChange}
             label="Password"
-            error={passwordError}
-            helperText={passwordHelperText}
+            error={password.error !== ''}
+            helperText={password.error}
             fullWidth
             margin="normal"
+            inputProps={{
+              maxLength: PASSWORD.MAX_LENGTH,
+            }}
+            required
           />
         </CardContent>
         <CardActions>
@@ -69,10 +81,10 @@ const LoginForm = (props) => {
             type="submit"
             variant="contained"
             color="primary"
-            disabled={isFetching}
+            disabled={isFetching || !enableSubmit}
             fullWidth
           >
-            {'Login'}
+            Login
           </Button>
         </CardActions>
         <CardActions>
@@ -80,7 +92,7 @@ const LoginForm = (props) => {
             href="/passwordreset/"
             fullWidth
           >
-            {'Forgot password?'}
+            Forgot password?
           </Button>
         </CardActions>
       </Card>
@@ -91,22 +103,8 @@ const LoginForm = (props) => {
 LoginForm.propTypes = {
   handleFieldChange: PropTypes.func.isRequired,
   handleLogin: PropTypes.func.isRequired,
-  username: PropTypes.string,
-  usernameError: PropTypes.bool,
-  usernameHelperText: PropTypes.string,
-  password: PropTypes.string,
-  passwordError: PropTypes.bool,
-  passwordHelperText: PropTypes.string,
+  fields: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
-};
-
-LoginForm.defaultProps = {
-  username: '',
-  usernameError: false,
-  usernameHelperText: '',
-  password: '',
-  passwordError: false,
-  passwordHelperText: '',
 };
 
 export default LoginForm;

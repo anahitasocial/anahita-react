@@ -1,4 +1,5 @@
 import App from './app';
+import Auth from './auth';
 import Avatar from './avatar';
 import Comments from './comments';
 import Cover from './cover';
@@ -16,6 +17,7 @@ import Stories from './stories';
 
 export {
   App,
+  Auth,
   Avatar,
   Comments,
   Cover,
