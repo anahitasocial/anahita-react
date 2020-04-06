@@ -86,7 +86,7 @@ const AuthSignup = (props) => {
       password,
     } = fields;
 
-    if (isValid) {
+    if (isValid()) {
       signup({
         givenName: givenName.value,
         familyName: familyName.value,

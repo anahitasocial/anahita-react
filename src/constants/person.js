@@ -17,4 +17,26 @@ export default {
     NEUTRAL: 'neutral',
     OTHER: 'other',
   },
+  FIELDS: {
+    GIVEN_NAME: {
+      MAX_LENGTH: 30,
+      MIN_LENGTH: 3,
+    },
+    FAMILY_NAME: {
+      MAX_LENGTH: 30,
+      MIN_LENGTH: 3,
+    },
+    USERNAME: {
+      MAX_LENGTH: 30,
+      MIN_LENGTH: 3,
+    },
+    EMAIL: {
+      MAX_LENGTH: 80,
+      MIN_LENGTH: 10,
+    },
+    PASSWORD: {
+      MAX_LENGTH: 80,
+      MIN_LENGTH: 8,
+    },
+  },
 };

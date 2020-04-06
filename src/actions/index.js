@@ -5,7 +5,6 @@ import app from './app';
 import avatar from './avatar';
 import inlineComments from './inline_comments';
 import cover from './cover';
-import is from './is';
 import likes from './likes';
 import notifications from './notifications';
 import password from './password';
@@ -41,7 +40,6 @@ export {
   commentStatus,
   cover,
   inlineComments,
-  is,
   groups,
   hashtags,
   likes,

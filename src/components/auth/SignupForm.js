@@ -111,6 +111,7 @@ const SignupForm = (props) => {
             required
           />
           <TextField
+            type="email"
             name="email"
             value={email.value}
             onChange={handleOnChange}

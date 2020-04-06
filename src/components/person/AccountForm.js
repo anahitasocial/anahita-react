@@ -1,127 +1,119 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
-import TextFieldUsername from '../textfields/Username';
-import TextFieldEmail from '../textfields/Email';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
-const styles = (theme) => {
-  return {
-    formPaper: {
-      padding: theme.spacing(2),
-    },
-    formControl: {
-      marginTop: theme.spacing(3),
-      display: 'block',
-    },
-    button: {
-      marginTop: theme.spacing(3),
-      marginRight: theme.spacing(1),
-    },
-  };
-};
+import { Link } from 'react-router-dom';
+
+import { Person as PERSON } from '../../constants';
 
 const PersonAccountForm = (props) => {
   const {
-    classes,
-    handleFieldChange,
-    handleEdit,
-    username,
-    usernameHelperText,
-    usernameError,
-    email,
-    emailHelperText,
-    emailError,
-    password,
-    passwordError,
-    passwordHelperText,
+    handleOnChange,
+    handleOnBlur,
+    handleOnSubmit,
+    fields: {
+      username,
+      email,
+      password,
+    },
     isFetching,
     dismissPath,
   } = props;
 
+  const { FIELDS } = PERSON;
+  const enableSubmit = username.isValid && email.isValid && password.isValid;
+
   return (
-    <Paper className={classes.formPaper} elevation={0}>
-      <Typography variant="h6" color="primary">
-        {'Account Information'}
-      </Typography>
-      <TextFieldUsername
-        value={username}
-        onChange={handleFieldChange}
-        error={usernameError}
-        helperText={usernameHelperText}
-      />
-      <TextFieldEmail
-        value={email}
-        onChange={handleFieldChange}
-        error={emailError}
-        helperText={emailHelperText}
-      />
-      <TextField
-        type="password"
-        name="password"
-        value={password}
-        onChange={handleFieldChange}
-        label="Password"
-        error={passwordError}
-        helperText={passwordHelperText}
-        fullWidth
-        margin="normal"
-      />
-      {dismissPath &&
-      <Button
-        className={classes.button}
-        component={Link}
-        to={dismissPath}
-      >
-        {'Dismiss'}
-      </Button>
-      }
-      <Button
-        variant="contained"
-        type="submit"
-        color="primary"
-        className={classes.button}
-        disabled={isFetching}
-        onClick={handleEdit}
-      >
-        {'Save'}
-      </Button>
-    </Paper>
+    <form onSubmit={handleOnSubmit} autoComplete="off">
+      <CardContent>
+        <Typography variant="h6" color="primary">
+          Account Information
+        </Typography>
+        <TextField
+          name="username"
+          value={username.value}
+          onChange={handleOnChange}
+          onBlur={handleOnBlur}
+          label="Username"
+          error={username.error !== ''}
+          helperText={username.error}
+          fullWidth
+          margin="normal"
+          inputProps={{
+            maxLength: FIELDS.USERNAME.MAX_LENGTH,
+            minLength: FIELDS.USERNAME.MIN_LENGTH,
+          }}
+          required
+        />
+        <TextField
+          type="email"
+          name="email"
+          value={email.value}
+          onChange={handleOnChange}
+          onBlur={handleOnBlur}
+          label="Email"
+          error={email.error !== ''}
+          helperText={email.error}
+          fullWidth
+          margin="normal"
+          inputProps={{
+            maxLength: FIELDS.EMAIL.MAX_LENGTH,
+            minLength: FIELDS.EMAIL.MIN_LENGTH,
+          }}
+          required
+        />
+        <TextField
+          type="password"
+          name="password"
+          value={password.value}
+          onChange={handleOnChange}
+          label="New Password"
+          error={password.error !== ''}
+          helperText={password.error}
+          fullWidth
+          margin="normal"
+          inputProps={{
+            maxLength: FIELDS.PASSWORD.MAX_LENGTH,
+            minLength: FIELDS.PASSWORD.MIN_LENGTH,
+          }}
+          required
+        />
+      </CardContent>
+      <CardActions>
+        {dismissPath &&
+        <Button
+          component={Link}
+          to={dismissPath}
+          fullWidth
+        >
+          Dismiss
+        </Button>
+        }
+        <Button
+          variant="contained"
+          type="submit"
+          color="primary"
+          disabled={isFetching || !enableSubmit}
+          fullWidth
+        >
+          Save
+        </Button>
+      </CardActions>
+    </form>
   );
 };
 
 PersonAccountForm.propTypes = {
-  classes: PropTypes.object.isRequired,
-  handleFieldChange: PropTypes.func.isRequired,
-  handleEdit: PropTypes.func.isRequired,
-  username: PropTypes.string,
-  usernameHelperText: PropTypes.string,
-  usernameError: PropTypes.bool,
-  email: PropTypes.string,
-  emailHelperText: PropTypes.string,
-  emailError: PropTypes.bool,
-  password: PropTypes.string,
-  passwordHelperText: PropTypes.string,
-  passwordError: PropTypes.bool,
+  handleOnSubmit: PropTypes.func.isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+  handleOnBlur: PropTypes.func.isRequired,
+  fields: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
-  dismissPath: PropTypes.string,
+  dismissPath: PropTypes.string.isRequired,
 };
 
-PersonAccountForm.defaultProps = {
-  username: '',
-  usernameError: false,
-  usernameHelperText: '',
-  email: '',
-  emailError: false,
-  emailHelperText: '',
-  password: '',
-  passwordError: false,
-  passwordHelperText: '',
-  dismissPath: '',
-};
-
-export default withStyles(styles)(PersonAccountForm);
+export default PersonAccountForm;

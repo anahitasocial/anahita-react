@@ -1,217 +1,169 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AccountForm from '../../../components/person/AccountForm';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
+import Progress from '../../../components/Progress';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';
-import * as validate from '../validate';
+import * as api from '../../../api';
 
 import PersonDefault from '../../../proptypes/PersonDefault';
 import PeopleType from '../../../proptypes/People';
 
-class PeopleSettingsAccount extends React.Component {
-  constructor(props) {
-    super(props);
+import formFields from '../../../formfields/person/account';
 
-    this.state = {
-      person: PersonDefault,
-      usernameError: false,
-      usernameHelperText: '',
-      emailError: false,
-      emailHelperText: '',
-      passwordError: false,
-      passwordHelperText: '',
-      isFetching: false,
-      success: false,
-      error: '',
-    };
-
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-
-    const {
-      readPerson,
-      computedMatch: {
-        params: {
-          id,
-        },
-      },
-    } = props;
-
-    readPerson(id);
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const {
-      people,
-      isFetching,
-      success,
-      error,
-    } = nextProps;
-
-    const person = { ...people.current };
-    delete person.password;
-
-    return {
-      person,
-      isFetching,
-      success,
-      error,
-    };
-  }
-
-  handleFieldChange(event) {
-    const { person } = this.state;
-    const { name, value } = event.target;
-
-    if (name === 'username' || name === 'email') {
-      this.validateField(name, value.toLowerCase().trim());
-      person[name] = value.toLowerCase().trim();
-    } else {
-      this.validateField(name, value.trim());
-      person[name] = value.trim();
-    }
-
-    this.setState({ person });
-  }
-
-  validateField(name, value) {
-    const fieldError = {
-      error: false,
-      helperText: '',
-    };
-
-    switch (name) {
-      case 'username':
-        if (!validate.username(value)) {
-          fieldError.error = true;
-          fieldError.helperText = 'A username of at least 6 characters is required!';
-        }
-        break;
-      case 'email':
-        if (!validate.email(value)) {
-          fieldError.error = true;
-          fieldError.helperText = 'A valid email address is required!';
-        }
-        break;
-      case 'password':
-        if (!validate.password(value)) {
-          fieldError.error = true;
-          fieldError.helperText = 'A secure password is reuqired!';
-        }
-        break;
-      default:
-        if (value === '') {
-          fieldError.error = true;
-          fieldError.helperText = 'This field is required!';
-        }
-    }
-
-    this.setState({
-      [`${name}Error`]: fieldError.error,
-      [`${name}HelperText`]: fieldError.helperText,
-    });
-
-    return !fieldError.error;
-  }
-
-  validate() {
-    const {
-      username,
-      email,
-      password,
-    } = this.state.person;
-
-    const usernameValidated = this.validateField('username', username);
-    const emailValidated = this.validateField('email', email);
-    const passwordValidated = this.validateField('password', password);
-
-    return usernameValidated &&
-    emailValidated &&
-    passwordValidated;
-  }
-
-  editPerson() {
-    const {
-      person: {
+const PeopleSettingsAccount = (props) => {
+  const {
+    readPerson,
+    editPerson,
+    people: {
+      current: person = { ...PersonDefault },
+    },
+    success,
+    isFetching,
+    error,
+    computedMatch: {
+      params: {
         id,
+      },
+    },
+  } = props;
+
+  useEffect(() => {
+    readPerson(id);
+  }, []);
+
+  formFields.username.value = person.username;
+  formFields.email.value = person.email;
+
+  const [fields, setFields] = useState(formFields);
+
+  const handleOnChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+
+    setFields({
+      ...fields,
+      [name]: {
+        value: value.trim(),
+        isValid: target.willValidate && target.checkValidity(),
+        error: target.validationMessage,
+      },
+    });
+  };
+
+  const handleOnBlur = (event) => {
+    event.preventDefault();
+
+    const { target } = event;
+    const { name, value } = target;
+    const {
+      email: cEmail,
+      username: cUsername,
+    } = person;
+
+    if (
+      name === 'username' &&
+      fields.username.value !== cUsername &&
+      fields.username.isValid
+    ) {
+      api.is.username(value).catch(() => {
+        setFields({
+          ...fields,
+          username: {
+            ...fields.username,
+            isValid: false,
+            error: 'Username is already taken!',
+          },
+        });
+      });
+    }
+
+    if (
+      name === 'email' &&
+      fields.email.value !== cEmail &&
+      fields.email.isValid
+    ) {
+      api.is.email(value).catch(() => {
+        setFields({
+          ...fields,
+          email: {
+            ...fields.email,
+            isValid: false,
+            error: 'Email is already available in our system!',
+          },
+        });
+      });
+    }
+  };
+
+  const isValid = () => {
+    const keys = Object.keys(fields);
+    return keys.filter((f) => {
+      return f.isValid === false;
+    }).length === 0;
+  };
+
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+
+    if (isValid()) {
+      const {
         email,
         username,
         password,
-      },
-    } = this.state;
+      } = fields;
 
-    this.props.editPerson({
-      id,
-      email,
-      username,
-      password,
-    });
-  }
-
-  handleEdit() {
-    if (this.validate()) {
-      this.editPerson();
+      editPerson({
+        id,
+        email: email.value,
+        username: username.value,
+        password: password.value,
+      });
     }
-  }
+  };
 
-  render() {
-    const {
-      person,
-      usernameHelperText,
-      usernameError,
-      emailHelperText,
-      emailError,
-      passwordError,
-      passwordHelperText,
-      isFetching,
-      success,
-      error,
-    } = this.state;
-
+  if (!person.id && isFetching) {
     return (
-      <React.Fragment>
-        <ActorSettingCard
-          namespace="people"
-          actor={person}
-        >
-          <AccountForm
-            usernameError={usernameError}
-            usernameHelperText={usernameHelperText}
-            emailError={emailError}
-            emailHelperText={emailHelperText}
-            passwordError={passwordError}
-            passwordHelperText={passwordHelperText}
-            username={person.username}
-            email={person.email}
-            password={person.password}
-            handleFieldChange={this.handleFieldChange}
-            handleEdit={this.handleEdit}
-            dismissPath={`/people/${person.id}/settings/`}
-            isFetching={isFetching}
-            success={success}
-            error={error}
-          />
-        </ActorSettingCard>
-        {error &&
-          <SimpleSnackbar
-            isOpen={Boolean(error)}
-            message="Something went wrong!"
-            type="error"
-          />
-        }
-        {success &&
-          <SimpleSnackbar
-            isOpen={Boolean(success)}
-            message="Account Updated!"
-            type="success"
-          />
-        }
-      </React.Fragment>
+      <Progress />
     );
   }
-}
+
+  return (
+    <React.Fragment>
+      <ActorSettingCard
+        namespace="people"
+        actor={person}
+      >
+        <AccountForm
+          fields={fields}
+          handleOnChange={handleOnChange}
+          handleOnBlur={handleOnBlur}
+          handleOnSubmit={handleOnSubmit}
+          dismissPath={`/people/${person.id}/settings/`}
+          isFetching={isFetching}
+          success={success}
+          error={error}
+        />
+      </ActorSettingCard>
+      {error &&
+        <SimpleSnackbar
+          isOpen={Boolean(error)}
+          message="Something went wrong!"
+          type="error"
+        />
+      }
+      {success &&
+        <SimpleSnackbar
+          isOpen={Boolean(success)}
+          message="Account Updated!"
+          type="success"
+        />
+      }
+    </React.Fragment>
+  );
+};
 
 PeopleSettingsAccount.propTypes = {
   readPerson: PropTypes.func.isRequired,
@@ -242,10 +194,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     readPerson: (id) => {
-      dispatch(actions.people.read(id));
+      return dispatch(actions.people.read(id));
     },
     editPerson: (person) => {
-      dispatch(actions.people.edit(person));
+      return dispatch(actions.people.edit(person));
     },
   };
 };

@@ -4,7 +4,6 @@ import app from './app';
 import avatar from './avatar';
 import inlineComments from './inline_comments';
 import cover from './cover';
-import is from './is';
 import likes from './likes';
 import locations from './locations';
 import hashtags from './hashtags';
@@ -43,7 +42,6 @@ export default combineReducers({
   cover,
   groups,
   inlineComments,
-  is,
   likes,
   locations,
   hashtags,
