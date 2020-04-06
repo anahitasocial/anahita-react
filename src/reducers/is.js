@@ -24,7 +24,7 @@ export default (state = { ...initState }, action) => {
     case IS.USERNAME.FAILURE:
       return {
         ...state,
-        isUsername: false,
+        isUsername: true,
         isFetching: false,
         error: action.error,
       };
@@ -43,7 +43,7 @@ export default (state = { ...initState }, action) => {
     case IS.EMAIL.FAILURE:
       return {
         ...state,
-        isEmail: false,
+        isEmail: true,
         isFetching: false,
         error: action.error,
       };

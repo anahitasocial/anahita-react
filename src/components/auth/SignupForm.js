@@ -12,35 +12,40 @@ import TextField from '@material-ui/core/TextField';
 
 import SignUpIcon from '@material-ui/icons/PersonAdd';
 
-import TextFieldUsername from '../textfields/Username';
-import TextFieldEmail from '../textfields/Email';
+import { Signup as SIGNUP } from '../../constants';
 
 const SignupForm = (props) => {
   const {
-    handleFieldChange,
-    handleFormSubmit,
-    givenName,
-    givenNameError,
-    givenNameHelperText,
-    familyName,
-    familyNameError,
-    familyNameHelperText,
-    username,
-    usernameError,
-    usernameHelperText,
-    email,
-    emailError,
-    emailHelperText,
-    password,
-    passwordError,
-    passwordHelperText,
+    handleOnChange,
+    handleOnBlur,
+    handleOnSubmit,
+    fields: {
+      givenName,
+      familyName,
+      username,
+      email,
+      password,
+    },
     isFetching,
     success,
-    canSubmit,
   } = props;
 
+  const {
+    GIVEN_NAME,
+    FAMILY_NAME,
+    USERNAME,
+    EMAIL,
+    PASSWORD,
+  } = SIGNUP.FIELDS;
+
+  const canSubmit = givenName.isValid &&
+  familyName.isValid &&
+  username.isValid &&
+  email.isValid &&
+  password.isValid;
+
   return (
-    <form onSubmit={handleFormSubmit} autoComplete="off">
+    <form onSubmit={handleOnSubmit} autoComplete="off">
       <Card>
         <CardHeader
           avatar={
@@ -50,59 +55,94 @@ const SignupForm = (props) => {
           }
           title={
             <Typography variant="h6">
-              {'Please Sign Up'}
+              Please Sign Up
             </Typography>
           }
         />
         <CardContent>
           <TextField
             name="givenName"
-            value={givenName}
-            onChange={handleFieldChange}
+            value={givenName.value}
+            onChange={handleOnChange}
             label="First Name"
-            error={givenNameError}
-            helperText={givenNameHelperText}
+            error={givenName.error !== ''}
+            helperText={givenName.error}
             autoFocus
             fullWidth
             margin="normal"
             disabled={success}
+            inputProps={{
+              maxLength: GIVEN_NAME.MAX_LENGTH,
+              minLength: GIVEN_NAME.MIN_LENGTH,
+            }}
+            required
           />
           <TextField
             name="familyName"
-            value={familyName}
-            onChange={handleFieldChange}
+            value={familyName.value}
+            onChange={handleOnChange}
             label="Last Name"
-            error={familyNameError}
-            helperText={familyNameHelperText}
+            error={familyName.error !== ''}
+            helperText={familyName.error}
             fullWidth
             margin="normal"
             disabled={success}
+            inputProps={{
+              maxLength: FAMILY_NAME.MAX_LENGTH,
+              minLength: FAMILY_NAME.MIN_LENGTH,
+            }}
+            required
           />
-          <TextFieldUsername
-            value={username}
-            onChange={handleFieldChange}
-            error={usernameError}
-            helperText={usernameHelperText}
+          <TextField
+            name="username"
+            value={username.value}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+            label="Username"
+            error={username.error !== ''}
+            helperText={username.error}
+            fullWidth
+            margin="normal"
             disabled={success}
+            inputProps={{
+              maxLength: USERNAME.MAX_LENGTH,
+              minLength: USERNAME.MIN_LENGTH,
+            }}
+            required
           />
-          <TextFieldEmail
-            value={email}
-            onChange={handleFieldChange}
-            error={emailError}
-            helperText={emailHelperText}
+          <TextField
+            name="email"
+            value={email.value}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+            label="Email"
+            error={email.error !== ''}
+            helperText={email.error}
+            fullWidth
+            margin="normal"
             disabled={success}
+            inputProps={{
+              maxLength: EMAIL.MAX_LENGTH,
+              minLength: EMAIL.MIN_LENGTH,
+            }}
+            required
           />
           <TextField
             type="password"
             name="password"
-            value={password}
-            onChange={handleFieldChange}
+            value={password.value}
+            onChange={handleOnChange}
             label="Password"
-            error={passwordError}
-            helperText={passwordHelperText}
+            error={password.error !== ''}
+            helperText={password.error}
             fullWidth
             margin="normal"
             disabled={success}
+            inputProps={{
+              maxLength: PASSWORD.MAX_LENGTH,
+              minLength: PASSWORD.MIN_LENGTH,
+            }}
+            required
           />
         </CardContent>
         <CardActions>
@@ -113,7 +153,7 @@ const SignupForm = (props) => {
             disabled={success || isFetching || !canSubmit}
             fullWidth
           >
-            {'Signup'}
+            Signup
           </Button>
         </CardActions>
       </Card>
@@ -122,39 +162,12 @@ const SignupForm = (props) => {
 };
 
 SignupForm.propTypes = {
-  handleFieldChange: PropTypes.func.isRequired,
-  handleFormSubmit: PropTypes.func.isRequired,
-  givenName: PropTypes.string,
-  givenNameError: PropTypes.bool.isRequired,
-  givenNameHelperText: PropTypes.string,
-  familyName: PropTypes.string,
-  familyNameError: PropTypes.bool.isRequired,
-  familyNameHelperText: PropTypes.string,
-  username: PropTypes.string,
-  usernameError: PropTypes.bool.isRequired,
-  usernameHelperText: PropTypes.string,
-  email: PropTypes.string,
-  emailError: PropTypes.bool.isRequired,
-  emailHelperText: PropTypes.string,
-  password: PropTypes.string,
-  passwordError: PropTypes.bool.isRequired,
-  passwordHelperText: PropTypes.string,
+  handleOnChange: PropTypes.func.isRequired,
+  handleOnBlur: PropTypes.func.isRequired,
+  handleOnSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
   success: PropTypes.bool.isRequired,
-  canSubmit: PropTypes.bool.isRequired,
-};
-
-SignupForm.defaultProps = {
-  givenName: '',
-  givenNameHelperText: '',
-  familyName: '',
-  familyNameHelperText: '',
-  username: '',
-  usernameHelperText: '',
-  email: '',
-  emailHelperText: '',
-  password: '',
-  passwordHelperText: '',
 };
 
 export default SignupForm;

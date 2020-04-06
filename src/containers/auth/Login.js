@@ -25,7 +25,7 @@ const AuthLogin = (props) => {
     };
   }, []);
 
-  const handleFieldChange = (event) => {
+  const handleOnChange = (event) => {
     const { target } = event;
     const { name, value } = target;
 
@@ -46,7 +46,7 @@ const AuthLogin = (props) => {
     }).length === 0;
   };
 
-  const handleLogin = (event) => {
+  const handleOnSubmit = (event) => {
     event.preventDefault();
     const { username, password } = fields;
     if (isValid) {
@@ -66,8 +66,8 @@ const AuthLogin = (props) => {
   return (
     <React.Fragment>
       <LoginForm
-        handleLogin={handleLogin}
-        handleFieldChange={handleFieldChange}
+        handleOnSubmit={handleOnSubmit}
+        handleOnChange={handleOnChange}
         fields={fields}
         canSignup
         isFetching={isFetching}

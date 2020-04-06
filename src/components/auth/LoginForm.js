@@ -16,8 +16,8 @@ import { Auth as AUTH } from '../../constants';
 
 const LoginForm = (props) => {
   const {
-    handleFieldChange,
-    handleLogin,
+    handleOnChange,
+    handleOnSubmit,
     fields: {
       username,
       password,
@@ -30,7 +30,7 @@ const LoginForm = (props) => {
   const enableSubmit = username.isValid && password.isValid;
 
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleOnSubmit}>
       <Card>
         <CardHeader
           avatar={
@@ -48,7 +48,7 @@ const LoginForm = (props) => {
           <TextField
             name="username"
             value={username.value}
-            onChange={handleFieldChange}
+            onChange={handleOnChange}
             label="Email or username"
             error={username.error !== ''}
             helperText={username.error}
@@ -64,7 +64,7 @@ const LoginForm = (props) => {
             type="password"
             name="password"
             value={password.value}
-            onChange={handleFieldChange}
+            onChange={handleOnChange}
             label="Password"
             error={password.error !== ''}
             helperText={password.error}
@@ -101,8 +101,8 @@ const LoginForm = (props) => {
 };
 
 LoginForm.propTypes = {
-  handleFieldChange: PropTypes.func.isRequired,
-  handleLogin: PropTypes.func.isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+  handleOnSubmit: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
 };

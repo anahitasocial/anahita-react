@@ -16,8 +16,8 @@ import { Password as PASSWORD } from '../../constants';
 
 const PasswordResetForm = (props) => {
   const {
-    handleFieldChange,
-    handleFormSubmit,
+    handleOnChange,
+    handleOnSubmit,
     isFetching,
     fields: {
       email,
@@ -29,7 +29,7 @@ const PasswordResetForm = (props) => {
   const enableSubmit = email.isValid;
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={handleOnSubmit}>
       <Card>
         <CardHeader
           avatar={
@@ -47,7 +47,7 @@ const PasswordResetForm = (props) => {
           <TextField
             name="email"
             value={email.value}
-            onChange={handleFieldChange}
+            onChange={handleOnChange}
             label="What is your email?"
             error={email.error !== ''}
             helperText={email.error}
@@ -78,8 +78,8 @@ const PasswordResetForm = (props) => {
 };
 
 PasswordResetForm.propTypes = {
-  handleFieldChange: PropTypes.func.isRequired,
-  handleFormSubmit: PropTypes.func.isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+  handleOnSubmit: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
 };

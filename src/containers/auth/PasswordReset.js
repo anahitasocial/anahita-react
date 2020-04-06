@@ -5,8 +5,6 @@ import PasswordResetForm from '../../components/auth/PasswordResetForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 
-import PersonDefault from '../../proptypes/PersonDefault';
-
 const AuthPasswordReset = (props) => {
   const {
     reset,
@@ -23,13 +21,7 @@ const AuthPasswordReset = (props) => {
     },
   });
 
-  useEffect(() => {
-    return () => {
-      reset();
-    };
-  }, []);
-
-  const handleFieldChange = (event) => {
+  const handleOnChange = (event) => {
     const { target } = event;
     const { name, value } = target;
 
@@ -50,23 +42,20 @@ const AuthPasswordReset = (props) => {
     }).length === 0;
   };
 
-  const handleSubmit = (event) => {
+  const handleOnSubmit = (event) => {
     event.preventDefault();
 
     if (isValid()) {
       const { email } = fields;
-      reset({
-        ...PersonDefault,
-        email: email.value,
-      });
+      reset(email.value);
     }
   };
 
   return (
     <React.Fragment>
       <PasswordResetForm
-        handleFormSubmit={handleSubmit}
-        handleFieldChange={handleFieldChange}
+        handleOnSubmit={handleOnSubmit}
+        handleOnChange={handleOnChange}
         fields={fields}
         error={error}
         success={success}

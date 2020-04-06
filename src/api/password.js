@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { constructURLSearchParams } from './utils';
 
-function reset(person) {
-  const { email } = person;
+function reset(email) {
   return axios.post('/people/token.json', constructURLSearchParams({
     email,
   }));
