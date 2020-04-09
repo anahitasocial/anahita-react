@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PasswordResetForm from '../../components/auth/PasswordResetForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
+import form from '../../utils/forms';
 
 const AuthPasswordReset = (props) => {
   const {
@@ -23,29 +24,19 @@ const AuthPasswordReset = (props) => {
 
   const handleOnChange = (event) => {
     const { target } = event;
-    const { name, value } = target;
+    const trimmed = ['email'];
+    const newFields = form.validateField(target, fields, trimmed);
 
-    setFields({
-      ...fields,
-      [name]: {
-        value: value.trim(),
-        isValid: target.willValidate && target.checkValidity(),
-        error: target.validationMessage,
-      },
-    });
-  };
-
-  const isValid = () => {
-    const keys = Object.keys(fields);
-    return keys.filter((f) => {
-      return f.isValid === false;
-    }).length === 0;
+    setFields({ ...newFields });
   };
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
 
-    if (isValid()) {
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
+
+    if (form.isValid(newFields)) {
       const { email } = fields;
       reset(email.value);
     }

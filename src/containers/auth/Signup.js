@@ -7,6 +7,7 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import * as api from '../../api';
 import formFields from '../../formfields/signup';
+import form from '../../utils/forms';
 
 const AuthSignup = (props) => {
   const {
@@ -21,18 +22,10 @@ const AuthSignup = (props) => {
 
   const handleOnChange = (event) => {
     const { target } = event;
-    const { name, value } = target;
-
     const trimmed = ['username', 'password', 'email'];
+    const newFields = form.validateField(target, fields, trimmed);
 
-    setFields({
-      ...fields,
-      [name]: {
-        value: trimmed.includes(name) ? value.trim() : value,
-        isValid: target.willValidate && target.checkValidity(),
-        error: target.validationMessage,
-      },
-    });
+    setFields({ ...newFields });
   };
 
   const handleOnBlur = (event) => {
@@ -68,25 +61,21 @@ const AuthSignup = (props) => {
     }
   };
 
-  const isValid = () => {
-    const keys = Object.keys(fields);
-    return keys.filter((f) => {
-      return f.isValid === false;
-    }).length === 0;
-  };
-
   const handleOnSubmit = (event) => {
     event.preventDefault();
 
-    const {
-      givenName,
-      familyName,
-      username,
-      email,
-      password,
-    } = fields;
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
 
-    if (isValid()) {
+    if (form.isValid(newFields)) {
+      const {
+        givenName,
+        familyName,
+        username,
+        email,
+        password,
+      } = fields;
+
       signup({
         givenName: givenName.value,
         familyName: familyName.value,

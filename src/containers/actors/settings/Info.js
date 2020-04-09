@@ -7,11 +7,10 @@ import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';
+import form from '../../../utils/forms';
 
 import ActorsType from '../../../proptypes/Actors';
 import ActorDefault from '../../../proptypes/ActorDefault';
-
-const BODY_CHARACTER_LIMIT = 1000;
 
 const ActorsSettingsInfo = (props) => {
   const {
@@ -29,14 +28,16 @@ const ActorsSettingsInfo = (props) => {
     },
   } = props;
 
-  const [fieldParams, setFieldParams] = useState({
+  const [fields, setFields] = useState({
     name: {
-      error: false,
-      helperText: '',
+      value: '',
+      isValid: false,
+      error: '',
     },
     body: {
-      error: false,
-      helperText: '',
+      value: '',
+      isValid: false,
+      error: '',
     },
   });
 
@@ -46,66 +47,33 @@ const ActorsSettingsInfo = (props) => {
     readActor(id);
   }, []);
 
-  const validateField = (name, value) => {
-    const fieldError = {
-      error: false,
-      helperText: '',
-    };
-
-    switch (name) {
-      case 'name':
-        if (value.length < 6) {
-          fieldError.error = true;
-          fieldError.helperText = 'At least 6 characters are required!';
-        }
-        break;
-      case 'body':
-        if (value.length > BODY_CHARACTER_LIMIT) {
-          fieldError.error = true;
-          fieldError.helperText = `You have exceeded the ${BODY_CHARACTER_LIMIT} character limit!`;
-        }
-        break;
-      default:
-        if (value === '') {
-          fieldError.error = true;
-          fieldError.helperText = 'This field is required!';
-        }
-    }
-
-    setFieldParams({
-      ...fieldParams,
-      [name]: { ...fieldError },
-    });
-
-    return !fieldError.error;
-  };
-
-  const validate = () => {
-    const { name, body } = actor;
-    const nameValidated = validateField('name', name);
-    const bodyValidated = validateField('body', body);
-
-    return nameValidated && bodyValidated;
-  };
-
-  const handleFieldChange = (event) => {
-    const { name, value } = event.target;
-
-    validateField(name, value.trim());
+  const handleOnChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
 
     actor[name] = value;
+
+    const newFields = form.validateField(target, fields);
+
+    setFields({ ...newFields });
   };
 
-  const saveActor = () => {
-    const { name, body } = actor;
-    editActor({ id: actor.id, name, body });
-  };
-
-  const handleFormSubmit = (event) => {
+  const handleOnSubmit = (event) => {
     event.preventDefault();
-    if (validate()) {
-      saveActor();
+
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
+
+    if (form.isValid(newFields)) {
+      const { name, body } = actor;
+      editActor({
+        id,
+        name,
+        body,
+      });
     }
+
+    setFields({ ...newFields });
   };
 
   if (!actor.id && isFetching) {
@@ -121,15 +89,11 @@ const ActorsSettingsInfo = (props) => {
         actor={actor}
       >
         <ActorInfoForm
-          formTitle={`${singularize(namespace)} Information`}
-          name={actor.name}
-          nameError={fieldParams.name.error}
-          nameHelperText={fieldParams.name.helperText}
-          body={actor.body}
-          bodyError={fieldParams.body.error}
-          bodyHelperText={fieldParams.body.helperText}
-          handleFieldChange={handleFieldChange}
-          handleFormSubmit={handleFormSubmit}
+          formTitle={`${singularize(namespace)} information`}
+          actor={actor}
+          fields={fields}
+          handleOnChange={handleOnChange}
+          handleOnSubmit={handleOnSubmit}
           isFetching={isFetching}
           dismissPath={`/${namespace}/${actor.id}/settings/`}
         />

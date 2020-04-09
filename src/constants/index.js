@@ -1,3 +1,4 @@
+import Actor from './actor';
 import App from './app';
 import Auth from './auth';
 import Avatar from './avatar';
@@ -16,6 +17,7 @@ import Storage from './storage';
 import Stories from './stories';
 
 export {
+  Actor,
   App,
   Auth,
   Avatar,

@@ -6,6 +6,7 @@ import LoginForm from '../../components/auth/LoginForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import formFields from '../../formfields/login';
+import form from '../../utils/forms';
 
 const AuthLogin = (props) => {
   const {
@@ -27,29 +28,19 @@ const AuthLogin = (props) => {
 
   const handleOnChange = (event) => {
     const { target } = event;
-    const { name, value } = target;
+    const newFields = form.validateField(target, fields);
 
-    setFields({
-      ...fields,
-      [name]: {
-        value: value.trim(),
-        isValid: target.willValidate && target.checkValidity(),
-        error: target.validationMessage,
-      },
-    });
-  };
-
-  const isValid = () => {
-    const keys = Object.keys(fields);
-    return keys.filter((f) => {
-      return f.isValid === false;
-    }).length === 0;
+    setFields({ ...newFields });
   };
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    const { username, password } = fields;
-    if (isValid) {
+
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
+
+    if (form.isValid(newFields)) {
+      const { username, password } = fields;
       login({
         username: username.value,
         password: password.value,
