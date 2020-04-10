@@ -26,6 +26,8 @@ const ActorInfoForm = (props) => {
     dismissPath,
   } = props;
 
+  const enableSubmit = actor.id > 0 || (name.isValid && body.isValid);
+
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <CardContent>
@@ -85,7 +87,7 @@ const ActorInfoForm = (props) => {
           type="submit"
           variant="contained"
           color="primary"
-          disabled={isFetching}
+          disabled={isFetching || !enableSubmit}
         >
           Save
         </Button>
