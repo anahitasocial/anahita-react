@@ -10,7 +10,7 @@ import {
 import PERSON from '../constants/person';
 import ImageURL from './ImageURL';
 
-const { TYPE, GENDER } = PERSON;
+const { TYPE, GENDER } = PERSON.FIELDS;
 
 export default shape({
   id: number,

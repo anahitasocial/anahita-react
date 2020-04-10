@@ -3,5 +3,4 @@ export default {
   isValid: false,
   error: '',
   helperText: '',
-  required: true,
 };

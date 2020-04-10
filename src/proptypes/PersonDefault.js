@@ -1,7 +1,7 @@
 import PERSON from '../constants/person';
 import ImageURLDefault from './ImageURLDefault';
 
-const { TYPE, GENDER } = PERSON;
+const { TYPE, GENDER } = PERSON.FIELDS;
 
 export default {
   id: null,
@@ -11,7 +11,7 @@ export default {
   username: '',
   email: '',
   password: '',
-  usertype: TYPE.GUEST,
+  usertype: TYPE.REGISTERED,
   givenName: '',
   familyName: '',
   body: '',

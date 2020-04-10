@@ -1,10 +1,9 @@
 import { Person as PERSON } from '../constants';
 
+const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
+
 const canEdit = (viewer, medium) => {
-  if ([
-    PERSON.TYPE.SUPER_ADMIN,
-    PERSON.TYPE.ADMIN,
-  ].includes(viewer.usertype)) {
+  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
     return true;
   }
 
@@ -20,10 +19,7 @@ const canEdit = (viewer, medium) => {
 };
 
 const canAdd = (viewer) => {
-  if ([
-    PERSON.TYPE.SUPER_ADMIN,
-    PERSON.TYPE.ADMIN,
-  ].includes(viewer.usertype)) {
+  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
     return true;
   }
 
@@ -31,10 +27,7 @@ const canAdd = (viewer) => {
 };
 
 const canDelete = (viewer, medium) => {
-  if ([
-    PERSON.TYPE.SUPER_ADMIN,
-    PERSON.TYPE.ADMIN,
-  ].includes(viewer.usertype)) {
+  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
     return true;
   }
 

@@ -11,6 +11,7 @@ import ActorInfoForm from '../../components/actor/forms/Info';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import form from '../../utils/forms';
+import formFields from '../../formfields/actor/info';
 
 import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';
@@ -27,18 +28,7 @@ const ActorsAdd = (props) => {
     error,
   } = props;
 
-  const [fields, setFields] = useState({
-    name: {
-      value: '',
-      isValid: false,
-      error: '',
-    },
-    body: {
-      value: '',
-      isValid: false,
-      error: '',
-    },
-  });
+  const [fields, setFields] = useState(formFields);
 
   const handleOnChange = (event) => {
     const { target } = event;

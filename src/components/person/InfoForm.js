@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Paper from '@material-ui/core/Paper';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -11,190 +11,183 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+
+import PersonType from '../../proptypes/Person';
 import { Person as PERSON } from '../../constants';
 
-const styles = (theme) => {
-  return {
-    formPaper: {
-      padding: theme.spacing(2),
-    },
-    formControl: {
-      marginTop: theme.spacing(3),
-      display: 'block',
-    },
-    group: {},
-    button: {
-      marginTop: theme.spacing(3),
-      marginRight: theme.spacing(1),
-    },
-  };
-};
+const {
+  GIVEN_NAME,
+  FAMILY_NAME,
+  BODY,
+  GENDER,
+  TYPE,
+} = PERSON.FIELDS;
 
 const PersonInfoForm = (props) => {
   const {
-    classes,
-    handleFieldChange,
-    handleEdit,
-    givenName,
-    givenNameError,
-    givenNameHelperText,
-    familyName,
-    familyNameError,
-    familyNameHelperText,
-    body,
-    bodyError,
-    bodyHelperText,
-    gender,
-    usertype,
-    dismissPath,
-    isFetching,
+    handleOnChange,
+    handleOnSubmit,
+    fields: {
+      givenName,
+      familyName,
+      body,
+    },
+    person,
     canChangeUsertype,
     isSuperAdmin,
+    dismissPath,
+    isFetching,
   } = props;
 
+  const isNew = !person.id;
+
+  const enableSubmit = !isNew || (
+    givenName.isValid &&
+    familyName.isValid &&
+    body.isValid
+  );
+
+  const formTitle = isNew ? 'Add a new person' : 'Edit Person';
+
   return (
-    <Paper className={classes.formPaper} elevation={0}>
-      <Typography variant="h6" color="primary">
-          Information
-      </Typography>
-      <TextField
-        name="givenName"
-        value={givenName}
-        onChange={handleFieldChange}
-        label="First Name"
-        error={givenNameError}
-        helperText={givenNameHelperText}
-        autoFocus
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        name="familyName"
-        value={familyName}
-        onChange={handleFieldChange}
-        label="Last Name"
-        error={familyNameError}
-        helperText={familyNameHelperText}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        name="body"
-        value={body || ''}
-        onChange={handleFieldChange}
-        label="Bio"
-        error={bodyError}
-        helperText={bodyHelperText}
-        margin="normal"
-        fullWidth
-        multiline
-      />
-      <FormControl className={classes.formControl}>
-        <FormLabel component="legend">
-          {'What pronoun do you use?'}
-        </FormLabel>
-        <RadioGroup
-          aria-label="gender"
-          name="gender"
-          className={classes.group}
-          value={gender || PERSON.GENDER.NEUTRAL}
-          onChange={handleFieldChange}
+    <form onSubmit={handleOnSubmit} noValidate>
+      <CardContent>
+        <Typography variant="h6" color="primary">
+          {formTitle}
+        </Typography>
+        <TextField
+          name="givenName"
+          value={person.givenName}
+          onChange={handleOnChange}
+          label="First Name"
+          error={givenName.error !== ''}
+          helperText={givenName.error}
+          autoFocus
+          fullWidth
+          margin="normal"
+          inputProps={{
+            maxLength: GIVEN_NAME.MAX_LENGTH,
+            minLength: GIVEN_NAME.MIN_LENGTH,
+          }}
+          required
+        />
+        <TextField
+          name="familyName"
+          value={person.familyName}
+          onChange={handleOnChange}
+          label="Last Name"
+          error={familyName.error !== ''}
+          helperText={familyName.error}
+          fullWidth
+          margin="normal"
+          inputProps={{
+            maxLength: FAMILY_NAME.MAX_LENGTH,
+            minLength: FAMILY_NAME.MIN_LENGTH,
+          }}
+          required
+        />
+        <TextField
+          name="body"
+          value={person.body}
+          onChange={handleOnChange}
+          label="Bio"
+          error={body.error !== ''}
+          helperText={body.error}
+          margin="normal"
+          fullWidth
+          multiline
+          inputProps={{
+            maxLength: BODY.MAX_LENGTH,
+            minLength: BODY.MIN_LENGTH,
+          }}
+          required
+        />
+        <FormControl margin="normal" fullWidth>
+          <FormLabel component="legend">
+            What pronoun do you use?
+          </FormLabel>
+          <RadioGroup
+            aria-label="gender"
+            name="gender"
+            value={person.gender}
+            onChange={handleOnChange}
+          >
+            <FormControlLabel
+              value={GENDER.FEMALE}
+              control={<Radio />}
+              label="Female"
+            />
+            <FormControlLabel
+              value={GENDER.MALE}
+              control={<Radio />}
+              label="Male"
+            />
+            <FormControlLabel
+              value={GENDER.NEUTRAL}
+              control={<Radio />}
+              label="Neutral"
+            />
+          </RadioGroup>
+        </FormControl>
+        {canChangeUsertype &&
+        <FormControl margin="normal" fullWidth>
+          <FormLabel component="legend">
+            User Type
+          </FormLabel>
+          <RadioGroup
+            aria-label="usertype"
+            name="usertype"
+            value={person.usertype}
+            onChange={handleOnChange}
+          >
+            <FormControlLabel
+              value={TYPE.REGISTERED}
+              control={<Radio />}
+              label="Registered"
+            />
+            <FormControlLabel
+              value={TYPE.ADMIN}
+              control={<Radio />}
+              label="Administrator"
+            />
+            {isSuperAdmin &&
+            <FormControlLabel
+              value={TYPE.SUPER_ADMIN}
+              control={<Radio />}
+              label="Super Administrator"
+            />
+            }
+          </RadioGroup>
+        </FormControl>
+        }
+      </CardContent>
+      <CardActions>
+        {dismissPath &&
+        <Button
+          component={Link}
+          to={dismissPath}
         >
-          <FormControlLabel
-            value={PERSON.GENDER.FEMALE}
-            control={<Radio />}
-            label="Female"
-          />
-          <FormControlLabel
-            value={PERSON.GENDER.MALE}
-            control={<Radio />}
-            label="Male"
-          />
-          <FormControlLabel
-            value={PERSON.GENDER.NEUTRAL}
-            control={<Radio />}
-            label="Neutral"
-          />
-        </RadioGroup>
-      </FormControl>
-      {canChangeUsertype &&
-      <FormControl className={classes.formControl}>
-        <FormLabel component="legend">
-          {'User Type'}
-        </FormLabel>
-        <RadioGroup
-          aria-label="usertype"
-          name="usertype"
-          className={classes.group}
-          value={usertype}
-          onChange={handleFieldChange}
+          Dismiss
+        </Button>
+        }
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={isFetching || !enableSubmit}
         >
-          <FormControlLabel
-            value={PERSON.TYPE.REGISTERED}
-            control={<Radio />}
-            label="Registered"
-          />
-          <FormControlLabel
-            value={PERSON.TYPE.ADMIN}
-            control={<Radio />}
-            label="Administrator"
-          />
-          {isSuperAdmin &&
-          <FormControlLabel
-            value={PERSON.TYPE.SUPER_ADMIN}
-            control={<Radio />}
-            label="Super Administrator"
-          />
-          }
-        </RadioGroup>
-      </FormControl>
-      }
-      {dismissPath &&
-      <Button
-        className={classes.button}
-        component={Link}
-        to={dismissPath}
-      >
-        {'Dismiss'}
-      </Button>
-      }
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        className={classes.button}
-        disabled={isFetching}
-        onClick={handleEdit}
-      >
-        {'Save'}
-      </Button>
-    </Paper>
+          Save
+        </Button>
+      </CardActions>
+    </form>
   );
 };
 
 PersonInfoForm.propTypes = {
-  classes: PropTypes.object.isRequired,
-  handleFieldChange: PropTypes.func.isRequired,
-  handleEdit: PropTypes.func.isRequired,
-  givenName: PropTypes.string,
-  givenNameError: PropTypes.bool,
-  givenNameHelperText: PropTypes.string,
-  familyName: PropTypes.string,
-  familyNameError: PropTypes.bool,
-  familyNameHelperText: PropTypes.string,
-  body: PropTypes.string,
-  bodyError: PropTypes.bool,
-  bodyHelperText: PropTypes.string,
-  gender: PropTypes.oneOf([
-    PERSON.GENDER.FEMALE,
-    PERSON.GENDER.MALE,
-    PERSON.GENDER.NEUTRAL,
-  ]),
-  usertype: PropTypes.oneOf([
-    PERSON.TYPE.REGISTERED,
-    PERSON.TYPE.ADMIN,
-    PERSON.TYPE.SUPER_ADMIN,
-  ]).isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+  handleOnSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.objectOf(PropTypes.any).isRequired,
+  person: PersonType.isRequired,
   canChangeUsertype: PropTypes.bool.isRequired,
   isSuperAdmin: PropTypes.bool.isRequired,
   dismissPath: PropTypes.string,
@@ -202,17 +195,7 @@ PersonInfoForm.propTypes = {
 };
 
 PersonInfoForm.defaultProps = {
-  givenName: '',
-  givenNameError: false,
-  givenNameHelperText: '',
-  familyName: '',
-  familyNameError: false,
-  familyNameHelperText: '',
-  body: '',
-  bodyError: false,
-  bodyHelperText: '',
-  gender: PERSON.GENDER.NEUTRAL,
   dismissPath: '',
 };
 
-export default withStyles(styles)(PersonInfoForm);
+export default PersonInfoForm;

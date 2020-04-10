@@ -8,6 +8,7 @@ import Progress from '../../../components/Progress';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';
 import form from '../../../utils/forms';
+import formFields from '../../../formfields/actor/info';
 
 import ActorsType from '../../../proptypes/Actors';
 import ActorDefault from '../../../proptypes/ActorDefault';
@@ -28,18 +29,7 @@ const ActorsSettingsInfo = (props) => {
     },
   } = props;
 
-  const [fields, setFields] = useState({
-    name: {
-      value: '',
-      isValid: false,
-      error: '',
-    },
-    body: {
-      value: '',
-      isValid: false,
-      error: '',
-    },
-  });
+  const [fields, setFields] = useState(formFields);
 
   const [id] = params.id.split('-');
 
@@ -82,6 +72,9 @@ const ActorsSettingsInfo = (props) => {
     );
   }
 
+  const formTitle = `${singularize(namespace)} information`;
+  const dismissPath = `/${namespace}/${actor.id}/settings/`;
+
   return (
     <React.Fragment>
       <ActorSettingCard
@@ -89,13 +82,13 @@ const ActorsSettingsInfo = (props) => {
         actor={actor}
       >
         <ActorInfoForm
-          formTitle={`${singularize(namespace)} information`}
+          formTitle={formTitle}
           actor={actor}
           fields={fields}
           handleOnChange={handleOnChange}
           handleOnSubmit={handleOnSubmit}
           isFetching={isFetching}
-          dismissPath={`/${namespace}/${actor.id}/settings/`}
+          dismissPath={dismissPath}
         />
       </ActorSettingCard>
       {error &&

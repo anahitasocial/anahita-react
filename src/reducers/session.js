@@ -7,12 +7,18 @@ import PersonDefault from '../proptypes/PersonDefault';
 /* global localStorage */
 const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : { ...PersonDefault };
 
+const {
+  REGISTERED,
+  ADMIN,
+  SUPER_ADMIN,
+} = PERSON.FIELDS.TYPE;
+
 const initState = {
   viewer,
   isAuthenticated: (
-    viewer.usertype === PERSON.TYPE.REGISTERED ||
-    viewer.usertype === PERSON.TYPE.ADMIN ||
-    viewer.usertype === PERSON.TYPE.SUPER_ADMIN
+    viewer.usertype === REGISTERED ||
+    viewer.usertype === ADMIN ||
+    viewer.usertype === SUPER_ADMIN
   ),
   isFetching: false,
   success: false,
