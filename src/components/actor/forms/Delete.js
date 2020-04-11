@@ -1,107 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Paper from '@material-ui/core/Paper';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { Link } from 'react-router-dom';
 
-const styles = (theme) => {
-  return {
-    formPaper: {
-      padding: '20px',
-    },
-    button: {
-      marginTop: theme.spacing(1),
-      marginRight: theme.spacing(1),
-    },
-    title: {
-      marginBottom: 10,
-    },
-  };
-};
+import ActorType from '../../../proptypes/Actor';
+import { Actor as ACTOR } from '../../../constants';
+
+const { ALIAS } = ACTOR.FIELDS;
 
 const ActorDeleteForm = (props) => {
   const {
-    classes,
-    handleFieldChange,
-    handleDelete,
-    referenceAlias,
-    alias,
-    aliasError,
-    aliasHelperText,
-    error,
+    handleOnChange,
+    handleOnSubmit,
+    fields: {
+      alias,
+    },
+    actor,
     canDelete,
     isFetching,
     dismissPath,
   } = props;
 
+  const enableDelete = actor.alias === alias.value && canDelete;
+
   return (
-    <React.Fragment>
-      <Paper className={classes.formPaper}>
+    <form onSubmit={handleOnSubmit} noValidate>
+      <CardContent>
         <Typography
           variant="h6"
           color="primary"
-          className={classes.title}
         >
           Delete Forever!
         </Typography>
-        {isFetching &&
-          <LinearProgress className={classes.progress} />
-        }
-        { error &&
-          <Typography
-            variant="h4"
-            color="error"
-            paragraph
-          >
-              {error}
-          </Typography>
-        }
         <TextField
           name="alias"
-          value={alias}
-          onChange={handleFieldChange}
-          label={`Type the exact alias: ${referenceAlias}`}
-          error={aliasError}
-          helperText={aliasHelperText}
+          onChange={handleOnChange}
+          label={`Type the exact alias: "${actor.alias}"`}
+          error={alias.error !== ''}
+          helperText={alias.error}
           margin="normal"
           fullWidth
           disabled={!canDelete}
+          inputProps={{
+            maxLength: ALIAS.MAX_LENGTH,
+            minLength: ALIAS.MIN_LENGTH,
+          }}
+          required
         />
+      </CardContent>
+      <CardActions>
         {dismissPath &&
         <Button
           component={Link}
-          className={classes.button}
           to={dismissPath}
         >
           Dismiss
         </Button>
         }
         <Button
+          type="submit"
           variant="contained"
           color="secondary"
-          className={classes.button}
-          onClick={handleDelete}
-          disabled={isFetching || !canDelete}
+          disabled={isFetching || !enableDelete}
         >
-          Delete
+          {isFetching ? 'Deleting in progress ...' : 'Delete'}
         </Button>
-      </Paper>
-    </React.Fragment>
+      </CardActions>
+    </form>
   );
 };
 
 ActorDeleteForm.propTypes = {
-  classes: PropTypes.object.isRequired,
-  handleFieldChange: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
-  referenceAlias: PropTypes.string.isRequired,
-  alias: PropTypes.string,
-  aliasError: PropTypes.bool,
-  aliasHelperText: PropTypes.string,
+  handleOnChange: PropTypes.func.isRequired,
+  handleOnSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.objectOf(PropTypes.any).isRequired,
+  actor: ActorType.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   canDelete: PropTypes.bool.isRequired,
@@ -109,10 +86,7 @@ ActorDeleteForm.propTypes = {
 };
 
 ActorDeleteForm.defaultProps = {
-  alias: '',
-  aliasError: false,
-  aliasHelperText: '',
   dismissPath: '',
 };
 
-export default withStyles(styles)(ActorDeleteForm);
+export default ActorDeleteForm;

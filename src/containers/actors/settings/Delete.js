@@ -7,10 +7,13 @@ import ActorDeleteForm from '../../../components/actor/forms/Delete';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
 import * as actions from '../../../actions';
+import form from '../../../utils/forms';
 
 import ActorsType from '../../../proptypes/Actors';
 import ActorDefault from '../../../proptypes/ActorDefault';
 import PersonType from '../../../proptypes/Person';
+
+const { TYPE } = PERSON.FIELDS;
 
 const ActorsSettingsDelete = (props) => {
   const {
@@ -30,10 +33,11 @@ const ActorsSettingsDelete = (props) => {
     },
   } = props;
 
-  const [field, setField] = useState({
+  const [fields, setFields] = useState({
     alias: {
       value: '',
-      error: false,
+      isValid: false,
+      error: '',
       helperText: '',
     },
   });
@@ -48,74 +52,42 @@ const ActorsSettingsDelete = (props) => {
     };
   }, []);
 
-  const validateField = (name, value) => {
-    const fieldError = {
-      error: false,
-      helperText: '',
-    };
+  const handleOnChange = (event) => {
+    const { target } = event;
+    const newFields = form.validateField(target, fields);
 
-    const { alias } = actor;
-
-    if (value === '' || value !== alias) {
-      fieldError.error = true;
-      fieldError.helperText = 'You must type the exact alias to delete this profile!';
-    }
-
-    if (value === alias) {
-      fieldError.error = false;
-      fieldError.helperText = 'This is the correct alias!';
-    }
-
-    setField({
-      ...field,
-      [name]: { ...fieldError },
-    });
-
-    return !fieldError.error;
+    setFields({ ...newFields });
   };
 
-  const validate = () => {
-    const { alias } = field;
-    return validateField('alias', alias.value);
-  };
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
 
-  const handleFieldChange = (event) => {
-    const { name, value } = event.target;
-    validateField(name, value);
-    setField({
-      ...field,
-      alias: {
-        ...field.alias,
-        value,
-      },
-    });
-  };
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
 
-  const handleDelete = () => {
-    if (validate()) {
+    if (form.isValid(newFields)) {
       deleteActor(actor);
     }
+
+    setFields({ ...newFields });
   };
 
   const canDelete = () => {
-    if (viewer.type !== PERSON.TYPE.SUPER_ADMIN) {
+    if (viewer.type !== TYPE.SUPER_ADMIN) {
       if (viewer.id === actor.id) {
         return true;
       }
     }
 
-    if (viewer.usertype === PERSON.TYPE.ADMIN) {
+    if (viewer.usertype === TYPE.ADMIN) {
       if (actor.objecttype === 'com:people:person') {
-        if (actor.usertype !== PERSON.TYPE.SUPER_ADMIN) {
+        if (actor.usertype !== TYPE.SUPER_ADMIN) {
           return true;
         }
       }
     }
 
-    if ([
-      PERSON.TYPE.ADMIN,
-      PERSON.TYPE.SUPER_ADMIN,
-    ].includes(viewer.usertype)) {
+    if ([TYPE.ADMIN, TYPE.SUPER_ADMIN].includes(viewer.usertype)) {
       return true;
     }
 
@@ -147,14 +119,13 @@ const ActorsSettingsDelete = (props) => {
     >
       <ActorDeleteForm
         referenceAlias={actor.alias}
-        alias={field.alias.value}
-        aliasError={field.alias.error}
-        aliasHelperText={field.alias.helperText}
+        fields={fields}
+        actor={actor}
         canDelete={canDelete()}
         isFetching={isFetching}
         error={error}
-        handleFieldChange={handleFieldChange}
-        handleDelete={handleDelete}
+        handleOnChange={handleOnChange}
+        handleOnSubmit={handleOnSubmit}
         dismissPath={`/${namespace}/${actor.id}/settings/`}
       />
     </ActorSettingCard>
