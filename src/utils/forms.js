@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import defaultField from '../formfields/field';
 
 const validateField = (field, fields, trimmed = []) => {
   const { name, value } = field;
@@ -18,7 +19,7 @@ const validateForm = (form, fields) => {
   const newFields = { ...fields };
 
   keys.forEach((key) => {
-    const field = form[key];
+    const field = form[key] || defaultField;
 
     newFields[key].value = field.value;
     newFields[key].isValid = field.willValidate && field.checkValidity();

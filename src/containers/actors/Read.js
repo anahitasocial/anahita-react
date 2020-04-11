@@ -13,7 +13,6 @@ import Avatar from './read/Avatar';
 import Cover from './read/Cover';
 import Commands from './read/Commands';
 import FollowAction from '../actions/Follow';
-import appActions from '../../actions/app';
 import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
@@ -224,7 +223,7 @@ const mapDispatchToProps = (namespace) => {
         return dispatch(actions[namespace].reset());
       },
       setAppTitle: (title) => {
-        return dispatch(appActions.setAppTitle(title));
+        return dispatch(actions.app.setAppTitle(title));
       },
     };
   };
