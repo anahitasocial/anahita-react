@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -11,10 +11,6 @@ import WarningIcon from '@material-ui/icons/Warning';
 
 const styles = (theme) => {
   return {
-    close: {
-      width: theme.spacing(4),
-      height: theme.spacing(4),
-    },
     message: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
@@ -25,23 +21,22 @@ const styles = (theme) => {
   };
 };
 
-class SimpleSnackbar extends React.Component {
-  constructor(props) {
-    super(props);
+const SimpleSnackbar = (props) => {
+  const {
+    classes,
+    message,
+    isOpen,
+    type,
+    autoHideDuration,
+  } = props;
 
-    this.state = {
-      open: props.isOpen,
-    };
+  const [open, setOpen] = useState(isOpen);
 
-    this.handleClose = this.handleClose.bind(this);
-  }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  handleClose() {
-    this.setState({ open: false });
-  }
-
-  renderMessage() {
-    const { type, message, classes } = this.props;
+  const renderMessage = () => {
     return (
       <React.Fragment>
         {type === 'warning' &&
@@ -61,41 +56,37 @@ class SimpleSnackbar extends React.Component {
         </span>
       </React.Fragment>
     );
-  }
+  };
 
-  render() {
-    const { classes, autoHideDuration } = this.props;
-    return (
-      <div>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          direction="up"
-          open={this.state.open}
-          autoHideDuration={autoHideDuration}
-          onClose={this.handleClose}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={this.renderMessage()}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              className={classes.close}
-              onClick={this.handleClose}
-            >
-              <CloseIcon />
-            </IconButton>,
-          ]}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        direction="up"
+        open={open}
+        autoHideDuration={autoHideDuration}
+        onClose={handleClose}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={renderMessage()}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      />
+    </div>
+  );
+};
 
 SimpleSnackbar.propTypes = {
   classes: PropTypes.object.isRequired,

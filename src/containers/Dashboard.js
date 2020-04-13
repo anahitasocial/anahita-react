@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
@@ -7,37 +7,36 @@ import StoriesBrowse from './stories/Browse';
 import appActions from '../actions/app';
 import i18n from '../languages';
 
-class DashboardPage extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+const DashboardPage = (props) => {
+  const {
+    setAppTitle,
+  } = props;
 
-    const { setAppTitle } = props;
+  useEffect(() => {
     setAppTitle(i18n.t('dashboard:cTitle'));
-  }
+  }, []);
 
-  render() {
-    const filters = {
-      filter: 'leaders',
-    };
+  const filters = {
+    filter: 'leaders',
+  };
 
-    return (
-      <React.Fragment>
-        <Helmet>
-          <title>{i18n.t('dashboard:cTitle')}</title>
-        </Helmet>
-        <Grid container justify="center">
-          <Grid item lg={6} md={12}>
-            <StoriesBrowse
-              key="com:stories.story"
-              queryFilters={filters}
-              {...this.params}
-            />
-          </Grid>
+  return (
+    <React.Fragment>
+      <Helmet>
+        <title>{i18n.t('dashboard:cTitle')}</title>
+      </Helmet>
+      <Grid container justify="center">
+        <Grid item lg={6} md={12}>
+          <StoriesBrowse
+            key="com:stories.story"
+            queryFilters={filters}
+            {...this.params}
+          />
         </Grid>
-      </React.Fragment>
-    );
-  }
-}
+      </Grid>
+    </React.Fragment>
+  );
+};
 
 DashboardPage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,

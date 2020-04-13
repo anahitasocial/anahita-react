@@ -4,14 +4,15 @@ import {
 } from '../constants';
 import PersonDefault from '../proptypes/PersonDefault';
 
-/* global localStorage */
-const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : { ...PersonDefault };
-
 const {
+  GUEST,
   REGISTERED,
   ADMIN,
   SUPER_ADMIN,
 } = PERSON.FIELDS.TYPE;
+
+/* global localStorage */
+const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : { ...PersonDefault, usertype: GUEST };
 
 const initState = {
   viewer,
