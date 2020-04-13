@@ -14,6 +14,9 @@ import LikeAction from '../actions/Like';
 import CommentMenu from './Menu';
 import CommentDefault from '../../proptypes/CommentDefault';
 
+import field from '../../formfields/field';
+import form from '../../utils/forms';
+
 const CommentsRead = (props) => {
   const {
     editCommentInline,
@@ -23,10 +26,14 @@ const CommentsRead = (props) => {
     isAuthenticated,
     viewer,
     inline,
+    isFetching,
   } = props;
 
   const [isEditing, setIsEditing] = useState(false);
   const [currComment, setCurrComment] = useState(comment);
+  const [fields, setFields] = useState({
+    body: { ...field },
+  });
   let oldComment = { ...CommentDefault };
 
   const handleCancel = () => {
@@ -39,16 +46,24 @@ const CommentsRead = (props) => {
     setIsEditing(true);
   };
 
-  const validate = (form) => {
-    const { body } = form;
-    return body.checkValidity();
+  const handleOnChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+
+    comment[name] = value;
+
+    const newFields = form.validateField(target, fields);
+
+    setFields({ ...newFields });
   };
 
-  const handleSave = (event) => {
+  const handleOnSubmit = (event) => {
     event.preventDefault();
-    const { target } = event;
 
-    if (validate(target)) {
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
+
+    if (form.isValid(newFields)) {
       const { objectType } = parent;
       const namespace = objectType.split('.')[1];
       const editMethod = inline ? editCommentInline : editComment;
@@ -57,11 +72,8 @@ const CommentsRead = (props) => {
         setIsEditing(false);
       });
     }
-  };
 
-  const handleFieldChange = (event) => {
-    const { name, value } = event.target;
-    setCurrComment({ ...currComment, [name]: value });
+    setFields({ ...newFields });
   };
 
   return (
@@ -87,10 +99,12 @@ const CommentsRead = (props) => {
       ]}
       commentForm={
         <CommentForm
-          comment={currComment}
-          handleFieldChange={handleFieldChange}
+          fields={fields}
+          comment={comment}
+          handleOnChange={handleOnChange}
+          handleOnSubmit={handleOnSubmit}
           handleCancel={handleCancel}
-          onSubmit={handleSave}
+          isFetching={isFetching}
         />
       }
       isEditing={isEditing}
@@ -104,9 +118,13 @@ const mapStateToProps = (state) => {
     isAuthenticated,
   } = state.session;
 
+  const { comments, inlineComments } = state;
+  const isFetching = comments.isFetching || inlineComments.isFetching;
+
   return {
     viewer,
     isAuthenticated,
+    isFetching,
   };
 };
 
@@ -129,6 +147,7 @@ CommentsRead.propTypes = {
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   inline: PropTypes.bool,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 CommentsRead.defaultProps = {

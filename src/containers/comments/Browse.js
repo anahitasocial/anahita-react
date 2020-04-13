@@ -13,6 +13,8 @@ import CommentsType from '../../proptypes/Comments';
 import CommentDefault from '../../proptypes/CommentDefault';
 import PersonType from '../../proptypes/Person';
 import { App as APP } from '../../constants';
+import field from '../../formfields/field';
+import form from '../../utils/forms';
 
 const { LIMIT } = APP.BROWSE;
 
@@ -26,9 +28,14 @@ const CommentsBrowse = (props) => {
     canAdd,
     parent,
     viewer,
+    isFetching,
   } = props;
 
   const namespace = parent.objectType.split('.')[1];
+
+  const [fields, setFields] = useState({
+    body: { ...field },
+  });
 
   const [comment, setComment] = useState({
     ...CommentDefault,
@@ -53,28 +60,35 @@ const CommentsBrowse = (props) => {
     }, namespace);
   };
 
-  const handleFieldChange = (event) => {
-    const { name, value } = event.target;
-    setComment({ ...comment, [name]: value });
-  };
-
-  const validate = (form) => {
-    const { body } = form;
-    return body.checkValidity();
-  };
-
-  const handleAdd = (event) => {
-    event.preventDefault();
+  const handleOnChange = (event) => {
     const { target } = event;
+    const { name, value } = target;
 
-    if (validate(target)) {
+    comment[name] = value;
+
+    const newFields = form.validateField(target, fields);
+
+    setFields({ ...newFields });
+    setComment({ ...comment });
+  };
+
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
+
+    if (form.isValid(newFields)) {
       addComment(comment, namespace).then(() => {
         setComment({
           ...CommentDefault,
           author: viewer,
+          parentId: parent.id,
         });
       });
     }
+
+    setFields({ ...newFields });
   };
 
   const hasComments = parent.numOfComments > 0;
@@ -102,9 +116,11 @@ const CommentsBrowse = (props) => {
       </InfiniteScroll>
       {canAdd &&
         <CommentForm
+          fields={fields}
           comment={comment}
-          handleFieldChange={handleFieldChange}
-          onSubmit={handleAdd}
+          handleOnChange={handleOnChange}
+          handleOnSubmit={handleOnSubmit}
+          isFetching={isFetching}
         />
       }
     </React.Fragment>
@@ -118,6 +134,7 @@ const mapStateToProps = (state) => {
     comments,
     error,
     hasMore,
+    isFetching,
   } = state.comments;
 
   return {
@@ -125,6 +142,7 @@ const mapStateToProps = (state) => {
     comments,
     error,
     hasMore,
+    isFetching,
   };
 };
 
@@ -151,6 +169,7 @@ CommentsBrowse.propTypes = {
   resetComments: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 CommentsBrowse.defaultProps = {

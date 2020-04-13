@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -9,48 +9,27 @@ import TextField from '@material-ui/core/TextField';
 import ActorAvatar from '../actor/Avatar';
 import CommentType from '../../proptypes/Comment';
 import i18n from '../../languages';
+import { Comments as COMMENT } from '../../constants';
+
+const { BODY } = COMMENT.FIELDS;
 
 const CommentForm = (props) => {
   const {
-    disabled,
-    handleFieldChange,
-    onSubmit,
+    handleOnChange,
+    handleOnSubmit,
     handleCancel,
     comment,
+    fields: {
+      body,
+    },
+    isFetching,
   } = props;
 
-  const { author, body } = comment;
-
-  const [enable, setEnable] = useState(false);
-  const [errors, setErrors] = useState({
-    body: '',
-  });
-
-  const validateField = (field) => {
-    const errs = {
-      ...errors,
-      [field.name]: field.validationMessage,
-    };
-
-    setErrors(errs);
-
-    const isValid = Boolean(field.value && errs[field.name] === '');
-
-    setEnable(isValid);
-  };
-
-  const onChange = (event) => {
-    const { target } = event;
-
-    setTimeout(() => {
-      return validateField(target);
-    }, 500);
-
-    handleFieldChange(event);
-  };
+  const { author } = comment;
+  const enableSubmit = comment.id > 0 || body.isValid;
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleOnSubmit}>
       <Card>
         <CardHeader
           avatar={
@@ -66,15 +45,19 @@ const CommentForm = (props) => {
               margin="normal"
               variant="outlined"
               placeholder={i18n.t('comments:comment.placeholder')}
-              onChange={onChange}
+              onChange={handleOnChange}
               name="body"
-              value={body}
-              disabled={disabled}
+              value={comment.body}
+              error={body.error !== ''}
+              helperText={body.error}
+              inputProps={{
+                maxLength: BODY.MAX_LENGTH,
+              }}
+              disabled={isFetching}
               fullWidth
               autoFocus
-              error={errors.body !== ''}
-              helperText={errors.body}
               multiline
+              required
             />
           }
         />
@@ -82,7 +65,6 @@ const CommentForm = (props) => {
           {comment.id > 0 &&
             <Button
               onClick={handleCancel}
-              disabled={disabled}
               size="small"
               fullWidth
             >
@@ -92,7 +74,7 @@ const CommentForm = (props) => {
           <Button
             type="submit"
             color="primary"
-            disabled={disabled || !enable}
+            disabled={isFetching || !enableSubmit}
             variant="contained"
             size="small"
             fullWidth
@@ -106,16 +88,16 @@ const CommentForm = (props) => {
 };
 
 CommentForm.propTypes = {
-  handleFieldChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+  handleOnSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func,
-  disabled: PropTypes.bool,
   comment: CommentType.isRequired,
+  fields: PropTypes.objectOf(PropTypes.any).isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 CommentForm.defaultProps = {
   handleCancel: null,
-  disabled: false,
 };
 
 export default CommentForm;
