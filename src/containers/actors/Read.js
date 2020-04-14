@@ -8,7 +8,7 @@ import Progress from '../../components/Progress';
 import ActorHeader from '../../components/actor/Header';
 import ActorBody from '../../components/actor/Body';
 import StoriesBrowse from '../stories/Browse';
-import Media from '../media';
+import Media from '../media/Browse';
 import Avatar from './read/Avatar';
 import Cover from './read/Cover';
 import Commands from './read/Commands';

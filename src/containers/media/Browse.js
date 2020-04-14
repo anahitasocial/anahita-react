@@ -7,7 +7,6 @@ import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import * as actions from '../../actions';
-import i18n from '../../languages';
 
 import MediumCard from './Card';
 import PersonType from '../../proptypes/Person';
@@ -21,7 +20,6 @@ const { LIMIT } = APP.BROWSE;
 
 const MediaBrowse = (props) => {
   const {
-    setAppTitle,
     browseMedia,
     resetMedia,
     media,
@@ -42,8 +40,6 @@ const MediaBrowse = (props) => {
   };
 
   useEffect(() => {
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
-
     return () => {
       resetMedia();
     };
@@ -89,7 +85,6 @@ MediaBrowse.propTypes = {
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
-  setAppTitle: PropTypes.func.isRequired,
   media: MediaType.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
@@ -128,9 +123,6 @@ const mapDispatchToProps = (namespace) => {
       },
       resetMedia: () => {
         return dispatch(actions[namespace].reset(namespace));
-      },
-      setAppTitle: (title) => {
-        return dispatch(actions.app.setAppTitle(title));
       },
     };
   };
