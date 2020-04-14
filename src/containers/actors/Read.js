@@ -8,7 +8,7 @@ import Progress from '../../components/Progress';
 import ActorHeader from '../../components/actor/Header';
 import ActorBody from '../../components/actor/Body';
 import StoriesBrowse from '../stories/Browse';
-import MediaBrowse from '../media/Browse';
+import Media from '../media';
 import Avatar from './read/Avatar';
 import Cover from './read/Cover';
 import Commands from './read/Commands';
@@ -24,11 +24,11 @@ import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
 import ActorsSocialgraph from './Socialgraph';
 import LocationsGadget from '../locations/Gadget';
 
-const NotesBrowse = MediaBrowse('notes');
-const PhotosBrowse = MediaBrowse('photos');
-const ArticlesBrowse = MediaBrowse('articles');
-const TopicsBrowse = MediaBrowse('topics');
-const TodosBrowse = MediaBrowse('todos');
+const Notes = Media('notes');
+const Photos = Media('photos');
+const Articles = Media('articles');
+const Topics = Media('topics');
+const Todos = Media('todos');
 
 const ActorsRead = (props) => {
   const {
@@ -139,35 +139,35 @@ const ActorsRead = (props) => {
           />
         }
         notes={
-          <NotesBrowse
+          <Notes
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
         photos={
-          <PhotosBrowse
+          <Photos
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
         articles={
-          <ArticlesBrowse
+          <Articles
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
         topics={
-          <TopicsBrowse
+          <Topics
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
         todos={
-          <TodosBrowse
+          <Todos
             queryFilters={{
               oid: actor.id,
             }}

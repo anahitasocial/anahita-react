@@ -97,6 +97,7 @@ MediaBrowse.propTypes = {
 MediaBrowse.defaultProps = {
   queryFilters: {
     q: '',
+    oid: 0,
   },
 };
 

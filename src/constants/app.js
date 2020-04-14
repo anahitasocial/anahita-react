@@ -8,6 +8,7 @@ export default {
       TRENDING: 'trending',
       TOP: 'top',
       RECENT: 'recent',
+      UPDATED: 'updated',
     },
   },
 };

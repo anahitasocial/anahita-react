@@ -24,7 +24,7 @@ import PeopleAdd from '../containers/people/Add';
 import PersonSettingsInfo from '../containers/people/settings/Info';
 import PersonSettingsAccount from '../containers/people/settings/Account';
 
-import MediaBrowse from '../containers/media/Browse';
+import Media from '../containers/media';
 import MediaRead from '../containers/media/Read';
 
 import Hashtags from '../containers/hashtags';
@@ -48,19 +48,19 @@ const PeopleRead = ActorsRead('people');
 const PeopleDelete = ActorsDelete('people');
 const PeopleSettings = ActorsSettings('people');
 
-const ArticlesBrowse = MediaBrowse('articles');
+const Articles = Media('articles');
 const ArticlesRead = MediaRead('articles');
 
-const NotesBrowse = MediaBrowse('notes');
+const Notes = Media('notes');
 const NotesRead = MediaRead('notes');
 
-const PhotosBrowse = MediaBrowse('photos');
+const Photos = Media('photos');
 const PhotosRead = MediaRead('photos');
 
-const TopicsBrowse = MediaBrowse('topics');
+const Topics = Media('topics');
 const TopicsRead = MediaRead('topics');
 
-const TodosBrowse = MediaBrowse('todos');
+const Todos = Media('todos');
 const TodosRead = MediaRead('todos');
 
 const scrollUp = () => {
@@ -194,7 +194,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/notes/"
-        component={NotesBrowse}
+        component={Notes}
       />
       <Route
         exact
@@ -206,7 +206,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/photos/"
-        component={PhotosBrowse}
+        component={Photos}
       />
       <Route
         exact
@@ -218,7 +218,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/todos/"
-        component={TodosBrowse}
+        component={Todos}
       />
       <Route
         exact
@@ -230,7 +230,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/topics/"
-        component={TopicsBrowse}
+        component={Topics}
       />
       <Route
         exact
@@ -242,7 +242,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/articles/"
-        component={ArticlesBrowse}
+        component={Articles}
       />
       <Route
         exact
