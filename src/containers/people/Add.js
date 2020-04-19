@@ -6,18 +6,27 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import PersonInfoForm from '../../components/person/InfoForm';
+import PersonAddForm from '../../components/person/Add';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
+import * as api from '../../api';
 import { Person as PERSON } from '../../constants';
 import form from '../../utils/forms';
-import formFields from '../../formfields/person/info';
 
 import PersonType from '../../proptypes/Person';
 import PersonDefault from '../../proptypes/PersonDefault';
 import PeopleType from '../../proptypes/People';
 
 const { TYPE } = PERSON.FIELDS;
+const formFields = form.createFormFields([
+  'givenName',
+  'familyName',
+  'body',
+  'username',
+  'email',
+  'gender',
+  'usertype',
+]);
 
 const PeopleAdd = (props) => {
   const {
@@ -54,6 +63,39 @@ const PeopleAdd = (props) => {
     setFields({ ...newFields });
   };
 
+  const handleOnBlur = (event) => {
+    event.preventDefault();
+
+    const { target } = event;
+    const { name, value } = target;
+
+    if (name === 'username' && fields.username.isValid) {
+      api.is.username(value).catch(() => {
+        setFields({
+          ...fields,
+          username: {
+            ...fields.username,
+            isValid: false,
+            error: 'Username is already taken!',
+          },
+        });
+      });
+    }
+
+    if (name === 'email' && fields.email.isValid) {
+      api.is.email(value).catch(() => {
+        setFields({
+          ...fields,
+          email: {
+            ...fields.email,
+            isValid: false,
+            error: 'Email is already available in our system!',
+          },
+        });
+      });
+    }
+  };
+
   const handleOnSubmit = (event) => {
     event.preventDefault();
 
@@ -61,21 +103,8 @@ const PeopleAdd = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      const {
-        givenName,
-        familyName,
-        body,
-        gender,
-        usertype,
-      } = person;
-
-      addPerson({
-        givenName,
-        familyName,
-        body,
-        gender,
-        usertype,
-      });
+      const formData = form.fieldsToData(newFields);
+      addPerson(formData);
     }
 
     setFields({ ...newFields });
@@ -104,14 +133,14 @@ const PeopleAdd = (props) => {
             </Avatar>
           }
         />
-        <PersonInfoForm
+        <PersonAddForm
           isSuperAdmin={isSuperAdmin}
           fields={fields}
           person={person}
           handleOnChange={handleOnChange}
+          handleOnBlur={handleOnBlur}
           handleOnSubmit={handleOnSubmit}
           isFetching={isFetching}
-          canChangeUsertype
           dismissPath="/people/"
         />
       </Card>

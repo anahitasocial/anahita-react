@@ -6,6 +6,8 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import form from '../../utils/forms';
 
+const formFields = form.createFormFields(['email']);
+
 const AuthPasswordReset = (props) => {
   const {
     reset,
@@ -14,13 +16,7 @@ const AuthPasswordReset = (props) => {
     error,
   } = props;
 
-  const [fields, setFields] = useState({
-    email: {
-      value: '',
-      isValid: false,
-      error: '',
-    },
-  });
+  const [fields, setFields] = useState(formFields);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -37,8 +33,8 @@ const AuthPasswordReset = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      const { email } = fields;
-      reset(email.value);
+      const formData = form.fieldsToData(newFields);
+      reset(formData);
     }
   };
 

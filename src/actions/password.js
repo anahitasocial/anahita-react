@@ -24,11 +24,11 @@ function resetFailure(error) {
   };
 }
 
-function reset(email) {
+function reset(person) {
   return (dispatch) => {
     dispatch(resetRequest());
     return new Promise((resolve, reject) => {
-      api.reset(email)
+      api.reset(person)
         .then((response) => {
           dispatch(resetSuccess(response));
           return resolve();

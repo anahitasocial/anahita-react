@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import InfoForm from '../../../components/person/InfoForm';
+import InfoForm from '../../../components/person/Info';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
@@ -11,9 +11,15 @@ import PersonType from '../../../proptypes/Person';
 import PersonDefault from '../../../proptypes/PersonDefault';
 import PeopleType from '../../../proptypes/People';
 import form from '../../../utils/forms';
-import formFields from '../../../formfields/person/info';
 
 const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
+const formFields = form.createFormFields([
+  'givenName',
+  'familyName',
+  'body',
+  'gender',
+  'usertype',
+]);
 
 const PersonSettingsInfo = (props) => {
   const {
@@ -57,21 +63,10 @@ const PersonSettingsInfo = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      const {
-        givenName,
-        familyName,
-        body,
-        gender,
-        usertype,
-      } = person;
-
+      const formData = form.fieldsToData(newFields);
       editPerson({
         id,
-        givenName,
-        familyName,
-        body,
-        gender,
-        usertype,
+        ...formData,
       });
     }
 

@@ -5,12 +5,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-
 import { Link } from 'react-router-dom';
+
+import PersonType from '../../proptypes/Person';
 
 import { Person as PERSON } from '../../constants';
 
-const PersonAccountForm = (props) => {
+const PersonAccount = (props) => {
   const {
     handleOnChange,
     handleOnBlur,
@@ -20,22 +21,26 @@ const PersonAccountForm = (props) => {
       email,
       password,
     },
+    person,
     isFetching,
     dismissPath,
   } = props;
 
   const { FIELDS } = PERSON;
-  const enableSubmit = username.isValid && email.isValid && password.isValid;
 
   return (
-    <form onSubmit={handleOnSubmit} autoComplete="off">
+    <form
+      onSubmit={handleOnSubmit}
+      autoComplete="off"
+      noValidate
+    >
       <CardContent>
         <Typography variant="h6" color="primary">
           Account Information
         </Typography>
         <TextField
           name="username"
-          value={username.value}
+          value={person.username}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
           label="Username"
@@ -52,7 +57,7 @@ const PersonAccountForm = (props) => {
         <TextField
           type="email"
           name="email"
-          value={email.value}
+          value={person.email}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
           label="Email"
@@ -69,9 +74,10 @@ const PersonAccountForm = (props) => {
         <TextField
           type="password"
           name="password"
-          value={password.value}
+          value={person.password}
           onChange={handleOnChange}
-          label="New Password"
+          onBlur={handleOnBlur}
+          label="New password"
           error={password.error !== ''}
           helperText={password.error}
           fullWidth
@@ -97,7 +103,7 @@ const PersonAccountForm = (props) => {
           variant="contained"
           type="submit"
           color="primary"
-          disabled={isFetching || !enableSubmit}
+          disabled={isFetching}
           fullWidth
         >
           Save
@@ -107,13 +113,14 @@ const PersonAccountForm = (props) => {
   );
 };
 
-PersonAccountForm.propTypes = {
+PersonAccount.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
   handleOnChange: PropTypes.func.isRequired,
   handleOnBlur: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
+  person: PersonType.isRequired,
   isFetching: PropTypes.bool.isRequired,
   dismissPath: PropTypes.string.isRequired,
 };
 
-export default PersonAccountForm;
+export default PersonAccount;

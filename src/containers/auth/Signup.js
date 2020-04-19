@@ -6,8 +6,15 @@ import SignupForm from '../../components/auth/SignupForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import * as api from '../../api';
-import formFields from '../../formfields/signup';
 import form from '../../utils/forms';
+
+const formFields = form.createFormFields([
+  'givenName',
+  'familyName',
+  'username',
+  'email',
+  'password',
+]);
 
 const AuthSignup = (props) => {
   const {
@@ -68,21 +75,8 @@ const AuthSignup = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      const {
-        givenName,
-        familyName,
-        username,
-        email,
-        password,
-      } = fields;
-
-      signup({
-        givenName: givenName.value,
-        familyName: familyName.value,
-        username: username.value,
-        email: email.value,
-        password: password.value,
-      });
+      const formData = form.fieldsToData(newFields);
+      signup(formData);
     }
   };
 

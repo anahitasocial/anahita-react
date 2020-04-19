@@ -11,10 +11,14 @@ import ActorInfoForm from '../../components/actor/forms/Info';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import form from '../../utils/forms';
-import formFields from '../../formfields/actor/info';
 
 import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';
+
+const formFields = form.createFormFields([
+  'name',
+  'body',
+]);
 
 const ActorsAdd = (props) => {
   const {
@@ -48,11 +52,8 @@ const ActorsAdd = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      const { name, body } = actor;
-      addActor({
-        name,
-        body,
-      });
+      const formData = form.fieldsToData(newFields);
+      addActor(formData);
     }
 
     setFields({ ...newFields });

@@ -23,7 +23,7 @@ const {
   TYPE,
 } = PERSON.FIELDS;
 
-const PersonInfoForm = (props) => {
+const PersonInfo = (props) => {
   const {
     handleOnChange,
     handleOnSubmit,
@@ -183,7 +183,7 @@ const PersonInfoForm = (props) => {
   );
 };
 
-PersonInfoForm.propTypes = {
+PersonInfo.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -194,8 +194,8 @@ PersonInfoForm.propTypes = {
   isFetching: PropTypes.bool.isRequired,
 };
 
-PersonInfoForm.defaultProps = {
+PersonInfo.defaultProps = {
   dismissPath: '',
 };
 
-export default PersonInfoForm;
+export default PersonInfo;

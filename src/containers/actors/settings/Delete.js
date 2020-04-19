@@ -14,6 +14,7 @@ import ActorDefault from '../../../proptypes/ActorDefault';
 import PersonType from '../../../proptypes/Person';
 
 const { TYPE } = PERSON.FIELDS;
+const formFields = form.createFormFields(['alias']);
 
 const ActorsSettingsDelete = (props) => {
   const {
@@ -33,15 +34,7 @@ const ActorsSettingsDelete = (props) => {
     },
   } = props;
 
-  const [fields, setFields] = useState({
-    alias: {
-      value: '',
-      isValid: false,
-      error: '',
-      helperText: '',
-    },
-  });
-
+  const [fields, setFields] = useState(formFields);
   const [id] = params.id.split('-');
 
   useEffect(() => {

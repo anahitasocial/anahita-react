@@ -1,10 +1,13 @@
 import _ from 'lodash';
 
-const editItem = (list, item) => {
+const editItem = (list, item, defaultItem) => {
   const items = { ...list };
   items.byId[item.id] = item;
   items.allIds = _.union(items.allIds, [item.id]);
-  items.current = item;
+  items.current = {
+    ...defaultItem,
+    ...item,
+  };
 
   return items;
 };

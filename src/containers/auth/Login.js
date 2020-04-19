@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import LoginForm from '../../components/auth/LoginForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
-import formFields from '../../formfields/login';
 import form from '../../utils/forms';
+
+const formFields = form.createFormFields(['username', 'password']);
 
 const AuthLogin = (props) => {
   const {
@@ -40,11 +41,8 @@ const AuthLogin = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      const { username, password } = fields;
-      login({
-        username: username.value,
-        password: password.value,
-      });
+      const formData = form.fieldsToData(newFields);
+      login(formData);
     }
   };
 

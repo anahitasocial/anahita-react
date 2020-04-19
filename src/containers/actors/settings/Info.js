@@ -8,10 +8,14 @@ import Progress from '../../../components/Progress';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';
 import form from '../../../utils/forms';
-import formFields from '../../../formfields/actor/info';
 
 import ActorsType from '../../../proptypes/Actors';
 import ActorDefault from '../../../proptypes/ActorDefault';
+
+const formFields = form.createFormFields([
+  'name',
+  'body',
+]);
 
 const ActorsSettingsInfo = (props) => {
   const {
@@ -55,11 +59,10 @@ const ActorsSettingsInfo = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      const { name, body } = actor;
+      const formData = form.fieldsToData(newFields);
       editActor({
         id,
-        name,
-        body,
+        ...formData,
       });
     }
 

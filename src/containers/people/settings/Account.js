@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import AccountForm from '../../../components/person/AccountForm';
+import AccountForm from '../../../components/person/Account';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
@@ -10,8 +10,13 @@ import * as api from '../../../api';
 
 import PersonDefault from '../../../proptypes/PersonDefault';
 import PeopleType from '../../../proptypes/People';
+import form from '../../../utils/forms';
 
-import formFields from '../../../formfields/person/account';
+const formFields = form.createFormFields([
+  'username',
+  'email',
+  'password',
+]);
 
 const PeopleSettingsAccount = (props) => {
   const {
@@ -34,23 +39,18 @@ const PeopleSettingsAccount = (props) => {
     readPerson(id);
   }, []);
 
-  formFields.username.value = person.username;
-  formFields.email.value = person.email;
-
   const [fields, setFields] = useState(formFields);
 
   const handleOnChange = (event) => {
     const { target } = event;
     const { name, value } = target;
 
-    setFields({
-      ...fields,
-      [name]: {
-        value: value.trim(),
-        isValid: target.willValidate && target.checkValidity(),
-        error: target.validationMessage,
-      },
-    });
+    person[name] = value.trim();
+
+    const trimmed = ['username', 'email', 'password'];
+    const newFields = form.validateField(target, fields, trimmed);
+
+    setFields({ ...newFields });
   };
 
   const handleOnBlur = (event) => {
@@ -98,28 +98,17 @@ const PeopleSettingsAccount = (props) => {
     }
   };
 
-  const isValid = () => {
-    const keys = Object.keys(fields);
-    return keys.filter((f) => {
-      return f.isValid === false;
-    }).length === 0;
-  };
-
   const handleOnSubmit = (event) => {
     event.preventDefault();
 
-    if (isValid()) {
-      const {
-        email,
-        username,
-        password,
-      } = fields;
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
 
+    if (form.isValid(newFields)) {
+      const formData = form.fieldsToData(newFields);
       editPerson({
         id,
-        email: email.value,
-        username: username.value,
-        password: password.value,
+        ...formData,
       });
     }
   };
@@ -138,6 +127,7 @@ const PeopleSettingsAccount = (props) => {
       >
         <AccountForm
           fields={fields}
+          person={person}
           handleOnChange={handleOnChange}
           handleOnBlur={handleOnBlur}
           handleOnSubmit={handleOnSubmit}

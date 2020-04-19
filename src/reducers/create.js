@@ -62,7 +62,11 @@ export default (namespace, defaultNode) => {
         return {
           ...state,
           isFetching: false,
-          [namespace]: utils.editItem(state[namespace], action.node),
+          [namespace]: utils.editItem(
+            state[namespace],
+            action.node,
+            defaultNode,
+          ),
           success: false,
         };
       case `${namespace.toUpperCase()}_EDIT_SUCCESS`:
@@ -70,7 +74,11 @@ export default (namespace, defaultNode) => {
         return {
           ...state,
           isFetching: false,
-          [namespace]: utils.editItem(state[namespace], action.node),
+          [namespace]: utils.editItem(
+            state[namespace],
+            action.node,
+            defaultNode,
+          ),
           success: true,
         };
       case `${namespace.toUpperCase()}_DELETE_SUCCESS`:
