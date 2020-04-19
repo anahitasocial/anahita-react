@@ -6,7 +6,7 @@ import SignupForm from '../../components/auth/SignupForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import * as api from '../../api';
-import form from '../../utils/forms';
+import form from '../../utils/form';
 
 const formFields = form.createFormFields([
   'givenName',

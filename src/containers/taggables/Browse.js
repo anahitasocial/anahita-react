@@ -18,7 +18,7 @@ import MediaCard from '../media/Card';
 import Progress from '../../components/Progress';
 import { App as APP } from '../../constants';
 
-import utils from '../../utils/nodes';
+import utils from '../../utils/node';
 import containersUtils from '../utils';
 
 const {

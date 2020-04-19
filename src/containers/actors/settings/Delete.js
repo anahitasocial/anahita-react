@@ -7,7 +7,7 @@ import ActorDeleteForm from '../../../components/actor/forms/Delete';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
 import * as actions from '../../../actions';
-import form from '../../../utils/forms';
+import form from '../../../utils/form';
 
 import ActorsType from '../../../proptypes/Actors';
 import ActorDefault from '../../../proptypes/ActorDefault';

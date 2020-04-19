@@ -15,7 +15,7 @@ import CommentMenu from './Menu';
 import CommentDefault from '../../proptypes/CommentDefault';
 
 import field from '../../formfields/field';
-import form from '../../utils/forms';
+import form from '../../utils/form';
 
 const CommentsRead = (props) => {
   const {

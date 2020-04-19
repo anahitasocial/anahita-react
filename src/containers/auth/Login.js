@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import LoginForm from '../../components/auth/LoginForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
-import form from '../../utils/forms';
+import form from '../../utils/form';
 
 const formFields = form.createFormFields(['username', 'password']);
 

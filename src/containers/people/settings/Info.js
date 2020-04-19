@@ -10,7 +10,7 @@ import { Person as PERSON } from '../../../constants';
 import PersonType from '../../../proptypes/Person';
 import PersonDefault from '../../../proptypes/PersonDefault';
 import PeopleType from '../../../proptypes/People';
-import form from '../../../utils/forms';
+import form from '../../../utils/form';
 
 const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
 const formFields = form.createFormFields([

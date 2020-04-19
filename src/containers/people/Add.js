@@ -11,7 +11,7 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import * as api from '../../api';
 import { Person as PERSON } from '../../constants';
-import form from '../../utils/forms';
+import form from '../../utils/form';
 
 import PersonType from '../../proptypes/Person';
 import PersonDefault from '../../proptypes/PersonDefault';

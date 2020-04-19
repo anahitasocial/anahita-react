@@ -10,7 +10,7 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ActorInfoForm from '../../components/actor/forms/Info';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
-import form from '../../utils/forms';
+import form from '../../utils/form';
 
 import ActorsType from '../../proptypes/Actors';
 import ActorDefault from '../../proptypes/ActorDefault';

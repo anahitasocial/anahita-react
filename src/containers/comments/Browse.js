@@ -14,7 +14,7 @@ import CommentDefault from '../../proptypes/CommentDefault';
 import PersonType from '../../proptypes/Person';
 import { App as APP } from '../../constants';
 import field from '../../formfields/field';
-import form from '../../utils/forms';
+import form from '../../utils/form';
 
 const { LIMIT } = APP.BROWSE;
 

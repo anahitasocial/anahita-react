@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PasswordResetForm from '../../components/auth/PasswordResetForm';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
-import form from '../../utils/forms';
+import form from '../../utils/form';
 
 const formFields = form.createFormFields(['email']);
 

@@ -10,7 +10,7 @@ import * as api from '../../../api';
 
 import PersonDefault from '../../../proptypes/PersonDefault';
 import PeopleType from '../../../proptypes/People';
-import form from '../../../utils/forms';
+import form from '../../../utils/form';
 
 const formFields = form.createFormFields([
   'username',

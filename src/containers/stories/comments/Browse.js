@@ -12,7 +12,7 @@ import NodeType from '../../../proptypes/Node';
 import NodesType from '../../../proptypes/Nodes';
 import PersonType from '../../../proptypes/Person';
 import field from '../../../formfields/field';
-import form from '../../../utils/forms';
+import form from '../../../utils/form';
 
 const CommentsBrowse = (props) => {
   const {
