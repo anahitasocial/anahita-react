@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -56,17 +57,15 @@ const LocationsRead = (props) => {
     setAppTitle(i18n.t('locations:cTitle'));
   }, []);
 
-  if (error) {
-    return (
-      <Typography variant="body1" color="error" align="center">
-        {error}
-      </Typography>
-    );
-  }
-
   if (isFetching) {
     return (
       <Progress key="location-progress" />
+    );
+  }
+
+  if (error !== '') {
+    return (
+      <Redirect push to="/404/" />
     );
   }
 

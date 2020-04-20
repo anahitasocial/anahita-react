@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -40,17 +40,15 @@ const HashtagsRead = (props) => {
     setAppTitle(i18n.t('hashtags:cTitle'));
   }, []);
 
-  if (error) {
-    return (
-      <Typography variant="body1" color="error" align="center">
-        {error}
-      </Typography>
-    );
-  }
-
   if (isFetching) {
     return (
       <Progress />
+    );
+  }
+
+  if (error !== '') {
+    return (
+      <Redirect push to="/404/" />
     );
   }
 
