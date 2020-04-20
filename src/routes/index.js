@@ -271,6 +271,11 @@ const Routes = (props) => {
         path="/locations/:id/"
         component={LocationsRead}
       />
+      <Route
+        exact
+        path="/404/"
+        component={NotFoundPage}
+      />
       <Route component={NotFoundPage} />
     </Switch>
   );

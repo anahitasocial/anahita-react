@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
 
@@ -42,6 +43,7 @@ const ActorsRead = (props) => {
     viewer,
     isAuthenticated,
     isFetching,
+    error,
     match: {
       params: {
         id,
@@ -67,6 +69,12 @@ const ActorsRead = (props) => {
   if (!actor.id && isFetching) {
     return (
       <Progress />
+    );
+  }
+
+  if (!actor.id && error !== '') {
+    return (
+      <Redirect push to="/404/" />
     );
   }
 
@@ -98,7 +106,7 @@ const ActorsRead = (props) => {
       <ActorBody
         actor={actor}
         viewer={viewer}
-        stories={
+        stories={actor.id &&
           <StoriesBrowse
             key="com:stories.story"
             queryFilters={{
@@ -107,30 +115,30 @@ const ActorsRead = (props) => {
             {...this.params}
           />
         }
-        locations={
+        locations={actor.id &&
           <LocationsGadget node={actor} />
         }
         socialgraph={
           <SocialgraphTabs
-            followers={
+            followers={actor.id &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="followers"
               />
             }
-            leaders={isPerson &&
+            leaders={actor.id && isPerson &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="leaders"
               />
             }
-            blocked={isViewer &&
+            blocked={actor.id && isViewer &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="blocked"
               />
             }
-            mutuals={!isViewer && isPerson &&
+            mutuals={actor.id && !isViewer && isPerson &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="mutuals"
@@ -138,35 +146,35 @@ const ActorsRead = (props) => {
             }
           />
         }
-        notes={
+        notes={actor.id &&
           <Notes
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        photos={
+        photos={actor.id &&
           <Photos
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        articles={
+        articles={actor.id &&
           <Articles
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        topics={
+        topics={actor.id &&
           <Topics
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        todos={
+        todos={actor.id &&
           <Todos
             queryFilters={{
               oid: actor.id,
@@ -186,6 +194,7 @@ ActorsRead.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   setAppTitle: PropTypes.func.isRequired,
 };

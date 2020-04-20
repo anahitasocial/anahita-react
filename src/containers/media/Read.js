@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
 // import Container from '@material-ui/core/Container';
@@ -23,6 +24,7 @@ const MediaRead = (props) => {
     isFetching,
     viewer,
     isAuthenticated,
+    error,
     media: {
       current: medium = { ...MediumDefault },
     },
@@ -40,6 +42,12 @@ const MediaRead = (props) => {
 
   const canAdd = isAuthenticated && medium.openToComment;
   // const maxWidth = ['article', 'topic'].includes(medium.objectType.split('.')[2]) ? 'md' : 'sm';
+
+  if (!medium.id && error !== '') {
+    return (
+      <Redirect push to="/404/" />
+    );
+  }
 
   return (
     <React.Fragment>
@@ -75,6 +83,7 @@ MediaRead.propTypes = {
   media: MediaType.isRequired,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
   setAppTitle: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,

@@ -27,7 +27,10 @@ const StoriesBrowse = (props) => {
   const {
     browseStories,
     resetStories,
-    queryFilters,
+    queryFilters = {
+      oid: 0,
+      filter: '',
+    },
     stories,
     hasMore,
     viewer,
@@ -43,9 +46,11 @@ const StoriesBrowse = (props) => {
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
+    const { oid, filter } = queryFilters;
+    console.log(oid);
     browseStories({
-      oid: queryFilters.oid,
-      filter: queryFilters.filter,
+      oid,
+      filter,
       start,
       limit: LIMIT,
     });
@@ -121,17 +126,10 @@ const StoriesBrowse = (props) => {
 StoriesBrowse.propTypes = {
   browseStories: PropTypes.func.isRequired,
   resetStories: PropTypes.func.isRequired,
-  queryFilters: PropTypes.object,
+  queryFilters: PropTypes.objectOf(PropTypes.any).isRequired,
   viewer: PersonType.isRequired,
   stories: StoriesType.isRequired,
   hasMore: PropTypes.bool.isRequired,
-};
-
-StoriesBrowse.defaultProps = {
-  queryFilters: {
-    filter: '',
-    oid: '',
-  },
 };
 
 const mapStateToProps = (state) => {
