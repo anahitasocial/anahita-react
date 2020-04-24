@@ -13,10 +13,13 @@ import CommentsType from '../../proptypes/Comments';
 import CommentDefault from '../../proptypes/CommentDefault';
 import PersonType from '../../proptypes/Person';
 import { App as APP } from '../../constants';
-import field from '../../formfields/field';
 import form from '../../utils/form';
 
 const { LIMIT } = APP.BROWSE;
+
+const formFields = form.createFormFields([
+  'body',
+]);
 
 const CommentsBrowse = (props) => {
   const {
@@ -33,9 +36,7 @@ const CommentsBrowse = (props) => {
 
   const namespace = parent.objectType.split('.')[1];
 
-  const [fields, setFields] = useState({
-    body: { ...field },
-  });
+  const [fields, setFields] = useState(formFields);
 
   const [comment, setComment] = useState({
     ...CommentDefault,

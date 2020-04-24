@@ -13,9 +13,11 @@ import PersonType from '../../proptypes/Person';
 import LikeAction from '../actions/Like';
 import CommentMenu from './Menu';
 import CommentDefault from '../../proptypes/CommentDefault';
-
-import field from '../../formfields/field';
 import form from '../../utils/form';
+
+const formFields = form.createFormFields([
+  'body',
+]);
 
 const CommentsRead = (props) => {
   const {
@@ -31,9 +33,8 @@ const CommentsRead = (props) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [currComment, setCurrComment] = useState(comment);
-  const [fields, setFields] = useState({
-    body: { ...field },
-  });
+  const [fields, setFields] = useState(formFields);
+
   let oldComment = { ...CommentDefault };
 
   const handleCancel = () => {
