@@ -28,7 +28,6 @@ export default shape({
   ]),
   givenName: string,
   familyName: string,
-  body: string,
   gender: oneOf([
     GENDER.NEUTRAL,
     GENDER.FEMALE,
@@ -36,6 +35,7 @@ export default shape({
     GENDER.OTHER,
     '',
   ]),
+  body: string,
   gadgets: objectOf(any),
   imageURL: ImageURL,
   coverURL: ImageURL,
