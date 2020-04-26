@@ -37,7 +37,9 @@ const TaggablesBrowse = (props) => {
     taggables,
     error,
     hasMore,
-    sort,
+    queryFilters: {
+      sort,
+    },
     width,
   } = props;
 
@@ -129,14 +131,13 @@ TaggablesBrowse.propTypes = {
   browseTaggables: PropTypes.func.isRequired,
   tag: NodeType.isRequired,
   taggables: NodesType.isRequired,
-  sort: PropTypes.oneOf([TOP, RECENT]),
+  queryFilters: PropTypes.objectOf({
+    sort: PropTypes.oneOf([TOP, RECENT]).isRequired,
+    q: PropTypes.string,
+  }).isRequired,
   width: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
-};
-
-TaggablesBrowse.defaultProps = {
-  sort: TOP,
 };
 
 const mapDispatchToProps = (dispatch) => {
