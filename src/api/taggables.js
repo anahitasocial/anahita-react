@@ -1,25 +1,55 @@
 import axios from 'axios';
+import { constructURLSearchParams } from './utils';
 
-const browse = (params) => {
-  const {
-    tag: {
-      id,
-      objectType,
-    },
-  } = params;
-
-  const namespace = objectType.split('.')[1];
-  const { start, limit, sort } = params;
-
-  return axios.get(`/${namespace}/${id}.json?`, {
-    params: {
-      start,
-      limit,
-      sort,
-    },
-  });
+const getNamespace = (node) => {
+  const { objectType } = node;
+  return objectType.split('.')[1];
 };
 
-export default {
-  browse,
+const browse = (tag) => {
+  return (params) => {
+    const { id, objectType } = tag;
+    const namespace = getNamespace(objectType);
+    const { start, limit, sort } = params;
+
+    return axios.get(`/${namespace}/${id}.json?`, {
+      params: {
+        start,
+        limit,
+        sort,
+      },
+    });
+  };
+};
+
+const add = (tag) => {
+  return (taggable) => {
+    const namespace = getNamespace(taggable);
+    const { id, objectType } = tag;
+
+    return axios.post(`/${namespace}/${taggable.id}.json`, constructURLSearchParams({
+      action: `add${objectType.split('.')[2]}`,
+      location_id: id,
+    }));
+  };
+};
+
+const deleteItem = (tag) => {
+  return (taggable) => {
+    const namespace = getNamespace(taggable);
+    const { id, objectType } = tag;
+
+    return axios.post(`/${namespace}/${taggable.id}.json`, constructURLSearchParams({
+      action: `delete${objectType.split('.')[2]}`,
+      location_id: id,
+    }));
+  };
+};
+
+export default (tag) => {
+  return {
+    browse: browse(tag),
+    add: add(tag),
+    deleteItem: deleteItem(tag),
+  };
 };

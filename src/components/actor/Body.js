@@ -123,9 +123,9 @@ ActorBody.propTypes = {
   classes: PropTypes.object.isRequired,
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
-  stories: PropTypes.node.isRequired,
-  locations: PropTypes.node.isRequired,
-  socialgraph: PropTypes.node.isRequired,
+  stories: PropTypes.node,
+  locations: PropTypes.node,
+  socialgraph: PropTypes.node,
   notes: PropTypes.node,
   photos: PropTypes.node,
   topics: PropTypes.node,
@@ -135,6 +135,9 @@ ActorBody.propTypes = {
 };
 
 ActorBody.defaultProps = {
+  stories: null,
+  locations: null,
+  socialgraph: null,
   notes: null,
   photos: null,
   topics: null,

@@ -32,6 +32,10 @@ const commentStatus = (namespace) => {
   return createAction('commentStatus')(api.commentStatus(namespace));
 };
 
+const locationsGraph = (taggable) => {
+  return createAction('locationsGraph')(api.tagGraph(taggable));
+};
+
 export {
   app,
   articles,
@@ -44,6 +48,7 @@ export {
   hashtags,
   likes,
   locations,
+  locationsGraph,
   notes,
   notifications,
   password,

@@ -27,6 +27,7 @@ const LocationsGadget = (props) => {
   const {
     locations,
     handleDelete,
+    canDelete,
     classes,
   } = props;
 
@@ -62,6 +63,7 @@ const LocationsGadget = (props) => {
       <GadgetList
         locations={locations}
         handleDelete={handleDelete}
+        canDelete={canDelete}
       />
     </Card>
   );
@@ -71,6 +73,7 @@ LocationsGadget.propTypes = {
   classes: PropTypes.object.isRequired,
   locations: LocationsType.isRequired,
   handleDelete: PropTypes.func.isRequired,
+  canDelete: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(LocationsGadget);

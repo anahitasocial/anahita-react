@@ -16,8 +16,9 @@ import stories from './stories';
 import taggables from './taggables';
 
 // creators
-import createActorsReducer from './createActors';
-import createCommentReducer from './createComment';
+import createActorsReducer from './create_actors';
+import createCommentReducer from './create_comment';
+import createTagGraphReducer from './create_tag_graph';
 import createMediaReducer from './createMedia';
 
 // create actors reducers
@@ -34,6 +35,9 @@ const articles = createMediaReducer('articles');
 // behaviours
 const comments = createCommentReducer('comments');
 
+// location graph
+const locationsGraph = createTagGraphReducer('locationsGraph');
+
 export default combineReducers({
   app,
   articles,
@@ -44,6 +48,7 @@ export default combineReducers({
   inlineComments,
   likes,
   locations,
+  locationsGraph,
   hashtags,
   notes,
   notifications,

@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 
 import * as actions from '../../actions';
+import permissions from '../../permissions/node';
 import LocationsType from '../../proptypes/Locations';
 import NodeType from '../../proptypes/Node';
+import PersonType from '../../proptypes/Person';
 
 import Gadget from '../../components/locations/Gadget';
 import Progress from '../../components/Progress';
@@ -13,28 +15,32 @@ import Progress from '../../components/Progress';
 const LocationsGadget = (props) => {
   const {
     node,
+    viewer,
     locations,
     isFetching,
     error,
-    browseLocations,
-    resetLocations,
+    browse,
+    deleteItem,
+    reset,
   } = props;
 
   useEffect(() => {
-    browseLocations({
-      locatable_id: node.id,
+    browse(node, {
+      objectType: 'com.locations.location',
+      taggable_id: node.id,
+      offset: 0,
     });
 
     return () => {
-      resetLocations();
+      reset(node);
     };
   }, []);
 
-  const handleDelete = (event, id) => {
-    console.log(id);
+  const handleDelete = (location) => {
+    return deleteItem(node, location);
   };
 
-  if (isFetching) {
+  if (locations.byId.length === 0 && isFetching) {
     return (
       <Progress />
     );
@@ -48,44 +54,57 @@ const LocationsGadget = (props) => {
     );
   }
 
+  const canDelete = permissions.canEdit(viewer, node);
+
   return (
     <Gadget
       locations={locations}
       handleDelete={handleDelete}
+      canDelete={canDelete}
     />
   );
 };
 
 LocationsGadget.propTypes = {
   node: NodeType.isRequired,
+  viewer: PersonType.isRequired,
   locations: LocationsType.isRequired,
-  browseLocations: PropTypes.func.isRequired,
-  resetLocations: PropTypes.func.isRequired,
+  browse: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
-    locations,
+    locationsGraph: locations,
     error,
     isFetching,
-  } = state.locations;
+  } = state.locationsGraph;
+
+  const {
+    viewer,
+  } = state.session;
 
   return {
     locations,
     error,
     isFetching,
+    viewer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseLocations: (params) => {
-      return dispatch(actions.locations.browse(params));
+    browse: (node, params) => {
+      return dispatch(actions.locationsGraph(node).browse(params));
     },
-    resetLocations: () => {
-      return dispatch(actions.locations.reset());
+    deleteItem: (node, location) => {
+      return dispatch(actions.locationsGraph(node).deleteItem(location));
+    },
+    reset: (node) => {
+      return dispatch(actions.locationsGraph(node).reset());
     },
   };
 };
