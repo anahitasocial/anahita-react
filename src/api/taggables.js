@@ -8,8 +8,8 @@ const getNamespace = (node) => {
 
 const browse = (tag) => {
   return (params) => {
-    const { id, objectType } = tag;
-    const namespace = getNamespace(objectType);
+    const { id } = tag;
+    const namespace = getNamespace(tag);
     const { start, limit, sort } = params;
 
     return axios.get(`/${namespace}/${id}.json?`, {
