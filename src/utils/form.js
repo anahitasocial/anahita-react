@@ -64,10 +64,24 @@ const fieldsToData = (fields) => {
   return entity;
 };
 
+const dataToFields = (data, fields) => {
+  const newFields = { ...fields };
+  const keys = _.keys(newFields);
+
+  keys.forEach((key) => {
+    if (data[key]) {
+      newFields[key].value = data[key];
+    }
+  });
+
+  return fields;
+};
+
 export default {
   createFormFields,
   validateField,
   validateForm,
   isValid,
   fieldsToData,
+  dataToFields,
 };

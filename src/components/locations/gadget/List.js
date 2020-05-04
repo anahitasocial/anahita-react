@@ -21,6 +21,7 @@ const LocationsGadgetList = (props) => {
         const location = locations.byId[locationId];
         return (
           <ListItem
+            key={`location-graph-list-item-${locationId}`}
             location={location}
             handleDelete={handleDelete}
             canDelete={canDelete}
