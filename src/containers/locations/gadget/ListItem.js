@@ -8,6 +8,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import LocationIcon from '@material-ui/icons/LocationOn';
 
+import locationUtils from '../utils';
 import LocationType from '../../../proptypes/Location';
 import NodeType from '../../../proptypes/Node';
 import DeleteAction from '../../actions/tags/location/Delete';
@@ -33,6 +34,7 @@ const LocationsGadgetListItem = (props) => {
       </ListItemAvatar>
       <ListItemText
         primary={location.name}
+        secondary={locationUtils.getAddress(location)}
       />
       <ListItemSecondaryAction>
         {canDelete && <DeleteAction node={node} tag={location} />}

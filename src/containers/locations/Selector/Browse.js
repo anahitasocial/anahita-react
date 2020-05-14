@@ -22,6 +22,7 @@ const LocationsBrowse = (props) => {
     locations,
     node,
     queryFilters,
+    handleClose,
     error,
     isFetching,
   } = props;
@@ -63,6 +64,7 @@ const LocationsBrowse = (props) => {
             key={`locations-selector-listitem-${location.id}`}
             node={node}
             location={location}
+            callback={handleClose}
             canAdd
           />
         );
@@ -79,7 +81,6 @@ LocationsBrowse.propTypes = {
   node: NodeType.isRequired,
   error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  handleAddLocationTag: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
 

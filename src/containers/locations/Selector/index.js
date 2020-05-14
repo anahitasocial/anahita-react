@@ -14,7 +14,6 @@ const LocationsSelector = (props) => {
     node,
     isOpen,
     handleClose,
-    handleAddLocationTag,
     coords,
     isGeolocationAvailable,
     isGeolocationEnabled,
@@ -54,7 +53,6 @@ const LocationsSelector = (props) => {
               nearby_latitude: here.latitude,
               nearby_longitude: here.longitude,
             }}
-            handleAddLocationTag={handleAddLocationTag}
             handleClose={handleClose}
           />
         }
@@ -66,7 +64,6 @@ const LocationsSelector = (props) => {
 LocationsSelector.propTypes = {
   node: NodeType.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  handleAddLocationTag: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   coords: PropTypes.objectOf(PropTypes.shape({
     longitude: PropTypes.number,

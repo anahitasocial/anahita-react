@@ -21,8 +21,6 @@ import LocationsType from '../../proptypes/Locations';
 import NodeType from '../../proptypes/Node';
 import PersonType from '../../proptypes/Person';
 
-// import Gadget from '../../components/locations/Gadget';
-
 import ListItem from './gadget/ListItem';
 import AnahitaMap from '../../components/Map';
 import Selector from './Selector';
@@ -49,8 +47,6 @@ const LocationsGadget = (props) => {
     isFetching,
     error,
     browse,
-    deleteLocation,
-    addLocation,
     reset,
   } = props;
 
@@ -69,14 +65,6 @@ const LocationsGadget = (props) => {
       reset(node);
     };
   }, []);
-
-  const handleDelete = (location) => {
-    return deleteLocation(node, location);
-  };
-
-  const handleAdd = (location) => {
-    return addLocation(node, location);
-  };
 
   const handleClose = () => {
     setIsOpen(false);
@@ -106,7 +94,6 @@ const LocationsGadget = (props) => {
         node={node}
         isOpen={isOpen}
         handleClose={handleClose}
-        handleAddLocationTag={handleAdd}
       />
       <Card className={classes.root}>
         <CardHeader
@@ -166,8 +153,6 @@ LocationsGadget.propTypes = {
   viewer: PersonType.isRequired,
   locations: LocationsType.isRequired,
   browse: PropTypes.func.isRequired,
-  deleteLocation: PropTypes.func.isRequired,
-  addLocation: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
@@ -196,12 +181,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     browse: (node, params) => {
       return dispatch(actions.locationsGraph(node).browse(params));
-    },
-    deleteLocation: (node, location) => {
-      return dispatch(actions.locationsGraph(node).deleteItem(location));
-    },
-    addLocation: (node, location) => {
-      return dispatch(actions.locationsGraph(node).add(location));
     },
     reset: (node) => {
       return dispatch(actions.locationsGraph(node).reset());

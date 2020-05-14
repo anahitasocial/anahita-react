@@ -15,6 +15,7 @@ const ActionsTagsLocationAdd = React.forwardRef((props, ref) => {
     addTag,
     node,
     tag,
+    callback,
   } = props;
 
   const [isWaiting, setIsWaiting] = useState(false);
@@ -28,6 +29,7 @@ const ActionsTagsLocationAdd = React.forwardRef((props, ref) => {
         setIsWaiting(true);
         addTag(node, tag).then(() => {
           setIsWaiting(false);
+          callback();
         });
       }}
     >
@@ -41,6 +43,7 @@ ActionsTagsLocationAdd.propTypes = {
   addTag: PropTypes.func.isRequired,
   node: NodeType.isRequired,
   tag: TagType.isRequired,
+  callback: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = () => {

@@ -13,6 +13,8 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 
 import LocationType from '../../../proptypes/Location';
 
+import locationUtils from '../../../containers/locations/utils';
+
 const LocationsGadgetListItem = (props) => {
   const {
     location,
@@ -36,6 +38,7 @@ const LocationsGadgetListItem = (props) => {
       </ListItemAvatar>
       <ListItemText
         primary={location.name}
+        secondary={locationUtils.getAddress(location)}
       />
       {canDelete &&
         <ListItemSecondaryAction>
