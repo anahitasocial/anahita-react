@@ -47,7 +47,7 @@ const StoriesBrowse = (props) => {
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
     const { oid, filter } = queryFilters;
-    console.log(oid);
+
     browseStories({
       oid,
       filter,

@@ -131,8 +131,8 @@ TaggablesBrowse.propTypes = {
   browseTaggables: PropTypes.func.isRequired,
   tag: NodeType.isRequired,
   taggables: NodesType.isRequired,
-  queryFilters: PropTypes.objectOf({
-    sort: PropTypes.oneOf([TOP, RECENT]).isRequired,
+  queryFilters: PropTypes.shape({
+    sort: PropTypes.oneOf([TOP, RECENT]),
     q: PropTypes.string,
   }).isRequired,
   width: PropTypes.string.isRequired,

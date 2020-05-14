@@ -7,6 +7,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
@@ -29,7 +30,7 @@ const styles = (theme) => {
       marginBottom: theme.spacing(2),
     },
     portrait: {
-      height: theme.spacing(40),
+      height: theme.spacing(60),
     },
     title: {
       textTransform: 'capitalize',
@@ -51,6 +52,7 @@ const StoryCardPhotoAdd = (props) => {
     actions,
     menu,
     showOwner,
+    comments,
   } = props;
 
   const subject = getStorySubject(story);
@@ -129,6 +131,8 @@ const StoryCardPhotoAdd = (props) => {
           {actions}
         </CardActions>
       }
+      <Divider />
+      {comments}
     </Card>
   );
 };
@@ -137,6 +141,7 @@ StoryCardPhotoAdd.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node,
   menu: PropTypes.node,
+  comments: PropTypes.node,
   story: PropTypes.object.isRequired,
   showOwner: PropTypes.bool,
 };
@@ -145,6 +150,7 @@ StoryCardPhotoAdd.defaultProps = {
   showOwner: false,
   actions: null,
   menu: null,
+  comments: null,
 };
 
 export default withStyles(styles)(StoryCardPhotoAdd);

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
 import InfiniteScroll from 'react-infinite-scroller';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -17,7 +16,7 @@ import Progress from '../../components/Progress';
 
 import LocationsType from '../../proptypes/Locations';
 
-import { locations as actions } from '../../actions';
+import * as actions from '../../actions';
 import locationUtils from './utils';
 import { App as APP } from '../../constants';
 
@@ -38,6 +37,12 @@ const LocationsBrowse = (props) => {
     queryFilters,
   } = props;
 
+  useEffect(() => {
+    return () => {
+      resetLocations();
+    };
+  }, []);
+
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
     browseLocations({
@@ -46,12 +51,6 @@ const LocationsBrowse = (props) => {
       ...queryFilters,
     });
   };
-
-  useEffect(() => {
-    return () => {
-      resetLocations();
-    };
-  }, []);
 
   if (error) {
     return (
@@ -62,44 +61,38 @@ const LocationsBrowse = (props) => {
   }
 
   return (
-    <List>
-      <InfiniteScroll
-        loadMore={fetchList}
-        hasMore={hasMore}
-        loader={
-          <Progress key="locations-progress" />
-        }
-      >
+    <InfiniteScroll
+      loadMore={fetchList}
+      hasMore={hasMore}
+      loader={
+        <Progress key="locations-progress" />
+      }
+    >
+      <List>
         {locations.allIds.map((locationId) => {
           const location = locations.byId[locationId];
           return (
-            <React.Fragment key={`location_list_item_container_${location.id}`}>
-              <ListItem
-                key={`location_list_item_${location.id}`}
-                href={`/locations/${location.id}-${location.alias}/`}
-                button
-                component="a"
-              >
-                <ListItemAvatar>
-                  <Avatar>
-                    <LocationIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={location.name}
-                  secondary={locationUtils.getAddress(location)}
-                />
-              </ListItem>
-              <Divider
-                component="li"
-                light
-                key={`location_list_divider_${location.id}`}
+            <ListItem
+              key={`location_list_item_${location.id}`}
+              href={`/locations/${location.id}-${location.alias}/`}
+              button
+              component="a"
+              divider
+            >
+              <ListItemAvatar>
+                <Avatar>
+                  <LocationIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={location.name}
+                secondary={locationUtils.getAddress(location)}
               />
-            </React.Fragment>
+            </ListItem>
           );
         })}
-      </InfiniteScroll>
-    </List>
+      </List>
+    </InfiniteScroll>
   );
 };
 
@@ -138,10 +131,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseLocations: (params) => {
-      return dispatch(actions.browse(params));
+      return dispatch(actions.locations.browse(params));
     },
     resetLocations: () => {
-      return dispatch(actions.reset());
+      return dispatch(actions.locations.reset());
     },
   };
 };

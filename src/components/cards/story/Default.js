@@ -32,7 +32,7 @@ const styles = (theme) => {
       marginBottom: theme.spacing(2),
     },
     media: {
-      height: theme.spacing(30),
+      height: theme.spacing(60),
     },
     title: {
       textTransform: 'capitalize',

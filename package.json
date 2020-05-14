@@ -44,6 +44,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-geolocated": "^3.0.1",
     "react-google-maps": "^9.4.5",
     "react-helmet": "^5.2.0",
     "react-i18next": "^10.11.4",
