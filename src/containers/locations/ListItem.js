@@ -8,22 +8,18 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import LocationIcon from '@material-ui/icons/LocationOn';
 
-import locationUtils from '../utils';
-import LocationType from '../../../proptypes/Location';
-import NodeType from '../../../proptypes/Node';
-import AddAction from '../../actions/tags/location/Add';
+import locationUtils from './utils';
+import LocationType from '../../proptypes/Location';
 
-const LocationsSelectorListItem = (props) => {
+const LocationsListItem = (props) => {
   const {
-    canAdd,
     location,
-    node,
-    callback,
+    actions,
   } = props;
 
   return (
     <ListItem
-      key={`locations-gadget-list-item-${location.id}`}
+      key={`locations-list-item-${location.id}`}
       button
       component="a"
       href={`/locations/${location.id}-${location.alias}/`}
@@ -37,24 +33,22 @@ const LocationsSelectorListItem = (props) => {
         primary={location.name}
         secondary={locationUtils.getAddress(location)}
       />
+      {actions &&
       <ListItemSecondaryAction>
-        {canAdd &&
-          <AddAction
-            node={node}
-            tag={location}
-            callback={callback}
-          />
-        }
+        {actions}
       </ListItemSecondaryAction>
+      }
     </ListItem>
   );
 };
 
-LocationsSelectorListItem.propTypes = {
+LocationsListItem.propTypes = {
   location: LocationType.isRequired,
-  node: NodeType.isRequired,
-  canAdd: PropTypes.bool.isRequired,
-  callback: PropTypes.func.isRequired,
+  actions: PropTypes.node,
 };
 
-export default LocationsSelectorListItem;
+LocationsListItem.defaultProps = {
+  actions: null,
+};
+
+export default LocationsListItem;

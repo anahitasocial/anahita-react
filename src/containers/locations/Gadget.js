@@ -21,10 +21,12 @@ import LocationsType from '../../proptypes/Locations';
 import NodeType from '../../proptypes/Node';
 import PersonType from '../../proptypes/Person';
 
-import ListItem from './gadget/ListItem';
+
 import AnahitaMap from '../../components/Map';
 import Selector from './Selector';
 import Progress from '../../components/Progress';
+import ListItem from './ListItem';
+import DeleteAction from '../actions/tags/location/Delete';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -78,7 +80,12 @@ const LocationsGadget = (props) => {
 
   if (error) {
     return (
-      <Typography variant="body1" color="error" align="center">
+      <Typography
+        variant="body1"
+        color="error"
+        align="center"
+        gutterBottom
+      >
         {error}
       </Typography>
     );
@@ -124,8 +131,7 @@ const LocationsGadget = (props) => {
               <ListItem
                 key={`location-graph-list-item-${locationId}`}
                 location={location}
-                node={node}
-                canDelete={canDelete}
+                actions={canDelete && <DeleteAction tag={location} node={node} />}
               />
             );
           })}

@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 
-import ListItem from './ListItem';
+import ListItem from '../ListItem';
 import Progress from '../../../components/Progress';
 import LocationsType from '../../../proptypes/Locations';
 import NodeType from '../../../proptypes/Node';
+import AddAction from '../../actions/tags/location/Add';
 
 import * as actions from '../../../actions';
 import { App as APP } from '../../../constants';
@@ -61,11 +62,15 @@ const LocationsBrowse = (props) => {
         const location = locations.byId[locationId];
         return (
           <ListItem
-            key={`locations-selector-listitem-${location.id}`}
-            node={node}
+            key={`location-graph-list-item-${locationId}`}
             location={location}
-            callback={handleClose}
-            canAdd
+            actions={
+              <AddAction
+                tag={location}
+                node={node}
+                callback={handleClose}
+              />
+            }
           />
         );
       })}

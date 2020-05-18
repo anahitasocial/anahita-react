@@ -2,22 +2,15 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Avatar from '@material-ui/core/Avatar';
 import InfiniteScroll from 'react-infinite-scroller';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
-import LocationIcon from '@material-ui/icons/LocationOn';
-
+import ListItem from './ListItem';
 import Progress from '../../components/Progress';
-
 import LocationsType from '../../proptypes/Locations';
 
 import * as actions from '../../actions';
-import locationUtils from './utils';
 import { App as APP } from '../../constants';
 
 const {
@@ -72,23 +65,7 @@ const LocationsBrowse = (props) => {
         {locations.allIds.map((locationId) => {
           const location = locations.byId[locationId];
           return (
-            <ListItem
-              key={`location_list_item_${location.id}`}
-              href={`/locations/${location.id}-${location.alias}/`}
-              button
-              component="a"
-              divider
-            >
-              <ListItemAvatar>
-                <Avatar>
-                  <LocationIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary={location.name}
-                secondary={locationUtils.getAddress(location)}
-              />
-            </ListItem>
+            <ListItem location={location} />
           );
         })}
       </List>

@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { geolocated } from 'react-geolocated';
 
+import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-// import DialogContent from '@material-ui/core/DialogContent';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+
+import LocationIcon from '@material-ui/icons/LocationOn';
+import DeleteIcon from '@material-ui/icons/Clear';
 
 import NodeType from '../../../proptypes/Node';
 import Browse from './Browse';
@@ -42,20 +49,40 @@ const LocationsSelector = (props) => {
         onClose={handleClose}
         fullScreen
       >
-        <DialogTitle id="locations-dialog-title">
-          Locations
-        </DialogTitle>
-        {isOpen &&
-          <Browse
-            node={node}
-            queryFilters={{
-              q: keywordQuery,
-              nearby_latitude: here.latitude,
-              nearby_longitude: here.longitude,
-            }}
-            handleClose={handleClose}
+        <Card square>
+          <CardHeader
+            avatar={
+              <Avatar>
+                <LocationIcon />
+              </Avatar>
+            }
+            title={
+              <Typography variant="h6">
+                Locations
+              </Typography>
+            }
+            action={
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+              >
+                <DeleteIcon />
+              </IconButton>
+            }
           />
-        }
+          <Divider light />
+          {isOpen &&
+            <Browse
+              node={node}
+              queryFilters={{
+                q: keywordQuery,
+                nearby_latitude: here.latitude,
+                nearby_longitude: here.longitude,
+              }}
+              handleClose={handleClose}
+            />
+          }
+        </Card>
       </Dialog>
     </React.Fragment>
   );
