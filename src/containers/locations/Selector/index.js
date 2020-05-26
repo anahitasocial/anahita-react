@@ -14,7 +14,14 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 import DeleteIcon from '@material-ui/icons/Clear';
 
 import NodeType from '../../../proptypes/Node';
-import Browse from './Browse';
+import BrowseLocations from './Browse';
+import AddLocation from './Add';
+
+const TABS = {
+  BROWSE: 'browse',
+  READ: 'read',
+  ADD: 'add',
+};
 
 const LocationsSelector = (props) => {
   const {
@@ -25,6 +32,9 @@ const LocationsSelector = (props) => {
     isGeolocationAvailable,
     isGeolocationEnabled,
   } = props;
+
+  const [tab, setTab] = useState(TABS.BROWSE);
+  const [keyword, setKeyword] = useState('');
 
   const here = {
     longitude: 0,
@@ -39,8 +49,6 @@ const LocationsSelector = (props) => {
     here.longitude = coords.longitude;
     here.latitude = coords.latitude;
   }
-
-  const [keywordQuery, setKeywordQuery] = useState('');
 
   return (
     <React.Fragment>
@@ -71,15 +79,27 @@ const LocationsSelector = (props) => {
             }
           />
           <Divider light />
-          {isOpen &&
-            <Browse
+          {tab === TABS.BROWSE &&
+            <BrowseLocations
               node={node}
               queryFilters={{
-                q: keywordQuery,
                 nearby_latitude: here.latitude,
                 nearby_longitude: here.longitude,
               }}
               handleClose={handleClose}
+              noResultsCallback={(newKeyword) => {
+                setKeyword(newKeyword);
+                setTab(TABS.ADD);
+              }}
+            />
+          }
+          {tab === TABS.ADD &&
+            <AddLocation
+              node={node}
+              name={keyword}
+              callback={() => {
+                handleClose();
+              }}
             />
           }
         </Card>

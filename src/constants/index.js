@@ -7,6 +7,7 @@ import Cover from './cover';
 import InlineComments from './inline_comments';
 import Is from './is';
 import Likes from './likes';
+import Locations from './locations';
 import Notifications from './notifications';
 import Password from './password';
 import Person from './person';
@@ -26,6 +27,7 @@ export {
   InlineComments,
   Is,
   Likes,
+  Locations,
   Notifications,
   Password,
   Person,
