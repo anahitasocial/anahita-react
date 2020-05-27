@@ -8,7 +8,7 @@ import withWidth from '@material-ui/core/withWidth';
 import InfiniteScroll from 'react-infinite-scroller';
 import StackGrid from 'react-stack-grid';
 
-import taggableActions from '../../actions/taggable';
+import * as actions from '../../actions';
 import NodeType from '../../proptypes/Node';
 import NodesType from '../../proptypes/Nodes';
 
@@ -45,13 +45,13 @@ const TaggablesBrowse = (props) => {
 
   useEffect(() => {
     return () => {
-      resetTaggables();
+      resetTaggables(tag);
     };
   }, []);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
-    browseTaggables({
+    browseTaggables(tag, {
       tag,
       sort,
       start,
@@ -131,8 +131,8 @@ TaggablesBrowse.propTypes = {
   browseTaggables: PropTypes.func.isRequired,
   tag: NodeType.isRequired,
   taggables: NodesType.isRequired,
-  queryFilters: PropTypes.objectOf({
-    sort: PropTypes.oneOf([TOP, RECENT]).isRequired,
+  queryFilters: PropTypes.shape({
+    sort: PropTypes.oneOf([TOP, RECENT]),
     q: PropTypes.string,
   }).isRequired,
   width: PropTypes.string.isRequired,
@@ -142,11 +142,11 @@ TaggablesBrowse.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseTaggables: (params) => {
-      return dispatch(taggableActions.browse(params));
+    browseTaggables: (tag, params) => {
+      return dispatch(actions.taggables(tag).browse(params));
     },
-    resetTaggables: () => {
-      return dispatch(taggableActions.reset());
+    resetTaggables: (tag) => {
+      return dispatch(actions.taggables(tag).reset());
     },
   };
 };

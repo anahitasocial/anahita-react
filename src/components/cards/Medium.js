@@ -35,7 +35,7 @@ const styles = (theme) => {
       marginBottom: theme.spacing(2),
     },
     portrait: {
-      minHeight: theme.spacing(40),
+      minHeight: theme.spacing(50),
     },
     authorName: {
       fontSize: 16,

@@ -1,11 +1,15 @@
 import { normalize, schema } from 'normalizr';
 import { taggables as api } from '../api';
 
+// -- Reset
+
 function reset() {
   return {
     type: 'TAGGABLES_BROWSE_RESET',
   };
 }
+
+// -- Browse
 
 function browseRequest() {
   return {
@@ -38,25 +42,29 @@ function browseFailure(error) {
   };
 }
 
-function browse(params) {
-  return (dispatch) => {
-    dispatch(browseRequest());
-    return new Promise((resolve, reject) => {
-      api.browse(params)
-        .then((results) => {
-          dispatch(browseSuccess(results));
-          return resolve();
-        }, (response) => {
-          dispatch(browseFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          console.error(error);
-        });
-    });
+function browse(tag) {
+  return (params) => {
+    return (dispatch) => {
+      dispatch(browseRequest());
+      return new Promise((resolve, reject) => {
+        api(tag).browse(params)
+          .then((results) => {
+            dispatch(browseSuccess(results));
+            return resolve();
+          }, (response) => {
+            dispatch(browseFailure(response));
+            return reject(response);
+          }).catch((error) => {
+            console.error(error);
+          });
+      });
+    };
   };
 }
 
-export default {
-  reset,
-  browse,
+export default (tag) => {
+  return {
+    reset,
+    browse: browse(tag),
+  };
 };

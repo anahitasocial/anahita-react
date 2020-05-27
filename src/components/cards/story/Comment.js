@@ -33,7 +33,7 @@ const styles = (theme) => {
       marginBottom: theme.spacing(2),
     },
     portrait: {
-      height: theme.spacing(40),
+      height: theme.spacing(60),
       marginBottom: theme.spacing(2),
     },
     title: {
