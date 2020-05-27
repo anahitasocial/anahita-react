@@ -54,7 +54,6 @@ const LocationForm = (props) => {
             helperText={name.error}
             inputProps={{
               maxLength: TITLE.MAX_LENGTH,
-              minLength: TITLE.MIN_LENGTH,
             }}
             disabled={isFetching}
             fullWidth
@@ -73,7 +72,6 @@ const LocationForm = (props) => {
             helperText={address.error}
             inputProps={{
               maxLength: ADDRESS.MAX_LENGTH,
-              minLength: ADDRESS.MIN_LENGTH,
             }}
             disabled={isFetching}
             fullWidth
@@ -91,7 +89,6 @@ const LocationForm = (props) => {
             helperText={city.error}
             inputProps={{
               maxLength: CITY.MAX_LENGTH,
-              minLength: CITY.MIN_LENGTH,
             }}
             disabled={isFetching}
             fullWidth
@@ -126,6 +123,7 @@ const LocationForm = (props) => {
             helperText={country.error}
             inputProps={{
               maxLength: COUNTRY.MAX_LENGTH,
+              minLength: COUNTRY.MIN_LENGTH,
             }}
             disabled={isFetching}
             fullWidth

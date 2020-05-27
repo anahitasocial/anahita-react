@@ -1,3 +1,4 @@
+/* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -24,6 +25,8 @@ const LocationsSelectorAdd = (props) => {
     callback,
   } = props;
 
+  formFields.name.value = name;
+
   const [fields, setFields] = useState(formFields);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -49,19 +52,15 @@ const LocationsSelectorAdd = (props) => {
           setIsFetching(true);
           return callback(location);
         }).catch((err) => {
-          return console.log(err);
+          return console.error(err);
         });
       }).catch((err) => {
-        return console.log(err);
+        return console.error(err);
       });
     }
 
     setFields({ ...newFields });
   };
-
-  if (name) {
-    fields.name.value = name;
-  }
 
   return (
     <LocationForm

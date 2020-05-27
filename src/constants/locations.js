@@ -1,21 +1,19 @@
 export default {
   FIELDS: {
     TITLE: {
-      MAX_LENGTH: 30,
-      MIN_LENGTH: 3,
+      MAX_LENGTH: 100,
     },
     ADDRESS: {
       MAX_LENGTH: 100,
-      MIN_LENGTH: 10,
     },
     CITY: {
-      MAX_LENGTH: 3,
-      MIN_LENGTH: 30,
+      MAX_LENGTH: 100,
     },
     STATE_PROVINCE: {
-      MIN_LENGTH: 100,
+      MAX_LENGTH: 100,
     },
     COUNTRY: {
+      MAX_LENGTH: 100,
       MIN_LENGTH: 2,
     },
   },
