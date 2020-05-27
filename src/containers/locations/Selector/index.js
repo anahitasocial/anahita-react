@@ -8,7 +8,6 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Clear';
 
 import NodeType from '../../../proptypes/Node';
@@ -42,7 +41,10 @@ const LocationsSelector = (props) => {
     setTab(value);
   };
 
-  if (
+  if (node.longitude && node.latitude) {
+    here.longitude = node.longitude;
+    here.latitude = node.latitude;
+  } else if (
     isGeolocationAvailable &&
     isGeolocationEnabled &&
     coords

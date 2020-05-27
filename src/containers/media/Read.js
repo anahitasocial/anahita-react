@@ -11,6 +11,7 @@ import MediaType from '../../proptypes/Media';
 import MediumDefault from '../../proptypes/MediumDefault';
 import MediumComments from '../comments/Browse';
 import Progress from '../../components/Progress';
+import LocationsGadget from '../locations/Gadget';
 import MediumCard from './Card';
 
 import * as actions from '../../actions';
@@ -72,6 +73,7 @@ const MediaRead = (props) => {
             parent={medium}
             canAdd={canAdd}
           />
+          <LocationsGadget node={medium} />
         </React.Fragment>
       }
     </React.Fragment>
