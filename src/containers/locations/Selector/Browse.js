@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import List from '@material-ui/core/List';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -16,9 +18,18 @@ import AddAction from '../../actions/tags/location/Add';
 import * as actions from '../../../actions';
 import { App as APP } from '../../../constants';
 
+const useStyles = makeStyles(theme => ({
+  list: {
+    position: 'relative',
+    overflow: 'auto',
+    // maxHeight: theme.spacing(50),
+  },
+}));
+
 const { LIMIT } = APP.BROWSE;
 
 const LocationsSelectorBrowse = (props) => {
+  const classes = useStyles();
   const {
     browseLocations,
     resetLocations,
@@ -83,25 +94,23 @@ const LocationsSelectorBrowse = (props) => {
   }
 
   return (
-    <React.Fragment>
-      <form onSubmit={handleOnSubmit}>
-        <FormControl
-          fullWidth
-          style={{
-            padding: 16,
-          }}
-        >
-          <TextField
-            name="keyword"
-            value={keyword}
-            onChange={handleOnChange}
-            variant="outlined"
-            placeholder="Search location ..."
-            fullWidth
-          />
-        </FormControl>
-      </form>
-      <List>
+    <Card square>
+      <CardContent>
+        <form onSubmit={handleOnSubmit}>
+          <FormControl fullWidth>
+            <TextField
+              name="keyword"
+              value={keyword}
+              onChange={handleOnChange}
+              variant="outlined"
+              placeholder="Search location ..."
+              fullWidth
+              autoFocus
+            />
+          </FormControl>
+        </form>
+      </CardContent>
+      <List className={classes.list}>
         {locations.allIds.map((locationId) => {
           const location = locations.byId[locationId];
           return (
@@ -119,7 +128,7 @@ const LocationsSelectorBrowse = (props) => {
           );
         })}
       </List>
-    </React.Fragment>
+    </Card>
   );
 };
 

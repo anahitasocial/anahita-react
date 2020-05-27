@@ -39,7 +39,7 @@ const LocationForm = (props) => {
   country.isValid;
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form onSubmit={handleOnSubmit} noValidate>
       <Card>
         <CardContent>
           <TextField

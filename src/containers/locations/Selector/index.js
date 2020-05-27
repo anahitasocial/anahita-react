@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { geolocated } from 'react-geolocated';
-
-import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+import AppBar from '@material-ui/core/AppBar';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-
-import LocationIcon from '@material-ui/icons/LocationOn';
 import DeleteIcon from '@material-ui/icons/Clear';
 
 import NodeType from '../../../proptypes/Node';
@@ -18,8 +16,7 @@ import BrowseLocations from './Browse';
 import AddLocation from './Add';
 
 const TABS = {
-  BROWSE: 'browse',
-  READ: 'read',
+  SEARCH: 'search',
   ADD: 'add',
 };
 
@@ -33,12 +30,16 @@ const LocationsSelector = (props) => {
     isGeolocationEnabled,
   } = props;
 
-  const [tab, setTab] = useState(TABS.BROWSE);
+  const [tab, setTab] = useState(TABS.SEARCH);
   const [keyword, setKeyword] = useState('');
 
   const here = {
     longitude: 0,
     latitude: 0,
+  };
+
+  const changeTab = (event, value) => {
+    setTab(value);
   };
 
   if (
@@ -57,52 +58,58 @@ const LocationsSelector = (props) => {
         onClose={handleClose}
         fullScreen
       >
-        <Card square>
-          <CardHeader
-            avatar={
-              <Avatar>
-                <LocationIcon />
-              </Avatar>
-            }
-            title={
-              <Typography variant="h6">
-                Locations
-              </Typography>
-            }
-            action={
-              <IconButton
-                aria-label="close"
-                onClick={handleClose}
-              >
-                <DeleteIcon />
-              </IconButton>
-            }
+        <DialogTitle>
+          Add Location
+          <IconButton
+            onClick={handleClose}
+            style={{
+              float: 'right',
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </DialogTitle>
+        <Divider light />
+        <AppBar
+          position="sticky"
+          color="inherit"
+          elevation={1}
+        >
+          <Tabs
+            value={tab}
+            onChange={changeTab}
+            centered
+            variant="fullWidth"
+            indicatorColor="primary"
+            textColor="primary"
+          >
+            <Tab label="Search" value={TABS.SEARCH} />
+            <Tab label="Add" value={TABS.ADD} />
+          </Tabs>
+        </AppBar>
+        {tab === TABS.SEARCH &&
+          <BrowseLocations
+            node={node}
+            queryFilters={{
+              nearby_latitude: here.latitude,
+              nearby_longitude: here.longitude,
+            }}
+            handleClose={handleClose}
+            noResultsCallback={(newKeyword) => {
+              setKeyword(newKeyword);
+              setTab(TABS.ADD);
+            }}
           />
-          <Divider light />
-          {tab === TABS.BROWSE &&
-            <BrowseLocations
-              node={node}
-              queryFilters={{
-                nearby_latitude: here.latitude,
-                nearby_longitude: here.longitude,
-              }}
-              handleClose={handleClose}
-              noResultsCallback={(newKeyword) => {
-                setKeyword(newKeyword);
-                setTab(TABS.ADD);
-              }}
-            />
-          }
-          {tab === TABS.ADD &&
-            <AddLocation
-              node={node}
-              name={keyword}
-              callback={() => {
-                handleClose();
-              }}
-            />
-          }
-        </Card>
+        }
+        {tab === TABS.ADD &&
+          <AddLocation
+            node={node}
+            name={keyword}
+            callback={() => {
+              handleClose();
+            }}
+          />
+        }
       </Dialog>
     </React.Fragment>
   );
