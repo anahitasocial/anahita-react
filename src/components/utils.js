@@ -39,8 +39,7 @@ export function getCoverURL(entity) {
 }
 
 export function getActorInitials(actor) {
-  const namespace = actor.objectType.split('.')[1];
-  if (namespace === 'people') {
+  if (actor.givenName && actor.familyName) {
     return `${actor.givenName.charAt(0).toUpperCase()}${actor.familyName.charAt(0).toUpperCase()}`;
   }
 

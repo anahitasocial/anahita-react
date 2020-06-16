@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import HashtagsBrowse from './Browse';
-import appActions from '../../actions/app';
+import { app as appActions } from '../../actions';
 import { App as APP } from '../../constants';
 import i18n from '../../languages';
 
@@ -27,26 +27,6 @@ const useStyles = makeStyles({
     zIndex: 8,
   },
 });
-
-const HashtagsPanel = (props) => {
-  const { sort } = props;
-  return (
-    <HashtagsBrowse
-      queryFilters={{
-        q: '',
-        sort,
-      }}
-    />
-  );
-};
-
-HashtagsPanel.propTypes = {
-  sort: PropTypes.oneOf([
-    TRENDING,
-    TOP,
-    RECENT,
-  ]).isRequired,
-};
 
 const Hashtags = (props) => {
   const classes = useStyles();
@@ -86,15 +66,13 @@ const Hashtags = (props) => {
           <Tab label="Recent" value={RECENT} />
         </Tabs>
       </AppBar>
-      {tab === TRENDING &&
-        <HashtagsPanel sort={tab} />
-      }
-      {tab === TOP &&
-        <HashtagsPanel sort={tab} />
-      }
-      {tab === RECENT &&
-        <HashtagsPanel sort={tab} />
-      }
+      <HashtagsBrowse
+        key={`hashtags-sort-${tab}`}
+        queryFilters={{
+          q: '',
+          sort: tab,
+        }}
+      />
     </React.Fragment>
   );
 };

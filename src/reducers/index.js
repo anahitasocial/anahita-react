@@ -9,6 +9,7 @@ import locations from './locations';
 import hashtags from './hashtags';
 import notifications from './notifications';
 import password from './password';
+import search from './search';
 import session from './session';
 import signup from './signup';
 import socialgraph from './socialgraph';
@@ -55,6 +56,7 @@ export default combineReducers({
   password,
   people,
   photos,
+  search,
   session,
   signup,
   socialgraph,

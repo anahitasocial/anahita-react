@@ -34,6 +34,7 @@ const locations = createApi('locations');
 const notes = createApi('notes');
 const people = createApi('people');
 const photos = createApi('photos');
+const search = createApi('search');
 const stories = createApi('stories');
 const todos = createApi('todos');
 const topics = createApi('topics');
@@ -55,6 +56,7 @@ export {
   password,
   people,
   photos,
+  search,
   session,
   signup,
   socialgraph,

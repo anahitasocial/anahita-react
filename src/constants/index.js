@@ -11,6 +11,7 @@ import Locations from './locations';
 import Notifications from './notifications';
 import Password from './password';
 import Person from './person';
+import Search from './search';
 import Session from './session';
 import Socialgraph from './socialgraph';
 import Signup from './signup';
@@ -31,6 +32,7 @@ export {
   Notifications,
   Password,
   Person,
+  Search,
   Signup,
   Session,
   Socialgraph,

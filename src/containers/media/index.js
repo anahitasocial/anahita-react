@@ -27,21 +27,6 @@ const useStyles = makeStyles({
   },
 });
 
-const MediaPanel = (props) => {
-  const { namespace, queryFilters } = props;
-  const MediaBrowse = Browse(namespace);
-  return (
-    <MediaBrowse
-      queryFilters={queryFilters}
-    />
-  );
-};
-
-MediaPanel.propTypes = {
-  namespace: PropTypes.string.isRequired,
-  queryFilters: PropTypes.object.isRequired,
-};
-
 const Media = (props) => {
   const classes = useStyles();
   const {
@@ -60,6 +45,8 @@ const Media = (props) => {
   useEffect(() => {
     setAppTitle(i18n.t(`${namespace}:cTitle`));
   }, []);
+
+  const MediaBrowse = Browse(namespace);
 
   return (
     <React.Fragment>
@@ -81,26 +68,13 @@ const Media = (props) => {
           <Tab label="Recent" value={RECENT} />
         </Tabs>
       </AppBar>
-      {tab === UPDATED &&
-        <MediaPanel
-          sort={tab}
-          namespace={namespace}
-          queryFilters={{
-            ...queryFilters,
-            sort: UPDATED,
-          }}
-        />
-      }
-      {tab === RECENT &&
-        <MediaPanel
-          sort={tab}
-          namespace={namespace}
-          queryFilters={{
-            ...queryFilters,
-            sort: RECENT,
-          }}
-        />
-      }
+      <MediaBrowse
+        key={`media-sort-${tab}`}
+        queryFilters={{
+          ...queryFilters,
+          sort: tab,
+        }}
+      />
     </React.Fragment>
   );
 };

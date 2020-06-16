@@ -88,6 +88,10 @@ export default {
     cTitle: 'Locations',
     mTitle: 'Locations',
   },
+  search: {
+    cTitle: 'Search',
+    mTitle: 'Search',
+  },
   taggables: {
     count: '{{count}} nodes',
   },
