@@ -13,4 +13,9 @@ export default {
       GROUPS: 'groups',
     },
   },
+  SORTING: {
+    RELEVANT: 'relevant',
+    RECENT: 'recent',
+    DISTANCE: 'distance',
+  },
 };

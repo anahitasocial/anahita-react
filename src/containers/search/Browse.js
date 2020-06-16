@@ -15,19 +15,18 @@ import CommentCard from '../../components/cards/Comment';
 import ActorsCard from '../actors/Card';
 import MediaCard from '../media/Card';
 import Progress from '../../components/Progress';
-import { App as APP } from '../../constants';
+import { App as APP, Search as SEARCH } from '../../constants';
 
 import utils from '../../utils/node';
 import containersUtils from '../utils';
 
+const { LIMIT } = APP.BROWSE;
+
 const {
-  LIMIT,
-  SORTING: {
-    TOP,
-    RECENT,
-    RELEVANT,
-  },
-} = APP.BROWSE;
+  RELEVANT,
+  RECENT,
+  DISTANCE,
+} = SEARCH.SORTING;
 
 const SearchBrowse = (props) => {
   const {
@@ -40,6 +39,8 @@ const SearchBrowse = (props) => {
       sort,
       q,
       scope,
+      searchRange,
+      searchComments,
     },
     width,
   } = props;
@@ -56,6 +57,8 @@ const SearchBrowse = (props) => {
       sort,
       start,
       scope,
+      search_range: searchRange,
+      search_comments: searchComments,
       limit: LIMIT,
       term: q,
     });
@@ -133,9 +136,11 @@ SearchBrowse.propTypes = {
   browseSearch: PropTypes.func.isRequired,
   search: NodesType.isRequired,
   queryParams: PropTypes.shape({
-    sort: PropTypes.oneOf([TOP, RECENT, RELEVANT]),
+    sort: PropTypes.oneOf([RELEVANT, RECENT, DISTANCE]),
     q: PropTypes.string,
     scope: PropTypes.string,
+    searchRange: PropTypes.number,
+    searchComments: PropTypes.bool,
   }).isRequired,
   width: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
