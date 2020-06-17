@@ -25,7 +25,6 @@ const { LIMIT } = APP.BROWSE;
 const {
   RELEVANT,
   RECENT,
-  DISTANCE,
 } = SEARCH.SORTING;
 
 const SearchBrowse = (props) => {
@@ -39,6 +38,9 @@ const SearchBrowse = (props) => {
       sort,
       q,
       scope,
+      coordLong,
+      coordLat,
+      searchNearme,
       searchRange,
       searchComments,
     },
@@ -57,8 +59,11 @@ const SearchBrowse = (props) => {
       sort,
       start,
       scope,
+      search_nearme: searchNearme,
       search_range: searchRange,
       search_comments: searchComments,
+      coord_long: coordLong,
+      coord_lat: coordLat,
       limit: LIMIT,
       term: q,
     });
@@ -136,11 +141,14 @@ SearchBrowse.propTypes = {
   browseSearch: PropTypes.func.isRequired,
   search: NodesType.isRequired,
   queryParams: PropTypes.shape({
-    sort: PropTypes.oneOf([RELEVANT, RECENT, DISTANCE]),
+    sort: PropTypes.oneOf([RELEVANT, RECENT]),
     q: PropTypes.string,
     scope: PropTypes.string,
+    searchNearme: PropTypes.bool,
     searchRange: PropTypes.number,
     searchComments: PropTypes.bool,
+    coordLong: PropTypes.number,
+    coordLat: PropTypes.number,
   }).isRequired,
   width: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,

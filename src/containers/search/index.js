@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { geolocated } from 'react-geolocated';
 import queryString from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -47,17 +48,23 @@ const Search = (props) => {
   const classes = useStyles();
   const {
     setAppTitle,
+    coords,
+    isGeolocationAvailable,
+    isGeolocationEnabled,
     location: {
       search,
     },
   } = props;
 
   const { q } = queryString.parse(search);
+  let coordLong = 0.0;
+  let coordLat = 0.0;
 
   const [scope, setScope] = useState(SCOPE.ALL);
   const [sort, setSort] = useState(SORTING.RELEVANT);
   const [searchComments, setSearchComments] = useState(false);
-  const [searchRange, setSearchRange] = useState(25);
+  const [searchNearme, setSearchNearme] = useState(false);
+  const [searchRange, setSearchRange] = useState(100);
 
   const changeScope = (event, value) => {
     setScope(value);
@@ -66,6 +73,15 @@ const Search = (props) => {
   useEffect(() => {
     setAppTitle(i18n.t('search:cTitle'));
   }, []);
+
+  if (
+    isGeolocationAvailable &&
+    isGeolocationEnabled &&
+    coords
+  ) {
+    coordLong = coords.longitude;
+    coordLat = coords.latitude;
+  }
 
   return (
     <React.Fragment>
@@ -93,9 +109,20 @@ const Search = (props) => {
               >
                 <MenuItem value={SORTING.RELEVANT}>Most Relevant</MenuItem>
                 <MenuItem value={SORTING.RECENT}>Most Recent</MenuItem>
-                <MenuItem value={SORTING.DISTANCE}>Near me</MenuItem>
               </Select>
             </FormControl>
+            <FormControlLabel
+              className={classes.formControlLabel}
+              control={
+                <Switch
+                  checked={searchNearme}
+                  onChange={() => {
+                    setSearchNearme(!searchNearme);
+                  }}
+                />
+              }
+              label="Near me"
+            />
             <FormControl
               variant="outlined"
               className={classes.formControl}
@@ -114,8 +141,9 @@ const Search = (props) => {
                 marks
                 min={10}
                 max={100}
-                disabled={sort !== SORTING.DISTANCE}
+                disabled={!searchNearme}
               />
+              <InputLabel id="search-range-label">Range</InputLabel>
             </FormControl>
             <FormControlLabel
               className={classes.formControlLabel}
@@ -127,7 +155,7 @@ const Search = (props) => {
                   }}
                 />
               }
-              label="Include Comments"
+              label="Include comments"
             />
           </FormGroup>
         </Toolbar>
@@ -149,13 +177,16 @@ const Search = (props) => {
         </Tabs>
       </AppBar>
       <SearchBrowse
-        key={`${sort}-${scope}-${searchRange}-${searchComments}`}
+        key={`${sort}-${scope}-${searchNearme}-${searchRange}-${searchComments}`}
         queryParams={{
           q,
           sort,
           scope,
+          searchNearme,
           searchRange,
           searchComments,
+          coordLong,
+          coordLat,
         }}
       />
     </React.Fragment>
@@ -165,6 +196,19 @@ const Search = (props) => {
 Search.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  coords: PropTypes.objectOf(PropTypes.shape({
+    longitude: PropTypes.number,
+    latitude: PropTypes.number,
+  })),
+  isGeolocationAvailable: PropTypes.bool.isRequired,
+  isGeolocationEnabled: PropTypes.bool.isRequired,
+};
+
+Search.defaultProps = {
+  coords: {
+    longitude: 0.0,
+    latitude: 0.0,
+  },
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -179,7 +223,12 @@ const mapStateToProps = () => {
   return {};
 };
 
-export default connect(
+export default geolocated({
+  positionOptions: {
+    enableHighAccuracy: false,
+  },
+  userDecisionTimeout: 5000,
+})(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Search);
+)(Search));
