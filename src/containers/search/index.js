@@ -134,7 +134,7 @@ const Search = (props) => {
                 onChange={(event) => {
                   setSort(event.target.value);
                 }}
-                label="Age"
+                label="Sort"
               >
                 <MenuItem value={SORTING.RELEVANT}>Most Relevant</MenuItem>
                 <MenuItem value={SORTING.RECENT}>Most Recent</MenuItem>
