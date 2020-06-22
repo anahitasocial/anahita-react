@@ -53,7 +53,7 @@ const SearchBox = (props) => {
     },
   } = props;
 
-  const { q } = queryString.parse(search);
+  const { q = '' } = queryString.parse(search);
 
   const [keyword, setKeyword] = useState(q);
 

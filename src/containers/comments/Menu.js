@@ -69,7 +69,7 @@ const CommentMenu = (props) => {
             {i18n.t('actions:edit')}
           </MenuItem>
         }
-        {author.id !== viewer.id &&
+        {author && author.id !== viewer.id &&
           <BlockActionActionWithRef
             actor={author}
             component="menuitem"
@@ -82,7 +82,7 @@ const CommentMenu = (props) => {
             })}
           />
         }
-        {author.id !== viewer.id &&
+        {author && author.id !== viewer.id &&
           <FollowActionWithRef
             actor={author}
             component="menuitem"

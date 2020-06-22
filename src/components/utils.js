@@ -30,6 +30,12 @@ export function getURL(entity) {
   return '/';
 }
 
+export function getCommentURL(comment) {
+  const { id, parentId, objectType } = comment;
+  const namespace = objectType.split('.')[1];
+  return `/${namespace}/${parentId}/#${id}`;
+}
+
 export function getPortraitURL(entity) {
   return entity.imageURL && entity.imageURL.medium && entity.imageURL.medium.url;
 }

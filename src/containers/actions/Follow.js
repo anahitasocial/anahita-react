@@ -25,7 +25,6 @@ const FollowAction = React.forwardRef((props, ref) => {
   const isLeader = actors.byId[actor.id] ? actors.byId[actor.id].isLeader : actor.isLeader;
 
   const [leader, setLeader] = useState(isLeader);
-
   const [waiting, setWaiting] = useState(false);
 
   useEffect(() => {

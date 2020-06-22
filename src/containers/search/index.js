@@ -18,6 +18,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Toolbar from '@material-ui/core/Toolbar';
 
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
+
 import SearchBrowse from './Browse';
 import { app as appActions } from '../../actions';
 import { Search as SEARCH } from '../../constants';
@@ -32,17 +34,41 @@ const useStyles = makeStyles((theme) => {
       position: 'sticky',
       top: 8 * 7,
       zIndex: 8,
+      width: '100%',
     },
     formControl: {
-      width: theme.spacing(20),
+      width: '100%',
       marginTop: theme.spacing(3),
-      marginRight: theme.spacing(2),
+      // marginLeft: theme.spacing(1),
     },
     formControlLabel: {
       marginTop: theme.spacing(3),
     },
   };
 });
+
+const marks = [
+  {
+    value: 25,
+    label: '25 km',
+  },
+  {
+    value: 50,
+    label: '50 km',
+  },
+  {
+    value: 75,
+    label: '75 km',
+  },
+  {
+    value: 100,
+    label: '100 km',
+  },
+  {
+    value: 125,
+    label: <AllInclusiveIcon />,
+  },
+];
 
 const Search = (props) => {
   const classes = useStyles();
@@ -63,8 +89,7 @@ const Search = (props) => {
   const [scope, setScope] = useState(SCOPE.ALL);
   const [sort, setSort] = useState(SORTING.RELEVANT);
   const [searchComments, setSearchComments] = useState(false);
-  const [searchNearme, setSearchNearme] = useState(false);
-  const [searchRange, setSearchRange] = useState(100);
+  const [searchRange, setSearchRange] = useState(125);
 
   const changeScope = (event, value) => {
     setScope(value);
@@ -92,7 +117,11 @@ const Search = (props) => {
         elevation={1}
       >
         <Toolbar>
-          <FormGroup row>
+          <FormGroup
+            style={{
+              width: '100%',
+            }}
+          >
             <FormControl
               variant="outlined"
               className={classes.formControl}
@@ -111,18 +140,6 @@ const Search = (props) => {
                 <MenuItem value={SORTING.RECENT}>Most Recent</MenuItem>
               </Select>
             </FormControl>
-            <FormControlLabel
-              className={classes.formControlLabel}
-              control={
-                <Switch
-                  checked={searchNearme}
-                  onChange={() => {
-                    setSearchNearme(!searchNearme);
-                  }}
-                />
-              }
-              label="Near me"
-            />
             <FormControl
               variant="outlined"
               className={classes.formControl}
@@ -130,20 +147,17 @@ const Search = (props) => {
               <Slider
                 value={searchRange}
                 getAriaValueText={(value) => {
-                  return `${value} km`;
+                  return `${value}km`;
                 }}
                 onChange={(event, value) => {
                   setSearchRange(value);
                 }}
-                aria-labelledby="discrete-slider"
-                valueLabelDisplay="auto"
-                step={10}
-                marks
-                min={10}
-                max={100}
-                disabled={!searchNearme}
+                aria-labelledby="search-range-slider"
+                min={25}
+                max={125}
+                step={25}
+                marks={marks}
               />
-              <InputLabel id="search-range-label">Range</InputLabel>
             </FormControl>
             <FormControlLabel
               className={classes.formControlLabel}
@@ -177,12 +191,11 @@ const Search = (props) => {
         </Tabs>
       </AppBar>
       <SearchBrowse
-        key={`${sort}-${scope}-${searchNearme}-${searchRange}-${searchComments}`}
+        key={`${sort}-${scope}-${searchRange}-${searchComments}`}
         queryParams={{
           q,
           sort,
           scope,
-          searchNearme,
           searchRange,
           searchComments,
           coordLong,
