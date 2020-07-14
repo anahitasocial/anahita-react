@@ -30,8 +30,6 @@ const SettingsConfigsForm = (props) => {
       live_site,
       log_path,
       tmp_path,
-      secret,
-      dbtype,
       host,
       db,
       dbprefix,
@@ -122,16 +120,10 @@ const SettingsConfigsForm = (props) => {
             <TextField
               name="secret"
               value={configs.secret}
-              onChange={handleOnChange}
               label="Secret Word"
-              error={secret.error !== ''}
-              helperText={secret.error}
               margin="normal"
               fullWidth
-              inputProps={{
-                maxLength: MAX_LENGTH,
-              }}
-              required
+              disabled
             />
             <FormControl margin="normal">
               <InputLabel id="configs-error-reporting-label">

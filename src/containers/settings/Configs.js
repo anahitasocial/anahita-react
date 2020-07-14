@@ -14,7 +14,6 @@ const formFields = form.createFormFields([
   'live_site',
   'log_path',
   'tmp_path',
-  'secret',
   'host',
   'db',
   'dbprefix',
