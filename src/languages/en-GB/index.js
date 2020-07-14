@@ -52,6 +52,10 @@ export default {
     cTitle: 'Dashboard',
     mTitle: 'Dashboard',
   },
+  settings: {
+    cTitle: 'Settings',
+    mTitle: 'Settings',
+  },
   groups: {
     cTitle: 'Groups',
     mTitle: 'Groups',

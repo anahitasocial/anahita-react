@@ -21,6 +21,10 @@ const locations = createAction('locations')(api.locations);
 const notes = createAction('notes')(api.notes);
 const people = createAction('people')(api.people);
 const photos = createAction('photos')(api.photos);
+const settings = {
+  about: createAction('settings_about')(api.settings.about),
+  configs: createAction('settings_configs')(api.settings.configs),
+};
 const search = createAction('search')(api.search);
 const todos = createAction('todos')(api.todos);
 const topics = createAction('topics')(api.topics);
@@ -56,6 +60,7 @@ export {
   people,
   photos,
   search,
+  settings,
   session,
   signup,
   socialgraph,

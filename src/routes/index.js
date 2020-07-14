@@ -35,6 +35,7 @@ import LocationsRead from '../containers/locations/Read';
 
 import DashboardPage from '../containers/Dashboard';
 import SearchPage from '../containers/search';
+import Settings from '../containers/settings';
 import NotFoundPage from '../containers/NotFound';
 
 const GroupsBrowse = ActorsBrowse('groups');
@@ -196,6 +197,11 @@ const Routes = (props) => {
         component={(params) => {
           return <GroupsDelete {...params} />;
         }}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/settings/"
+        component={Settings}
       />
       <Route
         exact

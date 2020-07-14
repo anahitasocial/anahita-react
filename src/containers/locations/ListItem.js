@@ -23,6 +23,7 @@ const LocationsListItem = (props) => {
       button
       component="a"
       href={`/locations/${location.id}-${location.alias}/`}
+      divider
     >
       <ListItemAvatar>
         <Avatar>

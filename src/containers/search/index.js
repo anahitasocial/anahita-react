@@ -21,7 +21,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 
 import SearchBrowse from './Browse';
-import { app as appActions } from '../../actions';
+import * as actions from '../../actions';
 import { Search as SEARCH } from '../../constants';
 import i18n from '../../languages';
 
@@ -227,7 +227,7 @@ Search.defaultProps = {
 const mapDispatchToProps = (dispatch) => {
   return {
     setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
+      dispatch(actions.app.setAppTitle(title));
     },
   };
 };
