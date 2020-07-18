@@ -30,6 +30,12 @@ export function getURL(entity) {
   return '/';
 }
 
+export function getCommentURL(comment) {
+  const { id, parentId, objectType } = comment;
+  const namespace = objectType.split('.')[1];
+  return `/${namespace}/${parentId}/#${id}`;
+}
+
 export function getPortraitURL(entity) {
   return entity.imageURL && entity.imageURL.medium && entity.imageURL.medium.url;
 }
@@ -39,8 +45,7 @@ export function getCoverURL(entity) {
 }
 
 export function getActorInitials(actor) {
-  const namespace = actor.objectType.split('.')[1];
-  if (namespace === 'people') {
+  if (actor.givenName && actor.familyName) {
     return `${actor.givenName.charAt(0).toUpperCase()}${actor.familyName.charAt(0).toUpperCase()}`;
   }
 

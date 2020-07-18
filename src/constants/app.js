@@ -9,6 +9,7 @@ export default {
       TOP: 'top',
       RECENT: 'recent',
       UPDATED: 'updated',
+      RELEVANT: 'relevant',
     },
   },
 };

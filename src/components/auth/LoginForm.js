@@ -30,7 +30,7 @@ const LoginForm = (props) => {
   const enableSubmit = username.isValid && password.isValid;
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form onSubmit={handleOnSubmit} noValidate>
       <Card>
         <CardHeader
           avatar={

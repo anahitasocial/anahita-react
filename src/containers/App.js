@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -13,10 +13,9 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import SearchIcon from '@material-ui/icons/Search';
+import SearchBox from '../containers/search/SearchBox';
 
 import Viewer from '../components/auth/Viewer';
 import LeftMenu from '../components/LeftMenu';
@@ -94,41 +93,6 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
     marginTop: theme.spacing(2),
   },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200,
-    },
-  },
 }));
 
 const App = (props) => {
@@ -150,7 +114,8 @@ const App = (props) => {
     isAuthenticated,
     viewer,
     appBarTitle,
-  } = props;
+    location,
+  } = props
 
   return (
     <div className={classes.root}>
@@ -177,19 +142,7 @@ const App = (props) => {
               {appBarTitle}
             </Typography>
           }
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+          <SearchBox location={location} />
           <div className={classes.grow} />
           <Viewer
             viewer={viewer}
@@ -212,7 +165,7 @@ const App = (props) => {
         <div className={classes.drawerInner}>
           <div className={classes.drawerHeader}>
             <Typography variant="h6" color="inherit" noWrap>
-              Anahita
+              {process.env.REACT_APP_NAME}
             </Typography>
             <IconButton onClick={handleDrawerToggle}>
               <ChevronLeftIcon />

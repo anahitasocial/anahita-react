@@ -15,6 +15,7 @@ import signup from './signup';
 import socialgraph from './socialgraph';
 import taggables from './taggables';
 import tagGraph from './tag_graph';
+import settings from './settings';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -34,6 +35,7 @@ const locations = createApi('locations');
 const notes = createApi('notes');
 const people = createApi('people');
 const photos = createApi('photos');
+const search = createApi('search');
 const stories = createApi('stories');
 const todos = createApi('todos');
 const topics = createApi('topics');
@@ -55,7 +57,9 @@ export {
   password,
   people,
   photos,
+  search,
   session,
+  settings,
   signup,
   socialgraph,
   stories,

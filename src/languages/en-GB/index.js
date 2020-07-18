@@ -52,6 +52,10 @@ export default {
     cTitle: 'Dashboard',
     mTitle: 'Dashboard',
   },
+  settings: {
+    cTitle: 'Settings',
+    mTitle: 'Settings',
+  },
   groups: {
     cTitle: 'Groups',
     mTitle: 'Groups',
@@ -87,6 +91,10 @@ export default {
   locations: {
     cTitle: 'Locations',
     mTitle: 'Locations',
+  },
+  search: {
+    cTitle: 'Search',
+    mTitle: 'Search',
   },
   taggables: {
     count: '{{count}} nodes',

@@ -45,7 +45,7 @@ const SignupForm = (props) => {
   password.isValid;
 
   return (
-    <form onSubmit={handleOnSubmit} autoComplete="off">
+    <form onSubmit={handleOnSubmit} noValidate>
       <Card>
         <CardHeader
           avatar={

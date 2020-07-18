@@ -25,27 +25,6 @@ const useStyles = makeStyles({
   },
 });
 
-const TaggablesPanel = (props) => {
-  const { sort, tag } = props;
-  return (
-    <TaggablesBrowse
-      tag={tag}
-      queryFilters={{
-        q: '',
-        sort,
-      }}
-    />
-  );
-};
-
-TaggablesPanel.propTypes = {
-  tag: NodeType.isRequired,
-  sort: PropTypes.oneOf([
-    TOP,
-    RECENT,
-  ]).isRequired,
-};
-
 const Taggables = (props) => {
   const classes = useStyles();
   const {
@@ -79,18 +58,14 @@ const Taggables = (props) => {
           <Tab label="Recent" value={RECENT} />
         </Tabs>
       </AppBar>
-      {tab === TOP &&
-        <TaggablesPanel
-          tag={tag}
-          sort={tab}
-        />
-      }
-      {tab === RECENT &&
-        <TaggablesPanel
-          tag={tag}
-          sort={tab}
-        />
-      }
+      <TaggablesBrowse
+        key={`taggable-panel-sort-${tab}`}
+        tag={tag}
+        queryFilters={{
+          q: '',
+          sort: tab,
+        }}
+      />
     </React.Fragment>
   );
 };

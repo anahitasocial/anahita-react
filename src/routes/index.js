@@ -34,6 +34,8 @@ import Locations from '../containers/locations';
 import LocationsRead from '../containers/locations/Read';
 
 import DashboardPage from '../containers/Dashboard';
+import SearchPage from '../containers/search';
+import Settings from '../containers/settings';
 import NotFoundPage from '../containers/NotFound';
 
 const GroupsBrowse = ActorsBrowse('groups');
@@ -78,6 +80,11 @@ const Routes = (props) => {
         exact
         path="/"
         component={isAuthenticated ? DashboardPage : HomePage}
+      />
+      <Route
+        exact
+        path="/search/"
+        component={SearchPage}
       />
       <Route
         exact
@@ -190,6 +197,11 @@ const Routes = (props) => {
         component={(params) => {
           return <GroupsDelete {...params} />;
         }}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/settings/"
+        component={Settings}
       />
       <Route
         exact

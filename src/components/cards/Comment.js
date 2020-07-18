@@ -6,11 +6,19 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import Link from '@material-ui/core/Link';
 
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import EntityBody from '../EntityBody';
+import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
+// import ActorDefault from '../../proptypes/ActorDefault';
+
+import {
+  getCommentURL,
+  getAuthor,
+} from '../utils';
 
 const styles = (theme) => {
   return {
@@ -38,7 +46,9 @@ const CommentCard = (props) => {
     commentForm,
   } = props;
 
-  const { author, creationTime } = comment;
+  const { creationTime } = comment;
+  const author = getAuthor(comment);
+  const url = getCommentURL(comment);
 
   if (isEditing) {
     return (
@@ -65,9 +75,11 @@ const CommentCard = (props) => {
           />
         }
         subheader={
-          <ReactTimeAgo
-            date={new Date(creationTime)}
-          />
+          <Link href={url}>
+            <ReactTimeAgo
+              date={new Date(creationTime)}
+            />
+          </Link>
         }
         action={menu}
       />

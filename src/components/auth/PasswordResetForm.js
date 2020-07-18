@@ -29,7 +29,7 @@ const PasswordResetForm = (props) => {
   const enableSubmit = email.isValid;
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form onSubmit={handleOnSubmit} noValidate>
       <Card>
         <CardHeader
           avatar={

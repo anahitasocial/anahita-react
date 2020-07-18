@@ -28,26 +28,6 @@ const useStyles = makeStyles({
   },
 });
 
-const LocationsPanel = (props) => {
-  const { sort } = props;
-  return (
-    <LocationsBrowse
-      queryFilters={{
-        q: '',
-        sort,
-      }}
-    />
-  );
-};
-
-LocationsPanel.propTypes = {
-  sort: PropTypes.oneOf([
-    TRENDING,
-    TOP,
-    RECENT,
-  ]).isRequired,
-};
-
 const Locations = (props) => {
   const classes = useStyles();
   const {
@@ -86,15 +66,13 @@ const Locations = (props) => {
           <Tab label="Recent" value={RECENT} />
         </Tabs>
       </AppBar>
-      {tab === TRENDING &&
-        <LocationsPanel sort={tab} />
-      }
-      {tab === TOP &&
-        <LocationsPanel sort={tab} />
-      }
-      {tab === RECENT &&
-        <LocationsPanel sort={tab} />
-      }
+      <LocationsBrowse
+        key={`locations-sort-${tab}`}
+        queryFilters={{
+          q: '',
+          sort: tab,
+        }}
+      />
     </React.Fragment>
   );
 };
