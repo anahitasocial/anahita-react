@@ -2,8 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import FormControl from '@material-ui/core/FormControl';
@@ -15,6 +17,8 @@ import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+
+import ConfigsIcon from '@material-ui/icons/Settings';
 
 import ConfigsType from '../../../proptypes/settings/Configs';
 
@@ -46,13 +50,17 @@ const SettingsConfigsForm = (props) => {
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <Card>
+        <CardHeader
+          title={
+            <Typography variant="h4">Configs</Typography>
+          }
+          avatar={
+            <Avatar>
+              <ConfigsIcon />
+            </Avatar>
+          }
+        />
         <CardContent>
-          <Typography
-            variant="h4"
-            gutterBottom
-          >
-            Configs
-          </Typography>
           <FormControl
             component="fieldset"
             fullWidth

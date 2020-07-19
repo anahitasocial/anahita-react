@@ -8,7 +8,9 @@ import * as actions from '../../actions';
 import i18n from '../../languages';
 
 import SettingsAbout from './About';
+import SettingsApps from './Apps';
 import SettingsConfigs from './Configs';
+import SettingsPlugins from './Plugins';
 
 const TABS = {
   ABOUT: 'about',
@@ -23,7 +25,7 @@ const Settings = (props) => {
     setAppTitle,
   } = props;
 
-  const [tab, setTab] = useState(TABS.CONFIGS);
+  const [tab, setTab] = useState(TABS.APPS);
 
   useEffect(() => {
     setAppTitle(i18n.t('settings:cTitle'));
@@ -43,7 +45,7 @@ const Settings = (props) => {
         <Tab label="About" value={TABS.ABOUT} />
         <Tab label="Configs" value={TABS.CONFIGS} />
         <Tab label="Apps" value={TABS.APPS} />
-        <Tab label="Assignments" value={TABS.ASSIGNMENTS} />
+        <Tab label="App Assignments" value={TABS.ASSIGNMENTS} />
         <Tab label="Plugins" value={TABS.PLUGINS} />
       </Tabs>
       {tab === TABS.ABOUT &&
@@ -51,6 +53,12 @@ const Settings = (props) => {
       }
       {tab === TABS.CONFIGS &&
         <SettingsConfigs />
+      }
+      {tab === TABS.APPS &&
+        <SettingsApps />
+      }
+      {tab === TABS.PLUGINS &&
+        <SettingsPlugins />
       }
     </React.Fragment>
   );

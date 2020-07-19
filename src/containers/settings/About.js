@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
+
+import AboutIcon from '@material-ui/icons/Info';
 
 import * as actions from '../../actions';
 import AboutType from '../../proptypes/settings/About';
@@ -33,14 +35,16 @@ const SettingsAbout = (props) => {
 
   return (
     <Card>
-      <CardContent>
-        <Typography
-          variant="h4"
-          gutterBottom
-        >
-          About
-        </Typography>
-      </CardContent>
+      <CardHeader
+        title={
+          <Typography variant="h4">About</Typography>
+        }
+        avatar={
+          <Avatar>
+            <AboutIcon />
+          </Avatar>
+        }
+      />
       <List>
         <ListItem divider>
           <ListItemAvatar>

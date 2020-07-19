@@ -24,6 +24,8 @@ const photos = createAction('photos')(api.photos);
 const settings = {
   about: createAction('settings_about')(api.settings.about),
   configs: createAction('settings_configs')(api.settings.configs),
+  apps: createAction('settings_apps')(api.settings.apps),
+  plugins: createAction('settings_plugins')(api.settings.plugins),
 };
 const search = createAction('search')(api.search);
 const todos = createAction('todos')(api.todos);
