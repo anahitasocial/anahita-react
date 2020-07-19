@@ -10,7 +10,10 @@ const read = (node) => {
 };
 
 const edit = (node) => {
-  return axios.post(`/settings/plugins/${node.id}.json`, constructURLSearchParams(node));
+  return axios.post(`/settings/plugins/${node.id}.json`, constructURLSearchParams({
+    ...node,
+    enabled: node.enabled ? 1 : 0,
+  }));
 };
 
 export default {

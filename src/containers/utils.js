@@ -53,12 +53,12 @@ const withRef = (Component) => {
 const applyDrag = (arr, dragResult) => {
   const { removedIndex, addedIndex, payload } = dragResult;
 
-  if (!removedIndex && !addedIndex) {
+  if (removedIndex === null && addedIndex === null) {
     return arr;
   }
 
   const result = [...arr];
-  const itemToAdd = removedIndex ? result.splice(removedIndex, 1)[0] : payload.id;
+  const itemToAdd = removedIndex === null ? payload.id : result.splice(removedIndex, 1)[0];
 
   result.splice(addedIndex, 0, itemToAdd);
 

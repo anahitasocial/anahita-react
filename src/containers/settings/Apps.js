@@ -75,6 +75,7 @@ const SettingsApps = (props) => {
 
     editApp({
       ...app,
+      enabled: true,
       ordering: addedIndex + 1,
     });
   };
@@ -133,7 +134,11 @@ const SettingsApps = (props) => {
               const key = `app_${app.id}`;
               return (
                 <Draggable key={key}>
-                  <ListItem divider disabled={!app.enabled}>
+                  <ListItem
+                    divider
+                    disabled={!app.enabled}
+                    button
+                  >
                     <ListItemText
                       primary={app.name}
                       secondary={app.package}
