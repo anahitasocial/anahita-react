@@ -50,6 +50,21 @@ const withRef = (Component) => {
   });
 };
 
+const applyDrag = (arr, dragResult) => {
+  const { removedIndex, addedIndex, payload } = dragResult;
+
+  if (!removedIndex && !addedIndex) {
+    return arr;
+  }
+
+  const result = [...arr];
+  const itemToAdd = removedIndex ? result.splice(removedIndex, 1)[0] : payload.id;
+
+  result.splice(addedIndex, 0, itemToAdd);
+
+  return result;
+};
+
 export default {
   getOwnerName,
   getColumnWidthPercentage,
@@ -57,4 +72,5 @@ export default {
   isLikeable,
   isSubscribable,
   withRef,
+  applyDrag,
 };
