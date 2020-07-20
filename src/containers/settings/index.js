@@ -8,9 +8,9 @@ import * as actions from '../../actions';
 import i18n from '../../languages';
 
 import SettingsAbout from './About';
-import SettingsApps from './Apps';
+import SettingsApps from './apps/Browse';
 import SettingsConfigs from './Configs';
-import SettingsPlugins from './Plugins';
+import SettingsPlugins from './plugins/Browse';
 
 const TABS = {
   ABOUT: 'about',

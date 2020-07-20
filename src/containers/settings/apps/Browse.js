@@ -17,14 +17,15 @@ import Typography from '@material-ui/core/Typography';
 import AppsIcon from '@material-ui/icons/Apps';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 
-import Progress from '../../components/Progress';
-import SelectSort from '../../components/settings/apps/SelectSort';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
+import Progress from '../../../components/Progress';
+import SelectSort from '../../../components/settings/apps/SelectSort';
+import SimpleSnackbar from '../../../components/SimpleSnackbar';
+import AppsEdit from './Edit';
 
 
-import * as actions from '../../actions';
-import AppsType from '../../proptypes/settings/Apps';
-import utils from '../utils';
+import * as actions from '../../../actions';
+import AppsType from '../../../proptypes/settings/Apps';
+import utils from '../../utils';
 
 const LIMIT = 99;
 const SORT = {
@@ -32,7 +33,7 @@ const SORT = {
   ORDERING: 'ordering',
 };
 
-const SettingsApps = (props) => {
+const SettingsAppsBrowse = (props) => {
   const {
     browseApps,
     editApp,
@@ -47,6 +48,8 @@ const SettingsApps = (props) => {
   } = props;
 
   const [sort, setSort] = useState(initSort);
+  const [editingOpen, setEditingOpen] = useState(false);
+  const [current, setCurrent] = useState(null);
 
   const fetchList = (newSort) => {
     browseApps({
@@ -64,6 +67,11 @@ const SettingsApps = (props) => {
       resetApps();
     };
   }, []);
+
+  const handleClose = () => {
+    setEditingOpen(false);
+    setCurrent(null);
+  };
 
   const handleReorder = (result) => {
     const {
@@ -96,6 +104,13 @@ const SettingsApps = (props) => {
 
   return (
     <React.Fragment>
+      {current &&
+        <AppsEdit
+          node={current}
+          open={editingOpen}
+          handleClose={handleClose}
+        />
+      }
       <Card>
         <CardHeader
           title={
@@ -136,8 +151,11 @@ const SettingsApps = (props) => {
                 <Draggable key={key}>
                   <ListItem
                     divider
-                    disabled={!app.enabled}
                     button
+                    onClick={() => {
+                      setCurrent(app);
+                      setEditingOpen(true);
+                    }}
                   >
                     <ListItemText
                       primary={app.name}
@@ -174,7 +192,7 @@ const SettingsApps = (props) => {
 };
 
 
-SettingsApps.propTypes = {
+SettingsAppsBrowse.propTypes = {
   browseApps: PropTypes.func.isRequired,
   editApp: PropTypes.func.isRequired,
   resetApps: PropTypes.func.isRequired,
@@ -185,7 +203,7 @@ SettingsApps.propTypes = {
   queryFilters: PropTypes.object,
 };
 
-SettingsApps.defaultProps = {
+SettingsAppsBrowse.defaultProps = {
   queryFilters: {
     sort: SORT.ORDERING,
   },
@@ -224,4 +242,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SettingsApps);
+)(SettingsAppsBrowse);

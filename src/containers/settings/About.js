@@ -16,6 +16,7 @@ import AboutIcon from '@material-ui/icons/Info';
 
 import * as actions from '../../actions';
 import AboutType from '../../proptypes/settings/About';
+import packageInfo from '../../../package.json';
 
 const SettingsAbout = (props) => {
   const {
@@ -56,8 +57,14 @@ const SettingsAbout = (props) => {
         </ListItem>
         <ListItem divider>
           <ListItemText
-            primary="Version"
+            primary="API Version"
             secondary={version}
+          />
+        </ListItem>
+        <ListItem divider>
+          <ListItemText
+            primary="Version"
+            secondary={packageInfo.version}
           />
         </ListItem>
         <ListItem divider>

@@ -17,14 +17,16 @@ import Typography from '@material-ui/core/Typography';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 import PluginsIcon from '@material-ui/icons/Extension';
 
-import Progress from '../../components/Progress';
-import SelectType from '../../components/settings/plugins/SelectType';
-import SelectSort from '../../components/settings/plugins/SelectSort';
+import Progress from '../../../components/Progress';
+import SelectType from '../../../components/settings/plugins/SelectType';
+import SelectSort from '../../../components/settings/plugins/SelectSort';
 
-import * as actions from '../../actions';
-import PluginsType from '../../proptypes/settings/Plugins';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
-import utils from '../utils';
+import * as actions from '../../../actions';
+import PluginsType from '../../../proptypes/settings/Plugins';
+import SimpleSnackbar from '../../../components/SimpleSnackbar';
+import PluginsEdit from './Edit';
+
+import utils from '../../utils';
 
 const LIMIT = 99;
 const SORT = {
@@ -48,6 +50,8 @@ const SettingsPlugins = (props) => {
 
   const [sort, setSort] = useState(initSort);
   const [type, setType] = useState('');
+  const [editingOpen, setEditingOpen] = useState(false);
+  const [current, setCurrent] = useState(null);
 
   const fetchList = (
     newType = '',
@@ -70,6 +74,11 @@ const SettingsPlugins = (props) => {
       resetPlugins();
     };
   }, []);
+
+  const handleClose = () => {
+    setEditingOpen(false);
+    setCurrent(null);
+  };
 
   const handleReorder = (result) => {
     const {
@@ -101,6 +110,13 @@ const SettingsPlugins = (props) => {
 
   return (
     <React.Fragment>
+      {current &&
+        <PluginsEdit
+          node={current}
+          open={editingOpen}
+          handleClose={handleClose}
+        />
+      }
       <Card>
         <CardHeader
           title={
@@ -148,7 +164,14 @@ const SettingsPlugins = (props) => {
               const key = `app_${plugin.id}`;
               return (
                 <Draggable key={key}>
-                  <ListItem divider disabled={!plugin.enabled}>
+                  <ListItem
+                    divider
+                    button
+                    onClick={() => {
+                      setCurrent(plugin);
+                      setEditingOpen(true);
+                    }}
+                  >
                     <ListItemText
                       primary={plugin.name}
                       secondary={`${plugin.element} (${plugin.type})`}
