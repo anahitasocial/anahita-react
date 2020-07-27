@@ -1,3 +1,4 @@
+import settings from './settings';
 import stories from './stories';
 
 export default {
@@ -55,6 +56,7 @@ export default {
   settings: {
     cTitle: 'Settings',
     mTitle: 'Settings',
+    ...settings,
   },
   groups: {
     cTitle: 'Groups',

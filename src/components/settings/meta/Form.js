@@ -39,7 +39,7 @@ const SettingsMetaForm = (props) => {
               type,
               option: options,
               value,
-              label,
+              // label,
               description,
               disabled: fcDisabled,
             } = fController;
@@ -82,8 +82,8 @@ const SettingsMetaForm = (props) => {
                       name={name}
                       value={meta[name]}
                       onChange={handleOnChange}
-                      // label={i18n.t(`settings:${namespace}.${_.camelCase(name)}`)}
-                      label={label}
+                      label={i18n.t(`settings:${namespace}.${_.camelCase(name)}`)}
+                      // label={label}
                       disabled={disabled}
                     >
                       {options.map((option, optionIndex) => {
@@ -93,12 +93,8 @@ const SettingsMetaForm = (props) => {
                             value={option.value}
                             key={optionKey}
                           >
-                            {option.text}
-                            {/*
-                              i18n.t(`settings:${namespace}
-                              .${_.camelCase(name)}.options
-                              .${_.camelCase(option.text)}`)
-                            */}
+                            {/* option.text */}
+                            {i18n.t(`settings:${namespace}.${_.camelCase(name)}Options.${_.camelCase(option.text)}`)}
                           </MenuItem>
                         );
                       })}
@@ -126,8 +122,8 @@ const SettingsMetaForm = (props) => {
                       onChange={handleOnChange}
                       error={fields[name].error !== ''}
                       helperText={fields[name].error}
-                      // label={i18n.t(`settings:${namespace}.${_.camelCase(name)}`)}
-                      label={label}
+                      label={i18n.t(`settings:${namespace}.${_.camelCase(name)}`)}
+                      // label={label}
                       margin="normal"
                       fullWidth
                       multiline={type === 'textarea'}
@@ -135,7 +131,7 @@ const SettingsMetaForm = (props) => {
                         maxLength: 300,
                         minLength: 3,
                       }}
-                      disabled={disabled}
+                      // disabled={disabled}
                     />
                     {description !== '' &&
                       <FormHelperText>{description}</FormHelperText>
