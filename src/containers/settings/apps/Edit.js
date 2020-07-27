@@ -1,45 +1,69 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
 
 import AppsIcon from '@material-ui/icons/Apps';
 
-
+import MetaForm from '../../../components/settings/meta/Form';
 import AppsType from '../../../proptypes/settings/Apps';
 import AppType from '../../../proptypes/settings/App';
 import * as actions from '../../../actions';
+import form from '../../../utils/form';
+import utils from '../utils';
 
 const SettingsAppsEdit = (props) => {
   const {
-    readApp,
     editApp,
     node,
     open,
-    apps: {
-      current: app = { ...AppType },
-    },
+    apps,
     handleClose,
     isFetching,
   } = props;
 
-  useEffect(() => {
-    readApp(node);
-  }, []);
+  const app = apps.byId[node.id];
+  const namespace = app.package.split('_')[1];
+  const { meta: formControllers = [] } = app;
+
+  const formControllerKeys = utils.getFormControllerKeys(formControllers);
+  const formFields = form.createFormFields(formControllerKeys);
+  const [fields, setFields] = useState(formFields);
+
+  const newEntity = utils.getMetaEntity(formControllers);
+  const [entity, setEntity] = useState(newEntity);
+
+  const handleOnChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+
+    entity[name] = value;
+
+    const newFields = form.validateField(target, fields);
+
+    setEntity({ ...entity });
+    setFields({ ...newFields });
+  };
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    editApp(app).then(() => {
-      handleClose();
-    });
+
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
+
+    if (form.isValid(newFields)) {
+      const formData = form.fieldsToData(newFields);
+      editApp({
+        id: node.id,
+        meta: utils.getMetaURLParams(formData),
+      });
+    }
+
+    setFields({ ...newFields });
   };
 
   return (
@@ -47,48 +71,40 @@ const SettingsAppsEdit = (props) => {
       open={open}
       onClose={handleClose}
       fullWidth
-      maxWidth="sm"
+      maxWidth="md"
+      scroll="body"
     >
-      <Card>
-        <CardHeader
-          title={
-            <Typography variant="h5">
-              {app.name}
-            </Typography>
-          }
-          subheader={app.package}
-          avatar={
-            <Avatar>
-              <AppsIcon />
-            </Avatar>
-          }
-        />
-        <CardContent>
-          Params go here ...
-        </CardContent>
-        <CardActions>
-          <Button
-            onClick={handleClose}
-            fullWidth
-          >
-            Close
-          </Button>
-          <Button
-            type="submit"
-            fullWidth
-            color="primary"
-            variant="contained"
-          >
-            Save
-          </Button>
-        </CardActions>
-      </Card>
+      <MetaForm
+        header={
+          <CardHeader
+            title={
+              <Typography variant="h5">
+                {app.name}
+              </Typography>
+            }
+            subheader={app.package}
+            avatar={
+              <Avatar>
+                <AppsIcon />
+              </Avatar>
+            }
+          />
+        }
+        nodeId={app.id}
+        namespace={`app.${namespace}`}
+        formControllers={formControllers}
+        meta={entity}
+        fields={formFields}
+        handleOnSubmit={handleOnSubmit}
+        handleOnChange={handleOnChange}
+        handleClose={handleClose}
+        isFetching={isFetching}
+      />
     </Dialog>
   );
 };
 
 SettingsAppsEdit.propTypes = {
-  readApp: PropTypes.func.isRequired,
   editApp: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   node: AppType.isRequired,
@@ -103,9 +119,6 @@ SettingsAppsEdit.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readApp: (app) => {
-      return dispatch(actions.settings.apps.read(app));
-    },
     editApp: (app) => {
       return dispatch(actions.settings.apps.edit(app));
     },

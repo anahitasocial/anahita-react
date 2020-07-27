@@ -5,16 +5,14 @@ const browse = (params) => {
   return axios.get('/settings/apps.json', { params });
 };
 
-const read = (node) => {
-  return axios.get(`/settings/apps/${node.id}.json`);
-};
-
 const edit = (node) => {
-  return axios.post(`/settings/apps/${node.id}.json`, constructURLSearchParams(node));
+  const { id, meta } = node;
+  return axios.post(`/settings/apps/${id}.json`, constructURLSearchParams({
+    ...meta,
+  }));
 };
 
 export default {
   browse,
-  read,
   edit,
 };

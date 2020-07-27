@@ -1,45 +1,70 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
 
 import PluginsIcon from '@material-ui/icons/Extension';
 
-
+import MetaForm from '../../../components/settings/meta/Form';
 import PluginsType from '../../../proptypes/settings/Plugins';
 import PluginType from '../../../proptypes/settings/Plugin';
 import * as actions from '../../../actions';
+import form from '../../../utils/form';
+import utils from '../utils';
 
 const SettingsPluginsEdit = (props) => {
   const {
-    readPlugin,
     editPlugin,
     node,
     open,
-    plugins: {
-      current: plugin = { ...PluginType },
-    },
+    plugins,
     handleClose,
     isFetching,
   } = props;
 
-  useEffect(() => {
-    readPlugin(node);
-  }, []);
+  const plugin = plugins.byId[node.id];
+  const namespace = `plugin.${plugin.element}.${plugin.type}`;
+  const { meta: formControllers = [] } = plugin;
+
+  const formControllerKeys = utils.getFormControllerKeys(formControllers);
+  const formFields = form.createFormFields(formControllerKeys);
+  const [fields, setFields] = useState(formFields);
+
+  const newEntity = utils.getMetaEntity(formControllers);
+  const [entity, setEntity] = useState(newEntity);
+
+  const handleOnChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+
+    entity[name] = value;
+
+    const newFields = form.validateField(target, fields);
+
+    setEntity({ ...entity });
+    setFields({ ...newFields });
+  };
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    editPlugin(plugin).then(() => {
-      handleClose();
-    });
+
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
+
+    if (form.isValid(newFields)) {
+      const formData = form.fieldsToData(newFields);
+      editPlugin({
+        id: node.id,
+        enabled: node.enabled,
+        meta: utils.getMetaURLParams(formData),
+      });
+    }
+
+    setFields({ ...newFields });
   };
 
   return (
@@ -47,48 +72,40 @@ const SettingsPluginsEdit = (props) => {
       open={open}
       onClose={handleClose}
       fullWidth
-      maxWidth="sm"
+      maxWidth="md"
+      scroll="body"
     >
-      <Card>
-        <CardHeader
-          title={
-            <Typography variant="h5">
-              {plugin.name}
-            </Typography>
-          }
-          subheader={`${plugin.element} (${plugin.type})`}
-          avatar={
-            <Avatar>
-              <PluginsIcon />
-            </Avatar>
-          }
-        />
-        <CardContent>
-          Params go here ...
-        </CardContent>
-        <CardActions>
-          <Button
-            onClick={handleClose}
-            fullWidth
-          >
-            Close
-          </Button>
-          <Button
-            type="submit"
-            fullWidth
-            color="primary"
-            variant="contained"
-          >
-            Save
-          </Button>
-        </CardActions>
-      </Card>
+      <MetaForm
+        header={
+          <CardHeader
+            title={
+              <Typography variant="h5">
+                {plugin.name}
+              </Typography>
+            }
+            subheader={`${plugin.element} (${plugin.type})`}
+            avatar={
+              <Avatar>
+                <PluginsIcon />
+              </Avatar>
+            }
+          />
+        }
+        nodeId={plugin.id}
+        namespace={namespace}
+        formControllers={formControllers}
+        meta={entity}
+        fields={formFields}
+        handleOnSubmit={handleOnSubmit}
+        handleOnChange={handleOnChange}
+        handleClose={handleClose}
+        isFetching={isFetching}
+      />
     </Dialog>
   );
 };
 
 SettingsPluginsEdit.propTypes = {
-  readPlugin: PropTypes.func.isRequired,
   editPlugin: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   node: PluginType.isRequired,
@@ -103,9 +120,6 @@ SettingsPluginsEdit.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readPlugin: (plugin) => {
-      return dispatch(actions.settings.plugins.read(plugin));
-    },
     editPlugin: (plugin) => {
       return dispatch(actions.settings.plugins.edit(plugin));
     },

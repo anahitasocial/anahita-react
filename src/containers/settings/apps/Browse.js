@@ -156,6 +156,7 @@ const SettingsAppsBrowse = (props) => {
                       setCurrent(app);
                       setEditingOpen(true);
                     }}
+                    disabled={!app.meta}
                   >
                     <ListItemText
                       primary={app.name}
