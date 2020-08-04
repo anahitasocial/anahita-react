@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 
 import AboutIcon from '@material-ui/icons/Info';
 
+import Progress from '../../components/Progress';
 import * as actions from '../../actions';
 import AboutType from '../../proptypes/settings/About';
 import packageInfo from '../../../package.json';
@@ -28,11 +29,18 @@ const SettingsAbout = (props) => {
       license,
       website,
     },
+    isFetching,
   } = props;
 
   useEffect(() => {
     readAbout();
   }, []);
+
+  if (isFetching) {
+    return (
+      <Progress />
+    );
+  }
 
   return (
     <Card>
@@ -63,7 +71,7 @@ const SettingsAbout = (props) => {
         </ListItem>
         <ListItem divider>
           <ListItemText
-            primary="Version"
+            primary="Client Version"
             secondary={packageInfo.version}
           />
         </ListItem>
@@ -100,6 +108,7 @@ const SettingsAbout = (props) => {
 
 SettingsAbout.propTypes = {
   about: AboutType.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   readAbout: PropTypes.func.isRequired,
 };
 
@@ -116,10 +125,12 @@ const mapStateToProps = (state) => {
     settings_about: {
       current: about,
     },
+    isFetching,
   } = state.settingsAbout;
 
   return {
     about,
+    isFetching,
   };
 };
 

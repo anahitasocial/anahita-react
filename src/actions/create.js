@@ -31,7 +31,7 @@ const browseSuccess = (results, namespace) => {
     type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
     [namespace]: normalized.entities[namespace],
     ids: normalized.result,
-    total: data.pagination.total,
+    total: pagination.total,
     hasMore,
   };
 };

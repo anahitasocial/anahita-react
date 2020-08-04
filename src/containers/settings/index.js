@@ -9,6 +9,7 @@ import i18n from '../../languages';
 
 import SettingsAbout from './About';
 import SettingsApps from './apps/Browse';
+import SettingsAssignments from './assignments/Browse';
 import SettingsConfigs from './Configs';
 import SettingsPlugins from './plugins/Browse';
 
@@ -25,7 +26,7 @@ const Settings = (props) => {
     setAppTitle,
   } = props;
 
-  const [tab, setTab] = useState(TABS.ABOUT);
+  const [tab, setTab] = useState(TABS.ASSIGNMENTS);
 
   useEffect(() => {
     setAppTitle(i18n.t('settings:cTitle'));
@@ -56,6 +57,9 @@ const Settings = (props) => {
       }
       {tab === TABS.APPS &&
         <SettingsApps />
+      }
+      {tab === TABS.ASSIGNMENTS &&
+        <SettingsAssignments />
       }
       {tab === TABS.PLUGINS &&
         <SettingsPlugins />

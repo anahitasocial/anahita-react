@@ -8,6 +8,7 @@ import form from '../../utils/form';
 import ConfigsType from '../../proptypes/settings/Configs';
 import SettingsConfigsForm from '../../components/settings/configs/Form';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
+import Progress from '../../components/Progress';
 
 const formFields = form.createFormFields([
   'sitename',
@@ -23,7 +24,7 @@ const formFields = form.createFormFields([
   'smtphost',
 ]);
 
-const ConfigsAbout = (props) => {
+const SettingsConfigs = (props) => {
   const {
     readConfigs,
     editConfigs,
@@ -85,6 +86,12 @@ const ConfigsAbout = (props) => {
     setFields({ ...newFields });
   };
 
+  if (configs.db === '' && isFetching) {
+    return (
+      <Progress />
+    );
+  }
+
   return (
     <React.Fragment>
       <SettingsConfigsForm
@@ -112,7 +119,7 @@ const ConfigsAbout = (props) => {
   );
 };
 
-ConfigsAbout.propTypes = {
+SettingsConfigs.propTypes = {
   configs: ConfigsType.isRequired,
   readConfigs: PropTypes.func.isRequired,
   editConfigs: PropTypes.func.isRequired,
@@ -153,4 +160,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ConfigsAbout);
+)(SettingsConfigs);

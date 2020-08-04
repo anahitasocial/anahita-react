@@ -11,9 +11,7 @@ import Link from '@material-ui/core/Link';
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import EntityBody from '../EntityBody';
-import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
-// import ActorDefault from '../../proptypes/ActorDefault';
 
 import {
   getCommentURL,

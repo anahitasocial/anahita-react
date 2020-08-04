@@ -12,6 +12,7 @@ import password from './password';
 import search from './search';
 import settingsAbout from './settings/about';
 import settingsApps from './settings/apps';
+import settingsAssignments from './settings/assignments';
 import settingsConfigs from './settings/configs';
 import settingsPlugins from './settings/plugins';
 import session from './session';
@@ -63,6 +64,7 @@ export default combineReducers({
   search,
   settingsAbout,
   settingsApps,
+  settingsAssignments,
   settingsConfigs,
   settingsPlugins,
   session,

@@ -29,4 +29,11 @@ export default {
       password: 'Paypal Password',
     },
   },
+  assignment: {
+    options: {
+      always: 'Always',
+      optional: 'Optional',
+      never: 'Never',
+    },
+  },
 };
