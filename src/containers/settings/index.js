@@ -26,7 +26,7 @@ const Settings = (props) => {
     setAppTitle,
   } = props;
 
-  const [tab, setTab] = useState(TABS.ASSIGNMENTS);
+  const [tab, setTab] = useState(TABS.ABOUT);
 
   useEffect(() => {
     setAppTitle(i18n.t('settings:cTitle'));

@@ -74,7 +74,7 @@ const SettingsAssignmentsBrowse = (props) => {
       <Card>
         <CardHeader
           title={
-            <Typography variant="h4">Assignments</Typography>
+            <Typography variant="h4">App Assignments</Typography>
           }
           subheader="Manage assignments of apps to actors"
           avatar={

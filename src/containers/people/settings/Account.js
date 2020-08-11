@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AccountForm from '../../../components/person/Account';
-import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
-import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';
 import * as api from '../../../api';
 
-import PersonDefault from '../../../proptypes/PersonDefault';
-import PeopleType from '../../../proptypes/People';
+import PersonType from '../../../proptypes/Person';
 import form from '../../../utils/form';
 
 const formFields = form.createFormFields([
@@ -20,24 +17,10 @@ const formFields = form.createFormFields([
 
 const PeopleSettingsAccount = (props) => {
   const {
-    readPerson,
     editPerson,
-    people: {
-      current: person = { ...PersonDefault },
-    },
-    success,
+    person,
     isFetching,
-    error,
-    computedMatch: {
-      params: {
-        id,
-      },
-    },
   } = props;
-
-  useEffect(() => {
-    readPerson(id);
-  }, []);
 
   const [fields, setFields] = useState(formFields);
 
@@ -107,7 +90,7 @@ const PeopleSettingsAccount = (props) => {
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
       editPerson({
-        id,
+        id: person.id,
         ...formData,
       });
     }
@@ -120,72 +103,39 @@ const PeopleSettingsAccount = (props) => {
   }
 
   return (
-    <React.Fragment>
-      <ActorSettingCard
-        namespace="people"
-        actor={person}
-      >
-        <AccountForm
-          fields={fields}
-          person={person}
-          handleOnChange={handleOnChange}
-          handleOnBlur={handleOnBlur}
-          handleOnSubmit={handleOnSubmit}
-          dismissPath={`/people/${person.id}/settings/`}
-          isFetching={isFetching}
-          success={success}
-          error={error}
-        />
-      </ActorSettingCard>
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Account Updated!"
-          type="success"
-        />
-      }
-    </React.Fragment>
+    <AccountForm
+      fields={fields}
+      person={person}
+      handleOnChange={handleOnChange}
+      handleOnBlur={handleOnBlur}
+      handleOnSubmit={handleOnSubmit}
+      isFetching={isFetching}
+    />
   );
 };
 
 PeopleSettingsAccount.propTypes = {
-  readPerson: PropTypes.func.isRequired,
   editPerson: PropTypes.func.isRequired,
-  people: PeopleType.isRequired,
-  success: PropTypes.bool.isRequired,
+  person: PersonType.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
-  computedMatch: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
-    people,
+    people: {
+      current: person,
+    },
     isFetching,
-    success,
-    error,
   } = state.people;
 
   return {
-    people,
-    error,
-    success,
+    person,
     isFetching,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readPerson: (id) => {
-      return dispatch(actions.people.read(id));
-    },
     editPerson: (person) => {
       return dispatch(actions.people.edit(person));
     },

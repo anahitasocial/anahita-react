@@ -61,10 +61,23 @@ export default {
   groups: {
     cTitle: 'Groups',
     mTitle: 'Groups',
+    settings: {
+      info: 'Info',
+      apps: 'Apps',
+      permissions: 'Permissions',
+      delete: 'Delete',
+    },
   },
   people: {
     cTitle: 'People',
     mTitle: 'People',
+    settings: {
+      info: 'Info',
+      account: 'Account',
+      apps: 'Apps',
+      permissions: 'Permissions',
+      delete: 'Delete',
+    },
   },
   notes: {
     cTitle: 'Notes',

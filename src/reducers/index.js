@@ -22,6 +22,7 @@ import stories from './stories';
 import taggables from './taggables';
 
 // creators
+import createActorApps from './actor/apps';
 import createActorsReducer from './create_actors';
 import createCommentReducer from './create_comment';
 import createTagGraphReducer from './create_tag_graph';
@@ -29,7 +30,9 @@ import createMediaReducer from './createMedia';
 
 // create actors reducers
 const people = createActorsReducer('people');
+const peopleApps = createActorApps('people_apps');
 const groups = createActorsReducer('groups');
+const groupsApps = createActorsReducer('groups_apps');
 
 // create media reducers
 const notes = createMediaReducer('notes');
@@ -51,6 +54,7 @@ export default combineReducers({
   comments,
   cover,
   groups,
+  groupsApps,
   inlineComments,
   likes,
   locations,
@@ -60,6 +64,7 @@ export default combineReducers({
   notifications,
   password,
   people,
+  peopleApps,
   photos,
   search,
   settingsAbout,

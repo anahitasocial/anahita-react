@@ -10,7 +10,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
 
 import PersonType from '../../proptypes/Person';
 import { Person as PERSON } from '../../constants';
@@ -35,7 +34,6 @@ const PersonInfo = (props) => {
     person,
     canChangeUsertype,
     isSuperAdmin,
-    dismissPath,
     isFetching,
   } = props;
 
@@ -51,6 +49,13 @@ const PersonInfo = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
+      {!canChangeUsertype &&
+        <input
+          type="hidden"
+          name="usertype"
+          value={person.usertype}
+        />
+      }
       <CardContent>
         <Typography variant="h6" color="primary">
           {formTitle}
@@ -162,19 +167,12 @@ const PersonInfo = (props) => {
         }
       </CardContent>
       <CardActions>
-        {dismissPath &&
-        <Button
-          component={Link}
-          to={dismissPath}
-        >
-          Dismiss
-        </Button>
-        }
         <Button
           type="submit"
           variant="contained"
           color="primary"
           disabled={isFetching || !enableSubmit}
+          fullWidth
         >
           Save
         </Button>
@@ -190,12 +188,7 @@ PersonInfo.propTypes = {
   person: PersonType.isRequired,
   canChangeUsertype: PropTypes.bool.isRequired,
   isSuperAdmin: PropTypes.bool.isRequired,
-  dismissPath: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
-};
-
-PersonInfo.defaultProps = {
-  dismissPath: '',
 };
 
 export default PersonInfo;

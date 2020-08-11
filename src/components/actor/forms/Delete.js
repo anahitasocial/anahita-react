@@ -5,7 +5,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
 
 import ActorType from '../../../proptypes/Actor';
 import { Actor as ACTOR } from '../../../constants';
@@ -22,7 +21,6 @@ const ActorDeleteForm = (props) => {
     actor,
     canDelete,
     isFetching,
-    dismissPath,
   } = props;
 
   const enableDelete = actor.alias === alias.value && canDelete;
@@ -53,14 +51,6 @@ const ActorDeleteForm = (props) => {
         />
       </CardContent>
       <CardActions>
-        {dismissPath &&
-        <Button
-          component={Link}
-          to={dismissPath}
-        >
-          Dismiss
-        </Button>
-        }
         <Button
           type="submit"
           variant="contained"
@@ -82,11 +72,6 @@ ActorDeleteForm.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   canDelete: PropTypes.bool.isRequired,
-  dismissPath: PropTypes.string,
-};
-
-ActorDeleteForm.defaultProps = {
-  dismissPath: '',
 };
 
 export default ActorDeleteForm;

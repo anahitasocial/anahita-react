@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
 
 import PersonType from '../../proptypes/Person';
 
@@ -23,7 +22,6 @@ const PersonAccount = (props) => {
     },
     person,
     isFetching,
-    dismissPath,
   } = props;
 
   const { FIELDS } = PERSON;
@@ -90,15 +88,6 @@ const PersonAccount = (props) => {
         />
       </CardContent>
       <CardActions>
-        {dismissPath &&
-        <Button
-          component={Link}
-          to={dismissPath}
-          fullWidth
-        >
-          Dismiss
-        </Button>
-        }
         <Button
           variant="contained"
           type="submit"
@@ -120,7 +109,6 @@ PersonAccount.propTypes = {
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   person: PersonType.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  dismissPath: PropTypes.string.isRequired,
 };
 
 export default PersonAccount;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import createApi from './create';
 
+import createActor from './actor';
 import avatar from './avatar';
 import comments from './comments';
 import commentStatus from './comments_status';
@@ -29,11 +30,17 @@ axios.interceptors.request.use((config) => {
 }, (error) => { return Promise.reject(error); });
 
 const articles = createApi('articles');
-const groups = createApi('groups');
+const groups = {
+  ...createApi('groups'),
+  group: createActor('groups'),
+};
 const hashtags = createApi('hashtags');
 const locations = createApi('locations');
 const notes = createApi('notes');
-const people = createApi('people');
+const people = {
+  ...createApi('people'),
+  person: createActor('people'),
+};
 const photos = createApi('photos');
 const search = createApi('search');
 const stories = createApi('stories');

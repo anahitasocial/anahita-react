@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { singularize } from 'inflected';
 import ActorInfoForm from '../../../components/actor/forms/Info';
-import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
-import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';
 import form from '../../../utils/form';
 
-import ActorsType from '../../../proptypes/Actors';
-import ActorDefault from '../../../proptypes/ActorDefault';
+import ActorType from '../../../proptypes/Actor';
 
 const formFields = form.createFormFields([
   'name',
@@ -19,27 +16,13 @@ const formFields = form.createFormFields([
 
 const ActorsSettingsInfo = (props) => {
   const {
-    readActor,
     editActor,
-    actors: {
-      current: actor = { ...ActorDefault },
-    },
+    actor,
     namespace,
-    success,
-    error,
     isFetching,
-    computedMatch: {
-      params,
-    },
   } = props;
 
   const [fields, setFields] = useState(formFields);
-
-  const [id] = params.id.split('-');
-
-  useEffect(() => {
-    readActor(id);
-  }, []);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -61,7 +44,7 @@ const ActorsSettingsInfo = (props) => {
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
       editActor({
-        id,
+        id: actor.id,
         ...formData,
       });
     }
@@ -76,67 +59,39 @@ const ActorsSettingsInfo = (props) => {
   }
 
   const formTitle = `${singularize(namespace)} information`;
-  const dismissPath = `/${namespace}/${actor.id}/settings/`;
 
   return (
-    <React.Fragment>
-      <ActorSettingCard
-        namespace={namespace}
-        actor={actor}
-      >
-        <ActorInfoForm
-          formTitle={formTitle}
-          actor={actor}
-          fields={fields}
-          handleOnChange={handleOnChange}
-          handleOnSubmit={handleOnSubmit}
-          isFetching={isFetching}
-          dismissPath={dismissPath}
-        />
-      </ActorSettingCard>
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Information Updated!"
-          type="success"
-        />
-      }
-    </React.Fragment>
+    <ActorInfoForm
+      formTitle={formTitle}
+      actor={actor}
+      fields={fields}
+      handleOnChange={handleOnChange}
+      handleOnSubmit={handleOnSubmit}
+      isFetching={isFetching}
+    />
   );
 };
 
 ActorsSettingsInfo.propTypes = {
-  readActor: PropTypes.func.isRequired,
   editActor: PropTypes.func.isRequired,
-  actors: ActorsType.isRequired,
+  actor: ActorType.isRequired,
   namespace: PropTypes.string.isRequired,
-  success: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  computedMatch: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (namespace) => {
   return (state) => {
     const {
+      [namespace]: {
+        current: actor,
+      },
       isFetching,
-      success,
-      error,
     } = state[namespace];
 
     return {
-      actors: state[namespace][namespace],
+      actor,
       namespace,
       isFetching,
-      success,
-      error,
     };
   };
 };
@@ -144,9 +99,6 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      readActor: (id) => {
-        return dispatch(actions[namespace].read(id));
-      },
       editActor: (actor) => {
         return dispatch(actions[namespace].edit(actor));
       },

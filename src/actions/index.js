@@ -15,11 +15,23 @@ import stories from './stories';
 import taggables from './taggable';
 
 const articles = createAction('articles')(api.articles);
-const groups = createAction('groups')(api.groups);
+const groups = {
+  ...createAction('groups')(api.groups),
+  settings: {
+    apps: createAction('groups_apps')(api.groups.group.apps),
+    permissions: createAction('groups_permissions')(api.groups.group.permissions),
+  },
+};
 const hashtags = createAction('hashtags')(api.hashtags);
 const locations = createAction('locations')(api.locations);
 const notes = createAction('notes')(api.notes);
-const people = createAction('people')(api.people);
+const people = {
+  ...createAction('people')(api.people),
+  settings: {
+    apps: createAction('people_apps')(api.people.person.apps),
+    permissions: createAction('people_permissions')(api.people.person.permissions),
+  },
+};
 const photos = createAction('photos')(api.photos);
 const settings = {
   about: createAction('settings_about')(api.settings.about),

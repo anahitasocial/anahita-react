@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Person as PERSON } from '../../../constants';
 import ActorDeleteForm from '../../../components/actor/forms/Delete';
-import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
 import * as actions from '../../../actions';
 import form from '../../../utils/form';
 
-import ActorsType from '../../../proptypes/Actors';
-import ActorDefault from '../../../proptypes/ActorDefault';
+import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 
 const { TYPE } = PERSON.FIELDS;
@@ -18,32 +16,16 @@ const formFields = form.createFormFields(['alias']);
 
 const ActorsSettingsDelete = (props) => {
   const {
-    readActor,
-    resetActors,
     deleteActor,
-    actors: {
-      current: actor = { ...ActorDefault },
-    },
-    namespace,
+    actor,
     error,
     isFetching,
-    success,
     viewer,
-    computedMatch: {
-      params,
-    },
+    history,
+    namespace,
   } = props;
 
   const [fields, setFields] = useState(formFields);
-  const [id] = params.id.split('-');
-
-  useEffect(() => {
-    readActor(id);
-
-    return () => {
-      resetActors();
-    };
-  }, []);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -59,7 +41,9 @@ const ActorsSettingsDelete = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      deleteActor(actor);
+      deleteActor(actor).then(() => {
+        history.push(`/${namespace}/`);
+      });
     }
 
     setFields({ ...newFields });
@@ -99,48 +83,36 @@ const ActorsSettingsDelete = (props) => {
     );
   }
 
-  if (success) {
-    return (
-      <Redirect to={`/${namespace}/`} />
-    );
-  }
-
   return (
-    <ActorSettingCard
-      namespace={namespace}
+    <ActorDeleteForm
+      referenceAlias={actor.alias}
+      fields={fields}
       actor={actor}
-    >
-      <ActorDeleteForm
-        referenceAlias={actor.alias}
-        fields={fields}
-        actor={actor}
-        canDelete={canDelete()}
-        isFetching={isFetching}
-        error={error}
-        handleOnChange={handleOnChange}
-        handleOnSubmit={handleOnSubmit}
-        dismissPath={`/${namespace}/${actor.id}/settings/`}
-      />
-    </ActorSettingCard>
+      canDelete={canDelete()}
+      isFetching={isFetching}
+      error={error}
+      handleOnChange={handleOnChange}
+      handleOnSubmit={handleOnSubmit}
+    />
   );
 };
 
 ActorsSettingsDelete.propTypes = {
-  readActor: PropTypes.func.isRequired,
-  resetActors: PropTypes.func.isRequired,
   deleteActor: PropTypes.func.isRequired,
-  actors: ActorsType.isRequired,
+  actor: ActorType.isRequired,
   namespace: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  success: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
-  computedMatch: PropTypes.object.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (namespace) => {
   return (state) => {
     const {
+      [namespace]: {
+        current: actor,
+      },
       error,
       success,
       isFetching,
@@ -151,7 +123,7 @@ const mapStateToProps = (namespace) => {
     } = state.session;
 
     return {
-      actors: state[namespace][namespace],
+      actor,
       namespace,
       viewer,
       isFetching,
@@ -164,12 +136,6 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      readActor: (id) => {
-        return dispatch(actions[namespace].read(id, namespace));
-      },
-      resetActors: () => {
-        return dispatch(actions[namespace].reset());
-      },
       deleteActor: (actor) => {
         return dispatch(actions[namespace].deleteItem(actor));
       },
@@ -178,8 +144,8 @@ const mapDispatchToProps = (namespace) => {
 };
 
 export default (namespace) => {
-  return connect(
+  return withRouter(connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(ActorsSettingsDelete);
+  )(ActorsSettingsDelete));
 };

@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import InfoForm from '../../../components/person/Info';
-import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
-import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import * as actions from '../../../actions';
 import { Person as PERSON } from '../../../constants';
 import PersonType from '../../../proptypes/Person';
-import PersonDefault from '../../../proptypes/PersonDefault';
-import PeopleType from '../../../proptypes/People';
 import form from '../../../utils/form';
 
 const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
@@ -18,32 +14,17 @@ const formFields = form.createFormFields([
   'familyName',
   'body',
   'gender',
-  'usertype',
 ]);
 
 const PersonSettingsInfo = (props) => {
   const {
-    readPerson,
     editPerson,
-    people: {
-      current: person = { ...PersonDefault },
-    },
+    person,
     viewer,
     isFetching,
-    success,
-    error,
-    computedMatch: {
-      params,
-    },
   } = props;
 
   const [fields, setFields] = useState(formFields);
-
-  const [id] = params.id.split('-');
-
-  useEffect(() => {
-    readPerson(id);
-  }, []);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -65,7 +46,7 @@ const PersonSettingsInfo = (props) => {
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
       editPerson({
-        id,
+        id: person.id,
         ...formData,
       });
     }
@@ -88,60 +69,32 @@ const PersonSettingsInfo = (props) => {
   }
 
   const isSuperAdmin = viewer.usertype === SUPER_ADMIN;
-  const dismissPath = `/people/${person.id}/settings/`;
 
   return (
-    <React.Fragment>
-      <ActorSettingCard
-        namespace="people"
-        actor={person}
-        key="com:people.person"
-      >
-        <InfoForm
-          fields={fields}
-          person={person}
-          handleOnChange={handleOnChange}
-          handleOnSubmit={handleOnSubmit}
-          isFetching={isFetching}
-          canChangeUsertype={canChangeUsertype()}
-          isSuperAdmin={isSuperAdmin}
-          dismissPath={dismissPath}
-        />
-      </ActorSettingCard>
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Information Updated!"
-          type="success"
-        />
-      }
-    </React.Fragment>
+    <InfoForm
+      fields={fields}
+      person={person}
+      handleOnChange={handleOnChange}
+      handleOnSubmit={handleOnSubmit}
+      isFetching={isFetching}
+      canChangeUsertype={canChangeUsertype()}
+      isSuperAdmin={isSuperAdmin}
+    />
   );
 };
 
 PersonSettingsInfo.propTypes = {
-  readPerson: PropTypes.func.isRequired,
   editPerson: PropTypes.func.isRequired,
-  people: PeopleType.isRequired,
+  person: PersonType.isRequired,
   viewer: PersonType.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  success: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
-  computedMatch: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
-    people,
-    success,
-    error,
+    people: {
+      current: person,
+    },
     isFetching,
   } = state.people;
 
@@ -150,9 +103,7 @@ const mapStateToProps = (state) => {
   } = state.session;
 
   return {
-    people,
-    error,
-    success,
+    person,
     viewer,
     isFetching,
   };
@@ -160,9 +111,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readPerson: (id) => {
-      dispatch(actions.people.read(id));
-    },
     editPerson: (person) => {
       dispatch(actions.people.edit(person));
     },

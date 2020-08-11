@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
 
 import ActorType from '../../../proptypes/Actor';
 import { Actor as ACTOR } from '../../../constants';
@@ -23,7 +22,6 @@ const ActorInfoForm = (props) => {
     },
     actor,
     isFetching,
-    dismissPath,
   } = props;
 
   const enableSubmit = actor.id > 0 || (name.isValid && body.isValid);
@@ -75,19 +73,12 @@ const ActorInfoForm = (props) => {
         />
       </CardContent>
       <CardActions>
-        {dismissPath &&
-        <Button
-          component={Link}
-          to={dismissPath}
-        >
-          Dismiss
-        </Button>
-        }
         <Button
           type="submit"
           variant="contained"
           color="primary"
           disabled={isFetching || !enableSubmit}
+          fullWidth
         >
           Save
         </Button>
@@ -103,12 +94,10 @@ ActorInfoForm.propTypes = {
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   actor: ActorType.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  dismissPath: PropTypes.string,
 };
 
 ActorInfoForm.defaultProps = {
   formTitle: '',
-  dismissPath: '',
 };
 
 export default ActorInfoForm;

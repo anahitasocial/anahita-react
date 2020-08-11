@@ -17,6 +17,7 @@ const ActorSettingCard = (props) => {
   const {
     classes,
     actor,
+    subheader,
     namespace,
     children,
   } = props;
@@ -41,7 +42,7 @@ const ActorSettingCard = (props) => {
             </Avatar>
           }
           title={actor.name}
-          subheader="Settings"
+          subheader={subheader}
         />
         <Divider />
         {children}
@@ -53,8 +54,13 @@ const ActorSettingCard = (props) => {
 ActorSettingCard.propTypes = {
   classes: PropTypes.object.isRequired,
   actor: PropTypes.object.isRequired,
+  subheader: PropTypes.string,
   namespace: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+};
+
+ActorSettingCard.defaultProps = {
+  subheader: 'Settings',
 };
 
 export default withStyles(styles)(ActorSettingCard);

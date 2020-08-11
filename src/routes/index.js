@@ -16,13 +16,11 @@ import HomePage from '../containers/Home';
 import ActorsBrowse from '../containers/actors/Browse';
 import ActorsRead from '../containers/actors/Read';
 import ActorsAdd from '../containers/actors/Add';
-import ActorsSettings from '../containers/actors/Settings';
+import ActorsSettings from '../containers/actors/settings';
 import ActorsEdit from '../containers/actors/settings/Info';
 import ActorsDelete from '../containers/actors/settings/Delete';
 
 import PeopleAdd from '../containers/people/Add';
-import PersonSettingsInfo from '../containers/people/settings/Info';
-import PersonSettingsAccount from '../containers/people/settings/Account';
 
 import Media from '../containers/media';
 import MediaRead from '../containers/media/Read';
@@ -114,20 +112,6 @@ const Routes = (props) => {
         path="/people/:id/settings/"
         exact
         component={PeopleSettings}
-      />
-      <AuthenticatedRoute
-        path="/people/:id/settings/info/"
-        exact
-        component={(params) => {
-          return <PersonSettingsInfo {...params} />;
-        }}
-      />
-      <AuthenticatedRoute
-        path="/people/:id/settings/account/"
-        exact
-        component={(params) => {
-          return <PersonSettingsAccount {...params} />;
-        }}
       />
       <AuthenticatedRoute
         path="/people/:id/settings/deleteforever/"
