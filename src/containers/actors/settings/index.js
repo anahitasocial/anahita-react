@@ -9,6 +9,7 @@ import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Apps from './Apps';
 import Delete from './Delete';
 import Info from './Info';
+import PermissionsBrowse from './permissions/Browse';
 import PersonAccount from '../../people/settings/Account';
 import PersonInfo from '../../people/settings/Info';
 import Progress from '../../../components/Progress';
@@ -23,6 +24,7 @@ const TABS = {
   ACCOUNT: 'account',
   APPS: 'apps',
   PERMISSIONS: 'permissions',
+  PRIVACY: 'privacy',
   DELETE: 'delete',
 };
 
@@ -42,7 +44,7 @@ const ActorsSettings = (props) => {
 
   const [id] = params.id.split('-');
 
-  const [tab, setTab] = useState(TABS.INFO);
+  const [tab, setTab] = useState(TABS.PERMISSIONS);
 
   useEffect(() => {
     readActor(id, namespace);
@@ -58,10 +60,10 @@ const ActorsSettings = (props) => {
     );
   }
 
-  const ActorInfo = Info(namespace);
   const ActorApps = Apps(namespace);
+  const ActorInfo = Info(namespace);
+  const ActorPermissionsBrowse = PermissionsBrowse(namespace);
   const ActorDelete = Delete(namespace);
-
 
   return (
     <React.Fragment>
@@ -78,6 +80,7 @@ const ActorsSettings = (props) => {
         {namespace === 'people' &&
           <Tab label="Account" value={TABS.ACCOUNT} />
         }
+        <Tab label="Privacy" value={TABS.PRIVACY} />
         <Tab label="Apps" value={TABS.APPS} />
         <Tab label="Permissions" value={TABS.PERMISSIONS} />
         <Tab label="Delete" value={TABS.DELETE} />
@@ -98,6 +101,9 @@ const ActorsSettings = (props) => {
         }
         {tab === TABS.APPS &&
           <ActorApps />
+        }
+        {tab === TABS.PERMISSIONS &&
+          <ActorPermissionsBrowse />
         }
         {tab === TABS.DELETE &&
           <ActorDelete />

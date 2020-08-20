@@ -42,7 +42,7 @@ const StoriesBrowse = (props) => {
     return () => {
       resetStories();
     };
-  }, []);
+  }, [resetStories]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
@@ -58,6 +58,7 @@ const StoriesBrowse = (props) => {
 
   return (
     <InfiniteScroll
+      pageStart={0}
       loadMore={fetchList}
       hasMore={hasMore}
       loader={

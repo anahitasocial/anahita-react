@@ -1,3 +1,4 @@
+import Access from './access';
 import Actor from './actor';
 import App from './app';
 import Auth from './auth';
@@ -19,6 +20,7 @@ import Storage from './storage';
 import Stories from './stories';
 
 export {
+  Access,
   Actor,
   App,
   Auth,

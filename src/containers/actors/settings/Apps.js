@@ -62,15 +62,11 @@ const ActorsSettingsApps = (props) => {
                 secondary={app.description}
               />
               <ListItemSecondaryAction>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={app.enabled}
-                      onChange={() => {
-                        handleEditApp(app);
-                      }}
-                    />}
-                  label="Enabled"
+                <Switch
+                  checked={app.enabled}
+                  onChange={() => {
+                    handleEditApp(app);
+                  }}
                 />
               </ListItemSecondaryAction>
             </ListItem>

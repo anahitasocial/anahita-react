@@ -20,6 +20,21 @@ export default {
     openComments: 'Open Comments',
     closeComments: 'Close Comments',
   },
+  access: {
+    people: {
+      public: 'Public',
+      registered: 'Registered',
+      followers: 'Followers',
+      leaders: 'Leaders',
+      mutuals: 'Mutuals',
+      admins: 'Only You',
+    },
+    groups: {
+      registered: 'Registered',
+      followers: 'Followers',
+      admins: 'Only You',
+    },
+  },
   translation: {
     stories,
   },
@@ -82,22 +97,57 @@ export default {
   notes: {
     cTitle: 'Notes',
     mTitle: 'Notes',
+    settings: {
+      note: {
+        add: 'Who can post a note on this profile?',
+        addcomment: 'Who can comment on notes?',
+      },
+    },
   },
   photos: {
     cTitle: 'Photos',
     mTitle: 'Photos',
+    settings: {
+      photo: {
+        add: 'Who can post photos on this profile?',
+        addcomment: 'Who can comment on photos?',
+      },
+      set: {
+        add: 'Who can create sets on this profile?',
+        addcomment: 'Who can comment on sets?',
+      },
+    },
   },
   topics: {
     cTitle: 'Topics',
     mTitle: 'Topics',
+    settings: {
+      topic: {
+        add: 'Who can start a topic on this profile?',
+        addcomment: 'Who can comment on topics?',
+      },
+    },
   },
   todos: {
     cTitle: 'Todos',
     mTitle: 'Todos',
+    settings: {
+      todo: {
+        add: 'Who can add a todo on this profile?',
+        addcomment: 'Who can comment on todos?',
+      },
+    },
   },
   articles: {
     cTitle: 'Articles',
     mTitle: 'Articles',
+    settings: {
+      article: {
+        add: 'Who can publish an article on this profile?',
+        addcomment: 'Who can comment on articles?',
+        edit: 'Who can edit an article on this profile?',
+      },
+    },
   },
   hashtags: {
     cTitle: 'Hashtags',

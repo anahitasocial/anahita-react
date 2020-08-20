@@ -17,11 +17,10 @@ import Typography from '@material-ui/core/Typography';
 import AppsIcon from '@material-ui/icons/Apps';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 
+import AppsEdit from './Edit';
 import Progress from '../../../components/Progress';
 import SelectSort from '../../../components/settings/apps/SelectSort';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
-import AppsEdit from './Edit';
-
 
 import * as actions from '../../../actions';
 import AppsType from '../../../proptypes/settings/Apps';

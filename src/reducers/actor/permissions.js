@@ -1,6 +1,8 @@
 import createReducer from '../create';
-import DEFAULT_ENTITY from '../../proptypes/settings/AppDefault';
+import DEFAULT_ENTITY from '../../proptypes/actor/PermissionDefault';
 
-export default (state, action) => {
-  return createReducer('actor_permissions', DEFAULT_ENTITY)(state, action);
+export default (namespace) => {
+  return (state, action) => {
+    return createReducer(namespace, DEFAULT_ENTITY)(state, action);
+  };
 };

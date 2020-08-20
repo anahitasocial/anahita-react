@@ -56,6 +56,7 @@ const ActorDeleteForm = (props) => {
           variant="contained"
           color="secondary"
           disabled={isFetching || !enableDelete}
+          fullWidth
         >
           {isFetching ? 'Deleting in progress ...' : 'Delete'}
         </Button>
