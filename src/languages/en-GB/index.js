@@ -30,6 +30,7 @@ export default {
       admins: 'Only You',
     },
     groups: {
+      public: 'Public',
       registered: 'Registered',
       followers: 'Followers',
       admins: 'Only You',
@@ -80,6 +81,7 @@ export default {
       info: 'Info',
       apps: 'Apps',
       permissions: 'Permissions',
+      privacy: 'Privacy',
       delete: 'Delete',
     },
   },
@@ -91,6 +93,7 @@ export default {
       account: 'Account',
       apps: 'Apps',
       permissions: 'Permissions',
+      privacy: 'Privacy',
       delete: 'Delete',
     },
   },

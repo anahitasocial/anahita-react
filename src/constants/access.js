@@ -1,5 +1,6 @@
 export default {
   PEOPLE: {
+    PUBLIC: 'public',
     REGISTERED: 'registered',
     FOLLOWERS: 'followers',
     LEADERS: 'leaders',
@@ -7,6 +8,7 @@ export default {
     ADMINS: 'admins',
   },
   GROUPS: {
+    PUBLIC: 'public',
     REGISTERED: 'registered',
     FOLLOWERS: 'followers',
     ADMINS: 'admins',

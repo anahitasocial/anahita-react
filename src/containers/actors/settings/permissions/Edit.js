@@ -34,9 +34,9 @@ const accessOptions = {
     ACCESS.PEOPLE.ADMINS,
   ],
   groups: [
-    ACCESS.PEOPLE.REGISTERED,
-    ACCESS.PEOPLE.FOLLOWERS,
-    ACCESS.PEOPLE.ADMINS,
+    ACCESS.GROUPS.REGISTERED,
+    ACCESS.GROUPS.FOLLOWERS,
+    ACCESS.GROUPS.ADMINS,
   ],
 };
 
@@ -108,7 +108,7 @@ const SettingsPermissionsEdit = (props) => {
                   fullWidth
                   margin="normal"
                 >
-                  <InputLabel>
+                  <InputLabel id={`${key}-label-id`}>
                     {label}
                   </InputLabel>
                   <Select

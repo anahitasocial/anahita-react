@@ -3,8 +3,8 @@ import * as api from '../api';
 import createAction from './create';
 import app from './app';
 import avatar from './avatar';
-import inlineComments from './inline_comments';
 import cover from './cover';
+import inlineComments from './inline_comments';
 import likes from './likes';
 import notifications from './notifications';
 import password from './password';
@@ -20,6 +20,7 @@ const groups = {
   settings: {
     apps: createAction('groups_apps')(api.groups.group.apps),
     permissions: createAction('groups_permissions')(api.groups.group.permissions),
+    privacy: createAction('groups_privacy')(api.groups.group.privacy),
   },
 };
 const hashtags = createAction('hashtags')(api.hashtags);
@@ -30,6 +31,7 @@ const people = {
   settings: {
     apps: createAction('people_apps')(api.people.person.apps),
     permissions: createAction('people_permissions')(api.people.person.permissions),
+    privacy: createAction('people_privacy')(api.people.person.privacy),
   },
 };
 const photos = createAction('photos')(api.photos);

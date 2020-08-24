@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 import ActorType from '../../../proptypes/Actor';
@@ -15,7 +14,6 @@ const ActorInfoForm = (props) => {
   const {
     handleOnChange,
     handleOnSubmit,
-    formTitle,
     fields: {
       name,
       body,
@@ -29,17 +27,6 @@ const ActorInfoForm = (props) => {
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <CardContent>
-        {formTitle &&
-          <Typography
-            variant="h6"
-            color="primary"
-            style={{
-              textTransform: 'capitalize',
-            }}
-          >
-            {formTitle}
-          </Typography>
-        }
         <TextField
           name="name"
           value={actor.name}
@@ -90,14 +77,9 @@ const ActorInfoForm = (props) => {
 ActorInfoForm.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
-  formTitle: PropTypes.string,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   actor: ActorType.isRequired,
   isFetching: PropTypes.bool.isRequired,
-};
-
-ActorInfoForm.defaultProps = {
-  formTitle: '',
 };
 
 export default ActorInfoForm;

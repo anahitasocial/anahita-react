@@ -12,6 +12,7 @@ import Info from './Info';
 import PermissionsBrowse from './permissions/Browse';
 import PersonAccount from '../../people/settings/Account';
 import PersonInfo from '../../people/settings/Info';
+import Privacy from './Privacy';
 import Progress from '../../../components/Progress';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
 
@@ -44,7 +45,7 @@ const ActorsSettings = (props) => {
 
   const [id] = params.id.split('-');
 
-  const [tab, setTab] = useState(TABS.PERMISSIONS);
+  const [tab, setTab] = useState(TABS.PRIVACY);
 
   useEffect(() => {
     readActor(id, namespace);
@@ -63,6 +64,7 @@ const ActorsSettings = (props) => {
   const ActorApps = Apps(namespace);
   const ActorInfo = Info(namespace);
   const ActorPermissionsBrowse = PermissionsBrowse(namespace);
+  const ActorPrivacy = Privacy(namespace);
   const ActorDelete = Delete(namespace);
 
   return (
@@ -98,6 +100,9 @@ const ActorsSettings = (props) => {
         }
         {namespace === 'people' && tab === TABS.ACCOUNT &&
           <PersonAccount />
+        }
+        {tab === TABS.PRIVACY &&
+          <ActorPrivacy />
         }
         {tab === TABS.APPS &&
           <ActorApps />

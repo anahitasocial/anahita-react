@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Typography from '@material-ui/core/Typography';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 
 import ActorType from '../../../proptypes/Actor';
 import { Actor as ACTOR } from '../../../constants';
@@ -28,16 +29,10 @@ const ActorDeleteForm = (props) => {
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <CardContent>
-        <Typography
-          variant="h6"
-          color="primary"
-        >
-          Delete Forever!
-        </Typography>
         <TextField
           name="alias"
           onChange={handleOnChange}
-          label={`Type the exact alias: "${actor.alias}"`}
+          label="Alias"
           error={alias.error !== ''}
           helperText={alias.error}
           margin="normal"
@@ -49,6 +44,9 @@ const ActorDeleteForm = (props) => {
           }}
           required
         />
+        <FormHelperText>
+          {`Type the exact alias: "${actor.alias}"`}
+        </FormHelperText>
       </CardContent>
       <CardActions>
         <Button

@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 
 import app from './app';
 import avatar from './avatar';
-import inlineComments from './inline_comments';
 import cover from './cover';
+import inlineComments from './inline_comments';
 import likes from './likes';
 import locations from './locations';
 import hashtags from './hashtags';
@@ -24,19 +24,22 @@ import taggables from './taggables';
 // creators
 import createActorApps from './actor/apps';
 import createActorPermissions from './actor/permissions';
+import createActorPrivacy from './actor/privacy';
 import createActorsReducer from './create_actors';
 import createCommentReducer from './create_comment';
-import createTagGraphReducer from './create_tag_graph';
 import createMediaReducer from './createMedia';
+import createTagGraphReducer from './create_tag_graph';
 
 // create actors reducers
 const people = createActorsReducer('people');
 const peopleApps = createActorApps('people_apps');
 const peoplePermissions = createActorPermissions('people_permissions');
+const peoplePrivacy = createActorPrivacy('people_privacy');
 
 const groups = createActorsReducer('groups');
 const groupsApps = createActorsReducer('groups_apps');
 const groupsPermissions = createActorPermissions('groups_permissions');
+const groupsPrivacy = createActorPrivacy('groups_privacy');
 
 // create media reducers
 const notes = createMediaReducer('notes');
@@ -60,6 +63,7 @@ export default combineReducers({
   groups,
   groupsApps,
   groupsPermissions,
+  groupsPrivacy,
   inlineComments,
   likes,
   locations,
@@ -71,6 +75,7 @@ export default combineReducers({
   people,
   peopleApps,
   peoplePermissions,
+  peoplePrivacy,
   photos,
   search,
   settingsAbout,

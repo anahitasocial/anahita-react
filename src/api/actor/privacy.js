@@ -1,5 +1,5 @@
+/* eslint camelcase: "off" */
 import axios from 'axios';
-import { constructURLSearchParams } from '../utils';
 
 const read = (namespace) => {
   return (actor) => {
@@ -7,25 +7,25 @@ const read = (namespace) => {
   };
 };
 
-/*
-action: setprivacy
-access: followers
-allowFollowRequest: 1
-*/
-
 const edit = (namespace) => {
   return (params) => {
     const {
       actor,
-      access,
-      allowFollowRequest,
+      privacy,
     } = params;
 
-    return axios.post(`/${namespace}/${actor.id}.json`, constructURLSearchParams({
+    let privacy_name = ['access', 'leadable:add'];
+
+    if (namespace === 'people') {
+      privacy_name = ['access'];
+      delete privacy['leadable:add'];
+    }
+
+    return axios.post(`/${namespace}/${actor.id}/privacy.json`, {
       action: 'setprivacy',
-      access,
-      allowFollowRequest,
-    }));
+      privacy_name,
+      ...privacy,
+    });
   };
 };
 
