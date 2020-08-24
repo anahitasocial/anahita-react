@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Typography from '@material-ui/core/Typography';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -52,14 +51,9 @@ const PersonAdd = (props) => {
     email.isValid
   );
 
-  const formTitle = isNew ? 'Add a new person' : 'Edit Person';
-
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <CardContent>
-        <Typography variant="h6" color="primary">
-          {formTitle}
-        </Typography>
         <TextField
           name="givenName"
           value={person.givenName}

@@ -17,6 +17,7 @@ import Progress from '../../../components/Progress';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
 
 import * as actions from '../../../actions';
+import permissions from '../../../permissions/actor';
 import ActorType from '../../../proptypes/Actor';
 import i18n from '../../../languages';
 
@@ -67,6 +68,8 @@ const ActorsSettings = (props) => {
   const ActorPrivacy = Privacy(namespace);
   const ActorDelete = Delete(namespace);
 
+  const canDelete = permissions.canDelete(actor);
+
   return (
     <React.Fragment>
       <Tabs
@@ -85,7 +88,9 @@ const ActorsSettings = (props) => {
         <Tab label="Privacy" value={TABS.PRIVACY} />
         <Tab label="Apps" value={TABS.APPS} />
         <Tab label="Permissions" value={TABS.PERMISSIONS} />
-        <Tab label="Delete" value={TABS.DELETE} />
+        {canDelete &&
+          <Tab label="Delete" value={TABS.DELETE} />
+        }
       </Tabs>
       <ActorSettingCard
         namespace={namespace}
@@ -110,7 +115,7 @@ const ActorsSettings = (props) => {
         {tab === TABS.PERMISSIONS &&
           <ActorPermissionsBrowse />
         }
-        {tab === TABS.DELETE &&
+        {canDelete && tab === TABS.DELETE &&
           <ActorDelete />
         }
       </ActorSettingCard>
@@ -154,17 +159,12 @@ const mapStateToProps = (namespace) => {
       success,
     } = state[namespace];
 
-    const {
-      viewer,
-    } = state.session;
-
     return {
       actor,
       namespace,
       isFetching,
       error,
       success,
-      viewer,
     };
   };
 };

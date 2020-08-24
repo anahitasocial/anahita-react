@@ -20,11 +20,10 @@ const ActorDeleteForm = (props) => {
       alias,
     },
     actor,
-    canDelete,
     isFetching,
   } = props;
 
-  const enableDelete = actor.alias === alias.value && canDelete;
+  const enableDelete = actor.alias === alias.value;
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
@@ -37,7 +36,6 @@ const ActorDeleteForm = (props) => {
           helperText={alias.error}
           margin="normal"
           fullWidth
-          disabled={!canDelete}
           inputProps={{
             maxLength: ALIAS.MAX_LENGTH,
             minLength: ALIAS.MIN_LENGTH,
@@ -70,7 +68,6 @@ ActorDeleteForm.propTypes = {
   actor: ActorType.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  canDelete: PropTypes.bool.isRequired,
 };
 
 export default ActorDeleteForm;

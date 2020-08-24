@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 
 import PersonType from '../../proptypes/Person';
 
@@ -33,9 +32,6 @@ const PersonAccount = (props) => {
       noValidate
     >
       <CardContent>
-        <Typography variant="h6" color="primary">
-          Account Information
-        </Typography>
         <TextField
           name="username"
           value={person.username}

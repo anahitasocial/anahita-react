@@ -58,13 +58,7 @@ const ActorsRead = (props) => {
     return () => {
       resetActors();
     };
-  }, []);
-
-  const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
-  const canEdit = permissions.canEdit(viewer, actor);
-  const isPerson = actor.objectType.split('.')[1] === 'people';
-  const isViewer = actor.id === viewer.id;
-  const metaDesc = striptags(actor.body).substr(0, 160);
+  }, [setAppTitle, readActor, resetActors, id, namespace]);
 
   if (!actor.id && isFetching) {
     return (
@@ -77,6 +71,12 @@ const ActorsRead = (props) => {
       <Redirect push to="/404/" />
     );
   }
+
+  const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
+  const canEdit = permissions.canEdit(actor);
+  const isPerson = actor.objectType.split('.')[1] === 'people';
+  const isViewer = actor.id === viewer.id;
+  const metaDesc = striptags(actor.body).substr(0, 160);
 
   return (
     <React.Fragment>

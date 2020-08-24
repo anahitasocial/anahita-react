@@ -3,29 +3,22 @@ import { Person as PERSON } from '../constants';
 const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
 
 const canAdd = (viewer) => {
-  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
-    return true;
-  }
-
-  return false;
+  return [SUPER_ADMIN, ADMIN].includes(viewer.usertype);
 };
 
-const canEdit = (viewer, actor) => {
-  if (viewer.id === actor.id) {
-    return true;
-  }
+const canEdit = (actor) => {
+  const { authorized } = actor;
+  return Boolean(authorized && authorized.edit);
+};
 
-  if (actor.administratorIds) {
-    if (actor.administratorIds.indexOf(String(viewer.id)) > -1) {
-      return true;
-    }
-  }
+const canDelete = (actor) => {
+  const { authorized } = actor;
+  return Boolean(authorized && authorized.delete);
+};
 
-  if ([ADMIN, SUPER_ADMIN].includes(viewer.usertype)) {
-    return true;
-  }
-
-  return false;
+const canAdminister = (actor) => {
+  const { authorized } = actor;
+  return Boolean(authorized && authorized.administration);
 };
 
 const canFollow = (isAuthenticated, viewer, actor) => {
@@ -34,6 +27,8 @@ const canFollow = (isAuthenticated, viewer, actor) => {
 
 export default {
   canAdd,
+  canAdminister,
   canEdit,
+  canDelete,
   canFollow,
 };
