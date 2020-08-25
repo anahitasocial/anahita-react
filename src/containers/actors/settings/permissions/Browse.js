@@ -87,6 +87,7 @@ const ActorsSettingsPermissionsBrowse = (props) => {
             >
               <ListItemText
                 primary={name}
+                secondary={permission.description}
               />
             </ListItem>
           );

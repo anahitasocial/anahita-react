@@ -10,6 +10,7 @@ import {
 export default shape({
   id: number,
   name: string,
+  description: string,
   enabled: bool,
   actions: objectOf(any),
 });
