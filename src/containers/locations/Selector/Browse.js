@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import ListItem from '../ListItem';
+import ListItem from './ListItem';
 import Progress from '../../../components/Progress';
 import LocationsType from '../../../proptypes/Locations';
 import NodeType from '../../../proptypes/Node';
@@ -18,13 +18,15 @@ import AddAction from '../../actions/tags/location/Add';
 import * as actions from '../../../actions';
 import { App as APP } from '../../../constants';
 
-const useStyles = makeStyles(theme => ({
-  list: {
-    position: 'relative',
-    overflow: 'auto',
-    // maxHeight: theme.spacing(50),
-  },
-}));
+const useStyles = makeStyles((theme) => {
+  return {
+    list: {
+      position: 'relative',
+      overflow: 'auto',
+      maxHeight: theme.spacing(50),
+    },
+  };
+});
 
 const { LIMIT } = APP.BROWSE;
 
