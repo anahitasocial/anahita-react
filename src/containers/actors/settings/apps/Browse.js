@@ -3,19 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Switch from '@material-ui/core/Switch';
+import Progress from '../../../../components/Progress';
+import AppRead from './Read';
+import SimpleSnackbar from '../../../../components/SimpleSnackbar';
 
-import Progress from '../../../components/Progress';
-import SimpleSnackbar from '../../../components/SimpleSnackbar';
+import AppsType from '../../../../proptypes/actor/Apps';
+import ActorType from '../../../../proptypes/Actor';
+import * as actions from '../../../../actions';
 
-import AppsType from '../../../proptypes/actor/Apps';
-import ActorType from '../../../proptypes/Actor';
-import * as actions from '../../../actions';
-
-const ActorsSettingsApps = (props) => {
+const ActorsSettingsAppsBrowse = (props) => {
   const {
     browseApps,
     editApp,
@@ -52,23 +48,12 @@ const ActorsSettingsApps = (props) => {
           const app = apps.byId[appId];
           const key = `app_${app.id}`;
           return (
-            <ListItem
-              divider
+            <AppRead
               key={key}
-            >
-              <ListItemText
-                primary={app.name}
-                secondary={app.description}
-              />
-              <ListItemSecondaryAction>
-                <Switch
-                  checked={app.enabled}
-                  onChange={() => {
-                    handleEditApp(app);
-                  }}
-                />
-              </ListItemSecondaryAction>
-            </ListItem>
+              app={app}
+              handleEdit={handleEditApp}
+              isFetching={isFetching}
+            />
           );
         })}
       </List>
@@ -90,7 +75,7 @@ const ActorsSettingsApps = (props) => {
   );
 };
 
-ActorsSettingsApps.propTypes = {
+ActorsSettingsAppsBrowse.propTypes = {
   actor: ActorType.isRequired,
   browseApps: PropTypes.func.isRequired,
   editApp: PropTypes.func.isRequired,
@@ -147,5 +132,5 @@ export default (namespace) => {
   return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(ActorsSettingsApps);
+  )(ActorsSettingsAppsBrowse);
 };

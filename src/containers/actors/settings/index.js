@@ -6,7 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import ActorSettingCard from '../../../components/cards/ActorSetting';
-import Apps from './Apps';
+import Apps from './apps/Browse';
 import Delete from './Delete';
 import Info from './Info';
 import PermissionsBrowse from './permissions/Browse';
