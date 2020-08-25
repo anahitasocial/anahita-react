@@ -68,11 +68,11 @@ const ActorsSettingsPrivacy = (props) => {
       },
     } = event;
 
-    privacy[name] = (type === 'checked') ? checked : value;
+    privacy[name] = (type === 'checkbox') ? checked : value;
 
     setEntity({
       ...entity,
-      [name]: type === 'checked' ? checked : value,
+      [name]: type === 'checkbox' ? checked : value,
     });
   };
 
@@ -86,6 +86,8 @@ const ActorsSettingsPrivacy = (props) => {
       <Progress />
     );
   }
+
+  console.log(privacy);
 
   return (
     <React.Fragment>
@@ -125,7 +127,7 @@ const ActorsSettingsPrivacy = (props) => {
             <FormControlLabel
               control={
                 <Switch
-                  value={privacy.allowFollowRequest}
+                  checked={privacy.allowFollowRequest}
                   onChange={handleOnChange}
                   name="allowFollowRequest"
                   disabled={[

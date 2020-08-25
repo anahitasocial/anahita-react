@@ -22,7 +22,10 @@ const SettingsAssignmentsEdit = (props) => {
 
   const handleOnChange = (event) => {
     const { target } = event;
-    setAccess(target.value);
+    const { name, value } = target;
+
+    app[name] = value;
+    setAccess(value);
   };
 
   const handleOnSubmit = (event) => {

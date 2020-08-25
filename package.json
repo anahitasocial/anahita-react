@@ -43,6 +43,7 @@
     "lodash": "^4.17.15",
     "normalizr": "^3.4.0",
     "prop-types": "^15.7.2",
+    "qs": "^6.9.4",
     "query-string": "^6.12.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",

@@ -46,7 +46,7 @@ const ActorsSettings = (props) => {
 
   const [id] = params.id.split('-');
 
-  const [tab, setTab] = useState(TABS.PRIVACY);
+  const [tab, setTab] = useState(TABS.INFO);
 
   useEffect(() => {
     readActor(id, namespace);

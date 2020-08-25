@@ -58,14 +58,8 @@ const TopicsRead = MediaRead('topics');
 const Todos = Media('todos');
 const TodosRead = MediaRead('todos');
 
-const scrollUp = () => {
-  window.scrollTo(0, 0);
-};
-
 const Routes = (props) => {
   const { isAuthenticated } = props;
-
-  scrollUp();
 
   return (
     <Switch>

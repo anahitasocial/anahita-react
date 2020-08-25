@@ -12,7 +12,14 @@ const getMetaEntity = (formControllers) => {
   const newEntity = {};
 
   formControllers.forEach((c) => {
-    const { name, value } = c;
+    const {
+      name,
+      value,
+      // selected,
+      // type,
+    } = c;
+
+    // newEntity[name] = ['select', 'list', 'radio'].includes(type) ? selected : value;
     newEntity[name] = value;
   });
 

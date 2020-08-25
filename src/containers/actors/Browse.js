@@ -74,7 +74,7 @@ const ActorsBrowse = (props) => {
     return () => {
       resetActors();
     };
-  }, []);
+  }, [setAppTitle, resetActors, namespace]);
 
   const columnWidth = containersUtils.getColumnWidthPercentage(width);
   const canAdd = permissions.canAdd(viewer);

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 
 const browse = (namespace) => {
   return (actor) => {
@@ -13,11 +14,11 @@ const edit = (namespace) => {
       actions,
     } = params;
 
-    return axios.post(`/${namespace}/${actor.id}.json`, {
+    return axios.post(`/${namespace}/${actor.id}.json`, qs.stringify({
       action: 'setpermission',
       privacy_name: Object.keys(actions),
       ...actions,
-    });
+    }));
   };
 };
 

@@ -43,7 +43,7 @@ const MediaBrowse = (props) => {
     return () => {
       resetMedia();
     };
-  }, []);
+  }, [resetMedia]);
 
   const columnWidth = utils.getColumnWidthPercentage(width);
 

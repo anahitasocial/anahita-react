@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { constructURLSearchParams } from './utils';
 import CommentDefault from '../proptypes/CommentDefault';
 
 const browse = (node) => {
@@ -17,7 +16,7 @@ const add = (node, comment = CommentDefault) => {
     action += 'comment';
   }
 
-  return axios.post(url, constructURLSearchParams({ action }));
+  return axios.post(url, { action });
 };
 
 const deleteItem = (node, comment = CommentDefault) => {
@@ -30,7 +29,7 @@ const deleteItem = (node, comment = CommentDefault) => {
     action += 'comment';
   }
 
-  return axios.post(url, constructURLSearchParams({ action }));
+  return axios.post(url, { action });
 };
 
 export default {

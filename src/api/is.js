@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { constructURLSearchParams } from './utils';
 
 function isAvailable(key, value) {
-  return axios.post('/people/person.json', constructURLSearchParams({
+  return axios.post('/people/person.json', {
     action: 'validate',
     key,
     value,
-  }));
+  });
 }
 
 function email(value) {

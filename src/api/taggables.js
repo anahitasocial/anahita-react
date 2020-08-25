@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { constructURLSearchParams } from './utils';
 
 const getNamespace = (node) => {
   const { objectType } = node;
@@ -27,10 +26,10 @@ const add = (tag) => {
     const namespace = getNamespace(taggable);
     const { id, objectType } = tag;
 
-    return axios.post(`/${namespace}/${taggable.id}.json`, constructURLSearchParams({
+    return axios.post(`/${namespace}/${taggable.id}.json`, {
       action: `add${objectType.split('.')[2]}`,
       location_id: id,
-    }));
+    });
   };
 };
 
@@ -39,10 +38,10 @@ const deleteItem = (tag) => {
     const namespace = getNamespace(taggable);
     const { id, objectType } = tag;
 
-    return axios.post(`/${namespace}/${taggable.id}.json`, constructURLSearchParams({
+    return axios.post(`/${namespace}/${taggable.id}.json`, {
       action: `delete${objectType.split('.')[2]}`,
       location_id: id,
-    }));
+    });
   };
 };
 

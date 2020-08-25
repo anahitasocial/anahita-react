@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { constructURLSearchParams } from './utils';
 
 const browse = (namespace) => {
   return (params) => {
@@ -21,13 +20,13 @@ const read = (namespace) => {
 
 const edit = (namespace) => {
   return (node) => {
-    return axios.post(`/${namespace}/${node.id}.json`, constructURLSearchParams(node));
+    return axios.post(`/${namespace}/${node.id}.json`, node);
   };
 };
 
 const add = (namespace) => {
   return (node) => {
-    return axios.post(`/${namespace}.json`, constructURLSearchParams(node));
+    return axios.post(`/${namespace}.json`, node);
   };
 };
 

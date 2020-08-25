@@ -58,7 +58,8 @@ const LocationsSelector = (props) => {
       <Dialog
         open={isOpen}
         onClose={handleClose}
-        fullScreen
+        maxWidth="md"
+        fullWidth
       >
         <DialogTitle>
           Add Location

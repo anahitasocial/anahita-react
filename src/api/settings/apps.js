@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { constructURLSearchParams } from '../utils';
+import qs from 'qs';
 
 const browse = (params) => {
   return axios.get('/settings/apps.json', { params });
@@ -7,7 +7,7 @@ const browse = (params) => {
 
 const edit = (node) => {
   const { id, meta } = node;
-  return axios.post(`/settings/apps/${id}.json`, constructURLSearchParams({
+  return axios.post(`/settings/apps/${id}.json`, qs.stringify({
     ...meta,
   }));
 };

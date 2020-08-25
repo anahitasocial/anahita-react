@@ -1,15 +1,14 @@
 import axios from 'axios';
-import { constructURLSearchParams } from '../utils';
 
 const browse = (params) => {
   return axios.get('/settings/assignments.json', { params });
 };
 
 const edit = (assignment) => {
-  return axios.post('/settings/assignment.json', constructURLSearchParams({
+  return axios.post('/settings/assignment.json', {
     ...assignment,
     action: 'edit',
-  }));
+  });
 };
 
 export default {

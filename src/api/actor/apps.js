@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { constructURLSearchParams } from '../utils';
 
 const browse = (namespace) => {
   return (actor) => {
@@ -21,10 +20,10 @@ const edit = (namespace) => {
     } = params;
     const action = app.enabled ? 'removeapp' : 'addapp';
 
-    return axios.post(`/${namespace}/${actor.id}.json`, constructURLSearchParams({
+    return axios.post(`/${namespace}/${actor.id}.json`, {
       action,
       app: app.id,
-    }));
+    });
   };
 };
 
