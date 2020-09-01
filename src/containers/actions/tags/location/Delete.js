@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Clear';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 import TagType from '../../../../proptypes/Location';
 import NodeType from '../../../../proptypes/Node';
@@ -29,7 +29,7 @@ const ActionsTagsLocationDelete = React.forwardRef((props, ref) => {
         deleteTag(node, tag);
       }}
     >
-      {!isWaiting && <DeleteIcon />}
+      {!isWaiting && <RemoveIcon />}
       {isWaiting && <CircularProgress size={20} />}
     </IconButton>
   );

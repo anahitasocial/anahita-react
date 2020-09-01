@@ -24,13 +24,11 @@ const ActorsSettingsAdminsBrowse = (props) => {
   const {
     browseAdmins,
     resetAdmins,
-    // addAdmin,
     removeAdmin,
     actor,
     admins,
     isFetching,
     success,
-    // error,
     namespace,
   } = props;
 
@@ -68,7 +66,7 @@ const ActorsSettingsAdminsBrowse = (props) => {
               key={key}
             >
               <ListItemAvatar>
-                <ActorAvatar actor={admin} />
+                <ActorAvatar actor={admin} linked />
               </ListItemAvatar>
               <ListItemText
                 primary={admin.name}
@@ -101,10 +99,8 @@ ActorsSettingsAdminsBrowse.propTypes = {
   actor: ActorType.isRequired,
   browseAdmins: PropTypes.func.isRequired,
   resetAdmins: PropTypes.func.isRequired,
-  // addAdmin: PropTypes.func.isRequired,
   removeAdmin: PropTypes.func.isRequired,
   admins: ActorsType.isRequired,
-  // error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -144,9 +140,6 @@ const mapDispatchToProps = (namespace) => {
       },
       resetAdmins: () => {
         return dispatch(actions[namespace].settings.admins.reset());
-      },
-      addAdmin: (params) => {
-        return dispatch(actions[namespace].settings.admins.add(params));
       },
       removeAdmin: (params) => {
         return dispatch(actions[namespace].settings.admins.deleteItem(params));

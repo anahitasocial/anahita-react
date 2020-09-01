@@ -79,6 +79,7 @@ export default {
     mTitle: 'Groups',
     settings: {
       info: 'Info',
+      admins: 'Admins',
       apps: 'Apps',
       permissions: 'Permissions',
       privacy: 'Privacy',

@@ -96,6 +96,7 @@ const ActorsSettingsAdminsAdd = (props) => {
             {...params}
             label="Add Admins"
             value={keyword}
+            placeholder="Jane smith ..."
             InputProps={{
               ...params.InputProps,
               endAdornment: (
