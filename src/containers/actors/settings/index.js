@@ -6,6 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import ActorSettingCard from '../../../components/cards/ActorSetting';
+
+import Admins from './admins/Browse';
 import Apps from './apps/Browse';
 import Delete from './Delete';
 import Info from './Info';
@@ -22,9 +24,10 @@ import ActorType from '../../../proptypes/Actor';
 import i18n from '../../../languages';
 
 const TABS = {
-  INFO: 'info',
+  ADMINS: 'admins',
   ACCOUNT: 'account',
   APPS: 'apps',
+  INFO: 'info',
   PERMISSIONS: 'permissions',
   PRIVACY: 'privacy',
   DELETE: 'delete',
@@ -46,7 +49,7 @@ const ActorsSettings = (props) => {
 
   const [id] = params.id.split('-');
 
-  const [tab, setTab] = useState(TABS.INFO);
+  const [tab, setTab] = useState(TABS.ADMINS);
 
   useEffect(() => {
     readActor(id, namespace);
@@ -62,6 +65,7 @@ const ActorsSettings = (props) => {
     );
   }
 
+  const ActorAdmins = Admins(namespace);
   const ActorApps = Apps(namespace);
   const ActorInfo = Info(namespace);
   const ActorPermissionsBrowse = PermissionsBrowse(namespace);
@@ -85,6 +89,9 @@ const ActorsSettings = (props) => {
         {namespace === 'people' &&
           <Tab label="Account" value={TABS.ACCOUNT} />
         }
+        {namespace !== 'people' &&
+          <Tab label="Admins" value={TABS.ADMINS} />
+        }
         <Tab label="Privacy" value={TABS.PRIVACY} />
         <Tab label="Apps" value={TABS.APPS} />
         <Tab label="Permissions" value={TABS.PERMISSIONS} />
@@ -105,6 +112,9 @@ const ActorsSettings = (props) => {
         }
         {namespace === 'people' && tab === TABS.ACCOUNT &&
           <PersonAccount />
+        }
+        {namespace !== 'people' && tab === TABS.ADMINS &&
+          <ActorAdmins />
         }
         {tab === TABS.PRIVACY &&
           <ActorPrivacy />

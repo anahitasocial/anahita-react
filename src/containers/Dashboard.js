@@ -26,7 +26,7 @@ const DashboardPage = (props) => {
         <title>{i18n.t('dashboard:cTitle')}</title>
       </Helmet>
       <Grid container justify="center">
-        <Grid item lg={6} md={12}>
+        <Grid item lg={8} md={12}>
           <StoriesBrowse
             key="com:stories.story"
             queryFilters={filters}

@@ -77,7 +77,6 @@ const ActorsSettingsPermissionsBrowse = (props) => {
           const name = i18n.t(`${permission.name.split('_')[1]}:mTitle`);
           return (
             <ListItem
-              divider
               button
               onClick={() => {
                 setCurrent(permission);

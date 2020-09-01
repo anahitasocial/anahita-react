@@ -1,6 +1,7 @@
 import * as api from '../api';
 
 import createAction from './create';
+import createActorAdmins from './actor/admins';
 import app from './app';
 import avatar from './avatar';
 import cover from './cover';
@@ -18,6 +19,7 @@ const articles = createAction('articles')(api.articles);
 const groups = {
   ...createAction('groups')(api.groups),
   settings: {
+    admins: createActorAdmins('groups')(api.groups.group.admins),
     apps: createAction('groups_apps')(api.groups.group.apps),
     permissions: createAction('groups_permissions')(api.groups.group.permissions),
     privacy: createAction('groups_privacy')(api.groups.group.privacy),

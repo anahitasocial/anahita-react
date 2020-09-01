@@ -22,6 +22,7 @@ import stories from './stories';
 import taggables from './taggables';
 
 // creators
+import createActorAdmins from './actor/admins';
 import createActorApps from './actor/apps';
 import createActorPermissions from './actor/permissions';
 import createActorPrivacy from './actor/privacy';
@@ -37,7 +38,8 @@ const peoplePermissions = createActorPermissions('people_permissions');
 const peoplePrivacy = createActorPrivacy('people_privacy');
 
 const groups = createActorsReducer('groups');
-const groupsApps = createActorsReducer('groups_apps');
+const groupsAdmins = createActorAdmins('groups_admins');
+const groupsApps = createActorApps('groups_apps');
 const groupsPermissions = createActorPermissions('groups_permissions');
 const groupsPrivacy = createActorPrivacy('groups_privacy');
 
@@ -61,6 +63,7 @@ export default combineReducers({
   comments,
   cover,
   groups,
+  groupsAdmins,
   groupsApps,
   groupsPermissions,
   groupsPrivacy,

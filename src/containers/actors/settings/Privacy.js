@@ -87,8 +87,6 @@ const ActorsSettingsPrivacy = (props) => {
     );
   }
 
-  console.log(privacy);
-
   return (
     <React.Fragment>
       <form onSubmit={handleOnSubmit}>

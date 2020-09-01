@@ -17,7 +17,7 @@ const ActorsSettingsAppsBrowse = (props) => {
   const [enabled, setEnabled] = useState(app.enabled);
 
   return (
-    <ListItem divider>
+    <ListItem>
       <ListItemText
         primary={app.name}
         secondary={app.description}
