@@ -10,29 +10,29 @@ import * as actions from '../../../actions';
 
 const SettingsAssignmentsEdit = (props) => {
   const {
-    editAssignment,
+    editItem,
     identifier,
-    app,
+    node,
     open,
     handleClose,
     isFetching,
   } = props;
 
-  const [access, setAccess] = useState(app.access);
+  const [access, setAccess] = useState(node.access);
 
   const handleOnChange = (event) => {
     const { target } = event;
     const { name, value } = target;
 
-    app[name] = value;
+    node[name] = value;
     setAccess(value);
   };
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
 
-    editAssignment({
-      app: app.id,
+    editItem({
+      app: node.id,
       access,
       actor: identifier,
     });
@@ -48,7 +48,7 @@ const SettingsAssignmentsEdit = (props) => {
     >
       <AssignmentForm
         identifier={identifier}
-        app={app}
+        app={node}
         handleOnSubmit={handleOnSubmit}
         handleOnChange={handleOnChange}
         handleClose={handleClose}
@@ -59,10 +59,10 @@ const SettingsAssignmentsEdit = (props) => {
 };
 
 SettingsAssignmentsEdit.propTypes = {
-  editAssignment: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   identifier: PropTypes.string.isRequired,
-  app: PropTypes.objectOf(PropTypes.any).isRequired,
+  node: PropTypes.objectOf(PropTypes.any).isRequired,
   open: PropTypes.bool,
   isFetching: PropTypes.bool.isRequired,
 };
@@ -73,8 +73,8 @@ SettingsAssignmentsEdit.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editAssignment: (assignment) => {
-      return dispatch(actions.settings.assignments.edit(assignment));
+    editItem: (node) => {
+      return dispatch(actions.settings.assignments.edit(node));
     },
   };
 };

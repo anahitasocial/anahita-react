@@ -22,9 +22,9 @@ const {
 
 const LocationsBrowse = (props) => {
   const {
-    browseLocations,
-    resetLocations,
-    locations,
+    browseList,
+    resetList,
+    items,
     error,
     hasMore,
     queryFilters,
@@ -32,13 +32,13 @@ const LocationsBrowse = (props) => {
 
   useEffect(() => {
     return () => {
-      resetLocations();
+      resetList();
     };
-  }, []);
+  }, [resetList]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
-    browseLocations({
+    browseList({
       start,
       limit: LIMIT,
       ...queryFilters,
@@ -62,10 +62,11 @@ const LocationsBrowse = (props) => {
       }
     >
       <List>
-        {locations.allIds.map((locationId) => {
-          const location = locations.byId[locationId];
+        {items.allIds.map((itemId) => {
+          const node = items.byId[itemId];
+          const key = `locations_node_list_item_${itemId}`;
           return (
-            <ListItem location={location} />
+            <ListItem location={node} key={key} />
           );
         })}
       </List>
@@ -74,10 +75,10 @@ const LocationsBrowse = (props) => {
 };
 
 LocationsBrowse.propTypes = {
-  browseLocations: PropTypes.func.isRequired,
-  resetLocations: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   queryFilters: PropTypes.object,
-  locations: LocationsType.isRequired,
+  items: LocationsType.isRequired,
   error: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
@@ -91,14 +92,14 @@ LocationsBrowse.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    locations,
+    locations: items,
     error,
     isFetching,
     hasMore,
   } = state.locations;
 
   return {
-    locations,
+    items,
     error,
     isFetching,
     hasMore,
@@ -107,10 +108,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseLocations: (params) => {
+    browseList: (params) => {
       return dispatch(actions.locations.browse(params));
     },
-    resetLocations: () => {
+    resetList: () => {
       return dispatch(actions.locations.reset());
     },
   };

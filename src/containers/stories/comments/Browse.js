@@ -22,13 +22,14 @@ const CommentsBrowse = (props) => {
     parent,
     parents,
     canAdd,
-    addComment,
-    setComments,
+    addItem,
+    setList,
     viewer,
     isFetching,
+    comments: initComments,
   } = props;
 
-  const comments = parents.byId[parent.id] || {
+  const items = parents.byId[parent.id] || {
     allIds: [],
     byId: {},
   };
@@ -44,8 +45,8 @@ const CommentsBrowse = (props) => {
   });
 
   useEffect(() => {
-    setComments(props.comments, parent, namespace);
-  }, []);
+    setList(initComments, parent, namespace);
+  }, [initComments, parent, namespace]);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -66,7 +67,7 @@ const CommentsBrowse = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      addComment(comment, namespace).then(() => {
+      addItem(comment, namespace).then(() => {
         setComment({
           ...CommentDefault,
           author: viewer,
@@ -80,14 +81,14 @@ const CommentsBrowse = (props) => {
 
   return (
     <React.Fragment>
-      {comments.allIds.map((itemId) => {
-        const item = comments.byId[itemId];
-        const key = `comment-${item.id}`;
+      {items.allIds.map((itemId) => {
+        const node = items.byId[itemId];
+        const key = `comment_list_item_${node.id}`;
         return (
           <CommentRead
             key={key}
             parent={parent}
-            comment={item}
+            comment={node}
             inline
           />
         );
@@ -124,11 +125,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setComments: (comments, parent, namespace) => {
-      return dispatch(actions(namespace).setList(comments, parent));
+    setList: (nodes, parent, namespace) => {
+      return dispatch(actions(namespace).setList(nodes, parent));
     },
-    addComment: (comment, namespace) => {
-      return dispatch(actions(namespace).add(comment));
+    addItem: (node, namespace) => {
+      return dispatch(actions(namespace).add(node));
     },
   };
 };
@@ -138,8 +139,8 @@ CommentsBrowse.propTypes = {
   parents: NodesType.isRequired,
   comments: CommentsType.isRequired,
   canAdd: PropTypes.bool,
-  setComments: PropTypes.func.isRequired,
-  addComment: PropTypes.func.isRequired,
+  setList: PropTypes.func.isRequired,
+  addItem: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };

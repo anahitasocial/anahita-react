@@ -20,9 +20,9 @@ const { LIMIT } = APP.BROWSE;
 
 const MediaBrowse = (props) => {
   const {
-    browseMedia,
-    resetMedia,
-    media,
+    browseList,
+    resetList,
+    items,
     namespace,
     viewer,
     width,
@@ -32,7 +32,7 @@ const MediaBrowse = (props) => {
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
-    browseMedia({
+    browseList({
       start,
       limit: LIMIT,
       ...queryFilters,
@@ -41,9 +41,9 @@ const MediaBrowse = (props) => {
 
   useEffect(() => {
     return () => {
-      resetMedia();
+      resetList();
     };
-  }, [resetMedia]);
+  }, [resetList]);
 
   const columnWidth = utils.getColumnWidthPercentage(width);
 
@@ -61,13 +61,13 @@ const MediaBrowse = (props) => {
         gutterWidth={16}
         gutterHeight={16}
       >
-        {media.allIds.map((mediumId) => {
-          const medium = media.byId[mediumId];
-          const key = `medium_${medium.id}`;
+        {items.allIds.map((itemId) => {
+          const node = items.byId[itemId];
+          const key = `${namespace}_node_list_item${node.id}`;
           return (
             <MediumCard
               key={key}
-              medium={medium}
+              medium={node}
               viewer={viewer}
             />
           );
@@ -79,13 +79,13 @@ const MediaBrowse = (props) => {
 };
 
 MediaBrowse.propTypes = {
-  browseMedia: PropTypes.func.isRequired,
-  resetMedia: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
-  media: MediaType.isRequired,
+  items: MediaType.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
 
@@ -106,7 +106,7 @@ const mapStateToProps = (namespace) => {
     const { viewer } = state.session;
 
     return {
-      media: state[namespace][namespace],
+      items: state[namespace][namespace],
       namespace,
       error,
       hasMore,
@@ -118,10 +118,10 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      browseMedia: (params) => {
+      browseList: (params) => {
         return dispatch(actions[namespace].browse(params, namespace));
       },
-      resetMedia: () => {
+      resetList: () => {
         return dispatch(actions[namespace].reset(namespace));
       },
     };

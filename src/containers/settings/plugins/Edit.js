@@ -18,15 +18,15 @@ import utils from '../utils';
 
 const SettingsPluginsEdit = (props) => {
   const {
-    editPlugin,
+    editItem,
     node,
     open,
-    plugins,
+    items,
     handleClose,
     isFetching,
   } = props;
 
-  const plugin = plugins.byId[node.id];
+  const plugin = items.byId[node.id];
   const namespace = `plugin.${plugin.element}.${plugin.type}`;
   const { meta: formControllers = [] } = plugin;
 
@@ -57,7 +57,7 @@ const SettingsPluginsEdit = (props) => {
 
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
-      editPlugin({
+      editItem({
         id: node.id,
         enabled: node.enabled,
         meta: utils.getMetaURLParams(formData),
@@ -106,11 +106,11 @@ const SettingsPluginsEdit = (props) => {
 };
 
 SettingsPluginsEdit.propTypes = {
-  editPlugin: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   node: PluginType.isRequired,
   open: PropTypes.bool,
-  plugins: PluginsType.isRequired,
+  items: PluginsType.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
@@ -120,22 +120,22 @@ SettingsPluginsEdit.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editPlugin: (plugin) => {
-      return dispatch(actions.settings.plugins.edit(plugin));
+    editItem: (node) => {
+      return dispatch(actions.settings.plugins.edit(node));
     },
   };
 };
 
 const mapStateToProps = (state) => {
   const {
-    settings_plugins: plugins,
+    settings_plugins: items,
     error,
     success,
     isFetching,
   } = state.settingsPlugins;
 
   return {
-    plugins,
+    items,
     error,
     success,
     isFetching,

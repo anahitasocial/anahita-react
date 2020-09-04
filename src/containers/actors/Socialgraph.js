@@ -19,8 +19,8 @@ const { LIMIT } = APP.BROWSE;
 
 const ActorsSocialgraph = (props) => {
   const {
-    browseActors,
-    resetActors,
+    browseList,
+    resetList,
     actors,
     actorNode,
     hasMore,
@@ -32,7 +32,7 @@ const ActorsSocialgraph = (props) => {
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
     const { q } = queryFilters;
-    browseActors({
+    browseList({
       q,
       filter,
       actor: actorNode,
@@ -44,7 +44,7 @@ const ActorsSocialgraph = (props) => {
 
   useEffect(() => {
     return () => {
-      resetActors();
+      resetList();
     };
   }, []);
 
@@ -85,8 +85,8 @@ const ActorsSocialgraph = (props) => {
 ActorsSocialgraph.propTypes = {
   actors: ActorsType.isRequired,
   actorNode: ActorType.isRequired,
-  browseActors: PropTypes.func.isRequired,
-  resetActors: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   width: PropTypes.string.isRequired,
   filter: PropTypes.oneOf([
     'followers',
@@ -127,10 +127,10 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseActors: (params) => {
+    browseList: (params) => {
       return dispatch(actions.socialgraph.browse(params));
     },
-    resetActors: () => {
+    resetList: () => {
       return dispatch(actions.socialgraph.reset());
     },
   };

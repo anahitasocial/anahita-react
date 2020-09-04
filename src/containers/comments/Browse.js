@@ -23,10 +23,10 @@ const formFields = form.createFormFields([
 
 const CommentsBrowse = (props) => {
   const {
-    browseComments,
-    resetComments,
-    addComment,
-    comments,
+    browseList,
+    resetList,
+    addItem,
+    items,
     hasMore,
     canAdd,
     parent,
@@ -46,15 +46,15 @@ const CommentsBrowse = (props) => {
 
   useEffect(() => {
     return () => {
-      resetComments();
+      resetList();
     };
-  }, []);
+  }, [resetList]);
 
   const fetchList = (page) => {
     const { id, objectType } = parent;
     const start = (page - 1) * LIMIT;
 
-    browseComments({
+    browseList({
       node: { id, objectType },
       start,
       limit: LIMIT,
@@ -80,7 +80,7 @@ const CommentsBrowse = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      addComment(comment, namespace).then(() => {
+      addItem(comment, namespace).then(() => {
         setComment({
           ...CommentDefault,
           author: viewer,
@@ -103,14 +103,14 @@ const CommentsBrowse = (props) => {
           <Progress key={`comments-progress-${parent.id}`} />
         }
       >
-        {comments.allIds.map((itemId) => {
-          const item = comments.byId[itemId];
-          const key = `comment_${item.id}`;
+        {items.allIds.map((itemId) => {
+          const node = items.byId[itemId];
+          const key = `comment_node_${node.id}`;
           return (
             <CommentRead
               key={key}
               parent={parent}
-              comment={item}
+              comment={node}
             />
           );
         })}
@@ -132,7 +132,7 @@ const mapStateToProps = (state) => {
   const { viewer } = state.session;
 
   const {
-    comments,
+    comments: items,
     error,
     hasMore,
     isFetching,
@@ -140,7 +140,7 @@ const mapStateToProps = (state) => {
 
   return {
     viewer,
-    comments,
+    items,
     error,
     hasMore,
     isFetching,
@@ -149,25 +149,25 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    resetComments: (namespace) => {
-      return dispatch(actions.comments(namespace).reset());
-    },
-    browseComments: (params, namespace) => {
+    browseList: (params, namespace) => {
       return dispatch(actions.comments(namespace).browse(params));
     },
-    addComment: (comment, namespace) => {
-      return dispatch(actions.comments(namespace).add(comment));
+    resetList: (namespace) => {
+      return dispatch(actions.comments(namespace).reset());
+    },
+    addItem: (node, namespace) => {
+      return dispatch(actions.comments(namespace).add(node));
     },
   };
 };
 
 CommentsBrowse.propTypes = {
-  comments: CommentsType.isRequired,
+  items: CommentsType.isRequired,
   parent: NodeType.isRequired,
   canAdd: PropTypes.bool,
-  addComment: PropTypes.func.isRequired,
-  browseComments: PropTypes.func.isRequired,
-  resetComments: PropTypes.func.isRequired,
+  addItem: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,

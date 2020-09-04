@@ -13,7 +13,6 @@ import * as actions from '../../actions';
 import form from '../../utils/form';
 
 import ActorsType from '../../proptypes/Actors';
-import ActorDefault from '../../proptypes/ActorDefault';
 
 const formFields = form.createFormFields([
   'name',
@@ -22,9 +21,9 @@ const formFields = form.createFormFields([
 
 const ActorsAdd = (props) => {
   const {
-    addActor,
-    actors: {
-      current: actor = { ...ActorDefault },
+    addItem,
+    items: {
+      current: actor,
     },
     namespace,
     isFetching,
@@ -53,7 +52,7 @@ const ActorsAdd = (props) => {
 
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
-      addActor(formData);
+      addItem(formData);
     }
 
     setFields({ ...newFields });
@@ -101,8 +100,8 @@ const ActorsAdd = (props) => {
 };
 
 ActorsAdd.propTypes = {
-  addActor: PropTypes.func.isRequired,
-  actors: ActorsType.isRequired,
+  addItem: PropTypes.func.isRequired,
+  items: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   success: PropTypes.bool.isRequired,
@@ -118,7 +117,7 @@ const mapStateToProps = (namespace) => {
     } = state[namespace];
 
     return {
-      actors: state[namespace][namespace],
+      items: state[namespace][namespace],
       namespace,
       isFetching,
       success,
@@ -130,8 +129,8 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      addActor: (actor) => {
-        return dispatch(actions[namespace].add(actor));
+      addItem: (node) => {
+        return dispatch(actions[namespace].add(node));
       },
     };
   };

@@ -27,9 +27,9 @@ const CURRENT_DEFAULT = {
 
 const SettingsAssignmentsBrowse = (props) => {
   const {
-    browseAssignments,
-    resetAssignments,
-    assignments,
+    browseList,
+    resetList,
+    items,
     error,
     success,
     isFetching,
@@ -39,22 +39,22 @@ const SettingsAssignmentsBrowse = (props) => {
   const [current, setCurrent] = useState({ ...CURRENT_DEFAULT });
 
   useEffect(() => {
-    browseAssignments({
+    browseList({
       limit: 99,
       offset: 0,
     });
 
     return () => {
-      resetAssignments();
+      resetList();
     };
-  }, []);
+  }, [browseList, resetList]);
 
   const handleClose = () => {
     setEditingOpen(false);
     setCurrent({ ...CURRENT_DEFAULT });
   };
 
-  if (assignments.allIds.length === 0 && isFetching) {
+  if (items.allIds.length === 0 && isFetching) {
     return (
       <Progress />
     );
@@ -76,15 +76,15 @@ const SettingsAssignmentsBrowse = (props) => {
           title={
             <Typography variant="h4">App Assignments</Typography>
           }
-          subheader="Manage assignments of apps to actors"
+          subheader="Manage items of apps to actors"
           avatar={
             <Avatar>
               <AssignmentsIcon />
             </Avatar>
           }
         />
-        {assignments.allIds.map((identifier) => {
-          const { apps } = assignments.byId[identifier];
+        {items.allIds.map((identifier) => {
+          const { apps } = items.byId[identifier];
           const type = identifier.split(':')[1].split('.')[0];
           const key = `assignment_${type}`;
 
@@ -139,9 +139,9 @@ const SettingsAssignmentsBrowse = (props) => {
 };
 
 SettingsAssignmentsBrowse.propTypes = {
-  browseAssignments: PropTypes.func.isRequired,
-  resetAssignments: PropTypes.func.isRequired,
-  assignments: AssignmentsType.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
+  items: AssignmentsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -149,10 +149,10 @@ SettingsAssignmentsBrowse.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseAssignments: (params) => {
+    browseList: (params) => {
       return dispatch(actions.settings.assignments.browse(params));
     },
-    resetAssignments: () => {
+    resetList: () => {
       return dispatch(actions.settings.assignments.reset());
     },
   };
@@ -160,14 +160,14 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   const {
-    settings_assignments: assignments,
+    settings_assignments: items,
     error,
     success,
     isFetching,
   } = state.settingsAssignments;
 
   return {
-    assignments,
+    items,
     error,
     success,
     isFetching,

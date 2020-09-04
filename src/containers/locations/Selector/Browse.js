@@ -33,10 +33,10 @@ const { LIMIT } = APP.BROWSE;
 const LocationsSelectorBrowse = (props) => {
   const classes = useStyles();
   const {
-    browseLocations,
-    resetLocations,
+    browseList,
+    resetList,
     noResultsCallback,
-    locations,
+    items,
     node,
     queryFilters,
     handleClose,
@@ -47,7 +47,7 @@ const LocationsSelectorBrowse = (props) => {
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
-    browseLocations({
+    browseList({
       start: 0,
       limit: LIMIT,
       layout: 'list_selector',
@@ -56,9 +56,9 @@ const LocationsSelectorBrowse = (props) => {
     });
 
     return () => {
-      resetLocations();
+      resetList();
     };
-  }, []);
+  }, [browseList, resetList, node, queryFilters]);
 
   const handleOnChange = (event) => {
     const { value } = event.target;
@@ -67,8 +67,8 @@ const LocationsSelectorBrowse = (props) => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    resetLocations();
-    browseLocations({
+    resetList();
+    browseList({
       start: 0,
       limit: LIMIT,
       layout: 'list_selector',
@@ -77,7 +77,7 @@ const LocationsSelectorBrowse = (props) => {
     });
   };
 
-  if (keyword !== '' && !isFetching && locations.allIds.length === 0 && noResultsCallback) {
+  if (keyword !== '' && !isFetching && items.allIds.length === 0 && noResultsCallback) {
     noResultsCallback(keyword);
   }
 
@@ -113,11 +113,11 @@ const LocationsSelectorBrowse = (props) => {
         </form>
       </CardContent>
       <List className={classes.list}>
-        {locations.allIds.map((locationId) => {
-          const location = locations.byId[locationId];
+        {items.allIds.map((itemId) => {
+          const location = items.byId[itemId];
           return (
             <ListItem
-              key={`location-graph-list-item-${locationId}`}
+              key={`location-graph-list-item-${itemId}`}
               location={location}
               actions={
                 <AddAction
@@ -135,10 +135,10 @@ const LocationsSelectorBrowse = (props) => {
 };
 
 LocationsSelectorBrowse.propTypes = {
-  browseLocations: PropTypes.func.isRequired,
-  resetLocations: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   queryFilters: PropTypes.object,
-  locations: LocationsType.isRequired,
+  items: LocationsType.isRequired,
   node: NodeType.isRequired,
   error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -158,14 +158,14 @@ LocationsSelectorBrowse.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    locations,
+    locations: items,
     error,
     isFetching,
     hasMore,
   } = state.locations;
 
   return {
-    locations,
+    items,
     error,
     isFetching,
     hasMore,
@@ -174,10 +174,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseLocations: (params) => {
+    browseList: (params) => {
       return dispatch(actions.locations.browse(params));
     },
-    resetLocations: () => {
+    resetList: () => {
       return dispatch(actions.locations.reset());
     },
   };

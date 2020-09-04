@@ -18,15 +18,15 @@ import utils from '../utils';
 
 const SettingsAppsEdit = (props) => {
   const {
-    editApp,
+    editItem,
     node,
     open,
-    apps,
+    items,
     handleClose,
     isFetching,
   } = props;
 
-  const app = apps.byId[node.id];
+  const app = items.byId[node.id];
   const namespace = app.package.split('_')[1];
   const { meta: formControllers = [] } = app;
 
@@ -57,7 +57,7 @@ const SettingsAppsEdit = (props) => {
 
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
-      editApp({
+      editItem({
         id: node.id,
         meta: utils.getMetaURLParams(formData),
       });
@@ -105,11 +105,11 @@ const SettingsAppsEdit = (props) => {
 };
 
 SettingsAppsEdit.propTypes = {
-  editApp: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   node: AppType.isRequired,
   open: PropTypes.bool,
-  apps: AppsType.isRequired,
+  items: AppsType.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
@@ -119,7 +119,7 @@ SettingsAppsEdit.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editApp: (app) => {
+    editItem: (app) => {
       return dispatch(actions.settings.apps.edit(app));
     },
   };
@@ -127,14 +127,14 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   const {
-    settings_apps: apps,
+    settings_apps: items,
     error,
     success,
     isFetching,
   } = state.settingsApps;
 
   return {
-    apps,
+    items,
     error,
     success,
     isFetching,

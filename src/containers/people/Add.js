@@ -14,7 +14,6 @@ import { Person as PERSON } from '../../constants';
 import form from '../../utils/form';
 
 import PersonType from '../../proptypes/Person';
-import PersonDefault from '../../proptypes/PersonDefault';
 import PeopleType from '../../proptypes/People';
 
 const { TYPE } = PERSON.FIELDS;
@@ -30,10 +29,10 @@ const formFields = form.createFormFields([
 
 const PeopleAdd = (props) => {
   const {
-    addPerson,
+    addItem,
     viewer,
-    people: {
-      current: person = { ...PersonDefault },
+    items: {
+      current: person,
     },
     success,
     isFetching,
@@ -104,7 +103,7 @@ const PeopleAdd = (props) => {
 
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
-      addPerson(formData);
+      addItem(formData);
     }
 
     setFields({ ...newFields });
@@ -159,9 +158,9 @@ const PeopleAdd = (props) => {
 };
 
 PeopleAdd.propTypes = {
-  addPerson: PropTypes.func.isRequired,
+  addItem: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
-  people: PeopleType.isRequired,
+  items: PeopleType.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
@@ -169,7 +168,7 @@ PeopleAdd.propTypes = {
 
 const mapStateToProps = (state) => {
   const {
-    people,
+    people: items,
     success,
     error,
     isFetching,
@@ -180,7 +179,7 @@ const mapStateToProps = (state) => {
   } = state.session;
 
   return {
-    people,
+    items,
     viewer,
     error,
     success,
@@ -190,7 +189,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addPerson: (params) => {
+    addItem: (params) => {
       return dispatch(actions.people.add(params));
     },
   };

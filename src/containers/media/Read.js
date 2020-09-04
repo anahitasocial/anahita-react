@@ -8,7 +8,6 @@ import striptags from 'striptags';
 
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
-import MediumDefault from '../../proptypes/MediumDefault';
 import MediumComments from '../comments/Browse';
 import Progress from '../../components/Progress';
 import LocationsGadget from '../locations/Gadget';
@@ -20,14 +19,14 @@ import i18n from '../../languages';
 const MediaRead = (props) => {
   const {
     namespace,
-    readMedium,
+    readItem,
     setAppTitle,
     isFetching,
     viewer,
     isAuthenticated,
     error,
     media: {
-      current: medium = { ...MediumDefault },
+      current: medium,
     },
     match: {
       params: {
@@ -37,7 +36,7 @@ const MediaRead = (props) => {
   } = props;
 
   useEffect(() => {
-    readMedium(id, namespace);
+    readItem(id, namespace);
     setAppTitle(i18n.t(`${namespace}:cTitle`));
   }, []);
 
@@ -81,7 +80,7 @@ const MediaRead = (props) => {
 };
 
 MediaRead.propTypes = {
-  readMedium: PropTypes.func.isRequired,
+  readItem: PropTypes.func.isRequired,
   media: MediaType.isRequired,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -115,7 +114,7 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      readMedium: (id) => {
+      readItem: (id) => {
         dispatch(actions[namespace].read(id, namespace));
       },
       setAppTitle: (title) => {

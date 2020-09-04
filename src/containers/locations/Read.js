@@ -19,7 +19,6 @@ import i18n from '../../languages';
 import utils from './utils';
 
 import LocationsType from '../../proptypes/Locations';
-import LocationDefault from '../../proptypes/LocationDefault';
 
 import AnahitaMap from '../../components/Map';
 import Taggables from '../taggables';
@@ -37,10 +36,10 @@ const useStyles = makeStyles({
 const LocationsRead = (props) => {
   const classes = useStyles();
   const {
-    readLocation,
+    readItem,
     setAppTitle,
-    locations: {
-      current: location = { ...LocationDefault },
+    items: {
+      current: location,
     },
     taggablesCount,
     isFetching,
@@ -53,7 +52,7 @@ const LocationsRead = (props) => {
   } = props;
 
   useEffect(() => {
-    readLocation(id);
+    readItem(id);
     setAppTitle(i18n.t('locations:cTitle'));
   }, []);
 
@@ -110,7 +109,7 @@ const LocationsRead = (props) => {
 
 const mapStateToProps = (state) => {
   const {
-    locations,
+    locations: items,
     error,
     isFetching,
   } = state.locations;
@@ -122,7 +121,7 @@ const mapStateToProps = (state) => {
   const taggablesCount = total;
 
   return {
-    locations,
+    items,
     taggablesCount,
     error,
     isFetching,
@@ -131,8 +130,8 @@ const mapStateToProps = (state) => {
 
 LocationsRead.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
-  readLocation: PropTypes.func.isRequired,
-  locations: LocationsType.isRequired,
+  readItem: PropTypes.func.isRequired,
+  items: LocationsType.isRequired,
   match: PropTypes.object.isRequired,
   taggablesCount: PropTypes.number.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -141,7 +140,7 @@ LocationsRead.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readLocation: (id) => {
+    readItem: (id) => {
       return dispatch(actions.locations.read(id));
     },
     setAppTitle: (title) => {

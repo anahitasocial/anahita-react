@@ -49,7 +49,7 @@ const ActorsSettings = (props) => {
 
   const [id] = params.id.split('-');
 
-  const [tab, setTab] = useState(TABS.ADMINS);
+  const [tab, setTab] = useState(TABS.INFO);
 
   useEffect(() => {
     readActor(id, namespace);

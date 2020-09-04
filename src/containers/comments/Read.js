@@ -21,8 +21,8 @@ const formFields = form.createFormFields([
 
 const CommentsRead = (props) => {
   const {
-    editCommentInline,
-    editComment,
+    editItemInline,
+    editItem,
     parent,
     comment = { ...CommentDefault },
     isAuthenticated,
@@ -67,7 +67,7 @@ const CommentsRead = (props) => {
     if (form.isValid(newFields)) {
       const { objectType } = parent;
       const namespace = objectType.split('.')[1];
-      const editMethod = inline ? editCommentInline : editComment;
+      const editMethod = inline ? editItemInline : editItem;
 
       editMethod(currComment, namespace).then(() => {
         setIsEditing(false);
@@ -131,18 +131,18 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editComment: (comment, namespace) => {
-      return dispatch(actions.comments(namespace).edit(comment));
+    editItem: (node, namespace) => {
+      return dispatch(actions.comments(namespace).edit(node));
     },
-    editCommentInline: (comment, namespace) => {
-      return dispatch(actions.inlineComments(namespace).edit(comment));
+    editItemInline: (node, namespace) => {
+      return dispatch(actions.inlineComments(namespace).edit(node));
     },
   };
 };
 
 CommentsRead.propTypes = {
-  editCommentInline: PropTypes.func.isRequired,
-  editComment: PropTypes.func.isRequired,
+  editItemInline: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
   parent: NodeType.isRequired,
   comment: CommentType.isRequired,
   viewer: PersonType.isRequired,

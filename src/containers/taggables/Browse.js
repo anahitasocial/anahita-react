@@ -31,10 +31,10 @@ const {
 
 const TaggablesBrowse = (props) => {
   const {
-    browseTaggables,
-    resetTaggables,
+    browseList,
+    resetList,
     tag,
-    taggables,
+    items,
     error,
     hasMore,
     queryFilters: {
@@ -45,13 +45,13 @@ const TaggablesBrowse = (props) => {
 
   useEffect(() => {
     return () => {
-      resetTaggables(tag);
+      resetList(tag);
     };
-  }, []);
+  }, [resetList]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
-    browseTaggables(tag, {
+    browseList(tag, {
       tag,
       sort,
       start,
@@ -83,24 +83,24 @@ const TaggablesBrowse = (props) => {
         gutterWidth={16}
         gutterHeight={16}
       >
-        {taggables.allIds.map((nodeId) => {
-            const taggable = taggables.byId[nodeId];
-            const key = `taggable_${taggable.id}`;
-            const namespace = taggable.objectType.split('.')[1];
+        {items.allIds.map((itemId) => {
+            const node = items.byId[itemId];
+            const key = `node_${node.id}`;
+            const namespace = node.objectType.split('.')[1];
             return (
               <React.Fragment key={key}>
-                {utils.isActor(taggable) &&
-                  <ActorsCard actor={taggable} />
+                {utils.isActor(node) &&
+                  <ActorsCard actor={node} />
                 }
-                {utils.isMedium(taggable) &&
+                {utils.isMedium(node) &&
                   <MediaCard
-                    medium={taggable}
+                    medium={node}
                     namespace={namespace}
                   />
                 }
-                {utils.isComment(taggable) &&
+                {utils.isComment(node) &&
                   <CommentCard
-                    comment={taggable}
+                    comment={node}
                   />
                 }
               </React.Fragment>
@@ -114,23 +114,23 @@ const TaggablesBrowse = (props) => {
 
 const mapStateToProps = (state) => {
   const {
-    taggables,
+    taggables: items,
     error,
     hasMore,
   } = state.taggables;
 
   return {
-    taggables,
+    items,
     error,
     hasMore,
   };
 };
 
 TaggablesBrowse.propTypes = {
-  resetTaggables: PropTypes.func.isRequired,
-  browseTaggables: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   tag: NodeType.isRequired,
-  taggables: NodesType.isRequired,
+  items: NodesType.isRequired,
   queryFilters: PropTypes.shape({
     sort: PropTypes.oneOf([TOP, RECENT]),
     q: PropTypes.string,
@@ -142,10 +142,10 @@ TaggablesBrowse.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseTaggables: (tag, params) => {
+    browseList: (tag, params) => {
       return dispatch(actions.taggables(tag).browse(params));
     },
-    resetTaggables: (tag) => {
+    resetList: (tag) => {
       return dispatch(actions.taggables(tag).reset());
     },
   };

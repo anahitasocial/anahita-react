@@ -24,6 +24,7 @@ import taggables from './taggables';
 // creators
 import createActorAdmins from './actor/admins';
 import createActorApps from './actor/apps';
+import createActorFollowRequests from './actor/followrequests';
 import createActorPermissions from './actor/permissions';
 import createActorPrivacy from './actor/privacy';
 import createActorsReducer from './create_actors';
@@ -34,12 +35,14 @@ import createTagGraphReducer from './create_tag_graph';
 // create actors reducers
 const people = createActorsReducer('people');
 const peopleApps = createActorApps('people_apps');
+const peopleFollowRequests = createActorFollowRequests('people_followrequests');
 const peoplePermissions = createActorPermissions('people_permissions');
 const peoplePrivacy = createActorPrivacy('people_privacy');
 
 const groups = createActorsReducer('groups');
 const groupsAdmins = createActorAdmins('groups_admins');
 const groupsApps = createActorApps('groups_apps');
+const groupsFollowRequests = createActorFollowRequests('groups_followrequests');
 const groupsPermissions = createActorPermissions('groups_permissions');
 const groupsPrivacy = createActorPrivacy('groups_privacy');
 
@@ -65,6 +68,7 @@ export default combineReducers({
   groups,
   groupsAdmins,
   groupsApps,
+  groupsFollowRequests,
   groupsPermissions,
   groupsPrivacy,
   inlineComments,
@@ -77,6 +81,7 @@ export default combineReducers({
   password,
   people,
   peopleApps,
+  peopleFollowRequests,
   peoplePermissions,
   peoplePrivacy,
   photos,

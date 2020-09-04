@@ -46,12 +46,12 @@ const ActorsBrowse = (props) => {
   const classes = useStyles();
   const {
     setAppTitle,
-    browseActors,
-    resetActors,
+    browseList,
+    resetList,
     namespace,
     viewer,
     width,
-    actors,
+    items,
     hasMore,
     queryFilters,
   } = props;
@@ -59,7 +59,7 @@ const ActorsBrowse = (props) => {
   const fetchList = (page) => {
     const { disabled, q } = queryFilters;
     const start = (page - 1) * LIMIT;
-    browseActors({
+    browseList({
       q,
       disabled,
       start,
@@ -72,9 +72,9 @@ const ActorsBrowse = (props) => {
     setAppTitle(i18n.t(`${namespace}:cTitle`));
 
     return () => {
-      resetActors();
+      resetList();
     };
-  }, [setAppTitle, resetActors, namespace]);
+  }, [setAppTitle, resetList, namespace]);
 
   const columnWidth = containersUtils.getColumnWidthPercentage(width);
   const canAdd = permissions.canAdd(viewer);
@@ -105,13 +105,13 @@ const ActorsBrowse = (props) => {
           gutterWidth={16}
           gutterHeight={16}
         >
-          {actors.allIds.map((actorId) => {
-            const actor = actors.byId[actorId];
-            const key = `${namespace}_${actor.id}`;
+          {items.allIds.map((itemId) => {
+            const node = items.byId[itemId];
+            const key = `${namespace}_node_list_item_${node.id}`;
             return (
               <ActorsCard
                 key={key}
-                actor={actor}
+                actor={node}
               />
             );
           })
@@ -123,14 +123,14 @@ const ActorsBrowse = (props) => {
 };
 
 ActorsBrowse.propTypes = {
-  browseActors: PropTypes.func.isRequired,
-  resetActors: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   width: PropTypes.string.isRequired,
   setAppTitle: PropTypes.func.isRequired,
-  actors: ActorsType.isRequired,
+  items: ActorsType.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
 
@@ -153,7 +153,7 @@ const mapStateToProps = (namespace) => {
     } = state.session;
 
     return {
-      actors: state[namespace][namespace],
+      items: state[namespace][namespace],
       namespace,
       error,
       hasMore,
@@ -165,10 +165,10 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      browseActors: (params) => {
+      browseList: (params) => {
         return dispatch(actions[namespace].browse(params, namespace));
       },
-      resetActors: () => {
+      resetList: () => {
         return dispatch(actions[namespace].reset(namespace));
       },
       setAppTitle: (title) => {

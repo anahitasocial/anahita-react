@@ -34,10 +34,10 @@ const SORT = {
 
 const SettingsAppsBrowse = (props) => {
   const {
-    browseApps,
-    editApp,
-    resetApps,
-    apps,
+    browseList,
+    resetList,
+    editItem,
+    items,
     error,
     success,
     isFetching,
@@ -51,7 +51,7 @@ const SettingsAppsBrowse = (props) => {
   const [current, setCurrent] = useState(null);
 
   const fetchList = (newSort) => {
-    browseApps({
+    browseList({
       sort: newSort,
       offset: 0,
       limit: LIMIT,
@@ -63,9 +63,9 @@ const SettingsAppsBrowse = (props) => {
     fetchList(sort);
 
     return () => {
-      resetApps();
+      resetList();
     };
-  }, []);
+  }, [resetList]);
 
   const handleClose = () => {
     setEditingOpen(false);
@@ -78,9 +78,9 @@ const SettingsAppsBrowse = (props) => {
       payload: app,
     } = result;
 
-    apps.allIds = utils.applyDrag(apps.allIds, result);
+    items.allIds = utils.applyDrag(items.allIds, result);
 
-    editApp({
+    editItem({
       ...app,
       enabled: true,
       ordering: addedIndex + 1,
@@ -95,7 +95,7 @@ const SettingsAppsBrowse = (props) => {
     );
   }
 
-  if (apps.allIds.length === 0 && isFetching) {
+  if (items.allIds.length === 0 && isFetching) {
     return (
       <Progress />
     );
@@ -126,7 +126,7 @@ const SettingsAppsBrowse = (props) => {
             value={sort}
             handleOnChange={(event) => {
               const { target: { value } } = event;
-              resetApps();
+              resetList();
               fetchList(value);
             }}
             label="Sort by"
@@ -138,28 +138,28 @@ const SettingsAppsBrowse = (props) => {
             lockAxis="y"
             onDrop={handleReorder}
             getChildPayload={(index) => {
-              const appId = apps.allIds[index];
-              const app = apps.byId[appId];
+              const itemId = items.allIds[index];
+              const app = items.byId[itemId];
               return app;
             }}
           >
-            {apps.allIds.map((appId) => {
-              const app = apps.byId[appId];
-              const key = `app_${app.id}`;
+            {items.allIds.map((itemId) => {
+              const node = items.byId[itemId];
+              const key = `app_${node.id}`;
               return (
                 <Draggable key={key}>
                   <ListItem
                     divider
                     button
                     onClick={() => {
-                      setCurrent(app);
+                      setCurrent(node);
                       setEditingOpen(true);
                     }}
-                    disabled={!app.meta}
+                    disabled={!node.meta}
                   >
                     <ListItemText
-                      primary={app.name}
-                      secondary={app.package}
+                      primary={node.name}
+                      secondary={node.package}
                     />
                     <ListItemSecondaryAction>
                       {sort === SORT.ORDERING &&
@@ -193,10 +193,10 @@ const SettingsAppsBrowse = (props) => {
 
 
 SettingsAppsBrowse.propTypes = {
-  browseApps: PropTypes.func.isRequired,
-  editApp: PropTypes.func.isRequired,
-  resetApps: PropTypes.func.isRequired,
-  apps: AppsType.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
+  items: AppsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -211,28 +211,28 @@ SettingsAppsBrowse.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseApps: (params) => {
+    browseList: (params) => {
       return dispatch(actions.settings.apps.browse(params));
     },
-    editApp: (app) => {
-      return dispatch(actions.settings.apps.edit(app));
-    },
-    resetApps: () => {
+    resetList: () => {
       return dispatch(actions.settings.apps.reset());
+    },
+    editItem: (app) => {
+      return dispatch(actions.settings.apps.edit(app));
     },
   };
 };
 
 const mapStateToProps = (state) => {
   const {
-    settings_apps: apps,
+    settings_apps: items,
     error,
     success,
     isFetching,
   } = state.settingsApps;
 
   return {
-    apps,
+    items,
     error,
     success,
     isFetching,

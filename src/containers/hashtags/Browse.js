@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
 import InfiniteScroll from 'react-infinite-scroller';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,9 +26,9 @@ const {
 
 const HashtagsBrowse = (props) => {
   const {
-    browseHashtags,
-    resetHashtags,
-    hashtags,
+    browseList,
+    resetList,
+    items,
     error,
     hasMore,
     queryFilters,
@@ -37,7 +36,7 @@ const HashtagsBrowse = (props) => {
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
-    browseHashtags({
+    browseList({
       start,
       limit: LIMIT,
       ...queryFilters,
@@ -46,9 +45,9 @@ const HashtagsBrowse = (props) => {
 
   useEffect(() => {
     return () => {
-      resetHashtags();
+      resetList();
     };
-  }, []);
+  }, [resetList]);
 
   if (error) {
     return (
@@ -67,29 +66,23 @@ const HashtagsBrowse = (props) => {
           <Progress key="hashtags-progress" />
         }
       >
-        {hashtags.allIds.map((hashtagId) => {
-          const hashtag = hashtags.byId[hashtagId];
+        {items.allIds.map((itemId) => {
+          const node = items.byId[itemId];
           return (
-            <React.Fragment key={`hashtag_list_item_container_${hashtag.id}`}>
-              <ListItem
-                key={`hashtag_list_item_${hashtag.id}`}
-                href={`/hashtags/${hashtag.alias}/`}
-                button
-                component="a"
-              >
-                <ListItemAvatar>
-                  <Avatar>
-                    #
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={hashtag.name} />
-              </ListItem>
-              <Divider
-                component="li"
-                light
-                key={`hashtag_list_divider_${hashtag.id}`}
-              />
-            </React.Fragment>
+            <ListItem
+              key={`node_list_item_${node.id}`}
+              href={`/hashtags/${node.alias}/`}
+              button
+              component="a"
+              divider
+            >
+              <ListItemAvatar>
+                <Avatar>
+                  #
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={node.name} />
+            </ListItem>
           );
         })}
       </InfiniteScroll>
@@ -98,10 +91,10 @@ const HashtagsBrowse = (props) => {
 };
 
 HashtagsBrowse.propTypes = {
-  browseHashtags: PropTypes.func.isRequired,
-  resetHashtags: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   queryFilters: PropTypes.object,
-  hashtags: HashtagsType.isRequired,
+  items: HashtagsType.isRequired,
   error: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
@@ -115,14 +108,14 @@ HashtagsBrowse.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    hashtags,
+    hashtags: items,
     error,
     isFetching,
     hasMore,
   } = state.hashtags;
 
   return {
-    hashtags,
+    items,
     error,
     isFetching,
     hasMore,
@@ -131,10 +124,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseHashtags: (params) => {
+    browseList: (params) => {
       return dispatch(actions.browse(params));
     },
-    resetHashtags: () => {
+    resetList: () => {
       return dispatch(actions.reset());
     },
   };

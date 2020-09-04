@@ -19,7 +19,6 @@ import i18n from '../../languages';
 import permissions from '../../permissions/actor';
 
 import ActorsType from '../../proptypes/Actors';
-import ActorDefault from '../../proptypes/ActorDefault';
 import PersonType from '../../proptypes/Person';
 import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
 import ActorsSocialgraph from './Socialgraph';
@@ -34,11 +33,11 @@ const Todos = Media('todos');
 const ActorsRead = (props) => {
   const {
     namespace,
-    readActor,
-    resetActors,
+    readItem,
+    resetList,
     setAppTitle,
-    actors: {
-      current: actor = { ...ActorDefault },
+    items: {
+      current: actor,
     },
     viewer,
     isAuthenticated,
@@ -53,12 +52,12 @@ const ActorsRead = (props) => {
 
   useEffect(() => {
     setAppTitle(i18n.t(`${namespace}:cTitle`));
-    readActor(id, namespace);
+    readItem(id, namespace);
 
     return () => {
-      resetActors();
+      resetList();
     };
-  }, [setAppTitle, readActor, resetActors, id, namespace]);
+  }, [setAppTitle, readItem, resetList, id, namespace]);
 
   if (!actor.id && isFetching) {
     return (
@@ -187,9 +186,9 @@ const ActorsRead = (props) => {
 };
 
 ActorsRead.propTypes = {
-  readActor: PropTypes.func.isRequired,
-  resetActors: PropTypes.func.isRequired,
-  actors: ActorsType.isRequired,
+  readItem: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
+  items: ActorsType.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -212,7 +211,7 @@ const mapStateToProps = (namespace) => {
     } = state.session;
 
     return {
-      actors: state[namespace][namespace],
+      items: state[namespace][namespace],
       namespace,
       error,
       isAuthenticated,
@@ -225,10 +224,10 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      readActor: (id) => {
+      readItem: (id) => {
         return dispatch(actions[namespace].read(id, namespace));
       },
-      resetActors: () => {
+      resetList: () => {
         return dispatch(actions[namespace].reset());
       },
       setAppTitle: (title) => {

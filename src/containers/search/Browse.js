@@ -29,9 +29,9 @@ const {
 
 const SearchBrowse = (props) => {
   const {
-    browseSearch,
-    resetSearch,
-    search,
+    browseList,
+    resetList,
+    items,
     error,
     hasMore,
     queryParams: {
@@ -48,13 +48,13 @@ const SearchBrowse = (props) => {
 
   useEffect(() => {
     return () => {
-      resetSearch();
+      resetList();
     };
-  }, []);
+  }, [resetList]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
-    browseSearch({
+    browseList({
       sort,
       start,
       scope,
@@ -91,9 +91,9 @@ const SearchBrowse = (props) => {
         gutterWidth={16}
         gutterHeight={16}
       >
-        {search.allIds.map((nodeId) => {
-            const node = search.byId[nodeId];
-            const key = `taggable_${node.id}`;
+        {items.allIds.map((itemId) => {
+            const node = items.byId[itemId];
+            const key = `search_node_${node.id}`;
             const namespace = node.objectType.split('.')[1];
             return (
               <React.Fragment key={key}>
@@ -122,22 +122,22 @@ const SearchBrowse = (props) => {
 
 const mapStateToProps = (state) => {
   const {
-    search,
+    search: items,
     error,
     hasMore,
   } = state.search;
 
   return {
-    search,
+    items,
     error,
     hasMore,
   };
 };
 
 SearchBrowse.propTypes = {
-  resetSearch: PropTypes.func.isRequired,
-  browseSearch: PropTypes.func.isRequired,
-  search: NodesType.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
+  items: NodesType.isRequired,
   queryParams: PropTypes.shape({
     sort: PropTypes.oneOf([RELEVANT, RECENT]),
     q: PropTypes.string,
@@ -154,10 +154,10 @@ SearchBrowse.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseSearch: (params) => {
+    browseList: (params) => {
       return dispatch(actions.search.browse(params));
     },
-    resetSearch: () => {
+    resetList: () => {
       return dispatch(actions.search.reset());
     },
   };

@@ -2,6 +2,7 @@ import * as api from '../api';
 
 import createAction from './create';
 import createActorAdmins from './actor/admins';
+import createActorFollowRequests from './actor/followrequests';
 import app from './app';
 import avatar from './avatar';
 import cover from './cover';
@@ -21,6 +22,7 @@ const groups = {
   settings: {
     admins: createActorAdmins('groups')(api.groups.group.admins),
     apps: createAction('groups_apps')(api.groups.group.apps),
+    followrequests: createActorFollowRequests('groups')(api.groups.group.followrequests),
     permissions: createAction('groups_permissions')(api.groups.group.permissions),
     privacy: createAction('groups_privacy')(api.groups.group.privacy),
   },
@@ -32,6 +34,7 @@ const people = {
   ...createAction('people')(api.people),
   settings: {
     apps: createAction('people_apps')(api.people.person.apps),
+    followrequests: createActorFollowRequests('people')(api.people.person.followrequests),
     permissions: createAction('people_permissions')(api.people.person.permissions),
     privacy: createAction('people_privacy')(api.people.person.privacy),
   },

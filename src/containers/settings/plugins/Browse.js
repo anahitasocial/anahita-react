@@ -36,10 +36,10 @@ const SORT = {
 
 const SettingsPlugins = (props) => {
   const {
-    browsePlugins,
-    editPlugin,
-    resetPlugins,
-    plugins,
+    browseList,
+    resetList,
+    editItem,
+    items,
     error,
     success,
     isFetching,
@@ -57,7 +57,7 @@ const SettingsPlugins = (props) => {
     newType = '',
     newSort = SORT.ORDERING,
   ) => {
-    browsePlugins({
+    browseList({
       sort: newSort,
       type: newType,
       offset: 0,
@@ -71,9 +71,9 @@ const SettingsPlugins = (props) => {
     fetchList(type, sort);
 
     return () => {
-      resetPlugins();
+      resetList();
     };
-  }, []);
+  }, [resetList]);
 
   const handleClose = () => {
     setEditingOpen(false);
@@ -86,9 +86,9 @@ const SettingsPlugins = (props) => {
       payload: plugin,
     } = result;
 
-    plugins.allIds = utils.applyDrag(plugins.allIds, result);
+    items.allIds = utils.applyDrag(items.allIds, result);
 
-    editPlugin({
+    editItem({
       ...plugin,
       ordering: addedIndex + 1,
     });
@@ -102,7 +102,7 @@ const SettingsPlugins = (props) => {
     );
   }
 
-  if (plugins.allIds.length === 0 && isFetching) {
+  if (items.allIds.length === 0 && isFetching) {
     return (
       <Progress />
     );
@@ -133,7 +133,7 @@ const SettingsPlugins = (props) => {
             value={sort}
             handleOnChange={(event) => {
               const { target: { value } } = event;
-              resetPlugins();
+              resetList();
               fetchList(type, value);
             }}
             label="Sort by"
@@ -142,7 +142,7 @@ const SettingsPlugins = (props) => {
             value={type}
             handleOnChange={(event) => {
               const { target: { value } } = event;
-              resetPlugins();
+              resetList();
               fetchList(value, sort);
             }}
             label="Filter by type"
@@ -154,28 +154,28 @@ const SettingsPlugins = (props) => {
             lockAxis="y"
             onDrop={handleReorder}
             getChildPayload={(index) => {
-              const appId = plugins.allIds[index];
-              const app = plugins.byId[appId];
-              return app;
+              const nodeId = items.allIds[index];
+              const node = items.byId[nodeId];
+              return node;
             }}
           >
-            {plugins.allIds.map((pluginId) => {
-              const plugin = plugins.byId[pluginId];
-              const key = `app_${plugin.id}`;
+            {items.allIds.map((itemId) => {
+              const node = items.byId[itemId];
+              const key = `app_${node.id}`;
               return (
                 <Draggable key={key}>
                   <ListItem
                     divider
                     button
                     onClick={() => {
-                      setCurrent(plugin);
+                      setCurrent(node);
                       setEditingOpen(true);
                     }}
-                    disabled={!plugin.meta}
+                    disabled={!node.meta}
                   >
                     <ListItemText
-                      primary={plugin.name}
-                      secondary={`${plugin.element} (${plugin.type})`}
+                      primary={node.name}
+                      secondary={`${node.element} (${node.type})`}
                     />
                     <ListItemSecondaryAction>
                       {sort === SORT.ORDERING &&
@@ -209,10 +209,10 @@ const SettingsPlugins = (props) => {
 
 
 SettingsPlugins.propTypes = {
-  browsePlugins: PropTypes.func.isRequired,
-  editPlugin: PropTypes.func.isRequired,
-  resetPlugins: PropTypes.func.isRequired,
-  plugins: PluginsType.isRequired,
+  browseList: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
+  items: PluginsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -227,28 +227,28 @@ SettingsPlugins.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browsePlugins: (params) => {
+    browseList: (params) => {
       return dispatch(actions.settings.plugins.browse(params));
     },
-    editPlugin: (plugin) => {
-      return dispatch(actions.settings.plugins.edit(plugin));
-    },
-    resetPlugins: () => {
+    resetList: () => {
       return dispatch(actions.settings.plugins.reset());
+    },
+    editItem: (node) => {
+      return dispatch(actions.settings.plugins.edit(node));
     },
   };
 };
 
 const mapStateToProps = (state) => {
   const {
-    settings_plugins: plugins,
+    settings_plugins: items,
     error,
     success,
     isFetching,
   } = state.settingsPlugins;
 
   return {
-    plugins,
+    items,
     error,
     success,
     isFetching,

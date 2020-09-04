@@ -25,13 +25,13 @@ const { LIMIT } = APP.BROWSE;
 
 const StoriesBrowse = (props) => {
   const {
-    browseStories,
-    resetStories,
+    browseList,
+    resetList,
     queryFilters = {
       oid: 0,
       filter: '',
     },
-    stories,
+    items,
     hasMore,
     viewer,
   } = props;
@@ -40,15 +40,15 @@ const StoriesBrowse = (props) => {
 
   useEffect(() => {
     return () => {
-      resetStories();
+      resetList();
     };
-  }, [resetStories]);
+  }, [resetList]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
     const { oid, filter } = queryFilters;
 
-    browseStories({
+    browseList({
       oid,
       filter,
       start,
@@ -65,39 +65,39 @@ const StoriesBrowse = (props) => {
         <Progress key="stories-progress" />
       }
     >
-      {stories.allIds.map((storyId) => {
-        const story = stories.byId[storyId];
-        const key = `story_${story.id}`;
-        const canAddComment = commentPerms.canAdd(story);
-        const commentsCount = story.comments.allIds.length;
-        const isCommentsOpen = openComments.includes(story.id);
+      {items.allIds.map((itemId) => {
+        const node = items.byId[itemId];
+        const key = `stories_node_${node.id}`;
+        const canAddComment = commentPerms.canAdd(node);
+        const commentsCount = node.comments.allIds.length;
+        const isCommentsOpen = openComments.includes(node.id);
 
         return (
           <StoryCard
-            story={story}
+            story={node}
             key={key}
             menu={
               <StoryMenu
-                story={story}
+                story={node}
                 viewer={viewer}
               />
             }
             actions={[
-              story.object && utils.isLikeable(story.object) &&
+              node.object && utils.isLikeable(node.object) &&
               <LikeAction
-                node={story.object}
-                liked={story.commands && story.commands.includes('unvote')}
-                key={`story-like-${story.id}`}
+                node={node.object}
+                liked={node.commands && node.commands.includes('unvote')}
+                key={`story-like-${node.id}`}
               />,
-              story.object && utils.isCommentable(story.object) &&
+              node.object && utils.isCommentable(node.object) &&
               <IconButton
                 onClick={() => {
-                  openComments.push(story.id);
+                  openComments.push(node.id);
                   setOpenComments([...openComments]);
                 }}
                 disabled={isCommentsOpen}
                 aria-label="Show Comments"
-                key={`story-comment-${story.id}`}
+                key={`story-comment-${node.id}`}
               >
                 <Badge
                   badgeContent={commentsCount}
@@ -108,10 +108,10 @@ const StoriesBrowse = (props) => {
                 </Badge>
               </IconButton>,
             ]}
-            comments={story.object && isCommentsOpen &&
+            comments={node.object && isCommentsOpen &&
               <CommentsBrowse
-                parent={story.object}
-                comments={story.comments}
+                parent={node.object}
+                comments={node.comments}
                 canAdd={canAddComment}
               />
             }
@@ -125,11 +125,11 @@ const StoriesBrowse = (props) => {
 };
 
 StoriesBrowse.propTypes = {
-  browseStories: PropTypes.func.isRequired,
-  resetStories: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   queryFilters: PropTypes.objectOf(PropTypes.any).isRequired,
   viewer: PersonType.isRequired,
-  stories: StoriesType.isRequired,
+  items: StoriesType.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
 
@@ -140,13 +140,13 @@ const mapStateToProps = (state) => {
   } = state.session;
 
   const {
-    stories,
+    stories: items,
     hasMore,
     error,
   } = state.stories;
 
   return {
-    stories,
+    items,
     hasMore,
     error,
     isAuthenticated,
@@ -156,10 +156,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseStories: (params) => {
+    browseList: (params) => {
       return dispatch(actions.browse(params));
     },
-    resetStories: () => {
+    resetList: () => {
       return dispatch(actions.reset());
     },
   };
