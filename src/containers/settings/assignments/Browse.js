@@ -65,7 +65,7 @@ const SettingsAssignmentsBrowse = (props) => {
       {current.app &&
         <AssignmentEdit
           identifier={current.identifier}
-          app={current.app}
+          node={current.app}
           open={editingOpen}
           handleClose={handleClose}
           isFetching={isFetching}
