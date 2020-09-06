@@ -13,29 +13,29 @@ import * as actions from '../../../../actions';
 
 const ActorsSettingsAppsBrowse = (props) => {
   const {
-    browseApps,
-    editApp,
-    resetApps,
+    browseList,
+    editItem,
+    resetList,
     actor,
-    apps,
+    items,
     isFetching,
     success,
     error,
   } = props;
 
   useEffect(() => {
-    browseApps(actor);
+    browseList(actor);
 
     return () => {
-      resetApps();
+      resetList();
     };
-  }, [browseApps, resetApps, actor]);
+  }, [browseList, resetList, actor]);
 
   const handleEditApp = (app) => {
-    editApp({ actor, app });
+    editItem({ actor, app });
   };
 
-  if (apps.allIds.length === 0 && isFetching) {
+  if (items.allIds.length === 0 && isFetching) {
     return (
       <Progress />
     );
@@ -44,13 +44,13 @@ const ActorsSettingsAppsBrowse = (props) => {
   return (
     <React.Fragment>
       <List>
-        {apps.allIds.map((appId) => {
-          const app = apps.byId[appId];
-          const key = `app_${app.id}`;
+        {items.allIds.map((itemId) => {
+          const node = items.byId[itemId];
+          const key = `app_node_${node.id}`;
           return (
             <AppRead
               key={key}
-              app={app}
+              app={node}
               handleEdit={handleEditApp}
               isFetching={isFetching}
             />
@@ -77,10 +77,10 @@ const ActorsSettingsAppsBrowse = (props) => {
 
 ActorsSettingsAppsBrowse.propTypes = {
   actor: ActorType.isRequired,
-  browseApps: PropTypes.func.isRequired,
-  editApp: PropTypes.func.isRequired,
-  resetApps: PropTypes.func.isRequired,
-  apps: AppsType.isRequired,
+  browseList: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
+  items: AppsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -95,7 +95,7 @@ const mapStateToProps = (namespace) => {
     } = state[namespace];
 
     const {
-      [`${namespace}_apps`]: apps,
+      [`${namespace}_apps`]: items,
       isFetching,
       error,
       success,
@@ -103,7 +103,7 @@ const mapStateToProps = (namespace) => {
 
     return {
       actor,
-      apps,
+      items,
       namespace,
       error,
       success,
@@ -115,13 +115,13 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      browseApps: (params) => {
+      browseList: (params) => {
         return dispatch(actions[namespace].settings.apps.browse(params));
       },
-      editApp: (app) => {
-        return dispatch(actions[namespace].settings.apps.edit(app));
+      editItem: (node) => {
+        return dispatch(actions[namespace].settings.apps.edit(node));
       },
-      resetApps: () => {
+      resetList: () => {
         return dispatch(actions[namespace].settings.apps.reset());
       },
     };

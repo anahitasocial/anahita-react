@@ -19,10 +19,10 @@ import taggables from './taggable';
 const articles = createAction('articles')(api.articles);
 const groups = {
   ...createAction('groups')(api.groups),
+  followRequests: createActorFollowRequests('groups')(api.groups.group.followrequests),
   settings: {
     admins: createActorAdmins('groups')(api.groups.group.admins),
     apps: createAction('groups_apps')(api.groups.group.apps),
-    followrequests: createActorFollowRequests('groups')(api.groups.group.followrequests),
     permissions: createAction('groups_permissions')(api.groups.group.permissions),
     privacy: createAction('groups_privacy')(api.groups.group.privacy),
   },
@@ -32,9 +32,9 @@ const locations = createAction('locations')(api.locations);
 const notes = createAction('notes')(api.notes);
 const people = {
   ...createAction('people')(api.people),
+  followRequests: createActorFollowRequests('people')(api.people.person.followrequests),
   settings: {
     apps: createAction('people_apps')(api.people.person.apps),
-    followrequests: createActorFollowRequests('people')(api.people.person.followrequests),
     permissions: createAction('people_permissions')(api.people.person.permissions),
     privacy: createAction('people_privacy')(api.people.person.privacy),
   },

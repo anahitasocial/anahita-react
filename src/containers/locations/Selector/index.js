@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import DeleteIcon from '@material-ui/icons/Clear';
+import CloseIcon from '@material-ui/icons/Close';
 
 import NodeType from '../../../proptypes/Node';
 import BrowseLocations from './Browse';
@@ -69,7 +69,7 @@ const LocationsSelector = (props) => {
               float: 'right',
             }}
           >
-            <DeleteIcon />
+            <CloseIcon />
           </IconButton>
         </DialogTitle>
         <Divider light />

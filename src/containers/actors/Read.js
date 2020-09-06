@@ -21,6 +21,7 @@ import permissions from '../../permissions/actor';
 import ActorsType from '../../proptypes/Actors';
 import PersonType from '../../proptypes/Person';
 import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
+import ActorsFollowRequests from './FollowRequests';
 import ActorsSocialgraph from './Socialgraph';
 import LocationsGadget from '../locations/Gadget';
 
@@ -73,9 +74,11 @@ const ActorsRead = (props) => {
 
   const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
   const canEdit = permissions.canEdit(actor);
+  const canAdminister = permissions.canAdminister(actor);
   const isPerson = actor.objectType.split('.')[1] === 'people';
   const isViewer = actor.id === viewer.id;
   const metaDesc = striptags(actor.body).substr(0, 160);
+  const FollowRequests = ActorsFollowRequests(namespace);
 
   return (
     <React.Fragment>
@@ -99,7 +102,12 @@ const ActorsRead = (props) => {
           />
         }
         actor={actor}
-        followAction={canFollow && actor.id && <FollowAction actor={actor} />}
+        followAction={
+          <React.Fragment>
+            {canAdminister && <FollowRequests actor={actor} />}
+            {canFollow && actor.id && <FollowAction actor={actor} />}
+          </React.Fragment>
+        }
         headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
       />
       <ActorBody

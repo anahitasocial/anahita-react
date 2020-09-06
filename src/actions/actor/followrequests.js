@@ -2,22 +2,24 @@ import createAction from '../create';
 
 // -- Add
 
-const addRequest = (namespace) => {
+const addRequest = (params, namespace) => {
+  const { followRequest: node } = params;
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_ADD_REQUEST`,
+    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_CONFIRM_REQUEST`,
+    node,
   };
 };
 
 const addSuccess = (result, namespace) => {
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_ADD_SUCCESS`,
+    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_CONFIRM_SUCCESS`,
     node: result.data,
   };
 };
 
 const addFailure = (response, namespace) => {
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_ADD_FAILURE`,
+    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_CONFIRM_FAILURE`,
     error: response.message,
   };
 };
@@ -25,7 +27,7 @@ const addFailure = (response, namespace) => {
 const add = (namespace, api) => {
   return (params) => {
     return (dispatch) => {
-      dispatch(addRequest(namespace));
+      dispatch(addRequest(params, namespace));
       return new Promise((resolve, reject) => {
         api.add(params)
           .then((result) => {
@@ -47,7 +49,7 @@ const add = (namespace, api) => {
 const deleteRequest = (params, namespace) => {
   const { followRequest: node } = params;
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_DELETE_REQUEST`,
+    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_IGNORE_REQUEST`,
     node,
   };
 };
@@ -55,14 +57,14 @@ const deleteRequest = (params, namespace) => {
 const deleteSuccess = (params, namespace) => {
   const { followRequest: node } = params;
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_DELETE_SUCCESS`,
+    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_IGNORE_SUCCESS`,
     node,
   };
 };
 
 const deleteFailure = (response, namespace) => {
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_DELETE_FAILURE`,
+    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_IGNORE_FAILURE`,
     error: response.message,
   };
 };
