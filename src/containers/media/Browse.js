@@ -2,30 +2,36 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import withWidth from '@material-ui/core/withWidth';
-import StackGrid from 'react-stack-grid';
+import { makeStyles } from '@material-ui/core/styles';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import * as actions from '../../actions';
-
-import MediumCard from './Card';
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
+
+import Masonry from '../../components/BreakpointMasonry';
+import MediumCard from './Card';
 import Progress from '../../components/Progress';
 import { App as APP } from '../../constants';
 
-import utils from '../utils';
-
 const { LIMIT } = APP.BROWSE;
 
+const useStyles = makeStyles((theme) => {
+  return {
+    card: {
+      marginBottom: theme.spacing(2),
+    },
+  };
+});
+
 const MediaBrowse = (props) => {
+  const classes = useStyles();
   const {
     browseList,
     resetList,
     items,
     namespace,
     viewer,
-    width,
     hasMore,
     queryFilters,
   } = props;
@@ -45,8 +51,6 @@ const MediaBrowse = (props) => {
     };
   }, [resetList]);
 
-  const columnWidth = utils.getColumnWidthPercentage(width);
-
   return (
     <InfiniteScroll
       loadMore={fetchList}
@@ -55,25 +59,24 @@ const MediaBrowse = (props) => {
         <Progress key={`${namespace}-progress`} />
       }
     >
-      <StackGrid
-        columnWidth={columnWidth}
-        duration={50}
-        gutterWidth={16}
-        gutterHeight={16}
-      >
+      <Masonry>
         {items.allIds.map((itemId) => {
           const node = items.byId[itemId];
           const key = `${namespace}_node_list_item${node.id}`;
           return (
-            <MediumCard
+            <div
+              className={classes.card}
               key={key}
-              medium={node}
-              viewer={viewer}
-            />
+            >
+              <MediumCard
+                medium={node}
+                viewer={viewer}
+              />
+            </div>
           );
         })
         }
-      </StackGrid>
+      </Masonry>
     </InfiniteScroll>
   );
 };
@@ -84,7 +87,6 @@ MediaBrowse.propTypes = {
   namespace: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
-  width: PropTypes.string.isRequired,
   items: MediaType.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
@@ -132,5 +134,5 @@ export default (namespace) => {
   return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(withWidth()(MediaBrowse));
+  )(MediaBrowse);
 };

@@ -2,23 +2,22 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import withWidth from '@material-ui/core/withWidth';
 
 import InfiniteScroll from 'react-infinite-scroller';
-import StackGrid from 'react-stack-grid';
 
 import * as actions from '../../actions';
 import NodesType from '../../proptypes/Nodes';
 
 import CommentCard from '../../components/cards/Comment';
 import ActorsCard from '../actors/Card';
+import Masonry from '../../components/BreakpointMasonry';
 import MediaCard from '../media/Card';
 import Progress from '../../components/Progress';
 import { App as APP, Search as SEARCH } from '../../constants';
 
 import utils from '../../utils/node';
-import containersUtils from '../utils';
 
 const { LIMIT } = APP.BROWSE;
 
@@ -27,7 +26,16 @@ const {
   RECENT,
 } = SEARCH.SORTING;
 
+const useStyles = makeStyles((theme) => {
+  return {
+    card: {
+      marginBottom: theme.spacing(2),
+    },
+  };
+});
+
 const SearchBrowse = (props) => {
+  const classes = useStyles();
   const {
     browseList,
     resetList,
@@ -43,7 +51,6 @@ const SearchBrowse = (props) => {
       searchRange,
       searchComments,
     },
-    width,
   } = props;
 
   useEffect(() => {
@@ -67,8 +74,6 @@ const SearchBrowse = (props) => {
     });
   };
 
-  const columnWidth = containersUtils.getColumnWidthPercentage(width);
-
   if (error) {
     return (
       <Typography variant="body1" color="error" align="center">
@@ -85,18 +90,13 @@ const SearchBrowse = (props) => {
         <Progress key="search-progress" />
       }
     >
-      <StackGrid
-        columnWidth={columnWidth}
-        duration={50}
-        gutterWidth={16}
-        gutterHeight={16}
-      >
+      <Masonry>
         {items.allIds.map((itemId) => {
             const node = items.byId[itemId];
             const key = `search_node_${node.id}`;
             const namespace = node.objectType.split('.')[1];
             return (
-              <React.Fragment key={key}>
+              <div key={key} className={classes.card}>
                 {utils.isActor(node) &&
                   <ActorsCard actor={node} />
                 }
@@ -111,11 +111,11 @@ const SearchBrowse = (props) => {
                     comment={node}
                   />
                 }
-              </React.Fragment>
+              </div>
             );
           })
         }
-      </StackGrid>
+      </Masonry>
     </InfiniteScroll>
   );
 };
@@ -147,7 +147,6 @@ SearchBrowse.propTypes = {
     coordLong: PropTypes.number,
     coordLat: PropTypes.number,
   }).isRequired,
-  width: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
@@ -166,4 +165,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withWidth()(SearchBrowse));
+)(SearchBrowse);

@@ -1,30 +1,37 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import withWidth from '@material-ui/core/withWidth';
+import { makeStyles } from '@material-ui/core/styles';
 
-import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import * as actions from '../../actions';
-import containersUtils from '../utils';
 
 import ActorType from '../../proptypes/Actor';
 import ActorsType from '../../proptypes/Actors';
 import ActorsCard from './Card';
+import Masonry from '../../components/BreakpointMasonry';
 import Progress from '../../components/Progress';
 import { App as APP } from '../../constants';
 
 const { LIMIT } = APP.BROWSE;
 
+const useStyles = makeStyles((theme) => {
+  return {
+    card: {
+      marginBottom: theme.spacing(2),
+    },
+  };
+});
+
 const ActorsSocialgraph = (props) => {
+  const classes = useStyles();
   const {
     browseList,
     resetList,
-    actors,
+    items,
     actorNode,
     hasMore,
-    width,
     filter,
     queryFilters,
   } = props;
@@ -46,9 +53,7 @@ const ActorsSocialgraph = (props) => {
     return () => {
       resetList();
     };
-  }, []);
-
-  const columnWidth = containersUtils.getColumnWidthPercentage(width);
+  }, [resetList]);
 
   return (
     <React.Fragment>
@@ -59,35 +64,31 @@ const ActorsSocialgraph = (props) => {
           <Progress key="socialgragh-progress" />
         }
       >
-        <StackGrid
-          columnWidth={columnWidth}
-          duration={50}
-          gutterWidth={16}
-          gutterHeight={16}
-        >
-          {actors.allIds.map((actorId) => {
-            const actor = actors.byId[actorId];
-            const key = `socialgraph_${actor.id}`;
+        <Masonry>
+          {items.allIds.map((itemId) => {
+            const node = items.byId[itemId];
+            const key = `socialgraph_node_${node.id}`;
             return (
-              <ActorsCard
+              <div
+                className={classes.card}
                 key={key}
-                actor={actor}
-              />
+              >
+                <ActorsCard actor={node} />
+              </div>
             );
           })
           }
-        </StackGrid>
+        </Masonry>
       </InfiniteScroll>
     </React.Fragment>
   );
 };
 
 ActorsSocialgraph.propTypes = {
-  actors: ActorsType.isRequired,
+  items: ActorsType.isRequired,
   actorNode: ActorType.isRequired,
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
-  width: PropTypes.string.isRequired,
   filter: PropTypes.oneOf([
     'followers',
     'leaders',
@@ -107,7 +108,7 @@ ActorsSocialgraph.defaultProps = {
 const mapStateToProps = () => {
   return (state) => {
     const {
-      actors,
+      actors: items,
       error,
       hasMore,
     } = state.socialgraph;
@@ -117,7 +118,7 @@ const mapStateToProps = () => {
     } = state.session;
 
     return {
-      actors,
+      items,
       error,
       hasMore,
       viewer,
@@ -139,4 +140,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withWidth()(ActorsSocialgraph));
+)(ActorsSocialgraph);

@@ -3,23 +3,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
-import withWidth from '@material-ui/core/withWidth';
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import StackGrid from 'react-stack-grid';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 
 import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
-import containersUtils from '../utils';
 
 import PersonType from '../../proptypes/Person';
 import ActorsType from '../../proptypes/Actors';
 
 import ActorsCard from './Card';
+import Masonry from '../../components/BreakpointMasonry';
 import Progress from '../../components/Progress';
 import { App as APP } from '../../constants';
 
@@ -39,6 +37,14 @@ const useStyles = makeStyles((theme) => {
       right: theme.spacing(3),
       zIndex: 10,
     },
+    masonryGrid: {
+      display: 'flex',
+      marginLeft: theme.spacing(-2),
+      width: 'inherit',
+    },
+    card: {
+      marginBottom: theme.spacing(2),
+    },
   };
 });
 
@@ -50,7 +56,7 @@ const ActorsBrowse = (props) => {
     resetList,
     namespace,
     viewer,
-    width,
+    // width,
     items,
     hasMore,
     queryFilters,
@@ -76,7 +82,7 @@ const ActorsBrowse = (props) => {
     };
   }, [setAppTitle, resetList, namespace]);
 
-  const columnWidth = containersUtils.getColumnWidthPercentage(width);
+  // const columnWidth = containersUtils.getColumnWidthPercentage(width);
   const canAdd = permissions.canAdd(viewer);
 
   return (
@@ -99,24 +105,21 @@ const ActorsBrowse = (props) => {
           <Progress key={`${namespace}-progress`} />
         }
       >
-        <StackGrid
-          columnWidth={columnWidth}
-          duration={50}
-          gutterWidth={16}
-          gutterHeight={16}
-        >
+        <Masonry>
           {items.allIds.map((itemId) => {
             const node = items.byId[itemId];
             const key = `${namespace}_node_list_item_${node.id}`;
             return (
-              <ActorsCard
+              <div
+                className={classes.card}
                 key={key}
-                actor={node}
-              />
+              >
+                <ActorsCard actor={node} />
+              </div>
             );
           })
           }
-        </StackGrid>
+        </Masonry>
       </InfiniteScroll>
     </React.Fragment>
   );
@@ -128,7 +131,6 @@ ActorsBrowse.propTypes = {
   namespace: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
-  width: PropTypes.string.isRequired,
   setAppTitle: PropTypes.func.isRequired,
   items: ActorsType.isRequired,
   hasMore: PropTypes.bool.isRequired,
@@ -182,5 +184,5 @@ export default (namespace) => {
   return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(withWidth()(ActorsBrowse));
+  )(ActorsBrowse);
 };
