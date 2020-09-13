@@ -13,9 +13,9 @@ import Link from '@material-ui/core/Link';
 import MediumType from '../../proptypes/Medium';
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
-import EntityBody from '../EntityBody';
 import CardHeaderOwner from './Owner';
 import Player from '../Player';
+import ReadMore from '../ReadMore';
 import contentfilter from '../contentfilter';
 
 import {
@@ -119,7 +119,7 @@ const MediumCard = (props) => {
           </Typography>
         }
         {medium.body &&
-          <EntityBody>
+          <ReadMore>
             {contentfilter({
               text: medium.body,
               filters: [
@@ -128,7 +128,7 @@ const MediumCard = (props) => {
                 'url',
               ],
             })}
-          </EntityBody>
+          </ReadMore>
         }
       </CardContent>
       {actions &&

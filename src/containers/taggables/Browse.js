@@ -54,7 +54,7 @@ const TaggablesBrowse = (props) => {
     return () => {
       resetList(tag);
     };
-  }, [resetList]);
+  }, [resetList, tag]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;

@@ -8,7 +8,7 @@ import striptags from 'striptags';
 import EntityBody from './EntityBody';
 import i18n from '../languages';
 
-const CHAR_LIMIT = 150;
+const CHAR_LIMIT = 280;
 
 const ReadMore = (props) => {
   const {

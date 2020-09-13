@@ -12,7 +12,7 @@ import Link from '@material-ui/core/Link';
 import ActorType from '../../proptypes/Actor';
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
-import EntityBody from '../EntityBody';
+import ReadMore from '../ReadMore';
 import contentfilter from '../contentfilter';
 
 import {
@@ -87,7 +87,7 @@ const ActorCard = (props) => {
         />
         {actor.body &&
         <CardContent>
-          <EntityBody>
+          <ReadMore charLimit={160}>
             {contentfilter({
               text: actor.body,
               filters: [
@@ -96,7 +96,7 @@ const ActorCard = (props) => {
                 'url',
               ],
             })}
-          </EntityBody>
+          </ReadMore>
         </CardContent>
         }
         <CardActions className={classes.actions}>
