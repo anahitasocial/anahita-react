@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { constructFormData } from '../utils';
 
 const browse = (namespace) => {
   return (actor) => {
@@ -9,20 +10,20 @@ const browse = (namespace) => {
 const add = (namespaces) => {
   return (params) => {
     const { actor, admin } = params;
-    return axios.post(`/${namespaces}/${actor.id}.json`, {
+    return axios.post(`/${namespaces}/${actor.id}.json`, constructFormData({
       action: 'addadmin',
       adminid: admin.id,
-    });
+    }));
   };
 };
 
 const deleteItem = (namespaces) => {
   return (params) => {
     const { admin, actor } = params;
-    return axios.post(`/${namespaces}/${actor.id}.json`, {
+    return axios.post(`/${namespaces}/${actor.id}.json`, constructFormData({
       action: 'removeadmin',
       adminid: admin.id,
-    });
+    }));
   };
 };
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import qs from 'qs';
+import { constructFormData } from './utils';
 
 const getNamespace = (node) => {
   const { objectType } = node;
@@ -27,7 +27,7 @@ const add = (node) => {
   return (tag) => {
     const namespace = getNamespace(node);
     const tagType = getNodeType(tag);
-    return axios.post(`/${namespace}/${node.id}.json?`, qs.stringify({
+    return axios.post(`/${namespace}/${node.id}.json?`, constructFormData({
       action: `add${tagType}`,
       [`${tagType}_id`]: tag.id,
     }));
@@ -38,7 +38,7 @@ const deleteItem = (node) => {
   return (tag) => {
     const namespace = getNamespace(node);
     const tagType = getNodeType(tag);
-    return axios.post(`/${namespace}/${node.id}.json`, qs.stringify({
+    return axios.post(`/${namespace}/${node.id}.json`, constructFormData({
       action: `delete${tagType}`,
       [`${tagType}_id`]: tag.id,
     }));

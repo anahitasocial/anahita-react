@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { constructFormData } from './utils';
 
 const getNamespace = (node) => {
   const { objectType } = node;
@@ -26,10 +27,10 @@ const add = (tag) => {
     const namespace = getNamespace(taggable);
     const { id, objectType } = tag;
 
-    return axios.post(`/${namespace}/${taggable.id}.json`, {
+    return axios.post(`/${namespace}/${taggable.id}.json`, constructFormData({
       action: `add${objectType.split('.')[2]}`,
       location_id: id,
-    });
+    }));
   };
 };
 
@@ -38,10 +39,10 @@ const deleteItem = (tag) => {
     const namespace = getNamespace(taggable);
     const { id, objectType } = tag;
 
-    return axios.post(`/${namespace}/${taggable.id}.json`, {
+    return axios.post(`/${namespace}/${taggable.id}.json`, constructFormData({
       action: `delete${objectType.split('.')[2]}`,
       location_id: id,
-    });
+    }));
   };
 };
 

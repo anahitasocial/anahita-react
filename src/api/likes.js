@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { constructFormData } from './utils';
 import CommentDefault from '../proptypes/CommentDefault';
 
 const browse = (node) => {
@@ -16,7 +17,7 @@ const add = (node, comment = CommentDefault) => {
     action += 'comment';
   }
 
-  return axios.post(url, { action });
+  return axios.post(url, constructFormData({ action }));
 };
 
 const deleteItem = (node, comment = CommentDefault) => {
@@ -29,7 +30,7 @@ const deleteItem = (node, comment = CommentDefault) => {
     action += 'comment';
   }
 
-  return axios.post(url, { action });
+  return axios.post(url, constructFormData({ action }));
 };
 
 export default {

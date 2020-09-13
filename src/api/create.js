@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { constructFormData } from './utils';
 
 const browse = (namespace) => {
   return (params) => {
@@ -20,13 +21,13 @@ const read = (namespace) => {
 
 const edit = (namespace) => {
   return (node) => {
-    return axios.post(`/${namespace}/${node.id}.json`, node);
+    return axios.post(`/${namespace}/${node.id}.json`, constructFormData(node));
   };
 };
 
 const add = (namespace) => {
   return (node) => {
-    return axios.post(`/${namespace}.json`, node);
+    return axios.post(`/${namespace}.json`, constructFormData(node));
   };
 };
 

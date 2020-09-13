@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { constructFormData } from '../utils';
 
 const browse = (namespace) => {
   return (actor) => {
@@ -20,10 +21,10 @@ const edit = (namespace) => {
     } = params;
     const action = app.enabled ? 'removeapp' : 'addapp';
 
-    return axios.post(`/${namespace}/${actor.id}.json`, {
+    return axios.post(`/${namespace}/${actor.id}.json`, constructFormData({
       action,
       app: app.id,
-    });
+    }));
   };
 };
 

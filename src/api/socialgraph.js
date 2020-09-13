@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { constructFormData } from './utils';
 
 function browse(params) {
   const {
@@ -19,34 +20,34 @@ function browse(params) {
 
 function follow(viewer, actor) {
   const component = actor.objectType.split('.')[1];
-  return axios.post(`/${component}/${actor.id}.json`, {
+  return axios.post(`/${component}/${actor.id}.json`, constructFormData({
     actor: viewer.id,
     action: 'follow',
-  });
+  }));
 }
 
 function unfollow(viewer, actor) {
   const component = actor.objectType.split('.')[1];
-  return axios.post(`/${component}/${actor.id}.json`, {
+  return axios.post(`/${component}/${actor.id}.json`, constructFormData({
     actor: viewer.id,
     action: 'unfollow',
-  });
+  }));
 }
 
 function block(viewer, actor) {
   const component = actor.objectType.split('.')[1];
-  return axios.post(`/${component}/${actor.id}.json`, {
+  return axios.post(`/${component}/${actor.id}.json`, constructFormData({
     actor: viewer.id,
     action: 'block',
-  });
+  }));
 }
 
 function unblock(viewer, actor) {
   const component = actor.objectType.split('.')[1];
-  return axios.post(`/${component}/${actor.id}.json`, {
+  return axios.post(`/${component}/${actor.id}.json`, constructFormData({
     actor: viewer.id,
     action: 'unblock',
-  });
+  }));
 }
 
 export default {
