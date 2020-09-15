@@ -29,11 +29,12 @@ const styles = (theme) => {
       marginBottom: theme.spacing(2),
     },
     cover: {
-      height: theme.spacing(20),
-      marginBottom: theme.spacing(2),
+      height: 0,
+      paddingTop: '30%',
     },
     portrait: {
-      height: theme.spacing(60),
+      height: 0,
+      paddingTop: '100%',
       marginBottom: theme.spacing(2),
     },
     title: {
@@ -72,7 +73,7 @@ const StoryCardComment = (props) => {
   const url = story.object ? getURL(story.object) : '';
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} component="article">
       {showOwner &&
         <StoryCardOwner node={story} />
       }

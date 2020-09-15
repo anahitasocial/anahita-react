@@ -31,8 +31,13 @@ const styles = (theme) => {
     root: {
       marginBottom: theme.spacing(2),
     },
+    cover: {
+      height: 0,
+      paddingTop: '30%',
+    },
     media: {
-      height: theme.spacing(60),
+      height: 0,
+      paddingTop: '100%',
     },
     title: {
       textTransform: 'capitalize',
@@ -71,7 +76,7 @@ const StoryCardDefault = (props) => {
   const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} component="article">
       {showOwnerHeader &&
         <StoryCardOwner node={story} />
       }
@@ -97,7 +102,7 @@ const StoryCardDefault = (props) => {
       {cover &&
         <Link href={url}>
           <CardMedia
-            className={classes.media}
+            className={classes.cover}
             image={cover}
             title={title}
             src="picture"

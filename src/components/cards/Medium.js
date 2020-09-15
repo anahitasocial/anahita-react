@@ -28,14 +28,16 @@ import {
 const styles = (theme) => {
   return {
     cover: {
-      height: theme.spacing(20),
+      height: 0,
+      paddingTop: '30%',
+    },
+    portrait: {
+      height: 0,
+      paddingTop: '100%',
     },
     title: {
       fontSize: 24,
       marginBottom: theme.spacing(2),
-    },
-    portrait: {
-      minHeight: theme.spacing(50),
     },
     authorName: {
       fontSize: 16,
@@ -60,7 +62,7 @@ const MediumCard = (props) => {
   const author = getAuthor(medium);
 
   return (
-    <Card>
+    <Card component="article">
       {medium.author && medium.owner.id !== medium.author.id &&
         <CardHeaderOwner node={medium} />
       }

@@ -4,14 +4,16 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
-// import Container from '@material-ui/core/Container';
 
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
 import MediumComments from '../comments/Browse';
 import Progress from '../../components/Progress';
 import LocationsGadget from '../locations/Gadget';
-import MediumCard from './Card';
+import LikeAction from '../actions/Like';
+import MediumMenu from './Menu';
+import Medium from '../../components/medium';
+
 
 import * as actions from '../../actions';
 import i18n from '../../languages';
@@ -41,7 +43,12 @@ const MediaRead = (props) => {
   }, []);
 
   const canAdd = isAuthenticated && medium.openToComment;
-  // const maxWidth = ['article', 'topic'].includes(medium.objectType.split('.')[2]) ? 'md' : 'sm';
+
+  if (isFetching && !medium.id) {
+    return (
+      <Progress />
+    );
+  }
 
   if (!medium.id && error !== '') {
     return (
@@ -51,29 +58,37 @@ const MediaRead = (props) => {
 
   return (
     <React.Fragment>
-      {medium.id > 0 &&
       <Helmet>
         <title>
           {medium.name || striptags(medium.body).substring(0, 60)}
         </title>
         <meta name="description" content={striptags(medium.body)} />
       </Helmet>
-      }
-      {isFetching && !medium.id &&
-        <Progress />
-      }
-      {medium.id > 0 &&
-        <React.Fragment>
-          <MediumCard
-            medium={medium}
-            viewer={viewer}
-          />
-          <MediumComments
-            parent={medium}
-            canAdd={canAdd}
-          />
-          <LocationsGadget node={medium} />
-        </React.Fragment>
+      {medium.id &&
+        <Medium
+          medium={medium}
+          menu={isAuthenticated &&
+            <MediumMenu
+              medium={medium}
+              viewer={viewer}
+            />
+          }
+          actions={isAuthenticated &&
+            <LikeAction
+              node={medium}
+              liked={medium.isVotedUp}
+            />
+          }
+          comments={
+            <MediumComments
+              parent={medium}
+              canAdd={canAdd}
+            />
+          }
+          locations={
+            <LocationsGadget node={medium} />
+          }
+        />
       }
     </React.Fragment>
   );

@@ -30,7 +30,8 @@ const styles = (theme) => {
       marginBottom: theme.spacing(2),
     },
     portrait: {
-      height: theme.spacing(60),
+      height: 0,
+      paddingTop: '100%',
     },
     title: {
       textTransform: 'capitalize',

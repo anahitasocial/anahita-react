@@ -36,8 +36,8 @@ export function getCommentURL(comment) {
   return `/${namespace}/${parentId}/#${id}`;
 }
 
-export function getPortraitURL(entity) {
-  return entity.imageURL && entity.imageURL.medium && entity.imageURL.medium.url;
+export function getPortraitURL(entity, size = 'medium') {
+  return entity.imageURL && entity.imageURL[size] && entity.imageURL[size].url;
 }
 
 export function getCoverURL(entity) {

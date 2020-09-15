@@ -22,6 +22,10 @@ import {
 
 const styles = (theme) => {
   return {
+    cover: {
+      height: 0,
+      paddingTop: '30%',
+    },
     actions: {
       padding: 8,
     },
@@ -53,7 +57,7 @@ const ActorCard = (props) => {
         {cover &&
           <Link href={url}>
             <CardMedia
-              className={classes.media}
+              className={classes.cover}
               image={cover}
               title={actor.name}
               src="picture"
