@@ -30,11 +30,8 @@ import DeleteAction from '../actions/tags/location/Delete';
 
 const useStyles = makeStyles((theme) => {
   return {
-    root: {
-      marginBottom: theme.spacing(2),
-    },
     mapContainer: {
-      height: 320,
+      height: theme.spacing(40),
       width: '100%',
     },
   };
@@ -102,7 +99,7 @@ const LocationsGadget = (props) => {
         isOpen={isOpen}
         handleClose={handleClose}
       />
-      <Card className={classes.root}>
+      <Card>
         <CardHeader
           title={
             <Typography

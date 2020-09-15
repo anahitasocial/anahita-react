@@ -100,6 +100,7 @@ const StoryCardDefault = (props) => {
             className={classes.media}
             image={cover}
             title={title}
+            src="picture"
           />
         </Link>
       }
@@ -109,6 +110,7 @@ const StoryCardDefault = (props) => {
             className={classes.portrait}
             title={title}
             image={portrait}
+            src="picture"
           />
         </Link>
       }

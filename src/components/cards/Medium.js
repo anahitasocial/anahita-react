@@ -70,6 +70,7 @@ const MediumCard = (props) => {
             className={classes.cover}
             image={cover}
             title={medium.name}
+            src="picture"
           />
         </Link>
       }
@@ -101,6 +102,7 @@ const MediumCard = (props) => {
             className={classes.portrait}
             title={medium.name}
             image={portrait}
+            src="picture"
           />
         </Link>
       }

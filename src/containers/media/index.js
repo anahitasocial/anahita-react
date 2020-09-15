@@ -90,11 +90,11 @@ Media.propTypes = {
 };
 
 Media.defaultProps = {
-  selectedTab: UPDATED,
+  selectedTab: RECENT,
   queryFilters: {
     q: '',
     oid: 0,
-    sort: UPDATED,
+    sort: RECENT,
   },
 };
 

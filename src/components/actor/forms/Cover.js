@@ -66,6 +66,7 @@ const ActorCoverForm = (props) => {
               className={classes.cover}
               title={node.name}
               image={cover}
+              src="picture"
             />
           </Fade>
         }

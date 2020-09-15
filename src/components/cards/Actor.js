@@ -56,6 +56,7 @@ const ActorCard = (props) => {
               className={classes.media}
               image={cover}
               title={actor.name}
+              src="picture"
             />
           </Link>
         }

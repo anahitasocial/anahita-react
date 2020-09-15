@@ -89,21 +89,19 @@ const ActorBody = (props) => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          <Grid
-            container
-            item
-            sm={4}
-          >
-            {actor.body &&
-              <Grid item sm={12}>
-                <ActorBodyAbout actor={actor} />
+          <Grid item xs={12} md={4}>
+            <Grid container spacing={2}>
+              {actor.body &&
+                <Grid item xs={12}>
+                  <ActorBodyAbout actor={actor} />
+                </Grid>
+              }
+              <Grid item xs={12}>
+                {locations}
               </Grid>
-            }
-            <Grid item sm={12}>
-              {locations}
             </Grid>
           </Grid>
-          <Grid item sm={8} zeroMinWidth>
+          <Grid item xs={12} md={8}>
             {stories}
           </Grid>
         </Grid>

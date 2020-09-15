@@ -104,6 +104,7 @@ const StoryCardComment = (props) => {
             className={classes.portrait}
             title={title}
             image={portrait}
+            src="picture"
           />
         </Link>
       }

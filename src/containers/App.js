@@ -115,7 +115,7 @@ const App = (props) => {
     viewer,
     appBarTitle,
     location,
-  } = props
+  } = props;
 
   return (
     <div className={classes.root}>
@@ -198,6 +198,7 @@ App.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   appBarTitle: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
