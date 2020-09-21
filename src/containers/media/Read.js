@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -13,19 +13,29 @@ import LocationsGadget from '../locations/Gadget';
 import LikeAction from '../actions/Like';
 import MediumMenu from './Menu';
 import Medium from '../../components/medium';
+import MediumForm from '../../components/medium/Form';
 
+import SimpleSnackbar from '../../components/SimpleSnackbar';
 
 import * as actions from '../../actions';
+import form from '../../utils/form';
 import i18n from '../../languages';
+
+const formFields = form.createFormFields([
+  'name',
+  'body',
+]);
 
 const MediaRead = (props) => {
   const {
     namespace,
     readItem,
+    editItem,
     setAppTitle,
     isFetching,
     viewer,
     isAuthenticated,
+    success,
     error,
     media: {
       current: medium,
@@ -37,10 +47,51 @@ const MediaRead = (props) => {
     },
   } = props;
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [fields, setFields] = useState(formFields);
+
   useEffect(() => {
     readItem(id, namespace);
     setAppTitle(i18n.t(`${namespace}:cTitle`));
   }, []);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  const handleOnChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+
+    medium[name] = value;
+
+    const newFields = form.validateField(target, fields);
+
+    setFields({ ...newFields });
+  };
+
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
+
+    if (form.isValid(newFields)) {
+      const formData = form.fieldsToData(newFields);
+      editItem({
+        id: medium.id,
+        ...formData,
+      }).then(() => {
+        handleCancel();
+      });
+    }
+
+    setFields({ ...newFields });
+  };
 
   const canAdd = isAuthenticated && medium.openToComment;
 
@@ -67,10 +118,22 @@ const MediaRead = (props) => {
       {medium.id &&
         <Medium
           medium={medium}
+          editing={isEditing}
+          form={
+            <MediumForm
+              medium={medium}
+              fields={fields}
+              handleOnChange={handleOnChange}
+              handleOnSubmit={handleOnSubmit}
+              handleCancel={handleCancel}
+              isFetching={isFetching}
+            />
+          }
           menu={isAuthenticated &&
             <MediumMenu
               medium={medium}
               viewer={viewer}
+              handleEdit={handleEdit}
             />
           }
           actions={isAuthenticated &&
@@ -90,16 +153,32 @@ const MediaRead = (props) => {
           }
         />
       }
+      {error &&
+        <SimpleSnackbar
+          isOpen={Boolean(error)}
+          message="Something went wrong!"
+          type="error"
+        />
+      }
+      {success &&
+        <SimpleSnackbar
+          isOpen={Boolean(success)}
+          message="Updated successfully!"
+          type="success"
+        />
+      }
     </React.Fragment>
   );
 };
 
 MediaRead.propTypes = {
   readItem: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
   media: MediaType.isRequired,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+  success: PropTypes.bool.isRequired,
   match: PropTypes.object.isRequired,
   setAppTitle: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
@@ -110,6 +189,7 @@ const mapStateToProps = (namespace) => {
   return (state) => {
     const {
       isFetching,
+      success,
       error,
     } = state[namespace];
 
@@ -118,6 +198,7 @@ const mapStateToProps = (namespace) => {
     return {
       media: state[namespace][namespace],
       namespace,
+      success,
       error,
       viewer,
       isAuthenticated,
@@ -130,10 +211,13 @@ const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
       readItem: (id) => {
-        dispatch(actions[namespace].read(id, namespace));
+        return dispatch(actions[namespace].read(id));
+      },
+      editItem: (node) => {
+        return dispatch(actions[namespace].edit(node));
       },
       setAppTitle: (title) => {
-        dispatch(actions.app.setAppTitle(title));
+        return dispatch(actions.app.setAppTitle(title));
       },
     };
   };

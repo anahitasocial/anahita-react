@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import permissions from '../../permissions/medium';
@@ -26,10 +29,13 @@ const MediaMenu = (props) => {
   const {
     medium,
     viewer,
+    handleEdit,
   } = props;
 
   const ownerName = getOwnerName(medium);
+  const canEdit = permissions.canEdit(viewer, medium);
   const canDelete = permissions.canDelete(viewer, medium);
+
 
   const [menuAnchorEl, setAnchorEl] = React.useState(null);
 
@@ -57,6 +63,17 @@ const MediaMenu = (props) => {
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
+        {handleEdit &&
+          <MenuItem
+            onClick={() => {
+              handleEdit();
+              handleClose();
+            }}
+            disabled={!canEdit}
+          >
+            Edit
+          </MenuItem>
+        }
         <NotificationActionWithRef
           medium={medium}
           isSubscribed={medium.isSubscribed}
@@ -93,6 +110,11 @@ const MediaMenu = (props) => {
 MediaMenu.propTypes = {
   medium: MediumType.isRequired,
   viewer: PersonType.isRequired,
+  handleEdit: PropTypes.func,
+};
+
+MediaMenu.defaultProps = {
+  handleEdit: null,
 };
 
 export default MediaMenu;

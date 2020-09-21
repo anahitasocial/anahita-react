@@ -3,11 +3,17 @@ import React from 'react';
 const OWNER_NAME_CHAR_LIMIT = 16;
 const MEDIA_NODE_OBJECT_TYPES = [
   'com.articles.article',
+  'com.documents.document',
   'com.notes.note',
   'com.photos.photo',
   'com.sets.set',
   'com.topics.topic',
   'com.todos.todo',
+];
+
+const MEDIA_NODE_BODY_HTML = [
+  'com.articles.article',
+  'com.topics.topic',
 ];
 
 const getOwnerName = (node) => {
@@ -18,30 +24,20 @@ const getOwnerName = (node) => {
   return name;
 };
 
-const getColumnWidthPercentage = (width) => {
-  let columnWidth = '100%';
-
-  if (width === 'md') {
-    columnWidth = '50%';
-  } else if (width === 'lg') {
-    columnWidth = '33.33%';
-  } else if (width === 'xl') {
-    columnWidth = '25%';
-  }
-
-  return columnWidth;
+const isCommentable = (medium) => {
+  return MEDIA_NODE_OBJECT_TYPES.includes(medium.objectType);
 };
 
-const isCommentable = (node) => {
-  return MEDIA_NODE_OBJECT_TYPES.includes(node.objectType);
+const isLikeable = (medium) => {
+  return MEDIA_NODE_OBJECT_TYPES.includes(medium.objectType);
 };
 
-const isLikeable = (node) => {
-  return MEDIA_NODE_OBJECT_TYPES.includes(node.objectType);
+const isSubscribable = (medium) => {
+  return MEDIA_NODE_OBJECT_TYPES.includes(medium.objectType);
 };
 
-const isSubscribable = (node) => {
-  return MEDIA_NODE_OBJECT_TYPES.includes(node.objectType);
+const isBodyHtml = (medium) => {
+  return MEDIA_NODE_BODY_HTML.includes(medium.objectType);
 };
 
 const withRef = (Component) => {
@@ -67,10 +63,10 @@ const applyDrag = (arr, dragResult) => {
 
 export default {
   getOwnerName,
-  getColumnWidthPercentage,
   isCommentable,
   isLikeable,
   isSubscribable,
+  isBodyHtml,
   withRef,
   applyDrag,
 };

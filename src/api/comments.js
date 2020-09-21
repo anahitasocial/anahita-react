@@ -7,7 +7,6 @@ const browse = (namespace) => {
     return axios.get(`/${namespace}/${node.id}/comments.json?`, {
       params: {
         start: offset,
-        ...params,
       },
     });
   };

@@ -38,7 +38,7 @@ const styles = (theme) => {
       paddingTop: '100%',
     },
     title: {
-      fontSize: 24,
+      fontSize: 36,
       marginBottom: theme.spacing(2),
     },
     authorName: {
@@ -63,6 +63,8 @@ const MediumDefault = (props) => {
     menu,
     locations,
     comments,
+    editing,
+    form,
   } = props;
 
   const [tab, setTab] = useState(TABS.COMMENTS);
@@ -122,36 +124,41 @@ const MediumDefault = (props) => {
             }
             action={menu}
           />
-          {medium.body &&
-            <Player text={medium.body} />
+          {editing && form}
+          {!editing &&
+            <React.Fragment>
+              {medium.body &&
+                <Player text={medium.body} />
+              }
+              <CardContent component="article">
+                {medium.name &&
+                  <Typography
+                    variant="h2"
+                    className={classes.title}
+                  >
+                    {medium.name}
+                  </Typography>
+                }
+                {medium.body &&
+                  <EntityBody>
+                    {contentfilter({
+                      text: medium.body,
+                      filters: [
+                        'hashtag',
+                        'mention',
+                        'url',
+                      ],
+                    })}
+                  </EntityBody>
+                }
+                {actions &&
+                  <CardActions>
+                    {actions}
+                  </CardActions>
+                }
+              </CardContent>
+            </React.Fragment>
           }
-          <CardContent component="article">
-            {medium.name &&
-              <Typography
-                variant="h2"
-                className={classes.title}
-              >
-                {medium.name}
-              </Typography>
-            }
-            {medium.body &&
-              <EntityBody>
-                {contentfilter({
-                  text: medium.body,
-                  filters: [
-                    'hashtag',
-                    'mention',
-                    'url',
-                  ],
-                })}
-              </EntityBody>
-            }
-            {actions &&
-              <CardActions>
-                {actions}
-              </CardActions>
-            }
-          </CardContent>
         </Card>
       </Grid>
       <Grid item xs={12} md={8}>
@@ -180,6 +187,8 @@ MediumDefault.propTypes = {
   medium: MediumType.isRequired,
   locations: PropTypes.node,
   comments: PropTypes.node,
+  form: PropTypes.node,
+  editing: PropTypes.bool,
 };
 
 MediumDefault.defaultProps = {
@@ -187,6 +196,8 @@ MediumDefault.defaultProps = {
   menu: null,
   locations: null,
   comments: null,
+  form: null,
+  editing: false,
 };
 
 export default withStyles(styles)(MediumDefault);
