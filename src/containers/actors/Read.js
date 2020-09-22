@@ -25,9 +25,10 @@ import ActorsFollowRequests from './FollowRequests';
 import ActorsSocialgraph from './Socialgraph';
 import LocationsGadget from '../locations/Gadget';
 
+const Articles = Media('articles');
+const Documents = Media('documents');
 const Notes = Media('notes');
 const Photos = Media('photos');
-const Articles = Media('articles');
 const Topics = Media('topics');
 const Todos = Media('todos');
 
@@ -153,6 +154,20 @@ const ActorsRead = (props) => {
             }
           />
         }
+        articles={actor.id &&
+          <Articles
+            queryFilters={{
+              oid: actor.id,
+            }}
+          />
+        }
+        documents={actor.id &&
+          <Documents
+            queryFilters={{
+              oid: actor.id,
+            }}
+          />
+        }
         notes={actor.id &&
           <Notes
             queryFilters={{
@@ -162,13 +177,6 @@ const ActorsRead = (props) => {
         }
         photos={actor.id &&
           <Photos
-            queryFilters={{
-              oid: actor.id,
-            }}
-          />
-        }
-        articles={actor.id &&
-          <Articles
             queryFilters={{
               oid: actor.id,
             }}

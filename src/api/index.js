@@ -30,6 +30,7 @@ axios.interceptors.request.use((config) => {
 }, (error) => { return Promise.reject(error); });
 
 const articles = createApi('articles');
+const documents = createApi('documents');
 const groups = {
   ...createApi('groups'),
   group: createActor('groups'),
@@ -49,6 +50,7 @@ const topics = createApi('topics');
 
 export {
   articles,
+  documents,
   avatar,
   comments,
   commentStatus,

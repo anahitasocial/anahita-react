@@ -46,6 +46,9 @@ const PeopleSettings = ActorsSettings('people');
 const Articles = Media('articles');
 const ArticlesRead = MediaRead('articles');
 
+const Documents = Media('documents');
+const DocumentsRead = MediaRead('documents');
+
 const Notes = Media('notes');
 const NotesRead = MediaRead('notes');
 
@@ -159,6 +162,30 @@ const Routes = (props) => {
       />
       <Route
         exact
+        path="/articles/"
+        component={Articles}
+      />
+      <Route
+        exact
+        path="/articles/:id/"
+        component={(params) => {
+          return <ArticlesRead {...params} />;
+        }}
+      />
+      <Route
+        exact
+        path="/documents/"
+        component={Documents}
+      />
+      <Route
+        exact
+        path="/documents/:id/"
+        component={(params) => {
+          return <DocumentsRead {...params} />;
+        }}
+      />
+      <Route
+        exact
         path="/notes/"
         component={Notes}
       />
@@ -203,18 +230,6 @@ const Routes = (props) => {
         path="/topics/:id/"
         component={(params) => {
           return <TopicsRead {...params} />;
-        }}
-      />
-      <Route
-        exact
-        path="/articles/"
-        component={Articles}
-      />
-      <Route
-        exact
-        path="/articles/:id/"
-        component={(params) => {
-          return <ArticlesRead {...params} />;
         }}
       />
       <Route

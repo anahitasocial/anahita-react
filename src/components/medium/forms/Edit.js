@@ -6,15 +6,15 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 
-import MediumType from '../../proptypes/Medium';
-import { Medium as MEDIUM } from '../../constants';
+import MediumType from '../../../proptypes/Medium';
+import { Medium as MEDIUM } from '../../../constants';
 
 const {
   NAME,
   BODY,
 } = MEDIUM.FIELDS;
 
-const MediumForm = (props) => {
+const MediumFormEdit = (props) => {
   const {
     handleOnChange,
     handleOnSubmit,
@@ -88,7 +88,7 @@ const MediumForm = (props) => {
   );
 };
 
-MediumForm.propTypes = {
+MediumFormEdit.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
@@ -97,4 +97,4 @@ MediumForm.propTypes = {
   isFetching: PropTypes.bool.isRequired,
 };
 
-export default MediumForm;
+export default MediumFormEdit;

@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import DocumentsIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupsIcon from '@material-ui/icons/GroupWork';
@@ -99,6 +100,16 @@ const LeftMenu = (props) => {
           <ArticlesIcon />
         </ListItemIcon>
         <ListItemText primary={i18n.t('articles:cTitle')} />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/documents/"
+      >
+        <ListItemIcon>
+          <DocumentsIcon />
+        </ListItemIcon>
+        <ListItemText primary={i18n.t('documents:cTitle')} />
       </ListItem>
       <ListItem
         button

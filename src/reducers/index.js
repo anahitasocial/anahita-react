@@ -47,11 +47,12 @@ const groupsPermissions = createActorPermissions('groups_permissions');
 const groupsPrivacy = createActorPrivacy('groups_privacy');
 
 // create media reducers
+const articles = createMediaReducer('articles');
+const documents = createMediaReducer('documents');
 const notes = createMediaReducer('notes');
 const topics = createMediaReducer('topics');
 const todos = createMediaReducer('todos');
 const photos = createMediaReducer('photos');
-const articles = createMediaReducer('articles');
 
 // behaviours
 const comments = createCommentReducer('comments');
@@ -64,6 +65,7 @@ export default combineReducers({
   articles,
   avatar,
   comments,
+  documents,
   cover,
   groups,
   groupsAdmins,

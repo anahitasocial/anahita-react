@@ -13,7 +13,7 @@ import LocationsGadget from '../locations/Gadget';
 import LikeAction from '../actions/Like';
 import MediumMenu from './Menu';
 import Medium from '../../components/medium';
-import MediumForm from '../../components/medium/Form';
+import MediumForm from '../../components/medium/forms/Edit';
 
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 

@@ -31,10 +31,11 @@ const ActorBody = (props) => {
     stories,
     locations,
     socialgraph,
+    articles,
+    documents,
     notes,
     photos,
     topics,
-    articles,
     todos,
     mentions,
   } = props;
@@ -71,6 +72,9 @@ const ActorBody = (props) => {
           }
           {gadgets.articles &&
             <Tab label="Articles" value="articles" id="actor-tab-articles" />
+          }
+          {gadgets.documents &&
+            <Tab label="Documents" value="documents" id="actor-tab-documents" />
           }
           {gadgets['topics-gadget'] &&
             <Tab label="Topics" value="topics" id="actor-tab-topics" />
@@ -110,6 +114,7 @@ const ActorBody = (props) => {
       {value === 'notes' && notes}
       {gadgets.photos && value === 'photos' && photos}
       {gadgets.articles && value === 'articles' && articles}
+      {gadgets.documents && value === 'documents' && documents}
       {gadgets['topics-gadget'] && value === 'topics' && topics}
       {gadgets['todos-gadget-profile-todos'] && value === 'todos' && todos}
       {actor.id === viewer.id && value === 'mentions' && mentions}
@@ -128,6 +133,7 @@ ActorBody.propTypes = {
   photos: PropTypes.node,
   topics: PropTypes.node,
   articles: PropTypes.node,
+  documents: PropTypes.node,
   todos: PropTypes.node,
   mentions: PropTypes.node,
 };
@@ -140,6 +146,7 @@ ActorBody.defaultProps = {
   photos: null,
   topics: null,
   articles: null,
+  documents: null,
   todos: null,
   mentions: null,
 };

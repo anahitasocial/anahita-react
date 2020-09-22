@@ -17,6 +17,7 @@ import stories from './stories';
 import taggables from './taggable';
 
 const articles = createAction('articles')(api.articles);
+const documents = createAction('documents')(api.documents);
 const groups = {
   ...createAction('groups')(api.groups),
   followRequests: createActorFollowRequests('groups')(api.groups.group.followrequests),
@@ -66,6 +67,7 @@ const locationsGraph = (taggable) => {
 export {
   app,
   articles,
+  documents,
   avatar,
   comments,
   commentStatus,

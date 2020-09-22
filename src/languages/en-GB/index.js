@@ -69,6 +69,10 @@ export default {
     cTitle: 'Dashboard',
     mTitle: 'Dashboard',
   },
+  documents: {
+    cTitle: 'Documents',
+    mTitle: 'Documents',
+  },
   settings: {
     cTitle: 'Settings',
     mTitle: 'Settings',
