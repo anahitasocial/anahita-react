@@ -55,7 +55,6 @@ const CommentForm = (props) => {
               }}
               disabled={isFetching}
               fullWidth
-              autoFocus
               multiline
               required
             />

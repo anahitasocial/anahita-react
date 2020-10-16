@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -9,6 +9,7 @@ import * as actions from '../../actions';
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
 
+import MediumStepper from './Stepper';
 import Masonry from '../../components/BreakpointMasonry';
 import MediumCard from './Card';
 import Progress from '../../components/Progress';
@@ -51,33 +52,55 @@ const MediaBrowse = (props) => {
     };
   }, [resetList]);
 
+  const [current, setCurrent] = useState(null);
+  const [stepperOpen, setStepperOpen] = useState(false);
+
+  const handleClose = () => {
+    setStepperOpen(false);
+  };
+
+  const Stepper = MediumStepper(namespace);
+
   return (
-    <InfiniteScroll
-      loadMore={fetchList}
-      hasMore={hasMore}
-      loader={
-        <Progress key={`${namespace}-progress`} />
+    <React.Fragment>
+      {current &&
+        <Stepper
+          medium={current}
+          open={stepperOpen}
+          handleClose={handleClose}
+        />
       }
-    >
-      <Masonry>
-        {items.allIds.map((itemId) => {
-          const node = items.byId[itemId];
-          const key = `${namespace}_node_list_item${node.id}`;
-          return (
-            <div
-              className={classes.card}
-              key={key}
-            >
-              <MediumCard
-                medium={node}
-                viewer={viewer}
-              />
-            </div>
-          );
-        })
+      <InfiniteScroll
+        loadMore={fetchList}
+        hasMore={hasMore}
+        loader={
+          <Progress key={`${namespace}-progress`} />
         }
-      </Masonry>
-    </InfiniteScroll>
+      >
+        <Masonry>
+          {items.allIds.map((itemId) => {
+            const node = items.byId[itemId];
+            const key = `${namespace}_node_list_item${node.id}`;
+            return (
+              <div
+                className={classes.card}
+                key={key}
+              >
+                <MediumCard
+                  medium={node}
+                  viewer={viewer}
+                  handleView={(e, medium) => {
+                    setCurrent({ ...medium });
+                    setStepperOpen(true);
+                  }}
+                />
+              </div>
+            );
+          })
+          }
+        </Masonry>
+      </InfiniteScroll>
+    </React.Fragment>
   );
 };
 

@@ -13,19 +13,19 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import MediumType from '../../proptypes/Medium';
-import ActorTitle from '../actor/Title';
-import ActorAvatar from '../actor/Avatar';
-import CardHeaderOwner from '../cards/Owner';
-import Player from '../Player';
-import EntityBody from '../EntityBody';
-import contentfilter from '../contentfilter';
+import MediumType from '../../../proptypes/Medium';
+import ActorTitle from '../../actor/Title';
+import ActorAvatar from '../../actor/Avatar';
+import CardHeaderOwner from '../../cards/Owner';
+import Player from '../../Player';
+import EntityBody from '../../EntityBody';
+import contentfilter from '../../contentfilter';
 
 import {
   getAuthor,
   getPortraitURL,
   getCoverURL,
-} from '../utils';
+} from '../../utils';
 
 const styles = (theme) => {
   return {
@@ -55,7 +55,7 @@ const TABS = {
   LOCATIONS: 'locations',
 };
 
-const MediumDefault = (props) => {
+const MediumReadDefault = (props) => {
   const {
     classes,
     medium,
@@ -73,7 +73,7 @@ const MediumDefault = (props) => {
     setTab(value);
   };
 
-  const portrait = getPortraitURL(medium, 'original');
+  const portrait = getPortraitURL(medium, 'large');
   const cover = getCoverURL(medium);
   const author = getAuthor(medium);
 
@@ -180,7 +180,7 @@ const MediumDefault = (props) => {
   );
 };
 
-MediumDefault.propTypes = {
+MediumReadDefault.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node,
   menu: PropTypes.node,
@@ -191,7 +191,7 @@ MediumDefault.propTypes = {
   editing: PropTypes.bool,
 };
 
-MediumDefault.defaultProps = {
+MediumReadDefault.defaultProps = {
   actions: null,
   menu: null,
   locations: null,
@@ -200,4 +200,4 @@ MediumDefault.defaultProps = {
   editing: false,
 };
 
-export default withStyles(styles)(MediumDefault);
+export default withStyles(styles)(MediumReadDefault);

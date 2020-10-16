@@ -12,7 +12,7 @@ import Progress from '../../components/Progress';
 import LocationsGadget from '../locations/Gadget';
 import LikeAction from '../actions/Like';
 import MediumMenu from './Menu';
-import Medium from '../../components/medium';
+import Medium from '../../components/medium/Read';
 import MediumForm from '../../components/medium/forms/Edit';
 
 import SimpleSnackbar from '../../components/SimpleSnackbar';
@@ -93,7 +93,7 @@ const MediaRead = (props) => {
     setFields({ ...newFields });
   };
 
-  const canAdd = isAuthenticated && medium.openToComment;
+  const canAddComment = isAuthenticated && medium.openToComment;
 
   if (isFetching && !medium.id) {
     return (
@@ -145,7 +145,7 @@ const MediaRead = (props) => {
           comments={
             <MediumComments
               parent={medium}
-              canAdd={canAdd}
+              canAdd={canAddComment}
             />
           }
           locations={

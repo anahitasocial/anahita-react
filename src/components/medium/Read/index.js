@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MediumType from '../../proptypes/Medium';
+import MediumType from '../../../proptypes/Medium';
 
 import Default from './Default';
 

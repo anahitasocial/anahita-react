@@ -13,11 +13,13 @@ const MediaCard = (props) => {
     medium,
     viewer,
     isAuthenticated,
+    handleView,
   } = props;
 
   return (
     <MediumCard
       medium={medium}
+      handleView={handleView}
       menu={isAuthenticated &&
         <MediumMenu
           medium={medium}
@@ -38,6 +40,7 @@ MediaCard.propTypes = {
   medium: MediumType.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  handleView: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {

@@ -184,6 +184,7 @@ const Search = (props) => {
           <Tab label="Notes" value={SCOPE.POSTS.NOTES} />
           <Tab label="Photos" value={SCOPE.POSTS.PHOTOS} />
           <Tab label="Articles" value={SCOPE.POSTS.ARTICLES} />
+          <Tab label="Documents" value={SCOPE.POSTS.DOCUMENTS} />
           <Tab label="Topics" value={SCOPE.POSTS.TOPICS} />
           <Tab label="Todos" value={SCOPE.POSTS.TODOS} />
           <Tab label="People" value={SCOPE.ACTORS.PEOPLE} />

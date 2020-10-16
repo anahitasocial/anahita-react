@@ -9,7 +9,6 @@ import Container from '@material-ui/core/Container';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -172,13 +171,11 @@ const App = (props) => {
             </IconButton>
           </div>
           <Divider />
-          <List className={classes.list}>
-            <LeftMenu
-              onLogoutClick={handleLogout}
-              isAuthenticated={isAuthenticated}
-              classNames={classes}
-            />
-          </List>
+          <LeftMenu
+            onLogoutClick={handleLogout}
+            isAuthenticated={isAuthenticated}
+            classNames={classes}
+          />
           <Divider />
         </div>
       </Drawer>

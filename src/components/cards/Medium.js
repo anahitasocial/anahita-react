@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTimeAgo from 'react-time-ago';
 import withStyles from '@material-ui/core/styles/withStyles';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -54,6 +55,7 @@ const MediumCard = (props) => {
     medium,
     actions,
     menu,
+    handleView,
   } = props;
 
   const portrait = getPortraitURL(medium);
@@ -67,14 +69,24 @@ const MediumCard = (props) => {
         <CardHeaderOwner node={medium} />
       }
       {cover &&
-        <Link href={url}>
+        <ButtonBase
+          // href={url}
+          component="a"
+          style={{
+            width: '100%',
+            display: 'inline',
+          }}
+          onClick={(e) => {
+            return handleView(e, medium);
+          }}
+        >
           <CardMedia
             className={classes.cover}
             image={cover}
             title={medium.name}
             src="picture"
           />
-        </Link>
+        </ButtonBase>
       }
       <CardHeader
         avatar={
@@ -90,7 +102,12 @@ const MediumCard = (props) => {
           />
         }
         subheader={
-          <Link href={url}>
+          <Link
+            href={url}
+            onClick={(e) => {
+              return handleView(e, medium);
+            }}
+          >
             <ReactTimeAgo
               date={new Date(medium.creationTime)}
             />
@@ -99,14 +116,24 @@ const MediumCard = (props) => {
         action={menu}
       />
       {portrait &&
-        <Link href={url}>
+        <ButtonBase
+          // href={url}
+          component="a"
+          style={{
+            width: '100%',
+            display: 'inline',
+          }}
+          onClick={(e) => {
+            return handleView(e, medium);
+          }}
+        >
           <CardMedia
             className={classes.portrait}
             title={medium.name}
             image={portrait}
             src="picture"
           />
-        </Link>
+        </ButtonBase>
       }
       {medium.body &&
         <Player text={medium.body} />
@@ -149,6 +176,7 @@ MediumCard.propTypes = {
   actions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
+  handleView: PropTypes.func.isRequired,
 };
 
 MediumCard.defaultProps = {

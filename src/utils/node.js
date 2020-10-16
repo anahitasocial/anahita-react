@@ -5,11 +5,12 @@ const actorObjectTypes = [
 ];
 
 const mediumObjectTypes = [
+  'com.articles.article',
+  'com.documents.document',
   'com.notes.note',
   'com.topics.topic',
   'com.photos.photo',
   'com.photos.set',
-  'com.articles.article',
   'com.todos.todo',
 ];
 
