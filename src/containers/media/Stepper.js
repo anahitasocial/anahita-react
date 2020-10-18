@@ -14,6 +14,8 @@ import NextIcon from '@material-ui/icons/NavigateNext';
 import PrevIcon from '@material-ui/icons/NavigateBefore';
 
 import CloseIcon from '@material-ui/icons/Close';
+import HomeIcon from '@material-ui/icons/Home';
+import LinkIcon from '@material-ui/icons/Link';
 
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
@@ -31,6 +33,7 @@ import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import form from '../../utils/form';
 import i18n from '../../languages';
+import utils from '../utils';
 
 const formFields = form.createFormFields([
   'name',
@@ -135,6 +138,7 @@ const MediaStepper = (props) => {
   }, [handleKeydown]);
 
   const canAddComment = isAuthenticated && medium.openToComment;
+  const url = utils.getURL(medium);
 
   return (
     <Dialog
@@ -151,6 +155,20 @@ const MediaStepper = (props) => {
           edge="start"
         >
           <CloseIcon />
+        </IconButton>
+        <IconButton
+          aria-label="close"
+          component="a"
+          href="/"
+        >
+          <HomeIcon />
+        </IconButton>
+        <IconButton
+          aria-label="close"
+          component="a"
+          href={url}
+        >
+          <LinkIcon />
         </IconButton>
       </DialogTitle>
       <Helmet>

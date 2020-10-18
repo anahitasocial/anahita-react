@@ -69,24 +69,14 @@ const MediumCard = (props) => {
         <CardHeaderOwner node={medium} />
       }
       {cover &&
-        <ButtonBase
-          // href={url}
-          component="a"
-          style={{
-            width: '100%',
-            display: 'inline',
-          }}
-          onClick={(e) => {
-            return handleView(e, medium);
-          }}
-        >
+        <Link href={url}>
           <CardMedia
             className={classes.cover}
             image={cover}
             title={medium.name}
             src="picture"
           />
-        </ButtonBase>
+        </Link>
       }
       <CardHeader
         avatar={
@@ -102,12 +92,7 @@ const MediumCard = (props) => {
           />
         }
         subheader={
-          <Link
-            href={url}
-            onClick={(e) => {
-              return handleView(e, medium);
-            }}
-          >
+          <Link href={url}>
             <ReactTimeAgo
               date={new Date(medium.creationTime)}
             />
@@ -117,8 +102,6 @@ const MediumCard = (props) => {
       />
       {portrait &&
         <ButtonBase
-          // href={url}
-          component="a"
           style={{
             width: '100%',
             display: 'inline',

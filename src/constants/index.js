@@ -5,7 +5,7 @@ import Auth from './auth';
 import Avatar from './avatar';
 import Comments from './comments';
 import Cover from './cover';
-import InlineComments from './inline_comments';
+import InlineComments from './inlineComments';
 import Is from './is';
 import Likes from './likes';
 import Locations from './locations';

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CommentRead from '../../comments/Read';
 import CommentForm from '../../../components/comment/Form';
 
-import actions from '../../../actions/inline_comments';
+import actions from '../../../actions/inlineComments';
 
 import CommentsType from '../../../proptypes/Comments';
 import CommentDefault from '../../../proptypes/CommentDefault';

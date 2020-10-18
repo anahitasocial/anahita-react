@@ -81,7 +81,6 @@ const MediumReadDefault = (props) => {
     <Grid
       container
       justify="center"
-      spacing={2}
     >
       <Grid item xs={12} md={8}>
         <Card>
@@ -160,8 +159,6 @@ const MediumReadDefault = (props) => {
             </React.Fragment>
           }
         </Card>
-      </Grid>
-      <Grid item xs={12} md={8}>
         <Tabs
           value={tab}
           onChange={changeTab}

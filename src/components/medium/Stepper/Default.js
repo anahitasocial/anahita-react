@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
+import Link from '@material-ui/core/Link';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -24,6 +25,7 @@ import contentfilter from '../../contentfilter';
 
 import {
   getAuthor,
+  getURL,
   getPortraitURL,
 } from '../../utils';
 
@@ -84,6 +86,7 @@ const MediumStepperDefault = (props) => {
   };
 
   const portrait = getPortraitURL(medium, 'large');
+  const url = getURL(medium);
   const author = getAuthor(medium);
 
   return (
@@ -161,9 +164,13 @@ const MediumStepperDefault = (props) => {
                 />
               }
               subheader={
-                <ReactTimeAgo
-                  date={new Date(medium.creationTime)}
-                />
+                <Link
+                  href={url}
+                >
+                  <ReactTimeAgo
+                    date={new Date(medium.creationTime)}
+                  />
+                </Link>
               }
               action={menu}
             />

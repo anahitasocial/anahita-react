@@ -1,4 +1,5 @@
 import React from 'react';
+import { pluralize } from 'inflection';
 
 const OWNER_NAME_CHAR_LIMIT = 16;
 const MEDIA_NODE_OBJECT_TYPES = [
@@ -61,6 +62,24 @@ const applyDrag = (arr, dragResult) => {
   return result;
 };
 
+const getURL = (entity) => {
+  if (entity.id && entity.objectType) {
+    const namespace = pluralize(entity.objectType.split('.')[2]);
+    let identifier = '';
+
+    if (namespace === 'people') {
+      identifier = entity.alias;
+    } else if (entity.alias) {
+      identifier = `${entity.id}-${entity.alias}`;
+    } else {
+      identifier = entity.id;
+    }
+    return `/${namespace}/${identifier}/`;
+  }
+
+  return '/';
+};
+
 export default {
   getOwnerName,
   isCommentable,
@@ -69,4 +88,5 @@ export default {
   isBodyHtml,
   withRef,
   applyDrag,
+  getURL,
 };

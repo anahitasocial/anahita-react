@@ -6,7 +6,7 @@ import createActorFollowRequests from './actor/followrequests';
 import app from './app';
 import avatar from './avatar';
 import cover from './cover';
-import inlineComments from './inline_comments';
+import inlineComments from './inlineComments';
 import likes from './likes';
 import notifications from './notifications';
 import password from './password';
