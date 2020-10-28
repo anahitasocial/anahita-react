@@ -1,3 +1,4 @@
+/* global Image */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -35,6 +36,7 @@ import * as actions from '../../actions';
 import form from '../../utils/form';
 // import i18n from '../../languages';
 import utils from '../utils';
+import { getPortraitURL } from '../../components/utils';
 
 const formFields = form.createFormFields([
   'name',
@@ -56,6 +58,9 @@ const MediaStepper = (props) => {
     open,
   } = props;
 
+  const nextImage = new Image();
+  const prevImage = new Image();
+
   const [isEditing, setIsEditing] = useState(false);
   const [fields, setFields] = useState(formFields);
   const [index, setIndex] = useState(items.allIds.indexOf(mediumId));
@@ -71,14 +76,28 @@ const MediaStepper = (props) => {
     setIsEditing(false);
   };
 
+  const preloadImages = () => {
+    if (items.allIds[index + 1]) {
+      const item = items.byId[items.allIds[index + 1]];
+      nextImage.src = getPortraitURL(item, 'large');
+    }
+
+    if (items.allIds[index - 1]) {
+      const item = items.byId[items.allIds[index - 1]];
+      prevImage.src = getPortraitURL(item, 'large');
+    }
+  };
+
   const handleNext = () => {
     if (items.allIds[index + 1]) {
+      preloadImages();
       setIndex(index + 1);
     }
   };
 
   const handlePrev = () => {
     if (items.allIds[index - 1]) {
+      preloadImages();
       setIndex(index - 1);
     }
   };
@@ -94,6 +113,17 @@ const MediaStepper = (props) => {
       handlePrev();
     }
   };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeydown);
+    preloadImages();
+
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+      nextImage.src = null;
+      prevImage.src = null;
+    };
+  }, [handleKeydown]);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -126,13 +156,6 @@ const MediaStepper = (props) => {
 
     setFields({ ...newFields });
   };
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeydown);
-    return () => {
-      window.removeEventListener('keydown', handleKeydown);
-    };
-  }, [handleKeydown]);
 
   const medium = items.byId[items.allIds[index]];
   const canAddComment = isAuthenticated && medium.openToComment;
