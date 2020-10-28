@@ -65,6 +65,7 @@ const MediumReadDefault = (props) => {
     comments,
     editing,
     form,
+    stats,
   } = props;
 
   const [tab, setTab] = useState(TABS.COMMENTS);
@@ -150,12 +151,17 @@ const MediumReadDefault = (props) => {
                     })}
                   </EntityBody>
                 }
-                {actions &&
-                  <CardActions>
-                    {actions}
-                  </CardActions>
-                }
               </CardContent>
+              {actions &&
+                <CardActions>
+                  {actions}
+                </CardActions>
+              }
+              {stats &&
+                <CardActions>
+                  {stats}
+                </CardActions>
+              }
             </React.Fragment>
           }
         </Card>
@@ -185,6 +191,7 @@ MediumReadDefault.propTypes = {
   locations: PropTypes.node,
   comments: PropTypes.node,
   form: PropTypes.node,
+  stats: PropTypes.node,
   editing: PropTypes.bool,
 };
 
@@ -195,6 +202,7 @@ MediumReadDefault.defaultProps = {
   comments: null,
   form: null,
   editing: false,
+  stats: null,
 };
 
 export default withStyles(styles)(MediumReadDefault);

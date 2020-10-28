@@ -18,21 +18,21 @@ import HomeIcon from '@material-ui/icons/Home';
 import LinkIcon from '@material-ui/icons/Link';
 
 import PersonType from '../../proptypes/Person';
-import MediumType from '../../proptypes/Medium';
 import MediaType from '../../proptypes/Media';
 
 import MediumComments from '../comments/Browse';
 import LocationsGadget from '../locations/Gadget';
-import LikeAction from '../actions/Like';
+import LikeAction from '../likes/Read';
+import Likes from '../likes';
 import MediumMenu from './Menu';
-import Medium from '../../components/medium/Stepper';
+import MediumStepper from '../../components/medium/Stepper';
 import MediumForm from '../../components/medium/forms/Edit';
 
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 
 import * as actions from '../../actions';
 import form from '../../utils/form';
-import i18n from '../../languages';
+// import i18n from '../../languages';
 import utils from '../utils';
 
 const formFields = form.createFormFields([
@@ -42,10 +42,9 @@ const formFields = form.createFormFields([
 
 const MediaStepper = (props) => {
   const {
-    setAppTitle,
     editItem,
     handleClose,
-    medium: current,
+    mediumId,
     items,
     namespace,
     viewer,
@@ -58,33 +57,27 @@ const MediaStepper = (props) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [fields, setFields] = useState(formFields);
-  const [medium, setMedium] = useState(current);
-
-  const index = items.allIds.indexOf(medium.id);
-
-  useEffect(() => {
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
-  }, [setAppTitle, namespace]);
+  const [index, setIndex] = useState(items.allIds.indexOf(mediumId));
+  const [medium, setMedium] = useState(null);
 
   const handleEdit = () => {
     setIsEditing(true);
   };
 
   const handleCancel = () => {
+    setMedium({ ...items.byId(items.allIds(index)) });
     setIsEditing(false);
   };
 
   const handleNext = () => {
     if (items.allIds[index + 1]) {
-      const item = items.byId[items.allIds[index + 1]];
-      setMedium({ ...item });
+      setIndex(index + 1);
     }
   };
 
   const handlePrev = () => {
     if (items.allIds[index - 1]) {
-      const item = items.byId[items.allIds[index - 1]];
-      setMedium({ ...item });
+      setIndex(index - 1);
     }
   };
 
@@ -105,6 +98,8 @@ const MediaStepper = (props) => {
     const { name, value } = target;
 
     medium[name] = value;
+
+    setMedium({ ...medium });
 
     const newFields = form.validateField(target, fields);
 
@@ -137,8 +132,10 @@ const MediaStepper = (props) => {
     };
   }, [handleKeydown]);
 
-  const canAddComment = isAuthenticated && medium.openToComment;
-  const url = utils.getURL(medium);
+  const cMedium = items.byId[items.allIds[index]];
+  const canAddComment = isAuthenticated && cMedium.openToComment;
+  const url = utils.getURL(cMedium);
+  const Like = LikeAction(cMedium.objectType.split('.')[1]);
 
   return (
     <Dialog
@@ -173,19 +170,19 @@ const MediaStepper = (props) => {
       </DialogTitle>
       <Helmet>
         <title>
-          {medium.name || striptags(medium.body).substring(0, 60)}
+          {cMedium.name || striptags(cMedium.body).substring(0, 60)}
         </title>
-        <meta name="description" content={striptags(medium.body)} />
+        <meta name="description" content={striptags(cMedium.body)} />
       </Helmet>
       <Divider />
-      <Medium
-        medium={medium}
+      <MediumStepper
+        medium={cMedium}
         steps={items.allIds.length}
-        activeStep={items.allIds.indexOf(medium.id)}
+        activeStep={items.allIds[index]}
         editing={isEditing}
         form={
           <MediumForm
-            medium={medium}
+            medium={cMedium}
             fields={fields}
             handleOnChange={handleOnChange}
             handleOnSubmit={handleOnSubmit}
@@ -195,30 +192,35 @@ const MediaStepper = (props) => {
         }
         menu={isAuthenticated &&
           <MediumMenu
-            medium={medium}
+            medium={cMedium}
             viewer={viewer}
             handleEdit={handleEdit}
-            key={`${namespace}-menu-${medium.id}`}
+            key={`${namespace}-menu-${cMedium.id}`}
           />
         }
         actions={isAuthenticated &&
-          <LikeAction
-            node={medium}
-            liked={medium.isVotedUp}
-            key={`${namespace}-likes-${medium.id}`}
+          <Like
+            node={cMedium}
+            key={`like-${cMedium.id}`}
+          />
+        }
+        stats={open &&
+          <Likes
+            node={cMedium}
+            key={`likes-${cMedium.id}`}
           />
         }
         comments={
           <MediumComments
-            parent={medium}
+            parent={cMedium}
             canAdd={canAddComment}
-            key={`${namespace}-comments-${medium.id}`}
+            key={`${namespace}-comments-${cMedium.id}`}
           />
         }
         locations={
           <LocationsGadget
             node={medium}
-            key={`${namespace}-locations-${medium.id}`}
+            key={`${namespace}-locations-${cMedium.id}`}
           />
         }
         nextAction={
@@ -259,14 +261,13 @@ const MediaStepper = (props) => {
 };
 
 MediaStepper.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,
   isFetching: PropTypes.bool.isRequired,
   items: MediaType.isRequired,
-  medium: MediumType.isRequired,
+  mediumId: PropTypes.number.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -300,9 +301,6 @@ const mapDispatchToProps = (namespace) => {
     return {
       editItem: (node) => {
         return dispatch(actions[namespace].edit(node));
-      },
-      setAppTitle: (title) => {
-        return dispatch(actions.app.setAppTitle(title));
       },
     };
   };

@@ -10,7 +10,7 @@ import CommentsBrowse from './comments/Browse';
 
 import actions from '../../actions/stories';
 
-import LikeAction from '../actions/Like';
+import LikeAction from '../likes/Read';
 import StoryMenu from './Menu';
 
 import Progress from '../../components/Progress';
@@ -72,6 +72,12 @@ const StoriesBrowse = (props) => {
         const commentsCount = node.comments.allIds.length;
         const isCommentsOpen = openComments.includes(node.id);
 
+        let Like = null;
+
+        if (node.object && utils.isLikeable(node.object)) {
+          Like = LikeAction(node.object.objectType.split('.')[1]);
+        }
+
         return (
           <StoryCard
             story={node}
@@ -84,10 +90,9 @@ const StoriesBrowse = (props) => {
             }
             actions={[
               node.object && utils.isLikeable(node.object) &&
-              <LikeAction
+              <Like
                 node={node.object}
-                liked={node.commands && node.commands.includes('unvote')}
-                key={`story-like-${node.id}`}
+                key={`story-like-${node.object.id}`}
               />,
               node.object && utils.isCommentable(node.object) &&
               <IconButton

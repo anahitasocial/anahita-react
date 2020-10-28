@@ -10,10 +10,12 @@ import MediaType from '../../proptypes/Media';
 import MediumComments from '../comments/Browse';
 import Progress from '../../components/Progress';
 import LocationsGadget from '../locations/Gadget';
-import LikeAction from '../actions/Like';
+
 import MediumMenu from './Menu';
 import Medium from '../../components/medium/Read';
 import MediumForm from '../../components/medium/forms/Edit';
+import Likes from '../likes';
+import LikeAction from '../likes/Read';
 
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 
@@ -107,6 +109,8 @@ const MediaRead = (props) => {
     );
   }
 
+  const Like = LikeAction(medium.objectType.split('.')[1]);
+
   return (
     <React.Fragment>
       <Helmet>
@@ -137,10 +141,10 @@ const MediaRead = (props) => {
             />
           }
           actions={isAuthenticated &&
-            <LikeAction
-              node={medium}
-              liked={medium.isVotedUp}
-            />
+            <Like node={medium} />
+          }
+          stats={
+            <Likes node={medium} />
           }
           comments={
             <MediumComments

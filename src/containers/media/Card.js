@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MediumCard from '../../components/cards/Medium';
-import LikeAction from '../actions/Like';
+import LikeAction from '../likes/Read';
+import Likes from '../likes';
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
 
@@ -16,6 +17,8 @@ const MediaCard = (props) => {
     handleView,
   } = props;
 
+  const Like = LikeAction(medium.objectType.split('.')[1]);
+
   return (
     <MediumCard
       medium={medium}
@@ -26,11 +29,11 @@ const MediaCard = (props) => {
           viewer={viewer}
         />
       }
+      stats={
+        <Likes node={medium} />
+      }
       actions={isAuthenticated &&
-        <LikeAction
-          node={medium}
-          liked={medium.isVotedUp}
-        />
+        <Like node={medium} />
       }
     />
   );

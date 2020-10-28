@@ -3,8 +3,7 @@ import { combineReducers } from 'redux';
 import app from './app';
 import avatar from './avatar';
 import cover from './cover';
-import inlineComments from './inlineComments';
-import likes from './likes';
+import commentsInline from './commentsInline';
 import locations from './locations';
 import hashtags from './hashtags';
 import notifications from './notifications';
@@ -33,6 +32,7 @@ import createMediaReducer from './createMedia';
 import createTagGraphReducer from './createTagGraph';
 
 // create actors reducers
+const likes = createActorsReducer('likes');
 const people = createActorsReducer('people');
 const peopleApps = createActorApps('people_apps');
 const peopleFollowRequests = createActorFollowRequests('people_followrequests');
@@ -73,7 +73,7 @@ export default combineReducers({
   groupsFollowRequests,
   groupsPermissions,
   groupsPrivacy,
-  inlineComments,
+  commentsInline,
   likes,
   locations,
   locationsGraph,

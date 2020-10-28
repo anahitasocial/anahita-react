@@ -10,7 +10,8 @@ import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
 import PersonType from '../../proptypes/Person';
 
-import LikeAction from '../actions/Like';
+import LikeCommentsAction from '../likes/ReadComments';
+import LikeCommentsInlineAction from '../likes/ReadCommentsInline';
 import CommentMenu from './Menu';
 import CommentDefault from '../../proptypes/CommentDefault';
 import form from '../../utils/form';
@@ -31,19 +32,17 @@ const CommentsRead = (props) => {
     isFetching,
   } = props;
 
+  const [oldBody, setOldBody] = useState('');
   const [isEditing, setIsEditing] = useState(false);
-  const [currComment, setCurrComment] = useState(comment);
   const [fields, setFields] = useState(formFields);
 
-  let oldComment = { ...CommentDefault };
-
   const handleCancel = () => {
-    setCurrComment(oldComment);
+    comment.body = oldBody;
     setIsEditing(false);
   };
 
   const handleEdit = () => {
-    oldComment = { ...currComment };
+    setOldBody(comment.body);
     setIsEditing(true);
   };
 
@@ -69,13 +68,18 @@ const CommentsRead = (props) => {
       const namespace = objectType.split('.')[1];
       const editMethod = inline ? editItemInline : editItem;
 
-      editMethod(currComment, namespace).then(() => {
+      editMethod(comment, namespace).then(() => {
         setIsEditing(false);
       });
     }
 
     setFields({ ...newFields });
   };
+
+  const commentObjectType = comment.objectType.split('.')[1];
+  const Like = inline ?
+    LikeCommentsInlineAction(commentObjectType) :
+    LikeCommentsAction(commentObjectType);
 
   return (
     <CommentCard
@@ -90,10 +94,9 @@ const CommentsRead = (props) => {
         />
       }
       actions={[
-        <LikeAction
+        <Like
           node={parent}
           comment={comment}
-          liked={comment.isVotedUp}
           key={`comment-like-${comment.id}`}
           size="small"
         />,
@@ -119,8 +122,8 @@ const mapStateToProps = (state) => {
     isAuthenticated,
   } = state.session;
 
-  const { comments, inlineComments } = state;
-  const isFetching = comments.isFetching || inlineComments.isFetching;
+  const { comments, commentsInline } = state;
+  const isFetching = comments.isFetching || commentsInline.isFetching;
 
   return {
     viewer,
@@ -135,7 +138,7 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(actions.comments(namespace).edit(node));
     },
     editItemInline: (node, namespace) => {
-      return dispatch(actions.inlineComments(namespace).edit(node));
+      return dispatch(actions.commentsInline(namespace).edit(node));
     },
   };
 };

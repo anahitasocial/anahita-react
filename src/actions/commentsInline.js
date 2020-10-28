@@ -1,13 +1,17 @@
 import { normalize, schema } from 'normalizr';
-import { comments as commentsApi } from '../api';
-import { InlineComments as INLINE_COMMENTS } from '../constants';
+import {
+  comments as commentsApi,
+  likes as likesApi,
+} from '../api';
+import { CommentsInline as COMMENTS_INLINE } from '../constants';
+import createLikes from './createLikes';
 
 // --- setList
 
 const setList = () => {
   return (comments, parent) => {
     return {
-      type: INLINE_COMMENTS.BROWSE.SET,
+      type: COMMENTS_INLINE.BROWSE.SET,
       comments,
       parent,
     };
@@ -18,7 +22,7 @@ const setList = () => {
 
 const reset = () => {
   return {
-    type: INLINE_COMMENTS.RESET,
+    type: COMMENTS_INLINE.RESET,
   };
 };
 
@@ -26,7 +30,7 @@ const reset = () => {
 
 function browseRequest() {
   return {
-    type: INLINE_COMMENTS.BROWSE.REQUEST,
+    type: COMMENTS_INLINE.BROWSE.REQUEST,
   };
 }
 
@@ -37,7 +41,7 @@ function browseSuccess(results) {
   const normalized = normalize(data.comments || [], comments);
 
   return {
-    type: INLINE_COMMENTS.BROWSE.SUCCESS,
+    type: COMMENTS_INLINE.BROWSE.SUCCESS,
     comments: normalized.entities.comments,
     ids: normalized.result,
   };
@@ -45,7 +49,7 @@ function browseSuccess(results) {
 
 function browseFailure(error) {
   return {
-    type: INLINE_COMMENTS.BROWSE.FAILURE,
+    type: COMMENTS_INLINE.BROWSE.FAILURE,
     errorMessage: error.message,
   };
 }
@@ -76,21 +80,21 @@ const browse = (api) => {
 
 function editRequest(comment) {
   return {
-    type: INLINE_COMMENTS.EDIT.REQUEST,
+    type: COMMENTS_INLINE.EDIT.REQUEST,
     comment,
   };
 }
 
 function editSuccess(result) {
   return {
-    type: INLINE_COMMENTS.EDIT.SUCCESS,
+    type: COMMENTS_INLINE.EDIT.SUCCESS,
     comment: result.data,
   };
 }
 
 function editFailure(error) {
   return {
-    type: INLINE_COMMENTS.EDIT.FAILURE,
+    type: COMMENTS_INLINE.EDIT.FAILURE,
     error: error.message,
   };
 }
@@ -120,21 +124,21 @@ const edit = (api) => {
 
 function addRequest(comment) {
   return {
-    type: INLINE_COMMENTS.ADD.REQUEST,
+    type: COMMENTS_INLINE.ADD.REQUEST,
     comment,
   };
 }
 
 function addSuccess(result) {
   return {
-    type: INLINE_COMMENTS.ADD.SUCCESS,
+    type: COMMENTS_INLINE.ADD.SUCCESS,
     comment: result.data,
   };
 }
 
 function addFailure(error) {
   return {
-    type: INLINE_COMMENTS.ADD.FAILURE,
+    type: COMMENTS_INLINE.ADD.FAILURE,
     error: error.message,
   };
 }
@@ -164,21 +168,21 @@ const add = (api) => {
 
 function deleteRequest(comment) {
   return {
-    type: INLINE_COMMENTS.DELETE.REQUEST,
+    type: COMMENTS_INLINE.DELETE.REQUEST,
     comment,
   };
 }
 
 function deleteSuccess(comment) {
   return {
-    type: INLINE_COMMENTS.DELETE.SUCCESS,
+    type: COMMENTS_INLINE.DELETE.SUCCESS,
     comment,
   };
 }
 
 function deleteFailure(response) {
   return {
-    type: INLINE_COMMENTS.DELETE.FAILURE,
+    type: COMMENTS_INLINE.DELETE.FAILURE,
     error: response.message,
   };
 }
@@ -213,5 +217,6 @@ export default (namespace) => {
     edit: edit(api),
     add: add(api),
     deleteItem: deleteItem(api),
+    likes: createLikes('comments_inline')(likesApi),
   };
 };

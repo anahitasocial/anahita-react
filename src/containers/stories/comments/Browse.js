@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CommentRead from '../../comments/Read';
 import CommentForm from '../../../components/comment/Form';
 
-import actions from '../../../actions/inlineComments';
+import actions from '../../../actions/commentsInline';
 
 import CommentsType from '../../../proptypes/Comments';
 import CommentDefault from '../../../proptypes/CommentDefault';
@@ -113,7 +113,7 @@ const mapStateToProps = (state) => {
     parents,
     error,
     isFetching,
-  } = state.inlineComments;
+  } = state.commentsInline;
 
   return {
     viewer,

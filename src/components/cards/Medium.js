@@ -53,6 +53,7 @@ const MediumCard = (props) => {
   const {
     classes,
     medium,
+    stats,
     actions,
     menu,
     handleView,
@@ -150,12 +151,16 @@ const MediumCard = (props) => {
           {actions}
         </CardActions>
       }
+      <CardActions>
+        {stats}
+      </CardActions>
     </Card>
   );
 };
 
 MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
+  stats: PropTypes.node,
   actions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
@@ -165,6 +170,7 @@ MediumCard.propTypes = {
 MediumCard.defaultProps = {
   actions: null,
   menu: null,
+  stats: null,
 };
 
 export default withStyles(styles)(MediumCard);

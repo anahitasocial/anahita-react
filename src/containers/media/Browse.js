@@ -50,9 +50,9 @@ const MediaBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
-  const [current, setCurrent] = useState(null);
+  const [current, setCurrent] = useState(0);
   const [stepperOpen, setStepperOpen] = useState(false);
 
   const handleClose = () => {
@@ -63,9 +63,9 @@ const MediaBrowse = (props) => {
 
   return (
     <React.Fragment>
-      {current &&
+      {current > 0 &&
         <Stepper
-          medium={current}
+          mediumId={current}
           open={stepperOpen}
           handleClose={handleClose}
         />
@@ -90,7 +90,7 @@ const MediaBrowse = (props) => {
                   medium={node}
                   viewer={viewer}
                   handleView={(e, medium) => {
-                    setCurrent({ ...medium });
+                    setCurrent(medium.id);
                     setStepperOpen(true);
                   }}
                 />

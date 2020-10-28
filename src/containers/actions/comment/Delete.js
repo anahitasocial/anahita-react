@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(actions.comments(namespace).deleteItem(comment));
     },
     deleteItemInline: (comment, namespace) => {
-      return dispatch(actions.inlineComments(namespace).deleteItem(comment));
+      return dispatch(actions.commentsInline(namespace).deleteItem(comment));
     },
   };
 };

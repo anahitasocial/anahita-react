@@ -71,6 +71,7 @@ const MediumStepperDefault = (props) => {
     medium,
     actions,
     menu,
+    stats,
     locations,
     comments,
     editing,
@@ -206,6 +207,11 @@ const MediumStepperDefault = (props) => {
                       {actions}
                     </CardActions>
                   }
+                  {stats &&
+                    <CardActions>
+                      {stats}
+                    </CardActions>
+                  }
                 </CardContent>
               </React.Fragment>
             }
@@ -232,6 +238,7 @@ const MediumStepperDefault = (props) => {
 MediumStepperDefault.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node,
+  stats: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
   locations: PropTypes.node,
@@ -245,6 +252,7 @@ MediumStepperDefault.propTypes = {
 MediumStepperDefault.defaultProps = {
   actions: null,
   menu: null,
+  stats: null,
   locations: null,
   comments: null,
   form: null,
