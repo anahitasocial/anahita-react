@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -52,7 +52,7 @@ const MediaBrowse = (props) => {
     };
   }, []);
 
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(items.allIds[0]);
   const [stepperOpen, setStepperOpen] = useState(false);
 
   const handleClose = () => {
@@ -63,13 +63,21 @@ const MediaBrowse = (props) => {
 
   return (
     <React.Fragment>
-      {current > 0 &&
-        <Stepper
-          mediumId={current}
-          open={stepperOpen}
-          handleClose={handleClose}
-        />
-      }
+      {useMemo(() => {
+        if (current) {
+          return (
+            <Stepper
+              mediumId={current}
+              open={stepperOpen}
+              handleClose={handleClose}
+            />
+          );
+        }
+
+        return (
+          <React.Fragment />
+        );
+      }, [current, stepperOpen])}
       <InfiniteScroll
         loadMore={fetchList}
         hasMore={hasMore}

@@ -27,8 +27,9 @@ import Likes from '../likes';
 import MediumMenu from './Menu';
 import MediumStepper from '../../components/medium/Stepper';
 import MediumForm from '../../components/medium/forms/Edit';
-
 import SimpleSnackbar from '../../components/SimpleSnackbar';
+
+import MEDIUM_DEFAULT from '../../proptypes/MediumDefault';
 
 import * as actions from '../../actions';
 import form from '../../utils/form';
@@ -58,14 +59,15 @@ const MediaStepper = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [fields, setFields] = useState(formFields);
   const [index, setIndex] = useState(items.allIds.indexOf(mediumId));
-  const [medium, setMedium] = useState(null);
+  const [current, setCurrent] = useState({ ...MEDIUM_DEFAULT });
 
   const handleEdit = () => {
+    setCurrent({ ...items.byId[items.allIds[index]] });
     setIsEditing(true);
   };
 
   const handleCancel = () => {
-    setMedium({ ...items.byId(items.allIds(index)) });
+    setCurrent({ ...MEDIUM_DEFAULT });
     setIsEditing(false);
   };
 
@@ -97,9 +99,9 @@ const MediaStepper = (props) => {
     const { target } = event;
     const { name, value } = target;
 
-    medium[name] = value;
+    current[name] = value;
 
-    setMedium({ ...medium });
+    setCurrent({ ...current });
 
     const newFields = form.validateField(target, fields);
 
@@ -115,7 +117,7 @@ const MediaStepper = (props) => {
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
       editItem({
-        id: medium.id,
+        id: current.id,
         ...formData,
       }).then(() => {
         handleCancel();
@@ -132,10 +134,10 @@ const MediaStepper = (props) => {
     };
   }, [handleKeydown]);
 
-  const cMedium = items.byId[items.allIds[index]];
-  const canAddComment = isAuthenticated && cMedium.openToComment;
-  const url = utils.getURL(cMedium);
-  const Like = LikeAction(cMedium.objectType.split('.')[1]);
+  const medium = items.byId[items.allIds[index]];
+  const canAddComment = isAuthenticated && medium.openToComment;
+  const url = utils.getURL(medium);
+  const Like = LikeAction(medium.objectType.split('.')[1]);
 
   return (
     <Dialog
@@ -170,19 +172,19 @@ const MediaStepper = (props) => {
       </DialogTitle>
       <Helmet>
         <title>
-          {cMedium.name || striptags(cMedium.body).substring(0, 60)}
+          {medium.name || striptags(medium.body).substring(0, 60)}
         </title>
-        <meta name="description" content={striptags(cMedium.body)} />
+        <meta name="description" content={striptags(medium.body)} />
       </Helmet>
       <Divider />
       <MediumStepper
-        medium={cMedium}
+        medium={medium}
         steps={items.allIds.length}
         activeStep={items.allIds[index]}
         editing={isEditing}
         form={
           <MediumForm
-            medium={cMedium}
+            medium={current}
             fields={fields}
             handleOnChange={handleOnChange}
             handleOnSubmit={handleOnSubmit}
@@ -192,35 +194,35 @@ const MediaStepper = (props) => {
         }
         menu={isAuthenticated &&
           <MediumMenu
-            medium={cMedium}
+            medium={medium}
             viewer={viewer}
             handleEdit={handleEdit}
-            key={`${namespace}-menu-${cMedium.id}`}
+            key={`${namespace}-menu-${medium.id}`}
           />
         }
         actions={isAuthenticated &&
           <Like
-            node={cMedium}
-            key={`like-${cMedium.id}`}
+            node={medium}
+            key={`like-${medium.id}`}
           />
         }
         stats={open &&
           <Likes
-            node={cMedium}
-            key={`likes-${cMedium.id}`}
+            node={medium}
+            key={`likes-${medium.id}`}
           />
         }
         comments={
           <MediumComments
-            parent={cMedium}
+            parent={medium}
             canAdd={canAddComment}
-            key={`${namespace}-comments-${cMedium.id}`}
+            key={`${namespace}-comments-${medium.id}`}
           />
         }
         locations={
           <LocationsGadget
             node={medium}
-            key={`${namespace}-locations-${cMedium.id}`}
+            key={`${namespace}-locations-${medium.id}`}
           />
         }
         nextAction={
