@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MediumCard from '../../components/cards/Medium';
 import LikeAction from '../likes/actions/Like';
-import Likes from '../likes';
+import LikesStats from '../likes';
+import CommentStats from '../../components/comment/Stats';
+
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
 
@@ -30,7 +32,10 @@ const MediaCard = (props) => {
         />
       }
       stats={
-        <Likes node={medium} />
+        <React.Fragment>
+          <LikesStats node={medium} />
+          <CommentStats node={medium} />
+        </React.Fragment>
       }
       actions={isAuthenticated &&
         <Like node={medium} />

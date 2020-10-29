@@ -16,6 +16,7 @@ import Medium from '../../components/medium/Read';
 import MediumForm from '../../components/medium/forms/Edit';
 import Likes from '../likes';
 import LikeAction from '../likes/actions/Like';
+import CommentStats from '../../components/comment/Stats';
 
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 
@@ -144,7 +145,10 @@ const MediaRead = (props) => {
             <Like node={medium} />
           }
           stats={
-            <Likes node={medium} />
+            <React.Fragment>
+              <Likes node={medium} />
+              <CommentStats node={medium} />
+            </React.Fragment>
           }
           comments={
             <MediumComments

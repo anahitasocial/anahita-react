@@ -157,9 +157,11 @@ const MediumCard = (props) => {
           {actions}
         </CardActions>
       }
-      <CardActions>
-        {stats}
-      </CardActions>
+      {stats &&
+        <CardActions>
+          {stats}
+        </CardActions>
+      }
     </Card>
   );
 };

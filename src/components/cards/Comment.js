@@ -38,6 +38,7 @@ const CommentCard = (props) => {
   const {
     comment,
     classes,
+    stats,
     actions,
     menu,
     isEditing,
@@ -91,12 +92,18 @@ const CommentCard = (props) => {
           {actions}
         </CardActions>
       }
+      {stats &&
+        <CardActions>
+          {stats}
+        </CardActions>
+      }
     </Card>
   );
 };
 
 CommentCard.propTypes = {
   classes: PropTypes.object.isRequired,
+  stats: PropTypes.node,
   actions: PropTypes.node,
   menu: PropTypes.node,
   comment: CommentType.isRequired,
@@ -109,6 +116,7 @@ CommentCard.defaultProps = {
   menu: null,
   commentForm: null,
   isEditing: false,
+  stats: null,
 };
 
 export default withStyles(styles)(CommentCard);

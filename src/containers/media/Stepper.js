@@ -25,6 +25,7 @@ import MediumComments from '../comments/Browse';
 import LocationsGadget from '../locations/Gadget';
 import LikeAction from '../likes/actions/Like';
 import Likes from '../likes';
+import CommentStats from '../../components/comment/Stats';
 import MediumMenu from './Menu';
 import MediumStepper from '../../components/medium/Stepper';
 import MediumForm from '../../components/medium/forms/Edit';
@@ -229,11 +230,14 @@ const MediaStepper = (props) => {
             key={`like-${medium.id}`}
           />
         }
-        stats={open &&
-          <Likes
-            node={medium}
-            key={`likes-${medium.id}`}
-          />
+        stats={
+          <React.Fragment>
+            <Likes
+              node={medium}
+              key={`likes-${medium.id}`}
+            />
+            <CommentStats node={medium} />
+          </React.Fragment>
         }
         comments={
           <MediumComments

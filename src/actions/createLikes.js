@@ -41,11 +41,11 @@ const browseFailure = (response) => {
 };
 
 const browse = (api) => {
-  return (node) => {
+  return (node, comment = CommentDefault) => {
     return (dispatch) => {
       dispatch(browseRequest());
       return new Promise((resolve, reject) => {
-        api.browse(node)
+        api.browse(node, comment)
           .then((result) => {
             dispatch(browseSuccess(result));
             return resolve();

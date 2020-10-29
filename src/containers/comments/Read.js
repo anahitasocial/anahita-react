@@ -10,6 +10,8 @@ import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
 import PersonType from '../../proptypes/Person';
 
+import LikesStats from '../likes';
+
 import ActionLikeComment from '../likes/actions/LikeComment';
 import ActionLikeCommentInline from '../likes/actions/LikeCommentInline';
 import CommentMenu from './Menu';
@@ -92,6 +94,14 @@ const CommentsRead = (props) => {
           handleEdit={handleEdit}
           inline={inline}
         />
+      }
+      stats={
+        <React.Fragment>
+          <LikesStats
+            node={parent}
+            comment={comment}
+          />
+        </React.Fragment>
       }
       actions={[
         <Like

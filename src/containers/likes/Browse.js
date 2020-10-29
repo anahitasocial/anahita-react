@@ -15,6 +15,8 @@ import * as actions from '../../actions';
 // import i18n from '../../languages';
 import Progress from '../../components/Progress';
 
+import CommentType from '../../proptypes/Comment';
+import CommentDefault from '../../proptypes/CommentDefault';
 import NodeType from '../../proptypes/Node';
 import NodesType from '../../proptypes/Nodes';
 import ActionFollow from '../actions/Follow';
@@ -25,16 +27,17 @@ const LikesBrowse = (props) => {
     resetList,
     items,
     node,
+    comment,
     isFetching,
     error,
     namespace,
   } = props;
 
   useEffect(() => {
-    browseList(node);
+    browseList(node, comment);
 
     return () => {
-      resetList(node);
+      resetList();
     };
   }, []);
 
@@ -98,11 +101,11 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      browseList: (node) => {
-        return dispatch(actions[namespace].likes.browse(node));
+      browseList: (node, comment = CommentDefault) => {
+        return dispatch(actions[namespace].likes.browse(node, comment));
       },
-      resetList: (node) => {
-        return dispatch(actions[namespace].likes.reset(node));
+      resetList: () => {
+        return dispatch(actions[namespace].likes.reset());
       },
     };
   };
@@ -111,11 +114,16 @@ const mapDispatchToProps = (namespace) => {
 LikesBrowse.propTypes = {
   items: NodesType.isRequired,
   node: NodeType.isRequired,
+  comment: CommentType,
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   namespace: PropTypes.string.isRequired,
+};
+
+LikesBrowse.defaultProps = {
+  comment: null,
 };
 
 export default (namespace) => {

@@ -8,11 +8,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import LikeIcon from '@material-ui/icons/Favorite';
 
 import LikesBrowse from './Browse';
+import CommentType from '../../proptypes/Comment';
 import NodeType from '../../proptypes/Node';
 
 const Likes = (props) => {
   const {
     node,
+    comment,
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -21,12 +23,14 @@ const Likes = (props) => {
     setOpen(false);
   };
 
+  const likeableNode = comment || node;
+
   const {
     voteUpCount: likesCount,
     objectType,
-  } = node;
+  } = likeableNode;
 
-  const MediumLikes = LikesBrowse(objectType.split('.')[1]);
+  const LikesStat = LikesBrowse(objectType.split('.')[1]);
 
   return (
     <React.Fragment>
@@ -40,7 +44,7 @@ const Likes = (props) => {
           {`${likesCount} Likes`}
         </DialogTitle>
         <DialogContent dividers style={{ padding: 0 }}>
-          {open && <MediumLikes node={node} />}
+          {open && <LikesStat node={node} comment={comment} />}
         </DialogContent>
         <DialogActions>
           <Button
@@ -68,6 +72,11 @@ const Likes = (props) => {
 
 Likes.propTypes = {
   node: NodeType.isRequired,
+  comment: CommentType,
+};
+
+Likes.defaultProps = {
+  comment: null,
 };
 
 export default Likes;
