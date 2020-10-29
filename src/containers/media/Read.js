@@ -15,7 +15,7 @@ import MediumMenu from './Menu';
 import Medium from '../../components/medium/Read';
 import MediumForm from '../../components/medium/forms/Edit';
 import Likes from '../likes';
-import LikeAction from '../likes/Read';
+import LikeAction from '../likes/actions/Like';
 
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 

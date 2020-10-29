@@ -6,13 +6,13 @@ import IconButton from '@material-ui/core/IconButton';
 import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import UnlikeIcon from '@material-ui/icons/Favorite';
 
-import * as actions from '../../actions';
-import NodeType from '../../proptypes/Node';
-import CommentType from '../../proptypes/Comment';
-import CommentDefault from '../../proptypes/CommentDefault';
-import i18n from '../../languages';
+import * as actions from '../../../actions';
+import NodeType from '../../../proptypes/Node';
+import CommentType from '../../../proptypes/Comment';
+import CommentDefault from '../../../proptypes/CommentDefault';
+import i18n from '../../../languages';
 
-const LikesRead = React.forwardRef((props, ref) => {
+const LikesActionCommentInline = React.forwardRef((props, ref) => {
   const {
     node,
     comment,
@@ -54,7 +54,7 @@ const LikesRead = React.forwardRef((props, ref) => {
   );
 });
 
-LikesRead.propTypes = {
+LikesActionCommentInline.propTypes = {
   likeNode: PropTypes.func.isRequired,
   unlikeNode: PropTypes.func.isRequired,
   node: NodeType.isRequired,
@@ -62,7 +62,7 @@ LikesRead.propTypes = {
   size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
 };
 
-LikesRead.defaultProps = {
+LikesActionCommentInline.defaultProps = {
   comment: CommentDefault,
   size: 'default',
 };
@@ -83,10 +83,10 @@ const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
       likeNode: (node, comment = CommentDefault) => {
-        return dispatch(actions.comments(namespace).likes.add(node, comment));
+        return dispatch(actions.commentsInline(namespace).likes.add(node, comment));
       },
       unlikeNode: (node, comment = CommentDefault) => {
-        return dispatch(actions.comments(namespace).likes.deleteItem(node, comment));
+        return dispatch(actions.commentsInline(namespace).likes.deleteItem(node, comment));
       },
     };
   };
@@ -96,5 +96,5 @@ export default (namespace) => {
   return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(LikesRead);
+  )(LikesActionCommentInline);
 };

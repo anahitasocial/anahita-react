@@ -6,28 +6,31 @@ import IconButton from '@material-ui/core/IconButton';
 import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import UnlikeIcon from '@material-ui/icons/Favorite';
 
-import * as actions from '../../actions';
-import NodeType from '../../proptypes/Node';
-import i18n from '../../languages';
+import * as actions from '../../../actions';
+import NodeType from '../../../proptypes/Node';
+import CommentType from '../../../proptypes/Comment';
+import CommentDefault from '../../../proptypes/CommentDefault';
+import i18n from '../../../languages';
 
-const LikesRead = React.forwardRef((props, ref) => {
+const LikesActionLikeComment = React.forwardRef((props, ref) => {
   const {
     node,
+    comment,
     likeNode,
     unlikeNode,
     size,
   } = props;
 
-  const [liked, setLiked] = useState(node.isVotedUp);
+  const [liked, setLiked] = useState(comment.isVotedUp);
 
   const handleLike = () => {
     setLiked(true);
-    likeNode(node);
+    likeNode(node, comment);
   };
 
   const handleUnlike = () => {
     setLiked(false);
-    unlikeNode(node);
+    unlikeNode(node, comment);
   };
 
   const label = liked ? i18n.t('actions:unlike') : i18n.t('actions:like');
@@ -51,14 +54,16 @@ const LikesRead = React.forwardRef((props, ref) => {
   );
 });
 
-LikesRead.propTypes = {
+LikesActionLikeComment.propTypes = {
   likeNode: PropTypes.func.isRequired,
   unlikeNode: PropTypes.func.isRequired,
   node: NodeType.isRequired,
+  comment: CommentType,
   size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
 };
 
-LikesRead.defaultProps = {
+LikesActionLikeComment.defaultProps = {
+  comment: CommentDefault,
   size: 'default',
 };
 
@@ -77,11 +82,11 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      likeNode: (node) => {
-        return dispatch(actions[namespace].likes.add(node));
+      likeNode: (node, comment = CommentDefault) => {
+        return dispatch(actions.comments(namespace).likes.add(node, comment));
       },
-      unlikeNode: (node) => {
-        return dispatch(actions[namespace].likes.deleteItem(node));
+      unlikeNode: (node, comment = CommentDefault) => {
+        return dispatch(actions.comments(namespace).likes.deleteItem(node, comment));
       },
     };
   };
@@ -91,5 +96,5 @@ export default (namespace) => {
   return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(LikesRead);
+  )(LikesActionLikeComment);
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MediumCard from '../../components/cards/Medium';
-import LikeAction from '../likes/Read';
+import LikeAction from '../likes/actions/Like';
 import Likes from '../likes';
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';

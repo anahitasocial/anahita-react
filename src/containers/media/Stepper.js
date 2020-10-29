@@ -23,7 +23,7 @@ import MediaType from '../../proptypes/Media';
 
 import MediumComments from '../comments/Browse';
 import LocationsGadget from '../locations/Gadget';
-import LikeAction from '../likes/Read';
+import LikeAction from '../likes/actions/Like';
 import Likes from '../likes';
 import MediumMenu from './Menu';
 import MediumStepper from '../../components/medium/Stepper';

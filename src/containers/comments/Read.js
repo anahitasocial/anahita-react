@@ -10,8 +10,8 @@ import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
 import PersonType from '../../proptypes/Person';
 
-import LikeCommentsAction from '../likes/ReadComments';
-import LikeCommentsInlineAction from '../likes/ReadCommentsInline';
+import ActionLikeComment from '../likes/actions/LikeComment';
+import ActionLikeCommentInline from '../likes/actions/LikeCommentInline';
 import CommentMenu from './Menu';
 import CommentDefault from '../../proptypes/CommentDefault';
 import form from '../../utils/form';
@@ -78,8 +78,8 @@ const CommentsRead = (props) => {
 
   const commentObjectType = comment.objectType.split('.')[1];
   const Like = inline ?
-    LikeCommentsInlineAction(commentObjectType) :
-    LikeCommentsAction(commentObjectType);
+    ActionLikeCommentInline(commentObjectType) :
+    ActionLikeComment(commentObjectType);
 
   return (
     <CommentCard

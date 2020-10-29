@@ -10,7 +10,7 @@ import CommentsBrowse from './comments/Browse';
 
 import actions from '../../actions/stories';
 
-import LikeAction from '../likes/Read';
+import LikeAction from '../likes/actions/Like';
 import StoryMenu from './Menu';
 
 import Progress from '../../components/Progress';
