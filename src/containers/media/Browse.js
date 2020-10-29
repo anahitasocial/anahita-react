@@ -59,12 +59,17 @@ const MediaBrowse = (props) => {
     setStepperOpen(false);
   };
 
+  const handleView = (e, medium) => {
+    setCurrent(medium.id);
+    setStepperOpen(true);
+  };
+
   const Stepper = MediumStepper(namespace);
 
   return (
     <React.Fragment>
       {useMemo(() => {
-        if (current) {
+        if (stepperOpen && current) {
           return (
             <Stepper
               mediumId={current}
@@ -77,7 +82,7 @@ const MediaBrowse = (props) => {
         return (
           <React.Fragment />
         );
-      }, [current, stepperOpen])}
+      }, [stepperOpen, current])}
       <InfiniteScroll
         loadMore={fetchList}
         hasMore={hasMore}
@@ -98,8 +103,7 @@ const MediaBrowse = (props) => {
                   medium={node}
                   viewer={viewer}
                   handleView={(e, medium) => {
-                    setCurrent(medium.id);
-                    setStepperOpen(true);
+                    return handleView(e, medium);
                   }}
                 />
               </div>
