@@ -26,7 +26,7 @@ const { LIMIT } = APP.BROWSE;
 const {
   isLikeable,
   isCommentable,
-} = utils;
+} = utils.node;
 
 const StoriesBrowse = (props) => {
   const {
@@ -79,7 +79,7 @@ const StoriesBrowse = (props) => {
 
         let Like = null;
 
-        if (node.object && utils.isLikeable(node.object)) {
+        if (node.object && isLikeable(node.object)) {
           Like = LikeAction(node.object.objectType.split('.')[1]);
         }
 
