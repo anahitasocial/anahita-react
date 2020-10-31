@@ -1,6 +1,10 @@
 import createReducer from './create';
 import MEDIUM_DEFAULT from '../proptypes/MediumDefault';
-import utils from './utils';
+import utils from '../utils';
+
+const {
+  editItem,
+} = utils.reducer;
 
 export default (namespace) => {
   return (iniState, action) => {
@@ -19,7 +23,7 @@ export default (namespace) => {
       case `${namespace.toUpperCase()}_LIKES_DELETE_SUCCESS`:
         return {
           ...state,
-          [namespace]: utils.editItem(
+          [namespace]: editItem(
             state[namespace],
             action.node,
             MEDIUM_DEFAULT,

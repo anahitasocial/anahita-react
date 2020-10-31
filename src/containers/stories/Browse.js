@@ -18,10 +18,15 @@ import StoryCard from '../../components/cards/Story';
 import PersonType from '../../proptypes/Person';
 import StoriesType from '../../proptypes/Stories';
 import commentPerms from '../../permissions/comment';
-import utils from '../utils';
+import utils from '../../utils';
 import { App as APP } from '../../constants';
 
 const { LIMIT } = APP.BROWSE;
+
+const {
+  isLikeable,
+  isCommentable,
+} = utils;
 
 const StoriesBrowse = (props) => {
   const {
@@ -89,12 +94,12 @@ const StoriesBrowse = (props) => {
               />
             }
             actions={[
-              node.object && utils.isLikeable(node.object) &&
+              node.object && isLikeable(node.object) &&
               <Like
                 node={node.object}
                 key={`story-like-${node.object.id}`}
               />,
-              node.object && utils.isCommentable(node.object) &&
+              node.object && isCommentable(node.object) &&
               <IconButton
                 onClick={() => {
                   openComments.push(node.id);

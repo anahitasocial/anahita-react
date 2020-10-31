@@ -2,7 +2,12 @@ import _ from 'lodash';
 import { CommentsInline as COMMENTS_INLINE } from '../constants';
 import CommentDefault from '../proptypes/CommentDefault';
 import NodeDefault from '../proptypes/NodeDefault';
-import utils from './utils';
+import utils from '../utils';
+
+const {
+  editItem,
+  deleteItem,
+} = utils.reducer;
 
 const CommentsDefault = {
   byId: {},
@@ -28,7 +33,7 @@ const updateComments = (action, state) => {
   const { parentId } = comment;
   const parents = { ...state.parents };
 
-  parents.byId[parentId] = utils.editItem(
+  parents.byId[parentId] = editItem(
     parents.byId[parentId] ? parents.byId[parentId] : CommentsDefault,
     comment,
   );
@@ -41,7 +46,7 @@ const deleteComment = (action, state) => {
   const { parentId } = comment;
   const parents = { ...state.parents };
 
-  parents.byId[parentId] = utils.deleteItem(
+  parents.byId[parentId] = deleteItem(
     parents.byId[parentId],
     comment,
     NodeDefault,

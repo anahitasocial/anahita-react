@@ -48,7 +48,11 @@ MediaCard.propTypes = {
   medium: MediumType.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  handleView: PropTypes.func.isRequired,
+  handleView: PropTypes.func,
+};
+
+MediaCard.defaultProps = {
+  handleView: null,
 };
 
 const mapStateToProps = (state) => {

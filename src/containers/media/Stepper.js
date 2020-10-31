@@ -36,8 +36,12 @@ import MEDIUM_DEFAULT from '../../proptypes/MediumDefault';
 import * as actions from '../../actions';
 import form from '../../utils/form';
 // import i18n from '../../languages';
-import utils from '../utils';
-import { getPortraitURL } from '../../components/utils';
+import utils from '../../utils';
+
+const {
+  getPortraitURL,
+  getURL,
+} = utils.node;
 
 const formFields = form.createFormFields([
   'name',
@@ -160,7 +164,7 @@ const MediaStepper = (props) => {
 
   const medium = items.byId[items.allIds[index]];
   const canAddComment = isAuthenticated && medium.openToComment;
-  const url = utils.getURL(medium);
+  const url = getURL(medium);
   const Like = LikeAction(medium.objectType.split('.')[1]);
 
   return (

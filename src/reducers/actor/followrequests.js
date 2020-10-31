@@ -1,6 +1,10 @@
-import utils from '../utils';
 import createReducer from '../create';
 import DEFAULT_ENTITY from '../../proptypes/PersonDefault';
+import utils from '../../utils';
+
+const {
+  deleteItem,
+} = utils.reducer;
 
 export default (namespace) => {
   return (iniState, action) => {
@@ -24,7 +28,7 @@ export default (namespace) => {
         return {
           ...state,
           isFetching: false,
-          [namespace]: utils.deleteItem(
+          [namespace]: deleteItem(
             state[namespace],
             state[namespace].current,
             DEFAULT_ENTITY,

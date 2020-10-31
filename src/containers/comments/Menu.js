@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import i18n from '../../languages';
-import utils from '../utils';
+import utils from '../../utils';
 
 import FollowAction from '../actions/Follow';
 import BlockAction from '../actions/Block';
@@ -16,7 +16,7 @@ import PersonType from '../../proptypes/Person';
 import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
 
-const { withRef } = utils;
+const { withRef } = utils.component;
 
 const FollowActionWithRef = withRef(FollowAction);
 const BlockActionActionWithRef = withRef(BlockAction);

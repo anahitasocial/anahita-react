@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { constructFormData } from './utils';
+import utils from '../utils';
 import CommentDefault from '../proptypes/CommentDefault';
+
+const { constructFormData } = utils.api;
 
 const browse = (node, comment = CommentDefault) => {
   const namespace = node.objectType.split('.')[1];

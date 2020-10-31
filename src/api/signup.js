@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { constructFormData } from './utils';
+import utils from '../utils';
+
+const { constructFormData } = utils.api;
 
 function add(person) {
   return axios.post('/people/signup.json', constructFormData(person));

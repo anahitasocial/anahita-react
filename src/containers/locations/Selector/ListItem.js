@@ -8,8 +8,10 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import LocationIcon from '@material-ui/icons/LocationOn';
 
-import locationUtils from '../utils';
+import utils from '../../../utils';
 import LocationType from '../../../proptypes/Location';
+
+const { getAddress } = utils.node;
 
 const LocationsListItem = (props) => {
   const {
@@ -29,7 +31,7 @@ const LocationsListItem = (props) => {
       </ListItemAvatar>
       <ListItemText
         primary={location.name}
-        secondary={locationUtils.getAddress(location)}
+        secondary={getAddress(location)}
       />
       {actions &&
       <ListItemSecondaryAction>

@@ -9,7 +9,9 @@ import {
 } from 'react-google-maps';
 import i18n from '../languages';
 import LocationType from '../proptypes/Location';
-import { getURL } from './utils';
+import utils from '../utils';
+
+const { getURL } = utils.node;
 
 const getBounds = (locations) => {
   const { maps } = window.google;

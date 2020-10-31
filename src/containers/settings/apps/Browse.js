@@ -24,13 +24,15 @@ import SimpleSnackbar from '../../../components/SimpleSnackbar';
 
 import * as actions from '../../../actions';
 import AppsType from '../../../proptypes/settings/Apps';
-import utils from '../../utils';
+import utils from '../../../utils';
 
 const LIMIT = 99;
 const SORT = {
   NAME: 'name',
   ORDERING: 'ordering',
 };
+
+const { applyDrag } = utils.component;
 
 const SettingsAppsBrowse = (props) => {
   const {
@@ -78,7 +80,7 @@ const SettingsAppsBrowse = (props) => {
       payload: app,
     } = result;
 
-    items.allIds = utils.applyDrag(items.allIds, result);
+    items.allIds = applyDrag(items.allIds, result);
 
     editItem({
       ...app,

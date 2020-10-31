@@ -25,8 +25,9 @@ import * as actions from '../../../actions';
 import PluginsType from '../../../proptypes/settings/Plugins';
 import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import PluginsEdit from './Edit';
+import utils from '../../../utils';
 
-import utils from '../../utils';
+const { applyDrag } = utils.component;
 
 const LIMIT = 99;
 const SORT = {
@@ -86,7 +87,7 @@ const SettingsPlugins = (props) => {
       payload: plugin,
     } = result;
 
-    items.allIds = utils.applyDrag(items.allIds, result);
+    items.allIds = applyDrag(items.allIds, result);
 
     editItem({
       ...plugin,

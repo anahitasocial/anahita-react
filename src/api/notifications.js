@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { constructFormData } from './utils';
+import utils from '../utils';
+
+const { constructFormData } = utils.api;
 
 function add(node) {
   const namespace = node.objectType.split('.')[1];

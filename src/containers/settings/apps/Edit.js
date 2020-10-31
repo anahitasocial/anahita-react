@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,8 +14,12 @@ import MetaForm from '../../../components/settings/meta/Form';
 import AppsType from '../../../proptypes/settings/Apps';
 import AppType from '../../../proptypes/settings/App';
 import * as actions from '../../../actions';
-import form from '../../../utils/form';
-import utils from '../utils';
+import utils from '../../../utils';
+
+const {
+  form,
+  settings,
+} = utils;
 
 const SettingsAppsEdit = (props) => {
   const {
@@ -30,11 +35,11 @@ const SettingsAppsEdit = (props) => {
   const namespace = app.package.split('_')[1];
   const { meta: formControllers = [] } = app;
 
-  const formControllerKeys = utils.getFormControllerKeys(formControllers);
+  const formControllerKeys = settings.getFormControllerKeys(formControllers);
   const formFields = form.createFormFields(formControllerKeys);
   const [fields, setFields] = useState(formFields);
 
-  const newEntity = utils.getMetaEntity(formControllers);
+  const newEntity = settings.getMetaEntity(formControllers);
   const [entity, setEntity] = useState(newEntity);
 
   const handleOnChange = (event) => {
@@ -59,7 +64,7 @@ const SettingsAppsEdit = (props) => {
       const formData = form.fieldsToData(newFields);
       editItem({
         id: node.id,
-        meta: utils.getMetaURLParams(formData),
+        meta: settings.getMetaURLParams(formData),
       });
     }
 
