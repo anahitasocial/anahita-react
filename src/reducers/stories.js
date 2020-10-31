@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import { Stories as STORIES } from '../constants';
 import storyDefault from '../proptypes/StoryDefault';
-import utils from './utils';
+import utils from '../utils';
+
+const {
+  deleteItem,
+} = utils.reducer;
 
 export default function (state = {
   isFetching: false,
@@ -65,7 +69,7 @@ export default function (state = {
       return {
         ...state,
         isFetching: false,
-        stories: utils.deleteItem(state.stories, state.stories.current, storyDefault),
+        stories: deleteItem(state.stories, state.stories.current, storyDefault),
         success: true,
       };
     case STORIES.BROWSE.FAILURE:

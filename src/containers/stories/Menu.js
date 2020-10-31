@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import utils from '../utils';
+import utils from '../../utils';
 import i18n from '../../languages';
 
 import NotificationAction from '../actions/medium/Notification';
@@ -14,11 +14,11 @@ import FollowAction from '../actions/Follow';
 import PersonType from '../../proptypes/Person';
 import StoryType from '../../proptypes/Story';
 
+const { withRef } = utils.component;
 const {
-  withRef,
   getOwnerName,
   isSubscribable,
-} = utils;
+} = utils.node;
 
 const FollowActionWithRef = withRef(FollowAction);
 const NotificationActionWithRef = withRef(NotificationAction);

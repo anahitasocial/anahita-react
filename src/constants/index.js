@@ -5,7 +5,7 @@ import Auth from './auth';
 import Avatar from './avatar';
 import Comments from './comments';
 import Cover from './cover';
-import InlineComments from './inline_comments';
+import CommentsInline from './commentsInline';
 import Is from './is';
 import Likes from './likes';
 import Locations from './locations';
@@ -28,7 +28,7 @@ export {
   Avatar,
   Comments,
   Cover,
-  InlineComments,
+  CommentsInline,
   Is,
   Likes,
   Locations,

@@ -10,7 +10,7 @@ import CommentsBrowse from './comments/Browse';
 
 import actions from '../../actions/stories';
 
-import LikeAction from '../actions/Like';
+import LikeAction from '../likes/actions/Like';
 import StoryMenu from './Menu';
 
 import Progress from '../../components/Progress';
@@ -18,10 +18,15 @@ import StoryCard from '../../components/cards/Story';
 import PersonType from '../../proptypes/Person';
 import StoriesType from '../../proptypes/Stories';
 import commentPerms from '../../permissions/comment';
-import utils from '../utils';
+import utils from '../../utils';
 import { App as APP } from '../../constants';
 
 const { LIMIT } = APP.BROWSE;
+
+const {
+  isLikeable,
+  isCommentable,
+} = utils;
 
 const StoriesBrowse = (props) => {
   const {
@@ -72,6 +77,12 @@ const StoriesBrowse = (props) => {
         const commentsCount = node.comments.allIds.length;
         const isCommentsOpen = openComments.includes(node.id);
 
+        let Like = null;
+
+        if (node.object && utils.isLikeable(node.object)) {
+          Like = LikeAction(node.object.objectType.split('.')[1]);
+        }
+
         return (
           <StoryCard
             story={node}
@@ -83,13 +94,12 @@ const StoriesBrowse = (props) => {
               />
             }
             actions={[
-              node.object && utils.isLikeable(node.object) &&
-              <LikeAction
+              node.object && isLikeable(node.object) &&
+              <Like
                 node={node.object}
-                liked={node.commands && node.commands.includes('unvote')}
-                key={`story-like-${node.id}`}
+                key={`story-like-${node.object.id}`}
               />,
-              node.object && utils.isCommentable(node.object) &&
+              node.object && isCommentable(node.object) &&
               <IconButton
                 onClick={() => {
                   openComments.push(node.id);

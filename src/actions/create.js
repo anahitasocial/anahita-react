@@ -22,16 +22,19 @@ const browseSuccess = (results, namespace) => {
   const { data } = results;
   const { pagination } = data;
 
+  const limit = pagination.limit || 20;
+  const total = pagination.total || 0;
+
   const node = new schema.Entity(namespace);
   const nodes = [node];
   const normalized = normalize(data.data, nodes);
-  const hasMore = data.data.length >= pagination.limit;
+  const hasMore = data.data.length >= limit;
 
   return {
     type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
     [namespace]: normalized.entities[namespace],
     ids: normalized.result,
-    total: pagination.total,
+    total,
     hasMore,
   };
 };

@@ -13,8 +13,12 @@ import MetaForm from '../../../components/settings/meta/Form';
 import PluginsType from '../../../proptypes/settings/Plugins';
 import PluginType from '../../../proptypes/settings/Plugin';
 import * as actions from '../../../actions';
-import form from '../../../utils/form';
-import utils from '../utils';
+import utils from '../../../utils';
+
+const {
+  form,
+  settings,
+} = utils;
 
 const SettingsPluginsEdit = (props) => {
   const {
@@ -30,11 +34,11 @@ const SettingsPluginsEdit = (props) => {
   const namespace = `plugin.${plugin.element}.${plugin.type}`;
   const { meta: formControllers = [] } = plugin;
 
-  const formControllerKeys = utils.getFormControllerKeys(formControllers);
+  const formControllerKeys = settings.getFormControllerKeys(formControllers);
   const formFields = form.createFormFields(formControllerKeys);
   const [fields, setFields] = useState(formFields);
 
-  const newEntity = utils.getMetaEntity(formControllers);
+  const newEntity = settings.getMetaEntity(formControllers);
   const [entity, setEntity] = useState(newEntity);
 
   const handleOnChange = (event) => {
@@ -60,7 +64,7 @@ const SettingsPluginsEdit = (props) => {
       editItem({
         id: node.id,
         enabled: node.enabled,
-        meta: utils.getMetaURLParams(formData),
+        meta: settings.getMetaURLParams(formData),
       });
     }
 

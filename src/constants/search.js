@@ -2,9 +2,10 @@ export default {
   SCOPE: {
     ALL: 'all',
     POSTS: {
+      ARTICLES: 'articles',
+      DOCUMENTS: 'documents',
       NOTES: 'notes',
       PHOTOS: 'photos',
-      ARTICLES: 'articles',
       TOPICS: 'topics',
       TODOS: 'todos',
     },

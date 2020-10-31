@@ -1,5 +1,10 @@
 import _ from 'lodash';
-import utils from './utils';
+import utils from '../utils';
+
+const {
+  editItem,
+  deleteItem,
+} = utils.reducer;
 
 export default (namespace, defaultNode) => {
   const DEFAULT_STATE = {
@@ -62,7 +67,7 @@ export default (namespace, defaultNode) => {
         return {
           ...state,
           isFetching: false,
-          [namespace]: utils.editItem(
+          [namespace]: editItem(
             state[namespace],
             action.node,
             defaultNode,
@@ -74,7 +79,7 @@ export default (namespace, defaultNode) => {
         return {
           ...state,
           isFetching: false,
-          [namespace]: utils.editItem(
+          [namespace]: editItem(
             state[namespace],
             action.node,
             defaultNode,
@@ -85,7 +90,7 @@ export default (namespace, defaultNode) => {
         return {
           ...state,
           isFetching: false,
-          [namespace]: utils.deleteItem(
+          [namespace]: deleteItem(
             state[namespace],
             state[namespace].current,
             defaultNode,

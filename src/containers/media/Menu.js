@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import permissions from '../../permissions/medium';
-import utils from '../utils';
+import utils from '../../utils';
 import i18n from '../../languages';
 
 import NotificationAction from '../actions/medium/Notification';
@@ -18,7 +18,8 @@ import FollowAction from '../actions/Follow';
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
 
-const { withRef, getOwnerName } = utils;
+const { getOwnerName } = utils.node;
+const { withRef } = utils.component;
 
 const NotificationActionWithRef = withRef(NotificationAction);
 const CommentStatusActionWithRef = withRef(CommentStatusAction);

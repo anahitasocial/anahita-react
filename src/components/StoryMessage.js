@@ -4,12 +4,14 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { Trans } from 'react-i18next';
 import _ from 'lodash';
-import {
+import utils from '../utils';
+import i18n from '../languages';
+
+const {
   getURL,
   getStorySubject,
   getStoryObjectName,
-} from './utils';
-import i18n from '../languages';
+} = utils.node;
 
 const StoryMessage = (props) => {
   const { story } = props;

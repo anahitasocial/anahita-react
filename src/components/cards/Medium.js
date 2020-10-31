@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTimeAgo from 'react-time-ago';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { withRouter } from 'react-router-dom';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -52,8 +54,11 @@ const MediumCard = (props) => {
   const {
     classes,
     medium,
+    stats,
     actions,
     menu,
+    handleView,
+    history,
   } = props;
 
   const portrait = getPortraitURL(medium);
@@ -99,14 +104,26 @@ const MediumCard = (props) => {
         action={menu}
       />
       {portrait &&
-        <Link href={url}>
+        <ButtonBase
+          style={{
+            width: '100%',
+            display: 'inline',
+          }}
+          onClick={(e) => {
+            if (handleView) {
+              return handleView(e, medium);
+            }
+
+            return history.push(url);
+          }}
+        >
           <CardMedia
             className={classes.portrait}
             title={medium.name}
             image={portrait}
             src="picture"
           />
-        </Link>
+        </ButtonBase>
       }
       {medium.body &&
         <Player text={medium.body} />
@@ -140,20 +157,30 @@ const MediumCard = (props) => {
           {actions}
         </CardActions>
       }
+      {stats &&
+        <CardActions>
+          {stats}
+        </CardActions>
+      }
     </Card>
   );
 };
 
 MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
+  stats: PropTypes.node,
   actions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
+  handleView: PropTypes.func,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 MediumCard.defaultProps = {
   actions: null,
   menu: null,
+  stats: null,
+  handleView: null,
 };
 
-export default withStyles(styles)(MediumCard);
+export default withRouter(withStyles(styles)(MediumCard));

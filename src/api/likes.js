@@ -1,10 +1,18 @@
 import axios from 'axios';
-import { constructFormData } from './utils';
+import utils from '../utils';
 import CommentDefault from '../proptypes/CommentDefault';
 
-const browse = (node) => {
+const { constructFormData } = utils.api;
+
+const browse = (node, comment = CommentDefault) => {
   const namespace = node.objectType.split('.')[1];
-  return axios.get(`/${namespace}/${node.id}.json?get=voters&avatar=1`);
+  let url = `/${namespace}/${node.id}.json?get=voters&avatar=1`;
+
+  if (comment) {
+    url += `&cid=${comment.id}`;
+  }
+
+  return axios.get(url);
 };
 
 const add = (node, comment = CommentDefault) => {

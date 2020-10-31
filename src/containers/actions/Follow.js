@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import actions from '../../actions/socialgraph';
+import permissions from '../../permissions/actor';
 import ActorsType from '../../proptypes/Actors';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
@@ -17,19 +18,21 @@ const FollowAction = React.forwardRef((props, ref) => {
     actor,
     actors,
     viewer,
+    isAuthenticated,
     component,
     followLabel,
     unfollowLabel,
   } = props;
 
   const isLeader = actors.byId[actor.id] ? actors.byId[actor.id].isLeader : actor.isLeader;
+  const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
 
   const [leader, setLeader] = useState(isLeader);
   const [waiting, setWaiting] = useState(false);
 
   useEffect(() => {
     return () => {
-      reset();
+      // reset();
     };
   }, []);
 
@@ -61,7 +64,7 @@ const FollowAction = React.forwardRef((props, ref) => {
     return (
       <MenuItem
         onClick={onClick}
-        disabled={waiting}
+        disabled={!canFollow || waiting}
         ref={ref}
       >
         {title}
@@ -72,7 +75,7 @@ const FollowAction = React.forwardRef((props, ref) => {
   return (
     <Button
       onClick={onClick}
-      disabled={waiting}
+      disabled={!canFollow || waiting}
       color={color}
       ref={ref}
     >
@@ -102,6 +105,7 @@ FollowAction.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     viewer,
+    isAuthenticated,
   } = state.session;
 
   const {
@@ -111,6 +115,7 @@ const mapStateToProps = (state) => {
   return {
     actors,
     viewer,
+    isAuthenticated,
   };
 };
 

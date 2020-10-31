@@ -1,6 +1,11 @@
 import { Cover as COVER } from '../constants';
 import NODE_DEFAULT from '../proptypes/NodeDefault';
-import utils from './utils';
+import utils from '../utils';
+
+const {
+  editItem,
+  deleteItem,
+} = utils.reducer;
 
 const DEFAULT_STATE = {
   isFetching: false,
@@ -31,7 +36,7 @@ export default function (state = {
         isFetching: false,
         success: true,
         error: '',
-        nodes: utils.editItem(state.nodes, action.node),
+        nodes: editItem(state.nodes, action.node),
       };
     case COVER.DELETE.SUCCESS:
       return {
@@ -39,7 +44,7 @@ export default function (state = {
         isFetching: false,
         success: true,
         error: '',
-        nodes: utils.deleteItem(state.nodes, action.node, NODE_DEFAULT),
+        nodes: deleteItem(state.nodes, action.node, NODE_DEFAULT),
       };
     case COVER.ADD.FAILURE:
     case COVER.DELETE.FAILURE:

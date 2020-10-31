@@ -1,12 +1,12 @@
 import async from './async';
 
-const comments = async('inline_comments');
+const comments = async('comments_inline');
 
 export default {
   BROWSE: {
     ...comments('browse'),
-    SET: 'INLINE_COMMENTS_BROWSE_SET',
-    RESET: 'INLINE_COMMENTS_BROWSE_RESET',
+    SET: 'COMMENTS_INLINE_BROWSE_SET',
+    RESET: 'COMMENTS_INLINE_BROWSE_RESET',
   },
   READ: comments('read'),
   EDIT: comments('edit'),

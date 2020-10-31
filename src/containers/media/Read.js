@@ -10,10 +10,13 @@ import MediaType from '../../proptypes/Media';
 import MediumComments from '../comments/Browse';
 import Progress from '../../components/Progress';
 import LocationsGadget from '../locations/Gadget';
-import LikeAction from '../actions/Like';
+
 import MediumMenu from './Menu';
-import Medium from '../../components/medium';
+import Medium from '../../components/medium/Read';
 import MediumForm from '../../components/medium/forms/Edit';
+import Likes from '../likes';
+import LikeAction from '../likes/actions/Like';
+import CommentStats from '../../components/comment/Stats';
 
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 
@@ -93,7 +96,7 @@ const MediaRead = (props) => {
     setFields({ ...newFields });
   };
 
-  const canAdd = isAuthenticated && medium.openToComment;
+  const canAddComment = isAuthenticated && medium.openToComment;
 
   if (isFetching && !medium.id) {
     return (
@@ -106,6 +109,8 @@ const MediaRead = (props) => {
       <Redirect push to="/404/" />
     );
   }
+
+  const Like = LikeAction(medium.objectType.split('.')[1]);
 
   return (
     <React.Fragment>
@@ -137,15 +142,18 @@ const MediaRead = (props) => {
             />
           }
           actions={isAuthenticated &&
-            <LikeAction
-              node={medium}
-              liked={medium.isVotedUp}
-            />
+            <Like node={medium} />
+          }
+          stats={
+            <React.Fragment>
+              <Likes node={medium} />
+              <CommentStats node={medium} />
+            </React.Fragment>
           }
           comments={
             <MediumComments
               parent={medium}
-              canAdd={canAdd}
+              canAdd={canAddComment}
             />
           }
           locations={

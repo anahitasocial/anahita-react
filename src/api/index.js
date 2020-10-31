@@ -4,7 +4,7 @@ import createActor from './actor';
 
 import avatar from './avatar';
 import comments from './comments';
-import commentStatus from './comments_status';
+import commentStatus from './commentsStatus';
 import cover from './cover';
 import is from './is';
 import likes from './likes';

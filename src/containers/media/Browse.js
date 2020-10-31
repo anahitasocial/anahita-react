@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -9,6 +9,7 @@ import * as actions from '../../actions';
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
 
+import MediumStepper from './Stepper';
 import Masonry from '../../components/BreakpointMasonry';
 import MediumCard from './Card';
 import Progress from '../../components/Progress';
@@ -49,35 +50,69 @@ const MediaBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
+
+  const [current, setCurrent] = useState(items.allIds[0]);
+  const [stepperOpen, setStepperOpen] = useState(false);
+
+  const handleClose = () => {
+    setStepperOpen(false);
+  };
+
+  const handleView = (e, medium) => {
+    setCurrent(medium.id);
+    setStepperOpen(true);
+  };
+
+  const Stepper = MediumStepper(namespace);
 
   return (
-    <InfiniteScroll
-      loadMore={fetchList}
-      hasMore={hasMore}
-      loader={
-        <Progress key={`${namespace}-progress`} />
-      }
-    >
-      <Masonry>
-        {items.allIds.map((itemId) => {
-          const node = items.byId[itemId];
-          const key = `${namespace}_node_list_item${node.id}`;
+    <React.Fragment>
+      {useMemo(() => {
+        if (stepperOpen && current) {
           return (
-            <div
-              className={classes.card}
-              key={key}
-            >
-              <MediumCard
-                medium={node}
-                viewer={viewer}
-              />
-            </div>
+            <Stepper
+              mediumId={current}
+              open={stepperOpen}
+              handleClose={handleClose}
+            />
           );
-        })
         }
-      </Masonry>
-    </InfiniteScroll>
+
+        return (
+          <React.Fragment />
+        );
+      }, [stepperOpen, current])}
+      <InfiniteScroll
+        loadMore={fetchList}
+        hasMore={hasMore}
+        loader={
+          <Progress key={`${namespace}-progress`} />
+        }
+      >
+        <Masonry>
+          {items.allIds.map((itemId) => {
+            const node = items.byId[itemId];
+            const key = `${namespace}_node_list_item${node.id}`;
+            return (
+              <div
+                className={classes.card}
+                key={key}
+              >
+                <MediumCard
+                  medium={node}
+                  viewer={viewer}
+                  handleView={(e, medium) => {
+                    return handleView(e, medium);
+                  }}
+                />
+              </div>
+            );
+          })
+          }
+        </Masonry>
+      </InfiniteScroll>
+    </React.Fragment>
   );
 };
 

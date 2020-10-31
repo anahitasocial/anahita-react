@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import { Socialgraph as SOCIALGRAPH } from '../constants';
 import ACTOR_DEFAULT from '../proptypes/ActorDefault';
-import utils from './utils';
+import utils from '../utils';
+
+const {
+  editItem,
+} = utils.reducer;
 
 const DEFAULT_STATE = {
   isFetching: false,
@@ -37,7 +41,7 @@ export default function (state = {
     case SOCIALGRAPH.UNBLOCK.REQUEST:
       return {
         ...state,
-        actors: utils.editItem(state.actors, action.actor),
+        actors: editItem(state.actors, action.actor),
         isFetching: true,
         success: false,
         error: '',
@@ -64,7 +68,7 @@ export default function (state = {
       return {
         ...state,
         isFetching: false,
-        actors: utils.editItem(state.actors, action.actor),
+        actors: editItem(state.actors, action.actor),
         success: true,
       };
     case SOCIALGRAPH.BROWSE.FAILURE:

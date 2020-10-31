@@ -1,6 +1,8 @@
 /* eslint camelcase: "off" */
 import axios from 'axios';
-import { constructFormData } from '../utils';
+import utils from '../../utils';
+
+const { constructFormData } = utils.api;
 
 const read = () => {
   return axios.get('/settings/config.json');

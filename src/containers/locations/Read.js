@@ -16,7 +16,7 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 
 import * as actions from '../../actions';
 import i18n from '../../languages';
-import utils from './utils';
+import utils from '../../utils';
 
 import LocationsType from '../../proptypes/Locations';
 
@@ -32,6 +32,8 @@ const useStyles = makeStyles({
     width: '100%',
   },
 });
+
+const { getAddress } = utils.node;
 
 const LocationsRead = (props) => {
   const classes = useStyles();
@@ -97,7 +99,7 @@ const LocationsRead = (props) => {
         <Divider light />
         <CardContent>
           <Typography variant="caption">
-            {utils.getAddress(location)}
+            {getAddress(location)}
           </Typography>
         </CardContent>
       </Card>
