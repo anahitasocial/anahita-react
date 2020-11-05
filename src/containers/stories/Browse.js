@@ -17,6 +17,7 @@ import StoryMenu from './Menu';
 
 import Progress from '../../components/Progress';
 import StoryCard from '../../components/cards/Story';
+import NodesType from '../../proptypes/Nodes';
 import PersonType from '../../proptypes/Person';
 import StoriesType from '../../proptypes/Stories';
 import commentPerms from '../../permissions/comment';
@@ -39,6 +40,7 @@ const StoriesBrowse = (props) => {
       filter: '',
     },
     items,
+    comments,
     hasMore,
     viewer,
   } = props;
@@ -63,6 +65,18 @@ const StoriesBrowse = (props) => {
     });
   };
 
+  const getNumOfComments = (node) => {
+    if (node.object && isCommentable(node.object)) {
+      if (comments.byId[node.object.id]) {
+        return comments.byId[node.object.id].allIds.length;
+      }
+
+      return node.comments.allIds.length;
+    }
+
+    return 0;
+  };
+
   return (
     <InfiniteScroll
       pageStart={0}
@@ -76,7 +90,7 @@ const StoriesBrowse = (props) => {
         const node = items.byId[itemId];
         const key = `stories_node_${node.id}`;
         const canAddComment = commentPerms.canAdd(node);
-        const commentsCount = node.comments.allIds.length;
+        const numOfComments = getNumOfComments(node);
         const isCommentsOpen = openComments.includes(node.id);
 
         let Like = null;
@@ -104,7 +118,10 @@ const StoriesBrowse = (props) => {
               node.object && isCommentable(node.object) &&
               <CommentStats
                 key={`story-comment-stat-${node.object.id}`}
-                node={node.object}
+                node={{
+                  ...node.object,
+                  numOfComments,
+                }}
               />,
             ]}
             actions={[
@@ -125,15 +142,15 @@ const StoriesBrowse = (props) => {
                 key={`story-comment-${node.id}`}
               >
                 <Badge
-                  badgeContent={commentsCount}
+                  badgeContent={numOfComments}
                   color="primary"
-                  invisible={isCommentsOpen || commentsCount === 0}
+                  invisible={isCommentsOpen || numOfComments === 0}
                 >
                   <CommentIcon fontSize="small" />
                 </Badge>
               </IconButton>,
             ]}
-            comments={node.object && isCommentsOpen &&
+            comments={node.object && isCommentable(node.object) && isCommentsOpen &&
               <CommentsBrowse
                 parent={node.object}
                 comments={node.comments}
@@ -155,6 +172,7 @@ StoriesBrowse.propTypes = {
   queryFilters: PropTypes.objectOf(PropTypes.any).isRequired,
   viewer: PersonType.isRequired,
   items: StoriesType.isRequired,
+  comments: NodesType.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
 
@@ -170,8 +188,13 @@ const mapStateToProps = (state) => {
     error,
   } = state.stories;
 
+  const {
+    parents: comments,
+  } = state.commentsInline;
+
   return {
     items,
+    comments,
     hasMore,
     error,
     isAuthenticated,

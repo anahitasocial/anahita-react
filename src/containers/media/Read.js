@@ -31,6 +31,7 @@ const formFields = form.createFormFields([
 
 const MediaRead = (props) => {
   const {
+    numOfComments,
     namespace,
     readItem,
     editItem,
@@ -147,7 +148,12 @@ const MediaRead = (props) => {
           stats={
             <React.Fragment>
               <Likes node={medium} />
-              <CommentStats node={medium} />
+              <CommentStats
+                node={{
+                  ...medium,
+                  numOfComments,
+                }}
+              />
             </React.Fragment>
           }
           comments={
@@ -183,6 +189,7 @@ MediaRead.propTypes = {
   readItem: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
   media: MediaType.isRequired,
+  numOfComments: PropTypes.number.isRequired,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
@@ -201,11 +208,14 @@ const mapStateToProps = (namespace) => {
       error,
     } = state[namespace];
 
+    const { comments } = state.comments;
+
     const { viewer, isAuthenticated } = state.session;
 
     return {
       media: state[namespace][namespace],
       namespace,
+      numOfComments: comments.allIds.length,
       success,
       error,
       viewer,
