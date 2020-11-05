@@ -29,26 +29,26 @@ const setComments = (action, state) => {
 };
 
 const updateComments = (action, state) => {
-  const { comment } = action;
-  const { parentId } = comment;
+  const { node } = action;
   const parents = { ...state.parents };
 
-  parents.byId[parentId] = editItem(
-    parents.byId[parentId] ? parents.byId[parentId] : CommentsDefault,
-    comment,
+  parents.byId[node.parentId] = editItem(
+    parents.byId[node.parentId] ?
+      parents.byId[node.parentId] :
+      CommentsDefault,
+    node,
   );
 
   return parents;
 };
 
 const deleteComment = (action, state) => {
-  const { comment } = action;
-  const { parentId } = comment;
+  const { node } = action;
   const parents = { ...state.parents };
 
-  parents.byId[parentId] = deleteItem(
-    parents.byId[parentId],
-    comment,
+  parents.byId[node.parentId] = deleteItem(
+    parents.byId[node.parentId],
+    node,
     NodeDefault,
   );
 
@@ -59,7 +59,7 @@ const initState = {
   parents: {
     byId: {},
     allIds: [],
-    current: { ...NodeDefault },
+    current: NodeDefault,
   },
   error: '',
   isFetching: false,
@@ -84,6 +84,8 @@ export default (state = initState, action) => {
     case COMMENTS_INLINE.EDIT.REQUEST:
     case COMMENTS_INLINE.ADD.REQUEST:
     case COMMENTS_INLINE.DELETE.REQUEST:
+    case 'COMMENTS_INLINE_LIKES_ADD_REQUEST':
+    case 'COMMENTS_INLINE_LIKES_DELETE_REQUEST':
       return {
         ...state,
         isFetching: true,
@@ -98,6 +100,8 @@ export default (state = initState, action) => {
       };
     case COMMENTS_INLINE.EDIT.SUCCESS:
     case COMMENTS_INLINE.ADD.SUCCESS:
+    case 'COMMENTS_INLINE_LIKES_ADD_SUCCESS':
+    case 'COMMENTS_INLINE_LIKES_DELETE_SUCCESS':
       return {
         ...state,
         parents: updateComments(action, state),
@@ -115,6 +119,8 @@ export default (state = initState, action) => {
     case COMMENTS_INLINE.EDIT.FAILURE:
     case COMMENTS_INLINE.ADD.FAILURE:
     case COMMENTS_INLINE.DELETE.FAILURE:
+    case 'COMMENTS_INLINE_LIKES_ADD_FAILURE':
+    case 'COMMENTS_INLINE_LIKES_DELETE_FAILURE':
       return {
         ...state,
         isFetching: false,

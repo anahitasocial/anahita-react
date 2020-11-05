@@ -4,7 +4,7 @@ import {
   likes as likesApi,
 } from '../api';
 import { CommentsInline as COMMENTS_INLINE } from '../constants';
-import createLikes from './createLikes';
+import likes from './likes';
 
 // --- setList
 
@@ -78,17 +78,16 @@ const browse = (api) => {
 
 // -- Edit
 
-function editRequest(comment) {
+function editRequest() {
   return {
     type: COMMENTS_INLINE.EDIT.REQUEST,
-    comment,
   };
 }
 
 function editSuccess(result) {
   return {
     type: COMMENTS_INLINE.EDIT.SUCCESS,
-    comment: result.data,
+    node: result.data,
   };
 }
 
@@ -102,7 +101,7 @@ function editFailure(error) {
 const edit = (api) => {
   return (comment) => {
     return (dispatch) => {
-      dispatch(editRequest(comment));
+      dispatch(editRequest());
       return new Promise((resolve, reject) => {
         api.edit(comment)
           .then((result) => {
@@ -122,17 +121,16 @@ const edit = (api) => {
 
 // -- Add
 
-function addRequest(comment) {
+function addRequest() {
   return {
     type: COMMENTS_INLINE.ADD.REQUEST,
-    comment,
   };
 }
 
 function addSuccess(result) {
   return {
     type: COMMENTS_INLINE.ADD.SUCCESS,
-    comment: result.data,
+    node: result.data,
   };
 }
 
@@ -146,7 +144,7 @@ function addFailure(error) {
 const add = (api) => {
   return (comment) => {
     return (dispatch) => {
-      dispatch(addRequest(comment));
+      dispatch(addRequest());
       return new Promise((resolve, reject) => {
         api.add(comment)
           .then((result) => {
@@ -166,17 +164,16 @@ const add = (api) => {
 
 // -- Delete
 
-function deleteRequest(comment) {
+function deleteRequest() {
   return {
     type: COMMENTS_INLINE.DELETE.REQUEST,
-    comment,
   };
 }
 
 function deleteSuccess(comment) {
   return {
     type: COMMENTS_INLINE.DELETE.SUCCESS,
-    comment,
+    node: comment,
   };
 }
 
@@ -190,7 +187,7 @@ function deleteFailure(response) {
 const deleteItem = (api) => {
   return (comment) => {
     return (dispatch) => {
-      dispatch(deleteRequest(comment));
+      dispatch(deleteRequest());
       return new Promise((resolve, reject) => {
         api.deleteItem(comment)
           .then(() => {
@@ -217,6 +214,6 @@ export default (namespace) => {
     edit: edit(api),
     add: add(api),
     deleteItem: deleteItem(api),
-    likes: createLikes('comments_inline')(likesApi),
+    likes: likes.commentsInline(likesApi),
   };
 };

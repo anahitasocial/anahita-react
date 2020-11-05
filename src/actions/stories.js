@@ -1,6 +1,9 @@
 import { normalize, schema } from 'normalizr';
-import { stories as api } from '../api';
-
+import {
+  stories as api,
+  likes as likesApi,
+} from '../api';
+import likes from './likes';
 import { Stories as STORIES } from '../constants';
 
 // -- reset
@@ -135,4 +138,5 @@ export default {
   reset,
   browse,
   deleteItem,
+  likes: likes.stories(likesApi),
 };

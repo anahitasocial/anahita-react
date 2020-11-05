@@ -60,6 +60,7 @@ const StoryCardComment = (props) => {
     classes,
     story,
     actions,
+    stats,
     menu,
     comments,
     showOwner,
@@ -136,6 +137,11 @@ const StoryCardComment = (props) => {
           </ReadMore>
         }
       </CardContent>
+      {stats &&
+        <CardActions>
+          {stats}
+        </CardActions>
+      }
       {actions &&
         <CardActions>
           {actions}
@@ -149,6 +155,7 @@ const StoryCardComment = (props) => {
 
 StoryCardComment.propTypes = {
   classes: PropTypes.object.isRequired,
+  stats: PropTypes.node,
   actions: PropTypes.node,
   menu: PropTypes.node,
   comments: PropTypes.node.isRequired,
@@ -158,6 +165,7 @@ StoryCardComment.propTypes = {
 
 StoryCardComment.defaultProps = {
   showOwner: false,
+  stats: null,
   actions: null,
   menu: null,
 };

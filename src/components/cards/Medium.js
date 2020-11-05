@@ -152,14 +152,14 @@ const MediumCard = (props) => {
           </ReadMore>
         }
       </CardContent>
-      {actions &&
-        <CardActions>
-          {actions}
-        </CardActions>
-      }
       {stats &&
         <CardActions>
           {stats}
+        </CardActions>
+      }
+      {actions &&
+        <CardActions>
+          {actions}
         </CardActions>
       }
     </Card>

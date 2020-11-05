@@ -10,7 +10,9 @@ import CommentsBrowse from './comments/Browse';
 
 import actions from '../../actions/stories';
 
-import LikeAction from '../likes/actions/Like';
+import LikeAction from '../likes/actions/LikeStory';
+import LikesStats from '../likes';
+import CommentStats from '../../components/comment/Stats';
 import StoryMenu from './Menu';
 
 import Progress from '../../components/Progress';
@@ -80,7 +82,7 @@ const StoriesBrowse = (props) => {
         let Like = null;
 
         if (node.object && isLikeable(node.object)) {
-          Like = LikeAction(node.object.objectType.split('.')[1]);
+          Like = LikeAction('stories');
         }
 
         return (
@@ -93,9 +95,22 @@ const StoriesBrowse = (props) => {
                 viewer={viewer}
               />
             }
+            stats={[
+              node.object && isLikeable(node.object) &&
+              <LikesStats
+                key={`story-like-stat-${node.object.id}`}
+                node={node.object}
+              />,
+              node.object && isCommentable(node.object) &&
+              <CommentStats
+                key={`story-comment-stat-${node.object.id}`}
+                node={node.object}
+              />,
+            ]}
             actions={[
               node.object && isLikeable(node.object) &&
               <Like
+                story={node}
                 node={node.object}
                 key={`story-like-${node.object.id}`}
               />,

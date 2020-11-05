@@ -202,14 +202,14 @@ const MediumStepperDefault = (props) => {
                       })}
                     </EntityBody>
                   }
-                  {actions &&
-                    <CardActions>
-                      {actions}
-                    </CardActions>
-                  }
                   {stats &&
                     <CardActions>
                       {stats}
+                    </CardActions>
+                  }
+                  {actions &&
+                    <CardActions>
+                      {actions}
                     </CardActions>
                   }
                 </CardContent>

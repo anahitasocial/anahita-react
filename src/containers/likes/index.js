@@ -57,12 +57,12 @@ const Likes = (props) => {
       </Dialog>
       <Button
         variant="text"
-        fullWidth
         onClick={() => {
           setOpen(true);
         }}
         disabled={likesCount === 0}
-        endIcon={<LikeIcon />}
+        startIcon={<LikeIcon />}
+        size="small"
       >
         {likesCount}
       </Button>

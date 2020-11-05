@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import { Stories as STORIES } from '../constants';
+// import nodeDefault from '../proptypes/NodeDefault';
 import storyDefault from '../proptypes/StoryDefault';
 import utils from '../utils';
 
 const {
+  editItem,
   deleteItem,
 } = utils.reducer;
 
@@ -35,6 +37,18 @@ export default function (state = {
     case STORIES.BROWSE.REQUEST:
       return {
         ...state,
+        isFetching: true,
+        success: false,
+        error: '',
+      };
+    case 'STORIES_LIKES_ADD_REQUEST':
+    case 'STORIES_LIKES_DELETE_REQUEST':
+      return {
+        ...state,
+        stories: {
+          ...state.stories,
+          current: action.story,
+        },
         isFetching: true,
         success: false,
         error: '',
@@ -72,8 +86,21 @@ export default function (state = {
         stories: deleteItem(state.stories, state.stories.current, storyDefault),
         success: true,
       };
+    case 'STORIES_LIKES_ADD_SUCCESS':
+    case 'STORIES_LIKES_DELETE_SUCCESS': {
+      const story = { ...state.stories.current };
+      story.object = action.node;
+      return {
+        ...state,
+        isFetching: false,
+        stories: editItem(state.stories, story, storyDefault),
+        success: true,
+      };
+    }
     case STORIES.BROWSE.FAILURE:
     case STORIES.DELETE.FAILURE:
+    case 'STORIES_LIKES_ADD_FAILURE':
+    case 'STORIES_LIKES_DELETE_FAILURE':
       return {
         ...state,
         hasMore: false,

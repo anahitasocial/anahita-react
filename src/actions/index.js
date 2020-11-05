@@ -3,11 +3,11 @@ import * as api from '../api';
 import createAction from './create';
 import createActorAdmins from './actor/admins';
 import createActorFollowRequests from './actor/followrequests';
-import createLikes from './createLikes';
 import app from './app';
 import avatar from './avatar';
 import cover from './cover';
 import commentsInline from './commentsInline';
+import likes from './likes';
 import notifications from './notifications';
 import password from './password';
 import session from './session';
@@ -18,12 +18,12 @@ import taggables from './taggable';
 
 const articles = {
   ...createAction('articles')(api.articles),
-  likes: createLikes('articles')(api.likes),
+  likes: likes.nodes('articles')(api.likes),
 };
 
 const documents = {
   ...createAction('documents')(api.documents),
-  likes: createLikes('documents')(api.likes),
+  likes: likes.nodes('documents')(api.likes),
 };
 
 const groups = {
@@ -41,7 +41,7 @@ const locations = createAction('locations')(api.locations);
 
 const notes = {
   ...createAction('notes')(api.notes),
-  likes: createLikes('notes')(api.likes),
+  likes: likes.nodes('notes')(api.likes),
 };
 
 const people = {
@@ -56,7 +56,7 @@ const people = {
 
 const photos = {
   ...createAction('photos')(api.photos),
-  likes: createLikes('photos')(api.likes),
+  likes: likes.nodes('photos')(api.likes),
 };
 
 const settings = {
@@ -70,18 +70,18 @@ const search = createAction('search')(api.search);
 
 const todos = {
   ...createAction('todos')(api.todos),
-  likes: createLikes('todos')(api.likes),
+  likes: likes.nodes('todos')(api.likes),
 };
 
 const topics = {
   ...createAction('topics')(api.topics),
-  likes: createLikes('topics')(api.likes),
+  likes: likes.nodes('topics')(api.likes),
 };
 
 const comments = (namespace) => {
   return {
     ...createAction('comments')(api.comments(namespace)),
-    likes: createLikes('comments')(api.likes),
+    likes: likes.comments(api.likes),
   };
 };
 

@@ -14,9 +14,9 @@ const CommentStats = (props) => {
     <Button
       component="a"
       href={url}
-      fullWidth
-      endIcon={<CommentIcon />}
+      startIcon={<CommentIcon />}
       disabled={node.numOfComments === 0}
+      size="small"
     >
       {node.numOfComments}
     </Button>

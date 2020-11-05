@@ -10,6 +10,7 @@ import StoryType from '../../proptypes/Story';
 const StoryCard = (props) => {
   const {
     story,
+    stats,
     actions,
     menu,
     comments,
@@ -26,6 +27,7 @@ const StoryCard = (props) => {
       return (
         <StoryCardComment
           story={story}
+          stats={stats}
           actions={actions}
           menu={menu}
           comments={comments}
@@ -36,6 +38,7 @@ const StoryCard = (props) => {
       return (
         <StoryCardPhotoAdd
           story={story}
+          stats={stats}
           actions={actions}
           menu={menu}
           comments={comments}
@@ -46,6 +49,7 @@ const StoryCard = (props) => {
       return (
         <StoryCardDefault
           story={story}
+          stats={stats}
           actions={actions}
           menu={menu}
           comments={comments}
@@ -57,6 +61,7 @@ const StoryCard = (props) => {
 
 StoryCard.propTypes = {
   actions: PropTypes.node,
+  stats: PropTypes.node,
   menu: PropTypes.node,
   comments: PropTypes.node,
   story: StoryType.isRequired,
@@ -66,6 +71,7 @@ StoryCard.propTypes = {
 StoryCard.defaultProps = {
   showOwner: false,
   actions: null,
+  stats: null,
   menu: null,
   comments: null,
 };

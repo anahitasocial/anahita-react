@@ -1,7 +1,9 @@
 /* eslint no-console: ["error", { allow: ["log", "error"] }] */
 
+import base from './base';
+
+/*
 import { normalize, schema } from 'normalizr';
-import CommentDefault from '../proptypes/CommentDefault';
 
 const reset = () => {
   return () => {
@@ -41,11 +43,11 @@ const browseFailure = (response) => {
 };
 
 const browse = (api) => {
-  return (node, comment = CommentDefault) => {
+  return (node) => {
     return (dispatch) => {
       dispatch(browseRequest());
       return new Promise((resolve, reject) => {
-        api.browse(node, comment)
+        api.browse(node)
           .then((result) => {
             dispatch(browseSuccess(result));
             return resolve();
@@ -59,17 +61,19 @@ const browse = (api) => {
     };
   };
 };
+*/
 
 // -- add like
 
-const addRequest = (namespace) => {
+const addRequest = (node, namespace) => {
   return {
     type: `${namespace.toUpperCase()}_LIKES_ADD_REQUEST`,
+    node,
   };
 };
 
-const addSuccess = (newNode, comment, namespace) => {
-  const node = comment.id > 0 ? { ...comment } : { ...newNode };
+const addSuccess = (newNode, namespace) => {
+  const node = { ...newNode };
   node.voteUpCount += 1;
   node.isVotedUp = true;
 
@@ -87,13 +91,13 @@ const addFailure = (response, namespace) => {
 };
 
 const add = (namespace, api) => {
-  return (node, comment = CommentDefault) => {
+  return (node) => {
     return (dispatch) => {
-      dispatch(addRequest(namespace));
+      dispatch(addRequest(node, namespace));
       return new Promise((resolve, reject) => {
-        api.add(node, comment)
+        api.add(node)
           .then(() => {
-            dispatch(addSuccess(node, comment, namespace));
+            dispatch(addSuccess(node, namespace));
             return resolve();
           }, (response) => {
             dispatch(addFailure(response, namespace));
@@ -108,14 +112,15 @@ const add = (namespace, api) => {
 
 // -- delete like
 
-const deleteRequest = (namespace) => {
+const deleteRequest = (node, namespace) => {
   return {
     type: `${namespace.toUpperCase()}_LIKES_DELETE_REQUEST`,
+    node,
   };
 };
 
-const deleteSuccess = (newNode, comment, namespace) => {
-  const node = comment.id > 0 ? { ...comment } : { ...newNode };
+const deleteSuccess = (newNode, namespace) => {
+  const node = { ...newNode };
   node.voteUpCount -= 1;
   node.isVotedUp = false;
 
@@ -133,13 +138,13 @@ const deleteFailure = (error, namespace) => {
 };
 
 const deleteItem = (namespace, api) => {
-  return (node, comment = CommentDefault) => {
+  return (node) => {
     return (dispatch) => {
-      dispatch(deleteRequest(namespace));
+      dispatch(deleteRequest(node, namespace));
       return new Promise((resolve, reject) => {
-        api.deleteItem(node, comment)
+        api.deleteItem(node)
           .then(() => {
-            dispatch(deleteSuccess(node, comment, namespace));
+            dispatch(deleteSuccess(node, namespace));
             return resolve();
           }, (response) => {
             dispatch(deleteFailure(response, namespace));
@@ -155,8 +160,8 @@ const deleteItem = (namespace, api) => {
 export default (namespace) => {
   return (api) => {
     return {
-      browse: browse(api),
-      reset: reset(namespace),
+      browse: base.browse(api),
+      reset: base.reset(),
       add: add(namespace, api),
       deleteItem: deleteItem(namespace, api),
     };
