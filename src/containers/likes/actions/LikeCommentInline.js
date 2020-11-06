@@ -39,6 +39,7 @@ const LikesActionCommentInline = React.forwardRef((props, ref) => {
 
   return (
     <Button
+      size="small"
       onClick={onClick}
       color={color}
       aria-label={label}
