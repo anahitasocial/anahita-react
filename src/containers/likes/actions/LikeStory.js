@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 
 import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import UnlikeIcon from '@material-ui/icons/Favorite';
@@ -37,19 +37,25 @@ const LikesActionLikeStory = React.forwardRef((props, ref) => {
   const color = liked ? 'primary' : 'inherit';
 
   return (
-    <IconButton
+    <Button
       onClick={onClick}
       color={color}
       aria-label={label}
       ref={ref}
+      startIcon={
+        <React.Fragment>
+          {liked &&
+            <UnlikeIcon fontSize={size} />
+          }
+          {!liked &&
+            <LikeIcon fontSize={size} />
+          }
+        </React.Fragment>
+      }
+      fullWidth
     >
-      {liked &&
-        <UnlikeIcon fontSize={size} />
-      }
-      {!liked &&
-        <LikeIcon fontSize={size} />
-      }
-    </IconButton>
+      Like
+    </Button>
   );
 });
 

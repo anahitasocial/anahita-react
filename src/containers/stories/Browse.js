@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import InfiniteScroll from 'react-infinite-scroller';
 import CommentIcon from '@material-ui/icons/Comment';
 
@@ -132,7 +131,7 @@ const StoriesBrowse = (props) => {
                 key={`story-like-${node.object.id}`}
               />,
               node.object && isCommentable(node.object) &&
-              <IconButton
+              <Button
                 onClick={() => {
                   openComments.push(node.id);
                   setOpenComments([...openComments]);
@@ -140,15 +139,13 @@ const StoriesBrowse = (props) => {
                 disabled={isCommentsOpen}
                 aria-label="Show Comments"
                 key={`story-comment-${node.id}`}
-              >
-                <Badge
-                  badgeContent={numOfComments}
-                  color="primary"
-                  invisible={isCommentsOpen || numOfComments === 0}
-                >
+                fullWidth
+                startIcon={
                   <CommentIcon fontSize="small" />
-                </Badge>
-              </IconButton>,
+                }
+              >
+                Comment
+              </Button>,
             ]}
             comments={node.object && isCommentable(node.object) && isCommentsOpen &&
               <CommentsBrowse

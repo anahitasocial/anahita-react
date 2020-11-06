@@ -87,14 +87,14 @@ const CommentCard = (props) => {
           {comment.body}
         </EntityBody>
       </CardContent>
-      {actions &&
-        <CardActions>
-          {actions}
-        </CardActions>
-      }
       {stats &&
         <CardActions>
           {stats}
+        </CardActions>
+      }
+      {actions &&
+        <CardActions>
+          {actions}
         </CardActions>
       }
     </Card>
