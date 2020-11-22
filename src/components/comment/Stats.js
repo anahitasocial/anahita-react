@@ -3,8 +3,9 @@ import Button from '@material-ui/core/Button';
 import CommentIcon from '@material-ui/icons/Comment';
 
 import NodeType from '../../proptypes/Node';
+import utils from '../../utils';
 
-import { getURL } from '../utils';
+const { getURL } = utils.node;
 
 const CommentStats = (props) => {
   const { node } = props;

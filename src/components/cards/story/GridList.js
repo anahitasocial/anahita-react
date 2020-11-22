@@ -8,10 +8,12 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import Link from '@material-ui/core/Link';
 import MediaType from '../../../proptypes/Media';
-import {
+import utils from '../../../utils';
+
+const {
   getURL,
   getPortraitURL,
-} from '../../utils';
+} = utils;
 
 const styles = (theme) => {
   return {

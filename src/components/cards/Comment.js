@@ -12,11 +12,12 @@ import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import EntityBody from '../EntityBody';
 import CommentType from '../../proptypes/Comment';
+import utils from '../../utils';
 
-import {
+const {
   getCommentURL,
   getAuthor,
-} from '../utils';
+} = utils.node;
 
 const styles = (theme) => {
   return {

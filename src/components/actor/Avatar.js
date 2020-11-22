@@ -5,12 +5,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
 import ActorType from '../../proptypes/Actor';
+import utils from '../../utils';
 
-import {
+const {
   getURL,
   getPortraitURL,
   getActorInitials,
-} from '../utils';
+} = utils.node;
 
 const styles = (theme) => {
   return {

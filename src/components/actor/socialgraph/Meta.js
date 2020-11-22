@@ -1,11 +1,12 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
-// import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import ActorType from '../../../proptypes/Actor';
-import { getURL } from '../../utils';
+import utils from '../../../utils';
+
+const { getURL } = utils.node;
 
 const styles = (theme) => {
   return {

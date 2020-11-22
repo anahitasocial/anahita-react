@@ -16,12 +16,13 @@ import ReadMore from '../../ReadMore';
 import StoryMessage from '../../StoryMessage';
 import StoryCardOwner from '../Owner';
 import Player from '../../Player';
+import utils from '../../../utils';
 
-import {
+const {
   getURL,
   getPortraitURL,
   getCoverURL,
-} from '../../utils';
+} = utils.node;
 
 const styles = (theme) => {
   return {

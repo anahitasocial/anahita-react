@@ -8,7 +8,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import NodeType from '../../../proptypes/Node';
-import { getActorInitials } from '../../utils';
+import utils from '../../../utils';
+
+const { getActorInitials } = utils.node;
 
 const styles = (theme) => {
   return {

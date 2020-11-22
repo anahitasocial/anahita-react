@@ -5,7 +5,9 @@ import Link from '@material-ui/core/Link';
 
 import ActorAvatar from '../actor/Avatar';
 import NodeType from '../../proptypes/Node';
-import { getURL } from '../utils';
+import utils from '../../utils';
+
+const { getURL } = utils.node;
 
 const CardOwner = (props) => {
   const { node: { owner } } = props;

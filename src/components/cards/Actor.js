@@ -14,11 +14,12 @@ import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import ReadMore from '../ReadMore';
 import contentfilter from '../contentfilter';
+import utils from '../../utils';
 
-import {
+const {
   getURL,
   getCoverURL,
-} from '../utils';
+} = utils.node;
 
 const styles = (theme) => {
   return {

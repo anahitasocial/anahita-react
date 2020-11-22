@@ -19,13 +19,14 @@ import CardHeaderOwner from './Owner';
 import Player from '../Player';
 import ReadMore from '../ReadMore';
 import contentfilter from '../contentfilter';
+import utils from '../../utils';
 
-import {
+const {
   getAuthor,
   getURL,
   getPortraitURL,
   getCoverURL,
-} from '../utils';
+} = utils.node;
 
 const styles = (theme) => {
   return {

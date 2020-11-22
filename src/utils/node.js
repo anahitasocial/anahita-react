@@ -102,8 +102,14 @@ const getCommentURL = (comment) => {
   return `/${namespace}/${parentId}/#${id}`;
 };
 
-const getCoverURL = (node) => {
-  return node.coverURL && node.coverURL.medium && node.coverURL.medium.url;
+const getCoverURL = (node, size = 'medium') => {
+  const path = node.coverURL && node.coverURL[size] && node.coverURL[size].url;
+
+  if (path) {
+    return path.substring(0, 4) === 'http' ? path : new URL(path, process.env.REACT_APP_API_BASE_URL).href;
+  }
+
+  return '';
 };
 
 const getOwnerName = (node) => {
@@ -115,7 +121,13 @@ const getOwnerName = (node) => {
 };
 
 const getPortraitURL = (node, size = 'medium') => {
-  return node.imageURL && node.imageURL[size] && node.imageURL[size].url;
+  const path = node.imageURL && node.imageURL[size] && node.imageURL[size].url;
+
+  if (path) {
+    return path.substring(0, 4) === 'http' ? path : new URL(path, process.env.REACT_APP_API_BASE_URL).href;
+  }
+
+  return '';
 };
 
 /*

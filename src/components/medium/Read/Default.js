@@ -20,12 +20,13 @@ import CardHeaderOwner from '../../cards/Owner';
 import Player from '../../Player';
 import EntityBody from '../../EntityBody';
 import contentfilter from '../../contentfilter';
+import utils from '../../../utils';
 
-import {
+const {
   getAuthor,
   getPortraitURL,
   getCoverURL,
-} from '../../utils';
+} = utils.node;
 
 const styles = (theme) => {
   return {

@@ -7,6 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
 import PersonType from '../../proptypes/Person';
+import utils from '../../utils';
+
+const {
+  getActorInitials,
+  getPortraitURL,
+} = utils.node;
 
 const styles = (theme) => {
   return {
@@ -43,6 +49,9 @@ const Viewer = (props) => {
   } = props;
 
   const profile = `/people/${viewer.username}/`;
+  const initials = getActorInitials(viewer);
+  const avatar = getPortraitURL(viewer, 'small');
+
   return (
     <React.Fragment>
       {!isAuthenticated &&
@@ -81,8 +90,8 @@ const Viewer = (props) => {
           </div>
           <div className={classes.avatarContent}>
             <Avatar
-              alt={`${viewer.givenName.charAt(0)}${viewer.familyName.charAt(0)}`}
-              src={viewer.imageURL.medium.url}
+              alt={initials}
+              src={avatar}
               className={classes.avatar}
             />
           </div>

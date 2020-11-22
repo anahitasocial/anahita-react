@@ -18,13 +18,14 @@ import ActorAvatar from '../../actor/Avatar';
 import StoryType from '../../../proptypes/Story';
 import StoryCardOwner from '../Owner';
 import Player from '../../Player';
+import utils from '../../../utils';
 
-import {
+const {
   getURL,
   getPortraitURL,
   getCoverURL,
   getStorySubject,
-} from '../../utils';
+} = utils.node;
 
 const styles = (theme) => {
   return {

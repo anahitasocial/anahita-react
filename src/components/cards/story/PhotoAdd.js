@@ -17,12 +17,13 @@ import StoryMessage from '../../StoryMessage';
 import ActorAvatar from '../../actor/Avatar';
 import GridList from './GridList';
 import StoryCardOwner from '../Owner';
+import utils from '../../../utils';
 
-import {
+const {
   getURL,
   getPortraitURL,
   getStorySubject,
-} from '../../utils';
+} = utils.node;
 
 const styles = (theme) => {
   return {
