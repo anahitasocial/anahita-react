@@ -50,7 +50,7 @@ const Viewer = (props) => {
 
   const profile = `/people/${viewer.username}/`;
   const initials = getActorInitials(viewer);
-  const avatar = getPortraitURL(viewer, 'small');
+  const avatar = getPortraitURL(viewer);
 
   return (
     <React.Fragment>
