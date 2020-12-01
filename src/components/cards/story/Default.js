@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTimeAgo from 'react-time-ago';
+import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -94,9 +94,7 @@ const StoryCardDefault = (props) => {
         }
         subheader={
           <Link href={url}>
-            <ReactTimeAgo
-              date={new Date(story.creationTime)}
-            />
+            {moment(story.creationTime).fromNow()}
           </Link>
         }
         action={menu}

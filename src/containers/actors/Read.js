@@ -109,7 +109,7 @@ const ActorsRead = (props) => {
             {canFollow && actor.id && <FollowAction actor={actor} />}
           </React.Fragment>
         }
-        headerActions={isAuthenticated && actor.id && <Commands actor={actor} />}
+        headerActions={isAuthenticated && actor.commands && <Commands actor={actor} />}
       />
       <ActorBody
         actor={actor}

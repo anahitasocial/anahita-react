@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTimeAgo from 'react-time-ago';
+import moment from 'moment';
 
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -67,9 +67,7 @@ const CommentListItem = (props) => {
                 actor={author}
                 linked={Boolean(author.id)}
               />
-              <ReactTimeAgo
-                date={new Date(creationTime)}
-              />
+              {moment(creationTime).fromNow()}
             </React.Fragment>
           }
           secondary={

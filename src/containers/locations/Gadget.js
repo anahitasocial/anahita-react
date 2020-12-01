@@ -17,7 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import * as actions from '../../actions';
 import permissions from '../../permissions/node';
-import LocationsType from '../../proptypes/Locations';
+import LocationType from '../../proptypes/Location';
 import NodeType from '../../proptypes/Node';
 import PersonType from '../../proptypes/Person';
 
@@ -42,16 +42,22 @@ const LocationsGadget = (props) => {
   const {
     node,
     viewer,
-    locations,
+    locationsGraph,
     isFetching,
     error,
     browse,
-    reset,
   } = props;
 
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const locations = locationsGraph[node.id] || {
+    allIds: [],
+    byId: {},
+  };
+
+  console.log(locations);
 
   useEffect(() => {
     browse(node, {
@@ -59,23 +65,19 @@ const LocationsGadget = (props) => {
       taggable_id: node.id,
       offset: 0,
     });
-
-    return () => {
-      reset(node);
-    };
   }, []);
 
   const handleClose = () => {
     setIsOpen(false);
   };
 
-  if (locations.byId.length === 0 && isFetching) {
+  if (locations.byId.length === 0 && isFetching[node.id]) {
     return (
       <Progress />
     );
   }
 
-  if (error) {
+  if (error[node.id]) {
     return (
       <Typography
         variant="body1"
@@ -83,7 +85,7 @@ const LocationsGadget = (props) => {
         align="center"
         gutterBottom
       >
-        {error}
+        {error[node.id]}
       </Typography>
     );
   }
@@ -154,16 +156,15 @@ const LocationsGadget = (props) => {
 LocationsGadget.propTypes = {
   node: NodeType.isRequired,
   viewer: PersonType.isRequired,
-  locations: LocationsType.isRequired,
+  locationsGraph: PropTypes.objectOf(LocationType).isRequired,
   browse: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
+  isFetching: PropTypes.objectOf(PropTypes.bool).isRequired,
+  error: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
-    locationsGraph: locations,
+    locations: locationsGraph,
     error,
     isFetching,
   } = state.locationsGraph;
@@ -173,7 +174,7 @@ const mapStateToProps = (state) => {
   } = state.session;
 
   return {
-    locations,
+    locationsGraph,
     error,
     isFetching,
     viewer,
@@ -183,10 +184,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browse: (node, params) => {
-      return dispatch(actions.locationsGraph(node).browse(params));
-    },
-    reset: (node) => {
-      return dispatch(actions.locationsGraph(node).reset());
+      return dispatch(actions.locationsGraph.browse(node)(params));
     },
   };
 };

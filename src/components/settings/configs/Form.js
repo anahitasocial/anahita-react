@@ -237,6 +237,50 @@ const SettingsConfigsForm = (props) => {
             margin="normal"
           >
             <FormLabel component="legend">
+              CORS Settings
+            </FormLabel>
+            <TextField
+              name="cors_origin"
+              value={configs.cors_origin}
+              label="Origin"
+              margin="normal"
+              fullWidth
+              disabled
+            />
+            <TextField
+              name="cors_methods"
+              value={configs.cors_methods}
+              label="Methods"
+              margin="normal"
+              fullWidth
+              disabled
+            />
+            <TextField
+              name="cors_headers"
+              value={configs.cors_headers}
+              label="Headers"
+              margin="normal"
+              fullWidth
+              disabled
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={configs.cors_credentials}
+                  onChange={handleOnChange}
+                  name="cors_credentials"
+                  disabled
+                />
+              }
+              label="Credentials"
+            />
+          </FormControl>
+          <FormControl
+            component="fieldset"
+            fullWidth
+            margin="normal"
+          >
+            <FormLabel component="legend">
               Mail Settings
             </FormLabel>
             <FormControlLabel

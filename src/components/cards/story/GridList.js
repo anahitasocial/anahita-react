@@ -13,7 +13,7 @@ import utils from '../../../utils';
 const {
   getURL,
   getPortraitURL,
-} = utils;
+} = utils.node;
 
 const styles = (theme) => {
   return {

@@ -48,7 +48,7 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteTag: (node, tag) => {
-      return dispatch(actions.locationsGraph(node).deleteItem(tag));
+      return dispatch(actions.locationsGraph.deleteItem(node)(tag));
     },
   };
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactTimeAgo from 'react-time-ago';
+import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import Card from '@material-ui/core/Card';
@@ -118,11 +118,7 @@ const MediumReadDefault = (props) => {
                 linked={Boolean(author.id)}
               />
             }
-            subheader={
-              <ReactTimeAgo
-                date={new Date(medium.creationTime)}
-              />
-            }
+            subheader={moment(medium.creationTime).fromNow()}
             action={menu}
           />
           {editing && form}

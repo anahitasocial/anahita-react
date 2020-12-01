@@ -32,8 +32,8 @@ const browseSuccess = (results, namespace) => {
 
   return {
     type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
-    [namespace]: normalized.entities[namespace],
-    ids: normalized.result,
+    [namespace]: normalized.entities[namespace] || {},
+    ids: normalized.result || [],
     total,
     hasMore,
   };

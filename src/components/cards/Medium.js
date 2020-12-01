@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTimeAgo from 'react-time-ago';
+import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { withRouter } from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -97,9 +97,7 @@ const MediumCard = (props) => {
         }
         subheader={
           <Link href={url}>
-            <ReactTimeAgo
-              date={new Date(medium.creationTime)}
-            />
+            {moment(medium.creationTime).fromNow()}
           </Link>
         }
         action={menu}
