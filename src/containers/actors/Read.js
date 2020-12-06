@@ -17,6 +17,7 @@ import FollowAction from '../actions/Follow';
 import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
+import utils from '../../utils';
 
 import ActorsType from '../../proptypes/Actors';
 import PersonType from '../../proptypes/Person';
@@ -42,7 +43,6 @@ const ActorsRead = (props) => {
       current: actor,
     },
     viewer,
-    isAuthenticated,
     isFetching,
     error,
     match: {
@@ -73,10 +73,19 @@ const ActorsRead = (props) => {
     );
   }
 
-  const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
+  const canFollow = permissions.canFollow(actor);
+
+  console.log('canFollow', canFollow);
+
   const canEdit = permissions.canEdit(actor);
   const canAdminister = permissions.canAdminister(actor);
-  const isPerson = actor.objectType.split('.')[1] === 'people';
+  const canViewCommands = permissions.canViewCommands(actor, [
+    'follow',
+    'unfollow',
+    'notifications-settings',
+  ]);
+
+  const isPerson = utils.node.isPerson(actor);
   const isViewer = actor.id === viewer.id;
   const metaDesc = striptags(actor.body).substr(0, 160);
   const FollowRequests = ActorsFollowRequests(namespace);
@@ -106,10 +115,12 @@ const ActorsRead = (props) => {
         followAction={
           <React.Fragment>
             {canAdminister && <FollowRequests actor={actor} />}
-            {canFollow && actor.id && <FollowAction actor={actor} />}
+            {canFollow && <FollowAction actor={actor} />}
           </React.Fragment>
         }
-        headerActions={isAuthenticated && actor.commands && <Commands actor={actor} />}
+        headerActions={canViewCommands &&
+          <Commands actor={actor} />
+        }
       />
       <ActorBody
         actor={actor}

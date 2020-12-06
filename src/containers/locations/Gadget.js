@@ -57,8 +57,6 @@ const LocationsGadget = (props) => {
     byId: {},
   };
 
-  console.log(locations);
-
   useEffect(() => {
     browse(node, {
       objectType: 'com.locations.location',

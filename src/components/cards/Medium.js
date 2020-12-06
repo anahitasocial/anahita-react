@@ -57,6 +57,7 @@ const MediumCard = (props) => {
     medium,
     stats,
     actions,
+    ownerActions,
     menu,
     handleView,
     history,
@@ -70,7 +71,10 @@ const MediumCard = (props) => {
   return (
     <Card component="article">
       {medium.author && medium.owner.id !== medium.author.id &&
-        <CardHeaderOwner node={medium} />
+        <CardHeaderOwner
+          node={medium}
+          actions={ownerActions}
+        />
       }
       {cover &&
         <Link href={url}>
@@ -169,6 +173,7 @@ MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
   stats: PropTypes.node,
   actions: PropTypes.node,
+  ownerActions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
   handleView: PropTypes.func,
@@ -177,6 +182,7 @@ MediumCard.propTypes = {
 
 MediumCard.defaultProps = {
   actions: null,
+  ownerActions: null,
   menu: null,
   stats: null,
   handleView: null,

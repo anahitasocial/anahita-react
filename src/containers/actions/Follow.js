@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -14,27 +14,19 @@ const FollowAction = React.forwardRef((props, ref) => {
   const {
     followActor,
     unfollowActor,
-    reset,
     actor,
     actors,
     viewer,
-    isAuthenticated,
     component,
     followLabel,
     unfollowLabel,
   } = props;
 
   const isLeader = actors.byId[actor.id] ? actors.byId[actor.id].isLeader : actor.isLeader;
-  const canFollow = permissions.canFollow(isAuthenticated, viewer, actor);
+  const canFollow = permissions.canFollow(actor);
 
   const [leader, setLeader] = useState(isLeader);
   const [waiting, setWaiting] = useState(false);
-
-  useEffect(() => {
-    return () => {
-      // reset();
-    };
-  }, []);
 
   const handleFollow = (event) => {
     event.preventDefault();
@@ -87,7 +79,6 @@ const FollowAction = React.forwardRef((props, ref) => {
 FollowAction.propTypes = {
   followActor: PropTypes.func.isRequired,
   unfollowActor: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
   actors: ActorsType.isRequired,
   viewer: PersonType.isRequired,
@@ -126,9 +117,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     unfollowActor: (viewer, actor) => {
       return dispatch(actions.unfollow(viewer, actor));
-    },
-    reset: () => {
-      return dispatch(actions.reset());
     },
   };
 };

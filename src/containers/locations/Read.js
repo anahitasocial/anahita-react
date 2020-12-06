@@ -89,13 +89,15 @@ const LocationsRead = (props) => {
           })}
         />
         <Divider light />
-        <AnahitaMap
-          locations={[location]}
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
-          loadingElement={<div style={{ height: '100%' }} />}
-          containerElement={<div className={classes.mapContainer} />}
-          mapElement={<div style={{ height: '100%' }} />}
-        />
+        {location.id &&
+          <AnahitaMap
+            locations={[location]}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
+            loadingElement={<div style={{ height: '100%' }} />}
+            containerElement={<div className={classes.mapContainer} />}
+            mapElement={<div style={{ height: '100%' }} />}
+          />
+        }
         <Divider light />
         <CardContent>
           <Typography variant="caption">
