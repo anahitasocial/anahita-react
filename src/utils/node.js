@@ -30,6 +30,10 @@ const isActor = (node) => {
   return node.objectType ? OBJECT_TYPES.ACTOR.includes(node.objectType) : false;
 };
 
+const isPerson = (node) => {
+  return node.objectType ? node.objectType.split('.')[1] === 'people' : false;
+};
+
 const isMedium = (node) => {
   return node.objectType ? OBJECT_TYPES.MEDIUM.includes(node.objectType) : false;
 };
@@ -169,6 +173,7 @@ const getURL = (node) => {
 
 export default {
   isActor,
+  isPerson,
   isMedium,
   isComment,
   isCommentable,

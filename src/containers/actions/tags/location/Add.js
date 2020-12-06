@@ -53,7 +53,7 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addTag: (node, tag) => {
-      return dispatch(actions.locationsGraph(node).add(tag));
+      return dispatch(actions.locationsGraph.add(node)(tag));
     },
   };
 };

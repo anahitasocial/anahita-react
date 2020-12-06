@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactTimeAgo from 'react-time-ago';
+import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import Box from '@material-ui/core/Box';
@@ -169,9 +169,7 @@ const MediumStepperDefault = (props) => {
                 <Link
                   href={url}
                 >
-                  <ReactTimeAgo
-                    date={new Date(medium.creationTime)}
-                  />
+                  {moment(medium.creationTime).fromNow()}
                 </Link>
               }
               action={menu}

@@ -1,6 +1,7 @@
 import * as api from '../api';
 
 import createAction from './create';
+import createGraphAction from './createGraph';
 import createActorAdmins from './actor/admins';
 import createActorFollowRequests from './actor/followrequests';
 import app from './app';
@@ -38,6 +39,7 @@ const groups = {
 };
 const hashtags = createAction('hashtags')(api.hashtags);
 const locations = createAction('locations')(api.locations);
+const locationsGraph = createGraphAction('locations')(api.tagGraph);
 
 const notes = {
   ...createAction('notes')(api.notes),
@@ -87,10 +89,6 @@ const comments = (namespace) => {
 
 const commentStatus = (namespace) => {
   return createAction('commentStatus')(api.commentStatus(namespace));
-};
-
-const locationsGraph = (taggable) => {
-  return createAction('locationsGraph')(api.tagGraph(taggable));
 };
 
 export {

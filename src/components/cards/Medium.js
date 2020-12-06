@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactTimeAgo from 'react-time-ago';
+import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { withRouter } from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -57,6 +57,7 @@ const MediumCard = (props) => {
     medium,
     stats,
     actions,
+    ownerActions,
     menu,
     handleView,
     history,
@@ -70,7 +71,10 @@ const MediumCard = (props) => {
   return (
     <Card component="article">
       {medium.author && medium.owner.id !== medium.author.id &&
-        <CardHeaderOwner node={medium} />
+        <CardHeaderOwner
+          node={medium}
+          actions={ownerActions}
+        />
       }
       {cover &&
         <Link href={url}>
@@ -97,9 +101,7 @@ const MediumCard = (props) => {
         }
         subheader={
           <Link href={url}>
-            <ReactTimeAgo
-              date={new Date(medium.creationTime)}
-            />
+            {moment(medium.creationTime).fromNow()}
           </Link>
         }
         action={menu}
@@ -171,6 +173,7 @@ MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
   stats: PropTypes.node,
   actions: PropTypes.node,
+  ownerActions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
   handleView: PropTypes.func,
@@ -179,6 +182,7 @@ MediumCard.propTypes = {
 
 MediumCard.defaultProps = {
   actions: null,
+  ownerActions: null,
   menu: null,
   stats: null,
   handleView: null,

@@ -5,6 +5,7 @@ import avatar from './avatar';
 import cover from './cover';
 import commentsInline from './commentsInline';
 import locations from './locations';
+import locationsGraph from './locationsGraph';
 import hashtags from './hashtags';
 import notifications from './notifications';
 import password from './password';
@@ -29,7 +30,6 @@ import createActorPrivacy from './actor/privacy';
 import createActorsReducer from './createActors';
 import createCommentReducer from './createComment';
 import createMediaReducer from './createMedia';
-import createTagGraphReducer from './createTagGraph';
 
 // create actors reducers
 const likes = createActorsReducer('likes');
@@ -56,9 +56,6 @@ const photos = createMediaReducer('photos');
 
 // behaviours
 const comments = createCommentReducer('comments');
-
-// location graph
-const locationsGraph = createTagGraphReducer('locationsGraph');
 
 export default combineReducers({
   app,
