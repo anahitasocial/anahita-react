@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import withWidth from '@material-ui/core/withWidth';
 
@@ -54,7 +53,7 @@ const HashtagsRead = (props) => {
 
   return (
     <React.Fragment>
-      <Card square>
+      <Card variant="outlined">
         <CardHeader
           avatar={
             <Avatar>
@@ -71,7 +70,6 @@ const HashtagsRead = (props) => {
           })}
         />
       </Card>
-      <Divider light />
       <Taggables tag={hashtag} />
     </React.Fragment>
   );

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 
+import Card from '@material-ui/core/Card';
 import CommentRead from './Read';
 import CommentForm from '../../components/comment/Form';
 import Progress from '../../components/Progress';
@@ -96,7 +97,7 @@ const CommentsBrowse = (props) => {
   const hasComments = parent.numOfComments > 0;
 
   return (
-    <React.Fragment>
+    <Card variant="outlined">
       <InfiniteScroll
         loadMore={fetchList}
         hasMore={hasComments && hasMore}
@@ -126,7 +127,7 @@ const CommentsBrowse = (props) => {
           cardProps={cardProps}
         />
       }
-    </React.Fragment>
+    </Card>
   );
 };
 

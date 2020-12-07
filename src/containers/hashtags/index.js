@@ -51,6 +51,7 @@ const Hashtags = (props) => {
         position="sticky"
         color="inherit"
         className={classes.root}
+        elevation={1}
       >
         <Tabs
           value={tab}

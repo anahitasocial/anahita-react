@@ -30,7 +30,7 @@ const CommentForm = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <Card variant="outlined">
+      <React.Fragment>
         <CardHeader
           avatar={
             <ActorAvatar
@@ -81,7 +81,7 @@ const CommentForm = (props) => {
             {comment.id ? i18n.t('actions:update') : i18n.t('actions:post')}
           </Button>
         </CardActions>
-      </Card>
+      </React.Fragment>
     </form>
   );
 };

@@ -44,6 +44,7 @@ const Taggables = (props) => {
         position="sticky"
         color="inherit"
         className={classes.root}
+        variant="outlined"
       >
         <Tabs
           value={tab}

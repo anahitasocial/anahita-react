@@ -40,6 +40,7 @@ const SocialgraphTabs = (props) => {
         position="sticky"
         color="inherit"
         className={classes.appBar}
+        variant="outlined"
       >
         <Tabs
           value={value}

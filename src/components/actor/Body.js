@@ -54,6 +54,7 @@ const ActorBody = (props) => {
         position="sticky"
         color="default"
         className={classes.appBar}
+        elevation={1}
       >
         <Tabs
           value={value}

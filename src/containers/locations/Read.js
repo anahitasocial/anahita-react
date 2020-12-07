@@ -8,7 +8,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import withWidth from '@material-ui/core/withWidth';
 
@@ -88,7 +87,6 @@ const LocationsRead = (props) => {
             count: taggablesCount,
           })}
         />
-        <Divider light />
         {location.id &&
           <AnahitaMap
             locations={[location]}
@@ -98,14 +96,12 @@ const LocationsRead = (props) => {
             mapElement={<div style={{ height: '100%' }} />}
           />
         }
-        <Divider light />
         <CardContent>
           <Typography variant="caption">
             {getAddress(location)}
           </Typography>
         </CardContent>
       </Card>
-      <Divider light />
       <Taggables tag={location} />
     </React.Fragment>
   );
