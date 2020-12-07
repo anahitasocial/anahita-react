@@ -49,7 +49,7 @@ const SettingsConfigsForm = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           title={
             <Typography variant="h4">Configs</Typography>

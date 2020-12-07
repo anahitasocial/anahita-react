@@ -52,7 +52,7 @@ const ActorHeader = (props) => {
 
   return (
     <React.Fragment>
-      <Card>
+      <Card variant="outlined">
         {cover}
         <CardHeader
           classes={{

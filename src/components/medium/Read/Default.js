@@ -85,7 +85,7 @@ const MediumReadDefault = (props) => {
       justify="center"
     >
       <Grid item xs={12} md={8}>
-        <Card>
+        <Card variant="outlined">
           {medium.owner.objectType.split('.')[1] !== 'people' &&
             <CardHeaderOwner node={medium} />
           }

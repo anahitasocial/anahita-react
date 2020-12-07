@@ -66,7 +66,7 @@ const ActorsAdd = (props) => {
 
   return (
     <React.Fragment>
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           title={actor.name}
           avatar={

@@ -31,7 +31,7 @@ const SettingsAssignmentsForm = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           title={
             <Typography variant="h5">

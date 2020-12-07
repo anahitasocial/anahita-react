@@ -112,7 +112,7 @@ const SettingsAppsBrowse = (props) => {
           handleClose={handleClose}
         />
       }
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           title={
             <Typography variant="h4">Apps</Typography>

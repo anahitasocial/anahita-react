@@ -54,7 +54,7 @@ const ActorCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card>
+      <Card variant="outlined">
         {cover &&
           <Link href={url}>
             <CardMedia

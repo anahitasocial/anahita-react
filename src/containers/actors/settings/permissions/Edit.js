@@ -82,7 +82,7 @@ const SettingsPermissionsEdit = (props) => {
       scroll="body"
     >
       <form onSubmit={handleOnSubmit}>
-        <Card>
+        <Card variant="outlined">
           <CardHeader
             title={
               <Typography variant="h5">

@@ -40,7 +40,7 @@ const LocationForm = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
-      <Card>
+      <Card variant="outlined">
         <CardContent>
           <TextField
             id="location-name"

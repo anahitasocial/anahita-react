@@ -42,6 +42,7 @@ const LocationsSelectorBrowse = (props) => {
     handleClose,
     error,
     isFetching,
+    cardProps,
   } = props;
 
   const [keyword, setKeyword] = useState('');
@@ -96,7 +97,10 @@ const LocationsSelectorBrowse = (props) => {
   }
 
   return (
-    <Card square>
+    <Card
+      square
+      {...cardProps}
+    >
       <CardContent>
         <form onSubmit={handleOnSubmit}>
           <FormControl fullWidth>
@@ -144,6 +148,7 @@ LocationsSelectorBrowse.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   noResultsCallback: PropTypes.func,
+  cardProps: PropTypes.objectOf(PropTypes.any),
 };
 
 LocationsSelectorBrowse.defaultProps = {
@@ -154,6 +159,7 @@ LocationsSelectorBrowse.defaultProps = {
     locatable_id: 0,
   },
   noResultsCallback: null,
+  cardProps: {},
 };
 
 const mapStateToProps = (state) => {

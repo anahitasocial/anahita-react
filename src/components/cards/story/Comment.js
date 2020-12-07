@@ -75,7 +75,11 @@ const StoryCardComment = (props) => {
   const url = story.object ? getURL(story.object) : '';
 
   return (
-    <Card className={classes.card} component="article">
+    <Card
+      className={classes.card}
+      component="article"
+      variant="outlined"
+    >
       {showOwner &&
         <StoryCardOwner node={story} />
       }

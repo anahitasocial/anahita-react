@@ -72,7 +72,7 @@ const LocationsRead = (props) => {
 
   return (
     <React.Fragment>
-      <Card square>
+      <Card square variant="outlined">
         <CardHeader
           avatar={
             <Avatar>

@@ -69,7 +69,10 @@ const StoryCardPhotoAdd = (props) => {
   const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
   return (
-    <Card className={classes.card}>
+    <Card
+      className={classes.card}
+      variant="outlined"
+    >
       {showOwnerHeader &&
         <StoryCardOwner node={story} />
       }

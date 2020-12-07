@@ -27,7 +27,7 @@ const ActorSettingCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           avatar={
             <Avatar

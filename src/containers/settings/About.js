@@ -43,7 +43,7 @@ const SettingsAbout = (props) => {
   }
 
   return (
-    <Card>
+    <Card variant="outlined">
       <CardHeader
         title={
           <Typography variant="h4">About</Typography>

@@ -32,6 +32,7 @@ const CommentsBrowse = (props) => {
     parent,
     viewer,
     isFetching,
+    cardProps,
   } = props;
 
   const namespace = parent.objectType.split('.')[1];
@@ -122,6 +123,7 @@ const CommentsBrowse = (props) => {
           handleOnChange={handleOnChange}
           handleOnSubmit={handleOnSubmit}
           isFetching={isFetching}
+          cardProps={cardProps}
         />
       }
     </React.Fragment>
@@ -171,10 +173,12 @@ CommentsBrowse.propTypes = {
   viewer: PersonType.isRequired,
   hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  cardProps: PropTypes.objectOf(PropTypes.any),
 };
 
 CommentsBrowse.defaultProps = {
   canAdd: false,
+  cardProps: {},
 };
 
 export default (connect(

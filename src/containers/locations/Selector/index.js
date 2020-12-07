@@ -76,7 +76,6 @@ const LocationsSelector = (props) => {
         <AppBar
           position="sticky"
           color="inherit"
-          elevation={1}
         >
           <Tabs
             value={tab}

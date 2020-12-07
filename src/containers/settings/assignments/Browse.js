@@ -71,7 +71,7 @@ const SettingsAssignmentsBrowse = (props) => {
           isFetching={isFetching}
         />
       }
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           title={
             <Typography variant="h4">App Assignments</Typography>

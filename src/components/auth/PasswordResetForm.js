@@ -30,7 +30,7 @@ const PasswordResetForm = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           avatar={
             <Avatar>

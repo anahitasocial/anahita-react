@@ -118,7 +118,7 @@ const SettingsPlugins = (props) => {
           handleClose={handleClose}
         />
       }
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           title={
             <Typography variant="h4">Plugins</Typography>

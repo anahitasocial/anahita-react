@@ -248,6 +248,9 @@ const MediaStepper = (props) => {
             parent={medium}
             canAdd={canAddComment}
             key={`${namespace}-comments-${medium.id}`}
+            cardProps={{
+              variant: 'outlined',
+            }}
           />
         }
         locations={
@@ -261,6 +264,7 @@ const MediaStepper = (props) => {
             onClick={handleNext}
             disabled={!items.allIds[index + 1]}
             fullWidth
+            variant="outlined"
           >
             <NextIcon />
           </Button>
@@ -270,6 +274,7 @@ const MediaStepper = (props) => {
             onClick={handlePrev}
             disabled={!items.allIds[index - 1]}
             fullWidth
+            variant="outlined"
           >
             <PrevIcon />
           </Button>

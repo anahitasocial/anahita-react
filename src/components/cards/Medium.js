@@ -69,7 +69,10 @@ const MediumCard = (props) => {
   const author = getAuthor(medium);
 
   return (
-    <Card component="article">
+    <Card
+      component="article"
+      variant="outlined"
+    >
       {medium.author && medium.owner.id !== medium.author.id &&
         <CardHeaderOwner
           node={medium}

@@ -59,7 +59,7 @@ const CommentCard = (props) => {
   }
 
   return (
-    <Card square className={classes.root}>
+    <Card className={classes.root}>
       <CardHeader
         avatar={
           <ActorAvatar

@@ -30,7 +30,7 @@ const CommentForm = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           avatar={
             <ActorAvatar

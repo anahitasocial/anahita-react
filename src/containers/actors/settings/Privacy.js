@@ -90,7 +90,7 @@ const ActorsSettingsPrivacy = (props) => {
   return (
     <React.Fragment>
       <form onSubmit={handleOnSubmit}>
-        <Card>
+        <Card variant="outlined">
           <CardContent>
             <FormControl
               fullWidth

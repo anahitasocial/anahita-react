@@ -121,7 +121,6 @@ const App = (props) => {
       <CssBaseline />
       <AppBar
         className={clsx(classes.appBar, open && classes.appBarShift)}
-        color="inherit"
       >
         <Toolbar disableGutters={!open} className={classes.toolbar}>
           <IconButton

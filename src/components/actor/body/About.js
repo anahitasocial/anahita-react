@@ -12,7 +12,7 @@ const ActorBodyAbout = (props) => {
   const { actor: { body } } = props;
 
   return (
-    <Card>
+    <Card variant="outlined">
       <CardHeader
         title={
           <Typography

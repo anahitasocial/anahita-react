@@ -119,7 +119,7 @@ const PeopleAdd = (props) => {
 
   return (
     <React.Fragment>
-      <Card>
+      <Card variant="outlined">
         <CardHeader
           title={getName()}
           subheader={person.username ? `@${person.username}` : ''}

@@ -30,7 +30,7 @@ const SettingsMetaForm = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <Card>
+      <Card variant="outlined">
         {header}
         <CardContent>
           {formControllers.map((fController, index) => {

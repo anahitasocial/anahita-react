@@ -46,6 +46,7 @@ const LocationsGadget = (props) => {
     isFetching,
     error,
     browse,
+    cardProps,
   } = props;
 
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
@@ -98,8 +99,9 @@ const LocationsGadget = (props) => {
         node={node}
         isOpen={isOpen}
         handleClose={handleClose}
+        cardProps={cardProps}
       />
-      <Card>
+      <Card variant="outlined" {...cardProps}>
         <CardHeader
           title={
             <Typography
@@ -158,6 +160,11 @@ LocationsGadget.propTypes = {
   browse: PropTypes.func.isRequired,
   isFetching: PropTypes.objectOf(PropTypes.bool).isRequired,
   error: PropTypes.objectOf(PropTypes.string).isRequired,
+  cardProps: PropTypes.objectOf(PropTypes.any),
+};
+
+LocationsGadget.defaultProps = {
+  cardProps: {},
 };
 
 const mapStateToProps = (state) => {

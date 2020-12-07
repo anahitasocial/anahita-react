@@ -78,7 +78,11 @@ const StoryCardDefault = (props) => {
   const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
 
   return (
-    <Card className={classes.root} component="article">
+    <Card
+      className={classes.root}
+      component="article"
+      variant="outlined"
+    >
       {showOwnerHeader &&
         <StoryCardOwner node={story} />
       }

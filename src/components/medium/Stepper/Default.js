@@ -50,6 +50,7 @@ const styles = (theme) => {
       fontSize: 12,
     },
     scrollingItem: {
+      marginTop: -2,
       height: '88vh',
       overflowY: 'auto',
     },
@@ -148,7 +149,7 @@ const MediumStepperDefault = (props) => {
         md={4}
       >
         <div className={classes.scrollingItem}>
-          <Card elevation={0}>
+          <Card variant="outlined" square>
             {medium.owner.objectType.split('.')[1] !== 'people' &&
               <CardHeaderOwner node={medium} />
             }

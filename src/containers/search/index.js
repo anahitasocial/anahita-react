@@ -114,7 +114,6 @@ const Search = (props) => {
         position="sticky"
         color="inherit"
         className={classes.root}
-        elevation={1}
       >
         <Toolbar>
           <FormGroup
