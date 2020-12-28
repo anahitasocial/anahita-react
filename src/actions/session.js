@@ -32,11 +32,11 @@ function readFailure(error) {
   };
 }
 
-function read(credentials) {
+function read() {
   return (dispatch) => {
     dispatch(readRequest());
     return new Promise((resolve, reject) => {
-      api.add(credentials)
+      api.read()
         .then((response) => {
           dispatch(readSuccess(response));
           return resolve();

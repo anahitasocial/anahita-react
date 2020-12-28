@@ -5,11 +5,13 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import _ from 'lodash';
 
@@ -26,6 +28,7 @@ const SettingsMetaForm = (props) => {
     handleOnSubmit,
     handleClose,
     isFetching,
+    enabled,
   } = props;
 
   return (
@@ -33,6 +36,16 @@ const SettingsMetaForm = (props) => {
       <Card variant="outlined">
         {header}
         <CardContent>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={enabled}
+                onChange={handleOnChange}
+                name="enabled"
+              />
+            }
+            label="Enabled"
+          />
           {formControllers.map((fController, index) => {
             const {
               name,
@@ -173,6 +186,7 @@ SettingsMetaForm.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  enabled: PropTypes.bool.isRequired,
 };
 
 SettingsMetaForm.defaultProps = {

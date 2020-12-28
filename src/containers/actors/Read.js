@@ -74,9 +74,6 @@ const ActorsRead = (props) => {
   }
 
   const canFollow = permissions.canFollow(actor);
-
-  console.log('canFollow', canFollow);
-
   const canEdit = permissions.canEdit(actor);
   const canAdminister = permissions.canAdminister(actor);
   const canViewCommands = permissions.canViewCommands(actor, [

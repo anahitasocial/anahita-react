@@ -17,6 +17,7 @@ import signup from './signup';
 import socialgraph from './socialgraph';
 import taggables from './taggables';
 import tagGraph from './tag_graph';
+import token from './token';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -76,4 +77,5 @@ export {
   tagGraph,
   todos,
   topics,
+  token,
 };

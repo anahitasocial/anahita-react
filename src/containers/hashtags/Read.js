@@ -53,7 +53,7 @@ const HashtagsRead = (props) => {
 
   return (
     <React.Fragment>
-      <Card variant="outlined">
+      <Card variant="outlined" square>
         <CardHeader
           avatar={
             <Avatar>

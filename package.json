@@ -2,7 +2,7 @@
   "name": "anahita-react",
   "description": "Front-end React application for Anahita",
   "keywords": "socialnetwork, knowledge network, knowledge sharing, graph architecture, platform, open science, open data, learning management system, lms",
-  "homepage": "http://localhost:5000",
+  "homepage": "http://localhost:3000",
   "bugs": "https://github.com/anahitasocial/anahita-react/issues",
   "license": "MIT",
   "version": "0.1.0",

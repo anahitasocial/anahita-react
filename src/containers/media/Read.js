@@ -97,8 +97,6 @@ const MediaRead = (props) => {
     setFields({ ...newFields });
   };
 
-  const canAddComment = isAuthenticated && medium.openToComment;
-
   if (isFetching && !medium.id) {
     return (
       <Progress />
@@ -111,6 +109,7 @@ const MediaRead = (props) => {
     );
   }
 
+  const canAddComment = isAuthenticated && medium.openToComment;
   const Like = LikeAction(medium.objectType.split('.')[1]);
 
   return (

@@ -96,6 +96,7 @@ const SettingsPluginsEdit = (props) => {
           />
         }
         nodeId={plugin.id}
+        enabled={plugin.enabled}
         namespace={namespace}
         formControllers={formControllers}
         meta={entity}

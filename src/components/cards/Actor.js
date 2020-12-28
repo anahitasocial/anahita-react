@@ -53,63 +53,61 @@ const ActorCard = (props) => {
   const url = getURL(actor);
 
   return (
-    <React.Fragment>
-      <Card variant="outlined">
-        {cover &&
-          <Link href={url}>
-            <CardMedia
-              className={classes.cover}
-              image={cover}
-              title={actor.name}
-              src="picture"
-            />
-          </Link>
+    <Card variant="outlined">
+      {cover &&
+        <Link href={url}>
+          <CardMedia
+            className={classes.cover}
+            image={cover}
+            title={actor.name}
+            src="picture"
+          />
+        </Link>
+      }
+      <CardHeader
+        avatar={
+          <ActorAvatar
+            actor={actor}
+            linked
+          />
         }
-        <CardHeader
-          avatar={
-            <ActorAvatar
-              actor={actor}
-              linked
-            />
-          }
-          title={
-            <ActorTitle
-              actor={actor}
-              typographyProps={{
-                  variant: 'h6',
-                  className: classes.title,
-              }}
-              linked
-            />
-          }
-          subheader={
-            <Typography
-              variant="subtitle1"
-              className={classes.alias}
-            >
-              {`@${actor.alias}`}
-            </Typography>
-          }
-        />
-        {actor.body &&
-        <CardContent>
-          <ReadMore charLimit={160}>
-            {contentfilter({
-              text: actor.body,
-              filters: [
-                'hashtag',
-                'mention',
-                'url',
-              ],
-            })}
-          </ReadMore>
-        </CardContent>
+        title={
+          <ActorTitle
+            actor={actor}
+            typographyProps={{
+                variant: 'h6',
+                className: classes.title,
+            }}
+            linked
+          />
         }
-        <CardActions className={classes.actions}>
-          {action}
-        </CardActions>
-      </Card>
-    </React.Fragment>
+        subheader={
+          <Typography
+            variant="subtitle1"
+            className={classes.alias}
+          >
+            {`@${actor.alias}`}
+          </Typography>
+        }
+      />
+      {actor.body &&
+      <CardContent>
+        <ReadMore charLimit={160}>
+          {contentfilter({
+            text: actor.body,
+            filters: [
+              'hashtag',
+              'mention',
+              'url',
+            ],
+          })}
+        </ReadMore>
+      </CardContent>
+      }
+      <CardActions className={classes.actions}>
+        {action}
+      </CardActions>
+    </Card>
   );
 };
 

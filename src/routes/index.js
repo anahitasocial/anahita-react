@@ -9,6 +9,7 @@ import {
 import AuthenticatedRoute from './AuthenticatedRoute';
 
 import AuthPage from '../containers/auth';
+import AuthToken from '../containers/auth/Token';
 import PasswordResetPage from '../containers/auth/PasswordReset';
 
 import HomePage from '../containers/Home';
@@ -78,6 +79,20 @@ const Routes = (props) => {
       />
       <Route
         exact
+        path="/token/:token/resetpassword/"
+        render={(params) => {
+          return (
+            <AuthToken resetPassword {...params} />
+          );
+        }}
+      />
+      <Route
+        exact
+        path="/token/:token/"
+        component={AuthToken}
+      />
+      <Route
+        exact
         path="/auth/"
         component={AuthPage}
       />
@@ -99,6 +114,12 @@ const Routes = (props) => {
       <AuthenticatedRoute
         path="/dashboard/"
         component={DashboardPage}
+      />
+      <AuthenticatedRoute
+        path="/people/:id/settings/account"
+        exact
+        component={PeopleSettings}
+        selectedTab="account"
       />
       <AuthenticatedRoute
         path="/people/:id/settings/"

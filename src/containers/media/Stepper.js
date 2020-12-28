@@ -110,6 +110,10 @@ const MediaStepper = (props) => {
   const handleKeydown = (event) => {
     const { code } = event;
 
+    if (isEditing) {
+      return;
+    }
+
     if (code === 'ArrowRight') {
       handleNext();
     }
@@ -120,11 +124,11 @@ const MediaStepper = (props) => {
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeydown);
+    // window.addEventListener('keydown', handleKeydown);
     preloadImages();
 
     return () => {
-      window.removeEventListener('keydown', handleKeydown);
+      // window.removeEventListener('keydown', handleKeydown);
       nextImage.src = null;
       prevImage.src = null;
     };

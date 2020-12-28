@@ -39,6 +39,7 @@ const ActorsSettings = (props) => {
     actor,
     resetActors,
     namespace,
+    selectedTab,
     computedMatch: {
       params,
     },
@@ -49,7 +50,7 @@ const ActorsSettings = (props) => {
 
   const [id] = params.id.split('-');
 
-  const [tab, setTab] = useState(TABS.INFO);
+  const [tab, setTab] = useState(selectedTab);
 
   useEffect(() => {
     readActor(id, namespace);
@@ -156,6 +157,19 @@ ActorsSettings.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
+  selectedTab: PropTypes.oneOf([
+    TABS.ADMINS,
+    TABS.ACCOUNT,
+    TABS.APPS,
+    TABS.INFO,
+    TABS.PERMISSIONS,
+    TABS.PRIVACY,
+    TABS.DELETE,
+  ]),
+};
+
+ActorsSettings.defaultProps = {
+  selectedTab: TABS.INFO,
 };
 
 const mapStateToProps = (namespace) => {

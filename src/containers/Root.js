@@ -3,9 +3,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { LoadScriptNext } from '@react-google-maps/api';
 import App from '../containers/App';
 import Routes from '../routes';
 import styles from '../styles';
+import i18n from '../languages';
 
 const Root = ({ store }) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -20,9 +22,15 @@ const Root = ({ store }) => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <App>
-          <Routes store={store} />
-        </App>
+        <LoadScriptNext
+          googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+          language={i18n.language}
+          loadingElement={<div />}
+        >
+          <App>
+            <Routes store={store} />
+          </App>
+        </LoadScriptNext>
       </ThemeProvider>
     </Provider>
   );

@@ -26,28 +26,26 @@ const ActorSettingCard = (props) => {
   const initials = actor.name.charAt(0);
 
   return (
-    <React.Fragment>
-      <Card variant="outlined">
-        <CardHeader
-          avatar={
-            <Avatar
-              aria-label={actor.name}
-              className={classes.avatar}
-              alt={actor.name}
-              src={avatarSrc}
-              component={Link}
-              to={`/${namespace}/${actor.id}/`}
-            >
-              {!avatarSrc && initials}
-            </Avatar>
-          }
-          title={actor.name}
-          subheader={subheader}
-        />
-        <Divider />
-        {children}
-      </Card>
-    </React.Fragment>
+    <Card variant="outlined">
+      <CardHeader
+        avatar={
+          <Avatar
+            aria-label={actor.name}
+            className={classes.avatar}
+            alt={actor.name}
+            src={avatarSrc}
+            component={Link}
+            to={`/${namespace}/${actor.id}/`}
+          >
+            {!avatarSrc && initials}
+          </Avatar>
+        }
+        title={actor.name}
+        subheader={subheader}
+      />
+      <Divider />
+      {children}
+    </Card>
   );
 };
 
