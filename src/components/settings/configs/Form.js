@@ -9,12 +9,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
@@ -31,21 +29,20 @@ const SettingsConfigsForm = (props) => {
     handleOnSubmit,
     fields: {
       sitename,
-      live_site,
-      log_path,
-      tmp_path,
-      host,
-      db,
-      dbprefix,
-      smtpport,
-      smtpuser,
-      smtppass,
-      smtphost,
+      // Mailer Settings
+      mailfrom,
+      fromname,
+      sendmail,
+      // SMTP Settings
+      smtp_user,
+      smtp_pass,
+      smtp_host,
+      smtp_port,
     },
     isFetching,
   } = props;
 
-  const enableSubmit = true; // sitename.isValid && live_site.isValid;
+  const isSMTP = configs.mailer === 'smtp';
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
@@ -84,92 +81,12 @@ const SettingsConfigsForm = (props) => {
               required
             />
             <TextField
-              name="live_site"
-              value={configs.live_site}
-              onChange={handleOnChange}
-              label="Live Site"
-              error={live_site.error !== ''}
-              helperText={live_site.error}
-              margin="normal"
-              fullWidth
-              inputProps={{
-                maxLength: MAX_LENGTH,
-              }}
-              required
-            />
-            <TextField
-              name="log_path"
-              value={configs.log_path}
-              onChange={handleOnChange}
-              label="Path to log folder"
-              error={log_path.error !== ''}
-              helperText={log_path.error}
-              margin="normal"
-              fullWidth
-              inputProps={{
-                maxLength: MAX_LENGTH,
-              }}
-              required
-            />
-            <TextField
-              name="tmp_path"
-              value={configs.tmp_path}
-              onChange={handleOnChange}
-              label="Path to temp folder"
-              error={tmp_path.error !== ''}
-              helperText={tmp_path.error}
-              margin="normal"
-              fullWidth
-              inputProps={{
-                maxLength: MAX_LENGTH,
-              }}
-              required
-            />
-            <TextField
-              name="secret"
-              value={configs.secret}
-              label="Secret Word"
+              name="server_domain"
+              value={configs.server_domain}
+              label="Server Domain"
               margin="normal"
               fullWidth
               disabled
-            />
-            <FormControl margin="normal">
-              <InputLabel id="configs-error-reporting-label">
-                Error Reporting
-              </InputLabel>
-              <Select
-                id="configs-error-reporting"
-                labelId="configs-error-reporting-label"
-                name="error_reporting"
-                value={configs.error_reporting}
-                onChange={handleOnChange}
-                label="Error Reporting"
-              >
-                <MenuItem value={-1}>System Default</MenuItem>
-                <MenuItem value={0}>None</MenuItem>
-                <MenuItem value={7}>Simple</MenuItem>
-                <MenuItem value={30719}>Maximum</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={configs.sef_rewrite}
-                  onChange={handleOnChange}
-                  name="sef_rewrite"
-                />
-              }
-              label="Use mod_rewrite"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={configs.debug}
-                  onChange={handleOnChange}
-                  name="debug"
-                />
-              }
-              label="Debug System"
             />
           </FormControl>
           <FormControl
@@ -178,37 +95,27 @@ const SettingsConfigsForm = (props) => {
             margin="normal"
           >
             <FormLabel component="legend">
-              Database Settings
+              Mailer Settings
             </FormLabel>
-            <TextField
-              name="dbtype"
-              value={configs.dbtype}
-              label="Database Type"
-              margin="normal"
-              fullWidth
-              disabled
-            />
-            <TextField
-              name="host"
-              value={configs.host}
+            <Select
+              id="configs-mailer"
+              labelId="configs-mailer-label"
+              name="mailer"
+              value={configs.mailer}
               onChange={handleOnChange}
-              label="Database Host"
-              error={host.error !== ''}
-              helperText={host.error}
-              margin="normal"
-              fullWidth
-              inputProps={{
-                maxLength: MAX_LENGTH,
-              }}
-              required
-            />
+              label="Mailer"
+            >
+              <MenuItem value="mail">Mail</MenuItem>
+              <MenuItem value="sendmail">Sendmail</MenuItem>
+              <MenuItem value="smtp">SMTP</MenuItem>
+            </Select>
             <TextField
-              name="db"
-              value={configs.db}
+              name="mailfrom"
+              value={configs.mailfrom}
               onChange={handleOnChange}
-              label="Database Type"
-              error={db.error !== ''}
-              helperText={db.error}
+              label="Mail From"
+              error={mailfrom.error !== ''}
+              helperText={mailfrom.error}
               margin="normal"
               fullWidth
               inputProps={{
@@ -217,12 +124,26 @@ const SettingsConfigsForm = (props) => {
               required
             />
             <TextField
-              name="dbprefix"
-              value={configs.dbprefix}
+              name="fromname"
+              value={configs.mailfrom}
               onChange={handleOnChange}
-              label="Database Prefix"
-              error={dbprefix.error !== ''}
-              helperText={dbprefix.error}
+              label="From Name"
+              error={fromname.error !== ''}
+              helperText={fromname.error}
+              margin="normal"
+              fullWidth
+              inputProps={{
+                maxLength: MAX_LENGTH,
+              }}
+              required
+            />
+            <TextField
+              name="sendmail"
+              value={configs.sendmail}
+              onChange={handleOnChange}
+              label="Send Mail"
+              error={sendmail.error !== ''}
+              helperText={sendmail.error}
               margin="normal"
               fullWidth
               inputProps={{
@@ -237,62 +158,8 @@ const SettingsConfigsForm = (props) => {
             margin="normal"
           >
             <FormLabel component="legend">
-              CORS Settings
+              SMTP Settings
             </FormLabel>
-            <TextField
-              name="cors_origin"
-              value={configs.cors_origin}
-              label="Origin"
-              margin="normal"
-              fullWidth
-              disabled
-            />
-            <TextField
-              name="cors_methods"
-              value={configs.cors_methods}
-              label="Methods"
-              margin="normal"
-              fullWidth
-              disabled
-            />
-            <TextField
-              name="cors_headers"
-              value={configs.cors_headers}
-              label="Headers"
-              margin="normal"
-              fullWidth
-              disabled
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={configs.cors_credentials}
-                  onChange={handleOnChange}
-                  name="cors_credentials"
-                  disabled
-                />
-              }
-              label="Credentials"
-            />
-          </FormControl>
-          <FormControl
-            component="fieldset"
-            fullWidth
-            margin="normal"
-          >
-            <FormLabel component="legend">
-              Mail Settings
-            </FormLabel>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={configs.smtpauth}
-                  onChange={handleOnChange}
-                  name="smtpauth"
-                />
-              }
-              label="SMTP Auth"
-            />
             <FormControl margin="normal">
               <InputLabel id="configs-smtp-security-label">
                 SMTP Security
@@ -300,8 +167,8 @@ const SettingsConfigsForm = (props) => {
               <Select
                 id="configs-smtp-security"
                 labelId="configs-smtp-security-label"
-                name="smtpsecure"
-                value={configs.smtpsecure}
+                name="smtp_secure"
+                value={configs.smtp_secure}
                 onChange={handleOnChange}
                 label="SMTP Security"
               >
@@ -311,62 +178,62 @@ const SettingsConfigsForm = (props) => {
               </Select>
             </FormControl>
             <TextField
-              name="smtpport"
+              name="smtp_port"
               type="number"
-              value={configs.smtpport}
+              value={configs.smtp_port}
               onChange={handleOnChange}
               label="SMTP Port"
-              error={smtpport.error !== ''}
-              helperText={smtpport.error}
+              error={smtp_port.error !== ''}
+              helperText={smtp_port.error}
               margin="normal"
               fullWidth
               inputProps={{
                 maxLength: MAX_LENGTH,
               }}
-              required
+              required={isSMTP}
             />
             <TextField
-              name="smtpuser"
-              value={configs.smtpuser}
+              name="smtp_user"
+              value={configs.smtp_user}
               onChange={handleOnChange}
               label="SMTP User"
-              error={smtpuser.error !== ''}
-              helperText={smtpuser.error}
+              error={smtp_user.error !== ''}
+              helperText={smtp_user.error}
               margin="normal"
               fullWidth
               inputProps={{
                 maxLength: MAX_LENGTH,
               }}
-              required
+              required={isSMTP}
             />
             <TextField
-              name="smtppass"
+              name="smtp_pass"
               type="password"
-              value={configs.smtppass}
+              value={configs.smtp_pass}
               onChange={handleOnChange}
               label="SMTP Password"
-              error={smtppass.error !== ''}
-              helperText={smtppass.error}
+              error={smtp_pass.error !== ''}
+              helperText={smtp_pass.error}
               margin="normal"
               fullWidth
               inputProps={{
                 maxLength: MAX_LENGTH,
               }}
-              required
+              required={isSMTP}
             />
             <TextField
-              name="smtphost"
-              value={configs.smtphost}
+              name="smtp_host"
+              value={configs.smtp_host}
               onChange={handleOnChange}
               label="SMTP Host"
-              error={smtphost.error !== ''}
-              helperText={smtphost.error}
+              error={smtp_host.error !== ''}
+              helperText={smtp_host.error}
               margin="normal"
               fullWidth
               inputProps={{
                 maxLength: MAX_LENGTH,
               }}
-              required
+              required={isSMTP}
             />
           </FormControl>
         </CardContent>
@@ -375,7 +242,7 @@ const SettingsConfigsForm = (props) => {
             type="submit"
             variant="contained"
             color="primary"
-            disabled={isFetching || !enableSubmit}
+            disabled={isFetching}
             fullWidth
           >
             Save

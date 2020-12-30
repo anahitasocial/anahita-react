@@ -12,16 +12,15 @@ import Progress from '../../components/Progress';
 
 const formFields = form.createFormFields([
   'sitename',
-  'live_site',
-  'log_path',
-  'tmp_path',
-  'host',
-  'db',
-  'dbprefix',
-  'smtpport',
-  'smtpuser',
-  'smtppass',
-  'smtphost',
+  // Mailer Settings
+  'mailfrom',
+  'fromname',
+  'sendmail',
+  // SMTP Settings
+  'smtp_port',
+  'smtp_user',
+  'smtp_pass',
+  'smtp_host',
 ]);
 
 const SettingsConfigs = (props) => {
@@ -86,7 +85,7 @@ const SettingsConfigs = (props) => {
     setFields({ ...newFields });
   };
 
-  if (configs.db === '' && isFetching) {
+  if (configs.sitename === '' && isFetching) {
     return (
       <Progress />
     );

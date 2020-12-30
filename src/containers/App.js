@@ -172,6 +172,7 @@ const App = (props) => {
           <Divider />
           <LeftMenu
             onLogoutClick={handleLogout}
+            viewer={viewer}
             isAuthenticated={isAuthenticated}
             classNames={classes}
           />

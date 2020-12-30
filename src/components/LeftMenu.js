@@ -22,9 +22,12 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 
 import i18n from '../languages';
+import PersonType from '../proptypes/Person';
+import permissions from '../permissions';
 
 const LeftMenu = (props) => {
   const {
+    viewer,
     isAuthenticated,
     onLogoutClick,
   } = props;
@@ -131,7 +134,7 @@ const LeftMenu = (props) => {
         </ListItemIcon>
         <ListItemText primary={i18n.t('locations:cTitle')} />
       </ListItem>
-      {isAuthenticated &&
+      {isAuthenticated && permissions.settings.canEdit(viewer) &&
         <ListItem
           button
           component={Link}
@@ -161,6 +164,7 @@ const LeftMenu = (props) => {
 
 LeftMenu.propTypes = {
   onLogoutClick: PropTypes.func.isRequired,
+  viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
