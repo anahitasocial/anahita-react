@@ -10,12 +10,10 @@ import i18n from '../../languages';
 import SettingsAbout from './About';
 import SettingsApps from './apps/Browse';
 import SettingsAssignments from './assignments/Browse';
-import SettingsConfigs from './Configs';
 import SettingsPlugins from './plugins/Browse';
 
 const TABS = {
   ABOUT: 'about',
-  CONFIGS: 'configs',
   APPS: 'apps',
   ASSIGNMENTS: 'assignments',
   PLUGINS: 'plugins',
@@ -44,16 +42,12 @@ const Settings = (props) => {
         aria-label="Site Settings"
       >
         <Tab label="About" value={TABS.ABOUT} />
-        <Tab label="Configs" value={TABS.CONFIGS} />
         <Tab label="Apps" value={TABS.APPS} />
         <Tab label="App Assignments" value={TABS.ASSIGNMENTS} />
         <Tab label="Plugins" value={TABS.PLUGINS} />
       </Tabs>
       {tab === TABS.ABOUT &&
         <SettingsAbout />
-      }
-      {tab === TABS.CONFIGS &&
-        <SettingsConfigs />
       }
       {tab === TABS.APPS &&
         <SettingsApps />
