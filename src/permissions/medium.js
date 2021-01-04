@@ -1,45 +1,15 @@
-import { Person as PERSON } from '../constants';
-
-const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
+import nodePermissions from './node';
 
 const canEdit = (viewer, medium) => {
-  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
-    return true;
-  }
-
-  if (medium.owner.id === viewer.id) {
-    return true;
-  }
-
-  if (medium.author.id === viewer.id) {
-    return true;
-  }
-
-  return false;
+  return nodePermissions.canEdit(viewer, medium);
 };
 
 const canAdd = (viewer, owner) => {
-  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
-    return true;
-  }
-
-  if (viewer.id === owner.id) {
-    return true;
-  }
-
-  return false;
+  return nodePermissions.canAdd(viewer, owner);
 };
 
 const canDelete = (viewer, medium) => {
-  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
-    return true;
-  }
-
-  if (medium.owner.id === viewer.id) {
-    return true;
-  }
-
-  return false;
+  return nodePermissions.canDelete(viewer, medium);
 };
 
 export default {

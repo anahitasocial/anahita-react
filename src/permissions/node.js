@@ -24,8 +24,12 @@ const canEdit = (viewer, node) => {
   return false;
 };
 
-const canAdd = (viewer) => {
+const canAdd = (viewer, owner = null) => {
   if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
+    return true;
+  }
+
+  if (owner && viewer.id === owner.id) {
     return true;
   }
 
