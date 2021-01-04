@@ -18,6 +18,11 @@ export default {
         no: 'No',
         yes: 'Yes',
       },
+      muteEmail: 'Mute Email Notifications',
+      muteEmailOptions: {
+        no: 'No',
+        yes: 'Yes',
+      },
     },
     mailer: {
       debug: 'Debug Mailer',
