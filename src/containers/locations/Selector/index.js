@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { geolocated } from 'react-geolocated';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -19,7 +20,19 @@ const TABS = {
   ADD: 'add',
 };
 
+const useStyles = makeStyles((theme) => {
+  return {
+    closeButton: {
+      position: 'absolute',
+      right: theme.spacing(1),
+      top: theme.spacing(1),
+      color: theme.palette.grey[500],
+    },
+  };
+});
+
 const LocationsSelector = (props) => {
+  const classes = useStyles();
   const {
     node,
     isOpen,
@@ -68,6 +81,7 @@ const LocationsSelector = (props) => {
             style={{
               float: 'right',
             }}
+            className={classes.closeButton}
           >
             <CloseIcon />
           </IconButton>

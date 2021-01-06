@@ -13,4 +13,8 @@ export default {
   latitude: 0.0,
   longitude: 0.0,
   commands: [],
+  address: '',
+  city: '',
+  state_province: '',
+  country: '',
 };

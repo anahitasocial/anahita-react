@@ -3,19 +3,32 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+
 import LocationForm from '../../../components/location/Form';
 import * as actions from '../../../actions';
 import * as api from '../../../api';
+import i18n from '../../../languages';
 import form from '../../../utils/form';
 import NodeType from '../../../proptypes/Node';
+import LocationDefault from '../../../proptypes/LocationDefault';
 
-const formFields = form.createFormFields([
-  'name',
-  'address',
-  'city',
-  'state_province',
-  'country',
-]);
+const fieldNames = ['name', 'address'];
+
+if (process.env.REACT_APP_LOCATION_FIXED_CITY === '') {
+  fieldNames.push('city');
+}
+
+if (process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE === '') {
+  fieldNames.push('state_province');
+}
+
+if (process.env.REACT_APP_LOCATION_FIXED_COUNTRY === '') {
+  fieldNames.push('country');
+}
+
+const formFields = form.createFormFields(fieldNames);
 
 const LocationsSelectorAdd = (props) => {
   const {
@@ -28,11 +41,14 @@ const LocationsSelectorAdd = (props) => {
   formFields.name.value = name;
 
   const [fields, setFields] = useState(formFields);
+  const [location, setLocation] = useState(LocationDefault);
   const [isFetching, setIsFetching] = useState(false);
 
   const handleOnChange = (event) => {
     const { target } = event;
     const newFields = form.validateField(target, fields);
+
+    location[target.name] = target.value;
 
     setFields({ ...newFields });
   };
@@ -45,10 +61,18 @@ const LocationsSelectorAdd = (props) => {
 
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
+
+      formData.city = process.env.REACT_APP_LOCATION_FIXED_CITY || formData.city;
+
+      formData.state_province =
+      process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE ||
+      formData.state_province;
+
+      formData.country = process.env.REACT_APP_LOCATION_FIXED_COUNTRY || formData.country;
+
       setIsFetching(true);
       api.locations.add(formData).then((result) => {
-        const { data: location } = result;
-        addTag(node, location).then(() => {
+        addTag(node, result.data).then(() => {
           setIsFetching(true);
           return callback(location);
         }).catch((err) => {
@@ -63,12 +87,27 @@ const LocationsSelectorAdd = (props) => {
   };
 
   return (
-    <LocationForm
-      fields={fields}
-      handleOnChange={handleOnChange}
-      handleOnSubmit={handleOnSubmit}
-      isFetching={isFetching}
-    />
+    <Card square variant="outlined">
+      <LocationForm
+        fields={fields}
+        location={location}
+        handleOnChange={handleOnChange}
+        handleOnSubmit={handleOnSubmit}
+        isFetching={isFetching}
+        actions={
+          <Button
+            type="submit"
+            color="primary"
+            disabled={isFetching}
+            variant="contained"
+            size="small"
+            fullWidth
+          >
+            {i18n.t('actions:add')}
+          </Button>
+        }
+      />
+    </Card>
   );
 };
 

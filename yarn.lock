@@ -7656,6 +7656,11 @@ react-base16-styling@^0.5.1:
     lodash.flow "^3.3.0"
     pure-color "^1.2.0"
 
+react-country-region-selector@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-country-region-selector/-/react-country-region-selector-3.0.1.tgz#d7368e0da8da21779bb19883ca1e829ff6879c97"
+  integrity sha512-yYAkBmc/JBfaytnFKawXYQ5Yf6dsT/j1sx7dLD1eSSPRIGCWVfeY1/BSEw00QYsUFN/C2F0mLNSAvY/XA1a33Q==
+
 react-dev-utils@^5.0.2:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.3.tgz#92f97668f03deb09d7fa11ea288832a8c756e35e"

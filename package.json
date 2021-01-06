@@ -49,6 +49,7 @@
     "qs": "^6.9.4",
     "query-string": "^6.12.1",
     "react": "^16.10.2",
+    "react-country-region-selector": "^3.0.1",
     "react-dom": "^16.10.2",
     "react-geolocated": "^3.0.1",
     "react-helmet": "^5.2.0",

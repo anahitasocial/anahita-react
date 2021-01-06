@@ -77,8 +77,8 @@ const getAddress = (node) => {
     fields.push(node.city);
   }
 
-  if (node.province) {
-    fields.push(node.province);
+  if (node.state_province) {
+    fields.push(node.state_province);
   }
 
   if (node.country) {

@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -13,12 +14,17 @@ import withWidth from '@material-ui/core/withWidth';
 
 import LocationIcon from '@material-ui/icons/LocationOn';
 
+import LocationMenu from './Menu';
+import LocationForm from '../../components/location/Form';
 import * as actions from '../../actions';
+import form from '../../utils/form';
 import i18n from '../../languages';
 import utils from '../../utils';
+import permissions from '../../permissions';
 
 import LocationsType from '../../proptypes/Locations';
 
+import PersonType from '../../proptypes/Person';
 import AnahitaMap from '../../components/Map';
 import Taggables from '../taggables';
 import Progress from '../../components/Progress';
@@ -33,11 +39,27 @@ const useStyles = makeStyles({
 });
 
 const { getAddress } = utils.node;
+const fieldNames = ['name', 'address'];
+
+if (process.env.REACT_APP_LOCATION_FIXED_CITY === '') {
+  fieldNames.push('city');
+}
+
+if (process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE === '') {
+  fieldNames.push('state_province');
+}
+
+if (process.env.REACT_APP_LOCATION_FIXED_COUNTRY === '') {
+  fieldNames.push('country');
+}
+
+const formFields = form.createFormFields(fieldNames);
 
 const LocationsRead = (props) => {
   const classes = useStyles();
   const {
     readItem,
+    editItem,
     setAppTitle,
     items: {
       current: location,
@@ -45,6 +67,7 @@ const LocationsRead = (props) => {
     taggablesCount,
     isFetching,
     error,
+    viewer,
     match: {
       params: {
         id,
@@ -52,12 +75,62 @@ const LocationsRead = (props) => {
     },
   } = props;
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [fields, setFields] = useState(formFields);
+
   useEffect(() => {
     readItem(id);
     setAppTitle(i18n.t('locations:cTitle'));
   }, []);
 
-  if (isFetching) {
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  const handleOnChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+
+    location[name] = value;
+
+    const newFields = form.validateField(target, fields);
+
+    setFields({ ...newFields });
+  };
+
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+
+    const { target } = event;
+    const newFields = form.validateForm(target, fields);
+
+    if (form.isValid(newFields)) {
+      const formData = form.fieldsToData(newFields);
+
+      formData.city = process.env.REACT_APP_LOCATION_FIXED_CITY || formData.city;
+
+      formData.state_province =
+      process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE ||
+      formData.state_province;
+
+      formData.country = process.env.REACT_APP_LOCATION_FIXED_COUNTRY || formData.country;
+
+      editItem({
+        id: location.id,
+        ...formData,
+      }).then(() => {
+        handleCancel();
+      });
+    }
+
+    setFields({ ...newFields });
+  };
+
+  if (!location.id && isFetching) {
     return (
       <Progress key="location-progress" />
     );
@@ -69,9 +142,11 @@ const LocationsRead = (props) => {
     );
   }
 
+  const canAdminister = permissions.node.canAdminister(viewer);
+
   return (
     <React.Fragment>
-      <Card square variant="outlined">
+      <Card square>
         <CardHeader
           avatar={
             <Avatar>
@@ -86,7 +161,41 @@ const LocationsRead = (props) => {
           subheader={i18n.t('taggables:count', {
             count: taggablesCount,
           })}
+          action={canAdminister &&
+            <LocationMenu
+              location={location}
+              viewer={viewer}
+              handleEdit={handleEdit}
+            />
+          }
         />
+        {isEditing &&
+          <LocationForm
+            fields={fields}
+            location={location}
+            handleOnChange={handleOnChange}
+            handleOnSubmit={handleOnSubmit}
+            isFetching={isFetching}
+            actions={[
+              <Button
+                onClick={handleCancel}
+                fullWidth
+                key="location-action-cancel"
+              >
+                Cancel
+              </Button>,
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                fullWidth
+                key="location-action-update"
+              >
+                Update
+              </Button>,
+            ]}
+          />
+        }
         {location.id &&
           <AnahitaMap
             locations={[location]}
@@ -120,28 +229,36 @@ const mapStateToProps = (state) => {
 
   const taggablesCount = total;
 
+  const { viewer } = state.session;
+
   return {
     items,
     taggablesCount,
     error,
     isFetching,
+    viewer,
   };
 };
 
 LocationsRead.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   readItem: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
   items: LocationsType.isRequired,
   match: PropTypes.object.isRequired,
   taggablesCount: PropTypes.number.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     readItem: (id) => {
       return dispatch(actions.locations.read(id));
+    },
+    editItem: (node) => {
+      return dispatch(actions.locations.edit(node));
     },
     setAppTitle: (title) => {
       dispatch(actions.app.setAppTitle(title));

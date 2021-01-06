@@ -1,82 +1,76 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 
-import i18n from '../../languages';
 import { Locations as LOCATION } from '../../constants';
+import LocationType from '../../proptypes/Location';
+import CountrySelect from '../select/Country';
 
 const {
   TITLE,
   ADDRESS,
   CITY,
   STATE_PROVINCE,
-  COUNTRY,
 } = LOCATION.FIELDS;
 
 const LocationForm = (props) => {
   const {
     handleOnChange,
     handleOnSubmit,
-    handleCancel,
-    fields: {
-      name,
-      address,
-      city,
-      state_province,
-      country,
-    },
+    fields,
+    location,
     isFetching,
+    actions,
+    requiredFields,
   } = props;
 
-  const enableSubmit = name.isValid &&
-  address.isValid &&
-  city.isValid &&
-  state_province.isValid &&
-  country.isValid;
-
   return (
-    <form onSubmit={handleOnSubmit} noValidate>
-      <Card variant="outlined">
-        <CardContent>
-          <TextField
-            id="location-name"
-            margin="normal"
-            variant="outlined"
-            label="Name"
-            onChange={handleOnChange}
-            name="name"
-            value={name.value}
-            error={name.error !== ''}
-            helperText={name.error}
-            inputProps={{
-              maxLength: TITLE.MAX_LENGTH,
-            }}
-            disabled={isFetching}
-            fullWidth
-            autoFocus
-            required
-          />
-          <TextField
-            id="location-address"
-            margin="normal"
-            variant="outlined"
-            label="Address"
-            onChange={handleOnChange}
-            name="address"
-            value={address.value}
-            error={address.error !== ''}
-            helperText={address.error}
-            inputProps={{
-              maxLength: ADDRESS.MAX_LENGTH,
-            }}
-            disabled={isFetching}
-            fullWidth
-            required
-          />
+    <form
+      onSubmit={handleOnSubmit}
+      noValidate
+      autoComplete="off"
+    >
+      <CardContent>
+        <TextField
+          id="location-name"
+          margin="normal"
+          variant="outlined"
+          label="Name"
+          onChange={handleOnChange}
+          name="name"
+          value={location.name}
+          error={fields.name.error !== ''}
+          helperText={fields.name.error}
+          inputProps={{
+            maxLength: TITLE.MAX_LENGTH,
+          }}
+          disabled={isFetching}
+          fullWidth
+          autoFocus
+          required={requiredFields.includes('name')}
+        />
+        <TextField
+          id="location-address"
+          margin="normal"
+          variant="outlined"
+          label="Address"
+          onChange={handleOnChange}
+          name="address"
+          value={location.address}
+          error={fields.address.error !== ''}
+          helperText={fields.address.error}
+          inputProps={{
+            maxLength: ADDRESS.MAX_LENGTH,
+          }}
+          disabled={isFetching}
+          fullWidth
+          required={requiredFields.includes('address')}
+        />
+        {fields.city &&
           <TextField
             id="location-city"
             margin="normal"
@@ -84,16 +78,18 @@ const LocationForm = (props) => {
             label="City"
             onChange={handleOnChange}
             name="city"
-            value={city.value}
-            error={city.error !== ''}
-            helperText={city.error}
+            value={location.city}
+            error={fields.city.error !== ''}
+            helperText={fields.city.error}
             inputProps={{
               maxLength: CITY.MAX_LENGTH,
             }}
             disabled={isFetching}
             fullWidth
-            required
+            required={requiredFields.includes('city')}
           />
+        }
+        {fields.state_province &&
           <TextField
             id="location-state-province"
             margin="normal"
@@ -101,57 +97,42 @@ const LocationForm = (props) => {
             label="State/Province"
             onChange={handleOnChange}
             name="state_province"
-            value={state_province.value}
-            error={state_province.error !== ''}
-            helperText={state_province.error}
+            value={location.state_province}
+            error={fields.state_province.error !== ''}
+            helperText={fields.state_province.error}
             inputProps={{
               maxLength: STATE_PROVINCE.MAX_LENGTH,
             }}
             disabled={isFetching}
             fullWidth
-            required
+            required={requiredFields.includes('state_province')}
           />
-          <TextField
-            id="location-country"
-            margin="normal"
+        }
+        {fields.country &&
+          <FormControl
             variant="outlined"
-            label="Country"
-            onChange={handleOnChange}
-            name="country"
-            value={country.value}
-            error={country.error !== ''}
-            helperText={country.error}
-            inputProps={{
-              maxLength: COUNTRY.MAX_LENGTH,
-              minLength: COUNTRY.MIN_LENGTH,
-            }}
-            disabled={isFetching}
             fullWidth
-            required
-          />
-        </CardContent>
-        <CardActions>
-          {handleCancel &&
-            <Button
-              onClick={handleCancel}
-              size="small"
-              fullWidth
-            >
-              {i18n.t('actions:cancel')}
-            </Button>
-          }
-          <Button
-            type="submit"
-            color="primary"
-            disabled={isFetching || !enableSubmit}
-            variant="contained"
-            size="small"
-            fullWidth
+            margin="normal"
           >
-            {i18n.t('actions:add')}
-          </Button>
-        </CardActions>
-      </Card>
+            <InputLabel id="location-country-label">
+              Country
+            </InputLabel>
+            <CountrySelect
+              id="location-country"
+              name="country"
+              label="Country"
+              onChange={handleOnChange}
+              value={location.country}
+              disabled={isFetching}
+            />
+          </FormControl>
+        }
+      </CardContent>
+      {actions &&
+      <CardActions>
+        {actions}
+      </CardActions>
+      }
     </form>
   );
 };
@@ -159,13 +140,22 @@ const LocationForm = (props) => {
 LocationForm.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
-  handleCancel: PropTypes.func,
+  location: LocationType.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
+  actions: PropTypes.node,
   isFetching: PropTypes.bool.isRequired,
+  requiredFields: PropTypes.arrayOf(PropTypes.string),
 };
 
 LocationForm.defaultProps = {
-  handleCancel: null,
+  actions: null,
+  requiredFields: [
+    'name',
+    'address',
+    'city',
+    'state_province',
+    'country',
+  ],
 };
 
 export default LocationForm;

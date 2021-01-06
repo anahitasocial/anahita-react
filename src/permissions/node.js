@@ -48,8 +48,13 @@ const canDelete = (viewer, node) => {
   return false;
 };
 
+const canAdminister = (viewer) => {
+  return [SUPER_ADMIN, ADMIN].includes(viewer.usertype);
+};
+
 export default {
   canAdd,
+  canAdminister,
   canEdit,
   canDelete,
 };

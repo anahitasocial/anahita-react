@@ -20,4 +20,8 @@ export default shape({
   latitude: number,
   longitude: number,
   commands: arrayOf(string),
+  address: string,
+  city: string,
+  state_province: string,
+  country: string,
 });
