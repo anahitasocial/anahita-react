@@ -14,8 +14,9 @@ import ImageURL from './ImageURL';
 export default shape({
   id: number,
   objectType: oneOf([
-    'com.media.medium',
     'com.articles.article',
+    'com.documents.document',
+    'com.media.medium',
     'com.notes.note',
     'com.photos.photo',
     'com.photos.set',

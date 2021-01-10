@@ -36,6 +36,13 @@ export default {
       admins: 'Only You',
     },
   },
+  apps: {
+    articles: 'Articles',
+    documents: 'Documents',
+    notes: 'Notes',
+    photos: 'Photos',
+    todos: 'Todos',
+  },
   translation: {
     stories,
   },

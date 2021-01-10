@@ -29,6 +29,7 @@ const MediaCard = (props) => {
         <MediumMenu
           medium={medium}
           viewer={viewer}
+          inline
         />
       }
       stats={

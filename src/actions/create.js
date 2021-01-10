@@ -173,11 +173,11 @@ const addFailure = (response, namespace) => {
 };
 
 const add = (namespace, api) => {
-  return (node) => {
+  return (node, owner = null) => {
     return (dispatch) => {
       dispatch(addRequest(namespace));
       return new Promise((resolve, reject) => {
-        api.add(node)
+        api.add(node, owner)
           .then((result) => {
             dispatch(addSuccess(result, namespace));
             return resolve();

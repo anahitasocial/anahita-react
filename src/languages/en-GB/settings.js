@@ -1,5 +1,13 @@
 export default {
   app: {
+    documents: {
+      uploadlimit: 'Upload Limit',
+      uploadlimitOptions: {
+        '2Mb': '2 MB',
+        '4Mb': '4 MB',
+        '8Mb': '8 MB',
+      },
+    },
     groups: {
       canPublish: 'Can publish',
       canPublishOptions: {

@@ -5,13 +5,17 @@ import { Helmet } from 'react-helmet';
 
 import Grid from '@material-ui/core/Grid';
 
+import Composers from './composers/';
 import StoriesBrowse from './stories/Browse';
 import appActions from '../actions/app';
 import i18n from '../languages';
 
+import PersonType from '../proptypes/Person';
+
 const DashboardPage = (props) => {
   const {
     setAppTitle,
+    viewer,
   } = props;
 
   useEffect(() => {
@@ -36,6 +40,13 @@ const DashboardPage = (props) => {
           xs={12}
           md={8}
         >
+          <Composers owner={viewer} />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={8}
+        >
           <StoriesBrowse
             key="com:stories.story"
             queryFilters={filters}
@@ -49,11 +60,19 @@ const DashboardPage = (props) => {
 
 DashboardPage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
+  viewer: PersonType.isRequired,
 };
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state) => {
+  const {
+    viewer,
+  } = state.session;
+
+  return {
+    viewer,
+  };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setAppTitle: (title) => {

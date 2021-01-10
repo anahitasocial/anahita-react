@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Redirect } from 'react-router-dom';
 
 import * as actions from '../../actions';
 import NodeType from '../../proptypes/Node';
@@ -12,7 +11,6 @@ const ActionsDelete = React.forwardRef((props, ref) => {
   const {
     deleteItem,
     node,
-    redirect,
   } = props;
 
   const [waiting, setWaiting] = useState(false);
@@ -21,14 +19,8 @@ const ActionsDelete = React.forwardRef((props, ref) => {
     event.preventDefault();
 
     setWaiting(true);
-    deleteItem(node).then(() => {
-      setWaiting(false);
-    });
+    deleteItem(node);
   };
-
-  if (redirect && !node.id && !waiting) {
-    return (<Redirect push to={redirect} />);
-  }
 
   const label = i18n.t('actions:delete');
 
@@ -47,11 +39,6 @@ const ActionsDelete = React.forwardRef((props, ref) => {
 ActionsDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,
   node: NodeType.isRequired,
-  redirect: PropTypes.string,
-};
-
-ActionsDelete.defaultProps = {
-  redirect: '',
 };
 
 const mapStateToProps = () => {

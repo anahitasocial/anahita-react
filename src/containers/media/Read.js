@@ -21,10 +21,10 @@ import CommentStats from '../../components/comment/Stats';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 
 import * as actions from '../../actions';
-import form from '../../utils/form';
+import utils from '../../utils';
 import i18n from '../../languages';
 
-const formFields = form.createFormFields([
+const formFields = utils.form.createFormFields([
   'name',
   'body',
 ]);
@@ -35,6 +35,7 @@ const MediaRead = (props) => {
     namespace,
     readItem,
     editItem,
+    deleteItem,
     setAppTitle,
     isFetching,
     viewer,
@@ -52,6 +53,7 @@ const MediaRead = (props) => {
   } = props;
 
   const [isEditing, setIsEditing] = useState(false);
+  const [redirect, setRedirect] = useState('');
   const [fields, setFields] = useState(formFields);
 
   useEffect(() => {
@@ -67,13 +69,20 @@ const MediaRead = (props) => {
     setIsEditing(false);
   };
 
+  const handleDelete = () => {
+    const ownerURL = utils.node.getURL(medium.owner);
+    deleteItem(medium).then(() => {
+      setRedirect(ownerURL);
+    });
+  };
+
   const handleOnChange = (event) => {
     const { target } = event;
     const { name, value } = target;
 
     medium[name] = value;
 
-    const newFields = form.validateField(target, fields);
+    const newFields = utils.form.validateField(target, fields);
 
     setFields({ ...newFields });
   };
@@ -82,10 +91,10 @@ const MediaRead = (props) => {
     event.preventDefault();
 
     const { target } = event;
-    const newFields = form.validateForm(target, fields);
+    const newFields = utils.form.validateForm(target, fields);
 
-    if (form.isValid(newFields)) {
-      const formData = form.fieldsToData(newFields);
+    if (utils.form.isValid(newFields)) {
+      const formData = utils.form.fieldsToData(newFields);
       editItem({
         id: medium.id,
         ...formData,
@@ -97,16 +106,24 @@ const MediaRead = (props) => {
     setFields({ ...newFields });
   };
 
-  if (isFetching && !medium.id) {
+  if (redirect) {
     return (
-      <Progress />
+      <Redirect push to={redirect} />
     );
   }
 
-  if (!medium.id && error !== '') {
-    return (
-      <Redirect push to="/404/" />
-    );
+  if (!medium.id) {
+    if (isFetching) {
+      return (
+        <Progress />
+      );
+    }
+
+    if (error !== '') {
+      return (
+        <Redirect push to="/404/" />
+      );
+    }
   }
 
   const canAddComment = isAuthenticated && medium.openToComment;
@@ -139,6 +156,7 @@ const MediaRead = (props) => {
               medium={medium}
               viewer={viewer}
               handleEdit={handleEdit}
+              handleDelete={handleDelete}
             />
           }
           actions={isAuthenticated &&
@@ -187,6 +205,7 @@ const MediaRead = (props) => {
 MediaRead.propTypes = {
   readItem: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
   media: MediaType.isRequired,
   numOfComments: PropTypes.number.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -232,6 +251,9 @@ const mapDispatchToProps = (namespace) => {
       },
       editItem: (node) => {
         return dispatch(actions[namespace].edit(node));
+      },
+      deleteItem: (node) => {
+        return dispatch(actions[namespace].deleteItem(node));
       },
       setAppTitle: (title) => {
         return dispatch(actions.app.setAppTitle(title));

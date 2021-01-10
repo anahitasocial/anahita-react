@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { singularize } from 'inflection';
 import utils from '../utils';
 
 const { constructFormData } = utils.api;
@@ -28,8 +29,11 @@ const edit = (namespace) => {
 };
 
 const add = (namespace) => {
-  return (node) => {
-    return axios.post(`/${namespace}.json`, constructFormData(node));
+  return (node, owner = null) => {
+    const path = (owner) ?
+      `/${namespace}/@${owner.id}/${singularize(namespace)}.json` :
+      `/${namespace}.json`;
+    return axios.post(path, constructFormData(node));
   };
 };
 

@@ -28,6 +28,7 @@ const ActorBody = (props) => {
     classes,
     actor,
     viewer,
+    composers,
     stories,
     locations,
     socialgraph,
@@ -107,7 +108,12 @@ const ActorBody = (props) => {
             </Grid>
           </Grid>
           <Grid item xs={12} md={8}>
-            {stories}
+            <Grid item xs={12}>
+              {composers}
+            </Grid>
+            <Grid item xs={12}>
+              {stories}
+            </Grid>
           </Grid>
         </Grid>
       }
@@ -127,6 +133,7 @@ ActorBody.propTypes = {
   classes: PropTypes.object.isRequired,
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
+  composers: PropTypes.node,
   stories: PropTypes.node,
   locations: PropTypes.node,
   socialgraph: PropTypes.node,
@@ -140,6 +147,7 @@ ActorBody.propTypes = {
 };
 
 ActorBody.defaultProps = {
+  composers: null,
   stories: null,
   locations: null,
   socialgraph: null,

@@ -5,15 +5,21 @@ import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
 
-import Progress from '../../components/Progress';
 import ActorHeader from '../../components/actor/Header';
 import ActorBody from '../../components/actor/Body';
-import StoriesBrowse from '../stories/Browse';
-import Media from '../media/Browse';
+import ActorsFollowRequests from './FollowRequests';
+import ActorsSocialgraph from './Socialgraph';
 import Avatar from './read/Avatar';
-import Cover from './read/Cover';
+import Composers from '../composers/';
 import Commands from './read/Commands';
+import Cover from './read/Cover';
 import FollowAction from '../actions/Follow';
+import LocationsGadget from '../locations/Gadget';
+import Media from '../media/Browse';
+import Progress from '../../components/Progress';
+import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
+import StoriesBrowse from '../stories/Browse';
+
 import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
@@ -21,10 +27,6 @@ import utils from '../../utils';
 
 import ActorsType from '../../proptypes/Actors';
 import PersonType from '../../proptypes/Person';
-import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
-import ActorsFollowRequests from './FollowRequests';
-import ActorsSocialgraph from './Socialgraph';
-import LocationsGadget from '../locations/Gadget';
 
 const Articles = Media('articles');
 const Documents = Media('documents');
@@ -122,9 +124,12 @@ const ActorsRead = (props) => {
       <ActorBody
         actor={actor}
         viewer={viewer}
+        composers={actor.id &&
+          <Composers owner={actor} />
+        }
         stories={actor.id &&
           <StoriesBrowse
-            key="com:stories.story"
+            // key="com:stories.story"
             queryFilters={{
               oid: actor.id,
             }}
