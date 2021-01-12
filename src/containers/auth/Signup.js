@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SignupForm from '../../components/auth/SignupForm';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import * as api from '../../api';
 import form from '../../utils/form';
@@ -23,9 +22,21 @@ const AuthSignup = (props) => {
     isFetching,
     error,
     isAuthenticated,
+    alertError,
+    alertSuccess,
   } = props;
 
   const [fields, setFields] = useState(formFields);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Thank you! We just emailed you an account activation link.');
+    }
+  }, [error, success]);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -87,38 +98,23 @@ const AuthSignup = (props) => {
   }
 
   return (
-    <React.Fragment>
-      <SignupForm
-        fields={fields}
-        handleOnChange={handleOnChange}
-        handleOnBlur={handleOnBlur}
-        handleOnSubmit={handleOnSubmit}
-        isFetching={isFetching}
-        success={success}
-        error={error}
-      />
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Thank you! We just emailed you an account activation link. Please click on it and log on to your account."
-          type="success"
-          autoHideDuration={null}
-        />
-      }
-    </React.Fragment>
+    <SignupForm
+      fields={fields}
+      handleOnChange={handleOnChange}
+      handleOnBlur={handleOnBlur}
+      handleOnSubmit={handleOnSubmit}
+      isFetching={isFetching}
+      success={success}
+      error={error}
+    />
   );
 };
 
 AuthSignup.propTypes = {
   signup: PropTypes.func.isRequired,
   success: PropTypes.bool.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -147,6 +143,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     signup: (person) => {
       return dispatch(actions.signup.add(person));
+    },
+    alertSuccess: (message) => {
+      return dispatch(actions.app.alert.success(message));
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Composers from './composers/';
 import StoriesBrowse from './stories/Browse';
-import appActions from '../actions/app';
+import * as actions from '../actions';
 import i18n from '../languages';
 
 import PersonType from '../proptypes/Person';
@@ -15,11 +15,13 @@ import PersonType from '../proptypes/Person';
 const DashboardPage = (props) => {
   const {
     setAppTitle,
+    sessionRead,
     viewer,
   } = props;
 
   useEffect(() => {
     setAppTitle(i18n.t('dashboard:cTitle'));
+    sessionRead();
   }, []);
 
   const filters = {
@@ -60,6 +62,7 @@ const DashboardPage = (props) => {
 
 DashboardPage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
+  sessionRead: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
 };
 
@@ -76,7 +79,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
+      dispatch(actions.app.setAppTitle(title));
+    },
+    sessionRead: () => {
+      return dispatch(actions.session.read());
     },
   };
 };

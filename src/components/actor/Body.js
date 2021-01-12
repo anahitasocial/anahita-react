@@ -10,6 +10,7 @@ import Tab from '@material-ui/core/Tab';
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
 import ActorBodyAbout from './body/About';
+import i18n from '../../languages';
 
 const styles = (theme) => {
   return {
@@ -47,8 +48,6 @@ const ActorBody = (props) => {
     setValue(newValue);
   };
 
-  const { gadgets } = actor;
-
   return (
     <Box className={classes.root}>
       <AppBar
@@ -66,24 +65,15 @@ const ActorBody = (props) => {
           scrollButtons="auto"
           aria-label="Profile Tabs"
         >
-          <Tab label="Stories" value="stories" id="actor-tab-stories" />
-          <Tab label="Socialgraph" value="socialgraph" id="actor-tab-socialgraph" />
-          <Tab label="Notes" value="notes" id="actor-tab-notes" />
-          {gadgets.photos &&
-            <Tab label="Photos" value="photos" id="actor-tab-photos" />
-          }
-          {gadgets.articles &&
-            <Tab label="Articles" value="articles" id="actor-tab-articles" />
-          }
-          {gadgets.documents &&
-            <Tab label="Documents" value="documents" id="actor-tab-documents" />
-          }
-          {gadgets['topics-gadget'] &&
-            <Tab label="Topics" value="topics" id="actor-tab-topics" />
-          }
-          {gadgets['todos-gadget-profile-todos'] &&
-            <Tab label="Todos" value="todos" id="actor-tab-todos" />
-          }
+          {actor.gadgets.map((gadget) => {
+            return (
+              <Tab
+                label={i18n.t(`${gadget}:mTitle`)}
+                value={gadget}
+                key={`actor-tab-${gadget}`}
+              />
+            );
+          })}
           {actor.id === viewer.id && <Tab label="Mentions" value="mentions" id="actor-tab-mentions" />}
         </Tabs>
       </AppBar>
@@ -119,11 +109,11 @@ const ActorBody = (props) => {
       }
       {value === 'socialgraph' && socialgraph}
       {value === 'notes' && notes}
-      {gadgets.photos && value === 'photos' && photos}
-      {gadgets.articles && value === 'articles' && articles}
-      {gadgets.documents && value === 'documents' && documents}
-      {gadgets['topics-gadget'] && value === 'topics' && topics}
-      {gadgets['todos-gadget-profile-todos'] && value === 'todos' && todos}
+      {value === 'photos' && photos}
+      {value === 'articles' && articles}
+      {value === 'documents' && documents}
+      {value === 'topics' && topics}
+      {value === 'todos' && todos}
       {actor.id === viewer.id && value === 'mentions' && mentions}
     </Box>
   );

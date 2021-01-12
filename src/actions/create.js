@@ -1,4 +1,5 @@
 import { normalize, schema } from 'normalizr';
+import stories from './stories';
 
 // -- Reset
 
@@ -159,9 +160,12 @@ const addRequest = (namespace) => {
 };
 
 const addSuccess = (result, namespace) => {
+  const node = result.data.objectType === 'com.stories.story' ?
+    result.data.object :
+    result.data;
   return {
     type: `${namespace.toUpperCase()}_ADD_SUCCESS`,
-    node: result.data,
+    node,
   };
 };
 
@@ -179,6 +183,9 @@ const add = (namespace, api) => {
       return new Promise((resolve, reject) => {
         api.add(node, owner)
           .then((result) => {
+            if (result.data && result.data.objectType === 'com.stories.story') {
+              dispatch(stories.add(result.data));
+            }
             dispatch(addSuccess(result, namespace));
             return resolve();
           }, (response) => {

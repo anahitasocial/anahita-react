@@ -107,6 +107,17 @@ export default function (state = {
         isFetching: false,
         error: action.error,
       };
+    case STORIES.ADD:
+      return {
+        ...state,
+        stories: {
+          byId: {
+            ...state.stories.byId,
+            [action.story.id]: action.story,
+          },
+          allIds: _.union([action.story.id], state.stories.allIds),
+        },
+      };
     default:
       return state;
   }

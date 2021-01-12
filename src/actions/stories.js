@@ -8,19 +8,19 @@ import { Stories as STORIES } from '../constants';
 
 // -- reset
 
-function reset() {
+const reset = () => {
   return {
     type: STORIES.BROWSE.RESET,
   };
-}
+};
 
 // -- Browse
 
-function browseRequest() {
+const browseRequest = () => {
   return {
     type: STORIES.BROWSE.REQUEST,
   };
-}
+};
 
 // @todo move these to utils
 
@@ -30,26 +30,31 @@ const normalizeNodes = (data, namespace) => {
   return normalize(data, nodes);
 };
 
+const normalizeComments = (story) => {
+  const node = { ...story };
+  if (node.comments) {
+    const normalized = normalizeNodes(node.comments, 'comments');
+    node.comments = {
+      byId: normalized.entities.comments,
+      allIds: normalized.result,
+    };
+  } else {
+    node.comments = {
+      byId: {},
+      allIds: [],
+    };
+  }
+  return node;
+};
+
 const normalizeNodesComments = (nodes) => {
   return [...nodes].map((n) => {
-    const node = { ...n };
-    if (node.comments) {
-      const normalized = normalizeNodes(node.comments, 'comments');
-      node.comments = {
-        byId: normalized.entities.comments,
-        allIds: normalized.result,
-      };
-    } else {
-      node.comments = {
-        byId: {},
-        allIds: [],
-      };
-    }
+    const node = normalizeComments(n);
     return node;
   });
 };
 
-function browseSuccess(results) {
+const browseSuccess = (results) => {
   const { data } = results;
   const { pagination } = data;
 
@@ -64,16 +69,16 @@ function browseSuccess(results) {
     total: pagination.total,
     hasMore,
   };
-}
+};
 
-function browseFailure(error) {
+const browseFailure = (error) => {
   return {
     type: STORIES.BROWSE.FAILURE,
     error: error.message,
   };
-}
+};
 
-function browse(params) {
+const browse = (params) => {
   return (dispatch) => {
     dispatch(browseRequest());
     return new Promise((resolve, reject) => {
@@ -90,32 +95,40 @@ function browse(params) {
         });
     });
   };
-}
+};
+
+// -- Add
+const add = (story) => {
+  return {
+    type: STORIES.ADD,
+    story: normalizeComments(story),
+  };
+};
 
 // -- Delete
 
-function deleteRequest(story) {
+const deleteRequest = (story) => {
   return {
     type: STORIES.DELETE.REQUEST,
-    story,
+    story: normalizeNodesComments(story),
   };
-}
+};
 
-function deleteSuccess(result) {
+const deleteSuccess = (result) => {
   return {
     type: STORIES.DELETE.SUCCESS,
     status: result.status,
   };
-}
+};
 
-function deleteFailure(response) {
+const deleteFailure = (response) => {
   return {
     type: STORIES.DELETE.FAILURE,
     error: response.message,
   };
-}
+};
 
-function deleteItem(story) {
+const deleteItem = (story) => {
   return (dispatch) => {
     dispatch(deleteRequest(story));
     return new Promise((resolve, reject) => {
@@ -132,11 +145,12 @@ function deleteItem(story) {
         });
     });
   };
-}
+};
 
 export default {
   reset,
   browse,
+  add,
   deleteItem,
   likes: likes.stories(likesApi),
 };

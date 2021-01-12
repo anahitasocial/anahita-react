@@ -1,10 +1,9 @@
 /* eslint no-console: ["error", { allow: ["log", "error"] }] */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
 import * as api from '../../api';
 import * as actions from '../../actions';
 import PersonType from '../../proptypes/Person';
@@ -13,6 +12,8 @@ const AuthToken = (props) => {
   const {
     read,
     reset,
+    alertSuccess,
+    alertError,
     isAuthenticated,
     viewer,
     resetPassword,
@@ -23,16 +24,14 @@ const AuthToken = (props) => {
     },
   } = props;
 
-  const [isTokenValid, setIsTokenValid] = useState(true);
-
   useEffect(() => {
     api.token.read(token)
       .then((result) => {
         console.log(result);
-        setIsTokenValid(result.status === 202);
+        alertSuccess('Welcome!');
         return read();
       }, () => {
-        setIsTokenValid(false);
+        alertError('This is an invalid token!');
       });
 
     return () => {
@@ -52,21 +51,14 @@ const AuthToken = (props) => {
     );
   }
 
-  return (
-    <Typography
-      color={isTokenValid ? 'initial' : 'error'}
-      align="center"
-      component="h1"
-      variant="body1"
-    >
-      {isTokenValid ? 'Welcome!' : 'This is an invalid Token!'}
-    </Typography>
-  );
+  return (<React.Fragment />);
 };
 
 AuthToken.propTypes = {
   read: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -102,6 +94,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     read: () => {
       return dispatch(actions.session.read());
+    },
+    alertSuccess: (message) => {
+      return dispatch(actions.app.alert.success(message));
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

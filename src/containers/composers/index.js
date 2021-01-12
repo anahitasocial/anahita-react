@@ -22,14 +22,6 @@ const useStyles = makeStyles({
   },
 });
 
-const apps = [
-  // 'articles',
-  'documents',
-  'notes',
-  'photos',
-  // 'topics',
-];
-
 const Composers = (props) => {
   const classes = useStyles();
   const {
@@ -62,13 +54,13 @@ const Composers = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          {apps.map((app) => {
+          {owner.composers.map((composer) => {
             return (
               <Tab
-                key={`composer-tab-${app}`}
-                label={i18n.t(`apps:${app}`)}
-                value={app}
-                icon={appIcons[app]}
+                key={`composer-tab-${composer}`}
+                label={i18n.t(`apps:${composer}`)}
+                value={composer}
+                icon={appIcons[composer]}
               />
             );
           })}
@@ -80,7 +72,7 @@ const Composers = (props) => {
 
 Composers.propTypes = {
   owner: ActorType.isRequired,
-  selectedTab: PropTypes.oneOf(apps),
+  selectedTab: PropTypes.string,
 };
 
 Composers.defaultProps = {

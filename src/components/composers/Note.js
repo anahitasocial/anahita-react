@@ -58,7 +58,7 @@ const ComposersNote = (props) => {
                 <Switch
                   name="is_private"
                   value={1}
-                  checked={medium.is_private === '1'}
+                  checked={medium.is_private}
                   onChange={handleOnChange}
                 />
               }
@@ -75,7 +75,7 @@ const ComposersNote = (props) => {
             fullWidth
           >
             {!isFetching && 'Post'}
-            {isFetching && <CircularProgress />}
+            {isFetching && <CircularProgress size={24} />}
           </Button>
         </CardActions>
       </Card>

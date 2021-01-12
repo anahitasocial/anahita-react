@@ -3,8 +3,7 @@ import {
   number,
   string,
   oneOf,
-  objectOf,
-  any,
+  arrayOf,
 } from 'prop-types';
 
 import PERSON from '../constants/person';
@@ -36,7 +35,8 @@ export default shape({
     '',
   ]),
   body: string,
-  gadgets: objectOf(any),
+  gadgets: arrayOf(string),
+  composers: arrayOf(string),
   imageURL: ImageURL,
   coverURL: ImageURL,
   followerCount: number,

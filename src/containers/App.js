@@ -18,6 +18,7 @@ import SearchBox from '../containers/search/SearchBox';
 
 import Viewer from '../components/auth/Viewer';
 import LeftMenu from '../components/LeftMenu';
+import Alerts from './Alerts';
 import * as actions from '../actions';
 
 const drawerWidth = 200;
@@ -119,6 +120,7 @@ const App = (props) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
+      <Alerts />
       <AppBar
         className={clsx(classes.appBar, open && classes.appBarShift)}
       >

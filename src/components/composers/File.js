@@ -139,7 +139,7 @@ const ComposersFile = (props) => {
             fullWidth
           >
             {!isFetching && 'Upload'}
-            {isFetching && <CircularProgress />}
+            {isFetching && <CircularProgress size={24} />}
           </Button>
         </CardActions>
       </Card>

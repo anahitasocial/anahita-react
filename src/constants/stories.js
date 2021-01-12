@@ -9,5 +9,6 @@ export default {
     RESET: 'STORIES_BROWSE_RESET',
   },
   READ: story('read'),
+  ADD: 'STORIES_ADD',
   DELETE: story('delete'),
 };

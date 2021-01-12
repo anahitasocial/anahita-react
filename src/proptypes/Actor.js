@@ -4,9 +4,7 @@ import {
   string,
   oneOf,
   arrayOf,
-  objectOf,
   bool,
-  any,
 } from 'prop-types';
 
 import PersonType from './Person';
@@ -22,7 +20,8 @@ export default shape({
   name: string,
   alias: string,
   body: string,
-  gadgets: objectOf(any),
+  gadgets: arrayOf(string),
+  composers: arrayOf(string),
   commands: arrayOf(string),
   imageURL: ImageURL,
   coverURL: ImageURL,

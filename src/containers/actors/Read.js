@@ -45,6 +45,7 @@ const ActorsRead = (props) => {
       current: actor,
     },
     viewer,
+    isAuthenticated,
     isFetching,
     error,
     match: {
@@ -124,7 +125,7 @@ const ActorsRead = (props) => {
       <ActorBody
         actor={actor}
         viewer={viewer}
-        composers={actor.id &&
+        composers={isAuthenticated && actor.id &&
           <Composers owner={actor} />
         }
         stories={actor.id &&

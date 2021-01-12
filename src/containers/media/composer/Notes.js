@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -22,6 +22,8 @@ const MediaComposerNotes = (props) => {
     success,
     error,
     isFetching,
+    alertError,
+    alertSuccess,
   } = props;
 
   const [fields, setFields] = useState(formFields);
@@ -29,6 +31,17 @@ const MediaComposerNotes = (props) => {
     ...MediumDefault,
     is_private: 0,
   });
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+      console.error(error);
+    }
+
+    if (success) {
+      alertSuccess('Item posted successfully!');
+    }
+  }, [error, success]);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -88,6 +101,8 @@ const MediaComposerNotes = (props) => {
 
 MediaComposerNotes.propTypes = {
   addItem: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   owner: AcctorType.isRequired,
   viewer: PersonType.isRequired,
   success: PropTypes.bool.isRequired,
@@ -116,6 +131,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addItem: (note, owner) => {
       return dispatch(actions.notes.add(note, owner));
+    },
+    alertSuccess: (message) => {
+      return dispatch(actions.app.alert.success(message));
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

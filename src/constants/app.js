@@ -1,6 +1,10 @@
 export default {
   TITLE: {
-    UPDATE: 'REACT_APP_TITLE_UPDATE',
+    UPDATE: 'APP_TITLE_UPDATE',
+  },
+  ALERT: {
+    ADD: 'APP_ALERT_ADD',
+    DELETE: 'APP_ALERT_DELETE',
   },
   BROWSE: {
     LIMIT: 20,

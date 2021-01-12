@@ -47,6 +47,8 @@ export default {
     stories,
   },
   stories: {
+    cTitle: 'Stories',
+    mTitle: 'Stories',
     actions: {
       followOwner: 'Follow {{name}}',
       unfollowOwner: 'Unfollow {{name}}',

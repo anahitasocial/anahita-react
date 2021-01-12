@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PasswordResetForm from '../../components/auth/PasswordResetForm';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import form from '../../utils/form';
 
@@ -14,9 +13,25 @@ const AuthPasswordReset = (props) => {
     success,
     isFetching,
     error,
+    alertError,
+    alertSuccess,
   } = props;
 
   const [fields, setFields] = useState(formFields);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('We emailed you a link. Please click on that link and follow the instructions!');
+    }
+
+    return () => {
+      reset();
+    };
+  }, [error, success]);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -39,37 +54,22 @@ const AuthPasswordReset = (props) => {
   };
 
   return (
-    <React.Fragment>
-      <PasswordResetForm
-        handleOnSubmit={handleOnSubmit}
-        handleOnChange={handleOnChange}
-        fields={fields}
-        error={error}
-        success={success}
-        isFetching={isFetching}
-      />
-      {error &&
-        <SimpleSnackbar
-          isOpen={error !== ''}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={success}
-          message="We emailed you a link. Please click on that link and follow the instructions!"
-          type="success"
-          autoHideDuration={null}
-        />
-      }
-    </React.Fragment>
+    <PasswordResetForm
+      handleOnSubmit={handleOnSubmit}
+      handleOnChange={handleOnChange}
+      fields={fields}
+      error={error}
+      success={success}
+      isFetching={isFetching}
+    />
   );
 };
 
 AuthPasswordReset.propTypes = {
   reset: PropTypes.func.isRequired,
   success: PropTypes.bool.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
 };
@@ -92,6 +92,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     reset: (person) => {
       dispatch(actions.password.reset(person));
+    },
+    alertSuccess: (message) => {
+      return dispatch(actions.app.alert.success(message));
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };
