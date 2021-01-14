@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -41,6 +40,7 @@ const TaggablesBrowse = (props) => {
   const {
     browseList,
     resetList,
+    alertError,
     tag,
     items,
     error,
@@ -56,6 +56,12 @@ const TaggablesBrowse = (props) => {
     };
   }, [resetList, tag]);
 
+  useEffect(() => {
+    if (error) {
+      alertError(error);
+    }
+  }, [error]);
+
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
     browseList(tag, {
@@ -65,14 +71,6 @@ const TaggablesBrowse = (props) => {
       limit: LIMIT,
     });
   };
-
-  if (error) {
-    return (
-      <Typography variant="body1" color="error" align="center">
-        {error}
-      </Typography>
-    );
-  }
 
   return (
     <InfiniteScroll
@@ -129,6 +127,7 @@ const mapStateToProps = (state) => {
 TaggablesBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   tag: NodeType.isRequired,
   items: NodesType.isRequired,
   queryFilters: PropTypes.shape({
@@ -146,6 +145,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetList: (tag) => {
       return dispatch(actions.taggables(tag).reset());
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

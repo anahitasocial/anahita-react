@@ -16,7 +16,6 @@ import AssignmentsIcon from '@material-ui/icons/SettingsApplications';
 import * as actions from '../../../actions';
 import i18n from '../../../languages';
 import AssignmentsType from '../../../proptypes/settings/Assignments';
-import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import Progress from '../../../components/Progress';
 import AssignmentEdit from './Edit';
 
@@ -29,6 +28,8 @@ const SettingsAssignmentsBrowse = (props) => {
   const {
     browseList,
     resetList,
+    alertError,
+    alertSuccess,
     items,
     error,
     success,
@@ -47,7 +48,17 @@ const SettingsAssignmentsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [browseList, resetList]);
+  }, []);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Updated successfully.');
+    }
+  }, [error, success]);
 
   const handleClose = () => {
     setEditingOpen(false);
@@ -120,20 +131,6 @@ const SettingsAssignmentsBrowse = (props) => {
           );
         })}
       </Card>
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Assignment Updated!"
-          type="success"
-        />
-      }
     </React.Fragment>
   );
 };
@@ -141,6 +138,8 @@ const SettingsAssignmentsBrowse = (props) => {
 SettingsAssignmentsBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   items: AssignmentsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
@@ -154,6 +153,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetList: () => {
       return dispatch(actions.settings.assignments.reset());
+    },
+    alertSuccess: (message) => {
+      return dispatch(actions.app.alert.success(message));
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

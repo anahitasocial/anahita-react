@@ -13,7 +13,6 @@ import RemoveIcon from '@material-ui/icons/Remove';
 
 import Add from './Add';
 import ActorAvatar from '../../../../components/actor/Avatar';
-import SimpleSnackbar from '../../../../components/SimpleSnackbar';
 import Progress from '../../../../components/Progress';
 
 import ActorsType from '../../../../proptypes/Actors';
@@ -25,9 +24,12 @@ const ActorsSettingsAdminsBrowse = (props) => {
     browseAdmins,
     resetAdmins,
     removeAdmin,
+    alertError,
+    alertSuccess,
     actor,
     admins,
     isFetching,
+    error,
     success,
     namespace,
   } = props;
@@ -44,7 +46,17 @@ const ActorsSettingsAdminsBrowse = (props) => {
     return () => {
       resetAdmins();
     };
-  }, [browseAdmins, resetAdmins, actor]);
+  }, [actor.id]);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Updated successfully');
+    }
+  }, [error, success]);
 
   const handleRemove = (admin) => {
     removeAdmin({ actor, admin });
@@ -84,13 +96,6 @@ const ActorsSettingsAdminsBrowse = (props) => {
           );
         })}
       </List>
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Updated successfully!"
-          type="success"
-        />
-      }
     </React.Fragment>
   );
 };
@@ -100,7 +105,10 @@ ActorsSettingsAdminsBrowse.propTypes = {
   browseAdmins: PropTypes.func.isRequired,
   resetAdmins: PropTypes.func.isRequired,
   removeAdmin: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   admins: ActorsType.isRequired,
+  error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -143,6 +151,12 @@ const mapDispatchToProps = (namespace) => {
       },
       removeAdmin: (params) => {
         return dispatch(actions[namespace].settings.admins.deleteItem(params));
+      },
+      alertSuccess: (message) => {
+        return dispatch(actions.app.alert.success(message));
+      },
+      alertError: (message) => {
+        return dispatch(actions.app.alert.error(message));
       },
     };
   };

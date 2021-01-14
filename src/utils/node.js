@@ -66,6 +66,16 @@ const getActorInitials = (actor) => {
   return actor.name.charAt(0).toUpperCase();
 };
 
+const getPersonInitials = (person) => {
+  const givenName = person.givenName.charAt(0);
+  const familyName = person.familyName.charAt(0);
+  return `${givenName}${familyName}`;
+};
+
+const getPersonName = (person) => {
+  return `${person.givenName} ${person.familyName}`;
+};
+
 const getAddress = (node) => {
   const fields = [];
 
@@ -171,6 +181,10 @@ const getURL = (node) => {
   return '/';
 };
 
+const getNamespace = (node) => {
+  return pluralize(node.objectType.split('.')[2]);
+};
+
 export default {
   isActor,
   isPerson,
@@ -180,6 +194,9 @@ export default {
   isLikeable,
   isSubscribable,
   isBodyHtml,
+  getNamespace,
+  getPersonInitials,
+  getPersonName,
   getActorInitials,
   getAddress,
   getAuthor,

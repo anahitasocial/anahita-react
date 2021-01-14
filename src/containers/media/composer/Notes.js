@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import * as actions from '../../../actions';
-import form from '../../../utils/form';
+import utils from '../../../utils';
 
 import NoteForm from '../../../components/composers/Note';
 import AcctorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import MediumDefault from '../../../proptypes/MediumDefault';
+
+const { form } = utils;
 
 const formFields = form.createFormFields([
   'body',
@@ -35,7 +37,6 @@ const MediaComposerNotes = (props) => {
   useEffect(() => {
     if (error) {
       alertError('Something went wrong!');
-      console.error(error);
     }
 
     if (success) {

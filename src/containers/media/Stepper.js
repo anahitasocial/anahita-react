@@ -29,7 +29,6 @@ import CommentStats from '../../components/comment/Stats';
 import MediumMenu from './Menu';
 import MediumStepper from '../../components/medium/Stepper';
 import MediumForm from '../../components/medium/forms/Edit';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
 
 import MEDIUM_DEFAULT from '../../proptypes/MediumDefault';
 
@@ -51,6 +50,8 @@ const formFields = form.createFormFields([
 const MediaStepper = (props) => {
   const {
     editItem,
+    alertError,
+    alertSuccess,
     handleClose,
     mediumId,
     items,
@@ -70,6 +71,16 @@ const MediaStepper = (props) => {
   const [fields, setFields] = useState(formFields);
   const [index, setIndex] = useState(items.allIds.indexOf(mediumId));
   const [current, setCurrent] = useState({ ...MEDIUM_DEFAULT });
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Updated successfully.');
+    }
+  }, [error, success]);
 
   const handleEdit = () => {
     setCurrent({ ...items.byId[items.allIds[index]] });
@@ -284,26 +295,14 @@ const MediaStepper = (props) => {
           </Button>
         }
       />
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Updated successfully!"
-          type="success"
-        />
-      }
     </Dialog>
   );
 };
 
 MediaStepper.propTypes = {
   editItem: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,
@@ -343,6 +342,12 @@ const mapDispatchToProps = (namespace) => {
     return {
       editItem: (node) => {
         return dispatch(actions[namespace].edit(node));
+      },
+      alertSuccess: (message) => {
+        return dispatch(actions.app.alert.success(message));
+      },
+      alertError: (message) => {
+        return dispatch(actions.app.alert.error(message));
       },
     };
   };

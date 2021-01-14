@@ -14,6 +14,10 @@ import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
 
+import utils from '../../utils';
+
+const { isPerson } = utils.node;
+
 const ComposersNote = (props) => {
   const {
     handleOnChange,
@@ -29,6 +33,7 @@ const ComposersNote = (props) => {
 
   const enableSubmit = body.isValid;
   const placeholder = (owner.id === viewer.id) ? `What's on your mind ${viewer.name}` : 'Share a note';
+  const isOwnerPerson = isPerson(owner);
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
@@ -52,7 +57,7 @@ const ComposersNote = (props) => {
             placeholder={placeholder}
             required
           />
-          {owner.id !== viewer.id &&
+          {isOwnerPerson && owner.id !== viewer.id &&
             <FormControlLabel
               control={
                 <Switch

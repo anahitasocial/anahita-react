@@ -34,6 +34,7 @@ const StoriesBrowse = (props) => {
   const {
     browseList,
     resetList,
+    alertError,
     queryFilters = {
       oid: 0,
       filter: '',
@@ -42,6 +43,7 @@ const StoriesBrowse = (props) => {
     comments,
     hasMore,
     viewer,
+    error,
   } = props;
 
   const [openComments, setOpenComments] = useState([]);
@@ -50,7 +52,13 @@ const StoriesBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
+
+  useEffect(() => {
+    if (error) {
+      alertError(error);
+    }
+  }, [error]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
@@ -166,11 +174,13 @@ const StoriesBrowse = (props) => {
 StoriesBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   queryFilters: PropTypes.objectOf(PropTypes.any).isRequired,
   viewer: PersonType.isRequired,
   items: StoriesType.isRequired,
   comments: NodesType.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -206,6 +216,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetList: () => {
       return dispatch(actions.reset());
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

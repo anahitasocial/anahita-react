@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 import Progress from '../../../../components/Progress';
 import AppRead from './Read';
-import SimpleSnackbar from '../../../../components/SimpleSnackbar';
 
 import AppsType from '../../../../proptypes/actor/Apps';
 import ActorType from '../../../../proptypes/Actor';
@@ -16,6 +15,8 @@ const ActorsSettingsAppsBrowse = (props) => {
     browseList,
     editItem,
     resetList,
+    alertError,
+    alertSuccess,
     actor,
     items,
     isFetching,
@@ -29,7 +30,17 @@ const ActorsSettingsAppsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [browseList, resetList, actor]);
+  }, [actor.id]);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Updated successfully.');
+    }
+  }, [error, success]);
 
   const handleEditApp = (app) => {
     editItem({ actor, app });
@@ -42,36 +53,20 @@ const ActorsSettingsAppsBrowse = (props) => {
   }
 
   return (
-    <React.Fragment>
-      <List>
-        {items.allIds.map((itemId) => {
-          const node = items.byId[itemId];
-          const key = `app_node_${node.id}`;
-          return (
-            <AppRead
-              key={key}
-              app={node}
-              handleEdit={handleEditApp}
-              isFetching={isFetching}
-            />
-          );
-        })}
-      </List>
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Updated successfully!"
-          type="success"
-        />
-      }
-    </React.Fragment>
+    <List>
+      {items.allIds.map((itemId) => {
+        const node = items.byId[itemId];
+        const key = `app_node_${node.id}`;
+        return (
+          <AppRead
+            key={key}
+            app={node}
+            handleEdit={handleEditApp}
+            isFetching={isFetching}
+          />
+        );
+      })}
+    </List>
   );
 };
 
@@ -80,6 +75,8 @@ ActorsSettingsAppsBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   items: AppsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
@@ -123,6 +120,12 @@ const mapDispatchToProps = (namespace) => {
       },
       resetList: () => {
         return dispatch(actions[namespace].settings.apps.reset());
+      },
+      alertSuccess: (message) => {
+        return dispatch(actions.app.alert.success(message));
+      },
+      alertError: (message) => {
+        return dispatch(actions.app.alert.error(message));
       },
     };
   };

@@ -16,7 +16,6 @@ import PersonAccount from '../../people/settings/Account';
 import PersonInfo from '../../people/settings/Info';
 import Privacy from './Privacy';
 import Progress from '../../../components/Progress';
-import SimpleSnackbar from '../../../components/SimpleSnackbar';
 
 import * as actions from '../../../actions';
 import permissions from '../../../permissions/actor';
@@ -38,6 +37,8 @@ const ActorsSettings = (props) => {
     readActor,
     actor,
     resetActors,
+    alertSuccess,
+    alertError,
     namespace,
     selectedTab,
     computedMatch: {
@@ -58,7 +59,17 @@ const ActorsSettings = (props) => {
     return () => {
       resetActors();
     };
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Updated successfully!');
+    }
+  }, [error, success]);
 
   if (!actor.id && isFetching) {
     return (
@@ -130,20 +141,6 @@ const ActorsSettings = (props) => {
           <ActorDelete />
         }
       </ActorSettingCard>
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Saved Successfully!"
-          type="success"
-        />
-      }
     </React.Fragment>
   );
 };
@@ -152,6 +149,8 @@ ActorsSettings.propTypes = {
   readActor: PropTypes.func.isRequired,
   actor: ActorType.isRequired,
   resetActors: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
   computedMatch: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -201,6 +200,12 @@ const mapDispatchToProps = (namespace) => {
       },
       resetActors: () => {
         return dispatch(actions[namespace].reset());
+      },
+      alertSuccess: (message) => {
+        return dispatch(actions.app.alert.success(message));
+      },
+      alertError: (message) => {
+        return dispatch(actions.app.alert.error(message));
       },
     };
   };

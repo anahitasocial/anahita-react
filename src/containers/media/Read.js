@@ -18,8 +18,6 @@ import Likes from '../likes';
 import LikeAction from '../likes/actions/Like';
 import CommentStats from '../../components/comment/Stats';
 
-import SimpleSnackbar from '../../components/SimpleSnackbar';
-
 import * as actions from '../../actions';
 import utils from '../../utils';
 import i18n from '../../languages';
@@ -36,6 +34,8 @@ const MediaRead = (props) => {
     readItem,
     editItem,
     deleteItem,
+    alertError,
+    alertSuccess,
     setAppTitle,
     isFetching,
     viewer,
@@ -60,6 +60,16 @@ const MediaRead = (props) => {
     readItem(id, namespace);
     setAppTitle(i18n.t(`${namespace}:cTitle`));
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Updated successfully.');
+    }
+  }, [error, success]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -98,8 +108,6 @@ const MediaRead = (props) => {
       editItem({
         id: medium.id,
         ...formData,
-      }).then(() => {
-        handleCancel();
       });
     }
 
@@ -184,20 +192,6 @@ const MediaRead = (props) => {
           }
         />
       }
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Updated successfully!"
-          type="success"
-        />
-      }
     </React.Fragment>
   );
 };
@@ -206,6 +200,8 @@ MediaRead.propTypes = {
   readItem: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   media: MediaType.isRequired,
   numOfComments: PropTypes.number.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -257,6 +253,12 @@ const mapDispatchToProps = (namespace) => {
       },
       setAppTitle: (title) => {
         return dispatch(actions.app.setAppTitle(title));
+      },
+      alertSuccess: (message) => {
+        return dispatch(actions.app.alert.success(message));
+      },
+      alertError: (message) => {
+        return dispatch(actions.app.alert.error(message));
       },
     };
   };

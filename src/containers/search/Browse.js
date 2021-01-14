@@ -39,6 +39,7 @@ const SearchBrowse = (props) => {
   const {
     browseList,
     resetList,
+    alertError,
     items,
     error,
     hasMore,
@@ -58,6 +59,12 @@ const SearchBrowse = (props) => {
       resetList();
     };
   }, [resetList]);
+
+  useEffect(() => {
+    if (error) {
+      alertError(error);
+    }
+  }, [error]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
@@ -137,6 +144,7 @@ const mapStateToProps = (state) => {
 SearchBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   items: NodesType.isRequired,
   queryParams: PropTypes.shape({
     sort: PropTypes.oneOf([RELEVANT, RECENT]),
@@ -158,6 +166,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetList: () => {
       return dispatch(actions.search.reset());
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

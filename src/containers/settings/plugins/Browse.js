@@ -23,7 +23,6 @@ import SelectSort from '../../../components/settings/plugins/SelectSort';
 
 import * as actions from '../../../actions';
 import PluginsType from '../../../proptypes/settings/Plugins';
-import SimpleSnackbar from '../../../components/SimpleSnackbar';
 import PluginsEdit from './Edit';
 import utils from '../../../utils';
 
@@ -40,6 +39,8 @@ const SettingsPlugins = (props) => {
     browseList,
     resetList,
     editItem,
+    alertError,
+    alertSuccess,
     items,
     error,
     success,
@@ -54,27 +55,28 @@ const SettingsPlugins = (props) => {
   const [editingOpen, setEditingOpen] = useState(false);
   const [current, setCurrent] = useState(null);
 
-  const fetchList = (
-    newType = '',
-    newSort = SORT.ORDERING,
-  ) => {
+  useEffect(() => {
     browseList({
-      sort: newSort,
-      type: newType,
+      sort,
+      type,
       offset: 0,
       limit: LIMIT,
     });
-    setType(newType);
-    setSort(newSort);
-  };
-
-  useEffect(() => {
-    fetchList(type, sort);
 
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, [sort, type]);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Updated successfully.');
+    }
+  }, [error, success]);
 
   const handleClose = () => {
     setEditingOpen(false);
@@ -134,8 +136,7 @@ const SettingsPlugins = (props) => {
             value={sort}
             handleOnChange={(event) => {
               const { target: { value } } = event;
-              resetList();
-              fetchList(type, value);
+              setSort(value);
             }}
             label="Sort by"
           />
@@ -143,8 +144,7 @@ const SettingsPlugins = (props) => {
             value={type}
             handleOnChange={(event) => {
               const { target: { value } } = event;
-              resetList();
-              fetchList(value, sort);
+              setType(value);
             }}
             label="Filter by type"
           />
@@ -197,13 +197,6 @@ const SettingsPlugins = (props) => {
           </Container>
         </List>
       </Card>
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Saved successfully!"
-          type="success"
-        />
-      }
     </React.Fragment>
   );
 };
@@ -213,6 +206,8 @@ SettingsPlugins.propTypes = {
   browseList: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   items: PluginsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
@@ -236,6 +231,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     editItem: (node) => {
       return dispatch(actions.settings.plugins.edit(node));
+    },
+    alertSuccess: (message) => {
+      return dispatch(actions.app.alert.success(message));
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

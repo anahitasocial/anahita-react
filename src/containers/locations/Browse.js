@@ -24,6 +24,7 @@ const LocationsBrowse = (props) => {
   const {
     browseList,
     resetList,
+    alertError,
     items,
     error,
     hasMore,
@@ -34,7 +35,13 @@ const LocationsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
+
+  useEffect(() => {
+    if (error) {
+      alertError(error);
+    }
+  }, [error]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;
@@ -77,6 +84,7 @@ const LocationsBrowse = (props) => {
 LocationsBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   queryFilters: PropTypes.object,
   items: LocationsType.isRequired,
   error: PropTypes.string.isRequired,
@@ -113,6 +121,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetList: () => {
       return dispatch(actions.locations.reset());
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

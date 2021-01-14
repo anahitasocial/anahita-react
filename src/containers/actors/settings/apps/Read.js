@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import ListItem from '@material-ui/core/ListItem';
@@ -14,8 +14,6 @@ const ActorsSettingsAppsBrowse = (props) => {
     app,
   } = props;
 
-  const [enabled, setEnabled] = useState(app.enabled);
-
   return (
     <ListItem>
       <ListItemText
@@ -24,10 +22,8 @@ const ActorsSettingsAppsBrowse = (props) => {
       />
       <ListItemSecondaryAction>
         <Switch
-          checked={enabled.enabled}
+          checked={app.enabled}
           onChange={() => {
-            app.enabled = !app.enabled;
-            setEnabled(app.enabled);
             handleEdit(app);
           }}
         />

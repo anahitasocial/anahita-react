@@ -17,7 +17,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import FollowRequestsIcon from '@material-ui/icons/People';
 
 import ActorAvatar from '../../components/actor/Avatar';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
 
 import * as actions from '../../actions';
 import ActorsType from '../../proptypes/Actors';
@@ -29,9 +28,12 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
     resetList,
     addItem,
     deleteItem,
+    alertError,
+    alertSuccess,
     namespace,
     items,
     actor,
+    error,
     success,
   } = props;
 
@@ -43,7 +45,17 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
     return () => {
       resetList();
     };
-  }, [browseList, resetList]);
+  }, [actor.id]);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Request Updated');
+    }
+  }, [error, success]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -120,13 +132,6 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
           <FollowRequestsIcon />
         </Badge>
       </IconButton>
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Updated successfully!"
-          type="success"
-        />
-      }
     </React.Fragment>
   );
 });
@@ -137,6 +142,8 @@ ActorsFollowRequests.propTypes = {
   resetList: PropTypes.func.isRequired,
   addItem: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   items: ActorsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
@@ -184,6 +191,12 @@ const mapDispatchToProps = (namespace) => {
       },
       deleteItem: (params) => {
         return dispatch(actions[namespace].followRequests.deleteItem(params));
+      },
+      alertSuccess: (message) => {
+        return dispatch(actions.app.alert.success(message));
+      },
+      alertError: (message) => {
+        return dispatch(actions.app.alert.error(message));
       },
     };
   };

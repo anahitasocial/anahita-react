@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { singularize } from 'inflected';
@@ -8,7 +8,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ActorInfoForm from '../../components/actor/forms/Info';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
 import * as actions from '../../actions';
 import form from '../../utils/form';
 
@@ -22,6 +21,8 @@ const formFields = form.createFormFields([
 const ActorsAdd = (props) => {
   const {
     addItem,
+    alertError,
+    alertSuccess,
     items: {
       current: actor,
     },
@@ -32,6 +33,16 @@ const ActorsAdd = (props) => {
   } = props;
 
   const [fields, setFields] = useState(formFields);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Added successfully.');
+    }
+  }, [error, success]);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -88,19 +99,14 @@ const ActorsAdd = (props) => {
           dismissPath={`/${namespace}/`}
         />
       </Card>
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
     </React.Fragment>
   );
 };
 
 ActorsAdd.propTypes = {
   addItem: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   items: ActorsType.isRequired,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -131,6 +137,12 @@ const mapDispatchToProps = (namespace) => {
     return {
       addItem: (node) => {
         return dispatch(actions[namespace].add(node));
+      },
+      alertSuccess: (message) => {
+        return dispatch(actions.app.alert.success(message));
+      },
+      alertError: (message) => {
+        return dispatch(actions.app.alert.error(message));
       },
     };
   };

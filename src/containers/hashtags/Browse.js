@@ -8,7 +8,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
 
 import Progress from '../../components/Progress';
 
@@ -28,6 +27,7 @@ const HashtagsBrowse = (props) => {
   const {
     browseList,
     resetList,
+    alertError,
     items,
     error,
     hasMore,
@@ -49,13 +49,11 @@ const HashtagsBrowse = (props) => {
     };
   }, [resetList]);
 
-  if (error) {
-    return (
-      <Typography variant="body1" color="error" align="center">
-        {error}
-      </Typography>
-    );
-  }
+  useEffect(() => {
+    if (error) {
+      alertError(error);
+    }
+  }, [error]);
 
   return (
     <List>
@@ -93,6 +91,7 @@ const HashtagsBrowse = (props) => {
 HashtagsBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   queryFilters: PropTypes.object,
   items: HashtagsType.isRequired,
   error: PropTypes.string.isRequired,
@@ -129,6 +128,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetList: () => {
       return dispatch(actions.reset());
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

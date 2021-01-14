@@ -61,12 +61,15 @@ const LocationsRead = (props) => {
     readItem,
     editItem,
     setAppTitle,
+    alertSuccess,
+    alertError,
     items: {
       current: location,
     },
     taggablesCount,
     isFetching,
     error,
+    success,
     viewer,
     match: {
       params: {
@@ -82,6 +85,16 @@ const LocationsRead = (props) => {
     readItem(id);
     setAppTitle(i18n.t('locations:cTitle'));
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Updated successfully.');
+    }
+  }, [error, success]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -122,8 +135,6 @@ const LocationsRead = (props) => {
       editItem({
         id: location.id,
         ...formData,
-      }).then(() => {
-        handleCancel();
       });
     }
 
@@ -220,6 +231,7 @@ const mapStateToProps = (state) => {
   const {
     locations: items,
     error,
+    success,
     isFetching,
   } = state.locations;
 
@@ -235,6 +247,7 @@ const mapStateToProps = (state) => {
     items,
     taggablesCount,
     error,
+    success,
     isFetching,
     viewer,
   };
@@ -244,11 +257,14 @@ LocationsRead.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   readItem: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
   items: LocationsType.isRequired,
   match: PropTypes.object.isRequired,
   taggablesCount: PropTypes.number.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+  success: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
 };
 
@@ -262,6 +278,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     setAppTitle: (title) => {
       dispatch(actions.app.setAppTitle(title));
+    },
+    alertSuccess: (message) => {
+      return dispatch(actions.app.alert.success(message));
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
     },
   };
 };

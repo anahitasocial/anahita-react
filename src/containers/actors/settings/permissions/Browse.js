@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 
 import PermissionsEdit from './Edit';
 import Progress from '../../../../components/Progress';
-import SimpleSnackbar from '../../../../components/SimpleSnackbar';
 
 import PermissionsType from '../../../../proptypes/actor/Permissions';
 import ActorType from '../../../../proptypes/Actor';
@@ -20,6 +19,8 @@ const ActorsSettingsPermissionsBrowse = (props) => {
   const {
     browsePermissions,
     resetPermissions,
+    alertError,
+    alertSuccess,
     actor,
     permissions,
     isFetching,
@@ -37,7 +38,17 @@ const ActorsSettingsPermissionsBrowse = (props) => {
     return () => {
       resetPermissions();
     };
-  }, [browsePermissions, resetPermissions, actor]);
+  }, [actor.id]);
+
+  useEffect(() => {
+    if (error) {
+      alertError('Something went wrong!');
+    }
+
+    if (success) {
+      alertSuccess('Permissions updated.');
+    }
+  }, [error, success]);
 
   const handleClose = () => {
     setEditingOpen(false);
@@ -92,20 +103,6 @@ const ActorsSettingsPermissionsBrowse = (props) => {
           );
         })}
       </List>
-      {error &&
-        <SimpleSnackbar
-          isOpen={Boolean(error)}
-          message="Something went wrong!"
-          type="error"
-        />
-      }
-      {success &&
-        <SimpleSnackbar
-          isOpen={Boolean(success)}
-          message="Updated successfully!"
-          type="success"
-        />
-      }
     </React.Fragment>
   );
 };
@@ -114,6 +111,8 @@ ActorsSettingsPermissionsBrowse.propTypes = {
   actor: ActorType.isRequired,
   browsePermissions: PropTypes.func.isRequired,
   resetPermissions: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
   permissions: PermissionsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
@@ -155,6 +154,12 @@ const mapDispatchToProps = (namespace) => {
       },
       resetPermissions: () => {
         return dispatch(actions[namespace].settings.permissions.reset());
+      },
+      alertSuccess: (message) => {
+        return dispatch(actions.app.alert.success(message));
+      },
+      alertError: (message) => {
+        return dispatch(actions.app.alert.error(message));
       },
     };
   };

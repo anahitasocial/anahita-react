@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+import utils from '../utils';
 import { Person as PERSON } from '../constants';
 
 const {
@@ -60,8 +61,11 @@ const canNotificationSettings = (actor) => {
 };
 
 const canViewCommands = (actor, exclude = []) => {
-  return isRegistered(actor) &&
-  _.difference(
+  if (utils.node.isPerson(actor) && !isRegistered(actor)) {
+    return false;
+  }
+
+  return _.difference(
     actor.commands,
     exclude,
   ).length > 0;
