@@ -95,14 +95,6 @@ const SettingsAppsBrowse = (props) => {
     });
   };
 
-  if (error) {
-    return (
-      <Typography variant="body1" color="error" align="center">
-        {error}
-      </Typography>
-    );
-  }
-
   if (items.allIds.length === 0 && isFetching) {
     return (
       <Progress />

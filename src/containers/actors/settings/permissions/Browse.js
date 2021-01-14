@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
 
 import PermissionsEdit from './Edit';
 import Progress from '../../../../components/Progress';
@@ -14,6 +13,8 @@ import PermissionsType from '../../../../proptypes/actor/Permissions';
 import ActorType from '../../../../proptypes/Actor';
 import * as actions from '../../../../actions';
 import i18n from '../../../../languages';
+
+let Edit = null;
 
 const ActorsSettingsPermissionsBrowse = (props) => {
   const {
@@ -50,20 +51,14 @@ const ActorsSettingsPermissionsBrowse = (props) => {
     }
   }, [error, success]);
 
+  useEffect(() => {
+    Edit = PermissionsEdit(namespace);
+  }, [namespace]);
+
   const handleClose = () => {
     setEditingOpen(false);
     setCurrent(null);
   };
-
-  const Edit = PermissionsEdit(namespace);
-
-  if (error) {
-    return (
-      <Typography variant="body1" color="error" align="center">
-        {error}
-      </Typography>
-    );
-  }
 
   if (permissions.allIds.length === 0 && isFetching) {
     return (
