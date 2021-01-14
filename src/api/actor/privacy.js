@@ -17,18 +17,21 @@ const edit = (namespace) => {
       privacy,
     } = params;
 
-    let privacy_name = ['access', 'leadable:add'];
-
-    if (namespace === 'people') {
-      privacy_name = ['access'];
-      delete privacy['leadable:add'];
-    }
-
-    return axios.post(`/${namespace}/${actor.id}/privacy.json`, constructFormData({
+    const data = namespace === 'people' ? {
       action: 'setprivacy',
-      privacy_name,
-      ...privacy,
-    }));
+      'privacy_name[0]': 'access',
+      access: privacy.access,
+      allowFollowRequest: privacy.allowFollowRequest,
+    } : {
+      action: 'setprivacy',
+      'privacy_name[0]': 'access',
+      'privacy_name[1]': 'leadable:add',
+      access: privacy.access,
+      'leadable:add': privacy['leadable:add'],
+      allowFollowRequest: privacy.allowFollowRequest,
+    };
+
+    return axios.post(`/${namespace}/${actor.id}/privacy.json`, constructFormData(data));
   };
 };
 
