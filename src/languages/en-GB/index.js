@@ -81,6 +81,12 @@ export default {
   documents: {
     cTitle: 'Documents',
     mTitle: 'Documents',
+    settings: {
+      document: {
+        add: 'Who can post a document on this profile?',
+        addcomment: 'Who can comment on documents?',
+      },
+    },
   },
   settings: {
     cTitle: 'Settings',
