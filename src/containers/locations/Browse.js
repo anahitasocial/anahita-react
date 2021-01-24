@@ -35,13 +35,13 @@ const LocationsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, []);
+  }, [resetList]);
 
   useEffect(() => {
     if (error) {
       alertError(error);
     }
-  }, [error]);
+  }, [error, alertError]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;

@@ -50,7 +50,7 @@ const CommentsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, []);
+  }, [resetList]);
 
   const fetchList = (page) => {
     const { id, objectType } = parent;

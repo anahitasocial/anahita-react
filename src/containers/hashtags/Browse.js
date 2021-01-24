@@ -53,7 +53,7 @@ const HashtagsBrowse = (props) => {
     if (error) {
       alertError(error);
     }
-  }, [error]);
+  }, [error, alertError]);
 
   return (
     <List>

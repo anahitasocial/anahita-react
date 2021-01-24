@@ -84,7 +84,7 @@ const LocationsRead = (props) => {
   useEffect(() => {
     readItem(id);
     setAppTitle(i18n.t('locations:cTitle'));
-  }, []);
+  }, [readItem, id, setAppTitle]);
 
   useEffect(() => {
     if (error) {
@@ -94,7 +94,7 @@ const LocationsRead = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleEdit = () => {
     setIsEditing(true);
