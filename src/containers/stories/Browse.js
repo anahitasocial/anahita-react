@@ -6,8 +6,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import CommentIcon from '@material-ui/icons/Comment';
 
 import CommentsBrowse from './comments/Browse';
-
-import actions from '../../actions/stories';
+import * as actions from '../../actions';
 
 import LikeAction from '../likes/actions/LikeStory';
 import LikesStats from '../likes';
@@ -52,7 +51,7 @@ const StoriesBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, []);
+  }, [resetList]);
 
   useEffect(() => {
     if (error) {
@@ -212,10 +211,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseList: (params) => {
-      return dispatch(actions.browse(params));
+      return dispatch(actions.stories.browse(params));
     },
     resetList: () => {
-      return dispatch(actions.reset());
+      return dispatch(actions.stories.reset());
     },
     alertError: (message) => {
       return dispatch(actions.app.alert.error(message));

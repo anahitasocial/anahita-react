@@ -60,7 +60,7 @@ const TaggablesBrowse = (props) => {
     if (error) {
       alertError(error);
     }
-  }, [error]);
+  }, [error, alertError]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;

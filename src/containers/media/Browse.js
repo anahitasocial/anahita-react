@@ -50,7 +50,7 @@ const MediaBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, []);
+  }, [resetList]);
 
   const [current, setCurrent] = useState(items.allIds[0]);
   const [stepperOpen, setStepperOpen] = useState(false);

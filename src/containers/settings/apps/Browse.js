@@ -25,7 +25,7 @@ import * as actions from '../../../actions';
 import AppsType from '../../../proptypes/settings/Apps';
 import utils from '../../../utils';
 
-const LIMIT = 99;
+const LIMIT = 100;
 const SORT = {
   NAME: 'name',
   ORDERING: 'ordering',
@@ -63,7 +63,7 @@ const SettingsAppsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [sort]);
+  }, [sort, resetList]);
 
   useEffect(() => {
     if (error) {
@@ -73,7 +73,7 @@ const SettingsAppsBrowse = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleClose = () => {
     setEditingOpen(false);

@@ -66,7 +66,7 @@ const SettingsPlugins = (props) => {
     return () => {
       resetList();
     };
-  }, [sort, type]);
+  }, [browseList, sort, type, resetList]);
 
   useEffect(() => {
     if (error) {
@@ -76,7 +76,7 @@ const SettingsPlugins = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleClose = () => {
     setEditingOpen(false);
@@ -172,7 +172,6 @@ const SettingsPlugins = (props) => {
                       setCurrent(node);
                       setEditingOpen(true);
                     }}
-                    disabled={!node.meta}
                   >
                     <ListItemText
                       primary={node.name}
