@@ -6,11 +6,15 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { singularize } from 'inflection';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
 import ActorBodyAbout from './body/About';
 import i18n from '../../languages';
+import utils from '../../utils';
+
+const { getNamespace } = utils.node;
 
 const styles = (theme) => {
   return {
@@ -29,6 +33,7 @@ const ActorBody = (props) => {
     classes,
     actor,
     viewer,
+    admins,
     composers,
     stories,
     locations,
@@ -48,6 +53,8 @@ const ActorBody = (props) => {
     setValue(newValue);
   };
 
+  const namespace = getNamespace(actor);
+
   return (
     <Box className={classes.root}>
       <AppBar
@@ -66,9 +73,10 @@ const ActorBody = (props) => {
           aria-label="Profile Tabs"
         >
           {actor.gadgets.map((gadget) => {
+            const label = gadget === 'stories' ? singularize(namespace) : i18n.t(`${gadget}:mTitle`);
             return (
               <Tab
-                label={i18n.t(`${gadget}:mTitle`)}
+                label={label}
                 value={gadget}
                 key={`actor-tab-${gadget}`}
               />
@@ -90,6 +98,11 @@ const ActorBody = (props) => {
               {actor.body &&
                 <Grid item xs={12}>
                   <ActorBodyAbout actor={actor} />
+                </Grid>
+              }
+              {admins &&
+                <Grid item xs={12}>
+                  {admins }
                 </Grid>
               }
               <Grid item xs={12}>
@@ -126,6 +139,7 @@ ActorBody.propTypes = {
   composers: PropTypes.node,
   stories: PropTypes.node,
   locations: PropTypes.node,
+  admins: PropTypes.node,
   socialgraph: PropTypes.node,
   notes: PropTypes.node,
   photos: PropTypes.node,
@@ -137,6 +151,7 @@ ActorBody.propTypes = {
 };
 
 ActorBody.defaultProps = {
+  admins: null,
   composers: null,
   stories: null,
   locations: null,

@@ -57,7 +57,7 @@ const ActorsSettingsPrivacy = (props) => {
 
   useEffect(() => {
     readPrivacy(actor);
-  }, [actor.id]);
+  }, [readPrivacy, actor]);
 
   useEffect(() => {
     if (error) {
@@ -67,7 +67,7 @@ const ActorsSettingsPrivacy = (props) => {
     if (success) {
       alertSuccess('Privacy updated.');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleOnChange = (event) => {
     const {

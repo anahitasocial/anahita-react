@@ -29,11 +29,16 @@ const Composers = (props) => {
     owner,
   } = props;
 
+  const composers = owner.composers || [];
   const [tab, setTab] = useState(selectedTab);
 
   const changeTab = (event, value) => {
     setTab(value);
   };
+
+  if (composers.length === 0) {
+    return (<React.Fragment />);
+  }
 
   return (
     <React.Fragment>
@@ -49,12 +54,11 @@ const Composers = (props) => {
         <Tabs
           value={tab}
           onChange={changeTab}
-          centered
-          variant="fullWidth"
+          variant="scrollable"
           indicatorColor="primary"
           textColor="primary"
         >
-          {owner.composers.map((composer) => {
+          {composers.map((composer) => {
             return (
               <Tab
                 key={`composer-tab-${composer}`}

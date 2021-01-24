@@ -5,8 +5,9 @@ import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import striptags from 'striptags';
 
-import ActorHeader from '../../components/actor/Header';
+import Admins from '../../components/actor/body/Admins';
 import ActorBody from '../../components/actor/Body';
+import ActorHeader from '../../components/actor/Header';
 import ActorsFollowRequests from './FollowRequests';
 import ActorsSocialgraph from './Socialgraph';
 import Avatar from './read/Avatar';
@@ -125,6 +126,9 @@ const ActorsRead = (props) => {
       <ActorBody
         actor={actor}
         viewer={viewer}
+        admins={actor.id > 0 && actor.administrators &&
+          <Admins actor={actor} />
+        }
         composers={isAuthenticated && actor.id &&
           <Composers owner={actor} />
         }
@@ -134,7 +138,6 @@ const ActorsRead = (props) => {
             queryFilters={{
               oid: actor.id,
             }}
-            {...this.params}
           />
         }
         locations={actor.id &&

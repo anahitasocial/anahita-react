@@ -52,7 +52,7 @@ const AnahitaMap = (props) => {
     });
 
     setMap(newMap);
-  }, []);
+  }, [locations]);
 
   const onUnmount = useCallback(() => {
     setMap(null);

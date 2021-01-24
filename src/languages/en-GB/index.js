@@ -172,6 +172,10 @@ export default {
       },
     },
   },
+  explore: {
+    cTitle: 'Explore',
+    mTitle: 'Explore',
+  },
   hashtags: {
     cTitle: 'Hashtags',
     mTitle: 'Hashtags',

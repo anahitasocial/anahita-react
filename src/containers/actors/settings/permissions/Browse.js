@@ -18,8 +18,8 @@ let Edit = null;
 
 const ActorsSettingsPermissionsBrowse = (props) => {
   const {
-    browsePermissions,
-    resetPermissions,
+    browseList,
+    resetList,
     alertError,
     alertSuccess,
     actor,
@@ -34,12 +34,12 @@ const ActorsSettingsPermissionsBrowse = (props) => {
   const [current, setCurrent] = useState(null);
 
   useEffect(() => {
-    browsePermissions(actor);
+    browseList(actor);
 
     return () => {
-      resetPermissions();
+      resetList();
     };
-  }, [actor.id]);
+  }, [browseList, actor, resetList]);
 
   useEffect(() => {
     if (error) {
@@ -49,7 +49,7 @@ const ActorsSettingsPermissionsBrowse = (props) => {
     if (success) {
       alertSuccess('Permissions updated.');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   useEffect(() => {
     Edit = PermissionsEdit(namespace);
@@ -104,8 +104,8 @@ const ActorsSettingsPermissionsBrowse = (props) => {
 
 ActorsSettingsPermissionsBrowse.propTypes = {
   actor: ActorType.isRequired,
-  browsePermissions: PropTypes.func.isRequired,
-  resetPermissions: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   permissions: PermissionsType.isRequired,
@@ -144,10 +144,10 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      browsePermissions: (params) => {
+      browseList: (params) => {
         return dispatch(actions[namespace].settings.permissions.browse(params));
       },
-      resetPermissions: () => {
+      resetList: () => {
         return dispatch(actions[namespace].settings.permissions.reset());
       },
       alertSuccess: (message) => {

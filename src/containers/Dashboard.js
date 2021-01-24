@@ -22,7 +22,7 @@ const DashboardPage = (props) => {
   useEffect(() => {
     setAppTitle(i18n.t('dashboard:cTitle'));
     sessionRead();
-  }, []);
+  }, [setAppTitle, sessionRead]);
 
   const filters = {
     filter: 'leaders',
@@ -52,7 +52,6 @@ const DashboardPage = (props) => {
           <StoriesBrowse
             key="com:stories.story"
             queryFilters={filters}
-            {...this.params}
           />
         </Grid>
       </Grid>

@@ -21,8 +21,8 @@ import * as actions from '../../../../actions';
 
 const ActorsSettingsAdminsBrowse = (props) => {
   const {
-    browseAdmins,
-    resetAdmins,
+    browseList,
+    resetList,
     removeAdmin,
     alertError,
     alertSuccess,
@@ -41,12 +41,12 @@ const ActorsSettingsAdminsBrowse = (props) => {
   }
 
   useEffect(() => {
-    browseAdmins(actor);
+    browseList(actor);
 
     return () => {
-      resetAdmins();
+      resetList();
     };
-  }, [actor.id]);
+  }, [browseList, actor, resetList]);
 
   useEffect(() => {
     if (error) {
@@ -56,7 +56,7 @@ const ActorsSettingsAdminsBrowse = (props) => {
     if (success) {
       alertSuccess('Updated successfully');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleRemove = (admin) => {
     removeAdmin({ actor, admin });
@@ -102,8 +102,8 @@ const ActorsSettingsAdminsBrowse = (props) => {
 
 ActorsSettingsAdminsBrowse.propTypes = {
   actor: ActorType.isRequired,
-  browseAdmins: PropTypes.func.isRequired,
-  resetAdmins: PropTypes.func.isRequired,
+  browseList: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
   removeAdmin: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
@@ -143,10 +143,10 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      browseAdmins: (params) => {
+      browseList: (params) => {
         return dispatch(actions[namespace].settings.admins.browse(params));
       },
-      resetAdmins: () => {
+      resetList: () => {
         return dispatch(actions[namespace].settings.admins.reset());
       },
       removeAdmin: (params) => {

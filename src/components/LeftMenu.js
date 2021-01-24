@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import DocumentsIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
+import ExploreIcon from '@material-ui/icons/Explore';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupsIcon from '@material-ui/icons/GroupWork';
 import NotesIcon from '@material-ui/icons/Note';
@@ -43,6 +44,16 @@ const LeftMenu = (props) => {
           <HomeIcon />
         </ListItemIcon>
         <ListItemText primary={i18n.t('dashboard:cTitle')} />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/explore/"
+      >
+        <ListItemIcon>
+          <ExploreIcon />
+        </ListItemIcon>
+        <ListItemText primary={i18n.t('explore:cTitle')} />
       </ListItem>
       <ListItem
         button

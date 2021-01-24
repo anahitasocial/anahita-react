@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -13,7 +13,6 @@ const BlockAction = React.forwardRef((props, ref) => {
   const {
     blockPerson,
     unblockPerson,
-    reset,
     actor,
     actors,
     viewer,
@@ -23,16 +22,8 @@ const BlockAction = React.forwardRef((props, ref) => {
   } = props;
 
   const isBlocked = actors.byId[actor.id] ? actors.byId[actor.id].isBlocked : actor.isBlocked;
-
   const [blocked, setBlocked] = useState(isBlocked);
-
   const [waiting, setWaiting] = useState(false);
-
-  useEffect(() => {
-    return () => {
-      reset();
-    };
-  }, []);
 
   const handleBlock = (event) => {
     event.preventDefault();
@@ -85,7 +76,6 @@ const BlockAction = React.forwardRef((props, ref) => {
 BlockAction.propTypes = {
   blockPerson: PropTypes.func.isRequired,
   unblockPerson: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
   actors: ActorsType.isRequired,
   viewer: PersonType.isRequired,
@@ -122,9 +112,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     unblockPerson: (viewer, actor) => {
       return dispatch(actions.unblock(viewer, actor));
-    },
-    reset: () => {
-      return dispatch(actions.reset());
     },
   };
 };

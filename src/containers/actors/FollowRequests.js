@@ -45,7 +45,7 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
     return () => {
       resetList();
     };
-  }, [actor.id]);
+  }, [browseList, actor, resetList]);
 
   useEffect(() => {
     if (error) {
@@ -55,7 +55,7 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
     if (success) {
       alertSuccess('Request Updated');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -147,7 +147,6 @@ ActorsFollowRequests.propTypes = {
   items: ActorsType.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
 };
 

@@ -30,7 +30,7 @@ const ActorsSettingsAppsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [actor.id]);
+  }, [browseList, actor, resetList]);
 
   useEffect(() => {
     if (error) {
@@ -40,7 +40,7 @@ const ActorsSettingsAppsBrowse = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleEditApp = (app) => {
     editItem({ actor, app });

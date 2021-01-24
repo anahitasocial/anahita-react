@@ -31,6 +31,7 @@ import MediaRead from '../containers/media/Read';
 import PeopleAdd from '../containers/people/Add';
 
 import DashboardPage from '../containers/Dashboard';
+import ExplorePage from '../containers/Explore';
 import SearchPage from '../containers/search';
 import Settings from '../containers/settings';
 import NotFoundPage from '../containers/NotFound';
@@ -71,6 +72,11 @@ const Routes = (props) => {
         exact
         path="/"
         component={isAuthenticated ? DashboardPage : HomePage}
+      />
+      <Route
+        exact
+        path="/explore/"
+        component={ExplorePage}
       />
       <Route
         exact

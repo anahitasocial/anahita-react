@@ -41,15 +41,15 @@ const useStyles = makeStyles({
 const { getAddress } = utils.node;
 const fieldNames = ['name', 'address'];
 
-if (process.env.REACT_APP_LOCATION_FIXED_CITY === '') {
+if (!process.env.REACT_APP_LOCATION_FIXED_CITY) {
   fieldNames.push('city');
 }
 
-if (process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE === '') {
+if (!process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE) {
   fieldNames.push('state_province');
 }
 
-if (process.env.REACT_APP_LOCATION_FIXED_COUNTRY === '') {
+if (!process.env.REACT_APP_LOCATION_FIXED_COUNTRY) {
   fieldNames.push('country');
 }
 
