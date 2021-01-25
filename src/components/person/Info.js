@@ -34,6 +34,7 @@ const PersonInfo = (props) => {
     canChangeUsertype,
     isSuperAdmin,
     isFetching,
+    enabled,
   } = props;
 
   const isNew = !person.id;
@@ -54,6 +55,7 @@ const PersonInfo = (props) => {
         />
       }
       <CardContent>
+        {enabled}
         <TextField
           name="givenName"
           value={person.givenName}
@@ -87,7 +89,7 @@ const PersonInfo = (props) => {
         />
         <TextField
           name="body"
-          value={person.body}
+          value={person.body || ''}
           onChange={handleOnChange}
           label="Bio"
           error={body.error !== ''}
@@ -183,6 +185,11 @@ PersonInfo.propTypes = {
   canChangeUsertype: PropTypes.bool.isRequired,
   isSuperAdmin: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  enabled: PropTypes.node,
+};
+
+PersonInfo.defaultProps = {
+  enabled: null,
 };
 
 export default PersonInfo;

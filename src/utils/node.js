@@ -1,6 +1,13 @@
 import { pluralize } from 'inflection';
 import countryList from 'country-list';
 import i18n from '../languages';
+import { Person as PERSON } from '../constants';
+
+const {
+  REGISTERED,
+  ADMIN,
+  SUPER_ADMIN,
+} = PERSON.FIELDS.TYPE;
 
 const OWNER_NAME_CHAR_LIMIT = 16;
 
@@ -34,6 +41,14 @@ const isPerson = (node) => {
   return node.objectType ? node.objectType.split('.')[1] === 'people' : false;
 };
 
+const isAdmin = (actor) => {
+  return [SUPER_ADMIN, ADMIN].includes(actor.usertype);
+};
+
+const isRegistered = (actor) => {
+  return [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.usertype);
+};
+
 const isMedium = (node) => {
   return node.objectType ? OBJECT_TYPES.MEDIUM.includes(node.objectType) : false;
 };
@@ -52,6 +67,14 @@ const isLikeable = (medium) => {
 
 const isSubscribable = (medium) => {
   return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
+};
+
+const isFollowable = (actor) => {
+  return isActor(actor);
+};
+
+const isLeadable = (actor) => {
+  return isPerson(actor);
 };
 
 const isBodyHtml = (medium) => {
@@ -188,11 +211,15 @@ const getNamespace = (node) => {
 export default {
   isActor,
   isPerson,
+  isAdmin,
+  isRegistered,
   isMedium,
   isComment,
   isCommentable,
   isLikeable,
   isSubscribable,
+  isFollowable,
+  isLeadable,
   isBodyHtml,
   getNamespace,
   getPersonInitials,

@@ -7,12 +7,12 @@ export default {
   VALIDATE_USERNAME: person('validate_USERNAME'),
   FIELDS: {
     GIVEN_NAME: {
-      MAX_LENGTH: 30,
-      MIN_LENGTH: 3,
+      MAX_LENGTH: 20,
+      MIN_LENGTH: 2,
     },
     FAMILY_NAME: {
-      MAX_LENGTH: 30,
-      MIN_LENGTH: 3,
+      MAX_LENGTH: 20,
+      MIN_LENGTH: 2,
     },
     BODY: {
       MAX_LENGTH: 500,

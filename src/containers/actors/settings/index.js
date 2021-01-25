@@ -50,7 +50,6 @@ const ActorsSettings = (props) => {
   } = props;
 
   const [id] = params.id.split('-');
-
   const [tab, setTab] = useState(selectedTab);
 
   useEffect(() => {
@@ -59,7 +58,7 @@ const ActorsSettings = (props) => {
     return () => {
       resetActors();
     };
-  }, [id]);
+  }, [readActor, id, namespace, resetActors]);
 
   useEffect(() => {
     if (error) {
@@ -69,7 +68,7 @@ const ActorsSettings = (props) => {
     if (success) {
       alertSuccess('Updated successfully!');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   if (!actor.id && isFetching) {
     return (

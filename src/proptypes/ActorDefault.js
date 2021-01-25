@@ -12,7 +12,7 @@ export default {
   commands: [],
   imageURL: ImageURLDefault,
   coverURL: ImageURLDefault,
-  administratorIds: [],
+  administrators: [],
   followerCount: 0,
   subscriberCount: 0,
   author: PersonDefault,
@@ -21,4 +21,5 @@ export default {
   updateTime: '0000-00-00 00:00:00',
   isAdministrated: false,
   isLeader: false,
+  information: null,
 };

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+
 import InfoForm from '../../../components/person/Info';
 import Progress from '../../../components/Progress';
 import * as actions from '../../../actions';
+import permissions from '../../../permissions';
 import { Person as PERSON } from '../../../constants';
 import PersonType from '../../../proptypes/Person';
 import form from '../../../utils/form';
@@ -15,6 +20,8 @@ const formFields = form.createFormFields([
   'body',
   'gender',
 ]);
+
+const { canAdminister } = permissions.actor;
 
 const PersonSettingsInfo = (props) => {
   const {
@@ -28,9 +35,13 @@ const PersonSettingsInfo = (props) => {
 
   const handleOnChange = (event) => {
     const { target } = event;
-    const { name, value } = target;
+    const { name, value, checked } = target;
 
-    person[name] = value;
+    if (name === 'enabled') {
+      person[name] = Boolean(checked);
+    } else {
+      person[name] = value;
+    }
 
     const newFields = form.validateField(target, fields);
 
@@ -46,8 +57,9 @@ const PersonSettingsInfo = (props) => {
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
       editPerson({
-        id: person.id,
         ...formData,
+        id: person.id,
+        enabled: person.enabled ? 1 : 0,
       });
     }
 
@@ -69,6 +81,7 @@ const PersonSettingsInfo = (props) => {
   }
 
   const isSuperAdmin = viewer.usertype === SUPER_ADMIN;
+  const canEditEnable = canAdminister(viewer) && viewer.id !== person.id;
 
   return (
     <InfoForm
@@ -79,6 +92,18 @@ const PersonSettingsInfo = (props) => {
       isFetching={isFetching}
       canChangeUsertype={canChangeUsertype()}
       isSuperAdmin={isSuperAdmin}
+      enabled={canEditEnable &&
+        <FormControlLabel
+          control={
+            <Switch
+              name="enabled"
+              checked={person.enabled}
+              onChange={handleOnChange}
+            />
+          }
+          label="Enabled"
+        />
+      }
     />
   );
 };

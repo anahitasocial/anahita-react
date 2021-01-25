@@ -17,7 +17,12 @@ import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
 
 const { withRef } = utils.component;
-const { getURL } = utils.node;
+const {
+  getURL,
+  // isLikeable,
+  isCommentable,
+  isSubscribable,
+} = utils.node;
 
 const NotificationActionWithRef = withRef(NotificationAction);
 const CommentStatusActionWithRef = withRef(CommentStatusAction);
@@ -32,10 +37,6 @@ const MediaMenu = (props) => {
     inline,
   } = props;
 
-  const canEdit = permissions.canEdit(viewer, medium);
-  const canDelete = permissions.canDelete(viewer, medium);
-
-
   const [menuAnchorEl, setAnchorEl] = React.useState(null);
 
   const handleOpenMenu = (event) => {
@@ -45,6 +46,15 @@ const MediaMenu = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const canEdit = permissions.canEdit(viewer, medium);
+  const canSubscribe = isSubscribable(medium);
+  const canComment = isCommentable(medium);
+  const canDelete = permissions.canDelete(viewer, medium);
+
+  if (!canEdit && !canSubscribe && !canComment && !canDelete) {
+    return (<React.Fragment />);
+  }
 
   return (
     <React.Fragment>
@@ -73,15 +83,19 @@ const MediaMenu = (props) => {
             Edit
           </MenuItem>
         }
-        <NotificationActionWithRef
-          medium={medium}
-          isSubscribed={medium.isSubscribed}
-          key={`medium-notification-${medium.id}`}
-        />
-        <CommentStatusActionWithRef
-          medium={medium}
-          key={`medium-comment-status-${medium.id}`}
-        />
+        {isSubscribable(medium) &&
+          <NotificationActionWithRef
+            medium={medium}
+            isSubscribed={medium.isSubscribed}
+            key={`medium-notification-${medium.id}`}
+          />
+        }
+        {isCommentable(medium) &&
+          <CommentStatusActionWithRef
+            medium={medium}
+            key={`medium-comment-status-${medium.id}`}
+          />
+        }
         {canDelete && !handleDelete &&
           <DeleteActionWithRef
             node={medium}

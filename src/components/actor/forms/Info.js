@@ -14,26 +14,25 @@ const ActorInfoForm = (props) => {
   const {
     handleOnChange,
     handleOnSubmit,
-    fields: {
-      name,
-      body,
-    },
+    fields,
     actor,
     isFetching,
+    enabled,
   } = props;
 
-  const enableSubmit = actor.id > 0 || (name.isValid && body.isValid);
+  const enableSubmit = actor.id > 0 || (fields.name.isValid && fields.body.isValid);
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <CardContent>
+        {enabled}
         <TextField
           name="name"
-          value={actor.name}
+          value={actor.name || ''}
           onChange={handleOnChange}
           label="Name"
-          error={name.error !== ''}
-          helperText={name.error}
+          error={fields.name.error !== ''}
+          helperText={fields.name.error}
           margin="normal"
           fullWidth
           inputProps={{
@@ -44,10 +43,10 @@ const ActorInfoForm = (props) => {
         />
         <TextField
           name="body"
-          value={actor.body}
+          value={actor.body || ''}
           onChange={handleOnChange}
-          error={body.error !== ''}
-          helperText={body.error}
+          error={fields.body.error !== ''}
+          helperText={fields.body.error}
           label="Description"
           margin="normal"
           fullWidth
@@ -80,6 +79,11 @@ ActorInfoForm.propTypes = {
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   actor: ActorType.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  enabled: PropTypes.node,
+};
+
+ActorInfoForm.defaultProps = {
+  enabled: null,
 };
 
 export default ActorInfoForm;

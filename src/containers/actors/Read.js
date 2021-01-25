@@ -126,13 +126,13 @@ const ActorsRead = (props) => {
       <ActorBody
         actor={actor}
         viewer={viewer}
-        admins={actor.id > 0 && actor.administrators &&
+        admins={actor.administrators &&
           <Admins actor={actor} />
         }
-        composers={isAuthenticated && actor.id &&
+        composers={isAuthenticated &&
           <Composers owner={actor} />
         }
-        stories={actor.id &&
+        stories={
           <StoriesBrowse
             // key="com:stories.story"
             queryFilters={{
@@ -140,30 +140,30 @@ const ActorsRead = (props) => {
             }}
           />
         }
-        locations={actor.id &&
+        locations={
           <LocationsGadget node={actor} />
         }
         socialgraph={
           <SocialgraphTabs
-            followers={actor.id &&
+            followers={
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="followers"
               />
             }
-            leaders={actor.id && isPerson &&
+            leaders={isPerson &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="leaders"
               />
             }
-            blocked={actor.id && isViewer &&
+            blocked={isViewer &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="blocked"
               />
             }
-            mutuals={actor.id && !isViewer && isPerson &&
+            mutuals={!isViewer && isPerson &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="mutuals"
@@ -171,42 +171,42 @@ const ActorsRead = (props) => {
             }
           />
         }
-        articles={actor.id &&
+        articles={
           <Articles
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        documents={actor.id &&
+        documents={
           <Documents
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        notes={actor.id &&
+        notes={
           <Notes
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        photos={actor.id &&
+        photos={
           <Photos
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        topics={actor.id &&
+        topics={
           <Topics
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        todos={actor.id &&
+        todos={
           <Todos
             queryFilters={{
               oid: actor.id,

@@ -22,10 +22,10 @@ import * as actions from '../../actions';
 import utils from '../../utils';
 import i18n from '../../languages';
 
-const formFields = utils.form.createFormFields([
-  'name',
-  'body',
-]);
+const {
+  isLikeable,
+  isCommentable,
+} = utils.node;
 
 const MediaRead = (props) => {
   const {
@@ -52,6 +52,19 @@ const MediaRead = (props) => {
     },
   } = props;
 
+  let formFields = null;
+
+  if (namespace === 'notes') {
+    formFields = utils.form.createFormFields([
+      'body',
+    ]);
+  } else {
+    formFields = utils.form.createFormFields([
+      'name',
+      'body',
+    ]);
+  }
+
   const [isEditing, setIsEditing] = useState(false);
   const [redirect, setRedirect] = useState('');
   const [fields, setFields] = useState(formFields);
@@ -59,7 +72,7 @@ const MediaRead = (props) => {
   useEffect(() => {
     readItem(id, namespace);
     setAppTitle(i18n.t(`${namespace}:cTitle`));
-  }, []);
+  }, [readItem, id, namespace, setAppTitle]);
 
   useEffect(() => {
     if (error) {
@@ -69,7 +82,7 @@ const MediaRead = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [error, success]);
+  }, [alertError, alertSuccess, error, success]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -172,16 +185,20 @@ const MediaRead = (props) => {
           }
           stats={
             <React.Fragment>
-              <Likes node={medium} />
-              <CommentStats
-                node={{
-                  ...medium,
-                  numOfComments,
-                }}
-              />
+              {isLikeable(medium) &&
+                <Likes node={medium} />
+              }
+              {isCommentable(medium) &&
+                <CommentStats
+                  node={{
+                    ...medium,
+                    numOfComments,
+                  }}
+                />
+              }
             </React.Fragment>
           }
-          comments={
+          comments={isCommentable(medium) &&
             <MediumComments
               parent={medium}
               canAdd={canAddComment}

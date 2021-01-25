@@ -9,7 +9,7 @@ export default {
   body: '',
   imageURL: ImageURLDefault,
   coverURL: ImageURLDefault,
-  administratorIds: [],
+  administrators: [],
   followerCount: 0,
   subscriberCount: 0,
   author: PersonDefault,

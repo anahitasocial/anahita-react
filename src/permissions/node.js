@@ -1,10 +1,14 @@
+import _ from 'lodash';
 import { Person as PERSON } from '../constants';
 
 const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
 
 const canEdit = (viewer, node) => {
-  if (node.administratorIds) {
-    if (node.administratorIds.indexOf(String(viewer.id)) > -1) {
+  if (node.administrators) {
+    const admins = node.administrators || [];
+    if (_.find(admins, (admin) => {
+      return admin.id === viewer.id;
+    })) {
       return true;
     }
   }

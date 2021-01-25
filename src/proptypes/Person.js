@@ -4,6 +4,9 @@ import {
   string,
   oneOf,
   arrayOf,
+  objectOf,
+  oneOfType,
+  any,
 } from 'prop-types';
 
 import PERSON from '../constants/person';
@@ -45,4 +48,8 @@ export default shape({
   subscriberCount: number,
   creationTime: string,
   updateTime: string,
+  information: oneOfType([
+    objectOf(any),
+    arrayOf(any),
+  ]),
 });

@@ -19,52 +19,51 @@ const MediumFormEdit = (props) => {
     handleOnChange,
     handleOnSubmit,
     handleCancel,
-    fields: {
-      name,
-      body,
-    },
+    fields,
     medium,
     isFetching,
   } = props;
 
-  const enableSubmit = medium.id > 0 || (name.isValid && body.isValid);
-
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <CardContent>
-        <TextField
-          name="name"
-          value={medium.name}
-          onChange={handleOnChange}
-          label="Title"
-          error={name.error !== ''}
-          helperText={name.error}
-          autoFocus
-          fullWidth
-          margin="normal"
-          disabled={isFetching}
-          inputProps={{
-            maxLength: NAME.MAX_LENGTH,
-            minLength: NAME.MIN_LENGTH,
-          }}
-          required
-        />
-        <TextField
-          name="body"
-          value={medium.body}
-          onChange={handleOnChange}
-          label="Description"
-          error={body.error !== ''}
-          helperText={body.error}
-          multiline
-          fullWidth
-          margin="normal"
-          disabled={isFetching}
-          inputProps={{
-            maxLength: BODY.MAX_LENGTH,
-          }}
-          required
-        />
+        {fields.name &&
+          <TextField
+            name="name"
+            value={medium.name}
+            onChange={handleOnChange}
+            label="Title"
+            error={fields.name.error !== ''}
+            helperText={fields.name.error}
+            autoFocus
+            fullWidth
+            margin="normal"
+            disabled={isFetching}
+            inputProps={{
+              maxLength: NAME.MAX_LENGTH,
+              minLength: NAME.MIN_LENGTH,
+            }}
+            required
+          />
+        }
+        {fields.body &&
+          <TextField
+            name="body"
+            value={fields.medium.body}
+            onChange={handleOnChange}
+            label="Description"
+            error={fields.body.error !== ''}
+            helperText={fields.body.error}
+            multiline
+            fullWidth
+            margin="normal"
+            disabled={isFetching}
+            inputProps={{
+              maxLength: BODY.MAX_LENGTH,
+            }}
+            required
+          />
+        }
       </CardContent>
       <CardActions>
         <Button
@@ -78,7 +77,7 @@ const MediumFormEdit = (props) => {
           type="submit"
           variant="contained"
           color="primary"
-          disabled={isFetching || !enableSubmit}
+          disabled={isFetching}
           fullWidth
         >
           Save

@@ -6,12 +6,18 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
+import utils from '../../utils';
 
 const styles = {
   avatar: {
     textDecoration: 'none',
   },
 };
+
+const {
+  getActorInitials,
+  getPortraitURL,
+} = utils.node;
 
 const ActorSettingCard = (props) => {
   const {
@@ -22,8 +28,8 @@ const ActorSettingCard = (props) => {
     children,
   } = props;
 
-  const avatarSrc = actor.imageURL.medium && actor.imageURL.medium.url;
-  const initials = actor.name.charAt(0);
+  const avatarSrc = getPortraitURL(actor, 'medium');
+  const initials = getActorInitials(actor);
 
   return (
     <Card variant="outlined">

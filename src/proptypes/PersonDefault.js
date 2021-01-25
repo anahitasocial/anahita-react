@@ -26,4 +26,5 @@ export default {
   subscriberCount: 0,
   creationTime: '0000-00-00 00:00:00',
   updateTime: '0000-00-00 00:00:00',
+  information: null,
 };

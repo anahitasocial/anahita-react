@@ -11,8 +11,8 @@ import NotificationAction from '../actions/medium/Notification';
 import DeleteAction from '../actions/Delete';
 import FollowAction from '../actions/Follow';
 
-import PersonType from '../../proptypes/Person';
 import StoryType from '../../proptypes/Story';
+import permissions from '../../permissions';
 
 const { withRef } = utils.component;
 const {
@@ -25,10 +25,7 @@ const NotificationActionWithRef = withRef(NotificationAction);
 const DeleteActionWithRef = withRef(DeleteAction);
 
 const StoryMenu = (props) => {
-  const {
-    story,
-    viewer,
-  } = props;
+  const { story } = props;
 
   const [menuAnchorEl, setAnchorEl] = useState(null);
 
@@ -42,8 +39,13 @@ const StoryMenu = (props) => {
 
   const ownerName = getOwnerName(story);
   const { id, owner } = story;
-  const showSubscriptionAction = story.object && isSubscribable(story.object);
-  const showFollowAction = owner.id !== viewer.id;
+  const canSubscribe = story.object && isSubscribable(story.object);
+  const canFollow = permissions.actor.canFollow(owner);
+  const canDelete = story.commands && story.commands.includes('delete');
+
+  if (!canSubscribe && !canFollow && !canDelete) {
+    return (<React.Fragment />);
+  }
 
   return (
     <React.Fragment>
@@ -61,7 +63,7 @@ const StoryMenu = (props) => {
         open={Boolean(menuAnchorEl)}
         onClose={handleClose}
       >
-        {showFollowAction &&
+        {canFollow &&
           <FollowActionWithRef
             actor={owner}
             component="menuitem"
@@ -74,17 +76,19 @@ const StoryMenu = (props) => {
             })}
           />
         }
-        {showSubscriptionAction &&
+        {canSubscribe &&
           <NotificationActionWithRef
             medium={story.object}
             isSubscribed={story.object.isSubscribed}
             key={`story-notification-${id}`}
           />
         }
-        <DeleteActionWithRef
-          node={story}
-          key={`story-delete-${id}`}
-        />
+        {canDelete &&
+          <DeleteActionWithRef
+            node={story}
+            key={`story-delete-${id}`}
+          />
+        }
       </Menu>
     </React.Fragment>
   );
@@ -92,7 +96,6 @@ const StoryMenu = (props) => {
 
 StoryMenu.propTypes = {
   story: StoryType.isRequired,
-  viewer: PersonType.isRequired,
 };
 
 export default StoryMenu;

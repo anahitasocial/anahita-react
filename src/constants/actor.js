@@ -4,8 +4,8 @@ export default {
       MAX_LENGTH: 100,
     },
     ALIAS: {
-      MAX_LENGTH: 100,
-      MIN_LENGTH: 10,
+      MAX_LENGTH: 30,
+      MIN_LENGTH: 3,
     },
     BODY: {
       MAX_LENGTH: 500,

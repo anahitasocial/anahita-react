@@ -20,7 +20,7 @@ export default shape({
   body: string,
   imageURL: ImageURL,
   coverURL: ImageURL,
-  administratorIds: arrayOf(number),
+  administrators: arrayOf(PersonType),
   followerCount: number,
   subscriberCount: number,
   author: PersonType,

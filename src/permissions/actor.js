@@ -1,23 +1,19 @@
 import _ from 'lodash';
-
 import utils from '../utils';
-import { Person as PERSON } from '../constants';
-
-const {
-  ADMIN,
-  SUPER_ADMIN,
-  REGISTERED,
-} = PERSON.FIELDS.TYPE;
 
 const isAdmin = (actor) => {
-  return [SUPER_ADMIN, ADMIN].includes(actor.usertype);
+  return utils.node.isAdmin(actor);
 };
 
 const isRegistered = (actor) => {
-  return [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.usertype);
+  return utils.node.isRegistered(actor);
 };
 
 const canAdd = (viewer) => {
+  /*
+  * @TODO we need a field in viewer to decide this one
+  * right now, only the admins can create new actors
+  */
   return isAdmin(viewer);
 };
 
