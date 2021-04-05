@@ -6,8 +6,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import { Helmet } from 'react-helmet';
-
 import appActions from '../actions/app';
 import i18n from '../languages';
 import { App as APP } from '../constants';
@@ -48,9 +46,14 @@ const ExplorePage = (props) => {
   const classes = useStyles();
   const {
     setAppTitle,
+    match: {
+      params: {
+        tab: selectedTab = TABS.GROUPS,
+      },
+    },
   } = props;
 
-  const [tab, setTab] = useState(TABS.GROUPS);
+  const [tab, setTab] = useState(selectedTab);
 
   const changeTab = (event, value) => {
     setTab(value);
@@ -129,6 +132,7 @@ const ExplorePage = (props) => {
 
 ExplorePage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = () => {

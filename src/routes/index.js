@@ -80,6 +80,11 @@ const Routes = (props) => {
       />
       <Route
         exact
+        path="/explore/:tab/"
+        component={ExplorePage}
+      />
+      <Route
+        exact
         path="/search/"
         component={SearchPage}
       />
