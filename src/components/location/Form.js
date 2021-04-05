@@ -9,12 +9,12 @@ import TextField from '@material-ui/core/TextField';
 import { Locations as LOCATION } from '../../constants';
 import LocationType from '../../proptypes/Location';
 import CountrySelect from '../select/Country';
+import RegionSelect from '../select/Region';
 
 const {
   TITLE,
   ADDRESS,
   CITY,
-  STATE_PROVINCE,
 } = LOCATION.FIELDS;
 
 const LocationForm = (props) => {
@@ -90,23 +90,24 @@ const LocationForm = (props) => {
           />
         }
         {fields.state_province &&
-          <TextField
-            id="location-state-province"
-            margin="normal"
+          <FormControl
             variant="outlined"
-            label="State/Province"
-            onChange={handleOnChange}
-            name="state_province"
-            value={location.state_province}
-            error={fields.state_province.error !== ''}
-            helperText={fields.state_province.error}
-            inputProps={{
-              maxLength: STATE_PROVINCE.MAX_LENGTH,
-            }}
-            disabled={isFetching}
             fullWidth
-            required={requiredFields.includes('state_province')}
-          />
+            margin="normal"
+          >
+            <InputLabel id="location-country-label">
+              Province
+            </InputLabel>
+            <RegionSelect
+              id="state_province"
+              name="state_province"
+              label="Province"
+              onChange={handleOnChange}
+              value={location.state_province}
+              disabled={location.country === '' || isFetching}
+              country={location.country}
+            />
+          </FormControl>
         }
         {fields.country &&
           <FormControl

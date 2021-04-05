@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Truncate from 'react-truncate';
 import ActorType from '../../proptypes/Actor';
 import utils from '../../utils';
 
@@ -20,20 +21,22 @@ const ActorTitle = (props) => {
     <React.Fragment>
       {linked &&
         <Typography
-          noWrap
           {...typographyProps}
         >
           <Link href={url}>
-            {actor.name}
+            <Truncate width={300}>
+              {actor.name}
+            </Truncate>
           </Link>
         </Typography>
       }
       {!linked &&
         <Typography
-          noWrap
           {...typographyProps}
         >
-          {actor.name}
+          <Truncate>
+            {actor.name}
+          </Truncate>
         </Typography>
       }
     </React.Fragment>

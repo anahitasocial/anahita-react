@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import striptags from 'striptags';
 
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
@@ -16,7 +14,9 @@ import Medium from '../../components/medium/Read';
 import MediumForm from '../../components/medium/forms/Edit';
 import Likes from '../likes';
 import LikeAction from '../likes/actions/Like';
+import DownloadAction from '../actions/medium/Download';
 import CommentStats from '../../components/comment/Stats';
+import HeaderMeta from '../../components/HeaderMeta';
 
 import * as actions from '../../actions';
 import utils from '../../utils';
@@ -25,6 +25,8 @@ import i18n from '../../languages';
 const {
   isLikeable,
   isCommentable,
+  getPortraitURL,
+  getCoverURL,
 } = utils.node;
 
 const MediaRead = (props) => {
@@ -33,7 +35,6 @@ const MediaRead = (props) => {
     namespace,
     readItem,
     editItem,
-    deleteItem,
     alertError,
     alertSuccess,
     setAppTitle,
@@ -66,7 +67,6 @@ const MediaRead = (props) => {
   }
 
   const [isEditing, setIsEditing] = useState(false);
-  const [redirect, setRedirect] = useState('');
   const [fields, setFields] = useState(formFields);
 
   useEffect(() => {
@@ -90,13 +90,6 @@ const MediaRead = (props) => {
 
   const handleCancel = () => {
     setIsEditing(false);
-  };
-
-  const handleDelete = () => {
-    const ownerURL = utils.node.getURL(medium.owner);
-    deleteItem(medium).then(() => {
-      setRedirect(ownerURL);
-    });
   };
 
   const handleOnChange = (event) => {
@@ -127,12 +120,6 @@ const MediaRead = (props) => {
     setFields({ ...newFields });
   };
 
-  if (redirect) {
-    return (
-      <Redirect push to={redirect} />
-    );
-  }
-
   if (!medium.id) {
     if (isFetching) {
       return (
@@ -148,16 +135,17 @@ const MediaRead = (props) => {
   }
 
   const canAddComment = isAuthenticated && medium.openToComment;
+  const portrait = getPortraitURL(medium, 'large');
+  const cover = getCoverURL(medium, 'large');
   const Like = LikeAction(medium.objectType.split('.')[1]);
 
   return (
     <React.Fragment>
-      <Helmet>
-        <title>
-          {medium.name || striptags(medium.body).substring(0, 60)}
-        </title>
-        <meta name="description" content={striptags(medium.body)} />
-      </Helmet>
+      <HeaderMeta
+        title={medium.name || medium.body}
+        description={medium.body}
+        image={portrait || cover}
+      />
       {medium.id &&
         <Medium
           medium={medium}
@@ -177,12 +165,12 @@ const MediaRead = (props) => {
               medium={medium}
               viewer={viewer}
               handleEdit={handleEdit}
-              handleDelete={handleDelete}
             />
           }
-          actions={isAuthenticated &&
-            <Like node={medium} />
-          }
+          actions={[isAuthenticated && isLikeable(medium) &&
+            <Like node={medium} key={`medium-like-${medium.id}`} />,
+            namespace === 'documents' && <DownloadAction node={medium} key={`medium-download-${medium.id}`} />
+          ]}
           stats={
             <React.Fragment>
               {isLikeable(medium) &&
@@ -216,7 +204,6 @@ const MediaRead = (props) => {
 MediaRead.propTypes = {
   readItem: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
-  deleteItem: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   media: MediaType.isRequired,
@@ -264,9 +251,6 @@ const mapDispatchToProps = (namespace) => {
       },
       editItem: (node) => {
         return dispatch(actions[namespace].edit(node));
-      },
-      deleteItem: (node) => {
-        return dispatch(actions[namespace].deleteItem(node));
       },
       setAppTitle: (title) => {
         return dispatch(actions.app.setAppTitle(title));

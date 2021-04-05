@@ -13,9 +13,11 @@ import i18n from '../languages';
 import { App as APP } from '../constants';
 
 import ActorsBrowse from './actors/Browse';
+import PeopleBrowse from './people/Browse';
 import Hashtags from './hashtags';
 import Locations from './locations';
 import Media from './media';
+import HeaderMeta from '../components/HeaderMeta';
 
 const TABS = {
   DOCUMENTS: 'documents',
@@ -61,7 +63,6 @@ const ExplorePage = (props) => {
   let NodeBrowse = null;
 
   switch (tab) {
-    case TABS.PEOPLE:
     case TABS.GROUPS:
       NodeBrowse = ActorsBrowse(tab);
       break;
@@ -78,9 +79,7 @@ const ExplorePage = (props) => {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <title>{i18n.t('dashboard:cTitle')}</title>
-      </Helmet>
+      <HeaderMeta title={i18n.t('explore:cTitle')} />
       <AppBar
         position="sticky"
         color="inherit"
@@ -90,8 +89,7 @@ const ExplorePage = (props) => {
         <Tabs
           value={tab}
           onChange={changeTab}
-          centered
-          variant="fullWidth"
+          variant="scrollable"
         >
           <Tab label="Groups" value={TABS.GROUPS} />
           <Tab label="People" value={TABS.PEOPLE} />
@@ -117,7 +115,10 @@ const ExplorePage = (props) => {
           }}
         />
       }
-      {[TABS.PEOPLE, TABS.GROUPS].includes(tab) &&
+      {tab === TABS.PEOPLE &&
+        <PeopleBrowse key={`${tab}-tab`} />
+      }
+      {[TABS.GROUPS].includes(tab) &&
         <NodeBrowse
           key={`${tab}-sort-${tab}`}
         />

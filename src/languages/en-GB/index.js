@@ -46,6 +46,14 @@ export default {
   translation: {
     stories,
   },
+  pages: {
+    about: 'About',
+    tos: 'Terms Of Service',
+    join: 'Join Us',
+    privacy: 'Privacy',
+    support: 'Support',
+    report: 'Report Issues',
+  },
   stories: {
     cTitle: 'Stories',
     mTitle: 'Stories',
@@ -78,6 +86,10 @@ export default {
     cTitle: 'Dashboard',
     mTitle: 'Dashboard',
   },
+  home: {
+    cTitle: 'Home',
+    mTitle: 'Home',
+  },
   documents: {
     cTitle: 'Documents',
     mTitle: 'Documents',
@@ -96,6 +108,10 @@ export default {
   groups: {
     cTitle: 'Groups',
     mTitle: 'Groups',
+    add: {
+      cTitle: 'Create group',
+      mTitle: 'Create group',
+    },
     settings: {
       info: 'Info',
       admins: 'Admins',
@@ -108,6 +124,10 @@ export default {
   people: {
     cTitle: 'People',
     mTitle: 'People',
+    add: {
+      cTitle: 'Add person',
+      mTitle: 'Add person',
+    },
     settings: {
       info: 'Info',
       account: 'Account',
@@ -115,6 +135,14 @@ export default {
       permissions: 'Permissions',
       privacy: 'Privacy',
       delete: 'Delete',
+    },
+    person: {
+      usertype: {
+        guest: 'Guest',
+        registered: 'Registered',
+        administrator: 'Admin',
+        'super-administrator': 'Super Admin',
+      },
     },
   },
   notes: {

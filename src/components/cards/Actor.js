@@ -1,5 +1,7 @@
 import React from 'react';
+import slugify from 'slugify';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -8,8 +10,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Truncate from 'react-truncate';
 
 import ActorType from '../../proptypes/Actor';
+import PersonType from '../../proptypes/Person';
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import ReadMore from '../ReadMore';
@@ -19,14 +23,11 @@ import utils from '../../utils';
 const {
   getURL,
   getCoverURL,
+  isAdmin,
 } = utils.node;
 
 const styles = (theme) => {
   return {
-    cover: {
-      height: 0,
-      paddingTop: '30%',
-    },
     actions: {
       padding: 8,
     },
@@ -39,6 +40,9 @@ const styles = (theme) => {
     media: {
       height: theme.spacing(20),
     },
+    disabled: {
+      borderColor: theme.palette.warning.light,
+    }
   };
 };
 
@@ -46,21 +50,26 @@ const ActorCard = (props) => {
   const {
     classes,
     actor,
+    viewer,
     action,
   } = props;
 
   const cover = getCoverURL(actor);
   const url = getURL(actor);
+  const slug = `@${slugify(actor.alias.toLowerCase())}`;
 
   return (
-    <Card variant="outlined">
+    <Card
+      variant="outlined"
+      className={!actor.enabled ? classes.disabled : ''}
+    >
       {cover &&
         <Link href={url}>
           <CardMedia
-            className={classes.cover}
-            image={cover}
+            component="img"
             title={actor.name}
-            src="picture"
+            alias={actor.name}
+            image={cover}
           />
         </Link>
       }
@@ -86,7 +95,9 @@ const ActorCard = (props) => {
             variant="subtitle1"
             className={classes.alias}
           >
-            {`@${actor.alias}`}
+            <Truncate width={300}>
+              {slug}
+            </Truncate>
           </Typography>
         }
       />
@@ -104,6 +115,13 @@ const ActorCard = (props) => {
         </ReadMore>
       </CardContent>
       }
+      {isAdmin(viewer) &&
+      <CardContent>
+        <Typography variant="caption">
+          Created {moment.utc(actor.creationTime).format('LLL').toString()}
+        </Typography>
+      </CardContent>
+      }
       <CardActions className={classes.actions}>
         {action}
       </CardActions>
@@ -115,6 +133,7 @@ ActorCard.propTypes = {
   classes: PropTypes.object.isRequired,
   action: PropTypes.node,
   actor: ActorType.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 ActorCard.defaultProps = {

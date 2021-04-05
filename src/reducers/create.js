@@ -90,12 +90,12 @@ export default (namespace, defaultNode) => {
         return {
           ...state,
           isFetching: false,
+          success: false,
           [namespace]: deleteItem(
             state[namespace],
             state[namespace].current,
             defaultNode,
           ),
-          success: true,
         };
       case `${namespace.toUpperCase()}_BROWSE_FAILURE`:
       case `${namespace.toUpperCase()}_READ_FAILURE`:

@@ -41,7 +41,12 @@ const LocationsSelectorAdd = (props) => {
   formFields.name.value = name;
 
   const [fields, setFields] = useState(formFields);
-  const [location, setLocation] = useState(LocationDefault);
+  const [location, setLocation] = useState({
+    ...LocationDefault,
+    country: process.env.REACT_APP_LOCATION_FIXED_COUNTRY,
+    state_province: process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE,
+    city: process.env.REACT_APP_LOCATION_FIXED_CITY,
+  });
   const [isFetching, setIsFetching] = useState(false);
 
   const handleOnChange = (event) => {

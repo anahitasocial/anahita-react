@@ -25,22 +25,11 @@ const { LIMIT } = APP.BROWSE;
 
 const useStyles = makeStyles((theme) => {
   return {
-    actorTitle: {
-      fontSize: 16,
-    },
-    actorAlias: {
-      fontSize: 12,
-    },
     addButton: {
       position: 'fixed',
       bottom: theme.spacing(3),
       right: theme.spacing(3),
       zIndex: 10,
-    },
-    masonryGrid: {
-      display: 'flex',
-      marginLeft: theme.spacing(-2),
-      width: 'inherit',
     },
     card: {
       marginBottom: theme.spacing(2),
@@ -82,8 +71,7 @@ const ActorsBrowse = (props) => {
     };
   }, [setAppTitle, resetList, namespace]);
 
-  // const columnWidth = containersUtils.getColumnWidthPercentage(width);
-  const canAdd = permissions.canAdd(viewer);
+  const canAdd = permissions.canAdd(viewer, namespace);
 
   return (
     <React.Fragment>
@@ -168,10 +156,10 @@ const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
       browseList: (params) => {
-        return dispatch(actions[namespace].browse(params, namespace));
+        return dispatch(actions[namespace].browse(params));
       },
       resetList: () => {
-        return dispatch(actions[namespace].reset(namespace));
+        return dispatch(actions[namespace].reset());
       },
       setAppTitle: (title) => {
         return dispatch(actions.app.setAppTitle(title));

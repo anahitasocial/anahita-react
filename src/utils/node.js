@@ -1,3 +1,4 @@
+import slugify from 'slugify';
 import { pluralize } from 'inflection';
 import countryList from 'country-list';
 import i18n from '../languages';
@@ -58,15 +59,15 @@ const isComment = (node) => {
 };
 
 const isCommentable = (medium) => {
-  return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
+  return OBJECT_TYPES.MEDIUM.includes(medium.objectType) && false;
 };
 
 const isLikeable = (medium) => {
-  return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
+  return OBJECT_TYPES.MEDIUM.includes(medium.objectType) && false;
 };
 
 const isSubscribable = (medium) => {
-  return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
+  return OBJECT_TYPES.MEDIUM.includes(medium.objectType) && false;
 };
 
 const isFollowable = (actor) => {
@@ -96,7 +97,7 @@ const getPersonInitials = (person) => {
 };
 
 const getPersonName = (person) => {
-  return `${person.givenName} ${person.familyName}`;
+  return `${person.givenName} ${person.familyName}`.trim();
 };
 
 const getAddress = (node) => {
@@ -188,17 +189,17 @@ const getStorySubject = (story) => {
 const getURL = (node) => {
   if (node.id && node.objectType) {
     const namespace = pluralize(node.objectType.split('.')[2]);
-    let identifier = '';
+    let slug = '';
 
     if (namespace === 'people') {
-      identifier = node.alias;
+      slug = node.alias;
     } else if (node.alias) {
-      identifier = `${node.id}-${node.alias}`;
+      slug = `${node.id}-${slugify(node.alias)}`;
     } else {
-      identifier = node.id;
+      slug = node.id;
     }
 
-    return `/${namespace}/${identifier}/`;
+    return `/${namespace}/${slug}/`;
   }
 
   return '/';

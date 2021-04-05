@@ -28,6 +28,7 @@ import LocationsRead from '../containers/locations/Read';
 import Media from '../containers/media';
 import MediaRead from '../containers/media/Read';
 
+import PeopleBrowse from '../containers/people/Browse';
 import PeopleAdd from '../containers/people/Add';
 
 import DashboardPage from '../containers/Dashboard';
@@ -41,7 +42,6 @@ const GroupsRead = ActorsRead('groups');
 const GroupsAdd = ActorsAdd('groups');
 const GroupsSettings = ActorsSettings('groups');
 
-const PeopleBrowse = ActorsBrowse('people');
 const PeopleRead = ActorsRead('people');
 const PeopleSettings = ActorsSettings('people');
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
@@ -37,6 +37,7 @@ const ActorBody = (props) => {
     composers,
     stories,
     locations,
+    groups,
     socialgraph,
     articles,
     documents,
@@ -47,7 +48,7 @@ const ActorBody = (props) => {
     mentions,
   } = props;
 
-  const [value, setValue] = React.useState('stories');
+  const [value, setValue] = useState(actor.gadgets[0]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -58,7 +59,7 @@ const ActorBody = (props) => {
   return (
     <Box className={classes.root}>
       <AppBar
-        position="sticky"
+        position="static"
         color="default"
         className={classes.appBar}
         elevation={1}
@@ -82,7 +83,9 @@ const ActorBody = (props) => {
               />
             );
           })}
+          {/*
           {actor.id === viewer.id && <Tab label="Mentions" value="mentions" id="actor-tab-mentions" />}
+          */}
         </Tabs>
       </AppBar>
       {value === 'stories' &&
@@ -105,9 +108,11 @@ const ActorBody = (props) => {
                   {admins }
                 </Grid>
               }
+              {locations &&
               <Grid item xs={12}>
                 {locations}
               </Grid>
+              }
             </Grid>
           </Grid>
           <Grid item xs={12} md={8}>
@@ -127,6 +132,7 @@ const ActorBody = (props) => {
       {value === 'documents' && documents}
       {value === 'topics' && topics}
       {value === 'todos' && todos}
+      {value === 'groups' && groups}
       {actor.id === viewer.id && value === 'mentions' && mentions}
     </Box>
   );
@@ -139,6 +145,7 @@ ActorBody.propTypes = {
   composers: PropTypes.node,
   stories: PropTypes.node,
   locations: PropTypes.node,
+  groups: PropTypes.node,
   admins: PropTypes.node,
   socialgraph: PropTypes.node,
   notes: PropTypes.node,
@@ -155,6 +162,7 @@ ActorBody.defaultProps = {
   composers: null,
   stories: null,
   locations: null,
+  groups: null,
   socialgraph: null,
   notes: null,
   photos: null,

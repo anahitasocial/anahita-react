@@ -4,6 +4,10 @@ import { Person as PERSON } from '../constants';
 const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
 
 const canEdit = (viewer, node) => {
+  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
+    return true;
+  }
+
   if (node.administrators) {
     const admins = node.administrators || [];
     if (_.find(admins, (admin) => {
@@ -11,10 +15,6 @@ const canEdit = (viewer, node) => {
     })) {
       return true;
     }
-  }
-
-  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
-    return true;
   }
 
   if (node.owner && node.owner.id === viewer.id) {

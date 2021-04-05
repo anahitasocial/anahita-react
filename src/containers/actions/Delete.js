@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as actions from '../../actions';
@@ -11,6 +12,10 @@ const ActionsDelete = React.forwardRef((props, ref) => {
   const {
     deleteItem,
     node,
+    history,
+    redirect,
+    alertSuccess,
+    alertError,
   } = props;
 
   const [waiting, setWaiting] = useState(false);
@@ -19,7 +24,16 @@ const ActionsDelete = React.forwardRef((props, ref) => {
     event.preventDefault();
 
     setWaiting(true);
-    deleteItem(node);
+    deleteItem(node)
+      .then(() => {
+        alertSuccess('Deleted successfully.');
+        if (redirect !== '') {
+          history.push(redirect);
+        }
+      }).catch((err) => {
+        console.error(err);
+        alertError('Something went wrong!');
+      });
   };
 
   const label = i18n.t('actions:delete');
@@ -38,7 +52,15 @@ const ActionsDelete = React.forwardRef((props, ref) => {
 
 ActionsDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
   node: NodeType.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  redirect: PropTypes.string,
+};
+
+ActionsDelete.defaultProps = {
+  redirect: '',
 };
 
 const mapStateToProps = () => {
@@ -51,10 +73,16 @@ const mapDispatchToProps = (dispatch) => {
       const namespace = node.objectType.split('.')[1];
       return dispatch(actions[namespace].deleteItem(node));
     },
+    alertSuccess: (message) => {
+      return dispatch(actions.app.alert.success(message));
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
+    },
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActionsDelete);
+)(ActionsDelete));

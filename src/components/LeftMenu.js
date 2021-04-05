@@ -47,7 +47,7 @@ const LeftMenu = (props) => {
         <ListItemIcon>
           <HomeIcon />
         </ListItemIcon>
-        <ListItemText primary={i18n.t('dashboard:cTitle')} />
+        <ListItemText primary={isAuthenticated ? i18n.t('dashboard:cTitle') : i18n.t('home:cTitle')} />
       </ListItem>
       <ListItem
         button

@@ -33,7 +33,6 @@ const MediaMenu = (props) => {
     medium,
     viewer,
     handleEdit,
-    handleDelete,
     inline,
   } = props;
 
@@ -96,23 +95,11 @@ const MediaMenu = (props) => {
             key={`medium-comment-status-${medium.id}`}
           />
         }
-        {canDelete && !handleDelete &&
-          <DeleteActionWithRef
-            node={medium}
-            key={`medium-delete-${medium.id}`}
-            redirect={inline ? getURL(medium.owner) : ''}
-          />
-        }
-        {canDelete && handleDelete &&
-          <MenuItem
-            onClick={() => {
-              handleDelete();
-              handleClose();
-            }}
-          >
-            Delete
-          </MenuItem>
-        }
+        <DeleteActionWithRef
+          node={medium}
+          key={`medium-delete-${medium.id}`}
+          redirect={inline ? '' : getURL(medium.owner)}
+        />
       </Menu>
     </React.Fragment>
   );
@@ -122,13 +109,11 @@ MediaMenu.propTypes = {
   medium: MediumType.isRequired,
   viewer: PersonType.isRequired,
   handleEdit: PropTypes.func,
-  handleDelete: PropTypes.func,
   inline: PropTypes.bool,
 };
 
 MediaMenu.defaultProps = {
   handleEdit: null,
-  handleDelete: null,
   inline: false,
 };
 

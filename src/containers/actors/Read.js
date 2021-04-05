@@ -2,14 +2,13 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import striptags from 'striptags';
 
-import Admins from '../../components/actor/body/Admins';
-import ActorBody from '../../components/actor/Body';
 import ActorHeader from '../../components/actor/Header';
+import ActorBody from '../../components/actor/Body';
 import ActorsFollowRequests from './FollowRequests';
 import ActorsSocialgraph from './Socialgraph';
+import ActorsBrowse from './Browse';
+import Admins from '../../components/actor/body/Admins';
 import Avatar from './read/Avatar';
 import Composers from '../composers/';
 import Commands from './read/Commands';
@@ -20,6 +19,7 @@ import Media from '../media/Browse';
 import Progress from '../../components/Progress';
 import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
 import StoriesBrowse from '../stories/Browse';
+import HeaderMeta from '../../components/HeaderMeta';
 
 import * as actions from '../../actions';
 import i18n from '../../languages';
@@ -35,6 +35,12 @@ const Notes = Media('notes');
 const Photos = Media('photos');
 const Topics = Media('topics');
 const Todos = Media('todos');
+const GroupsBrowse = ActorsBrowse('groups');
+
+const {
+  isPerson,
+  getPortraitURL,
+} = utils.node;
 
 const ActorsRead = (props) => {
   const {
@@ -77,6 +83,12 @@ const ActorsRead = (props) => {
     );
   }
 
+  // adding project gadget
+  // @TODO we need a custom Read container for the Project Actors at this point
+  if (isPerson(actor)) {
+    actor.gadgets.splice(1, 0, 'groups');
+  }
+
   const canFollow = permissions.canFollow(actor);
   const canEdit = permissions.canEdit(actor);
   const canAdminister = permissions.canAdminister(actor);
@@ -86,19 +98,16 @@ const ActorsRead = (props) => {
     'notifications-settings',
   ]);
 
-  const isPerson = utils.node.isPerson(actor);
   const isViewer = actor.id === viewer.id;
-  const metaDesc = striptags(actor.body).substr(0, 160);
   const FollowRequests = ActorsFollowRequests(namespace);
 
   return (
     <React.Fragment>
-      <Helmet>
-        <title>
-          {actor.name}
-        </title>
-        <meta name="description" content={metaDesc} />
-      </Helmet>
+      <HeaderMeta
+        title={actor.name}
+        description={actor.body}
+        image={getPortraitURL(actor, 'large')}
+      />
       <ActorHeader
         cover={
           <Cover
@@ -115,7 +124,7 @@ const ActorsRead = (props) => {
         actor={actor}
         followAction={
           <React.Fragment>
-            {canAdminister && <FollowRequests actor={actor} />}
+            {canAdminister && false && <FollowRequests actor={actor} />}
             {canFollow && <FollowAction actor={actor} />}
           </React.Fragment>
         }
@@ -126,44 +135,55 @@ const ActorsRead = (props) => {
       <ActorBody
         actor={actor}
         viewer={viewer}
-        admins={actor.administrators &&
+        admins={actor.id > 0 && actor.administrators &&
           <Admins actor={actor} />
         }
-        composers={isAuthenticated &&
+        composers={isAuthenticated && actor.id &&
           <Composers owner={actor} />
         }
-        stories={
+        stories={actor.id &&
           <StoriesBrowse
             // key="com:stories.story"
             queryFilters={{
               oid: actor.id,
             }}
+            // {...this.params}
           />
         }
-        locations={
+        locations={actor.id &&
           <LocationsGadget node={actor} />
+        }
+        groups={actor.id && isPerson(actor) &&
+          <GroupsBrowse
+            queryFilters={{
+              oid: actor.id,
+              filter: 'administering',
+              offset: 0,
+              limit: 1000,
+            }}
+          />
         }
         socialgraph={
           <SocialgraphTabs
-            followers={
+            followers={actor.id &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="followers"
               />
             }
-            leaders={isPerson &&
+            leaders={actor.id && isPerson &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="leaders"
               />
             }
-            blocked={isViewer &&
+            blocked={actor.id && isViewer &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="blocked"
               />
             }
-            mutuals={!isViewer && isPerson &&
+            mutuals={actor.id && !isViewer && isPerson &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="mutuals"
@@ -171,42 +191,42 @@ const ActorsRead = (props) => {
             }
           />
         }
-        articles={
+        articles={actor.id &&
           <Articles
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        documents={
+        documents={actor.id &&
           <Documents
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        notes={
+        notes={actor.id &&
           <Notes
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        photos={
+        photos={actor.id &&
           <Photos
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        topics={
+        topics={actor.id &&
           <Topics
             queryFilters={{
               oid: actor.id,
             }}
           />
         }
-        todos={
+        todos={actor.id &&
           <Todos
             queryFilters={{
               oid: actor.id,

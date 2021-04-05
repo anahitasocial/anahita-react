@@ -1,27 +1,29 @@
-import React from 'react';
-import clsx from 'clsx';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
-import Drawer from '@material-ui/core/Drawer';
+
 import AppBar from '@material-ui/core/AppBar';
+import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SearchBox from '../containers/search/SearchBox';
 
 import Viewer from '../components/auth/Viewer';
 import LeftMenu from '../components/LeftMenu';
 import Alerts from './Alerts';
+import MenuLogo from '../components/Logo';
 import * as actions from '../actions';
 
-const drawerWidth = 200;
+const drawerWidth = 240;
 
 // Apply some reset
 const useStyles = makeStyles(theme => ({
@@ -29,59 +31,34 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  toolbar: {
-    paddingRight: theme.spacing(1),
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
   },
   grow: {
     flex: '1 1 auto',
   },
   menuButton: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
   },
-  hide: {
-    display: 'none',
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
   },
   drawerPaper: {
-    position: 'relative',
-    height: '100%',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    width: 0,
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  drawerInner: {
-    // Make the items inside not wrap when transitioning:
     width: drawerWidth,
   },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
+    justifyContent: 'flex-start',
+    padding: `0 ${theme.spacing(2)}px`,
     ...theme.mixins.toolbar,
   },
   viewer: {
@@ -91,14 +68,23 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     overflow: 'auto',
-    marginTop: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
 }));
 
 const App = (props) => {
   const classes = useStyles();
+  const {
+    children,
+    isAuthenticated,
+    viewer,
+    appBarTitle,
+    location,
+    history,
+  } = props;
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -106,42 +92,58 @@ const App = (props) => {
 
   const handleLogout = () => {
     const { logout } = props;
-    logout();
+    logout()
+      .then(() => {
+        history.push('/auth/');
+      });
   };
 
-  const {
-    children,
-    isAuthenticated,
-    viewer,
-    appBarTitle,
-    location,
-  } = props;
+  const drawer = () => {
+    return (
+      <React.Fragment>
+        <div className={classes.drawerHeader}>
+          <MenuLogo />
+        </div>
+        <Divider />
+        <LeftMenu
+          onLogoutClick={handleLogout}
+          viewer={viewer}
+          isAuthenticated={isAuthenticated}
+          classNames={classes}
+        />
+        <Divider />
+      </React.Fragment>
+    );
+  };
+
+  const container = window !== undefined ? () => window.document.body : undefined;
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <Alerts />
-      <AppBar
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
-        <Toolbar disableGutters={!open} className={classes.toolbar}>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
           <IconButton
-            className={clsx(classes.menuButton, open && classes.hide)}
             color="inherit"
-            aria-label="toggle drawer"
+            aria-label="open drawer"
+            edge="start"
             onClick={handleDrawerToggle}
+            className={classes.menuButton}
           >
             <MenuIcon />
           </IconButton>
-          {appBarTitle && !open &&
-            <Typography
-              variant="h6"
-              color="inherit"
-              noWrap
-            >
-              {appBarTitle}
-            </Typography>
-          }
+          <Hidden xsDown implementation="css">
+            {appBarTitle && !open &&
+              <Typography
+                variant="h6"
+                color="inherit"
+                noWrap
+              >
+                {appBarTitle}
+              </Typography>
+            }
+          </Hidden>
           <SearchBox location={location} />
           <div className={classes.grow} />
           <Viewer
@@ -150,37 +152,36 @@ const App = (props) => {
           />
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="temporary"
-        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        onClose={handleDrawerToggle}
-      >
-        <div className={classes.drawerInner}>
-          <div className={classes.drawerHeader}>
-            <Typography variant="h6" color="inherit" noWrap>
-              {process.env.REACT_APP_NAME}
-            </Typography>
-            <IconButton onClick={handleDrawerToggle}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
-          <LeftMenu
-            onLogoutClick={handleLogout}
-            viewer={viewer}
-            isAuthenticated={isAuthenticated}
-            classNames={classes}
-          />
-          <Divider />
-        </div>
-      </Drawer>
+      <nav className={classes.drawer}>
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={open}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {drawer()}
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {drawer()}
+          </Drawer>
+        </Hidden>
+      </nav>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container>
@@ -198,6 +199,7 @@ App.propTypes = {
   logout: PropTypes.func.isRequired,
   appBarTitle: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
