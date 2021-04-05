@@ -10,8 +10,8 @@ import {
   any,
 } from 'prop-types';
 
-import PersonType from './Person';
-import ImageURL from './ImageURL';
+import personType from './Person';
+import imageURL from './ImageURL';
 
 export default shape({
   id: number,
@@ -26,14 +26,14 @@ export default shape({
   gadgets: arrayOf(string),
   composers: arrayOf(string),
   commands: arrayOf(string),
-  imageURL: ImageURL,
-  coverURL: ImageURL,
-  administrators: arrayOf(PersonType),
+  imageURL,
+  coverURL: imageURL,
+  administrators: arrayOf(personType),
   followerCount: number,
   subscriberCount: number,
-  author: PersonType,
+  author: personType,
   creationTime: string,
-  editor: PersonType,
+  editor: personType,
   updateTime: string,
   isAdministrated: bool,
   isLeader: bool,

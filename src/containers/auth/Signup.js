@@ -36,7 +36,7 @@ const AuthSignup = (props) => {
     if (success) {
       alertSuccess('Thank you! We just emailed you an account activation link.');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleOnChange = (event) => {
     const { target } = event;

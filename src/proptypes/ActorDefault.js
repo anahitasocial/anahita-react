@@ -1,5 +1,5 @@
-import PersonDefault from './PersonDefault';
-import ImageURLDefault from './ImageURLDefault';
+import personDefault from './PersonDefault';
+import imageURLDefault from './ImageURLDefault';
 
 export default {
   id: null,
@@ -10,14 +10,14 @@ export default {
   gadgets: [],
   composers: [],
   commands: [],
-  imageURL: ImageURLDefault,
-  coverURL: ImageURLDefault,
+  imageURL: imageURLDefault,
+  coverURL: imageURLDefault,
   administrators: [],
   followerCount: 0,
   subscriberCount: 0,
-  author: PersonDefault,
+  author: personDefault,
   creationTime: '0000-00-00 00:00:00',
-  editor: PersonDefault,
+  editor: personDefault,
   updateTime: '0000-00-00 00:00:00',
   isAdministrated: false,
   isLeader: false,

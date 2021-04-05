@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { singularize } from 'inflected';
 import { Redirect } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -9,9 +8,15 @@ import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ActorInfoForm from '../../components/actor/forms/Info';
 import * as actions from '../../actions';
-import form from '../../utils/form';
+import utils from '../../utils';
 
 import ActorsType from '../../proptypes/Actors';
+
+const { form } = utils;
+const {
+  getURL,
+  getActorInitials,
+} = utils.node;
 
 const formFields = form.createFormFields([
   'name',
@@ -42,7 +47,7 @@ const ActorsAdd = (props) => {
     if (success) {
       alertSuccess('Added successfully.');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -69,9 +74,9 @@ const ActorsAdd = (props) => {
     setFields({ ...newFields });
   };
 
-  if (success) {
+  if (success && actor.id) {
     return (
-      <Redirect to={`/${namespace}/${actor.id}/`} />
+      <Redirect to={getURL(actor)} />
     );
   }
 
@@ -85,12 +90,11 @@ const ActorsAdd = (props) => {
               aria-label={actor.name}
               alt={actor.name}
             >
-              {actor.name ? actor.name.charAt(0).toUpperCase() : <GroupAddIcon />}
+              {actor.name ? getActorInitials(actor) : <GroupAddIcon />}
             </Avatar>
           }
         />
         <ActorInfoForm
-          formTitle={`${singularize(namespace)} information`}
           actor={actor}
           fields={fields}
           handleOnChange={handleOnChange}

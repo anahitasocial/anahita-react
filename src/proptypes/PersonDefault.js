@@ -1,5 +1,5 @@
 import PERSON from '../constants/person';
-import ImageURLDefault from './ImageURLDefault';
+import imageURLDefault from './ImageURLDefault';
 
 const { TYPE, GENDER } = PERSON.FIELDS;
 
@@ -18,8 +18,8 @@ export default {
   gadgets: [],
   composers: [],
   gender: GENDER.NEUTRAL,
-  imageURL: ImageURLDefault,
-  coverURL: ImageURLDefault,
+  imageURL: imageURLDefault,
+  coverURL: imageURLDefault,
   followerCount: 0,
   leaderCount: 0,
   mutualCount: 0,

@@ -16,6 +16,12 @@ import PersonType from '../../proptypes/Person';
 import PeopleType from '../../proptypes/People';
 
 const { form } = utils;
+const {
+  getURL,
+  getPersonInitials,
+  getPersonName,
+} = utils.node;
+
 const { TYPE } = PERSON.FIELDS;
 
 const formFields = form.createFormFields([
@@ -52,7 +58,7 @@ const PeopleAdd = (props) => {
     if (success) {
       alertSuccess('Person profile added successfully.');
     }
-  }, [error, success]);
+  }, [error, alertError, success, alertSuccess]);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -114,24 +120,27 @@ const PeopleAdd = (props) => {
 
   const isSuperAdmin = viewer.usertype === TYPE.SUPER_ADMIN;
 
-  if (success) {
+  if (success && person.id) {
     return (
-      <Redirect to={`/people/${person.id}/`} />
+      <Redirect to={getURL(person)} />
     );
   }
+
+  const personName = getPersonName(person);
+  const personInitials = getPersonInitials(person) || <PersonAddIcon />;
 
   return (
     <React.Fragment>
       <Card variant="outlined">
         <CardHeader
-          title={utils.node.getPersonName(person)}
+          title={personName}
           subheader={person.username ? `@${person.username}` : ''}
           avatar={
             <Avatar
-              aria-label={utils.node.getPersonName(person)}
-              alt={utils.node.getPersonName(person)}
+              aria-label={personName}
+              alt={personName}
             >
-              {utils.node.getPersonInitials(person) || <PersonAddIcon />}
+              {personInitials}
             </Avatar>
           }
         />
