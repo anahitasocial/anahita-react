@@ -8,13 +8,16 @@ import * as actions from '../../../actions';
 import form from '../../../utils/form';
 
 import ActorType from '../../../proptypes/Actor';
+import PersonType from '../../../proptypes/Person';
 
 const formFields = form.createFormFields(['alias']);
 
 const ActorsSettingsDelete = (props) => {
   const {
     deleteActor,
+    logout,
     actor,
+    viewer,
     error,
     isFetching,
     history,
@@ -37,7 +40,11 @@ const ActorsSettingsDelete = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
+      const isViewer = actor.id === viewer.id;
       deleteActor(actor).then(() => {
+        if (isViewer) {
+          logout();
+        }
         history.push(`/${namespace}/`);
       });
     }
@@ -66,7 +73,9 @@ const ActorsSettingsDelete = (props) => {
 
 ActorsSettingsDelete.propTypes = {
   deleteActor: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   actor: ActorType.isRequired,
+  viewer: PersonType.isRequired,
   namespace: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -84,8 +93,11 @@ const mapStateToProps = (namespace) => {
       isFetching,
     } = state[namespace];
 
+    const { viewer } = state.session;
+
     return {
       actor,
+      viewer,
       namespace,
       isFetching,
       success,
@@ -99,6 +111,9 @@ const mapDispatchToProps = (namespace) => {
     return {
       deleteActor: (actor) => {
         return dispatch(actions[namespace].deleteItem(actor));
+      },
+      logout: () => {
+        return dispatch(actions.session.deleteItem());
       },
     };
   };

@@ -6,8 +6,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import BlockAction from '../../actions/Block';
 
 import ActorType from '../../../proptypes/Actor';
+import utils from '../../../utils';
 
 const ITEM_HEIGHT = 48;
+
+const { getURL } = utils.node;
 
 const ActorsReadCommands = (props) => {
   const { actor } = props;
@@ -63,7 +66,7 @@ const ActorsReadCommands = (props) => {
                 <MenuItem
                   key={`actor-${command}`}
                   component="a"
-                  href="settings/"
+                  href={`${getURL(actor)}settings`}
                 >
                   Settings
                 </MenuItem>

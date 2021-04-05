@@ -20,7 +20,7 @@ import LabelIcon from '@material-ui/icons/Label';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import i18n from '../languages';
 import PersonType from '../proptypes/Person';
@@ -28,9 +28,12 @@ import permissions from '../permissions';
 
 const LeftMenu = (props) => {
   const {
-    viewer,
     isAuthenticated,
+    viewer,
     onLogoutClick,
+    location: {
+      pathname,
+    },
   } = props;
 
   return (
@@ -39,6 +42,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/"
+        selected={pathname === '/'}
       >
         <ListItemIcon>
           <HomeIcon />
@@ -49,6 +53,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/explore/"
+        selected={pathname === '/explore/'}
       >
         <ListItemIcon>
           <ExploreIcon />
@@ -59,6 +64,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/people/"
+        selected={pathname === '/people/'}
       >
         <ListItemIcon>
           <PeopleIcon />
@@ -69,6 +75,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/groups/"
+        selected={pathname === '/groups/'}
       >
         <ListItemIcon>
           <GroupsIcon />
@@ -79,6 +86,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/notes/"
+        selected={pathname === '/notes/'}
       >
         <ListItemIcon>
           <NotesIcon />
@@ -89,6 +97,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/photos/"
+        selected={pathname === '/photos/'}
       >
         <ListItemIcon>
           <PhotosIcon />
@@ -99,6 +108,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/topics/"
+        selected={pathname === '/topics/'}
       >
         <ListItemIcon>
           <TopicsIcon />
@@ -109,6 +119,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/articles/"
+        selected={pathname === '/articles/'}
       >
         <ListItemIcon>
           <ArticlesIcon />
@@ -119,6 +130,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/documents/"
+        selected={pathname === '/documents/'}
       >
         <ListItemIcon>
           <DocumentsIcon />
@@ -129,6 +141,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/hashtags/"
+        selected={pathname === '/hashtags/'}
       >
         <ListItemIcon>
           <LabelIcon />
@@ -139,6 +152,7 @@ const LeftMenu = (props) => {
         button
         component={Link}
         to="/locations/"
+        selected={pathname === '/locations/'}
       >
         <ListItemIcon>
           <LocationIcon />
@@ -150,6 +164,7 @@ const LeftMenu = (props) => {
           button
           component={Link}
           to="/settings/"
+          selected={pathname === '/settings/'}
         >
           <ListItemIcon>
             <SettingsIcon />
@@ -177,6 +192,7 @@ LeftMenu.propTypes = {
   onLogoutClick: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default LeftMenu;
+export default withRouter(LeftMenu);

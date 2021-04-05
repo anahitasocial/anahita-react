@@ -6,9 +6,11 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import Typography from '@material-ui/core/Typography';
 import ActorInfoForm from '../../components/actor/forms/Info';
 import * as actions from '../../actions';
 import utils from '../../utils';
+import i18n from '../../languages';
 
 import ActorsType from '../../proptypes/Actors';
 
@@ -81,29 +83,36 @@ const ActorsAdd = (props) => {
   }
 
   return (
-    <React.Fragment>
-      <Card variant="outlined">
-        <CardHeader
-          title={actor.name}
-          avatar={
-            <Avatar
-              aria-label={actor.name}
-              alt={actor.name}
-            >
-              {actor.name ? getActorInitials(actor) : <GroupAddIcon />}
-            </Avatar>
-          }
-        />
-        <ActorInfoForm
-          actor={actor}
-          fields={fields}
-          handleOnChange={handleOnChange}
-          handleOnSubmit={handleOnSubmit}
-          isFetching={isFetching}
-          dismissPath={`/${namespace}/`}
-        />
-      </Card>
-    </React.Fragment>
+    <Card>
+      <CardHeader
+        title={
+          <Typography
+            variant="h3"
+            style={{
+              fontSize: 24,
+            }}
+          >
+            {actor.name || i18n.t(`${namespace}:add.cTitle`)}
+          </Typography>
+        }
+        avatar={
+          <Avatar
+            aria-label={actor.name}
+            alt={actor.name}
+          >
+            {actor.name ? getActorInitials(actor) : <GroupAddIcon />}
+          </Avatar>
+        }
+      />
+      <ActorInfoForm
+        actor={actor}
+        fields={fields}
+        handleOnChange={handleOnChange}
+        handleOnSubmit={handleOnSubmit}
+        isFetching={isFetching}
+        dismissPath={`/${namespace}/`}
+      />
+    </Card>
   );
 };
 

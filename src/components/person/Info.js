@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -8,7 +10,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 
 import PersonType from '../../proptypes/Person';
 import { Person as PERSON } from '../../constants';
@@ -25,11 +26,7 @@ const PersonInfo = (props) => {
   const {
     handleOnChange,
     handleOnSubmit,
-    fields: {
-      givenName,
-      familyName,
-      body,
-    },
+    fields,
     person,
     canChangeUsertype,
     isSuperAdmin,
@@ -38,6 +35,12 @@ const PersonInfo = (props) => {
   } = props;
 
   const isNew = !person.id;
+
+  const {
+    givenName,
+    familyName,
+    body,
+  } = fields;
 
   const enableSubmit = !isNew || (
     givenName.isValid &&

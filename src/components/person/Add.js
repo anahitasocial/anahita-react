@@ -1,209 +1,234 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import Avatar from '@material-ui/core/Avatar';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import PersonAddForm from '../../components/person/Add';
-import * as actions from '../../actions';
-import * as api from '../../api';
-import { Person as PERSON } from '../../constants';
-import utils from '../../utils';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 import PersonType from '../../proptypes/Person';
-import PeopleType from '../../proptypes/People';
+import { Person as PERSON } from '../../constants';
 
-const { form } = utils;
 const {
-  getURL,
-  getPersonInitials,
-  getPersonName,
-} = utils.node;
+  GIVEN_NAME,
+  FAMILY_NAME,
+  USERNAME,
+  EMAIL,
+  BODY,
+  GENDER,
+  TYPE,
+} = PERSON.FIELDS;
 
-const { TYPE } = PERSON.FIELDS;
-
-const formFields = form.createFormFields([
-  'givenName',
-  'familyName',
-  'body',
-  'username',
-  'email',
-  'gender',
-  'usertype',
-]);
-
-const PeopleAdd = (props) => {
+const PersonAdd = (props) => {
   const {
-    addItem,
-    alertError,
-    alertSuccess,
-    viewer,
-    items: {
-      current: person,
+    handleOnChange,
+    handleOnBlur,
+    handleOnSubmit,
+    fields: {
+      givenName,
+      familyName,
+      body,
+      username,
+      email,
     },
-    success,
+    person,
+    isSuperAdmin,
+    dismissPath,
     isFetching,
-    error,
   } = props;
 
-  const [fields, setFields] = useState(formFields);
+  const isNew = !person.id;
 
-  useEffect(() => {
-    if (error) {
-      alertError('Something went wrong!');
-    }
-
-    if (success) {
-      alertSuccess('Person profile added successfully.');
-    }
-  }, [error, alertError, success, alertSuccess]);
-
-  const handleOnChange = (event) => {
-    const { target } = event;
-    const { name, value } = target;
-
-    person[name] = value;
-
-    const newFields = form.validateField(target, fields);
-
-    setFields({ ...newFields });
-  };
-
-  const handleOnBlur = (event) => {
-    event.preventDefault();
-
-    const { target } = event;
-    const { name, value } = target;
-
-    if (name === 'username' && fields.username.isValid) {
-      api.is.username(value).catch(() => {
-        setFields({
-          ...fields,
-          username: {
-            ...fields.username,
-            isValid: false,
-            error: 'Username is already taken!',
-          },
-        });
-      });
-    }
-
-    if (name === 'email' && fields.email.isValid) {
-      api.is.email(value).catch(() => {
-        setFields({
-          ...fields,
-          email: {
-            ...fields.email,
-            isValid: false,
-            error: 'Email is already available in our system!',
-          },
-        });
-      });
-    }
-  };
-
-  const handleOnSubmit = (event) => {
-    event.preventDefault();
-
-    const { target } = event;
-    const newFields = form.validateForm(target, fields);
-
-    if (form.isValid(newFields)) {
-      const formData = form.fieldsToData(newFields);
-      addItem(formData);
-    }
-
-    setFields({ ...newFields });
-  };
-
-  const isSuperAdmin = viewer.usertype === TYPE.SUPER_ADMIN;
-
-  if (success && person.id) {
-    return (
-      <Redirect to={getURL(person)} />
-    );
-  }
-
-  const personName = getPersonName(person);
-  const personInitials = getPersonInitials(person) || <PersonAddIcon />;
+  const enableSubmit = !isNew || (
+    givenName.isValid &&
+    familyName.isValid &&
+    body.isValid &&
+    email.isValid
+  );
 
   return (
-    <Card variant="outlined">
-      <CardHeader
-        title={personName}
-        subheader={person.username ? `@${person.username}` : ''}
-        avatar={
-          <Avatar
-            aria-label={personName}
-            alt={personName}
+    <form onSubmit={handleOnSubmit} noValidate>
+      <CardContent>
+        <TextField
+          name="givenName"
+          value={person.givenName}
+          onChange={handleOnChange}
+          label="First Name"
+          error={givenName.error !== ''}
+          helperText={givenName.error}
+          autoFocus
+          fullWidth
+          margin="normal"
+          inputProps={{
+            maxLength: GIVEN_NAME.MAX_LENGTH,
+            minLength: GIVEN_NAME.MIN_LENGTH,
+          }}
+          required
+        />
+        <TextField
+          name="familyName"
+          value={person.familyName}
+          onChange={handleOnChange}
+          label="Last Name"
+          error={familyName.error !== ''}
+          helperText={familyName.error}
+          fullWidth
+          margin="normal"
+          inputProps={{
+            maxLength: FAMILY_NAME.MAX_LENGTH,
+            minLength: FAMILY_NAME.MIN_LENGTH,
+          }}
+          required
+        />
+        <TextField
+          name="username"
+          value={person.username}
+          onChange={handleOnChange}
+          onBlur={handleOnBlur}
+          label="Username"
+          error={username.error !== ''}
+          helperText={username.error}
+          fullWidth
+          margin="normal"
+          inputProps={{
+            maxLength: USERNAME.MAX_LENGTH,
+            minLength: USERNAME.MIN_LENGTH,
+          }}
+          required
+        />
+        <TextField
+          type="email"
+          name="email"
+          value={person.email}
+          onChange={handleOnChange}
+          onBlur={handleOnBlur}
+          label="Email"
+          error={email.error !== ''}
+          helperText={email.error}
+          fullWidth
+          margin="normal"
+          inputProps={{
+            maxLength: EMAIL.MAX_LENGTH,
+            minLength: EMAIL.MIN_LENGTH,
+          }}
+          required
+        />
+        <TextField
+          name="body"
+          value={person.body}
+          onChange={handleOnChange}
+          label="Bio"
+          error={body.error !== ''}
+          helperText={body.error}
+          margin="normal"
+          fullWidth
+          multiline
+          inputProps={{
+            maxLength: BODY.MAX_LENGTH,
+            minLength: BODY.MIN_LENGTH,
+          }}
+          required
+        />
+        <FormControl margin="normal" fullWidth>
+          <FormLabel component="legend">
+            What pronoun do you use?
+          </FormLabel>
+          <RadioGroup
+            aria-label="gender"
+            name="gender"
+            value={person.gender}
+            onChange={handleOnChange}
           >
-            {personInitials}
-          </Avatar>
+            <FormControlLabel
+              value={GENDER.FEMALE}
+              control={<Radio />}
+              label="Female"
+            />
+            <FormControlLabel
+              value={GENDER.MALE}
+              control={<Radio />}
+              label="Male"
+            />
+            <FormControlLabel
+              value={GENDER.NEUTRAL}
+              control={<Radio />}
+              label="Neutral"
+            />
+          </RadioGroup>
+        </FormControl>
+        <FormControl margin="normal" fullWidth>
+          <FormLabel component="legend">
+            User Type
+          </FormLabel>
+          <RadioGroup
+            aria-label="usertype"
+            name="usertype"
+            value={person.usertype}
+            onChange={handleOnChange}
+          >
+            <FormControlLabel
+              value={TYPE.REGISTERED}
+              control={<Radio />}
+              label="Registered"
+            />
+            <FormControlLabel
+              value={TYPE.ADMIN}
+              control={<Radio />}
+              label="Administrator"
+            />
+            {isSuperAdmin &&
+            <FormControlLabel
+              value={TYPE.SUPER_ADMIN}
+              control={<Radio />}
+              label="Super Administrator"
+            />
+            }
+          </RadioGroup>
+        </FormControl>
+      </CardContent>
+      <CardActions>
+        {dismissPath &&
+        <Button
+          component={Link}
+          href={dismissPath}
+          to={dismissPath}
+          fullWidth
+        >
+          Dismiss
+        </Button>
         }
-      />
-      <PersonAddForm
-        isSuperAdmin={isSuperAdmin}
-        fields={fields}
-        person={person}
-        handleOnChange={handleOnChange}
-        handleOnBlur={handleOnBlur}
-        handleOnSubmit={handleOnSubmit}
-        isFetching={isFetching}
-        dismissPath="/people/"
-      />
-    </Card>
+        <Button
+          fullWidth
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={isFetching || !enableSubmit}
+        >
+          Save
+        </Button>
+      </CardActions>
+    </form>
   );
 };
 
-PeopleAdd.propTypes = {
-  addItem: PropTypes.func.isRequired,
-  alertSuccess: PropTypes.func.isRequired,
-  alertError: PropTypes.func.isRequired,
-  viewer: PersonType.isRequired,
-  items: PeopleType.isRequired,
-  success: PropTypes.bool.isRequired,
+PersonAdd.propTypes = {
+  handleOnChange: PropTypes.func.isRequired,
+  handleOnBlur: PropTypes.func.isRequired,
+  handleOnSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.objectOf(PropTypes.any).isRequired,
+  person: PersonType.isRequired,
+  isSuperAdmin: PropTypes.bool.isRequired,
+  dismissPath: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const {
-    people: items,
-    success,
-    error,
-    isFetching,
-  } = state.people;
-
-  const {
-    viewer,
-  } = state.session;
-
-  return {
-    items,
-    viewer,
-    error,
-    success,
-    isFetching,
-  };
+PersonAdd.defaultProps = {
+  dismissPath: '',
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addItem: (params) => {
-      return dispatch(actions.people.add(params));
-    },
-    alertSuccess: (message) => {
-      return dispatch(actions.app.alert.success(message));
-    },
-    alertError: (message) => {
-      return dispatch(actions.app.alert.error(message));
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PeopleAdd);
+export default PersonAdd;
