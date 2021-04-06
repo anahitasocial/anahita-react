@@ -10,10 +10,10 @@ const TYPE = {
   ALL: '-',
   AUTHENTICATION: 'authentication',
   CONNECT: 'connect',
-  PROFILE: 'Profile',
+  PROFILE: 'profile',
+  USER: 'user',
   STORAGE: 'storage',
   SYSTEM: 'system',
-  USER: 'user',
 };
 
 const SettingsPluginsSelectType = (props) => {
@@ -41,9 +41,9 @@ const SettingsPluginsSelectType = (props) => {
         <MenuItem value={TYPE.AUTHENTICATION}>Authentication</MenuItem>
         <MenuItem value={TYPE.CONNECT}>Connect</MenuItem>
         <MenuItem value={TYPE.PROFILE}>Profile</MenuItem>
+        <MenuItem value={TYPE.USER}>User</MenuItem>
         <MenuItem value={TYPE.STORAGE}>Storage</MenuItem>
         <MenuItem value={TYPE.SYSTEM}>System</MenuItem>
-        <MenuItem value={TYPE.USER}>User</MenuItem>
       </Select>
     </FormControl>
   );

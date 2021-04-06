@@ -41,12 +41,17 @@ const SettingsAppsEdit = (props) => {
 
   const newEntity = settings.getMetaEntity(formControllers);
   const [entity, setEntity] = useState(newEntity);
+  const [enabled, setEnabled] = useState(app.enabled);
 
   const handleOnChange = (event) => {
     const { target } = event;
-    const { name, value } = target;
+    const { name, value, checked } = target;
 
-    entity[name] = value;
+    if (name === 'enabled') {
+      setEnabled(Boolean(checked));
+    } else {
+      entity[name] = value;
+    }
 
     const newFields = form.validateField(target, fields);
 
@@ -65,6 +70,7 @@ const SettingsAppsEdit = (props) => {
       editItem({
         id: node.id,
         meta: settings.getMetaURLParams(formData),
+        enabled,
       });
     }
 
@@ -96,6 +102,7 @@ const SettingsAppsEdit = (props) => {
           />
         }
         nodeId={app.id}
+        enabled={enabled}
         namespace={`app.${namespace}`}
         formControllers={formControllers}
         meta={entity}

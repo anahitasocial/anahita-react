@@ -34,7 +34,7 @@ const SettingsAbout = (props) => {
 
   useEffect(() => {
     readAbout();
-  }, []);
+  }, [readAbout]);
 
   if (isFetching) {
     return (

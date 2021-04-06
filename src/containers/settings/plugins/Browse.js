@@ -172,6 +172,7 @@ const SettingsPlugins = (props) => {
                       setCurrent(node);
                       setEditingOpen(true);
                     }}
+                    // disabled={!node.meta}
                   >
                     <ListItemText
                       primary={node.name}

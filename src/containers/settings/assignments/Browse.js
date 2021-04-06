@@ -19,7 +19,6 @@ import AssignmentsType from '../../../proptypes/settings/Assignments';
 import Progress from '../../../components/Progress';
 import AssignmentEdit from './Edit';
 
-const LIMIT = 100;
 const CURRENT_DEFAULT = {
   identifier: '',
   app: null,
@@ -42,7 +41,7 @@ const SettingsAssignmentsBrowse = (props) => {
 
   useEffect(() => {
     browseList({
-      limit: LIMIT,
+      limit: 99,
       offset: 0,
     });
 
@@ -59,7 +58,7 @@ const SettingsAssignmentsBrowse = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [alertError, error, alertSuccess, success]);
 
   const handleClose = () => {
     setEditingOpen(false);

@@ -28,7 +28,7 @@ const Settings = (props) => {
 
   useEffect(() => {
     setAppTitle(i18n.t('settings:cTitle'));
-  }, []);
+  });
 
   return (
     <React.Fragment>

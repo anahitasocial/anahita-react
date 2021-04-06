@@ -25,7 +25,7 @@ import * as actions from '../../../actions';
 import AppsType from '../../../proptypes/settings/Apps';
 import utils from '../../../utils';
 
-const LIMIT = 100;
+const LIMIT = 99;
 const SORT = {
   NAME: 'name',
   ORDERING: 'ordering',
@@ -63,7 +63,7 @@ const SettingsAppsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [sort, resetList]);
+  }, [browseList, resetList, sort]);
 
   useEffect(() => {
     if (error) {
@@ -73,7 +73,7 @@ const SettingsAppsBrowse = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [alertError, error, alertSuccess, success]);
 
   const handleClose = () => {
     setEditingOpen(false);
@@ -154,6 +154,7 @@ const SettingsAppsBrowse = (props) => {
                       setCurrent(node);
                       setEditingOpen(true);
                     }}
+                    disabled={!node.meta}
                   >
                     <ListItemText
                       primary={node.name}
