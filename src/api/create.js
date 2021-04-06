@@ -43,6 +43,12 @@ const deleteItem = (namespace) => {
   };
 };
 
+const download = (namespace) => {
+  return (id) => {
+    return axios.get(`/${namespace}/${id}.file`, { responseType: 'blob' });
+  };
+};
+
 export default (namespace) => {
   return {
     browse: browse(namespace),
@@ -50,5 +56,6 @@ export default (namespace) => {
     edit: edit(namespace),
     add: add(namespace),
     deleteItem: deleteItem(namespace),
+    download: download(namespace),
   };
 };

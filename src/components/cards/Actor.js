@@ -42,7 +42,7 @@ const styles = (theme) => {
     },
     disabled: {
       borderColor: theme.palette.warning.light,
-    }
+    },
   };
 };
 

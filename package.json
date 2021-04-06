@@ -53,6 +53,7 @@
     "react-country-region-selector": "^3.0.1",
     "react-dom": "^16.10.2",
     "react-dropzone": "^11.2.4",
+    "react-ga": "^3.3.0",
     "react-geolocated": "^3.0.1",
     "react-helmet": "^5.2.0",
     "react-i18next": "^10.11.4",

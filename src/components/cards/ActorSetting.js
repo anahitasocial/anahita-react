@@ -1,50 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import { Link } from 'react-router-dom';
-import utils from '../../utils';
 
-const styles = {
-  avatar: {
-    textDecoration: 'none',
-  },
-};
+import BackIcon from '@material-ui/icons/ArrowBackIos';
+
+import utils from '../../utils';
 
 const {
   getActorInitials,
   getPortraitURL,
+  getURL,
 } = utils.node;
 
 const ActorSettingCard = (props) => {
   const {
-    classes,
     actor,
     subheader,
-    namespace,
     children,
   } = props;
 
-  const avatarSrc = getPortraitURL(actor, 'medium');
+  const src = getPortraitURL(actor, 'medium');
   const initials = getActorInitials(actor);
+  const url = getURL(actor);
 
   return (
     <Card variant="outlined">
       <CardHeader
         avatar={
-          <Avatar
-            aria-label={actor.name}
-            className={classes.avatar}
-            alt={actor.name}
-            src={avatarSrc}
-            component={Link}
-            to={`/${namespace}/${actor.id}/`}
+          <Button
+            href={url}
+            variant="text"
+            startIcon={<BackIcon />}
           >
-            {!avatarSrc && initials}
-          </Avatar>
+            <Avatar
+              aria-label={actor.name}
+              alt={actor.name}
+              src={src}
+            >
+              {!src && initials}
+            </Avatar>
+          </Button>
         }
         title={actor.name}
         subheader={subheader}
@@ -56,10 +55,8 @@ const ActorSettingCard = (props) => {
 };
 
 ActorSettingCard.propTypes = {
-  classes: PropTypes.object.isRequired,
   actor: PropTypes.object.isRequired,
   subheader: PropTypes.string,
-  namespace: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 
@@ -67,4 +64,4 @@ ActorSettingCard.defaultProps = {
   subheader: 'Settings',
 };
 
-export default withStyles(styles)(ActorSettingCard);
+export default ActorSettingCard;

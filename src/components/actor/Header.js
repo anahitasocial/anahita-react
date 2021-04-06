@@ -1,4 +1,5 @@
 import React from 'react';
+import slugify from 'slugify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
@@ -24,7 +25,6 @@ const styles = (theme) => {
       marginTop: theme.spacing(4),
     },
     hAction: {
-      position: 'absolute',
       alignSelf: 'flex-end',
     },
     title: {
@@ -36,6 +36,9 @@ const styles = (theme) => {
     },
     grow: {
       flex: '1 1 auto',
+    },
+    disabled: {
+      borderColor: theme.palette.warning.light,
     },
   };
 };
@@ -51,48 +54,49 @@ const ActorHeader = (props) => {
   } = props;
 
   return (
-    <React.Fragment>
-      <Card variant="outlined">
-        {cover}
-        <CardHeader
-          classes={{
-            root: classes.hRoot,
-            avatar: classes.hAvatar,
-            content: classes.hContent,
-            action: classes.hAction,
-          }}
-          avatar={avatar}
-          title={
+    <Card
+      variant="outlined"
+      className={!actor.enabled ? classes.disabled : ''}
+    >
+      {cover}
+      <CardHeader
+        classes={{
+          root: classes.hRoot,
+          avatar: classes.hAvatar,
+          content: classes.hContent,
+          action: classes.hAction,
+        }}
+        avatar={avatar}
+        title={
+          <Typography
+            variant="h2"
+            className={classes.title}
+            align="center"
+          >
+            {actor.name}
+          </Typography>
+        }
+        subheader={
+          <React.Fragment>
             <Typography
-              variant="h2"
-              className={classes.title}
+              variant="h3"
+              className={classes.subheader}
               align="center"
             >
-              {actor.name}
+              {actor.alias && `@${slugify(actor.alias.toLowerCase())}`}
             </Typography>
-          }
-          subheader={
-            <React.Fragment>
-              <Typography
-                variant="h3"
-                className={classes.subheader}
-                align="center"
-              >
-                {actor.alias && `@${actor.alias}`}
-              </Typography>
-              <SocialgraphMeta actor={actor} />
-            </React.Fragment>
-          }
-          action={headerActions}
-        />
-        {followAction &&
-          <CardActions>
-            <div className={classes.grow} />
-            {followAction}
-          </CardActions>
+            <SocialgraphMeta actor={actor} />
+          </React.Fragment>
         }
-      </Card>
-    </React.Fragment>
+        action={headerActions}
+      />
+      {followAction &&
+        <CardActions>
+          <div className={classes.grow} />
+          {followAction}
+        </CardActions>
+      }
+    </Card>
   );
 };
 

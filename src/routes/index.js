@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -63,8 +64,21 @@ const TopicsRead = MediaRead('topics');
 const Todos = Media('todos');
 const TodosRead = MediaRead('todos');
 
+const scrollUp = () => {
+  window.scrollTo(0, 0);
+};
+
 const Routes = (props) => {
   const { isAuthenticated } = props;
+
+  scrollUp();
+
+  if (process.env.REACT_APP_GOOGLE_ANALYTICS) {
+    ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS, {
+      debug: process.env.NODE_ENV === 'development',
+    });
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }
 
   return (
     <Switch>

@@ -19,25 +19,22 @@ const HeaderMeta = (props) => {
   return (
     <Helmet>
       {metaTitle && [
-        <title>{metaTitle}</title>,
-        <meta itemprop="name" content={metaTitle} />,
-        <meta property="og:title" content={metaTitle} />,
+        <title key="meta-title">{metaTitle}</title>,
+        <meta property="og:title" content={metaTitle} key="og-title" />,
       ]}
       {metaDesc && [
-        <meta name="description" content={metaDesc} />,
-        <meta itemprop="description" content={metaDesc} />,
-        <meta property="og:description" content={metaDesc} />
+        <meta name="description" content={metaDesc} key="meta-description" />,
+        <meta property="og:description" content={metaDesc} key="og-description" />,
       ]}
       {image && [
-        <meta itemprop="image" content={image} />,
-        <meta name="twitter:card" content={twitterCard} />,
-        <meta property="og:image" content={image} />,
+        <meta name="twitter:card" content={twitterCard} key="twitter-card" />,
+        <meta property="og:image" content={image} key="og-image" />,
       ]}
       {url && [
-        <meta property="og:site" content={url} />,
+        <meta property="og:site" content={url} key="og-site" />,
       ]}
       {type && [
-        <meta property="og:type" content={type} />,
+        <meta property="og:type" content={type} key="og-type" />,
       ]}
     </Helmet>
   );

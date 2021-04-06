@@ -59,15 +59,15 @@ const isComment = (node) => {
 };
 
 const isCommentable = (medium) => {
-  return OBJECT_TYPES.MEDIUM.includes(medium.objectType) && false;
+  return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
 };
 
 const isLikeable = (medium) => {
-  return OBJECT_TYPES.MEDIUM.includes(medium.objectType) && false;
+  return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
 };
 
 const isSubscribable = (medium) => {
-  return OBJECT_TYPES.MEDIUM.includes(medium.objectType) && false;
+  return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
 };
 
 const isFollowable = (actor) => {

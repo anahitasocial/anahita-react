@@ -124,7 +124,7 @@ const ActorsRead = (props) => {
         actor={actor}
         followAction={
           <React.Fragment>
-            {canAdminister && false && <FollowRequests actor={actor} />}
+            {canAdminister && <FollowRequests actor={actor} />}
             {canFollow && <FollowAction actor={actor} />}
           </React.Fragment>
         }

@@ -49,7 +49,7 @@ const MediumFormEdit = (props) => {
         {fields.body &&
           <TextField
             name="body"
-            value={fields.medium.body}
+            value={medium.body}
             onChange={handleOnChange}
             label="Description"
             error={fields.body.error !== ''}
