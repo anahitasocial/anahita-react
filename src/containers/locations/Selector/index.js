@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { geolocated } from 'react-geolocated';
+import {
+  geolocated,
+  geoPropTypes,
+} from 'react-geolocated';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Dialog from '@material-ui/core/Dialog';
@@ -136,19 +139,7 @@ LocationsSelector.propTypes = {
   node: NodeType.isRequired,
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  coords: PropTypes.objectOf(PropTypes.shape({
-    longitude: PropTypes.number,
-    latitude: PropTypes.number,
-  })),
-  isGeolocationAvailable: PropTypes.bool.isRequired,
-  isGeolocationEnabled: PropTypes.bool.isRequired,
-};
-
-LocationsSelector.defaultProps = {
-  coords: {
-    longitude: 0.0,
-    latitude: 0.0,
-  },
+  ...geoPropTypes,
 };
 
 export default geolocated({

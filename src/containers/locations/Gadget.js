@@ -64,7 +64,7 @@ const LocationsGadget = (props) => {
       taggable_id: node.id,
       offset: 0,
     });
-  }, []);
+  }, [browse, node]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -95,12 +95,14 @@ const LocationsGadget = (props) => {
 
   return (
     <React.Fragment>
-      <Selector
-        node={node}
-        isOpen={isOpen}
-        handleClose={handleClose}
-        cardProps={cardProps}
-      />
+      {canAdd &&
+        <Selector
+          node={node}
+          isOpen={isOpen}
+          handleClose={handleClose}
+          cardProps={cardProps}
+        />
+      }
       <Card variant="outlined" {...cardProps}>
         <CardHeader
           title={

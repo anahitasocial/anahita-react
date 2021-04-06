@@ -43,7 +43,7 @@ const Locations = (props) => {
 
   useEffect(() => {
     setAppTitle(i18n.t('locations:cTitle'));
-  }, []);
+  }, [setAppTitle]);
 
   return (
     <React.Fragment>
@@ -61,7 +61,7 @@ const Locations = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="Trending" value={TRENDING} />
+          {/* <Tab label="Trending" value={TRENDING} /> */}
           <Tab label="Top" value={TOP} />
           <Tab label="Recent" value={RECENT} />
         </Tabs>
@@ -87,7 +87,7 @@ Locations.propTypes = {
 };
 
 Locations.defaultProps = {
-  selectedTab: TRENDING,
+  selectedTab: TOP,
 };
 
 const mapDispatchToProps = (dispatch) => {

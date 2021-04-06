@@ -41,7 +41,7 @@ const LocationsBrowse = (props) => {
     if (error) {
       alertError(error);
     }
-  }, [error, alertError]);
+  }, [alertError, error]);
 
   const fetchList = (page) => {
     const start = (page - 1) * LIMIT;

@@ -28,6 +28,7 @@ import PersonType from '../../proptypes/Person';
 import AnahitaMap from '../../components/Map';
 import Taggables from '../taggables';
 import Progress from '../../components/Progress';
+import HeaderMeta from '../../components/HeaderMeta';
 
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -157,6 +158,9 @@ const LocationsRead = (props) => {
 
   return (
     <React.Fragment>
+      <HeaderMeta
+        title={location.name}
+      />
       <Card square>
         <CardHeader
           avatar={
