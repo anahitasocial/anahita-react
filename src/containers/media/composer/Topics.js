@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../actions';
 import form from '../../../utils/form';
 
-import FileForm from '../../../components/composers/File';
+import TopicForm from '../../../components/composers/Topic';
 import AcctorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import MediumDefault from '../../../proptypes/MediumDefault';
@@ -15,13 +15,7 @@ const formFields = form.createFormFields([
   'body',
 ]);
 
-const supportedMimetypes = [
-  'application/pdf',
-  'application/msword',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-];
-
-const MediaComposerDocuments = (props) => {
+const MediaComposerTopics = (props) => {
   const {
     owner,
     viewer,
@@ -35,7 +29,6 @@ const MediaComposerDocuments = (props) => {
 
   const [fields, setFields] = useState(formFields);
   const [medium, setMedium] = useState(MediumDefault);
-  const [file, setFile] = useState(null);
 
   useEffect(() => {
     if (error) {
@@ -59,10 +52,6 @@ const MediaComposerDocuments = (props) => {
     setFields({ ...newFields });
   };
 
-  const handleOnFileSelect = (newFile) => {
-    setFile(newFile);
-  };
-
   const handleOnSubmit = (event) => {
     event.preventDefault();
 
@@ -72,7 +61,6 @@ const MediaComposerDocuments = (props) => {
     if (form.isValid(newFields)) {
       const formData = {
         ...form.fieldsToData(fields),
-        file,
       };
 
       addItem({
@@ -81,33 +69,27 @@ const MediaComposerDocuments = (props) => {
       }, owner).then(() => {
         setMedium({
           ...medium,
-          name: '',
           body: '',
         });
-        setFile(null);
         setFields({ ...formFields });
       });
     }
   };
 
   return (
-    <FileForm
+    <TopicForm
       owner={owner}
       viewer={viewer}
       medium={medium}
       fields={fields}
       handleOnChange={handleOnChange}
-      handleOnFileSelect={handleOnFileSelect}
       handleOnSubmit={handleOnSubmit}
       isFetching={isFetching}
-      supportedMimetypes={supportedMimetypes}
-      success={success}
-      file={file}
     />
   );
 };
 
-MediaComposerDocuments.propTypes = {
+MediaComposerTopics.propTypes = {
   addItem: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
@@ -123,7 +105,7 @@ const mapStateToProps = (state) => {
     success,
     error,
     isFetching,
-  } = state.documents;
+  } = state.topics;
 
   const { viewer } = state.session;
 
@@ -138,7 +120,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addItem: (medium, owner) => {
-      return dispatch(actions.documents.add(medium, owner));
+      return dispatch(actions.topics.add(medium, owner));
     },
     alertSuccess: (message) => {
       return dispatch(actions.app.alert.success(message));
@@ -152,4 +134,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MediaComposerDocuments);
+)(MediaComposerTopics);

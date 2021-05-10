@@ -5,9 +5,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import Articles from '../media/composer/Articles';
 import Documents from '../media/composer/Documents';
 import Notes from '../media/composer/Notes';
 import Photos from '../media/composer/Photos';
+import Topics from '../media/composer/Topics';
 
 import i18n from '../../languages';
 import appIcons from '../../components/app/Icons';
@@ -42,9 +44,11 @@ const Composers = (props) => {
 
   return (
     <React.Fragment>
+      {tab === 'articles' && <Articles owner={owner} />}
       {tab === 'documents' && <Documents owner={owner} />}
       {tab === 'photos' && <Photos owner={owner} />}
       {tab === 'notes' && <Notes owner={owner} />}
+      {tab === 'topics' && <Topics owner={owner} />}
       <AppBar
         position="sticky"
         color="inherit"

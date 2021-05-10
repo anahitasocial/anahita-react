@@ -38,7 +38,6 @@ const MediaComposerPhotos = (props) => {
   useEffect(() => {
     if (error) {
       alertError('Something went wrong!');
-      console.error(error);
     }
 
     if (success) {

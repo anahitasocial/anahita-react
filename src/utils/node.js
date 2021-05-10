@@ -87,7 +87,7 @@ const getActorInitials = (actor) => {
     return `${actor.givenName.charAt(0).toUpperCase()}${actor.familyName.charAt(0).toUpperCase()}`;
   }
 
-  return actor.name.charAt(0).toUpperCase();
+  return actor.name.substring(0, 2).toUpperCase();
 };
 
 const getPersonInitials = (person) => {
