@@ -4,7 +4,6 @@ import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
@@ -17,13 +16,10 @@ import StoryMessage from './StoryMessage';
 import ActorAvatar from '../../actor/Avatar';
 import StoryType from '../../../proptypes/Story';
 import StoryCardOwner from '../Owner';
-import Player from '../../Player';
 import utils from '../../../utils';
 
 const {
   getURL,
-  getPortraitURL,
-  getCoverURL,
   getStorySubject,
 } = utils.node;
 
@@ -31,10 +27,6 @@ const styles = (theme) => {
   return {
     root: {
       marginBottom: theme.spacing(2),
-    },
-    cover: {
-      height: 0,
-      paddingTop: '30%',
     },
     media: {
       height: 0,
@@ -50,13 +42,10 @@ const styles = (theme) => {
     ownerName: {
       fontSize: 14,
     },
-    portrait: {
-      minHeight: theme.spacing(30),
-    },
   };
 };
 
-const StoryCardDefault = (props) => {
+const StoryCardTodoStatus = (props) => {
   const {
     classes,
     story,
@@ -70,8 +59,6 @@ const StoryCardDefault = (props) => {
   const subject = getStorySubject(story);
 
   // @Todo add support for array objects
-  const portrait = story.object && getPortraitURL(story.object);
-  const cover = story.object && getCoverURL(story.object);
   const title = story.object && story.object.name;
   const body = story.object && story.object.body;
   const url = story.object ? getURL(story.object) : '';
@@ -103,29 +90,6 @@ const StoryCardDefault = (props) => {
         }
         action={menu}
       />
-      {cover &&
-        <Link href={url}>
-          <CardMedia
-            className={classes.cover}
-            image={cover}
-            title={title}
-            src="picture"
-          />
-        </Link>
-      }
-      {portrait &&
-        <Link href={url}>
-          <CardMedia
-            className={classes.portrait}
-            title={title}
-            image={portrait}
-            src="picture"
-          />
-        </Link>
-      }
-      {body &&
-        <Player text={body} />
-      }
       <CardContent>
         {title &&
           <Typography
@@ -166,7 +130,7 @@ const StoryCardDefault = (props) => {
   );
 };
 
-StoryCardDefault.propTypes = {
+StoryCardTodoStatus.propTypes = {
   classes: PropTypes.object.isRequired,
   stats: PropTypes.node,
   actions: PropTypes.node,
@@ -176,7 +140,7 @@ StoryCardDefault.propTypes = {
   showOwner: PropTypes.bool,
 };
 
-StoryCardDefault.defaultProps = {
+StoryCardTodoStatus.defaultProps = {
   showOwner: false,
   actions: null,
   stats: null,
@@ -184,4 +148,4 @@ StoryCardDefault.defaultProps = {
   comments: null,
 };
 
-export default withStyles(styles)(StoryCardDefault);
+export default withStyles(styles)(StoryCardTodoStatus);

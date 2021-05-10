@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import contentfilter from '../../contentfilter';
 import ReadMore from '../../ReadMore';
-import StoryMessage from '../../StoryMessage';
+import StoryMessage from './StoryMessage';
 import StoryCardOwner from '../Owner';
 import Player from '../../Player';
 import utils from '../../../utils';

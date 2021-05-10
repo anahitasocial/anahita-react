@@ -10,10 +10,12 @@ export default {
   actorAdd: '<0>{{subject}}</0> created <1>{{object}}</1>',
   todoAdd: '<0>{{subject}}</0> created a <1>todo</1>',
   todoComment: '<0>{{subject}}</0> commented on <1>todo</1>',
+  todoEnable: '<0>{{subject}}</0> enabled <1>todo</1>',
+  todoDisable: '<0>{{subject}}</0> disabled <1>todo</1>',
   topicAdd: '<0>{{subject}}</0> started a <1>topic</1>',
   topicComment: '<0>{{subject}}</0> commented on <1>topic</1>',
   setAdd: '<0>{{subject}}</0> created a <1>photo set</1>',
   setComment: '<0>{{subject}}</0> commented on <1>photo set</1>',
   actorFollow: '<0>{{subject}}</0> is following <2>{{target}}</2>',
-  actorFollowerAdd: '<0>{{subject}}</0> added follower <1>{{object}}</1>',
+  actorFollowerAdd: '<0>{{subject}}</0> added follower to <1>{{object}}</1>',
 };

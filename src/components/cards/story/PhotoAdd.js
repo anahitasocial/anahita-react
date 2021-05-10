@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import contentfilter from '../../contentfilter';
 import ReadMore from '../../ReadMore';
-import StoryMessage from '../../StoryMessage';
+import StoryMessage from './StoryMessage';
 import ActorAvatar from '../../actor/Avatar';
 import GridList from './GridList';
 import StoryCardOwner from '../Owner';

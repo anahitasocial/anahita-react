@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import StoryCardDefault from './story/Default';
 import StoryCardComment from './story/Comment';
 import StoryCardPhotoAdd from './story/PhotoAdd';
+import StoryCardTodoStatus from './story/TodoStatus';
 
 import StoryType from '../../proptypes/Story';
 
@@ -37,6 +38,18 @@ const StoryCard = (props) => {
     case 'photo_add':
       return (
         <StoryCardPhotoAdd
+          story={story}
+          stats={stats}
+          actions={actions}
+          menu={menu}
+          comments={comments}
+          showOwner={showOwner}
+        />
+      );
+    case 'todo_enable':
+    case 'todo_disable':
+      return (
+        <StoryCardTodoStatus
           story={story}
           stats={stats}
           actions={actions}
