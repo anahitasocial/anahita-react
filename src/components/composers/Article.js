@@ -42,7 +42,7 @@ const ComposersArticle = (props) => {
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Write a meaningful title ..."
+              placeholder="Article's title ..."
               error={fields.name.error !== ''}
               helperText={fields.name.error}
               fullWidth

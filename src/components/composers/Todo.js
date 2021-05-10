@@ -41,7 +41,7 @@ const ComposersTodo = (props) => {
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Write a meaningful title ..."
+              placeholder="Todo's title ..."
               error={fields.name.error !== ''}
               helperText={fields.name.error}
               fullWidth
