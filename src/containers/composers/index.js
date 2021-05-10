@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     zIndex: 8,
   },
   tab: {
-    fontSize: 10,
+    fontSize: 12,
   },
 });
 

@@ -11,7 +11,7 @@ import TodosIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 const useStyles = makeStyles({
   icon: {
-    fontSize: 16,
+    fontSize: 20,
   },
 });
 
