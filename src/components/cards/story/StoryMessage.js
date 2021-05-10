@@ -4,8 +4,8 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { Trans } from 'react-i18next';
 import _ from 'lodash';
-import utils from '../utils';
-import i18n from '../languages';
+import utils from '../../../utils';
+import i18n from '../../../languages';
 
 const {
   getURL,
