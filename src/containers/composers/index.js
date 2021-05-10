@@ -9,6 +9,7 @@ import Articles from '../media/composer/Articles';
 import Documents from '../media/composer/Documents';
 import Notes from '../media/composer/Notes';
 import Photos from '../media/composer/Photos';
+import Todos from '../media/composer/Todos';
 import Topics from '../media/composer/Topics';
 
 import i18n from '../../languages';
@@ -48,6 +49,7 @@ const Composers = (props) => {
       {tab === 'documents' && <Documents owner={owner} />}
       {tab === 'photos' && <Photos owner={owner} />}
       {tab === 'notes' && <Notes owner={owner} />}
+      {tab === 'todos' && <Todos owner={owner} />}
       {tab === 'topics' && <Topics owner={owner} />}
       <AppBar
         position="sticky"

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../actions';
 import form from '../../../utils/form';
 
-import ArticleForm from '../../../components/composers/Article';
+import TodoForm from '../../../components/composers/Todo';
 import AcctorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import MediumDefault from '../../../proptypes/MediumDefault';
@@ -13,10 +13,9 @@ import MediumDefault from '../../../proptypes/MediumDefault';
 const formFields = form.createFormFields([
   'name',
   'body',
-  'excerpt',
 ]);
 
-const MediaComposerArticles = (props) => {
+const MediaComposerTodos = (props) => {
   const {
     owner,
     viewer,
@@ -78,7 +77,7 @@ const MediaComposerArticles = (props) => {
   };
 
   return (
-    <ArticleForm
+    <TodoForm
       owner={owner}
       viewer={viewer}
       medium={medium}
@@ -90,7 +89,7 @@ const MediaComposerArticles = (props) => {
   );
 };
 
-MediaComposerArticles.propTypes = {
+MediaComposerTodos.propTypes = {
   addItem: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
@@ -121,7 +120,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addItem: (medium, owner) => {
-      return dispatch(actions.articles.add(medium, owner));
+      return dispatch(actions.todos.add(medium, owner));
     },
     alertSuccess: (message) => {
       return dispatch(actions.app.alert.success(message));
@@ -135,4 +134,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MediaComposerArticles);
+)(MediaComposerTodos);
