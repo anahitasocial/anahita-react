@@ -18,13 +18,16 @@ import Media from './media';
 import HeaderMeta from '../components/HeaderMeta';
 
 const TABS = {
+  ARTICLES: 'articles',
   DOCUMENTS: 'documents',
+  GROUPS: 'groups',
   HASHTAGS: 'hashtags',
   LOCATIONS: 'locations',
   NOTES: 'notes',
   PEOPLE: 'people',
   PHOTOS: 'photos',
-  GROUPS: 'groups',
+  TODOS: 'todos',
+  TOPICS: 'topics',
 };
 
 const {
@@ -98,17 +101,23 @@ const ExplorePage = (props) => {
           <Tab label="People" value={TABS.PEOPLE} />
           <Tab label="Hashtags" value={TABS.HASHTAGS} />
           <Tab label="Locations" value={TABS.LOCATIONS} />
+          <Tab label="Articles" value={TABS.ARTICLES} />
           <Tab label="Documents" value={TABS.DOCUMENTS} />
           <Tab label="Notes" value={TABS.NOTES} />
           <Tab label="Photos" value={TABS.PHOTOS} />
+          <Tab label="Todos" value={TABS.TODOS} />
+          <Tab label="Topics" value={TABS.TOPICS} />
         </Tabs>
       </AppBar>
       {[
-        TABS.PHOTOS,
+        TABS.ARTICLES,
         TABS.DOCUMENTS,
+        TABS.HASHTAGS,
+        TABS.PHOTOS,
         TABS.LOCATIONS,
         TABS.NOTES,
-        TABS.HASHTAGS,
+        TABS.TODOS,
+        TABS.TOPICS,
       ].includes(tab) &&
         <NodeBrowse
           key={`sort-${tab}`}
