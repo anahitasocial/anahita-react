@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import _ from 'lodash';
 
 import Articles from '../media/composer/Articles';
 import Documents from '../media/composer/Documents';
@@ -22,6 +23,9 @@ const useStyles = makeStyles({
     position: 'sticky',
     top: 8 * 7,
     zIndex: 8,
+  },
+  tab: {
+    fontSize: 10,
   },
 });
 
@@ -70,7 +74,8 @@ const Composers = (props) => {
                 key={`composer-tab-${composer}`}
                 label={i18n.t(`apps:${composer}`)}
                 value={composer}
-                icon={appIcons[composer]}
+                icon={appIcons[_.upperFirst(composer)]}
+                className={classes.tab}
               />
             );
           })}
