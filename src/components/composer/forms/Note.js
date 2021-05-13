@@ -10,11 +10,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
-import ActorType from '../../proptypes/Actor';
-import PersonType from '../../proptypes/Person';
-import MediumType from '../../proptypes/Medium';
+import ActorType from '../../../proptypes/Actor';
+import PersonType from '../../../proptypes/Person';
+import MediumType from '../../../proptypes/Medium';
 
-import utils from '../../utils';
+import utils from '../../../utils';
 
 const { isPerson } = utils.node;
 

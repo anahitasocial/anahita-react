@@ -11,8 +11,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import RootRef from '@material-ui/core/RootRef';
 import TextField from '@material-ui/core/TextField';
 
-import { Medium as MEDIUM } from '../../constants';
-import MediumType from '../../proptypes/Medium';
+import { Medium as MEDIUM } from '../../../constants';
+import MediumType from '../../../proptypes/Medium';
 
 const useStyles = makeStyles((theme) => {
   return {
