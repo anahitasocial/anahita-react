@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ComposerDefault from './Default';
-import ArticleForm from '../../../components/composer/Article';
-import FileForm from '../../../components/composer/File';
-import NoteForm from '../../../components/composer/Note';
-import TodoForm from '../../../components/composer/Todo';
-import TopicForm from '../../../components/composer/Topic';
+import ArticleForm from '../../../components/composer/forms/Article';
+import FileForm from '../../../components/composer/forms/File';
+import NoteForm from '../../../components/composer/forms/Note';
+import TodoForm from '../../../components/composer/forms/Todo';
+import TopicForm from '../../../components/composer/forms/Topic';
 
 import AcctorType from '../../../proptypes/Actor';
 import utils from '../../../utils';
