@@ -2,7 +2,10 @@ import slugify from 'slugify';
 import { pluralize } from 'inflection';
 import countryList from 'country-list';
 import i18n from '../languages';
-import { Person as PERSON } from '../constants';
+import {
+  Node as NODE,
+  Person as PERSON,
+} from '../constants';
 
 const {
   REGISTERED,
@@ -12,27 +15,10 @@ const {
 
 const OWNER_NAME_CHAR_LIMIT = 16;
 
-const OBJECT_TYPES = {
-  ACTOR: [
-    'com.actors.actor',
-    'com.groups.group',
-    'com.people.person',
-  ],
-  MEDIUM: [
-    'com.articles.article',
-    'com.documents.document',
-    'com.notes.note',
-    'com.topics.topic',
-    'com.photos.photo',
-    'com.photos.set',
-    'com.todos.todo',
-  ],
-};
-
-const MEDIUM_WITH_HTML_BODY = [
-  'com.articles.article',
-  'com.topics.topic',
-];
+const {
+  OBJECT_TYPES,
+  MEDIUM_WITH_HTML_BODY,
+} = NODE;
 
 const isActor = (node) => {
   return node.objectType ? OBJECT_TYPES.ACTOR.includes(node.objectType) : false;
@@ -209,6 +195,24 @@ const getNamespace = (node) => {
   return pluralize(node.objectType.split('.')[2]);
 };
 
+const getSupportedMimetypes = (namespace) => {
+  switch (namespace) {
+    case 'documents':
+      return [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      ];
+    case 'photos':
+      return [
+        'image/jpeg',
+        'image/png',
+      ];
+    default:
+      return [];
+  }
+};
+
 export default {
   isActor,
   isPerson,
@@ -234,5 +238,6 @@ export default {
   getPortraitURL,
   getStoryObjectName,
   getStorySubject,
+  getSupportedMimetypes,
   getURL,
 };

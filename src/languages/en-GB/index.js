@@ -42,6 +42,7 @@ export default {
     notes: 'Notes',
     photos: 'Photos',
     todos: 'Todos',
+    topics: 'Topics',
   },
   translation: {
     stories,

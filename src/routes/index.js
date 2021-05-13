@@ -75,7 +75,7 @@ const Routes = (props) => {
 
   if (process.env.REACT_APP_GOOGLE_ANALYTICS) {
     ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS, {
-      debug: process.env.NODE_ENV === 'development',
+      debug: process.env.NODE_ENV === 'development' && false,
     });
     ReactGA.pageview(window.location.pathname + window.location.search);
   }

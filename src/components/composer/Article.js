@@ -26,7 +26,7 @@ const ComposersArticle = (props) => {
     isFetching,
   } = props;
 
-  const canAdd = fields.name.isValid && fields.body.isValid;
+  const canAdd = fields.name.isValid && fields.body.isValid && fields.excerpt.isValid;
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
@@ -91,8 +91,8 @@ const ComposersArticle = (props) => {
                 shrink: true,
               }}
               placeholder="Write a excerpt ..."
-              error={fields.body.error !== ''}
-              helperText={fields.body.error}
+              error={fields.excerpt.error !== ''}
+              helperText={fields.excerpt.error}
               fullWidth
               multiline
               margin="normal"
