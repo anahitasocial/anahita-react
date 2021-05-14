@@ -205,6 +205,10 @@ export default {
     cTitle: 'Explore',
     mTitle: 'Explore',
   },
+  socialgraph: {
+    cTitle: 'Social Graph',
+    mTitle: 'Social Graph',
+  },
   hashtags: {
     cTitle: 'Hashtags',
     mTitle: 'Hashtags',

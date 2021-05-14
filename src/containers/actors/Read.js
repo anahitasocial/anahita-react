@@ -83,11 +83,11 @@ const ActorsRead = (props) => {
     );
   }
 
-  // adding project gadget
   // @TODO we need a custom Read container for the Project Actors at this point
   if (isPerson(actor)) {
     actor.gadgets.splice(1, 0, 'groups');
   }
+  actor.gadgets.splice(1, 0, 'socialgraph');
 
   const canFollow = permissions.canFollow(actor);
   const canEdit = permissions.canEdit(actor);
@@ -171,7 +171,7 @@ const ActorsRead = (props) => {
                 filter="followers"
               />
             }
-            leaders={actor.id && isPerson &&
+            leaders={actor.id && isPerson(actor) &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="leaders"
@@ -183,7 +183,7 @@ const ActorsRead = (props) => {
                 filter="blocked"
               />
             }
-            mutuals={actor.id && !isViewer && isPerson &&
+            mutuals={actor.id && !isViewer && isPerson(actor) &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="mutuals"

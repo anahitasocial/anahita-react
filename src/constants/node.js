@@ -1,7 +1,7 @@
 export default {
   OBJECT_TYPES: {
     ACTOR: [
-      'com.actors.actor',
+      // 'com.actors.actor',
       'com.groups.group',
       'com.people.person',
     ],
@@ -13,6 +13,21 @@ export default {
       'com.photos.photo',
       'com.photos.set',
       'com.todos.todo',
+    ],
+  },
+  NAMESPACES: {
+    ACTOR: [
+      'groups',
+      'people',
+    ],
+    MEDIUM: [
+      'articles',
+      'documents',
+      'notes',
+      'topics',
+      'photos',
+      'photos',
+      'todos',
     ],
   },
   MEDIUM_WITH_HTML_BODY: [
