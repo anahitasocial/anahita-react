@@ -15,7 +15,7 @@ import Commands from './read/Commands';
 import Cover from './read/Cover';
 import FollowAction from '../actions/Follow';
 import LocationsGadget from '../locations/Gadget';
-import Media from '../media/Browse';
+import MediaBrowse from '../media/Browse';
 import Progress from '../../components/Progress';
 import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
 import StoriesBrowse from '../stories/Browse';
@@ -66,16 +66,20 @@ const ActorsRead = (props) => {
     };
   }, [setAppTitle, readItem, resetList, id, namespace]);
 
-  if (!actor.id && isFetching) {
-    return (
-      <Progress />
-    );
-  }
+  if (!actor.id) {
+    if (isFetching) {
+      return (
+        <Progress />
+      );
+    }
 
-  if (!actor.id && error !== '') {
-    return (
-      <Redirect push to="/404/" />
-    );
+    if (error !== '') {
+      return (
+        <Redirect push to="/404/" />
+      );
+    }
+
+    return <React.Fragment />;
   }
 
   // @TODO we need a custom Read container for the Project Actors at this point
@@ -112,7 +116,7 @@ const ActorsRead = (props) => {
     }
 
     if (NAMESPACES.MEDIUM.includes(gadget)) {
-      const MediaGadget = Media(gadget);
+      const MediaGadget = MediaBrowse(gadget);
       gadgets[gadget] = (<MediaGadget
         key={`medium-gadget-${actor.id}`}
         queryFilters={{ oid: actor.id }}

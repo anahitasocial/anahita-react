@@ -43,18 +43,14 @@ const ActorsBrowse = (props) => {
     resetList,
     namespace,
     viewer,
-    // width,
     items,
     hasMore,
     queryFilters,
   } = props;
 
   const fetchList = (page) => {
-    const { disabled, q } = queryFilters;
     const start = (page - 1) * LIMIT;
     browseList({
-      q,
-      disabled,
       start,
       limit: LIMIT,
       ...queryFilters,
@@ -65,7 +61,7 @@ const ActorsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList, namespace]);
+  }, [resetList]);
 
   const canAdd = permissions.canAdd(viewer, namespace);
 
@@ -98,7 +94,7 @@ const ActorsBrowse = (props) => {
                 className={classes.card}
                 key={key}
               >
-                <ActorsCard actor={node} />
+                <ActorsCard actor={node} viewer={viewer} />
               </div>
             );
           })
@@ -123,6 +119,8 @@ ActorsBrowse.defaultProps = {
   queryFilters: {
     q: '',
     disabled: false,
+    oid: 0,
+    filter: '',
   },
 };
 

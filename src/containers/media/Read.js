@@ -132,6 +132,8 @@ const MediaRead = (props) => {
         <Redirect push to="/404/" />
       );
     }
+
+    return <React.Fragment />;
   }
 
   const canAddComment = isAuthenticated && medium.openToComment;
@@ -169,7 +171,11 @@ const MediaRead = (props) => {
           }
           actions={[isAuthenticated && isLikeable(medium) &&
             <Like node={medium} key={`medium-like-${medium.id}`} />,
-            namespace === 'documents' && <DownloadAction node={medium} key={`medium-download-${medium.id}`} />
+            namespace === 'documents' &&
+            <DownloadAction
+              node={medium}
+              key={`medium-download-${medium.id}`}
+            />,
           ]}
           stats={
             <React.Fragment>
