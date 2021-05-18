@@ -37,14 +37,8 @@ const ActorBody = (props) => {
     composers,
     stories,
     locations,
-    groups,
     socialgraph,
-    articles,
-    documents,
-    notes,
-    photos,
-    topics,
-    todos,
+    gadgets,
     mentions,
   } = props;
 
@@ -84,7 +78,9 @@ const ActorBody = (props) => {
             );
           })}
           {/*
-          {actor.id === viewer.id && <Tab label="Mentions" value="mentions" id="actor-tab-mentions" />}
+          {actor.id === viewer.id &&
+            <Tab label="Mentions" value="mentions" id="actor-tab-mentions" />
+          }
           */}
         </Tabs>
       </AppBar>
@@ -126,13 +122,7 @@ const ActorBody = (props) => {
         </Grid>
       }
       {value === 'socialgraph' && socialgraph}
-      {value === 'notes' && notes}
-      {value === 'photos' && photos}
-      {value === 'articles' && articles}
-      {value === 'documents' && documents}
-      {value === 'topics' && topics}
-      {value === 'todos' && todos}
-      {value === 'groups' && groups}
+      {typeof (gadgets[value]) !== 'undefined' && gadgets[value]}
       {actor.id === viewer.id && value === 'mentions' && mentions}
     </Box>
   );
@@ -145,15 +135,9 @@ ActorBody.propTypes = {
   composers: PropTypes.node,
   stories: PropTypes.node,
   locations: PropTypes.node,
-  groups: PropTypes.node,
   admins: PropTypes.node,
   socialgraph: PropTypes.node,
-  notes: PropTypes.node,
-  photos: PropTypes.node,
-  topics: PropTypes.node,
-  articles: PropTypes.node,
-  documents: PropTypes.node,
-  todos: PropTypes.node,
+  gadgets: PropTypes.arrayOf(PropTypes.node).isRequired,
   mentions: PropTypes.node,
 };
 
@@ -162,14 +146,7 @@ ActorBody.defaultProps = {
   composers: null,
   stories: null,
   locations: null,
-  groups: null,
   socialgraph: null,
-  notes: null,
-  photos: null,
-  topics: null,
-  articles: null,
-  documents: null,
-  todos: null,
   mentions: null,
 };
 

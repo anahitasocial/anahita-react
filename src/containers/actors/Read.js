@@ -25,22 +25,17 @@ import * as actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions/actor';
 import utils from '../../utils';
+import { Node as NODE } from '../../constants';
 
 import ActorsType from '../../proptypes/Actors';
 import PersonType from '../../proptypes/Person';
-
-const Articles = Media('articles');
-const Documents = Media('documents');
-const Notes = Media('notes');
-const Photos = Media('photos');
-const Topics = Media('topics');
-const Todos = Media('todos');
-const GroupsBrowse = ActorsBrowse('groups');
 
 const {
   isPerson,
   getPortraitURL,
 } = utils.node;
+
+const { NAMESPACES } = NODE;
 
 const ActorsRead = (props) => {
   const {
@@ -101,6 +96,32 @@ const ActorsRead = (props) => {
   const isViewer = actor.id === viewer.id;
   const FollowRequests = ActorsFollowRequests(namespace);
 
+  const gadgets = [];
+  actor.gadgets.map((gadget) => {
+    if (NAMESPACES.ACTOR.includes(gadget)) {
+      const ActorsGadget = ActorsBrowse(gadget);
+      gadgets[gadget] = (<ActorsGadget
+        key={`actor-gadget-${actor.id}`}
+        queryFilters={{
+          oid: actor.id,
+          filter: 'administering',
+          offset: 0,
+          limit: 1000,
+        }}
+      />);
+    }
+
+    if (NAMESPACES.MEDIUM.includes(gadget)) {
+      const MediaGadget = Media(gadget);
+      gadgets[gadget] = (<MediaGadget
+        key={`medium-gadget-${actor.id}`}
+        queryFilters={{ oid: actor.id }}
+      />);
+    }
+
+    return true;
+  });
+
   return (
     <React.Fragment>
       <HeaderMeta
@@ -143,25 +164,13 @@ const ActorsRead = (props) => {
         }
         stories={actor.id &&
           <StoriesBrowse
-            // key="com:stories.story"
             queryFilters={{
               oid: actor.id,
             }}
-            // {...this.params}
           />
         }
         locations={actor.id &&
           <LocationsGadget node={actor} />
-        }
-        groups={actor.id && isPerson(actor) &&
-          <GroupsBrowse
-            queryFilters={{
-              oid: actor.id,
-              filter: 'administering',
-              offset: 0,
-              limit: 1000,
-            }}
-          />
         }
         socialgraph={
           <SocialgraphTabs
@@ -191,48 +200,7 @@ const ActorsRead = (props) => {
             }
           />
         }
-        articles={actor.id &&
-          <Articles
-            queryFilters={{
-              oid: actor.id,
-            }}
-          />
-        }
-        documents={actor.id &&
-          <Documents
-            queryFilters={{
-              oid: actor.id,
-            }}
-          />
-        }
-        notes={actor.id &&
-          <Notes
-            queryFilters={{
-              oid: actor.id,
-            }}
-          />
-        }
-        photos={actor.id &&
-          <Photos
-            queryFilters={{
-              oid: actor.id,
-            }}
-          />
-        }
-        topics={actor.id &&
-          <Topics
-            queryFilters={{
-              oid: actor.id,
-            }}
-          />
-        }
-        todos={actor.id &&
-          <Todos
-            queryFilters={{
-              oid: actor.id,
-            }}
-          />
-        }
+        gadgets={gadgets}
       />
     </React.Fragment>
   );

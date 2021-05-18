@@ -1,7 +1,7 @@
 export default {
   OBJECT_TYPES: {
     ACTOR: [
-      // 'com.actors.actor',
+      'com.actors.actor',
       'com.groups.group',
       'com.people.person',
     ],

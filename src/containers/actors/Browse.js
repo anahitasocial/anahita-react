@@ -10,7 +10,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 
 import * as actions from '../../actions';
-import i18n from '../../languages';
 import permissions from '../../permissions/actor';
 
 import PersonType from '../../proptypes/Person';
@@ -40,7 +39,6 @@ const useStyles = makeStyles((theme) => {
 const ActorsBrowse = (props) => {
   const classes = useStyles();
   const {
-    setAppTitle,
     browseList,
     resetList,
     namespace,
@@ -64,12 +62,10 @@ const ActorsBrowse = (props) => {
   };
 
   useEffect(() => {
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
-
     return () => {
       resetList();
     };
-  }, [setAppTitle, resetList, namespace]);
+  }, [resetList, namespace]);
 
   const canAdd = permissions.canAdd(viewer, namespace);
 
@@ -119,7 +115,6 @@ ActorsBrowse.propTypes = {
   namespace: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
-  setAppTitle: PropTypes.func.isRequired,
   items: ActorsType.isRequired,
   hasMore: PropTypes.bool.isRequired,
 };
@@ -160,9 +155,6 @@ const mapDispatchToProps = (namespace) => {
       },
       resetList: () => {
         return dispatch(actions[namespace].reset());
-      },
-      setAppTitle: (title) => {
-        return dispatch(actions.app.setAppTitle(title));
       },
     };
   };

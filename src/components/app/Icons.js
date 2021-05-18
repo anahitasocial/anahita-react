@@ -23,7 +23,7 @@ const StyledIcon = ({ component: Component, ...props }) => {
 };
 
 StyledIcon.propTypes = {
-  component: PropTypes.node.isRequired,
+  component: PropTypes.object.isRequired,
 };
 
 export default {
