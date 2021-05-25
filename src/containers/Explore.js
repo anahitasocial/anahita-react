@@ -10,8 +10,8 @@ import appActions from '../actions/app';
 import i18n from '../languages';
 import { App as APP } from '../constants';
 
-import ActorsBrowse from './actors/Browse';
-import PeopleBrowse from './people/Browse';
+import Actors from './actors';
+import People from './people';
 import Hashtags from './hashtags';
 import Locations from './locations';
 import Media from './media';
@@ -70,7 +70,7 @@ const ExplorePage = (props) => {
 
   switch (tab) {
     case TABS.GROUPS:
-      NodeBrowse = ActorsBrowse(tab);
+      NodeBrowse = Actors(tab);
       break;
     case TABS.HASHTAGS:
       NodeBrowse = Hashtags;
@@ -128,7 +128,7 @@ const ExplorePage = (props) => {
         />
       }
       {tab === TABS.PEOPLE &&
-        <PeopleBrowse key={`${tab}-tab`} />
+        <People key={`${tab}-tab`} />
       }
       {[TABS.GROUPS].includes(tab) &&
         <NodeBrowse

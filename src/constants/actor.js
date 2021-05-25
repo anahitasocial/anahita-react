@@ -1,4 +1,8 @@
 export default {
+  FILTER: {
+    ADMINISTERING: 'administering',
+    FOLLOWING: 'following',
+  },
   FIELDS: {
     NAME: {
       MAX_LENGTH: 100,

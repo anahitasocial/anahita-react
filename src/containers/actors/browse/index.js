@@ -9,16 +9,16 @@ import AddIcon from '@material-ui/icons/Add';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 
-import * as actions from '../../actions';
-import permissions from '../../permissions/actor';
+import * as actions from '../../../actions';
+import permissions from '../../../permissions/actor';
 
-import PersonType from '../../proptypes/Person';
-import ActorsType from '../../proptypes/Actors';
+import PersonType from '../../../proptypes/Person';
+import ActorsType from '../../../proptypes/Actors';
 
 import ActorsCard from './Card';
-import Masonry from '../../components/BreakpointMasonry';
-import Progress from '../../components/Progress';
-import { App as APP } from '../../constants';
+import Masonry from '../../../components/BreakpointMasonry';
+import Progress from '../../../components/Progress';
+import { App as APP } from '../../../constants';
 
 const { LIMIT } = APP.BROWSE;
 

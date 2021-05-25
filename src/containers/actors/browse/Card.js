@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import FollowAction from '../actions/Follow';
-import ActorCard from '../../components/cards/Actor';
-import permissions from '../../permissions/actor';
-import ActorType from '../../proptypes/Actor';
-import PersonType from '../../proptypes/Person';
+import FollowAction from '../../actions/Follow';
+import ActorCard from '../../../components/cards/Actor';
+import permissions from '../../../permissions/actor';
+import ActorType from '../../../proptypes/Actor';
+import PersonType from '../../../proptypes/Person';
 
 const ActorsCard = (props) => {
   const {

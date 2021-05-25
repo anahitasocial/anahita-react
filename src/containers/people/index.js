@@ -9,7 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Switch from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import ActorsBrowse from '../actors/Browse';
+import ActorsBrowse from '../actors/browse';
 import SelectUsertype from '../../components/select/Usertype';
 
 import PersonType from '../../proptypes/Person';
@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => {
     },
     filter: {
       margin: theme.spacing(2),
-    }
+    },
   };
 });
 
 const Browse = ActorsBrowse('people');
 
-const PeopleBrowse = (props) => {
+const People = (props) => {
   const classes = useStyles();
   const { viewer } = props;
   const [disabled, setDisabled] = useState(false);
@@ -110,7 +110,7 @@ const PeopleBrowse = (props) => {
   );
 };
 
-PeopleBrowse.propTypes = {
+People.propTypes = {
   viewer: PersonType.isRequired,
 };
 
@@ -127,4 +127,4 @@ const mapDispatchToProps = () => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PeopleBrowse);
+)(People);

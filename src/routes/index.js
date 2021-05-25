@@ -15,8 +15,8 @@ import PasswordResetPage from '../containers/auth/PasswordReset';
 
 import HomePage from '../containers/Home';
 
-import ActorsBrowse from '../containers/actors/Browse';
-import ActorsRead from '../containers/actors/Read';
+import Actors from '../containers/actors';
+import ActorsRead from '../containers/actors/read';
 import ActorsAdd from '../containers/actors/Add';
 import ActorsSettings from '../containers/actors/settings';
 
@@ -29,7 +29,7 @@ import LocationsRead from '../containers/locations/Read';
 import Media from '../containers/media';
 import MediaRead from '../containers/media/Read';
 
-import PeopleBrowse from '../containers/people/Browse';
+import People from '../containers/people';
 import PeopleAdd from '../containers/people/Add';
 
 import DashboardPage from '../containers/Dashboard';
@@ -38,7 +38,7 @@ import SearchPage from '../containers/search';
 import Settings from '../containers/settings';
 import NotFoundPage from '../containers/NotFound';
 
-const GroupsBrowse = ActorsBrowse('groups');
+const GroupsBrowse = Actors('groups');
 const GroupsRead = ActorsRead('groups');
 const GroupsAdd = ActorsAdd('groups');
 const GroupsSettings = ActorsSettings('groups');
@@ -154,7 +154,7 @@ const Routes = (props) => {
       <Route
         exact
         path="/people/"
-        component={PeopleBrowse}
+        component={People}
       />
       <AuthenticatedRoute
         exact

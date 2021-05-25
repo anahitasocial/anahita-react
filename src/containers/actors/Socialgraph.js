@@ -9,7 +9,7 @@ import * as actions from '../../actions';
 
 import ActorType from '../../proptypes/Actor';
 import ActorsType from '../../proptypes/Actors';
-import ActorsCard from './Card';
+import ActorsCard from './browse/Card';
 import Masonry from '../../components/BreakpointMasonry';
 import Progress from '../../components/Progress';
 import { App as APP } from '../../constants';

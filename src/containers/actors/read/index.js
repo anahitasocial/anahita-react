@@ -3,32 +3,32 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import ActorHeader from '../../components/actor/Header';
-import ActorBody from '../../components/actor/Body';
-import ActorsFollowRequests from './FollowRequests';
-import ActorsSocialgraph from './Socialgraph';
-import ActorsBrowse from './Browse';
-import Admins from '../../components/actor/body/Admins';
-import Avatar from './read/Avatar';
-import Composers from '../composers/';
-import Commands from './read/Commands';
-import Cover from './read/Cover';
-import FollowAction from '../actions/Follow';
-import LocationsGadget from '../locations/Gadget';
-import MediaBrowse from '../media/Browse';
-import Progress from '../../components/Progress';
-import SocialgraphTabs from '../../components/actor/socialgraph/Tabs';
-import StoriesBrowse from '../stories/Browse';
-import HeaderMeta from '../../components/HeaderMeta';
+import ActorHeader from '../../../components/actor/Header';
+import ActorBody from '../../../components/actor/Body';
+import ActorsFollowRequests from '../FollowRequests';
+import ActorsSocialgraph from '../Socialgraph';
+import ActorsBrowseGadget from '../browse/Gadget';
+import Admins from '../../../components/actor/body/Admins';
+import Avatar from './Avatar';
+import Composers from '../../composers/';
+import Commands from './Commands';
+import Cover from './Cover';
+import FollowAction from '../../actions/Follow';
+import LocationsGadget from '../../locations/Gadget';
+import MediaBrowse from '../../media/Browse';
+import Progress from '../../../components/Progress';
+import SocialgraphTabs from '../../../components/actor/socialgraph/Tabs';
+import StoriesBrowse from '../../stories/Browse';
+import HeaderMeta from '../../../components/HeaderMeta';
 
-import * as actions from '../../actions';
-import i18n from '../../languages';
-import permissions from '../../permissions/actor';
-import utils from '../../utils';
-import { Node as NODE } from '../../constants';
+import * as actions from '../../../actions';
+import i18n from '../../../languages';
+import permissions from '../../../permissions/actor';
+import utils from '../../../utils';
+import { Node as NODE } from '../../../constants';
 
-import ActorsType from '../../proptypes/Actors';
-import PersonType from '../../proptypes/Person';
+import ActorsType from '../../../proptypes/Actors';
+import PersonType from '../../../proptypes/Person';
 
 const {
   isPerson,
@@ -103,15 +103,10 @@ const ActorsRead = (props) => {
   const gadgets = [];
   actor.gadgets.map((gadget) => {
     if (NAMESPACES.ACTOR.includes(gadget)) {
-      const ActorsGadget = ActorsBrowse(gadget);
-      gadgets[gadget] = (<ActorsGadget
+      gadgets[gadget] = (<ActorsBrowseGadget
         key={`actor-gadget-${actor.id}`}
-        queryFilters={{
-          oid: actor.id,
-          filter: 'administering',
-          offset: 0,
-          limit: 1000,
-        }}
+        owner={actor}
+        namespace={gadget}
       />);
     }
 
