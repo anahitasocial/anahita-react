@@ -8,7 +8,7 @@ import CommentRead from './Read';
 import CommentForm from '../../components/comment/Form';
 import Progress from '../../components/Progress';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import NodeType from '../../proptypes/Node';
 import CommentsType from '../../proptypes/Comments';
 import CommentDefault from '../../proptypes/CommentDefault';

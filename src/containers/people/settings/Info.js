@@ -7,7 +7,7 @@ import Switch from '@material-ui/core/Switch';
 
 import InfoForm from '../../../components/person/Info';
 import Progress from '../../../components/Progress';
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import permissions from '../../../permissions';
 import { Person as PERSON } from '../../../constants';
 import PersonType from '../../../proptypes/Person';

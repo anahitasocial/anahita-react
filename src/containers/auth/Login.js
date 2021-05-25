@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/auth/LoginForm';
-import * as actions from '../../actions';
+import actions from '../../actions';
 import form from '../../utils/form';
 
 const formFields = form.createFormFields(['username', 'password']);

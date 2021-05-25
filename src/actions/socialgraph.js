@@ -1,6 +1,8 @@
-import { socialgraph as api } from '../api';
+import apis from '../api';
 import { Socialgraph as SOCIALGRAPH } from '../constants';
 import createAction from './create';
+
+const { socialgraph: api } = apis;
 
 const sgActions = createAction('socialgraph')(api);
 

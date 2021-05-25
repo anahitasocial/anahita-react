@@ -1,5 +1,7 @@
-import { notifications as api } from '../api';
+import apis from '../api';
 import { Notifications as NOTIFICATIONS } from '../constants';
+
+const { notifications: api } = apis;
 
 // -- add subscription
 

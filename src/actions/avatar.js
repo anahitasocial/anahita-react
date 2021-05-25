@@ -1,5 +1,7 @@
-import { avatar as api } from '../api';
+import apis from '../api';
 import { Avatar as AVATAR } from '../constants';
+
+const { avatar: api } = apis;
 
 // -- Add Avatar
 

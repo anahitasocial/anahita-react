@@ -1,5 +1,7 @@
-import { cover as api } from '../api';
+import apis from '../api';
 import { Cover as COVER } from '../constants';
+
+const { cover: api } = apis;
 
 // -- Add Avatar
 

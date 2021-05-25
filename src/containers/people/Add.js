@@ -7,8 +7,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonAddForm from '../../components/person/Add';
-import * as actions from '../../actions';
-import * as api from '../../api';
+import actions from '../../actions';
+import api from '../../api';
 import { Person as PERSON } from '../../constants';
 import utils from '../../utils';
 

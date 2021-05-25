@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import withWidth from '@material-ui/core/withWidth';
 
 import appActions from '../../actions/app';
-import { hashtags as actions } from '../../actions';
+import actions from '../../actions';
 import i18n from '../../languages';
 import HashtagDefault from '../../proptypes/HashtagDefault';
 import HashtagsType from '../../proptypes/Hashtags';
@@ -109,10 +109,10 @@ HashtagsRead.propTypes = {
 const mapDispatchToProps = (dispatch) => {
   return {
     readHashtag: (alias) => {
-      return dispatch(actions.read(alias));
+      return dispatch(actions.hashtags.read(alias));
     },
     setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
+      dispatch(actions.app.setAppTitle(title));
     },
   };
 };

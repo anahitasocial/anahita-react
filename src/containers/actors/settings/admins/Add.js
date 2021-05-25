@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 
 import ActorAvatar from '../../../../components/actor/Avatar';
 import ActorType from '../../../../proptypes/Actor';
-import * as actions from '../../../../actions';
+import actions from '../../../../actions';
 
 const ActorsSettingsAdminsAdd = (props) => {
   const {

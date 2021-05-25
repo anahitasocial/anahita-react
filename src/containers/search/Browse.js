@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 import InfiniteScroll from 'react-infinite-scroller';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import NodesType from '../../proptypes/Nodes';
 
 import CommentCard from '../../components/cards/Comment';

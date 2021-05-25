@@ -1,5 +1,5 @@
 export default {
-  PEOPLE: {
+  DEFAULT: {
     PUBLIC: 'public',
     REGISTERED: 'registered',
     FOLLOWERS: 'followers',
@@ -7,7 +7,7 @@ export default {
     MUTUALS: 'mutuals',
     ADMINS: 'admins',
   },
-  GROUPS: {
+  ACTORS: {
     PUBLIC: 'public',
     REGISTERED: 'registered',
     FOLLOWERS: 'followers',

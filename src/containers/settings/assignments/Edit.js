@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 
 import AssignmentForm from '../../../components/settings/assignments/Form';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 
 const SettingsAssignmentsEdit = (props) => {
   const {

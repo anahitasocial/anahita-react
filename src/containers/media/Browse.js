@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
 

@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import Typography from '@material-ui/core/Typography';
 import ActorInfoForm from '../../components/actor/forms/Info';
-import * as actions from '../../actions';
+import actions from '../../actions';
 import utils from '../../utils';
 import i18n from '../../languages';
 

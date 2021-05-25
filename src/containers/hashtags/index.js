@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import HashtagsBrowse from './Browse';
-import { app as appActions } from '../../actions';
+import actions from '../../actions';
 import { App as APP } from '../../constants';
 import i18n from '../../languages';
 
@@ -93,7 +93,7 @@ Hashtags.defaultProps = {
 const mapDispatchToProps = (dispatch) => {
   return {
     setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
+      dispatch(actions.app.setAppTitle(title));
     },
   };
 };

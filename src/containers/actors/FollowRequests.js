@@ -18,7 +18,7 @@ import FollowRequestsIcon from '@material-ui/icons/People';
 
 import ActorAvatar from '../../components/actor/Avatar';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import ActorsType from '../../proptypes/Actors';
 import ActorType from '../../proptypes/Actor';
 

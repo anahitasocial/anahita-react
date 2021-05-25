@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
-import * as actions from '../actions';
+import actions from '../actions';
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

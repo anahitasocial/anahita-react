@@ -12,7 +12,7 @@ import PluginsIcon from '@material-ui/icons/Extension';
 import MetaForm from '../../../components/settings/meta/Form';
 import PluginsType from '../../../proptypes/settings/Plugins';
 import PluginType from '../../../proptypes/settings/Plugin';
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import utils from '../../../utils';
 
 const {

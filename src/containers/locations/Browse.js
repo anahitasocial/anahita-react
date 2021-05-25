@@ -10,7 +10,7 @@ import ListItem from './ListItem';
 import Progress from '../../components/Progress';
 import LocationsType from '../../proptypes/Locations';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import { App as APP } from '../../constants';
 
 const {

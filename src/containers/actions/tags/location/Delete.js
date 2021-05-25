@@ -8,7 +8,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 
 import TagType from '../../../../proptypes/Location';
 import NodeType from '../../../../proptypes/Node';
-import * as actions from '../../../../actions';
+import actions from '../../../../actions';
 
 const ActionsTagsLocationDelete = React.forwardRef((props, ref) => {
   const {

@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Composers from './composers/';
 import StoriesBrowse from './stories/Browse';
-import * as actions from '../actions';
+import actions from '../actions';
 import i18n from '../languages';
 
 import PersonType from '../proptypes/Person';

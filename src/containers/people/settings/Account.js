@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AccountForm from '../../../components/person/Account';
 import Progress from '../../../components/Progress';
-import * as actions from '../../../actions';
-import * as api from '../../../api';
+import actions from '../../../actions';
+import api from '../../../api';
 
 import PersonType from '../../../proptypes/Person';
 import form from '../../../utils/form';

@@ -21,24 +21,9 @@ import AppIcon from '@material-ui/icons/Apps';
 import ActorType from '../../../../proptypes/Actor';
 import PermissionsType from '../../../../proptypes/actor/Permissions';
 import PermissionType from '../../../../proptypes/actor/Permission';
-import * as actions from '../../../../actions';
+import actions from '../../../../actions';
 import i18n from '../../../../languages';
 import ACCESS from '../../../../constants/access';
-
-const accessOptions = {
-  people: [
-    ACCESS.PEOPLE.REGISTERED,
-    ACCESS.PEOPLE.FOLLOWERS,
-    ACCESS.PEOPLE.LEADERS,
-    ACCESS.PEOPLE.MUTUALS,
-    ACCESS.PEOPLE.ADMINS,
-  ],
-  groups: [
-    ACCESS.GROUPS.REGISTERED,
-    ACCESS.GROUPS.FOLLOWERS,
-    ACCESS.GROUPS.ADMINS,
-  ],
-};
 
 const SettingsPermissionsEdit = (props) => {
   const {
@@ -51,6 +36,23 @@ const SettingsPermissionsEdit = (props) => {
     isFetching,
     namespace,
   } = props;
+
+  const accessOptions = {
+    people: [
+      ACCESS.DEFAULT.PUBLIC,
+      ACCESS.DEFAULT.REGISTERED,
+      ACCESS.DEFAULT.FOLLOWERS,
+      ACCESS.DEFAULT.LEADERS,
+      ACCESS.DEFAULT.MUTUALS,
+      ACCESS.DEFAULT.ADMINS,
+    ],
+    [namespace]: [
+      ACCESS.ACTORS.PUBLIC,
+      ACCESS.ACTORS.REGISTERED,
+      ACCESS.ACTORS.FOLLOWERS,
+      ACCESS.ACTORS.ADMINS,
+    ],
+  };
 
   const permission = permissions.byId[node.id];
   const [entity, setEntity] = useState(permission.actions);

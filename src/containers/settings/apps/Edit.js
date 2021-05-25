@@ -13,7 +13,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import MetaForm from '../../../components/settings/meta/Form';
 import AppsType from '../../../proptypes/settings/Apps';
 import AppType from '../../../proptypes/settings/App';
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import utils from '../../../utils';
 
 const {

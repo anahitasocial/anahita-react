@@ -15,7 +15,7 @@ import LocationsType from '../../../proptypes/Locations';
 import NodeType from '../../../proptypes/Node';
 import AddAction from '../../actions/tags/location/Add';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import { App as APP } from '../../../constants';
 
 const useStyles = makeStyles((theme) => {

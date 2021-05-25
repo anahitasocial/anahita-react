@@ -16,7 +16,7 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 
 import LocationMenu from './Menu';
 import LocationForm from '../../components/location/Form';
-import * as actions from '../../actions';
+import actions from '../../actions';
 import form from '../../utils/form';
 import i18n from '../../languages';
 import utils from '../../utils';

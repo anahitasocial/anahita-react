@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 
 import Avatar from '../../components/actor/Avatar';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 // import i18n from '../../languages';
 import Progress from '../../components/Progress';
 

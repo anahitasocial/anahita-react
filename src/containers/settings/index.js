@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import i18n from '../../languages';
 
 import SettingsAbout from './About';

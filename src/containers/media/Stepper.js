@@ -32,7 +32,7 @@ import MediumForm from '../../components/medium/forms/Edit';
 
 import MEDIUM_DEFAULT from '../../proptypes/MediumDefault';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import form from '../../utils/form';
 // import i18n from '../../languages';
 import utils from '../../utils';

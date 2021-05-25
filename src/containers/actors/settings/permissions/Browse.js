@@ -11,7 +11,7 @@ import Progress from '../../../../components/Progress';
 
 import PermissionsType from '../../../../proptypes/actor/Permissions';
 import ActorType from '../../../../proptypes/Actor';
-import * as actions from '../../../../actions';
+import actions from '../../../../actions';
 import i18n from '../../../../languages';
 
 let Edit = null;

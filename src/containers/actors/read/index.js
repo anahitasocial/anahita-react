@@ -21,7 +21,7 @@ import SocialgraphTabs from '../../../components/actor/socialgraph/Tabs';
 import StoriesBrowse from '../../stories/Browse';
 import HeaderMeta from '../../../components/HeaderMeta';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import i18n from '../../../languages';
 import permissions from '../../../permissions/actor';
 import utils from '../../../utils';

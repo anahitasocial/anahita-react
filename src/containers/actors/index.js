@@ -79,6 +79,7 @@ const Actors = (props) => {
 Actors.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   selectedTab: PropTypes.oneOf([
+    '',
     FILTER.ADMINISTERING,
     FILTER.FOLLOWING,
   ]),

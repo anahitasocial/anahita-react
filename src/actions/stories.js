@@ -1,10 +1,12 @@
 import { normalize, schema } from 'normalizr';
-import {
-  stories as api,
-  likes as likesApi,
-} from '../api';
+import apis from '../api';
 import likes from './likes';
 import { Stories as STORIES } from '../constants';
+
+const {
+  stories: api,
+  likes: likesApi,
+} = apis;
 
 // -- reset
 

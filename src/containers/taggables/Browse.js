@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import InfiniteScroll from 'react-infinite-scroller';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import NodeType from '../../proptypes/Node';
 import NodesType from '../../proptypes/Nodes';
 

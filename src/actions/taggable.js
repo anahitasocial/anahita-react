@@ -1,5 +1,7 @@
 import { normalize, schema } from 'normalizr';
-import { taggables as api } from '../api';
+import apis from '../api';
+
+const { taggables: api } = apis;
 
 // -- Reset
 

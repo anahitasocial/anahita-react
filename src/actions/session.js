@@ -1,6 +1,8 @@
 /* global localStorage */
-import { session as api } from '../api';
+import apis from '../api';
 import { Session as SESSION } from '../constants';
+
+const { session: api } = apis;
 
 function reset() {
   return {

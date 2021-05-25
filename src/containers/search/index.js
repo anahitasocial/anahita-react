@@ -21,7 +21,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 
 import SearchBrowse from './Browse';
-import * as actions from '../../actions';
+import actions from '../../actions';
 import { Search as SEARCH } from '../../constants';
 import i18n from '../../languages';
 

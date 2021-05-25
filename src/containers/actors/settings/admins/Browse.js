@@ -17,7 +17,7 @@ import Progress from '../../../../components/Progress';
 
 import ActorsType from '../../../../proptypes/Actors';
 import ActorType from '../../../../proptypes/Actor';
-import * as actions from '../../../../actions';
+import actions from '../../../../actions';
 
 const ActorsSettingsAdminsBrowse = (props) => {
   const {

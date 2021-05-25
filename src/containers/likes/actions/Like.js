@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import UnlikeIcon from '@material-ui/icons/Favorite';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';
 

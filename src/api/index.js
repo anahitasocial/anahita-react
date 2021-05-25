@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { singularize } from 'inflection';
+
 import createApi from './create';
 import createActor from './actor';
 
@@ -30,52 +32,59 @@ axios.interceptors.request.use((config) => {
   };
 }, (error) => { return Promise.reject(error); });
 
-const articles = createApi('articles');
-const documents = createApi('documents');
-const groups = {
-  ...createApi('groups'),
-  group: createActor('groups'),
+const namespaces = {
+  actors: [
+    'groups',
+    'people',
+  ],
+  media: [
+    'articles',
+    'documents',
+    'notes',
+    'photos',
+    'todos',
+    'topics',
+  ],
+  nodes: [
+    'hashtags',
+    'locations',
+    'search',
+    'stories',
+  ],
 };
-const hashtags = createApi('hashtags');
-const locations = createApi('locations');
-const notes = createApi('notes');
-const people = {
-  ...createApi('people'),
-  person: createActor('people'),
-};
-const photos = createApi('photos');
-const search = createApi('search');
-const stories = createApi('stories');
-const todos = createApi('todos');
-const topics = createApi('topics');
 
-export {
-  articles,
-  documents,
+const exports = {
   avatar,
   comments,
   commentStatus,
   cover,
-  groups,
-  hashtags,
   is,
   likes,
-  locations,
   node,
-  notes,
   notifications,
   password,
-  people,
-  photos,
-  search,
   session,
   settings,
   signup,
   socialgraph,
-  stories,
   taggables,
   tagGraph,
-  todos,
-  topics,
   token,
 };
+
+namespaces.actors.forEach((ns) => {
+  exports[ns] = {
+    ...createApi(ns),
+    [singularize(ns)]: createActor(ns),
+  };
+});
+
+namespaces.media.forEach((ns) => {
+  exports[ns] = createApi(ns);
+});
+
+namespaces.nodes.forEach((ns) => {
+  exports[ns] = createApi(ns);
+});
+
+export default exports;

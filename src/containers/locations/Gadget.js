@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 
 import AddIcon from '@material-ui/icons/Add';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import permissions from '../../permissions/node';
 import LocationType from '../../proptypes/Location';
 import NodeType from '../../proptypes/Node';

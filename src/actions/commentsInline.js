@@ -1,10 +1,12 @@
 import { normalize, schema } from 'normalizr';
-import {
-  comments as commentsApi,
-  likes as likesApi,
-} from '../api';
+import apis from '../api';
 import { CommentsInline as COMMENTS_INLINE } from '../constants';
 import likes from './likes';
+
+const {
+  comments: commentsApi,
+  likes: likesApi,
+} = apis;
 
 // --- setList
 

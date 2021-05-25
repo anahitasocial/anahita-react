@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import AboutIcon from '@material-ui/icons/Info';
 
 import Progress from '../../components/Progress';
-import * as actions from '../../actions';
+import actions from '../../actions';
 import AboutType from '../../proptypes/settings/About';
 import packageInfo from '../../../package.json';
 

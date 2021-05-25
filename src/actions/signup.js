@@ -1,5 +1,7 @@
-import { signup as api } from '../api';
+import apis from '../api';
 import { Signup as SIGNUP } from '../constants';
+
+const { signup: api } = apis;
 
 // - Add Action -
 

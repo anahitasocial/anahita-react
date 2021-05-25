@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 
 import DownloadIcon from '@material-ui/icons/CloudDownload';
 
-import * as api from '../../../api';
+import api from '../../../api';
 import NodeType from '../../../proptypes/Node';
 
 const ActionsMediumDownload = React.forwardRef((props, ref) => {

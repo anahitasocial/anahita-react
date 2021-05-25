@@ -13,7 +13,7 @@ import Progress from '../../components/Progress';
 
 import HashtagsType from '../../proptypes/Hashtags';
 
-import { hashtags as actions } from '../../actions';
+import actions from '../../actions';
 import { App as APP } from '../../constants';
 
 const {
@@ -124,10 +124,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseList: (params) => {
-      return dispatch(actions.browse(params));
+      return dispatch(actions.hasshtags.browse(params));
     },
     resetList: () => {
-      return dispatch(actions.reset());
+      return dispatch(actions.hashtags.reset());
     },
     alertError: (message) => {
       return dispatch(actions.app.alert.error(message));

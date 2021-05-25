@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ActorDeleteForm from '../../../components/actor/forms/Delete';
 import Progress from '../../../components/Progress';
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import form from '../../../utils/form';
 
 import ActorType from '../../../proptypes/Actor';

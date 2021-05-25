@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import permissions from '../../../permissions/actor';
 
 import PersonType from '../../../proptypes/Person';

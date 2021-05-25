@@ -1,5 +1,7 @@
-import { password as api } from '../api';
+import apis from '../api';
 import { Password as PASSWORD } from '../constants';
+
+const { password: api } = apis;
 
 // - Reset Action -
 

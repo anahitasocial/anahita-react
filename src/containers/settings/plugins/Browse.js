@@ -21,7 +21,7 @@ import Progress from '../../../components/Progress';
 import SelectType from '../../../components/settings/plugins/SelectType';
 import SelectSort from '../../../components/settings/plugins/SelectSort';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import PluginsType from '../../../proptypes/settings/Plugins';
 import PluginsEdit from './Edit';
 import utils from '../../../utils';

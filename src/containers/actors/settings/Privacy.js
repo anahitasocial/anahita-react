@@ -18,26 +18,9 @@ import Progress from '../../../components/Progress';
 
 import PrivacyType from '../../../proptypes/actor/Privacy';
 import ActorType from '../../../proptypes/Actor';
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import i18n from '../../../languages';
 import ACCESS from '../../../constants/access';
-
-const accessOptions = {
-  people: [
-    ACCESS.PEOPLE.PUBLIC,
-    ACCESS.PEOPLE.REGISTERED,
-    ACCESS.PEOPLE.FOLLOWERS,
-    ACCESS.PEOPLE.LEADERS,
-    ACCESS.PEOPLE.MUTUALS,
-    ACCESS.PEOPLE.ADMINS,
-  ],
-  groups: [
-    ACCESS.GROUPS.PUBLIC,
-    ACCESS.GROUPS.REGISTERED,
-    ACCESS.GROUPS.FOLLOWERS,
-    ACCESS.GROUPS.ADMINS,
-  ],
-};
 
 const ActorsSettingsPrivacy = (props) => {
   const {
@@ -52,6 +35,23 @@ const ActorsSettingsPrivacy = (props) => {
     error,
     namespace,
   } = props;
+
+  const accessOptions = {
+    people: [
+      ACCESS.DEFAULT.PUBLIC,
+      ACCESS.DEFAULT.REGISTERED,
+      ACCESS.DEFAULT.FOLLOWERS,
+      ACCESS.DEFAULT.LEADERS,
+      ACCESS.DEFAULT.MUTUALS,
+      ACCESS.DEFAULT.ADMINS,
+    ],
+    [namespace]: [
+      ACCESS.ACTORS.PUBLIC,
+      ACCESS.ACTORS.REGISTERED,
+      ACCESS.ACTORS.FOLLOWERS,
+      ACCESS.ACTORS.ADMINS,
+    ],
+  };
 
   const [entity, setEntity] = useState(privacy);
 
@@ -139,8 +139,8 @@ const ActorsSettingsPrivacy = (props) => {
                 onChange={handleOnChange}
                 name="allowFollowRequest"
                 disabled={[
-                  ACCESS.PEOPLE.PUBLIC,
-                  ACCESS.PEOPLE.REGISTERED,
+                  ACCESS.DEFAULT.PUBLIC,
+                  ACCESS.DEFAULT.REGISTERED,
                 ].includes(privacy.access)}
               />
             }

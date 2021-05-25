@@ -18,7 +18,7 @@ import DownloadAction from '../actions/medium/Download';
 import CommentStats from '../../components/comment/Stats';
 import HeaderMeta from '../../components/HeaderMeta';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import utils from '../../utils';
 import i18n from '../../languages';
 

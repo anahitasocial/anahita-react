@@ -21,7 +21,7 @@ import Viewer from '../components/auth/Viewer';
 import LeftMenu from '../components/LeftMenu';
 import Alerts from './Alerts';
 import MenuLogo from '../components/Logo';
-import * as actions from '../actions';
+import actions from '../actions';
 
 const drawerWidth = 240;
 

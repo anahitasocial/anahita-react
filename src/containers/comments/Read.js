@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import CommentCard from '../../components/cards/Comment';
 import CommentForm from '../../components/comment/Form';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
 import PersonType from '../../proptypes/Person';

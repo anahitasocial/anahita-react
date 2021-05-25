@@ -17,7 +17,7 @@ import PersonInfo from '../../people/settings/Info';
 import Privacy from './Privacy';
 import Progress from '../../../components/Progress';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import permissions from '../../../permissions/actor';
 import ActorType from '../../../proptypes/Actor';
 import i18n from '../../../languages';

@@ -7,8 +7,8 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 
 import LocationForm from '../../../components/location/Form';
-import * as actions from '../../../actions';
-import * as api from '../../../api';
+import actions from '../../../actions';
+import api from '../../../api';
 import i18n from '../../../languages';
 import form from '../../../utils/form';
 import NodeType from '../../../proptypes/Node';

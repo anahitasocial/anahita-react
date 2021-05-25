@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import CommentType from '../../../proptypes/Comment';
 import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';

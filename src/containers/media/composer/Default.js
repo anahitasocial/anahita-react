@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import utils from '../../../utils';
 
 import AcctorType from '../../../proptypes/Actor';

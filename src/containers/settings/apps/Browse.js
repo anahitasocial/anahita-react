@@ -21,7 +21,7 @@ import AppsEdit from './Edit';
 import Progress from '../../../components/Progress';
 import SelectSort from '../../../components/settings/apps/SelectSort';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import AppsType from '../../../proptypes/settings/Apps';
 import utils from '../../../utils';
 

@@ -1,4 +1,4 @@
-import * as actions from '../actions';
+import actions from '../actions';
 
 // should catch any API errors and act accordingly
 export const apiErrorMiddleware = store => next => action => {

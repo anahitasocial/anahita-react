@@ -4,8 +4,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as api from '../../api';
-import * as actions from '../../actions';
+import api from '../../api';
+import actions from '../../actions';
 import PersonType from '../../proptypes/Person';
 
 const AuthToken = (props) => {

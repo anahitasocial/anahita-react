@@ -8,7 +8,7 @@ import AppRead from './Read';
 
 import AppsType from '../../../../proptypes/actor/Apps';
 import ActorType from '../../../../proptypes/Actor';
-import * as actions from '../../../../actions';
+import actions from '../../../../actions';
 
 const ActorsSettingsAppsBrowse = (props) => {
   const {

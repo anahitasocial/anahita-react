@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SignupForm from '../../components/auth/SignupForm';
-import * as actions from '../../actions';
-import * as api from '../../api';
+import actions from '../../actions';
+import api from '../../api';
 import form from '../../utils/form';
 
 const formFields = form.createFormFields([

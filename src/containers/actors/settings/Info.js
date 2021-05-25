@@ -8,7 +8,7 @@ import Switch from '@material-ui/core/Switch';
 
 import ActorInfoForm from '../../../components/actor/forms/Info';
 import Progress from '../../../components/Progress';
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import permissions from '../../../permissions';
 import form from '../../../utils/form';
 

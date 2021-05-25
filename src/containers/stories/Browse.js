@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import CommentIcon from '@material-ui/icons/Comment';
 
 import CommentsBrowse from './comments/Browse';
-import * as actions from '../../actions';
+import actions from '../../actions';
 
 import LikeAction from '../likes/actions/LikeStory';
 import LikesStats from '../likes';

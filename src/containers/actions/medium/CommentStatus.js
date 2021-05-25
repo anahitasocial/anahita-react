@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import * as actions from '../../../actions';
-import * as api from '../../../api';
+import actions from '../../../actions';
+import api from '../../../api';
 import MediumType from '../../../proptypes/Medium';
 import i18n from '../../../languages';
 

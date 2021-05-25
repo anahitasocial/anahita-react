@@ -1,4 +1,4 @@
-import * as api from '../api';
+import api from '../api';
 
 import createAction from './create';
 import createGraphAction from './createGraph';
@@ -91,7 +91,7 @@ const commentStatus = (namespace) => {
   return createAction('commentStatus')(api.commentStatus(namespace));
 };
 
-export {
+export default {
   app,
   articles,
   documents,

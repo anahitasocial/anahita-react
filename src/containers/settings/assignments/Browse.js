@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import AssignmentsIcon from '@material-ui/icons/SettingsApplications';
 
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 import i18n from '../../../languages';
 import AssignmentsType from '../../../proptypes/settings/Assignments';
 import Progress from '../../../components/Progress';
