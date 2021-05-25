@@ -8,7 +8,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import withWidth from '@material-ui/core/withWidth';
 
-import appActions from '../../actions/app';
 import actions from '../../actions';
 import i18n from '../../languages';
 import HashtagDefault from '../../proptypes/HashtagDefault';

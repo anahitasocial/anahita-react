@@ -124,7 +124,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseList: (params) => {
-      return dispatch(actions.hasshtags.browse(params));
+      return dispatch(actions.hashtags.browse(params));
     },
     resetList: () => {
       return dispatch(actions.hashtags.reset());

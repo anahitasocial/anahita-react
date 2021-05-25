@@ -1,4 +1,5 @@
-import api from '../api';
+import { singularize } from 'inflection';
+import apis from '../api';
 
 import createAction from './create';
 import createGraphAction from './createGraph';
@@ -17,105 +18,91 @@ import socialgraph from './socialgraph';
 import stories from './stories';
 import taggables from './taggable';
 
-const articles = {
-  ...createAction('articles')(api.articles),
-  likes: likes.nodes('articles')(api.likes),
+const namespaces = {
+  actors: [
+    'groups',
+    'people',
+  ],
+  media: [
+    'articles',
+    'documents',
+    'notes',
+    'photos',
+    'todos',
+    'topics',
+  ],
+  tags: [
+    'hashtags',
+    'locations',
+  ],
+  nodes: [
+    'search',
+  ],
 };
 
-const documents = {
-  ...createAction('documents')(api.documents),
-  likes: likes.nodes('documents')(api.likes),
-};
-
-const groups = {
-  ...createAction('groups')(api.groups),
-  followRequests: createActorFollowRequests('groups')(api.groups.group.followrequests),
-  settings: {
-    admins: createActorAdmins('groups')(api.groups.group.admins),
-    apps: createAction('groups_apps')(api.groups.group.apps),
-    permissions: createAction('groups_permissions')(api.groups.group.permissions),
-    privacy: createAction('groups_privacy')(api.groups.group.privacy),
-  },
-};
-const hashtags = createAction('hashtags')(api.hashtags);
-const locations = createAction('locations')(api.locations);
-const locationsGraph = createGraphAction('locations')(api.tagGraph);
-
-const notes = {
-  ...createAction('notes')(api.notes),
-  likes: likes.nodes('notes')(api.likes),
-};
-
-const people = {
-  ...createAction('people')(api.people),
-  followRequests: createActorFollowRequests('people')(api.people.person.followrequests),
-  settings: {
-    apps: createAction('people_apps')(api.people.person.apps),
-    permissions: createAction('people_permissions')(api.people.person.permissions),
-    privacy: createAction('people_privacy')(api.people.person.privacy),
-  },
-};
-
-const photos = {
-  ...createAction('photos')(api.photos),
-  likes: likes.nodes('photos')(api.likes),
-};
-
-const settings = {
-  about: createAction('settings_about')(api.settings.about),
-  apps: createAction('settings_apps')(api.settings.apps),
-  assignments: createAction('settings_assignments')(api.settings.assignments),
-  configs: createAction('settings_configs')(api.settings.configs),
-  plugins: createAction('settings_plugins')(api.settings.plugins),
-};
-const search = createAction('search')(api.search);
-
-const todos = {
-  ...createAction('todos')(api.todos),
-  likes: likes.nodes('todos')(api.likes),
-};
-
-const topics = {
-  ...createAction('topics')(api.topics),
-  likes: likes.nodes('topics')(api.likes),
-};
-
-const comments = (namespace) => {
-  return {
-    ...createAction('comments')(api.comments(namespace)),
-    likes: likes.comments(api.likes),
-  };
-};
-
-const commentStatus = (namespace) => {
-  return createAction('commentStatus')(api.commentStatus(namespace));
-};
-
-export default {
+const actions = {
   app,
-  articles,
-  documents,
   avatar,
-  comments,
-  commentsInline,
-  commentStatus,
   cover,
-  groups,
-  hashtags,
-  locations,
-  locationsGraph,
-  notes,
+  commentsInline,
+  likes,
   notifications,
   password,
-  people,
-  photos,
-  search,
-  settings,
   session,
   signup,
   socialgraph,
   stories,
   taggables,
-  todos,
-  topics,
 };
+
+namespaces.actors.forEach((ns) => {
+  const api = apis[ns][singularize(ns)];
+  actions[ns] = {
+    ...createAction(ns)(apis[ns]),
+    followRequests: createActorFollowRequests(ns)(api.followrequests),
+    settings: {
+      admins: createActorAdmins(ns)(api.admins),
+      apps: createAction(`${ns}_apps`)(api.apps),
+      permissions: createAction(`${ns}_permissions`)(api.permissions),
+      privacy: createAction(`${ns}_privacy`)(api.privacy),
+    },
+  };
+});
+
+namespaces.media.forEach((ns) => {
+  actions[ns] = {
+    ...createAction(ns)(apis[ns]),
+    likes: likes.nodes(ns)(apis[ns]),
+  };
+});
+
+namespaces.tags.forEach((ns) => {
+  actions[ns] = createAction(ns)(apis[ns]);
+});
+
+namespaces.nodes.forEach((ns) => {
+  actions[ns] = createAction(ns)(apis[ns]);
+});
+
+actions.comments = (namespace) => {
+  return {
+    ...createAction('comments')(apis.comments(namespace)),
+    likes: likes.comments(apis.likes),
+  };
+};
+
+actions.commentStatus = (namespace) => {
+  return createAction('commentStatus')(apis.commentStatus(namespace));
+};
+
+actions.locationsGraph = createGraphAction('locations')(apis.tagGraph);
+
+actions.settings = {
+  about: createAction('settings_about')(apis.settings.about),
+  apps: createAction('settings_apps')(apis.settings.apps),
+  assignments: createAction('settings_assignments')(apis.settings.assignments),
+  configs: createAction('settings_configs')(apis.settings.configs),
+  plugins: createAction('settings_plugins')(apis.settings.plugins),
+};
+
+export default actions;

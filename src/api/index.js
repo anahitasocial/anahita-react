@@ -45,15 +45,17 @@ const namespaces = {
     'todos',
     'topics',
   ],
-  nodes: [
+  tags: [
     'hashtags',
     'locations',
+  ],
+  nodes: [
     'search',
     'stories',
   ],
 };
 
-const exports = {
+const apis = {
   avatar,
   comments,
   commentStatus,
@@ -73,18 +75,22 @@ const exports = {
 };
 
 namespaces.actors.forEach((ns) => {
-  exports[ns] = {
+  apis[ns] = {
     ...createApi(ns),
     [singularize(ns)]: createActor(ns),
   };
 });
 
 namespaces.media.forEach((ns) => {
-  exports[ns] = createApi(ns);
+  apis[ns] = createApi(ns);
+});
+
+namespaces.tags.forEach((ns) => {
+  apis[ns] = createApi(ns);
 });
 
 namespaces.nodes.forEach((ns) => {
-  exports[ns] = createApi(ns);
+  apis[ns] = createApi(ns);
 });
 
-export default exports;
+export default apis;
