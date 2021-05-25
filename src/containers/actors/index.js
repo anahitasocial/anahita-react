@@ -7,9 +7,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import Browse from './browse';
-import actions from '../../actions/app';
+
 import { Actor as ACTOR } from '../../constants';
 import PersonType from '../../proptypes/Person';
+import actions from '../../actions';
 import i18n from '../../languages';
 
 const { FILTER } = ACTOR;
@@ -60,7 +61,7 @@ const Actors = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label={i18n.t(`${namespace}:cTitle`)} value="" />
+          <Tab label="All" value="" />
           <Tab label="Following" value={FILTER.FOLLOWING} />
           <Tab label="Administering" value={FILTER.ADMINISTERING} />
         </Tabs>
@@ -95,7 +96,7 @@ const mapDispatchToProps = () => {
   return (dispatch) => {
     return {
       setAppTitle: (title) => {
-        return dispatch(actions.setAppTitle(title));
+        return dispatch(actions.app.setAppTitle(title));
       },
     };
   };

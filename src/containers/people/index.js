@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,6 +14,8 @@ import ActorsBrowse from '../actors/browse';
 import SelectUsertype from '../../components/select/Usertype';
 
 import PersonType from '../../proptypes/Person';
+import actions from '../../actions';
+import i18n from '../../languages';
 import utils from '../../utils';
 
 const { isAdmin } = utils.node;
@@ -35,9 +38,17 @@ const Browse = ActorsBrowse('people');
 
 const People = (props) => {
   const classes = useStyles();
-  const { viewer } = props;
+  const {
+    viewer,
+    setAppTitle,
+  } = props;
+
   const [disabled, setDisabled] = useState(false);
   const [usertype, setUsertype] = useState('');
+
+  useEffect(() => {
+    setAppTitle(i18n.t('people:cTitle'));
+  }, []);
 
   const handleDisabled = (e, value) => {
     setDisabled(value);
@@ -111,6 +122,7 @@ const People = (props) => {
 };
 
 People.propTypes = {
+  setAppTitle: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
 };
 
@@ -121,7 +133,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = () => {
-  return {};
+  return (dispatch) => {
+    return {
+      setAppTitle: (title) => {
+        return dispatch(actions.app.setAppTitle(title));
+      },
+    };
+  };
 };
 
 export default connect(
