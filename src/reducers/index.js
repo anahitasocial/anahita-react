@@ -30,59 +30,31 @@ import createActorsReducer from './createActors';
 import createCommentReducer from './createComment';
 import createMediaReducer from './createMedia';
 
-// create actors reducers
-const likes = createActorsReducer('likes');
-const people = createActorsReducer('people');
-const peopleApps = createActorApps('people_apps');
-const peopleFollowRequests = createActorFollowRequests('people_followrequests');
-const peoplePermissions = createActorPermissions('people_permissions');
-const peoplePrivacy = createActorPrivacy('people_privacy');
+const namespaces = {
+  actors: [
+    'people',
+    'groups',
+  ],
+  media: [
+    'articles',
+    'documents',
+    'notes',
+    'photos',
+    'topics',
+    'todos',
+  ],
+};
 
-const groups = createActorsReducer('groups');
-const groupsAdmins = createActorAdmins('groups_admins');
-const groupsApps = createActorApps('groups_apps');
-const groupsFollowRequests = createActorFollowRequests('groups_followrequests');
-const groupsPermissions = createActorPermissions('groups_permissions');
-const groupsPrivacy = createActorPrivacy('groups_privacy');
-
-// create media reducers
-const articles = createMediaReducer('articles');
-const documents = createMediaReducer('documents');
-const notes = createMediaReducer('notes');
-const topics = createMediaReducer('topics');
-const todos = createMediaReducer('todos');
-const photos = createMediaReducer('photos');
-
-// behaviours
-const comments = createCommentReducer('comments');
-
-export default combineReducers({
+const reducers = {
   app,
-  articles,
   avatar,
-  comments,
-  documents,
   cover,
-  groups,
-  groupsAdmins,
-  groupsApps,
-  groupsFollowRequests,
-  groupsPermissions,
-  groupsPrivacy,
   commentsInline,
-  likes,
   locations,
   locationsGraph,
   hashtags,
-  notes,
   notifications,
   password,
-  people,
-  peopleApps,
-  peopleFollowRequests,
-  peoplePermissions,
-  peoplePrivacy,
-  photos,
   search,
   settingsAbout,
   settingsApps,
@@ -93,6 +65,26 @@ export default combineReducers({
   socialgraph,
   stories,
   taggables,
-  topics,
-  todos,
+};
+
+namespaces.actors.forEach((ns) => {
+  if (ns === 'people') {
+    reducers.likes = createActorsReducer('likes');
+  }
+  reducers[ns] = createActorsReducer(ns);
+  if (ns !== 'people') {
+    reducers[`${ns}Admins`] = createActorAdmins(`${ns}_admins`);
+  }
+  reducers[`${ns}Apps`] = createActorApps(`${ns}_apps`);
+  reducers[`${ns}FollowRequests`] = createActorFollowRequests(`${ns}_followrequests`);
+  reducers[`${ns}Permissions`] = createActorPermissions(`${ns}_permissions`);
+  reducers[`${ns}Privacy`] = createActorPrivacy(`${ns}_privacy`);
 });
+
+namespaces.media.forEach((ns) => {
+  reducers[ns] = createMediaReducer(ns);
+});
+
+reducers.comments = createCommentReducer('comments');
+
+export default combineReducers(reducers);

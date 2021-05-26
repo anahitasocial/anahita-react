@@ -70,9 +70,11 @@ namespaces.actors.forEach((ns) => {
 });
 
 namespaces.media.forEach((ns) => {
+  const api = apis[ns][singularize(ns)];
   actions[ns] = {
     ...createAction(ns)(apis[ns]),
     likes: likes.nodes(ns)(apis[ns]),
+    privacy: createAction(`${ns}_privacy`)(api.privacy),
   };
 });
 
