@@ -4,6 +4,10 @@ import { Person as PERSON } from '../constants';
 const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
 
 const canEdit = (viewer, node) => {
+  if (node.authorized && node.authorized.edit) {
+    return true;
+  }
+
   if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
     return true;
   }
@@ -41,6 +45,10 @@ const canAdd = (viewer, owner = null) => {
 };
 
 const canDelete = (viewer, node) => {
+  if (node.authorized && node.authorized.delete) {
+    return true;
+  }
+
   if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
     return true;
   }

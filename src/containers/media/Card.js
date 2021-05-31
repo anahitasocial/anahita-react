@@ -1,15 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import MediumCard from '../../components/cards/Medium';
+
+import CommentStats from '../../components/comment/Stats';
 import LikeAction from '../likes/actions/Like';
 import LikesStats from '../likes';
-import CommentStats from '../../components/comment/Stats';
+import MediumCard from '../../components/cards/Medium';
+import PrivacyAction from '../actions/medium/Privacy';
 
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
 
 import MediumMenu from './Menu';
+import utils from '../../utils';
+import perms from '../../permissions';
+
+const { getNamespace } = utils.node;
 
 const MediaCard = (props) => {
   const {
@@ -19,7 +25,10 @@ const MediaCard = (props) => {
     handleView,
   } = props;
 
-  const Like = LikeAction(medium.objectType.split('.')[1]);
+  const namespace = getNamespace(medium);
+  const Like = LikeAction(namespace);
+  const Privacy = PrivacyAction(namespace);
+  const canEditMedium = perms.medium.canEdit(viewer, medium);
 
   return (
     <MediumCard
@@ -32,6 +41,7 @@ const MediaCard = (props) => {
           inline
         />
       }
+      privacy={canEditMedium && medium.access && <Privacy medium={medium} size="small" />}
       stats={
         <React.Fragment>
           <LikesStats node={medium} />

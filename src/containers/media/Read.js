@@ -5,22 +5,24 @@ import { Redirect } from 'react-router-dom';
 
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
-import MediumComments from '../comments/Browse';
-import Progress from '../../components/Progress';
-import LocationsGadget from '../locations/Gadget';
 
+import CommentStats from '../../components/comment/Stats';
+import DownloadAction from '../actions/medium/Download';
+import HeaderMeta from '../../components/HeaderMeta';
+import Likes from '../likes';
+import LikeAction from '../likes/actions/Like';
+import LocationsGadget from '../locations/Gadget';
+import MediumComments from '../comments/Browse';
 import MediumMenu from './Menu';
 import Medium from '../../components/medium/Read';
 import MediumForm from '../../components/medium/forms/Edit';
-import Likes from '../likes';
-import LikeAction from '../likes/actions/Like';
-import DownloadAction from '../actions/medium/Download';
-import CommentStats from '../../components/comment/Stats';
-import HeaderMeta from '../../components/HeaderMeta';
+import PrivacyAction from '../actions/medium/Privacy';
+import Progress from '../../components/Progress';
 
 import actions from '../../actions';
 import utils from '../../utils';
 import i18n from '../../languages';
+import perms from '../../permissions';
 
 const {
   isLikeable,
@@ -139,7 +141,9 @@ const MediaRead = (props) => {
   const canAddComment = isAuthenticated && medium.openToComment;
   const portrait = getPortraitURL(medium, 'large');
   const cover = getCoverURL(medium, 'large');
-  const Like = LikeAction(medium.objectType.split('.')[1]);
+  const Like = LikeAction(namespace);
+  const Privacy = PrivacyAction(namespace);
+  const canEditMedium = perms.medium.canEdit(viewer, medium);
 
   return (
     <React.Fragment>
@@ -151,6 +155,7 @@ const MediaRead = (props) => {
       {medium.id &&
         <Medium
           medium={medium}
+          privacy={canEditMedium && medium.access && <Privacy medium={medium} size="small" />}
           editing={isEditing}
           form={
             <MediumForm

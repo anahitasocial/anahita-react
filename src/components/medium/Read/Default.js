@@ -60,6 +60,7 @@ const MediumReadDefault = (props) => {
   const {
     classes,
     medium,
+    privacy,
     actions,
     menu,
     locations,
@@ -118,7 +119,11 @@ const MediumReadDefault = (props) => {
                 linked={Boolean(author.id)}
               />
             }
-            subheader={moment(medium.creationTime).fromNow()}
+            subheader={
+              <React.Fragment>
+                {moment(medium.creationTime).fromNow()} {privacy}
+              </React.Fragment>
+            }
             action={menu}
           />
           {editing && form}
@@ -185,6 +190,7 @@ MediumReadDefault.propTypes = {
   actions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
+  privacy: PropTypes.node,
   locations: PropTypes.node,
   comments: PropTypes.node,
   form: PropTypes.node,
@@ -194,6 +200,7 @@ MediumReadDefault.propTypes = {
 
 MediumReadDefault.defaultProps = {
   actions: null,
+  privacy: null,
   menu: null,
   locations: null,
   comments: null,

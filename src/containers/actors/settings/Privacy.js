@@ -20,7 +20,8 @@ import PrivacyType from '../../../proptypes/actor/Privacy';
 import ActorType from '../../../proptypes/Actor';
 import actions from '../../../actions';
 import i18n from '../../../languages';
-import ACCESS from '../../../constants/access';
+import utils from '../../../utils';
+import { Access as ACCESS } from '../../../constants';
 
 const ActorsSettingsPrivacy = (props) => {
   const {
@@ -35,23 +36,6 @@ const ActorsSettingsPrivacy = (props) => {
     error,
     namespace,
   } = props;
-
-  const accessOptions = {
-    people: [
-      ACCESS.DEFAULT.PUBLIC,
-      ACCESS.DEFAULT.REGISTERED,
-      ACCESS.DEFAULT.FOLLOWERS,
-      ACCESS.DEFAULT.LEADERS,
-      ACCESS.DEFAULT.MUTUALS,
-      ACCESS.DEFAULT.ADMINS,
-    ],
-    [namespace]: [
-      ACCESS.ACTORS.PUBLIC,
-      ACCESS.ACTORS.REGISTERED,
-      ACCESS.ACTORS.FOLLOWERS,
-      ACCESS.ACTORS.ADMINS,
-    ],
-  };
 
   const [entity, setEntity] = useState(privacy);
 
@@ -98,6 +82,8 @@ const ActorsSettingsPrivacy = (props) => {
     );
   }
 
+  const accessOptions = utils.node.isPerson(actor) ? ACCESS.DEFAULT : ACCESS.ACTORS;
+
   return (
     <form onSubmit={handleOnSubmit}>
       <Card variant="outlined">
@@ -119,14 +105,14 @@ const ActorsSettingsPrivacy = (props) => {
               onChange={handleOnChange}
               label="Who can see this profile?"
             >
-              {accessOptions[namespace].map((option) => {
-                const key = `people-privacy-access-${option}`;
+              {Object.keys(accessOptions).map((key) => {
+                const option = accessOptions[key];
                 return (
                   <MenuItem
-                    key={key}
+                    key={`people-privacy-access-${option}`}
                     value={option}
                   >
-                    {i18n.t(`access:people.${option}`)}
+                    {i18n.t(`access:${option}`)}
                   </MenuItem>
                 );
               })}
@@ -164,14 +150,14 @@ const ActorsSettingsPrivacy = (props) => {
                 onChange={handleOnChange}
                 label="Who can can add new followers?"
               >
-                {accessOptions[namespace].map((option) => {
-                  const key = `people-privacy-leadable-add-${option}`;
+                {Object.keys(accessOptions).map((key) => {
+                  const option = accessOptions[key];
                   return (
                     <MenuItem
-                      key={key}
+                      key={`people-privacy-leadable-add-${option}`}
                       value={option}
                     >
-                      {i18n.t(`access:${namespace}.${option}`)}
+                      {i18n.t(`access:${option}`)}
                     </MenuItem>
                   );
                 })}

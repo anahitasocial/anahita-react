@@ -57,6 +57,7 @@ const MediumCard = (props) => {
     medium,
     stats,
     actions,
+    privacy,
     ownerActions,
     menu,
     handleView,
@@ -103,9 +104,11 @@ const MediumCard = (props) => {
           />
         }
         subheader={
-          <Link href={url}>
-            {moment(medium.creationTime).fromNow()}
-          </Link>
+          <React.Fragment>
+            <Link href={url}>
+              {moment(medium.creationTime).fromNow()}
+            </Link> {privacy}
+          </React.Fragment>
         }
         action={menu}
       />
@@ -176,6 +179,7 @@ MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
   stats: PropTypes.node,
   actions: PropTypes.node,
+  privacy: PropTypes.node,
   ownerActions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
@@ -185,6 +189,7 @@ MediumCard.propTypes = {
 
 MediumCard.defaultProps = {
   actions: null,
+  privacy: null,
   ownerActions: null,
   menu: null,
   stats: null,

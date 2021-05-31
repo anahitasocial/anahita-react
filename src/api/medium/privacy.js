@@ -5,16 +5,11 @@ import utils from '../../utils';
 const { constructFormData } = utils.api;
 
 const edit = (namespace) => {
-  return (params) => {
-    const {
-      medium,
-      privacy,
-    } = params;
-
+  return (medium) => {
     const data = {
       action: 'setprivacy',
       'privacy_name[0]': 'access',
-      access: privacy.access,
+      access: medium.access,
     };
 
     return axios.post(`/${namespace}/${medium.id}.json`, constructFormData(data));
