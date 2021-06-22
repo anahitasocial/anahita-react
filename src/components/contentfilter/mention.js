@@ -1,9 +1,8 @@
 const baseURL = window.location.origin.toString();
 
-const contentfilterMention = (props) => {
-  const { text, classes } = props;
+const contentfilterMention = (text) => {
   const regex = /@(\S{2,})(?![^<]*>)/g;
-  return text.replace(regex, `<a class="${classes}" href="${baseURL}/people/$1/">@$1</a>`);
+  return text.replace(regex, `[@$1](${baseURL}/people/$1/)`);
 };
 
 export default contentfilterMention;

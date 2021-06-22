@@ -61,7 +61,7 @@ const ActorsReadCommands = (props) => {
                   component="menuitem"
                 />
               );
-            case 'edit-actor':
+            case 'edit':
               return (
                 <MenuItem
                   key={`actor-${command}`}

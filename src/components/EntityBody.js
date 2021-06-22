@@ -1,57 +1,51 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
+import gfm from 'remark-gfm';
 import classNames from 'classnames';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = (theme) => {
+const useStyles = makeStyles((theme) => {
+  const { body1, body2 } = theme.typography;
   return {
     root: {
-      fontFamily: theme.typography.fontFamily,
-      fontWeight: 400,
-      letterSpacing: 0,
-      lineHeight: 1.4,
-      color: theme.palette.text.primary,
+      '& a': {
+        color: theme.palette.primary.main,
+        textDecoration: 'none',
+      },
     },
-    largeSize: {
-      fontSize: 21,
-    },
-    smallSize: {
-      fontSize: 14,
-    },
-    defaultSize: {
-      fontSize: 16,
-    },
+    body1,
+    body2,
   };
-};
+});
 
 const EntityBody = (props) => {
+  const classes = useStyles();
   const {
-    classes,
     children,
     size,
   } = props;
 
   return (
-    <span
+    <ReactMarkdown
+      remarkPlugins={[gfm]}
       className={classNames(
         classes.root,
-        classes[`${size}Size`],
+        classes[size],
       )}
-      dangerouslySetInnerHTML={{
-        __html: children,
-      }}
-    />
+    >
+      {children}
+    </ReactMarkdown>
   );
 };
 
 EntityBody.propTypes = {
-  classes: PropTypes.object.isRequired,
   children: PropTypes.string.isRequired,
-  size: PropTypes.oneOf(['small', 'large', 'default']),
+  size: PropTypes.oneOf(['body1', 'body2']),
 };
 
 EntityBody.defaultProps = {
-  size: 'default',
+  size: 'body1',
 };
 
-export default withStyles(styles)(EntityBody);
+export default EntityBody;

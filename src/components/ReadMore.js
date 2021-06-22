@@ -31,7 +31,7 @@ const ReadMore = (props) => {
     );
   }
 
-  const shortBody = `${striptags(children.substr(0, charLimit))}... `;
+  const shortBody = `${children.substr(0, charLimit)}... `;
   const longBody = `${children} `;
 
   return (

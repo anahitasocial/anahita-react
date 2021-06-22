@@ -18,7 +18,6 @@ import ActorAvatar from '../actor/Avatar';
 import CardHeaderOwner from './Owner';
 import Player from '../Player';
 import ReadMore from '../ReadMore';
-import contentfilter from '../contentfilter';
 import utils from '../../utils';
 
 const {
@@ -150,14 +149,7 @@ const MediumCard = (props) => {
         }
         {medium.body &&
           <ReadMore>
-            {contentfilter({
-              text: medium.body,
-              filters: [
-                'hashtag',
-                'mention',
-                'url',
-              ],
-            })}
+            {medium.body}
           </ReadMore>
         }
       </CardContent>
