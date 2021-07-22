@@ -84,8 +84,11 @@ const StoryCardTodoStatus = (props) => {
           <StoryMessage story={story} />
         }
         subheader={
-          <Link href={url}>
-            {moment(story.creationTime).fromNow()}
+          <Link
+            href={url}
+            title={moment.utc(story.creationTime).format('LLL').toString()}
+          >
+            {moment.utc(story.creationTime).fromNow()}
           </Link>
         }
         action={menu}

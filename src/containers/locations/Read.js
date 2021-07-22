@@ -226,7 +226,9 @@ const LocationsRead = (props) => {
           </Typography>
         </CardContent>
       </Card>
-      <Taggables tag={location} />
+      {location.id > 0 &&
+        <Taggables tag={location} />
+      }
     </React.Fragment>
   );
 };

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Avatar from '@material-ui/core/Avatar';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -34,14 +34,7 @@ const HashtagsBrowse = (props) => {
     queryFilters,
   } = props;
 
-  const fetchList = (page) => {
-    const start = (page - 1) * LIMIT;
-    browseList({
-      start,
-      limit: LIMIT,
-      ...queryFilters,
-    });
-  };
+  const [start, setStart] = useState(0);
 
   useEffect(() => {
     return () => {
@@ -50,18 +43,31 @@ const HashtagsBrowse = (props) => {
   }, [resetList]);
 
   useEffect(() => {
+    browseList({
+      start,
+      limit: LIMIT,
+      ...queryFilters,
+    });
+  }, [start]);
+
+  useEffect(() => {
     if (error) {
       alertError(error);
     }
   }, [error, alertError]);
 
+  const fetchList = () => {
+    return setStart(start + LIMIT);
+  };
+
   return (
     <List>
       <InfiniteScroll
-        loadMore={fetchList}
+        dataLength={items.allIds.length}
+        next={fetchList}
         hasMore={hasMore}
         loader={
-          <Progress key="hashtags-progress" />
+          <Progress key="items-progress" />
         }
       >
         {items.allIds.map((itemId) => {

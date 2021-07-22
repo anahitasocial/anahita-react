@@ -75,8 +75,11 @@ const CommentCard = (props) => {
           />
         }
         subheader={
-          <Link href={url}>
-            {moment(creationTime).fromNow()}
+          <Link
+            href={url}
+            title={moment.utc(creationTime).format('LLL').toString()}
+          >
+            {moment.utc(creationTime).fromNow()}
           </Link>
         }
         action={menu}

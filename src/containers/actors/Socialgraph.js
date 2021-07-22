@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import actions from '../../actions';
 
@@ -36,9 +36,16 @@ const ActorsSocialgraph = (props) => {
     queryFilters,
   } = props;
 
-  const fetchList = (page) => {
-    const start = (page - 1) * LIMIT;
-    const { q } = queryFilters;
+  const { q } = queryFilters;
+  const [start, setStart] = useState(0);
+
+  useEffect(() => {
+    return () => {
+      resetList();
+    };
+  }, [resetList]);
+
+  useEffect(() => {
     browseList({
       q,
       filter,
@@ -47,21 +54,20 @@ const ActorsSocialgraph = (props) => {
       limit: LIMIT,
       ...queryFilters,
     });
-  };
+  }, [q, filter, start]);
 
-  useEffect(() => {
-    return () => {
-      resetList();
-    };
-  }, [resetList]);
+  const fetchList = () => {
+    return setStart(start + LIMIT);
+  };
 
   return (
     <React.Fragment>
       <InfiniteScroll
-        loadMore={fetchList}
+        dataLength={items.allIds.length}
+        next={fetchList}
         hasMore={hasMore}
         loader={
-          <Progress key="socialgragh-progress" />
+          <Progress key="items-progress" />
         }
       >
         <Masonry>

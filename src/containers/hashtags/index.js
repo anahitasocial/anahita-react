@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -66,13 +66,17 @@ const Hashtags = (props) => {
           <Tab label="Recent" value={RECENT} />
         </Tabs>
       </AppBar>
-      <HashtagsBrowse
-        key={`hashtags-sort-${tab}`}
-        queryFilters={{
-          q: '',
-          sort: tab,
-        }}
-      />
+      {useMemo(() => {
+        return (
+          <HashtagsBrowse
+            key={`items-tab-${tab}`}
+            queryFilters={{
+              q: '',
+              sort: tab,
+            }}
+          />
+        );
+      }, [tab])}
     </React.Fragment>
   );
 };

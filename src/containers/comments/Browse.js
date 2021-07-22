@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Card from '@material-ui/core/Card';
 import CommentRead from './Read';
@@ -37,7 +37,9 @@ const CommentsBrowse = (props) => {
   } = props;
 
   const namespace = parent.objectType.split('.')[1];
+  const { id, objectType } = parent;
 
+  const [start, setStart] = useState(0);
   const [fields, setFields] = useState(formFields);
 
   const [comment, setComment] = useState({
@@ -52,15 +54,16 @@ const CommentsBrowse = (props) => {
     };
   }, [resetList]);
 
-  const fetchList = (page) => {
-    const { id, objectType } = parent;
-    const start = (page - 1) * LIMIT;
-
+  useEffect(() => {
     browseList({
       node: { id, objectType },
       start,
       limit: LIMIT,
     }, namespace);
+  }, [start]);
+
+  const fetchList = () => {
+    return setStart(start + LIMIT);
   };
 
   const handleOnChange = (event) => {
@@ -94,15 +97,14 @@ const CommentsBrowse = (props) => {
     setFields({ ...newFields });
   };
 
-  const hasComments = parent.numOfComments > 0;
-
   return (
     <Card variant="outlined">
       <InfiniteScroll
-        loadMore={fetchList}
-        hasMore={hasComments && hasMore}
+        dataLength={items.allIds.length}
+        next={fetchList}
+        hasMore={hasMore}
         loader={
-          <Progress key={`comments-progress-${parent.id}`} />
+          <Progress key={`${namespace}-progress`} />
         }
       >
         {items.allIds.map((itemId) => {

@@ -56,7 +56,7 @@ export default (namespace, defaultNode) => {
               ...state[namespace].byId,
               ...action[namespace],
             },
-            allIds: _.union(state[namespace].allIds, action.ids),
+            allIds: _.uniq([...state[namespace].allIds, ...action.ids]),
             current: { ...defaultNode },
           },
           total: action.total,

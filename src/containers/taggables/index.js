@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -58,14 +58,18 @@ const Taggables = (props) => {
           <Tab label="Recent" value={RECENT} />
         </Tabs>
       </AppBar>
-      <TaggablesBrowse
-        key={`taggable-panel-sort-${tab}`}
-        tag={tag}
-        queryFilters={{
-          q: '',
-          sort: tab,
-        }}
-      />
+      {useMemo(() => {
+        return (<TaggablesBrowse
+          key={`taggable-tab-${tab}`}
+          tag={tag}
+          queryFilters={{
+            q: '',
+            sort: tab,
+          }}
+        />);
+      }, [
+          tab,
+        ])}
     </React.Fragment>
   );
 };

@@ -162,6 +162,12 @@ export default {
       },
     },
   },
+  media: {
+    medium: {
+      description: 'Description',
+      title: 'Title',
+    },
+  },
   topics: {
     cTitle: 'Topics',
     mTitle: 'Topics',

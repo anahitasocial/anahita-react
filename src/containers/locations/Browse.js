@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 
@@ -31,6 +31,8 @@ const LocationsBrowse = (props) => {
     queryFilters,
   } = props;
 
+  const [start, setStart] = useState(0);
+
   useEffect(() => {
     return () => {
       resetList();
@@ -38,18 +40,21 @@ const LocationsBrowse = (props) => {
   }, [resetList]);
 
   useEffect(() => {
-    if (error) {
-      alertError(error);
-    }
-  }, [alertError, error]);
-
-  const fetchList = (page) => {
-    const start = (page - 1) * LIMIT;
     browseList({
       start,
       limit: LIMIT,
       ...queryFilters,
     });
+  }, [start]);
+
+  useEffect(() => {
+    if (error) {
+      alertError(error);
+    }
+  }, [alertError, error]);
+
+  const fetchList = () => {
+    return setStart(start + LIMIT);
   };
 
   if (error) {
@@ -62,10 +67,11 @@ const LocationsBrowse = (props) => {
 
   return (
     <InfiniteScroll
-      loadMore={fetchList}
+      dataLength={items.allIds.length}
+      next={fetchList}
       hasMore={hasMore}
       loader={
-        <Progress key="locations-progress" />
+        <Progress key="items-progress" />
       }
     >
       <List>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import CommentIcon from '@material-ui/icons/Comment';
 
 import CommentsBrowse from './comments/Browse';
@@ -45,13 +45,16 @@ const StoriesBrowse = (props) => {
     error,
   } = props;
 
+  const { oid, filter } = queryFilters;
+
+  const [start, setStart] = useState(0);
   const [openComments, setOpenComments] = useState([]);
 
   useEffect(() => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -59,16 +62,17 @@ const StoriesBrowse = (props) => {
     }
   }, [error]);
 
-  const fetchList = (page) => {
-    const start = (page - 1) * LIMIT;
-    const { oid, filter } = queryFilters;
-
+  useEffect(() => {
     browseList({
       oid,
       filter,
       start,
       limit: LIMIT,
     });
+  }, [oid, filter, start]);
+
+  const fetchList = () => {
+    return setStart(start + LIMIT);
   };
 
   const getNumOfComments = (node) => {
@@ -85,8 +89,8 @@ const StoriesBrowse = (props) => {
 
   return (
     <InfiniteScroll
-      pageStart={0}
-      loadMore={fetchList}
+      dataLength={items.allIds.length}
+      next={fetchList}
       hasMore={hasMore}
       loader={
         <Progress key="stories-progress" />

@@ -69,7 +69,9 @@ const HashtagsRead = (props) => {
           })}
         />
       </Card>
-      <Taggables tag={hashtag} />
+      {hashtag.id > 0 &&
+        <Taggables tag={hashtag} />
+      }
     </React.Fragment>
   );
 };

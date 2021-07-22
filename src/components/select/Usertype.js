@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Person as PERSON } from '../../constants';
 import i18n from '../../languages';
 
-const usertypes  = [
+const usertypes = [
   PERSON.FIELDS.TYPE.REGISTERED,
   PERSON.FIELDS.TYPE.ADMIN,
   PERSON.FIELDS.TYPE.SUPER_ADMIN,
@@ -32,7 +32,7 @@ const SelectPersontype = (props) => {
 
 SelectPersontype.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -41,6 +41,7 @@ SelectPersontype.propTypes = {
 SelectPersontype.defaultProps = {
   disabled: false,
   required: false,
+  value: '',
 };
 
 export default SelectPersontype;

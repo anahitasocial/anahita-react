@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -66,13 +66,20 @@ const Actors = (props) => {
           <Tab label="Administering" value={FILTER.ADMINISTERING} />
         </Tabs>
       </AppBar>
-      <ActorsBrowse
-        key={`actors-${tab}`}
-        queryFilters={{
-          oid: owner.id,
-          filter: tab,
-        }}
-      />
+      {useMemo(() => {
+        return (
+          <ActorsBrowse
+            key={`actors-tab-${tab}`}
+            queryFilters={{
+              oid: owner.id,
+              filter: tab,
+            }}
+          />
+        );
+      }, [
+          owner.id,
+          tab,
+        ])}
     </React.Fragment>
   );
 };

@@ -68,15 +68,9 @@ LikesActionLike.defaultProps = {
   size: 'default',
 };
 
-const mapStateToProps = (namespace) => {
-  return (state) => {
-    const {
-      isFetching,
-    } = state[namespace];
-
-    return {
-      isFetching,
-    };
+const mapStateToProps = () => {
+  return () => {
+    return {};
   };
 };
 

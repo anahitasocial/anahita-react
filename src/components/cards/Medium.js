@@ -104,8 +104,11 @@ const MediumCard = (props) => {
         }
         subheader={
           <React.Fragment>
-            <Link href={url}>
-              {moment(medium.creationTime).fromNow()}
+            <Link
+              href={url}
+              title={moment.utc(medium.creationTime).format('LLL').toString()}
+            >
+              {moment.utc(medium.creationTime).fromNow()}
             </Link> {privacy}
           </React.Fragment>
         }

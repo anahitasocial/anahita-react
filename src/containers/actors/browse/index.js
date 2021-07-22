@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router-dom';
 
 import actions from '../../../actions';
@@ -48,20 +48,25 @@ const ActorsBrowse = (props) => {
     queryFilters,
   } = props;
 
-  const fetchList = (page) => {
-    const start = (page - 1) * LIMIT;
-    browseList({
-      start,
-      limit: LIMIT,
-      ...queryFilters,
-    }, namespace);
-  };
+  const [start, setStart] = useState(0);
 
   useEffect(() => {
     return () => {
       resetList();
     };
   }, [resetList]);
+
+  useEffect(() => {
+    browseList({
+      start,
+      limit: LIMIT,
+      ...queryFilters,
+    }, namespace);
+  }, [start]);
+
+  const fetchList = () => {
+    return setStart(start + LIMIT);
+  };
 
   const canAdd = permissions.canAdd(viewer, namespace);
 
@@ -79,7 +84,8 @@ const ActorsBrowse = (props) => {
         </Fab>
       }
       <InfiniteScroll
-        loadMore={fetchList}
+        dataLength={items.allIds.length}
+        next={fetchList}
         hasMore={hasMore}
         loader={
           <Progress key={`${namespace}-progress`} />

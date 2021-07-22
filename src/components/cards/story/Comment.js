@@ -68,7 +68,7 @@ const StoryCardComment = (props) => {
   } = props;
 
   // @Todo add support for array objects
-  const portrait = story.object && getPortraitURL(story.object);
+  const portrait = story.object && getPortraitURL(story.object, 'large');
   const cover = story.object && getCoverURL(story.object);
   const title = story.object && story.object.name;
   const body = story.object && story.object.body;
@@ -88,8 +88,11 @@ const StoryCardComment = (props) => {
           <StoryMessage story={story} />
         }
         subheader={
-          <Link href={url}>
-            {moment(story.creationTime).fromNow()}
+          <Link
+            href={url}
+            title={moment.utc(story.creationTime).format('LLL').toString()}
+          >
+            {moment.utc(story.creationTime).fromNow()}
           </Link>
         }
         action={menu}

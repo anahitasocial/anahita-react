@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -110,13 +110,20 @@ const People = (props) => {
           </Toolbar>
         </AppBar>
       }
-      <Browse
-        queryFilters={{
-          'filter[disabled]': disabled ? 1 : 0,
-          'filter[usertype]': usertype,
-        }}
-        key={key}
-      />
+      {useMemo(() => {
+        return (
+          <Browse
+            queryFilters={{
+              'filter[disabled]': disabled ? 1 : 0,
+              'filter[usertype]': usertype,
+            }}
+            key={key}
+          />
+        );
+      }, [
+          disabled,
+          usertype,
+        ])}
     </React.Fragment>
   );
 };

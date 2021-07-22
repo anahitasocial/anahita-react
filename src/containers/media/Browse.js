@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import actions from '../../actions';
 import PersonType from '../../proptypes/Person';
@@ -37,14 +37,9 @@ const MediaBrowse = (props) => {
     queryFilters,
   } = props;
 
-  const fetchList = (page) => {
-    const start = (page - 1) * LIMIT;
-    browseList({
-      start,
-      limit: LIMIT,
-      ...queryFilters,
-    }, namespace);
-  };
+  const [start, setStart] = useState(0);
+  const [current, setCurrent] = useState(items.allIds[0]);
+  const [stepperOpen, setStepperOpen] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -52,8 +47,13 @@ const MediaBrowse = (props) => {
     };
   }, [resetList]);
 
-  const [current, setCurrent] = useState(items.allIds[0]);
-  const [stepperOpen, setStepperOpen] = useState(false);
+  useEffect(() => {
+    browseList({
+      start,
+      limit: LIMIT,
+      ...queryFilters,
+    }, namespace);
+  }, [start]);
 
   const handleClose = () => {
     setStepperOpen(false);
@@ -62,6 +62,10 @@ const MediaBrowse = (props) => {
   const handleView = (e, medium) => {
     setCurrent(medium.id);
     setStepperOpen(true);
+  };
+
+  const fetchList = () => {
+    return setStart(start + LIMIT);
   };
 
   const Stepper = MediumStepper(namespace);
@@ -84,7 +88,8 @@ const MediaBrowse = (props) => {
         );
       }, [stepperOpen, current])}
       <InfiniteScroll
-        loadMore={fetchList}
+        dataLength={items.allIds.length}
+        next={fetchList}
         hasMore={hasMore}
         loader={
           <Progress key={`${namespace}-progress`} />

@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import MediumType from '../../../proptypes/Medium';
 import { Medium as MEDIUM } from '../../../constants';
 
+import i18n from '../../../languages';
+
 const {
   NAME,
   BODY,
@@ -32,7 +34,7 @@ const MediumFormEdit = (props) => {
             name="name"
             value={medium.name}
             onChange={handleOnChange}
-            label="Title"
+            label={i18n.t('media:medium.title')}
             error={fields.name.error !== ''}
             helperText={fields.name.error}
             autoFocus
@@ -51,7 +53,7 @@ const MediumFormEdit = (props) => {
             name="body"
             value={medium.body}
             onChange={handleOnChange}
-            label="Description"
+            label={i18n.t('media:medium.description')}
             error={fields.body.error !== ''}
             helperText={fields.body.error}
             multiline

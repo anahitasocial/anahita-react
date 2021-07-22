@@ -60,7 +60,7 @@ const StoryCardPhotoAdd = (props) => {
   const subject = getStorySubject(story);
 
   // @Todo add support for array objects
-  const portrait = story.object && getPortraitURL(story.object);
+  const portrait = story.object && getPortraitURL(story.object, 'large');
   const portraits = story.objects;
 
   const title = story.object && story.object.name;

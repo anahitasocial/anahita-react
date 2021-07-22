@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -44,7 +44,7 @@ const Media = (props) => {
 
   useEffect(() => {
     setAppTitle(i18n.t(`${namespace}:cTitle`));
-  }, []);
+  }, [namespace]);
 
   const MediaBrowse = Browse(namespace);
 
@@ -68,13 +68,20 @@ const Media = (props) => {
           <Tab label="Recent" value={RECENT} />
         </Tabs>
       </AppBar>
-      <MediaBrowse
-        key={`media-sort-${tab}`}
-        queryFilters={{
-          ...queryFilters,
-          sort: tab,
-        }}
-      />
+      {useMemo(() => {
+        return (<MediaBrowse
+          key={`media-tab-${tab}`}
+          queryFilters={{
+            ...queryFilters,
+            sort: tab,
+          }}
+        />);
+      }, [
+          tab,
+          queryFilters.oid,
+          queryFilters.q,
+          queryFilters.sort,
+        ])}
     </React.Fragment>
   );
 };

@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import actions from '../../actions';
 import NodeType from '../../proptypes/Node';
@@ -50,6 +50,8 @@ const TaggablesBrowse = (props) => {
     },
   } = props;
 
+  const [start, setStart] = useState(0);
+
   useEffect(() => {
     return () => {
       resetList(tag);
@@ -62,22 +64,26 @@ const TaggablesBrowse = (props) => {
     }
   }, [error, alertError]);
 
-  const fetchList = (page) => {
-    const start = (page - 1) * LIMIT;
+  useEffect(() => {
     browseList(tag, {
       tag,
       sort,
       start,
       limit: LIMIT,
     });
+  }, [start]);
+
+  const fetchList = () => {
+    return setStart(start + LIMIT);
   };
 
   return (
     <InfiniteScroll
-      loadMore={fetchList}
+      dataLength={items.allIds.length}
+      next={fetchList}
       hasMore={hasMore}
       loader={
-        <Progress key="taggables-progress" />
+        <Progress key="items-progress" />
       }
     >
       <Masonry>

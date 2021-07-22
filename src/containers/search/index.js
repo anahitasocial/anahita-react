@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { geolocated } from 'react-geolocated';
@@ -191,9 +191,22 @@ const Search = (props) => {
           <Tab label="Groups" value={SCOPE.ACTORS.GROUPS} />
         </Tabs>
       </AppBar>
-      <SearchBrowse
-        key={`${sort}-${scope}-${searchRange}-${searchComments}`}
-        queryParams={{
+      {useMemo(() => {
+        return (
+          <SearchBrowse
+            key={`${sort}-${scope}-${searchRange}-${searchComments}`}
+            queryParams={{
+              q,
+              sort,
+              scope,
+              searchRange,
+              searchComments,
+              coordLong,
+              coordLat,
+            }}
+          />
+        );
+      }, [
           q,
           sort,
           scope,
@@ -201,8 +214,7 @@ const Search = (props) => {
           searchComments,
           coordLong,
           coordLat,
-        }}
-      />
+        ])}
     </React.Fragment>
   );
 };

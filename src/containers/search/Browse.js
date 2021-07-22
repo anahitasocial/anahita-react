@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import actions from '../../actions';
 import NodesType from '../../proptypes/Nodes';
@@ -54,6 +54,8 @@ const SearchBrowse = (props) => {
     },
   } = props;
 
+  const [start, setStart] = useState(0);
+
   useEffect(() => {
     return () => {
       resetList();
@@ -61,13 +63,6 @@ const SearchBrowse = (props) => {
   }, [resetList]);
 
   useEffect(() => {
-    if (error) {
-      alertError(error);
-    }
-  }, [error]);
-
-  const fetchList = (page) => {
-    const start = (page - 1) * LIMIT;
     browseList({
       sort,
       start,
@@ -79,6 +74,25 @@ const SearchBrowse = (props) => {
       limit: LIMIT,
       term: q,
     });
+  }, [
+    sort,
+    start,
+    scope,
+    searchRange,
+    searchComments,
+    searchRange,
+    coordLong,
+    coordLat,
+  ]);
+
+  useEffect(() => {
+    if (error) {
+      alertError(error);
+    }
+  }, [error]);
+
+  const fetchList = () => {
+    return setStart(start + LIMIT);
   };
 
   if (error) {
@@ -91,10 +105,11 @@ const SearchBrowse = (props) => {
 
   return (
     <InfiniteScroll
-      loadMore={fetchList}
+      dataLength={items.allIds.length}
+      next={fetchList}
       hasMore={hasMore}
       loader={
-        <Progress key="search-progress" />
+        <Progress key="items-progress" />
       }
     >
       <Masonry>
