@@ -55,35 +55,35 @@ const actions = {
   taggables,
 };
 
-namespaces.actors.forEach((ns) => {
-  const api = apis[ns][singularize(ns)];
-  actions[ns] = {
-    ...createAction(ns)(apis[ns]),
-    followRequests: createActorFollowRequests(ns)(api.followrequests),
+namespaces.actors.forEach((namespace) => {
+  const api = apis[namespace][singularize(namespace)];
+  actions[namespace] = {
+    ...createAction(namespace)(apis[namespace]),
+    followRequests: createActorFollowRequests(namespace)(api.followrequests),
     settings: {
-      admins: createActorAdmins(ns)(api.admins),
-      apps: createAction(`${ns}_apps`)(api.apps),
-      permissions: createAction(`${ns}_permissions`)(api.permissions),
-      privacy: createAction(`${ns}_privacy`)(api.privacy),
+      admins: createActorAdmins(namespace)(api.admins),
+      apps: createAction(`${namespace}_apps`)(api.apps),
+      permissions: createAction(`${namespace}_permissions`)(api.permissions),
+      privacy: createAction(`${namespace}_privacy`)(api.privacy),
     },
   };
 });
 
-namespaces.media.forEach((ns) => {
-  const api = apis[ns][singularize(ns)];
-  actions[ns] = {
-    ...createAction(ns)(apis[ns]),
-    likes: likes.nodes(ns)(apis[ns]),
-    privacy: createAction(`${ns}_privacy`)(api.privacy),
+namespaces.media.forEach((namespace) => {
+  const api = apis[namespace][singularize(namespace)];
+  actions[namespace] = {
+    ...createAction(namespace)(apis[namespace]),
+    likes: likes.nodes(namespace)(apis.likes),
+    privacy: createAction(`${namespace}_privacy`)(api.privacy),
   };
 });
 
-namespaces.tags.forEach((ns) => {
-  actions[ns] = createAction(ns)(apis[ns]);
+namespaces.tags.forEach((namespace) => {
+  actions[namespace] = createAction(namespace)(apis[namespace]);
 });
 
-namespaces.nodes.forEach((ns) => {
-  actions[ns] = createAction(ns)(apis[ns]);
+namespaces.nodes.forEach((namespace) => {
+  actions[namespace] = createAction(namespace)(apis[namespace]);
 });
 
 actions.comments = (namespace) => {
