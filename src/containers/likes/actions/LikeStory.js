@@ -81,10 +81,10 @@ const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
       likeNode: (story, node) => {
-        return dispatch(actions[namespace].likes.add(story, node));
+        return dispatch(actions[namespace].likes.add({ story, node }));
       },
       unlikeNode: (story, node) => {
-        return dispatch(actions[namespace].likes.deleteItem(story, node));
+        return dispatch(actions[namespace].likes.deleteItem({ story, node }));
       },
     };
   };

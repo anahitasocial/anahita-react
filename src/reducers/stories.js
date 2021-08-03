@@ -35,20 +35,10 @@ export default function (state = {
         hasMore: true,
       };
     case STORIES.BROWSE.REQUEST:
-      return {
-        ...state,
-        isFetching: true,
-        success: false,
-        error: '',
-      };
     case 'STORIES_LIKES_ADD_REQUEST':
     case 'STORIES_LIKES_DELETE_REQUEST':
       return {
         ...state,
-        stories: {
-          ...state.stories,
-          current: action.story,
-        },
         isFetching: true,
         success: false,
         error: '',
@@ -88,8 +78,9 @@ export default function (state = {
       };
     case 'STORIES_LIKES_ADD_SUCCESS':
     case 'STORIES_LIKES_DELETE_SUCCESS': {
-      const story = { ...state.stories.current };
-      story.object = action.node;
+      // const { current: story } = state.stories;
+      const { node, story } = action;
+      story.object = node;
       return {
         ...state,
         isFetching: false,

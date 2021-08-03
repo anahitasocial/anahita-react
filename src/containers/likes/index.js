@@ -26,7 +26,7 @@ const Likes = (props) => {
   const likeableNode = comment || node;
 
   const {
-    voteUpCount: likesCount,
+    voteUpCount,
     objectType,
   } = likeableNode;
 
@@ -41,7 +41,7 @@ const Likes = (props) => {
         open={open}
       >
         <DialogTitle>
-          {`${likesCount} Likes`}
+          {`${voteUpCount} Likes`}
         </DialogTitle>
         <DialogContent dividers style={{ padding: 0 }}>
           {open && <LikesStat node={node} comment={comment} />}
@@ -60,11 +60,11 @@ const Likes = (props) => {
         onClick={() => {
           setOpen(true);
         }}
-        disabled={likesCount === 0}
+        disabled={voteUpCount === 0}
         startIcon={<LikeIcon />}
         size="small"
       >
-        {likesCount}
+        {voteUpCount}
       </Button>
     </React.Fragment>
   );

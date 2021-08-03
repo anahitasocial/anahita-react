@@ -216,6 +216,6 @@ export default (namespace) => {
     edit: edit(api),
     add: add(api),
     deleteItem: deleteItem(api),
-    likes: likes.commentsInline(likesApi),
+    likes: likes('comments_inline')(likesApi),
   };
 };

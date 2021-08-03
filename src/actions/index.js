@@ -73,7 +73,7 @@ namespaces.media.forEach((namespace) => {
   const api = apis[namespace][singularize(namespace)];
   actions[namespace] = {
     ...createAction(namespace)(apis[namespace]),
-    likes: likes.nodes(namespace)(apis.likes),
+    likes: likes(namespace)(apis.likes),
     privacy: createAction(`${namespace}_privacy`)(api.privacy),
   };
 });
@@ -89,7 +89,7 @@ namespaces.nodes.forEach((namespace) => {
 actions.comments = (namespace) => {
   return {
     ...createAction('comments')(apis.comments(namespace)),
-    likes: likes.comments(apis.likes),
+    likes: likes('comments')(apis.likes),
   };
 };
 

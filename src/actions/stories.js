@@ -154,5 +154,5 @@ export default {
   browse,
   add,
   deleteItem,
-  likes: likes.stories(likesApi),
+  likes: likes('stories')(likesApi),
 };
