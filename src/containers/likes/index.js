@@ -60,7 +60,7 @@ const Likes = (props) => {
         onClick={() => {
           setOpen(true);
         }}
-        disabled={voteUpCount === 0}
+        disabled={!voteUpCount}
         startIcon={<LikeIcon />}
         size="small"
       >

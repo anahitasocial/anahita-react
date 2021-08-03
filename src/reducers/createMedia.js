@@ -34,9 +34,9 @@ export default (namespace) => {
           success: false,
           error: '',
         };
-      case `${namespace.toUpperCase()}_PRIVACY_EDIT_FAILURE`:
       case `${namespace.toUpperCase()}_LIKES_ADD_FAILURE`:
       case `${namespace.toUpperCase()}_LIKES_DELETE_FAILURE`:
+      case `${namespace.toUpperCase()}_PRIVACY_EDIT_FAILURE`:
         return {
           ...state,
           isFetching: false,

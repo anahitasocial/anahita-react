@@ -13,7 +13,7 @@ import NodesType from '../../proptypes/Nodes';
 import CommentCard from '../../components/cards/Comment';
 import ActorsCard from '../actors/browse/Card';
 import Masonry from '../../components/BreakpointMasonry';
-import MediaCard from '../media/Card';
+import MediaCard from '../nodes/cards/Medium';
 import Progress from '../../components/Progress';
 import { App as APP, Search as SEARCH } from '../../constants';
 
@@ -116,22 +116,16 @@ const SearchBrowse = (props) => {
         {items.allIds.map((itemId) => {
             const node = items.byId[itemId];
             const key = `search_node_${node.id}`;
-            const namespace = node.objectType.split('.')[1];
             return (
               <div key={key} className={classes.card}>
                 {utils.isActor(node) &&
                   <ActorsCard actor={node} />
                 }
                 {utils.isMedium(node) &&
-                  <MediaCard
-                    medium={node}
-                    namespace={namespace}
-                  />
+                  <MediaCard medium={node} />
                 }
                 {utils.isComment(node) &&
-                  <CommentCard
-                    comment={node}
-                  />
+                  <CommentCard comment={node} />
                 }
               </div>
             );
