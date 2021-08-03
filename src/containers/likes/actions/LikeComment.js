@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -21,15 +21,13 @@ const LikesActionLikeComment = React.forwardRef((props, ref) => {
     size,
   } = props;
 
-  const [liked, setLiked] = useState(comment.isVotedUp);
+  const { isVotedUp: liked } = comment;
 
   const handleLike = () => {
-    setLiked(true);
     likeNode(node, comment);
   };
 
   const handleUnlike = () => {
-    setLiked(false);
     unlikeNode(node, comment);
   };
 
