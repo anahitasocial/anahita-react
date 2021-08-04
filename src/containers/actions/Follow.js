@@ -28,9 +28,7 @@ const FollowAction = React.forwardRef((props, ref) => {
   const [leader, setLeader] = useState(isLeader);
   const [waiting, setWaiting] = useState(false);
 
-  const handleFollow = (event) => {
-    event.preventDefault();
-
+  const handleFollow = () => {
     setWaiting(true);
     followActor(viewer, actor).then(() => {
       setWaiting(false);
@@ -38,9 +36,7 @@ const FollowAction = React.forwardRef((props, ref) => {
     });
   };
 
-  const handleUnfollow = (event) => {
-    event.preventDefault();
-
+  const handleUnfollow = () => {
     setWaiting(true);
     unfollowActor(viewer, actor).then(() => {
       setWaiting(false);

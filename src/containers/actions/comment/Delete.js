@@ -23,8 +23,7 @@ const ActionsCommentDelete = React.forwardRef((props, ref) => {
   const namespace = objectType.split('.')[1];
   const deleteFunc = inline ? deleteItemInline : deleteItem;
 
-  const handleDelete = (event) => {
-    event.preventDefault();
+  const handleDelete = () => {
     deleteFunc(comment, namespace);
   };
 

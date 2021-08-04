@@ -25,9 +25,7 @@ const BlockAction = React.forwardRef((props, ref) => {
   const [blocked, setBlocked] = useState(isBlocked);
   const [waiting, setWaiting] = useState(false);
 
-  const handleBlock = (event) => {
-    event.preventDefault();
-
+  const handleBlock = () => {
     setWaiting(true);
     blockPerson(viewer, actor).then(() => {
       setWaiting(false);
@@ -35,9 +33,7 @@ const BlockAction = React.forwardRef((props, ref) => {
     });
   };
 
-  const handleUnblock = (event) => {
-    event.preventDefault();
-
+  const handleUnblock = () => {
     setWaiting(true);
     unblockPerson(viewer, actor).then(() => {
       setWaiting(false);

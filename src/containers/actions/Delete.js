@@ -20,9 +20,7 @@ const ActionsDelete = React.forwardRef((props, ref) => {
 
   const [waiting, setWaiting] = useState(false);
 
-  const handleDelete = (event) => {
-    event.preventDefault();
-
+  const handleDelete = () => {
     setWaiting(true);
     deleteItem(node)
       .then(() => {

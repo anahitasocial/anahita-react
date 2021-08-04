@@ -21,15 +21,13 @@ const ActionsMediumNotification = React.forwardRef((props, ref) => {
 
   const [subscribed, setSubscribed] = useState(isSubscribed);
 
-  const handleSubscribe = (event) => {
-    event.preventDefault();
+  const handleSubscribe = () => {
     subscribe(medium).then(() => {
       setSubscribed(true);
     });
   };
 
-  const handleUnsubscribe = (event) => {
-    event.preventDefault();
+  const handleUnsubscribe = () => {
     unsubscribe(medium).then(() => {
       setSubscribed(false);
     });

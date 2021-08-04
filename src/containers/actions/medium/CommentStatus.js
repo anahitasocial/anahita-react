@@ -18,9 +18,7 @@ const ActionsMediumCommentStatus = React.forwardRef((props, ref) => {
 
   const [isFetching, setIsFetching] = useState(false);
 
-  const handleAction = (event) => {
-    event.preventDefault();
-
+  const handleAction = () => {
     const payload = { ...medium };
     const namespace = medium.objectType.split('.')[1];
 
