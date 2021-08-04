@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CommentRead from '../../comments/Read';
 import CommentForm from '../../../components/comment/Form';
 
-import actions from '../../../actions/commentsInline';
+import actions from '../../../actions';
 
 import CommentsType from '../../../proptypes/Comments';
 import CommentDefault from '../../../proptypes/CommentDefault';
@@ -126,10 +126,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setList: (nodes, parent, namespace) => {
-      return dispatch(actions(namespace).setList(nodes, parent));
+      return dispatch(actions.commentsInline(namespace).setList(nodes, parent));
     },
     addItem: (node, namespace) => {
-      return dispatch(actions(namespace).add(node));
+      return dispatch(actions.commentsInline(namespace).add(node));
     },
   };
 };

@@ -7,8 +7,8 @@ import createActorAdmins from './actor/admins';
 import createActorFollowRequests from './actor/followrequests';
 import app from './app';
 import avatar from './avatar';
-import cover from './cover';
 import commentsInline from './commentsInline';
+import cover from './cover';
 import likes from './likes';
 import notifications from './notifications';
 import password from './password';
@@ -43,8 +43,8 @@ const namespaces = {
 const actions = {
   app,
   avatar,
-  cover,
   commentsInline,
+  cover,
   likes,
   notifications,
   password,
