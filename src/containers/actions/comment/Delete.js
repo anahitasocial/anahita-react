@@ -7,20 +7,19 @@ import actions from '../../../actions';
 import CommentType from '../../../proptypes/Comment';
 import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';
+import utils from '../../../utils';
 
 const ActionsCommentDelete = React.forwardRef((props, ref) => {
   const {
     deleteItem,
     deleteItemInline,
     comment,
-    node: {
-      objectType,
-    },
+    node,
     inline,
   } = props;
 
   const label = i18n.t('actions:delete');
-  const namespace = objectType.split('.')[1];
+  const namespace = utils.node.getNamespace(node);
   const deleteFunc = inline ? deleteItemInline : deleteItem;
 
   const handleDelete = () => {

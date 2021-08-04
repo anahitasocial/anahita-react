@@ -10,6 +10,7 @@ import LikeIcon from '@material-ui/icons/Favorite';
 import LikesBrowse from './Browse';
 import CommentType from '../../proptypes/Comment';
 import NodeType from '../../proptypes/Node';
+import utils from '../../utils';
 
 const Likes = (props) => {
   const {
@@ -24,13 +25,9 @@ const Likes = (props) => {
   };
 
   const likeableNode = comment || node;
-
-  const {
-    voteUpCount,
-    objectType,
-  } = likeableNode;
-
-  const LikesStat = LikesBrowse(objectType.split('.')[1]);
+  const { voteUpCount } = likeableNode;
+  const namespace = utils.node.getNamespace(likeableNode);
+  const LikesStat = LikesBrowse(namespace);
 
   return (
     <React.Fragment>

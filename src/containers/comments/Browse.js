@@ -14,7 +14,9 @@ import CommentsType from '../../proptypes/Comments';
 import CommentDefault from '../../proptypes/CommentDefault';
 import PersonType from '../../proptypes/Person';
 import { App as APP } from '../../constants';
-import form from '../../utils/form';
+import utils from '../../utils';
+
+const { form } = utils;
 
 const { LIMIT } = APP.BROWSE;
 
@@ -36,7 +38,8 @@ const CommentsBrowse = (props) => {
     cardProps,
   } = props;
 
-  const namespace = parent.objectType.split('.')[1];
+  const namespace = utils.node.getNamespace(parent);
+
   const { id, objectType } = parent;
 
   const [start, setStart] = useState(0);

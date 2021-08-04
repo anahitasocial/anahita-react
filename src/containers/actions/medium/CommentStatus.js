@@ -9,6 +9,7 @@ import actions from '../../../actions';
 import api from '../../../api';
 import MediumType from '../../../proptypes/Medium';
 import i18n from '../../../languages';
+import utils from '../../../utils';
 
 const ActionsMediumCommentStatus = React.forwardRef((props, ref) => {
   const {
@@ -20,7 +21,7 @@ const ActionsMediumCommentStatus = React.forwardRef((props, ref) => {
 
   const handleAction = () => {
     const payload = { ...medium };
-    const namespace = medium.objectType.split('.')[1];
+    const namespace = utils.node.getNamespace(medium);
 
     payload.openToComment = !medium.openToComment;
 
@@ -61,7 +62,7 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch) => {
   return {
     read: (medium) => {
-      const namespace = medium.objectType.split('.')[1];
+      const namespace = utils.node.getNamespace(medium);
       return dispatch(actions[namespace].read(medium.id, namespace));
     },
   };

@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import actions from '../../actions';
 import NodeType from '../../proptypes/Node';
 import i18n from '../../languages';
+import utils from '../../utils';
 
 const ActionsDelete = React.forwardRef((props, ref) => {
   const {
@@ -68,7 +69,7 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (node) => {
-      const namespace = node.objectType.split('.')[1];
+      const namespace = utils.node.getNamespace(node);
       return dispatch(actions[namespace].deleteItem(node));
     },
     alertSuccess: (message) => {

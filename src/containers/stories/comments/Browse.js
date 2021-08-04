@@ -11,7 +11,9 @@ import CommentDefault from '../../../proptypes/CommentDefault';
 import NodeType from '../../../proptypes/Node';
 import NodesType from '../../../proptypes/Nodes';
 import PersonType from '../../../proptypes/Person';
-import form from '../../../utils/form';
+import utils from '../../../utils';
+
+const { form } = utils;
 
 const formFields = form.createFormFields([
   'body',
@@ -34,7 +36,7 @@ const CommentsBrowse = (props) => {
     byId: {},
   };
 
-  const namespace = parent.objectType.split('.')[1];
+  const namespace = utils.node.getNamespace(parent);
 
   const [fields, setFields] = useState(formFields);
 

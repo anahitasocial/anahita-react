@@ -10,8 +10,7 @@ function browse(params) {
     start,
     q,
   } = params;
-  const component = actor.objectType.split('.')[1];
-
+  const component = utils.node.getNamespace(actor);
   return axios.get(`/${component}/${actor.id}/graph/${filter}.json`, {
     params: {
       start,
@@ -21,7 +20,7 @@ function browse(params) {
 }
 
 function follow(viewer, actor) {
-  const component = actor.objectType.split('.')[1];
+  const component = utils.node.getNamespace(actor);
   return axios.post(`/${component}/${actor.id}.json`, constructFormData({
     actor: viewer.id,
     action: 'follow',
@@ -29,7 +28,7 @@ function follow(viewer, actor) {
 }
 
 function unfollow(viewer, actor) {
-  const component = actor.objectType.split('.')[1];
+  const component = utils.node.getNamespace(actor);
   return axios.post(`/${component}/${actor.id}.json`, constructFormData({
     actor: viewer.id,
     action: 'unfollow',
@@ -37,7 +36,7 @@ function unfollow(viewer, actor) {
 }
 
 function block(viewer, actor) {
-  const component = actor.objectType.split('.')[1];
+  const component = utils.node.getNamespace(actor);
   return axios.post(`/${component}/${actor.id}.json`, constructFormData({
     actor: viewer.id,
     action: 'block',
@@ -45,7 +44,7 @@ function block(viewer, actor) {
 }
 
 function unblock(viewer, actor) {
-  const component = actor.objectType.split('.')[1];
+  const component = utils.node.getNamespace(actor);
   return axios.post(`/${component}/${actor.id}.json`, constructFormData({
     actor: viewer.id,
     action: 'unblock',

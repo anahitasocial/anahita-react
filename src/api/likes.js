@@ -4,7 +4,7 @@ import utils from '../utils';
 const { constructFormData } = utils.api;
 
 const browse = (node, comment = null) => {
-  const namespace = node.objectType.split('.')[1];
+  const namespace = utils.node.getNamespace(node);
   let url = `/${namespace}/${node.id}.json?get=voters&avatar=1`;
 
   if (comment) {
@@ -15,7 +15,7 @@ const browse = (node, comment = null) => {
 };
 
 const add = (node, comment = null) => {
-  const namespace = node.objectType.split('.')[1];
+  const namespace = utils.node.getNamespace(node);
   let url = `/${namespace}/${node.id}.json`;
   let action = 'vote';
 
@@ -28,7 +28,7 @@ const add = (node, comment = null) => {
 };
 
 const deleteItem = (node, comment = null) => {
-  const namespace = node.objectType.split('.')[1];
+  const namespace = utils.node.getNamespace(node);
   let url = `/${namespace}/${node.id}.json`;
   let action = 'unvote';
 

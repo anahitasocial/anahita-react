@@ -26,8 +26,6 @@ const ActorsReadCommands = (props) => {
     setAnchorEl(currentTarget);
   };
 
-  // const namespace = actor.objectType.split('.')[1];
-  // console.log(actor.commands);
   return (
     <React.Fragment>
       <IconButton

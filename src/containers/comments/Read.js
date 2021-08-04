@@ -16,7 +16,9 @@ import ActionLikeComment from '../likes/actions/LikeComment';
 import ActionLikeCommentInline from '../likes/actions/LikeCommentInline';
 import CommentMenu from './Menu';
 import CommentDefault from '../../proptypes/CommentDefault';
-import form from '../../utils/form';
+import utils from '../../utils';
+
+const { form } = utils;
 
 const formFields = form.createFormFields([
   'body',
@@ -66,8 +68,7 @@ const CommentsRead = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      const { objectType } = parent;
-      const namespace = objectType.split('.')[1];
+      const namespace = utils.node.getNamespace(parent);
       const editMethod = inline ? editItemInline : editItem;
 
       editMethod(comment, namespace).then(() => {
@@ -78,7 +79,7 @@ const CommentsRead = (props) => {
     setFields({ ...newFields });
   };
 
-  const commentObjectType = comment.objectType.split('.')[1];
+  const commentObjectType = utils.node.getNamespace(comment);
   const Like = inline ?
     ActionLikeCommentInline(commentObjectType) :
     ActionLikeComment(commentObjectType);

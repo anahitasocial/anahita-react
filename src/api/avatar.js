@@ -1,9 +1,10 @@
 /* global FormData, File */
 import axios from 'axios';
+import utils from '../utils';
 
 const edit = (node, file) => {
-  const { id, objectType } = node;
-  const namespace = objectType.split('.')[1];
+  const namespace = utils.node.getNamespace(node);
+  const { id } = node;
   const formData = new FormData();
 
   if (!file) {
