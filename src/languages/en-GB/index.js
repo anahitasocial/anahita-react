@@ -138,6 +138,10 @@ export default {
       },
     },
   },
+  notifications: {
+    cTitle: 'Notifications',
+    mTitle: 'Notifications',
+  },
   notes: {
     cTitle: 'Notes',
     mTitle: 'Notes',

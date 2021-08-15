@@ -29,6 +29,8 @@ import LocationsRead from '../containers/locations/Read';
 import Media from '../containers/media';
 import MediaRead from '../containers/media/Read';
 
+import Notifications from '../containers/notifications';
+
 import People from '../containers/people';
 import PeopleAdd from '../containers/people/Add';
 
@@ -201,6 +203,11 @@ const Routes = (props) => {
         component={(params) => {
           return <GroupsSettings {...params} />;
         }}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/notifications/"
+        component={Notifications}
       />
       <AuthenticatedRoute
         exact

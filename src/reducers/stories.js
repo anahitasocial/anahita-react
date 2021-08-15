@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { Stories as STORIES } from '../constants';
-// import nodeDefault from '../proptypes/NodeDefault';
 import storyDefault from '../proptypes/StoryDefault';
 import utils from '../utils';
 

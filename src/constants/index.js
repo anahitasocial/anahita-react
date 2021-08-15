@@ -11,7 +11,6 @@ import Likes from './likes';
 import Locations from './locations';
 import Medium from './medium';
 import Node from './node';
-import Notifications from './notifications';
 import Password from './password';
 import Person from './person';
 import Search from './search';
@@ -35,7 +34,6 @@ export {
   Locations,
   Medium,
   Node,
-  Notifications,
   Password,
   Person,
   Search,

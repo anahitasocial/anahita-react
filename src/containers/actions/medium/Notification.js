@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import actions from '../../../actions/notifications';
+import actions from '../../../actions';
 import MediumType from '../../../proptypes/Medium';
 import i18n from '../../../languages';
 
@@ -78,10 +78,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     subscribe: (medium) => {
-      return dispatch(actions.add(medium));
+      return dispatch(actions.notifications.add(medium));
     },
     unsubscribe: (medium) => {
-      return dispatch(actions.deleteItem(medium));
+      return dispatch(actions.notifications.deleteItem(medium));
     },
   };
 };

@@ -3,6 +3,12 @@ import utils from '../utils';
 
 const { constructFormData } = utils.api;
 
+function browse(params) {
+  return axios.get('/notifications.json?', {
+    params,
+  });
+}
+
 function add(node) {
   const namespace = utils.node.getNamespace(node);
   return axios.post(`/${namespace}/${node.id}.json`, constructFormData({
@@ -17,7 +23,15 @@ function deleteItem(node) {
   }));
 }
 
+function count() {
+  return axios.get('/notifications.json?', {
+    get: 'count',
+  });
+}
+
 export default {
+  browse,
   add,
   deleteItem,
+  count,
 };

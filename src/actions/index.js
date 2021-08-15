@@ -10,7 +10,6 @@ import avatar from './avatar';
 import commentsInline from './commentsInline';
 import cover from './cover';
 import likes from './likes';
-import notifications from './notifications';
 import password from './password';
 import session from './session';
 import signup from './signup';
@@ -37,6 +36,7 @@ const namespaces = {
   ],
   nodes: [
     'search',
+    'notifications',
   ],
 };
 
@@ -46,7 +46,6 @@ const actions = {
   commentsInline,
   cover,
   likes,
-  notifications,
   password,
   session,
   signup,
