@@ -24,9 +24,7 @@ function deleteItem(node) {
 }
 
 function count() {
-  return axios.get('/notifications.json?', {
-    get: 'count',
-  });
+  return axios.get('/notifications.json?get=count');
 }
 
 export default {
