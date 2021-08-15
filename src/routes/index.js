@@ -36,6 +36,7 @@ import DashboardPage from '../containers/Dashboard';
 import ExplorePage from '../containers/Explore';
 import SearchPage from '../containers/search';
 import Settings from '../containers/settings';
+import StaticPage from '../containers/page';
 import NotFoundPage from '../containers/NotFound';
 
 const GroupsBrowse = Actors('groups');
@@ -241,6 +242,11 @@ const Routes = (props) => {
         component={(params) => {
           return <NotesRead {...params} />;
         }}
+      />
+      <Route
+        exact
+        path="/pages/:alias"
+        component={StaticPage}
       />
       <Route
         exact
