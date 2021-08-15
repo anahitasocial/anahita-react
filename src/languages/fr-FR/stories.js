@@ -16,4 +16,7 @@ export default {
   setComment: '<0>{{subject}}</0> a commenté <1>le set de photos</1>',
   actorFollow: '<0>{{subject}}</0> suit <2>{{target}}</2>',
   actorFollowerAdd: '<0>{{subject}}</0> a ajouté <1>{{object}}</1>',
+  actorMention: '<0>{{subject}}</0> vous a mentionné dans un <1>publication</1>',
+  actorMentionComment: '<0>{{subject}}</0> vous a mentionné dans un <1>commentaire</1>',
+  voteup: '<0>{{subject}}</0> a aimé votre <1>publication</1>',
 };
