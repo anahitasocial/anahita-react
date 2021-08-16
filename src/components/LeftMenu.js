@@ -7,11 +7,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import DocumentsIcon from '@material-ui/icons/PictureAsPdf';
+import BlogsIcon from '@material-ui/icons/Announcement';
 import HomeIcon from '@material-ui/icons/Home';
 import ExploreIcon from '@material-ui/icons/Explore';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupsIcon from '@material-ui/icons/GroupWork';
-// import NotificationsIcon from '@material-ui/icons/Notifications';
 import NotesIcon from '@material-ui/icons/Note';
 import PhotosIcon from '@material-ui/icons/Photo';
 import TopicsIcon from '@material-ui/icons/QuestionAnswer';
@@ -187,6 +187,17 @@ const LeftMenu = (props) => {
           <ListItemText primary={i18n.t('settings:mTitle')} />
         </ListItem>
       }
+      <ListItem
+        button
+        component={Link}
+        to="/blogs/"
+        selected={pathname === '/blogs/'}
+      >
+        <ListItemIcon>
+          <BlogsIcon />
+        </ListItemIcon>
+        <ListItemText primary={i18n.t('blogs:cTitle')} />
+      </ListItem>
       {isAuthenticated &&
         <ListItem
           button

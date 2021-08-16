@@ -1,5 +1,9 @@
 export default {
   app: {
+    blogs: {
+      ownerIds: 'Owner Ids',
+      createdByIds: 'Created by Ids',
+    },
     documents: {
       uploadlimit: 'Upload Limit',
       uploadlimitOptions: {
