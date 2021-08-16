@@ -20,6 +20,8 @@ import ActorsRead from '../containers/actors/read';
 import ActorsAdd from '../containers/actors/Add';
 import ActorsSettings from '../containers/actors/settings';
 
+import Blogs from '../containers/blogs';
+
 import Hashtags from '../containers/hashtags';
 import HashtagsRead from '../containers/hashtags/Read';
 
@@ -89,6 +91,11 @@ const Routes = (props) => {
         exact
         path="/"
         component={isAuthenticated ? DashboardPage : HomePage}
+      />
+      <Route
+        exact
+        path="/blogs/"
+        component={Blogs}
       />
       <Route
         exact

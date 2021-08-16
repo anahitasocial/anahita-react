@@ -37,6 +37,7 @@ const namespaces = {
   nodes: [
     'search',
     'notifications',
+    'blogs',
   ],
 };
 

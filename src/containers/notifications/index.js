@@ -8,7 +8,7 @@ import Browse from './Browse';
 import actions from '../../actions/app';
 import i18n from '../../languages';
 
-const NotificationsBrowse = (props) => {
+const Notifications = (props) => {
   const { setAppTitle } = props;
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const NotificationsBrowse = (props) => {
   );
 };
 
-NotificationsBrowse.propTypes = {
+Notifications.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
 };
 
@@ -54,4 +54,4 @@ const mapStateToProps = () => {
 export default connect(
   mapStateToProps(),
   mapDispatchToProps(),
-)(NotificationsBrowse);
+)(Notifications);

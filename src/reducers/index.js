@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import createReducer from './create';
 
 import app from './app';
 import avatar from './avatar';
@@ -18,7 +19,6 @@ import session from './session';
 import signup from './signup';
 import socialgraph from './socialgraph';
 import stories from './stories';
-import taggables from './taggables';
 
 // creators
 import createActorAdmins from './actor/admins';
@@ -29,6 +29,8 @@ import createActorPrivacy from './actor/privacy';
 import createActorsReducer from './createActors';
 import createCommentReducer from './createComment';
 import createMediaReducer from './createMedia';
+
+import DEFAULT_NODE from '../proptypes/NodeDefault';
 
 const namespaces = {
   actors: [
@@ -42,6 +44,10 @@ const namespaces = {
     'photos',
     'topics',
     'todos',
+  ],
+  nodes: [
+    'taggables',
+    'blogs',
   ],
 };
 
@@ -64,7 +70,6 @@ const reducers = {
   signup,
   socialgraph,
   stories,
-  taggables,
 };
 
 namespaces.actors.forEach((ns) => {
@@ -83,6 +88,10 @@ namespaces.actors.forEach((ns) => {
 
 namespaces.media.forEach((ns) => {
   reducers[ns] = createMediaReducer(ns);
+});
+
+namespaces.nodes.forEach((ns) => {
+  reducers[ns] = createReducer(ns, DEFAULT_NODE);
 });
 
 reducers.comments = createCommentReducer('comments');

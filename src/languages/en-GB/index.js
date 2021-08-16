@@ -75,6 +75,10 @@ export default {
   actor: {
     unknown: 'Unknown',
   },
+  blogs: {
+    cTitle: 'Blogs',
+    mTitle: 'Blogs',
+  },
   dashboard: {
     cTitle: 'Dashboard',
     mTitle: 'Dashboard',

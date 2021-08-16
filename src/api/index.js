@@ -53,6 +53,7 @@ const namespaces = {
   nodes: [
     'search',
     'stories',
+    'blogs',
   ],
 };
 
