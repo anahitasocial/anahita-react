@@ -11,6 +11,7 @@ import actions from '../../actions';
 import i18n from '../../languages';
 
 import NodesGadget from './Nodes';
+import MediaGadget from './Media';
 import Hero from './Hero';
 import LocationsMap from './LocationsMap';
 import HeaderMeta from '../../components/HeaderMeta';
@@ -39,7 +40,6 @@ const Home = (props) => {
           <ButtonGroup
             fullWidth
             variant="contained"
-            size="large"
           >
             <Button
               href="https://github.com/anahitasocial/anahita"
@@ -47,7 +47,7 @@ const Home = (props) => {
               color="primary"
               startIcon={<GithubIcon />}
             >
-              Anahita
+              Server
             </Button>
             <Button
               href="https://github.com/anahitasocial/anahita-react"
@@ -55,7 +55,7 @@ const Home = (props) => {
               color="primary"
               startIcon={<GithubIcon />}
             >
-              Anahita React
+              Client
             </Button>
             <Button
               href="/pages/join/"
@@ -70,6 +70,9 @@ const Home = (props) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <NodesGadget namespace="groups" />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <MediaGadget />
         </Grid>
         <Grid item xs={12} md={4}>
           <NodesGadget namespace="hashtags" />

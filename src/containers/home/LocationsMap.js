@@ -33,16 +33,12 @@ const HomeLocationsMap = () => {
   return (
     <Card variant="outlined">
       <CardHeader
-        avatar={
-          <Avatar>
-            <LocationIcon />
-          </Avatar>
-        }
         title={
           <Typography variant="h6">
             Locations Map
           </Typography>
         }
+        subheader="Tag Nodes"
       />
       {locations.length === 0 &&
         <Progress />
@@ -53,6 +49,7 @@ const HomeLocationsMap = () => {
           googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
           loadingElement={<div style={{ height: '100%' }} />}
           mapElement={<div style={{ height: '100%' }} />}
+          height={295}
         />
       }
       <CardActions>

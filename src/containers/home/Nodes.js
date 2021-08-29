@@ -40,6 +40,18 @@ const getAvatar = (node) => {
   return <Avatar>{icons[_.upperFirst(namespace)]}</Avatar>;
 };
 
+const getSubheader = (namespace) => {
+  if (['people', 'groups'].includes(namespace)) {
+    return 'Actor Nodes';
+  }
+
+  if (['hashtags', 'locations'].includes(namespace)) {
+    return 'Tag Nodes';
+  }
+
+  return '';
+};
+
 const HomeNodesGadget = (props) => {
   const { namespace, limit, sort } = props;
 
@@ -70,6 +82,7 @@ const HomeNodesGadget = (props) => {
             {i18n.t(`${namespace}:cTitle`)}
           </Typography>
         }
+        subheader={getSubheader(namespace)}
       />
       {items.length === 0 &&
         <Progress />
@@ -123,7 +136,7 @@ HomeNodesGadget.propTypes = {
 };
 
 HomeNodesGadget.defaultProps = {
-  limit: 7,
+  limit: 5,
   sort: SORTING.TOP,
 };
 

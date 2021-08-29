@@ -133,6 +133,7 @@ const App = (props) => {
           >
             <MenuIcon />
           </IconButton>
+          <SearchBox location={location} />
           <Hidden xsDown implementation="css">
             {appBarTitle && !open &&
               <Typography
@@ -144,7 +145,6 @@ const App = (props) => {
               </Typography>
             }
           </Hidden>
-          <SearchBox location={location} />
           <div className={classes.grow} />
           <Viewer
             viewer={viewer}
