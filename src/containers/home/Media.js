@@ -37,7 +37,7 @@ const HomeMedia = () => {
         <ListItem
           button
           component={Link}
-          to="/notes/"
+          to="explore/notes/"
         >
           <ListItemAvatar>
             <Avatar>
@@ -49,7 +49,7 @@ const HomeMedia = () => {
         <ListItem
           button
           component={Link}
-          to="/photos/"
+          to="explore/photos/"
         >
           <ListItemAvatar>
             <Avatar>
@@ -61,7 +61,7 @@ const HomeMedia = () => {
         <ListItem
           button
           component={Link}
-          to="/topics/"
+          to="explore/topics/"
         >
           <ListItemAvatar>
             <Avatar>
@@ -73,7 +73,7 @@ const HomeMedia = () => {
         <ListItem
           button
           component={Link}
-          to="/articles/"
+          to="explore/articles/"
         >
           <ListItemAvatar>
             <Avatar>
@@ -85,7 +85,7 @@ const HomeMedia = () => {
         <ListItem
           button
           component={Link}
-          to="/documents/"
+          to="explore/documents/"
         >
           <ListItemAvatar>
             <Avatar>
