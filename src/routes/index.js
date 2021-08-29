@@ -13,7 +13,7 @@ import AuthPage from '../containers/auth';
 import AuthToken from '../containers/auth/Token';
 import PasswordResetPage from '../containers/auth/PasswordReset';
 
-import HomePage from '../containers/Home';
+import HomePage from '../containers/home';
 
 import Actors from '../containers/actors';
 import ActorsRead from '../containers/actors/read';

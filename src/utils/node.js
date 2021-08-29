@@ -177,7 +177,7 @@ const getURL = (node) => {
     const namespace = pluralize(node.objectType.split('.')[2]);
     let slug = '';
 
-    if (namespace === 'people') {
+    if (['people', 'hashtags'].includes(namespace)) {
       slug = node.alias;
     } else if (node.alias) {
       slug = `${node.id}-${slugify(node.alias)}`;

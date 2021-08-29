@@ -329,7 +329,7 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
 
 "anahita-react-assets@https://github.com/anahitasocial/anahita-react-assets.git":
   version "1.0.0"
-  resolved "https://github.com/anahitasocial/anahita-react-assets.git#f0405eba51ebd53c0373a6d41c7c3805fa4a2d2d"
+  resolved "https://github.com/anahitasocial/anahita-react-assets.git#2a55e6cde9c47cd075fa04d1e23e2d9dd00137b6"
 
 ansi-align@^2.0.0:
   version "2.0.0"

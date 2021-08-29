@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import ArticlesIcon from '@material-ui/icons/LibraryBooks';
 import DocumentsIcon from '@material-ui/icons/PictureAsPdf';
+import LocationsIcon from '@material-ui/icons/LocationOn';
 import NotesIcon from '@material-ui/icons/Note';
 import PhotosIcon from '@material-ui/icons/Photo';
 import TopicsIcon from '@material-ui/icons/QuestionAnswer';
@@ -29,6 +30,7 @@ StyledIcon.propTypes = {
 export default {
   Articles: <StyledIcon component={ArticlesIcon} />,
   Documents: <StyledIcon component={DocumentsIcon} />,
+  Locations: <StyledIcon component={LocationsIcon} />,
   Notes: <StyledIcon component={NotesIcon} />,
   Photos: <StyledIcon component={PhotosIcon} />,
   Topics: <StyledIcon component={TopicsIcon} />,
