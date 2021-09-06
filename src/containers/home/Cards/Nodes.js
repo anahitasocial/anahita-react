@@ -13,14 +13,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import _ from 'lodash';
 
-import ActorAvatar from '../../components/actor/Avatar';
-import Progress from '../../components/Progress';
-import { App as APP } from '../../constants';
-import icons from '../../components/app/Icons';
+import ActorAvatar from '../../../components/actor/Avatar';
+import Progress from '../../../components/Progress';
+import { App as APP } from '../../../constants';
+import icons from '../../../components/app/Icons';
 
-import api from '../../api';
-import i18n from '../../languages';
-import utils from '../../utils';
+import api from '../../../api';
+import i18n from '../../../languages';
+import utils from '../../../utils';
 
 const { getURL, getNamespace, isActor } = utils.node;
 
@@ -52,7 +52,7 @@ const getSubheader = (namespace) => {
   return '';
 };
 
-const HomeNodesGadget = (props) => {
+const HomeCardNodes = (props) => {
   const { namespace, limit, sort } = props;
 
   const [items, setItems] = useState([]);
@@ -126,7 +126,7 @@ const HomeNodesGadget = (props) => {
   );
 };
 
-HomeNodesGadget.propTypes = {
+HomeCardNodes.propTypes = {
   namespace: PropTypes.string.isRequired,
   limit: PropTypes.number,
   sort: PropTypes.oneOf([
@@ -135,9 +135,9 @@ HomeNodesGadget.propTypes = {
   ]),
 };
 
-HomeNodesGadget.defaultProps = {
+HomeCardNodes.defaultProps = {
   limit: 5,
   sort: SORTING.TOP,
 };
 
-export default HomeNodesGadget;
+export default HomeCardNodes;

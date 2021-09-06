@@ -41,6 +41,7 @@ const styles = (theme) => {
       fontSize: 24,
       marginBottom: theme.spacing(2),
     },
+    content: {},
     authorName: {
       fontSize: 16,
     },
@@ -139,7 +140,7 @@ const MediumCard = (props) => {
       {medium.body &&
         <Player text={medium.body} />
       }
-      <CardContent component="article">
+      <CardContent component="article" className={classes.content}>
         {medium.name &&
           <Typography
             variant="h2"

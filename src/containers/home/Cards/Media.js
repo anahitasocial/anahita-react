@@ -20,9 +20,9 @@ import PhotosIcon from '@material-ui/icons/Photo';
 import TopicsIcon from '@material-ui/icons/QuestionAnswer';
 import ArticlesIcon from '@material-ui/icons/LibraryBooks';
 
-import i18n from '../../languages';
+import i18n from '../../../languages';
 
-const HomeMedia = () => {
+const HomeCardMedia = () => {
   return (
     <Card variant="outlined">
       <CardHeader
@@ -108,4 +108,4 @@ const HomeMedia = () => {
   );
 };
 
-export default HomeMedia;
+export default HomeCardMedia;

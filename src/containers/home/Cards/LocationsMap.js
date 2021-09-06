@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 
-import LocationIcon from '@material-ui/icons/LocationOn';
 
-import AnahitaMap from '../../components/Map';
-import Progress from '../../components/Progress';
-import api from '../../api';
+import AnahitaMap from '../../../components/Map';
+import Progress from '../../../components/Progress';
+import api from '../../../api';
 
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-const HomeLocationsMap = () => {
+const HomeCardMap = () => {
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
@@ -65,4 +63,4 @@ const HomeLocationsMap = () => {
   );
 };
 
-export default HomeLocationsMap;
+export default HomeCardMap;

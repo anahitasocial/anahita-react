@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => {
       '& a': {
         color: theme.palette.primary.main,
         textDecoration: 'none',
+        wordWrap: 'break-word',
       },
     },
     body1,
