@@ -1,14 +1,19 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import { colors } from '@material-ui/core';
-import assets from 'anahita-react-assets';
+
+const { red } = colors;
 
 export default (prefersDarkMode) => {
-  const styles = assets.styles.global({
-    prefersDarkMode,
-    colors,
-  });
-
   return createMuiTheme({
-    ...styles,
+    typography: {
+      useNextVariants: true,
+    },
+    palette: {
+      type: prefersDarkMode ? 'dark' : 'light',
+      primary: {
+        main: prefersDarkMode ? '#90caf9' : '#098ED1',
+      },
+      error: red,
+    },
   });
 };

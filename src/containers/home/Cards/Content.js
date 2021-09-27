@@ -11,7 +11,7 @@ const HomeCardContent = (props) => {
   const {
     title,
     subtitle,
-    body,
+    content,
     actions,
   } = props;
 
@@ -25,9 +25,11 @@ const HomeCardContent = (props) => {
         }
         subtitle={subtitle}
       />
-      <CardContent>
-        {body}
-      </CardContent>
+      {content &&
+        <CardContent>
+          {content}
+        </CardContent>
+      }
       {actions &&
         <CardActions>
           {actions}
@@ -38,17 +40,19 @@ const HomeCardContent = (props) => {
 };
 
 HomeCardContent.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   subtitle: PropTypes.string,
-  body: PropTypes.oneOfType([
+  content: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
-  ]).isRequired,
+  ]),
   actions: PropTypes.node,
 };
 
 HomeCardContent.defaultProps = {
+  title: '',
   subtitle: '',
+  content: null,
   actions: null,
 };
 

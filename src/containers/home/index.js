@@ -1,25 +1,29 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
 import Particles from 'react-particles-js';
-
-import GithubIcon from '@material-ui/icons/GitHub';
 
 import actions from '../../actions';
 import i18n from '../../languages';
 
 import ContentCard from './Cards/Content';
 import NodesCard from './Cards/Nodes';
+import MapCard from './Cards/Map';
 import MediaCard from './Cards/Media';
 import Hero from './Hero';
-import MapCard from './Cards/LocationsMap';
+import cards from './Cards';
+import Masonry from '../../components/BreakpointMasonry';
 import HeaderMeta from '../../components/HeaderMeta';
+
+const useStyles = makeStyles((theme) => {
+  return {
+    card: {
+      marginBottom: theme.spacing(2),
+    },
+  };
+});
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -31,8 +35,10 @@ function getWindowDimensions() {
 
 const Home = (props) => {
   const theme = useTheme();
-  const { setAppTitle } = props;
+  const classes = useStyles();
 
+  const { setAppTitle } = props;
+  const homeCards = cards();
   const { width: winWidth } = getWindowDimensions();
 
   useEffect(() => {
@@ -52,7 +58,7 @@ const Home = (props) => {
               value: 2,
             },
             move: {
-              speed: 1,
+              speed: 0.1,
             },
             lineLinked: {
               color: theme.palette.primary.main,
@@ -83,166 +89,51 @@ const Home = (props) => {
           <Hero />
         </Grid>
         <Grid item xs={12}>
-          <ButtonGroup
-            fullWidth
-            variant="contained"
-          >
-            <Button
-              href="https://github.com/anahitasocial/anahita"
-              target="_blank"
-              color="primary"
-              startIcon={<GithubIcon />}
-            >
-              Server
-            </Button>
-            <Button
-              href="https://github.com/anahitasocial/anahita-react"
-              target="_blank"
-              color="primary"
-              startIcon={<GithubIcon />}
-            >
-              Client
-            </Button>
-          </ButtonGroup>
-        </Grid>
-        <Grid item xs={12}>
-          <ContentCard
-            title="Overview"
-            body={
-              <React.Fragment>
-                Anahita is a platform and framework for developing open
-                science and knowledge sharing applications on a social
-                networking foundation.
-              </React.Fragment>
-            }
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <ContentCard
-            title="Concepts"
-            body={
-              <React.Fragment>
-                Anahita provides the essential nodes and graphs that you need
-                for most of your projects. You can also build your own custom
-                apps with custom nodes and graphs to further extend your platform.
-              </React.Fragment>
-            }
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <ContentCard
-            title="Graph Architecture"
-            body={
-              <React.Fragment>
-                Anahita’s native framework provides a graph architecture and
-                necessary design patterns that you need for developing
-                social apps that work seamlessly with each other.
-                Unlike conventional web applications, Anahita stores
-                app’s data as a network of interconnected nodes and graphs
-                which makes it ready to be used for real-time analysis.
-              </React.Fragment>
-            }
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <ContentCard
-            title="RAD Framework"
-            body={
-              <React.Fragment>
-                <Typography variant="body1">
-                  We have developed Anahita using open source technologies that are
-                  globally accessible to developers such as the LAMP stack and Javascript.
-                </Typography>
-                <ol>
-                  <li>MVC rapid app development framework specialized for building social apps.</li>
-                  <li>Fully customizable theme and user interfaces.</li>
-                  <li>Extendable by social apps and components.</li>
-                  <li>
-                    RESTful and JSON APIs (ideal to use Anahita as a back-end
-                    for mobile apps).
-                  </li>
-                </ol>
-              </React.Fragment>
-            }
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <NodesCard namespace="people" />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <NodesCard namespace="groups" />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <NodesCard namespace="locations" />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <MapCard />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <NodesCard namespace="hashtags" />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <MediaCard />
-        </Grid>
-        <Grid item xs={12}>
-          <ContentCard
-            title="Tribe Support"
-            body={
-              <React.Fragment>
-                Join the Anahita tribe and then post your questions
-                on the <Link href="/groups/107732-tribe-support/">Tribe Support</Link> group
-                to get help from the members for free.
-              </React.Fragment>
-            }
-            actions={
-              <Button
-                href="/pages/join"
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
-                Get Tribe Support
-              </Button>
-            }
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <ContentCard
-            title="Paid Support"
-            body={
-              <React.Fragment>
-                Send an inquiry to the company who develops and maintains Anahita.
-              </React.Fragment>
-            }
-            actions={
-              <Button
-                href="https://www.rmdstudio.com/contact"
-                target="_blank"
-                fullWidth
-              >
-                Get Paid Support
-              </Button>
-            }
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <ContentCard
-            title="Credits"
-            body={
-              <React.Fragment>
-                Anahita is developed and maintained by <strong>rmd Studio</strong>.
-              </React.Fragment>
-            }
-            actions={
-              <Button
-                href="https://www.rmdstudio.com"
-                target="_blank"
-                fullWidth
-              >
-                Visit Website
-              </Button>
-            }
-          />
+          <Masonry>
+            {homeCards.map((card, cardIndex) => {
+              const key = `card-${card.type}-${cardIndex}`;
+              switch (card.type) {
+                case 'content':
+                  return (
+                    <div key={key} className={classes.card}>
+                      <ContentCard
+                        title={card.title}
+                        content={card.content && card.content()}
+                        actions={card.actions && card.actions()}
+                      />
+                    </div>
+                  );
+                case 'map':
+                  return (
+                    <div key={key} className={classes.card}>
+                      <MapCard />
+                    </div>
+                  );
+                case 'media':
+                  return (
+                    <div key={key} className={classes.card}>
+                      <MediaCard />
+                    </div>
+                  );
+                case 'nodes':
+                  return (
+                    <div key={key} className={classes.card}>
+                      <NodesCard
+                        title={card.title}
+                        ids={card.ids}
+                        namespace={card.namespace}
+                        limit={card.limit}
+                        sort={card.sort}
+                      />
+                    </div>
+                  );
+                case 'spacer':
+                  return (<div key={key} />);
+                default:
+                  return (card.custom);
+              }
+            })}
+          </Masonry>
         </Grid>
       </Grid>
     </React.Fragment>

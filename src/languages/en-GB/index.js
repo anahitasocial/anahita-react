@@ -47,6 +47,11 @@ export default {
     support: 'Support',
     report: 'Report Issues',
   },
+  social: {
+    cTitle: 'Social Media',
+    mTitle: 'Social Media',
+    description: 'Like & Follow us',
+  },
   stories: {
     cTitle: 'Stories',
     mTitle: 'Stories',

@@ -1,4 +1,7 @@
+/* eslint no-console: ["error", { allow: ["log", "error"] }] */
+
 import React, { useEffect, useState } from 'react';
+
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -13,7 +16,7 @@ import api from '../../../api';
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
 const HomeCardMap = () => {
-  const [locations, setLocations] = useState([]);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     api.locations.browse({
@@ -23,9 +26,11 @@ const HomeCardMap = () => {
     })
       .then((results) => {
         const { data } = results;
-        setLocations([...data.data]);
+        setItems([...data.data]);
       })
-      .catch(err => console.error(err));
+      .catch((err) => {
+        return console.error(err);
+      });
   }, []);
 
   return (
@@ -38,12 +43,12 @@ const HomeCardMap = () => {
         }
         subheader="Tag Nodes"
       />
-      {locations.length === 0 &&
+      {items.length === 0 &&
         <Progress />
       }
-      {locations.length > 0 &&
+      {items.length > 0 &&
         <AnahitaMap
-          locations={locations}
+          locations={items}
           googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
           loadingElement={<div style={{ height: '100%' }} />}
           mapElement={<div style={{ height: '100%' }} />}

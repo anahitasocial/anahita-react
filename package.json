@@ -33,7 +33,6 @@
     "@material-ui/styles": "^4.11.2",
     "@react-google-maps/api": "^1.13.0",
     "add": "^2.0.6",
-    "anahita-react-assets": "https://github.com/anahitasocial/anahita-react-assets.git",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "clsx": "^1.0.4",

@@ -1,3 +1,5 @@
+/* eslint no-console: ["error", { allow: ["log", "error"] }] */
+
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -41,7 +43,7 @@ const getAvatar = (node) => {
 };
 
 const getSubheader = (namespace) => {
-  if (['people', 'groups'].includes(namespace)) {
+  if (['actors', 'people', 'groups'].includes(namespace)) {
     return 'Actor Nodes';
   }
 
@@ -53,7 +55,12 @@ const getSubheader = (namespace) => {
 };
 
 const HomeCardNodes = (props) => {
-  const { namespace, limit, sort } = props;
+  const {
+    namespace,
+    limit,
+    sort,
+    ids,
+  } = props;
 
   const [items, setItems] = useState([]);
 
@@ -62,12 +69,15 @@ const HomeCardNodes = (props) => {
       start: 0,
       limit,
       sort,
+      ids,
     })
       .then((results) => {
         const { data } = results;
         setItems([...data.data]);
       })
-      .catch(err => console.error(err));
+      .catch((err) => {
+        return console.error(err);
+      });
 
     return () => {
       setItems([]);
@@ -133,11 +143,13 @@ HomeCardNodes.propTypes = {
     SORTING.TOP,
     SORTING.RECENT,
   ]),
+  ids: PropTypes.arrayOf(PropTypes.number),
 };
 
 HomeCardNodes.defaultProps = {
-  limit: 5,
+  limit: 10,
   sort: SORTING.TOP,
+  ids: [],
 };
 
 export default HomeCardNodes;

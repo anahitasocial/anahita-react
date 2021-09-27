@@ -7,12 +7,12 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactMarkdown from 'react-markdown';
 import Container from '@material-ui/core/Container';
-import assets from 'anahita-react-assets';
 import _ from 'lodash';
 
 import HeaderMeta from '../../components/HeaderMeta';
 import actions from '../../actions';
 import i18n from '../../languages';
+import pages from '../../statics/pages';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -34,7 +34,7 @@ const StaticPage = (props) => {
   } = props;
 
   const alias = _.snakeCase(params.alias);
-  const src = assets.pages[alias];
+  const src = pages[alias];
 
   useEffect(() => {
     setAppTitle(i18n.t(`pages:${params.alias}`));

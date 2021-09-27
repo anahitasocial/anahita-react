@@ -1,13 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
+
 import Avatar from '@material-ui/core/Avatar';
-// import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-// import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import assets from 'anahita-react-assets';
+
+import appLogo from '../../statics/logo';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => {
 
 const HomeHero = () => {
   const classes = useStyles();
-  const { color: logo } = assets.logo;
+  const { color: logo } = appLogo;
   return (
     <Card elevation={0} className={classes.root}>
       <CardHeader
