@@ -13,7 +13,7 @@ import NodesCard from './Cards/Nodes';
 import MapCard from './Cards/Map';
 import MediaCard from './Cards/Media';
 import Hero from './Hero';
-import cards from './Cards';
+import home from '../../statics/home';
 import Masonry from '../../components/BreakpointMasonry';
 import HeaderMeta from '../../components/HeaderMeta';
 
@@ -38,7 +38,7 @@ const Home = (props) => {
   const classes = useStyles();
 
   const { setAppTitle } = props;
-  const homeCards = cards();
+  const homeCards = home();
   const { width: winWidth } = getWindowDimensions();
 
   useEffect(() => {
