@@ -2,3 +2,6 @@
 *.png binary
 *.ico binary
 *.icns binary
+
+src/statics/* merge=staging
+src/statics/* merge=prod
