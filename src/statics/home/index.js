@@ -50,7 +50,7 @@ const cards = () => {
         </React.Fragment>
       );
     },
-  }, {
+  },/* {
     type: 'content',
     alias: 'about',
     title: 'What is Anahita?',
@@ -106,7 +106,7 @@ const cards = () => {
         </React.Fragment>
       );
     },
-  }, {
+  }, */{
     type: 'content',
     alias: 'socialmedia',
     title: 'Social Media',
