@@ -56,6 +56,8 @@ const getSubheader = (namespace) => {
 
 const HomeCardNodes = (props) => {
   const {
+    title,
+    subheader,
     namespace,
     limit,
     sort,
@@ -89,10 +91,10 @@ const HomeCardNodes = (props) => {
       <CardHeader
         title={
           <Typography variant="h6">
-            {i18n.t(`${namespace}:cTitle`)}
+            {title || i18n.t(`${namespace}:cTitle`)}
           </Typography>
         }
-        subheader={getSubheader(namespace)}
+        subheader={subheader || getSubheader(namespace)}
       />
       {items.length === 0 &&
         <Progress />
@@ -137,6 +139,8 @@ const HomeCardNodes = (props) => {
 };
 
 HomeCardNodes.propTypes = {
+  title: PropTypes.string,
+  subheader: PropTypes.string,
   namespace: PropTypes.string.isRequired,
   limit: PropTypes.number,
   sort: PropTypes.oneOf([
@@ -147,6 +151,8 @@ HomeCardNodes.propTypes = {
 };
 
 HomeCardNodes.defaultProps = {
+  title: '',
+  subheader: '',
   limit: 10,
   sort: SORTING.TOP,
   ids: [],

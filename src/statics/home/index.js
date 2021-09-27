@@ -18,10 +18,10 @@ const cards = () => {
     subtitle: '',
     content: () => {
       return (
-        <React.Fragment>
+        <Typography variant="body1">
           Anahita has a Client Server architecture.
           You need to setup a serve side API and a client side app.
-        </React.Fragment>
+        </Typography>
       );
     },
     actions: () => {
@@ -50,7 +50,7 @@ const cards = () => {
         </React.Fragment>
       );
     },
-  },/* {
+  }, {
     type: 'content',
     alias: 'about',
     title: 'What is Anahita?',
@@ -106,10 +106,36 @@ const cards = () => {
         </React.Fragment>
       );
     },
-  }, */{
+  }, {
+    type: 'content',
+    title: 'Support',
+    alias: 'support',
+    subtitle: '',
+    content: () => {
+      return (
+        <React.Fragment>
+          <Typography variant="h6" paragraph>
+            Community
+          </Typography>
+          <Typography variant="body1" paragraph>
+            Join the Anahita tribe and then post your questions
+            on the <Link href="/groups/107732-tribe-support/">Tribe Support</Link> group
+            to get help from the members for free.
+          </Typography>
+          <Typography variant="h6" paragraph>
+            Premium
+          </Typography>
+          <Typography variant="body1">
+            <Link href="https://www.rmdstudio.com/contact/" target="_blank">Send an inquiry</Link> to
+            the company who develops and maintains Anahita.
+          </Typography>
+        </React.Fragment>
+      );
+    },
+  }, {
     type: 'content',
     alias: 'socialmedia',
-    title: 'Social Media',
+    title: 'Follow us',
     subtitle: '',
     actions: () => {
       return (
@@ -156,59 +182,40 @@ const cards = () => {
       );
     },
   }, {
-    type: 'content',
-    title: 'Support',
-    alias: 'support',
-    subtitle: '',
-    content: () => {
-      return (
-        <React.Fragment>
-          <Typography variant="h6" paragraph>
-            Community
-          </Typography>
-          <Typography variant="body1" paragraph>
-            Join the Anahita tribe and then post your questions
-            on the <Link href="/groups/107732-tribe-support/">Tribe Support</Link> group
-            to get help from the members for free.
-          </Typography>
-          <Typography variant="h6" paragraph>
-            Premium
-          </Typography>
-          <Typography variant="body1">
-            <Link href="https://www.rmdstudio.com/contact/" target="_blank">Send an inquiry</Link> to
-            the company who develops and maintains Anahita.
-          </Typography>
-        </React.Fragment>
-      );
-    },
-  }, {
     type: 'nodes',
+    title: 'Hashtags',
+    subheader: 'Nodes + Tags',
     alias: 'hashtags',
     namespace: 'hashtags',
     limit: 5,
   }, {
     type: 'map',
+    title: 'Locations',
+    subheader: 'Nodes + Tags',
     alias: 'map',
-  }, {
-    type: 'nodes',
-    alias: 'locations',
-    namespace: 'locations',
-    limit: 5,
+    showList: true,
+    limit: 20,
   }, {
     type: 'spacer',
   }, {
     type: 'media',
     alias: 'media',
   }, {
+    type: 'spacer',
+  }, {
     type: 'nodes',
     alias: 'people',
     namespace: 'people',
     ids: [5, 14071, 166682, 159157, 162324, 162072, 150163, 25896, 120085, 8146],
   }, {
+    type: 'spacer',
+  }, {
+    type: 'spacer',
+  }, {
     type: 'nodes',
     alias: 'groups',
     namespace: 'groups',
-    ids: [84719, 26935, 42242, 10273, 107732, 143713, 128215],
+    ids: [84719, 26935, 42242, 10273, 107732, 143713, 128215, 21626],
     sort: 'top',
   }];
 };

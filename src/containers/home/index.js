@@ -98,6 +98,7 @@ const Home = (props) => {
                     <div key={key} className={classes.card}>
                       <ContentCard
                         title={card.title}
+                        subheader={card.subheader}
                         content={card.content && card.content()}
                         actions={card.actions && card.actions()}
                       />
@@ -106,7 +107,12 @@ const Home = (props) => {
                 case 'map':
                   return (
                     <div key={key} className={classes.card}>
-                      <MapCard />
+                      <MapCard
+                        title={card.title}
+                        subheader={card.subheader}
+                        showList={card.showList}
+                        limit={card.limit}
+                      />
                     </div>
                   );
                 case 'media':
@@ -120,6 +126,7 @@ const Home = (props) => {
                     <div key={key} className={classes.card}>
                       <NodesCard
                         title={card.title}
+                        subheader={card.subheader}
                         ids={card.ids}
                         namespace={card.namespace}
                         limit={card.limit}
