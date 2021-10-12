@@ -1,105 +1,168 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Particles from 'react-particles-js';
 
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-// import Link from '@material-ui/core/Link';
-// import Typography from '@material-ui/core/Typography';
+import actions from '../../../actions';
+import i18n from '../../../languages';
 
-import GithubIcon from '@material-ui/icons/GitHub';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import WebsiteIcon from '@material-ui/icons/Web';
+import HeaderMeta from '../../../components/HeaderMeta';
+import ContentCard from './Cards/Content';
+import NodesCard from './Cards/Nodes';
+import MapCard from './Cards/Map';
+import Masonry from '../../../components/BreakpointMasonry';
+import MediaCard from './Cards/Media';
 
-const cards = () => {
-  return [{
-    type: 'content',
-    title: 'Getting Started',
-    alias: 'getting-started',
-    subtitle: '',
-    content: () => {
-      return (
-        <React.Fragment>
-          Anahita has a Client Server architecture.
-          You need to setup a serve side API and a client side app.
-        </React.Fragment>
-      );
+import Hero from './Hero';
+import content from './content';
+
+const useStyles = makeStyles((theme) => {
+  return {
+    card: {
+      marginBottom: theme.spacing(2),
     },
-    actions: () => {
-      return (
-        <React.Fragment>
-          <Button
-            href="https://github.com/anahitasocial/anahita"
-            target="_blank"
-            color="primary"
-            startIcon={<GithubIcon />}
-            fullWidth
-            variant="contained"
-          >
-            Server
-          </Button>
-          <Button
-            href="https://github.com/anahitasocial/anahita-react"
-            target="_blank"
-            color="primary"
-            startIcon={<GithubIcon />}
-            fullWidth
-            variant="contained"
-          >
-            Client
-          </Button>
-        </React.Fragment>
-      );
-    },
-  }, {
-    type: 'content',
-    alias: 'socialmedia',
-    title: 'Social Media',
-    subtitle: '',
-    actions: () => {
-      return (
-        <React.Fragment>
-          <IconButton
-            href="https://www.rmdstudio.com"
-            target="_blank"
-            aria-label="website"
-            title="rmd Studio website"
-          >
-            <WebsiteIcon />
-          </IconButton>
-          <IconButton
-            href="https://github.com/anahitasocial/anahita"
-            target="_blank"
-            aria-label="github-server"
-            title="Anahita Server"
-          >
-            <GithubIcon />
-          </IconButton>
-          <IconButton
-            href="https://github.com/anahitasocial/anahita-react"
-            target="_blank"
-            aria-label="github-client"
-            title="Anahita Client"
-          >
-            <GithubIcon />
-          </IconButton>
-          <IconButton
-            href="https://www.facebook.com/anahitasocial"
-            target="_blank"
-            aria-label="facebook"
-          >
-            <FacebookIcon />
-          </IconButton>
-          <IconButton
-            href="https://www.twitter.com/anahitapolis"
-            target="_blank"
-            aria-label="twitter"
-          >
-            <TwitterIcon />
-          </IconButton>
-        </React.Fragment>
-      );
-    },
-  }];
+  };
+});
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
+
+const Home = (props) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const { setAppTitle } = props;
+  const { width: winWidth } = getWindowDimensions();
+
+  useEffect(() => {
+    setAppTitle(i18n.t('home:cTitle'));
+  }, [setAppTitle]);
+
+  return (
+    <React.Fragment>
+      <HeaderMeta title={i18n.t('home:cTitle')} />
+      <Particles
+        params={{
+          particles: {
+            number: {
+              value: Math.ceil(winWidth / 8),
+            },
+            size: {
+              value: 2,
+            },
+            move: {
+              speed: 0.1,
+            },
+            lineLinked: {
+              color: theme.palette.primary.main,
+            },
+            shape: {
+              stroke: {
+                color: theme.palette.primary.main,
+              },
+            },
+          },
+        }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          backgroundColor: 'transparent',
+          zIndex: -10,
+        }}
+      />
+      <Grid
+        container
+        spacing={2}
+        direction="row"
+        justify="flex-start"
+        alignItems="stretch"
+      >
+        <Grid item xs={12}>
+          <Hero />
+        </Grid>
+        <Grid item xs={12}>
+          <Masonry>
+            {content.map((card, cardIndex) => {
+              const key = `card-${card.type}-${cardIndex}`;
+              switch (card.type) {
+                case 'content':
+                  return (
+                    <div key={key} className={classes.card}>
+                      <ContentCard
+                        title={card.title}
+                        subheader={card.subheader}
+                        content={card.content && card.content()}
+                        actions={card.actions && card.actions()}
+                      />
+                    </div>
+                  );
+                case 'map':
+                  return (
+                    <div key={key} className={classes.card}>
+                      <MapCard
+                        title={card.title}
+                        subheader={card.subheader}
+                        showList={card.showList}
+                        limit={card.limit}
+                      />
+                    </div>
+                  );
+                case 'media':
+                  return (
+                    <div key={key} className={classes.card}>
+                      <MediaCard />
+                    </div>
+                  );
+                case 'nodes':
+                  return (
+                    <div key={key} className={classes.card}>
+                      <NodesCard
+                        title={card.title}
+                        subheader={card.subheader}
+                        ids={card.ids}
+                        namespace={card.namespace}
+                        limit={card.limit}
+                        sort={card.sort}
+                      />
+                    </div>
+                  );
+                case 'spacer':
+                  return (<div key={key} />);
+                default:
+                  return (card.custom);
+              }
+            })}
+          </Masonry>
+        </Grid>
+      </Grid>
+    </React.Fragment>
+  );
 };
 
-export default cards;
+Home.propTypes = {
+  setAppTitle: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = () => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setAppTitle: (title) => {
+      return dispatch(actions.app.setAppTitle(title));
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Home);
