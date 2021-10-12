@@ -15,7 +15,6 @@ const cards = () => {
     type: 'content',
     title: 'Getting Started',
     alias: 'getting-started',
-    subtitle: '',
     content: () => {
       return (
         <Typography variant="body1">
@@ -54,7 +53,6 @@ const cards = () => {
     type: 'content',
     alias: 'about',
     title: 'What is Anahita?',
-    subtitle: '',
     content: () => {
       return (
         <React.Fragment>
@@ -110,7 +108,6 @@ const cards = () => {
     type: 'content',
     title: 'Support',
     alias: 'support',
-    subtitle: '',
     content: () => {
       return (
         <React.Fragment>
@@ -134,9 +131,8 @@ const cards = () => {
     },
   }, {
     type: 'content',
-    alias: 'socialmedia',
-    title: 'Follow us',
-    subtitle: '',
+    alias: 'links',
+    title: 'Follow #Anahita',
     actions: () => {
       return (
         <React.Fragment>
