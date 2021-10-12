@@ -1,30 +1,23 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useTheme, makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import { useTheme } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import Particles from 'react-particles-js';
+
+import IconButton from '@material-ui/core/IconButton';
+
+import GithubIcon from '@material-ui/icons/GitHub';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import WebsiteIcon from '@material-ui/icons/Web';
 
 import actions from '../../../actions';
 import i18n from '../../../languages';
 
 import HeaderMeta from '../../../components/HeaderMeta';
-import ContentCard from './Cards/Content';
-import NodesCard from './Cards/Nodes';
-import MapCard from './Cards/Map';
-import Masonry from '../../../components/BreakpointMasonry';
-import MediaCard from './Cards/Media';
-
 import Hero from './Hero';
-import content from './content';
-
-const useStyles = makeStyles((theme) => {
-  return {
-    card: {
-      marginBottom: theme.spacing(2),
-    },
-  };
-});
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -35,7 +28,6 @@ function getWindowDimensions() {
 }
 
 const Home = (props) => {
-  const classes = useStyles();
   const theme = useTheme();
   const { setAppTitle } = props;
   const { width: winWidth } = getWindowDimensions();
@@ -61,10 +53,12 @@ const Home = (props) => {
             },
             lineLinked: {
               color: theme.palette.primary.main,
+              opacity: 0.3,
             },
             shape: {
               stroke: {
                 color: theme.palette.primary.main,
+                opacity: 0.3,
               },
             },
           },
@@ -77,71 +71,50 @@ const Home = (props) => {
           zIndex: -10,
         }}
       />
-      <Grid
-        container
-        spacing={2}
-        direction="row"
-        justify="flex-start"
-        alignItems="stretch"
-      >
-        <Grid item xs={12}>
-          <Hero />
-        </Grid>
-        <Grid item xs={12}>
-          <Masonry>
-            {content.map((card, cardIndex) => {
-              const key = `card-${card.type}-${cardIndex}`;
-              switch (card.type) {
-                case 'content':
-                  return (
-                    <div key={key} className={classes.card}>
-                      <ContentCard
-                        title={card.title}
-                        subheader={card.subheader}
-                        content={card.content && card.content()}
-                        actions={card.actions && card.actions()}
-                      />
-                    </div>
-                  );
-                case 'map':
-                  return (
-                    <div key={key} className={classes.card}>
-                      <MapCard
-                        title={card.title}
-                        subheader={card.subheader}
-                        showList={card.showList}
-                        limit={card.limit}
-                      />
-                    </div>
-                  );
-                case 'media':
-                  return (
-                    <div key={key} className={classes.card}>
-                      <MediaCard />
-                    </div>
-                  );
-                case 'nodes':
-                  return (
-                    <div key={key} className={classes.card}>
-                      <NodesCard
-                        title={card.title}
-                        subheader={card.subheader}
-                        ids={card.ids}
-                        namespace={card.namespace}
-                        limit={card.limit}
-                        sort={card.sort}
-                      />
-                    </div>
-                  );
-                case 'spacer':
-                  return (<div key={key} />);
-                default:
-                  return (card.custom);
-              }
-            })}
-          </Masonry>
-        </Grid>
-      </Grid>
+      <Hero />
+      <Typography align="center" variant="h6">
+        Follow #Anahita
+      </Typography>
+      <Box align="center">
+        <IconButton
+          href="https://www.anahita.io"
+          target="_blank"
+          aria-label="website"
+          title="Anahita Knowlege Networking Platform & Framework"
+        >
+          <WebsiteIcon />
+        </IconButton>
+        <IconButton
+          href="https://github.com/anahitasocial/anahita"
+          target="_blank"
+          aria-label="github-server"
+          title="Anahita Server"
+        >
+          <GithubIcon />
+        </IconButton>
+        <IconButton
+          href="https://github.com/anahitasocial/anahita-react"
+          target="_blank"
+          aria-label="github-client"
+          title="Anahita Client"
+        >
+          <GithubIcon />
+        </IconButton>
+        <IconButton
+          href="https://www.facebook.com/anahitasocial"
+          target="_blank"
+          aria-label="facebook"
+        >
+          <FacebookIcon />
+        </IconButton>
+        <IconButton
+          href="https://www.twitter.com/anahitapolis"
+          target="_blank"
+          aria-label="twitter"
+        >
+          <TwitterIcon />
+        </IconButton>
+      </Box>
     </React.Fragment>
   );
 };

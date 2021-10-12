@@ -1,5 +1,5 @@
 import assets from '../../assets';
 
-const { Home } = assets.home;
+const { Home } = assets;
 
 export default Home;
