@@ -2,12 +2,12 @@ import React from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import logo from '../statics/logo';
+import assets from '../assets';
 
 const {
   white: darkThemeLogo,
   color: lightThemeLogo,
-} = logo;
+} = assets.logo;
 
 const Logo = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');

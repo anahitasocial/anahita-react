@@ -1,19 +1,18 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import { colors } from '@material-ui/core';
+import assets from '../assets';
 
 const { red } = colors;
+const { styles } = assets;
 
 export default (prefersDarkMode) => {
+  const style = styles.global({
+    colors: {
+      red,
+    },
+    prefersDarkMode,
+  });
   return createMuiTheme({
-    typography: {
-      useNextVariants: true,
-    },
-    palette: {
-      type: prefersDarkMode ? 'dark' : 'light',
-      primary: {
-        main: prefersDarkMode ? '#90caf9' : '#098ED1',
-      },
-      error: red,
-    },
+    ...style,
   });
 };

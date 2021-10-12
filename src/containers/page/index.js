@@ -12,7 +12,7 @@ import _ from 'lodash';
 import HeaderMeta from '../../components/HeaderMeta';
 import actions from '../../actions';
 import i18n from '../../languages';
-import pages from '../../statics/pages';
+import assets from '../../assets';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -34,7 +34,7 @@ const StaticPage = (props) => {
   } = props;
 
   const alias = _.snakeCase(params.alias);
-  const src = pages[alias];
+  const src = assets.pages[alias];
 
   useEffect(() => {
     setAppTitle(i18n.t(`pages:${params.alias}`));
