@@ -9,11 +9,11 @@ import actions from '../../../actions';
 import i18n from '../../../languages';
 
 import HeaderMeta from '../../../components/HeaderMeta';
-import ContentCard from './Cards/Content';
-import NodesCard from './Cards/Nodes';
-import MapCard from './Cards/Map';
+import ContentCard from '../../../components/cards/home/Content';
+import NodesCard from '../../../components/cards/home/Nodes';
+import MapCard from '../../../components/cards/home/Map';
 import Masonry from '../../../components/BreakpointMasonry';
-import MediaCard from './Cards/Media';
+import MediaCard from '../../../components/cards/home/Media';
 
 import Hero from './Hero';
 import content from './content';

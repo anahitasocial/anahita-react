@@ -15,12 +15,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 
-import AnahitaMap from '../../../../components/Map';
-import Progress from '../../../../components/Progress';
-import { App as APP } from '../../../../constants';
-import icons from '../../../../components/app/Icons';
-import api from '../../../../api';
-import utils from '../../../../utils';
+import AnahitaMap from '../../Map';
+import Progress from '../../Progress';
+import { App as APP } from '../../../constants';
+import icons from '../../app/Icons';
+import api from '../../../api';
+import utils from '../../../utils';
 
 const { getURL } = utils.node;
 const { SORTING } = APP.BROWSE;

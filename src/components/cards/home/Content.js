@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 const HomeCardContent = (props) => {
   const {
     title,
-    subtitle,
+    subheader,
     content,
     actions,
   } = props;
@@ -23,7 +23,7 @@ const HomeCardContent = (props) => {
             {title}
           </Typography>
         }
-        subtitle={subtitle}
+        subheader={subheader}
       />
       {content &&
         <CardContent>
@@ -41,7 +41,7 @@ const HomeCardContent = (props) => {
 
 HomeCardContent.propTypes = {
   title: PropTypes.string,
-  subtitle: PropTypes.string,
+  subheader: PropTypes.string,
   content: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
@@ -51,7 +51,7 @@ HomeCardContent.propTypes = {
 
 HomeCardContent.defaultProps = {
   title: '',
-  subtitle: '',
+  subheader: '',
   content: null,
   actions: null,
 };

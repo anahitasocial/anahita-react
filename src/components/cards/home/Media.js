@@ -20,7 +20,7 @@ import PhotosIcon from '@material-ui/icons/Photo';
 import TopicsIcon from '@material-ui/icons/QuestionAnswer';
 import ArticlesIcon from '@material-ui/icons/LibraryBooks';
 
-import i18n from '../../../../languages';
+import i18n from '../../../languages';
 
 const HomeCardMedia = () => {
   return (
