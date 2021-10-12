@@ -91,7 +91,7 @@ const HomeCardMap = (params) => {
               >
                 <ListItemAvatar>
                   <Avatar>
-                    {icons['Locations']}
+                    {icons.Locations}
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
