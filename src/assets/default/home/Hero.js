@@ -7,7 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
-import appLogo from '../../statics/logo';
+import appLogo from '../media/logo';
 
 const useStyles = makeStyles((theme) => {
   return {
