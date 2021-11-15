@@ -15,12 +15,12 @@ import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 
 import Progress from '../../../components/Progress';
+import DialogAlert from '../../../components/DialogAlert';
 
 import PrivacyType from '../../../proptypes/actor/Privacy';
 import ActorType from '../../../proptypes/Actor';
 import actions from '../../../actions';
 import i18n from '../../../languages';
-import utils from '../../../utils';
 import { Access as ACCESS } from '../../../constants';
 
 const ActorsSettingsPrivacy = (props) => {
@@ -37,7 +37,25 @@ const ActorsSettingsPrivacy = (props) => {
     namespace,
   } = props;
 
+  const accessOptions = {
+    people: [
+      ACCESS.DEFAULT.PUBLIC,
+      ACCESS.DEFAULT.REGISTERED,
+      ACCESS.DEFAULT.FOLLOWERS,
+      ACCESS.DEFAULT.LEADERS,
+      ACCESS.DEFAULT.MUTUALS,
+      ACCESS.DEFAULT.ADMINS,
+    ],
+    [namespace]: [
+      ACCESS.ACTORS.PUBLIC,
+      ACCESS.ACTORS.REGISTERED,
+      ACCESS.ACTORS.FOLLOWERS,
+      ACCESS.ACTORS.ADMINS,
+    ],
+  };
+
   const [entity, setEntity] = useState(privacy);
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
     readPrivacy(actor);
@@ -65,6 +83,10 @@ const ActorsSettingsPrivacy = (props) => {
 
     privacy[name] = (type === 'checkbox') ? checked : value;
 
+    if (name === 'access' && value === accessOptions[namespace][0]) {
+      setShowDialog(true);
+    }
+
     setEntity({
       ...entity,
       [name]: type === 'checkbox' ? checked : value,
@@ -73,7 +95,13 @@ const ActorsSettingsPrivacy = (props) => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    editPrivacy({ actor, privacy });
+    editPrivacy({ actor, privacy }).then(() => {
+      setShowDialog(false);
+    });
+  };
+
+  const handleDismiss = () => {
+    setShowDialog(false);
   };
 
   if (privacy.access === '' && isFetching) {
@@ -82,102 +110,109 @@ const ActorsSettingsPrivacy = (props) => {
     );
   }
 
-  const accessOptions = utils.node.isPerson(actor) ? ACCESS.DEFAULT : ACCESS.ACTORS;
-
   return (
-    <form onSubmit={handleOnSubmit}>
-      <Card variant="outlined">
-        <CardContent>
-          <FormControl
-            fullWidth
-            margin="normal"
-          >
-            <InputLabel
-              id={`${namespace}-privacy-access-label-id`}
-            >
-              Who can see this profile?
-            </InputLabel>
-            <Select
-              id={`${namespace}-privacy-access-id`}
-              labelId={`${namespace}-privacy-access-label-id`}
-              name="access"
-              value={privacy.access}
-              onChange={handleOnChange}
-              label="Who can see this profile?"
-            >
-              {Object.keys(accessOptions).map((key) => {
-                const option = accessOptions[key];
-                return (
-                  <MenuItem
-                    key={`people-privacy-access-${option}`}
-                    value={option}
-                  >
-                    {i18n.t(`access:${option}`)}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={privacy.allowFollowRequest}
-                onChange={handleOnChange}
-                name="allowFollowRequest"
-                disabled={[
-                  ACCESS.DEFAULT.PUBLIC,
-                  ACCESS.DEFAULT.REGISTERED,
-                ].includes(privacy.access)}
-              />
-            }
-            label="Others can request to follow"
-          />
-          {actor.isAdministrated &&
+    <React.Fragment>
+      <DialogAlert
+        title="Privacy Alert"
+        content="This profile will be publicly visible. Would you like to proceed?"
+        handleConfirm={handleOnSubmit}
+        handleDismiss={handleDismiss}
+        open={showDialog}
+      />
+      <form onSubmit={handleOnSubmit}>
+        <Card variant="outlined">
+          <CardContent>
             <FormControl
               fullWidth
               margin="normal"
             >
               <InputLabel
-                id={`${namespace}-privacy-leadable-add-label-id`}
+                id={`${namespace}-privacy-access-label-id`}
               >
-                Who can can add new followers?
+                Who can see this profile?
               </InputLabel>
               <Select
-                id={`${namespace}-privacy-leadable-add-id`}
-                labelId={`${namespace}-privacy-leadable-add-label-id`}
-                name="leadable:add"
-                value={privacy['leadable:add']}
+                id={`${namespace}-privacy-access-id`}
+                labelId={`${namespace}-privacy-access-label-id`}
+                name="access"
+                value={privacy.access}
                 onChange={handleOnChange}
-                label="Who can can add new followers?"
+                label="Who can see this profile?"
               >
-                {Object.keys(accessOptions).map((key) => {
-                  const option = accessOptions[key];
+                {accessOptions[namespace].map((option) => {
+                  const optionKey = `privacy-${option}`;
                   return (
                     <MenuItem
-                      key={`people-privacy-leadable-add-${option}`}
+                      key={optionKey}
                       value={option}
                     >
-                      {i18n.t(`access:${option}`)}
+                      {i18n.t(`access:${namespace}.${option}`)}
                     </MenuItem>
                   );
                 })}
               </Select>
             </FormControl>
-          }
-        </CardContent>
-        <CardActions>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disabled={isFetching}
-            fullWidth
-          >
-            Save
-          </Button>
-        </CardActions>
-      </Card>
-    </form>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={privacy.allowFollowRequest}
+                  onChange={handleOnChange}
+                  name="allowFollowRequest"
+                  disabled={[
+                    ACCESS.DEFAULT.PUBLIC,
+                    ACCESS.DEFAULT.REGISTERED,
+                  ].includes(privacy.access)}
+                />
+              }
+              label="Others can request to follow"
+            />
+            {actor.isAdministrated &&
+              <FormControl
+                fullWidth
+                margin="normal"
+              >
+                <InputLabel
+                  id={`${namespace}-privacy-leadable-add-label-id`}
+                >
+                  Who can can add new followers?
+                </InputLabel>
+                <Select
+                  id={`${namespace}-privacy-leadable-add-id`}
+                  labelId={`${namespace}-privacy-leadable-add-label-id`}
+                  name="leadable:add"
+                  value={privacy['leadable:add']}
+                  onChange={handleOnChange}
+                  label="Who can can add new followers?"
+                >
+                  {Object.keys(accessOptions).map((key) => {
+                    const option = accessOptions[key];
+                    return (
+                      <MenuItem
+                        key={`people-privacy-leadable-add-${option}`}
+                        value={option}
+                      >
+                        {i18n.t(`access:${option}`)}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            }
+          </CardContent>
+          <CardActions>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isFetching}
+              fullWidth
+            >
+              Save
+            </Button>
+          </CardActions>
+        </Card>
+      </form>
+    </React.Fragment>
   );
 };
 
