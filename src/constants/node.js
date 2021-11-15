@@ -26,12 +26,7 @@ export default {
       'notes',
       'topics',
       'photos',
-      'photos',
       'todos',
     ],
   },
-  MEDIUM_WITH_HTML_BODY: [
-    'com.articles.article',
-    'com.topics.topic',
-  ],
 };
