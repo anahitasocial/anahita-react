@@ -14,7 +14,6 @@ import NodesCard from '../../../components/cards/home/Nodes';
 import MapCard from '../../../components/cards/home/Map';
 import Masonry from '../../../components/BreakpointMasonry';
 import MediaCard from '../../../components/cards/home/Media';
-
 import Hero from './Hero';
 import content from './content';
 
