@@ -30,10 +30,6 @@ const styles = (theme) => {
     card: {
       marginBottom: theme.spacing(2),
     },
-    portrait: {
-      height: 0,
-      paddingTop: '100%',
-    },
     title: {
       textTransform: 'capitalize',
       marginBottom: theme.spacing(2),
@@ -99,7 +95,7 @@ const StoryCardPhotoAdd = (props) => {
       {!portraits && portrait &&
         <Link href={url}>
           <CardMedia
-            className={classes.portrait}
+            component="img"
             title={title}
             image={portrait}
           />
