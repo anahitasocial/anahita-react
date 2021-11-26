@@ -33,7 +33,7 @@ const ComposersNote = (props) => {
 
   const enableSubmit = body.isValid;
   const placeholder = (owner.id === viewer.id) ? `What's on your mind ${viewer.name}` : 'Share a note';
-  const canPrivatePost = isPerson(owner) && owner.id !== viewer.id && false;
+  const canPrivatePost = isPerson(owner) && owner.id !== viewer.id;
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
