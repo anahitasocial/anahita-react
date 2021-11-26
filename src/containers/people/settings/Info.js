@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
 
 import InfoForm from '../../../components/person/Info';
 import Progress from '../../../components/Progress';
@@ -13,12 +15,15 @@ import { Person as PERSON } from '../../../constants';
 import PersonType from '../../../proptypes/Person';
 import form from '../../../utils/form';
 
-const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
+const { SUPER_ADMIN } = PERSON.FIELDS.TYPE;
+
 const formFields = form.createFormFields([
   'givenName',
   'familyName',
   'body',
-  'gender',
+  'website',
+  'contact_url',
+  'phone',
 ]);
 
 const { canAdminister } = permissions.actor;
@@ -26,10 +31,14 @@ const { canAdminister } = permissions.actor;
 const PersonSettingsInfo = (props) => {
   const {
     editPerson,
-    person,
     viewer,
     isFetching,
   } = props;
+
+  const [person, setPerson] = useState({
+    ...props.person,
+    ...props.person.information,
+  });
 
   const [fields, setFields] = useState(formFields);
 
@@ -46,6 +55,7 @@ const PersonSettingsInfo = (props) => {
     const newFields = form.validateField(target, fields);
 
     setFields({ ...newFields });
+    setPerson({ ...person });
   };
 
   const handleOnSubmit = (event) => {
@@ -59,19 +69,11 @@ const PersonSettingsInfo = (props) => {
       editPerson({
         ...formData,
         id: person.id,
-        enabled: person.enabled ? 1 : 0,
+        enabled: person.enabled,
       });
     }
 
     setFields({ ...newFields });
-  };
-
-  const canChangeUsertype = () => {
-    if (viewer.id !== person.id) {
-      return [ADMIN, SUPER_ADMIN].includes(viewer.usertype);
-    }
-
-    return false;
   };
 
   if (!person.id && isFetching) {
@@ -81,7 +83,7 @@ const PersonSettingsInfo = (props) => {
   }
 
   const isSuperAdmin = viewer.usertype === SUPER_ADMIN;
-  const canEditEnable = canAdminister(viewer) && viewer.id !== person.id;
+  const canAdmin = canAdminister(viewer) && viewer.id !== person.id;
 
   return (
     <InfoForm
@@ -90,19 +92,24 @@ const PersonSettingsInfo = (props) => {
       handleOnChange={handleOnChange}
       handleOnSubmit={handleOnSubmit}
       isFetching={isFetching}
-      canChangeUsertype={canChangeUsertype()}
+      canChangeUsertype={canAdmin}
       isSuperAdmin={isSuperAdmin}
-      enabled={canEditEnable &&
-        <FormControlLabel
-          control={
-            <Switch
-              name="enabled"
-              checked={person.enabled}
-              onChange={handleOnChange}
-            />
-          }
-          label="Enabled"
-        />
+      enabled={canAdmin &&
+        <React.Fragment>
+          <Typography variant="caption" display="block">
+            Joined {moment.utc(person.creationTime).format('LLL').toString()}
+          </Typography>
+          <FormControlLabel
+            control={
+              <Switch
+                name="enabled"
+                checked={person.enabled}
+                onChange={handleOnChange}
+              />
+            }
+            label="Enabled"
+          />
+        </React.Fragment>
       }
     />
   );

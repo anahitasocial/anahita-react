@@ -7,10 +7,11 @@ import TextField from '@material-ui/core/TextField';
 
 import ActorType from '../../../proptypes/Actor';
 import { Actor as ACTOR } from '../../../constants';
+import ActorsFormsMetadata from './Metadata';
 
 const { NAME, BODY } = ACTOR.FIELDS;
 
-const ActorInfoForm = (props) => {
+const ActorFormsInfo = (props) => {
   const {
     handleOnChange,
     handleOnSubmit,
@@ -28,7 +29,7 @@ const ActorInfoForm = (props) => {
         {enabled}
         <TextField
           name="name"
-          value={actor.name || ''}
+          value={actor.name}
           onChange={handleOnChange}
           label="Name"
           error={fields.name.error !== ''}
@@ -57,6 +58,11 @@ const ActorInfoForm = (props) => {
           }}
           required
         />
+        <ActorsFormsMetadata
+          handleOnChange={handleOnChange}
+          fields={fields}
+          actor={actor}
+        />
       </CardContent>
       <CardActions>
         <Button
@@ -73,17 +79,18 @@ const ActorInfoForm = (props) => {
   );
 };
 
-ActorInfoForm.propTypes = {
+ActorFormsInfo.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
+  formTitle: PropTypes.string,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   actor: ActorType.isRequired,
   isFetching: PropTypes.bool.isRequired,
   enabled: PropTypes.node,
 };
 
-ActorInfoForm.defaultProps = {
+ActorFormsInfo.defaultProps = {
   enabled: null,
 };
 
-export default ActorInfoForm;
+export default ActorFormsInfo;

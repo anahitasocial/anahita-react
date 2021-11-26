@@ -11,6 +11,8 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 
+import ActorsFormsMetadata from '../actor/forms/Metadata';
+
 import PersonType from '../../proptypes/Person';
 import { Person as PERSON } from '../../constants';
 
@@ -40,12 +42,18 @@ const PersonInfo = (props) => {
     givenName,
     familyName,
     body,
+    website,
+    contact_url,
+    phone,
   } = fields;
 
   const enableSubmit = !isNew || (
     givenName.isValid &&
     familyName.isValid &&
-    body.isValid
+    body.isValid &&
+    website.isValid &&
+    contact_url.isValid &&
+    phone.isValid
   );
 
   return (
@@ -164,6 +172,11 @@ const PersonInfo = (props) => {
           </RadioGroup>
         </FormControl>
         }
+        <ActorsFormsMetadata
+          handleOnChange={handleOnChange}
+          fields={fields}
+          actor={person}
+        />
       </CardContent>
       <CardActions>
         <Button
