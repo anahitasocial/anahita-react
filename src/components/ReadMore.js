@@ -15,6 +15,7 @@ const ReadMore = (props) => {
     charLimit,
     readMoreText,
     children,
+    contentFilter,
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -23,16 +24,16 @@ const ReadMore = (props) => {
     setIsOpen(!isOpen);
   };
 
+  const shortBody = `${striptags(children.substr(0, charLimit))}... `;
+  const longBody = `${children} `;
+
   if (striptags(children).length < charLimit) {
     return (
-      <EntityBody>
-        {children}
+      <EntityBody contentFilter={contentFilter}>
+        {longBody}
       </EntityBody>
     );
   }
-
-  const shortBody = `${children.substr(0, charLimit)}... `;
-  const longBody = `${children} `;
 
   return (
     <React.Fragment>
@@ -41,7 +42,7 @@ const ReadMore = (props) => {
         timeout="auto"
         unmountOnExit
       >
-        <EntityBody>
+        <EntityBody contentFilter={contentFilter}>
           {shortBody}
         </EntityBody>
         <Link
@@ -57,7 +58,7 @@ const ReadMore = (props) => {
         timeout="auto"
         unmountOnExit
       >
-        <EntityBody>
+        <EntityBody contentFilter={contentFilter}>
           {longBody}
         </EntityBody>
       </Collapse>
@@ -69,11 +70,13 @@ ReadMore.propTypes = {
   charLimit: PropTypes.number,
   readMoreText: PropTypes.string,
   children: PropTypes.string.isRequired,
+  contentFilter: PropTypes.bool,
 };
 
 ReadMore.defaultProps = {
   charLimit: CHAR_LIMIT,
   readMoreText: i18n.t('commons:readMore'),
+  contentFilter: false,
 };
 
 export default ReadMore;

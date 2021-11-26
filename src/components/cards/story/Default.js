@@ -137,15 +137,8 @@ const StoryCardDefault = (props) => {
           </Typography>
         }
         {body &&
-          <ReadMore>
-            {contentfilter({
-              text: body,
-              filters: [
-                'hashtag',
-                'mention',
-                'url',
-              ],
-            })}
+          <ReadMore contentFilter>
+            {body}
           </ReadMore>
         }
       </CardContent>

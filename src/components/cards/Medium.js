@@ -148,7 +148,7 @@ const MediumCard = (props) => {
           </Typography>
         }
         {medium.body &&
-          <ReadMore>
+          <ReadMore contentFilter>
             {medium.body}
           </ReadMore>
         }
