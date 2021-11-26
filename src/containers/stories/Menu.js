@@ -11,6 +11,7 @@ import NotificationAction from '../actions/medium/Notification';
 import DeleteAction from '../actions/Delete';
 import FollowAction from '../actions/Follow';
 
+import PersonType from '../../proptypes/Person';
 import StoryType from '../../proptypes/Story';
 import permissions from '../../permissions';
 
@@ -25,7 +26,7 @@ const NotificationActionWithRef = withRef(NotificationAction);
 const DeleteActionWithRef = withRef(DeleteAction);
 
 const StoryMenu = (props) => {
-  const { story } = props;
+  const { story, viewer } = props;
 
   const [menuAnchorEl, setAnchorEl] = useState(null);
 

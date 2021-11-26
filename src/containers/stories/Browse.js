@@ -42,6 +42,7 @@ const StoriesBrowse = (props) => {
     comments,
     hasMore,
     viewer,
+    isAuthenticated,
     error,
   } = props;
 
@@ -113,10 +114,9 @@ const StoriesBrowse = (props) => {
           <StoryCard
             story={node}
             key={key}
-            menu={
+            menu={isAuthenticated &&
               <StoryMenu
                 story={node}
-                viewer={viewer}
               />
             }
             stats={[
@@ -134,7 +134,7 @@ const StoriesBrowse = (props) => {
                 }}
               />,
             ]}
-            actions={[
+            actions={isAuthenticated && [
               node.object && isLikeable(node.object) &&
               <Like
                 story={node}
