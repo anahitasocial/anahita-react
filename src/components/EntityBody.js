@@ -5,6 +5,8 @@ import gfm from 'remark-gfm';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
 
+import cFilter from './contentfilter';
+
 const useStyles = makeStyles((theme) => {
   const { body1, body2 } = theme.typography;
   return {
@@ -25,7 +27,21 @@ const EntityBody = (props) => {
   const {
     children,
     size,
+    contentFilter,
   } = props;
+
+  let body = `${children}`;
+
+  if (contentFilter) {
+    body = cFilter({
+      text: children,
+      filters: [
+        'hashtag',
+        'mention',
+        'url',
+      ],
+    });
+  }
 
   return (
     <ReactMarkdown
@@ -35,7 +51,7 @@ const EntityBody = (props) => {
         classes[size],
       )}
     >
-      {children}
+      {body}
     </ReactMarkdown>
   );
 };
@@ -43,10 +59,12 @@ const EntityBody = (props) => {
 EntityBody.propTypes = {
   children: PropTypes.string.isRequired,
   size: PropTypes.oneOf(['body1', 'body2']),
+  contentFilter: PropTypes.bool,
 };
 
 EntityBody.defaultProps = {
   size: 'body1',
+  contentFilter: false,
 };
 
 export default EntityBody;

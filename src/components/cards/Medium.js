@@ -33,10 +33,6 @@ const styles = (theme) => {
       height: 0,
       paddingTop: '30%',
     },
-    portrait: {
-      height: 0,
-      paddingTop: '100%',
-    },
     title: {
       fontSize: 24,
       marginBottom: theme.spacing(2),
@@ -130,10 +126,10 @@ const MediumCard = (props) => {
           }}
         >
           <CardMedia
-            className={classes.portrait}
+            component="img"
             title={medium.name}
+            alias={medium.name}
             image={portrait}
-            src="picture"
           />
         </ButtonBase>
       }
@@ -152,7 +148,7 @@ const MediumCard = (props) => {
           </Typography>
         }
         {medium.body &&
-          <ReadMore>
+          <ReadMore contentFilter>
             {medium.body}
           </ReadMore>
         }

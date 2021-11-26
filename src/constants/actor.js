@@ -12,7 +12,10 @@ export default {
       MIN_LENGTH: 3,
     },
     BODY: {
-      MAX_LENGTH: 500,
+      MAX_LENGTH: 1000,
+    },
+    METADATA: {
+      MAX_LENGTH: 100,
     },
   },
 };

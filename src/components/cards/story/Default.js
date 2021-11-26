@@ -50,9 +50,6 @@ const styles = (theme) => {
     ownerName: {
       fontSize: 14,
     },
-    portrait: {
-      minHeight: theme.spacing(30),
-    },
   };
 };
 
@@ -119,10 +116,9 @@ const StoryCardDefault = (props) => {
       {portrait &&
         <Link href={url}>
           <CardMedia
-            className={classes.portrait}
+            component="img"
             title={title}
             image={portrait}
-            src="picture"
           />
         </Link>
       }
@@ -141,15 +137,8 @@ const StoryCardDefault = (props) => {
           </Typography>
         }
         {body &&
-          <ReadMore>
-            {contentfilter({
-              text: body,
-              filters: [
-                'hashtag',
-                'mention',
-                'url',
-              ],
-            })}
+          <ReadMore contentFilter>
+            {body}
           </ReadMore>
         }
       </CardContent>

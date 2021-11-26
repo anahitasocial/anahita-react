@@ -107,9 +107,9 @@ const MediaBrowse = (props) => {
                 <MediumCard
                   medium={node}
                   viewer={viewer}
-                  handleView={(e, medium) => {
-                    return handleView(e, medium);
-                  }}
+                  // handleView={(e, medium) => {
+                  //  return handleView(e, medium);
+                  // }}
                 />
               </div>
             );

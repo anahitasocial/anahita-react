@@ -103,15 +103,8 @@ const ActorCard = (props) => {
       />
       {actor.body &&
       <CardContent>
-        <ReadMore charLimit={160}>
-          {contentfilter({
-            text: actor.body,
-            filters: [
-              'hashtag',
-              'mention',
-              'url',
-            ],
-          })}
+        <ReadMore charLimit={160} contentFilter>
+          {actor.body}
         </ReadMore>
       </CardContent>
       }

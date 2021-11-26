@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { singularize } from 'inflected';
-
+import moment from 'moment';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
 
 import ActorInfoForm from '../../../components/actor/forms/Info';
 import Progress from '../../../components/Progress';
@@ -18,6 +19,9 @@ import PersonType from '../../../proptypes/Person';
 const formFields = form.createFormFields([
   'name',
   'body',
+  'website',
+  'contact_url',
+  'phone',
 ]);
 
 const { canAdminister } = permissions.actor;
@@ -25,11 +29,15 @@ const { canAdminister } = permissions.actor;
 const ActorsSettingsInfo = (props) => {
   const {
     editActor,
-    actor,
     namespace,
     isFetching,
     viewer,
   } = props;
+
+  const [actor, setActor] = useState({
+    ...props.actor,
+    ...props.actor.information,
+  });
 
   const [fields, setFields] = useState(formFields);
 
@@ -46,6 +54,7 @@ const ActorsSettingsInfo = (props) => {
     const newFields = form.validateField(target, fields);
 
     setFields({ ...newFields });
+    setActor({ ...actor });
   };
 
   const handleOnSubmit = (event) => {
@@ -83,16 +92,21 @@ const ActorsSettingsInfo = (props) => {
       handleOnSubmit={handleOnSubmit}
       isFetching={isFetching}
       enabled={canAdminister(viewer) &&
-        <FormControlLabel
-          control={
-            <Switch
-              name="enabled"
-              checked={actor.enabled}
-              onChange={handleOnChange}
-            />
-          }
-          label="Enabled"
-        />
+        <React.Fragment>
+          <Typography variant="caption" display="block">
+            Created {moment.utc(actor.creationTime).format('LLL').toString()}
+          </Typography>
+          <FormControlLabel
+            control={
+              <Switch
+                name="enabled"
+                checked={actor.enabled}
+                onChange={handleOnChange}
+              />
+            }
+            label="Enabled"
+          />
+        </React.Fragment>
       }
     />
   );

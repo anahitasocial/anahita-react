@@ -33,11 +33,6 @@ const styles = (theme) => {
       height: 0,
       paddingTop: '30%',
     },
-    portrait: {
-      height: 0,
-      paddingTop: '100%',
-      marginBottom: theme.spacing(2),
-    },
     title: {
       textTransform: 'capitalize',
       marginBottom: theme.spacing(2),
@@ -109,10 +104,9 @@ const StoryCardComment = (props) => {
       {portrait &&
         <Link href={url}>
           <CardMedia
-            className={classes.portrait}
+            component="img"
             title={title}
             image={portrait}
-            src="picture"
           />
         </Link>
       }
@@ -131,15 +125,8 @@ const StoryCardComment = (props) => {
           </Typography>
         }
         {body &&
-          <ReadMore>
-            {contentfilter({
-              text: body,
-              filters: [
-                'hashtag',
-                'mention',
-                'url',
-              ],
-            })}
+          <ReadMore contentFilter>
+            {body}
           </ReadMore>
         }
       </CardContent>

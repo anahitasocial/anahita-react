@@ -34,10 +34,6 @@ const styles = (theme) => {
       height: 0,
       paddingTop: '30%',
     },
-    portrait: {
-      height: 0,
-      paddingTop: '100%',
-    },
     title: {
       fontSize: 36,
       marginBottom: theme.spacing(2),
@@ -100,10 +96,10 @@ const MediumReadDefault = (props) => {
           }
           {portrait &&
             <CardMedia
-              className={classes.portrait}
+              component="img"
               title={medium.name}
+              alias={medium.name}
               image={portrait}
-              src="picture"
             />
           }
           <CardHeader
