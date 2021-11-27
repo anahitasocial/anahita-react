@@ -92,6 +92,11 @@ const Routes = (props) => {
         path="/"
         component={isAuthenticated ? DashboardPage : HomePage}
       />
+      <AuthenticatedRoute
+        exact
+        path="/about/"
+        component={HomePage}
+      />
       <Route
         exact
         path="/blogs/"
