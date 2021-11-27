@@ -9,24 +9,19 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DocumentsIcon from '@material-ui/icons/PictureAsPdf';
 import BlogsIcon from '@material-ui/icons/Announcement';
 import HomeIcon from '@material-ui/icons/Home';
+import AboutIcon from '@material-ui/icons/Info';
 import ExploreIcon from '@material-ui/icons/Explore';
-import PeopleIcon from '@material-ui/icons/People';
-import GroupsIcon from '@material-ui/icons/GroupWork';
-import NotesIcon from '@material-ui/icons/Note';
-import PhotosIcon from '@material-ui/icons/Photo';
-import TopicsIcon from '@material-ui/icons/QuestionAnswer';
-import ArticlesIcon from '@material-ui/icons/LibraryBooks';
+import JoinIcon from '@material-ui/icons/AssignmentInd';
+import LegalIcon from '@material-ui/icons/Description';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import LabelIcon from '@material-ui/icons/Label';
-import LocationIcon from '@material-ui/icons/LocationOn';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { Link, withRouter } from 'react-router-dom';
 
-import NotificationsIcon from '../containers/notifications/Icon';
-import i18n from '../languages';
-import PersonType from '../proptypes/Person';
-import permissions from '../permissions';
+import NotificationsIcon from '../../../containers/notifications/Icon';
+import i18n from '../../../languages';
+import PersonType from '../../../proptypes/Person';
+import permissions from '../../../permissions';
 
 const LeftMenu = (props) => {
   const {
@@ -75,104 +70,64 @@ const LeftMenu = (props) => {
         </ListItemIcon>
         <ListItemText primary={i18n.t('explore:cTitle')} />
       </ListItem>
+      {isAuthenticated &&
+        <ListItem
+          button
+          component={Link}
+          to="/about/"
+          selected={pathname === '/about/'}
+        >
+          <ListItemIcon>
+            <AboutIcon />
+          </ListItemIcon>
+          <ListItemText primary={i18n.t('pages:about')} />
+        </ListItem>
+      }
       <ListItem
         button
         component={Link}
-        to="/people/"
-        selected={pathname === '/people/'}
+        to="/blogs/"
+        selected={pathname === '/blogs/'}
       >
         <ListItemIcon>
-          <PeopleIcon />
+          <BlogsIcon />
         </ListItemIcon>
-        <ListItemText primary={i18n.t('people:cTitle')} />
+        <ListItemText primary={i18n.t('blogs:cTitle')} />
+      </ListItem>
+      {!isAuthenticated &&
+        <ListItem
+          button
+          component={Link}
+          to="/pages/join/"
+          selected={pathname === '/pages/join/'}
+        >
+          <ListItemIcon>
+            <JoinIcon />
+          </ListItemIcon>
+          <ListItemText primary={i18n.t('pages:join')} />
+        </ListItem>
+      }
+      <ListItem
+        button
+        component={Link}
+        to="/pages/privacy/"
+        selected={pathname === '/pages/privacy/'}
+      >
+        <ListItemIcon>
+          <LegalIcon />
+        </ListItemIcon>
+        <ListItemText primary={i18n.t('pages:privacy')} />
       </ListItem>
       <ListItem
         button
         component={Link}
-        to="/groups/"
-        selected={pathname === '/groups/'}
+        to="/pages/tos/"
+        selected={pathname === '/pages/tos/'}
       >
         <ListItemIcon>
-          <GroupsIcon />
+          <LegalIcon />
         </ListItemIcon>
-        <ListItemText primary={i18n.t('groups:cTitle')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/notes/"
-        selected={pathname === '/notes/'}
-      >
-        <ListItemIcon>
-          <NotesIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('notes:cTitle')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/photos/"
-        selected={pathname === '/photos/'}
-      >
-        <ListItemIcon>
-          <PhotosIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('photos:cTitle')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/topics/"
-        selected={pathname === '/topics/'}
-      >
-        <ListItemIcon>
-          <TopicsIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('topics:cTitle')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/articles/"
-        selected={pathname === '/articles/'}
-      >
-        <ListItemIcon>
-          <ArticlesIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('articles:cTitle')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/documents/"
-        selected={pathname === '/documents/'}
-      >
-        <ListItemIcon>
-          <DocumentsIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('documents:cTitle')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/hashtags/"
-        selected={pathname === '/hashtags/'}
-      >
-        <ListItemIcon>
-          <LabelIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('hashtags:cTitle')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/locations/"
-        selected={pathname === '/locations/'}
-      >
-        <ListItemIcon>
-          <LocationIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('locations:cTitle')} />
+        <ListItemText primary={i18n.t('pages:tos')} />
       </ListItem>
       {isAuthenticated && permissions.settings.canEdit(viewer) &&
         <ListItem
@@ -187,17 +142,6 @@ const LeftMenu = (props) => {
           <ListItemText primary={i18n.t('settings:mTitle')} />
         </ListItem>
       }
-      <ListItem
-        button
-        component={Link}
-        to="/blogs/"
-        selected={pathname === '/blogs/'}
-      >
-        <ListItemIcon>
-          <BlogsIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('blogs:cTitle')} />
-      </ListItem>
       {isAuthenticated &&
         <ListItem
           button

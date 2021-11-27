@@ -23,10 +23,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 import { Link, withRouter } from 'react-router-dom';
 
-import NotificationsIcon from '../containers/notifications/Icon';
-import i18n from '../languages';
-import PersonType from '../proptypes/Person';
-import permissions from '../permissions';
+import NotificationsIcon from '../../../containers/notifications/Icon';
+import i18n from '../../../languages';
+import PersonType from '../../../proptypes/Person';
+import permissions from '../../../permissions';
 
 const LeftMenu = (props) => {
   const {
