@@ -18,12 +18,13 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchBox from '../containers/search/SearchBox';
 
 import Viewer from '../components/auth/Viewer';
-import LeftMenu from '../components/LeftMenu';
+import assets from '../assets';
 import Alerts from './Alerts';
 import MenuLogo from '../components/Logo';
 import actions from '../actions';
 
 const drawerWidth = 240;
+const { LeftMenu } = assets.navs;
 
 // Apply some reset
 const useStyles = makeStyles(theme => ({
@@ -83,6 +84,7 @@ const App = (props) => {
     location,
     history,
   } = props;
+
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
