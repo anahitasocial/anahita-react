@@ -17,7 +17,6 @@ import PersonType from '../../proptypes/Person';
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import ReadMore from '../ReadMore';
-import contentfilter from '../contentfilter';
 import utils from '../../utils';
 
 const {

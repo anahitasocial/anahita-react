@@ -29,7 +29,6 @@ const {
   isCommentable,
   getPortraitURL,
   getCoverURL,
-  isRequired,
 } = utils.node;
 
 const MediaRead = (props) => {

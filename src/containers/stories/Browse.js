@@ -41,7 +41,6 @@ const StoriesBrowse = (props) => {
     items,
     comments,
     hasMore,
-    viewer,
     isAuthenticated,
     error,
   } = props;

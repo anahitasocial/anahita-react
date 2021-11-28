@@ -59,10 +59,12 @@ const MediaBrowse = (props) => {
     setStepperOpen(false);
   };
 
+/*
   const handleView = (e, medium) => {
     setCurrent(medium.id);
     setStepperOpen(true);
   };
+*/
 
   const fetchList = () => {
     return setStart(start + LIMIT);

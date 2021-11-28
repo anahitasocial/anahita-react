@@ -11,7 +11,6 @@ import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
-import contentfilter from '../../contentfilter';
 import ReadMore from '../../ReadMore';
 import StoryMessage from './StoryMessage';
 import ActorAvatar from '../../actor/Avatar';
