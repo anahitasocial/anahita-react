@@ -53,6 +53,8 @@ const ActorsRead = (props) => {
     match: {
       params: {
         id,
+        tab,
+        subtab,
       },
     },
   } = props;
@@ -155,6 +157,7 @@ const ActorsRead = (props) => {
       <ActorBody
         actor={actor}
         viewer={viewer}
+        selectedTab={tab}
         admins={actor.id > 0 && actor.administrators &&
           <Admins actor={actor} />
         }
@@ -197,6 +200,7 @@ const ActorsRead = (props) => {
                 filter="mutuals"
               />
             }
+            selectedTab={subtab}
           />
         }
         gadgets={gadgets}

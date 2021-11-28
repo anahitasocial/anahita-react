@@ -40,9 +40,10 @@ const ActorBody = (props) => {
     socialgraph,
     gadgets,
     mentions,
+    selectedTab,
   } = props;
 
-  const [value, setValue] = useState(actor.gadgets[0]);
+  const [value, setValue] = useState(selectedTab || actor.gadgets[0]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -139,6 +140,7 @@ ActorBody.propTypes = {
   socialgraph: PropTypes.node,
   gadgets: PropTypes.arrayOf(PropTypes.node).isRequired,
   mentions: PropTypes.node,
+  selectedTab: PropTypes.string,
 };
 
 ActorBody.defaultProps = {
@@ -148,6 +150,7 @@ ActorBody.defaultProps = {
   locations: null,
   socialgraph: null,
   mentions: null,
+  selectedTab: null,
 };
 
 export default withStyles(styles)(ActorBody);

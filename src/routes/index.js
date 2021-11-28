@@ -187,6 +187,14 @@ const Routes = (props) => {
       />
       <Route
         exact
+        path="/people/:id/:tab/:subtab"
+        component={(params) => {
+          console.log(params);
+          return <PeopleRead {...params} />;
+        }}
+      />
+      <Route
+        exact
         path="/groups/"
         component={GroupsBrowse}
       />

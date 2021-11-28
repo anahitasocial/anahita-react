@@ -70,7 +70,7 @@ SocialgraphTabs.propTypes = {
   leaders: PropTypes.node,
   mutuals: PropTypes.node,
   blocked: PropTypes.node,
-  selectedTab: PropTypes.oneOf(['followers', 'leaders']),
+  selectedTab: PropTypes.oneOf(['followers', 'leaders', 'mutuals', 'blocked']),
 };
 
 SocialgraphTabs.defaultProps = {
