@@ -185,11 +185,15 @@ const Routes = (props) => {
           return <PeopleRead {...params} />;
         }}
       />
+      <AuthenticatedRoute
+        path="/groups/:id/settings/"
+        exact
+        component={GroupsSettings}
+      />
       <Route
         exact
         path="/people/:id/:tab/:subtab"
         component={(params) => {
-          console.log(params);
           return <PeopleRead {...params} />;
         }}
       />
@@ -197,11 +201,6 @@ const Routes = (props) => {
         exact
         path="/groups/"
         component={GroupsBrowse}
-      />
-      <AuthenticatedRoute
-        path="/groups/:id/settings/"
-        exact
-        component={GroupsSettings}
       />
       <AuthenticatedRoute
         exact
@@ -222,6 +221,13 @@ const Routes = (props) => {
         path="/groups/:id/settings/"
         component={(params) => {
           return <GroupsSettings {...params} />;
+        }}
+      />
+      <Route
+        exact
+        path="/groups/:id/:tab/:subtab"
+        component={(params) => {
+          return <GroupsRead {...params} />;
         }}
       />
       <AuthenticatedRoute
