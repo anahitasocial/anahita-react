@@ -32,13 +32,13 @@ const Auth = (props) => {
           textColor="primary"
         >
           <Tab label="Login" />
-          <Tab label="Signup" />
+          {/* <Tab label="Signup" /> */}
         </Tabs>
       </AppBar>
       {tab === 0 &&
         <Login />
       }
-      {tab === 1 &&
+      {tab === 1 && false &&
         <Signup />
       }
     </React.Fragment>
