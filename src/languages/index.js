@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import en from './en-GB';
-import fr from './fr-FR';
+// import fr from './fr-FR';
 
 const DEBUG = process.env.NODE_ENV !== 'production';
 
@@ -12,7 +12,7 @@ i18n
   .init({
     resources: {
       en,
-      fr,
+    //  fr,
     },
     interpolation: {
       escapeValue: false,

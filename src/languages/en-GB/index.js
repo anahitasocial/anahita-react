@@ -21,12 +21,20 @@ export default {
     closeComments: 'Close Comments',
   },
   access: {
-    public: 'Public',
-    registered: 'Registered',
-    followers: 'Followers',
-    leaders: 'Leaders',
-    mutuals: 'Mutuals',
-    admins: 'Only You',
+    people: {
+      public: 'Public',
+      registered: 'Registered',
+      followers: 'Followers',
+      leaders: 'Leaders',
+      mutuals: 'Mutuals',
+      admins: 'Only You',
+    },
+    groups: {
+      public: 'Public',
+      registered: 'Registered',
+      followers: 'Followers',
+      admins: 'Only You',
+    },
   },
   apps: {
     articles: 'Articles',
