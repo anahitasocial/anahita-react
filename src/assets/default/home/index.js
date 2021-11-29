@@ -101,14 +101,14 @@ const Home = (props) => {
           <GithubIcon />
         </IconButton>
         <IconButton
-          href="https://www.facebook.com/anahitasocial"
+          href="https://www.facebook.com/anahita_io"
           target="_blank"
           aria-label="facebook"
         >
           <FacebookIcon />
         </IconButton>
         <IconButton
-          href="https://www.twitter.com/anahitapolis"
+          href="https://www.twitter.com/anahita_io"
           target="_blank"
           aria-label="twitter"
         >
