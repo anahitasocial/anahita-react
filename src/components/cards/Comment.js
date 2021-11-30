@@ -85,7 +85,7 @@ const CommentCard = (props) => {
         action={menu}
       />
       <CardContent className={classes.content}>
-        <EntityBody size="small">
+        <EntityBody>
           {comment.body}
         </EntityBody>
       </CardContent>

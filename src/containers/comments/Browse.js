@@ -100,6 +100,8 @@ const CommentsBrowse = (props) => {
     setFields({ ...newFields });
   };
 
+  items.allIds.reverse();
+
   return (
     <Card variant="outlined">
       <InfiniteScroll
