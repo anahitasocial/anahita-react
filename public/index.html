@@ -3,8 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <meta
       name="viewport"
       content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
@@ -24,7 +22,14 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>%REACT_APP_NAME%</title>
+    <meta property="twitter:title" content="%REACT_APP_NAME%" />
+    <meta property="og:title" content="%REACT_APP_NAME%" />
+
     <meta name="description" content="%REACT_APP_DESCRIPTION%" />
+    <meta property="og:description" content="%REACT_APP_DESCRIPTION%" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:image" content="assets/%REACT_APP_ASSETS%/media/og/ogimage.jpg" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
