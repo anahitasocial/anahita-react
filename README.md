@@ -1,6 +1,6 @@
 # Anahita React
 
-This project is a front-end for Anahita. We've just started this repository. Give us some time to finish this app. For more information Join the [Anahita tribe](https://www.anahita.io/join) and then follow the [Anahita Project](https://www.anahita.io/groups/42242-anahita-project) group.
+This project is a front-end for Anahita. We've just started this repository. Give us some time to finish this app. For more information Join the [Anahita tribe](https://www.anahita.io/pages/join) and then follow the [Anahita Project](https://www.anahita.io/groups/42242-anahita-project) group.
 
 ## Credits
 
