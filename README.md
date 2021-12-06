@@ -4,7 +4,7 @@
 
 This project is a front-end Client developed using [React Material-UI](https://mui.com/) for [Anahita](https://github.com/anahitasocial/anahita). We are currently using this app for our live website, but please remember that this repository is under active development.
 
-To learn more, you can join the [Anahita tribe](https://www.anahita.io/pages/join) and then follow the [Anahita Project](https://www.anahita.io/groups/42242-anahita-project) group for more information.
+You can join the [Anahita tribe](https://www.anahita.io/pages/join) and then follow the [Anahita Project](https://www.anahita.io/groups/42242-anahita-project) group for more information.
 
 # Installation
 
