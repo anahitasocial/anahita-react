@@ -31,6 +31,7 @@ const Actors = (props) => {
     selectedTab,
     namespace,
     owner,
+    isAuthenticated,
   } = props;
 
   const [tab, setTab] = useState(selectedTab);
@@ -62,8 +63,8 @@ const Actors = (props) => {
           textColor="primary"
         >
           <Tab label="All" value="" />
-          <Tab label="Following" value={FILTER.FOLLOWING} />
-          <Tab label="Administering" value={FILTER.ADMINISTERING} />
+          {isAuthenticated && <Tab label="Following" value={FILTER.FOLLOWING} />}
+          {isAuthenticated && <Tab label="Administering" value={FILTER.ADMINISTERING} />}
         </Tabs>
       </AppBar>
       {useMemo(() => {
@@ -93,6 +94,7 @@ Actors.propTypes = {
   ]),
   namespace: PropTypes.string.isRequired,
   owner: PersonType.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 Actors.defaultProps = {
@@ -113,11 +115,13 @@ const mapStateToProps = (namespace) => {
   return (state) => {
     const {
       viewer: owner,
+      isAuthenticated,
     } = state.session;
 
     return {
       namespace,
       owner,
+      isAuthenticated,
     };
   };
 };
