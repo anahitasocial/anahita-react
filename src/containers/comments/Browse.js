@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -62,6 +62,7 @@ const CommentsBrowse = (props) => {
       node: { id, objectType },
       start,
       limit: LIMIT,
+      sort: 'oldest',
     }, namespace);
   }, [start]);
 
@@ -100,30 +101,29 @@ const CommentsBrowse = (props) => {
     setFields({ ...newFields });
   };
 
-  items.allIds.reverse();
-
   return (
     <Card variant="outlined">
-      <InfiniteScroll
-        dataLength={items.allIds.length}
-        next={fetchList}
-        hasMore={hasMore}
-        loader={
-          <Progress key={`${namespace}-progress`} />
-        }
-      >
-        {items.allIds.map((itemId) => {
-          const node = items.byId[itemId];
-          const key = `comment_node_${node.id}`;
-          return (
-            <CommentRead
-              key={key}
-              parent={parent}
-              comment={node}
-            />
-          );
-        })}
-      </InfiniteScroll>
+      {useMemo(() =>
+        <InfiniteScroll
+          dataLength={items.allIds.length}
+          next={fetchList}
+          hasMore={hasMore}
+          loader={
+            <Progress key={`${namespace}-progress`} />
+          }
+        >
+          {items.allIds.map((itemId) => {
+            const node = items.byId[itemId];
+            const key = `comment_node_${node.id}`;
+            return (
+              <CommentRead
+                key={key}
+                parent={parent}
+                comment={node}
+              />
+            );
+          })}
+        </InfiniteScroll>, [items.allIds.length, hasMore])}
       {canAdd &&
         <CommentForm
           fields={fields}
