@@ -23,6 +23,7 @@ import PermissionsType from '../../../../proptypes/actor/Permissions';
 import PermissionType from '../../../../proptypes/actor/Permission';
 import actions from '../../../../actions';
 import i18n from '../../../../languages';
+import utils from '../../../../utils';
 import ACCESS from '../../../../constants/access';
 
 const SettingsPermissionsEdit = (props) => {
@@ -37,23 +38,8 @@ const SettingsPermissionsEdit = (props) => {
     namespace,
   } = props;
 
-  const accessOptions = {
-    people: [
-      ACCESS.DEFAULT.PUBLIC,
-      ACCESS.DEFAULT.REGISTERED,
-      ACCESS.DEFAULT.FOLLOWERS,
-      ACCESS.DEFAULT.LEADERS,
-      ACCESS.DEFAULT.MUTUALS,
-      ACCESS.DEFAULT.ADMINS,
-    ],
-    [namespace]: [
-      ACCESS.ACTORS.PUBLIC,
-      ACCESS.ACTORS.REGISTERED,
-      ACCESS.ACTORS.FOLLOWERS,
-      ACCESS.ACTORS.ADMINS,
-    ],
-  };
-
+  const actorType = utils.node.isPerson(actor) ? 'PEOPLE' : 'ACTORS';
+  const accessOptions = _.values(ACCESS[actorType]);
   const permission = permissions.byId[node.id];
   const [entity, setEntity] = useState(permission.actions);
 
@@ -121,14 +107,14 @@ const SettingsPermissionsEdit = (props) => {
                     onChange={handleOnChange}
                     label={label}
                   >
-                    {accessOptions[namespace].map((option) => {
+                    {accessOptions.map((option) => {
                       const optionKey = `${key}-${option}`;
                       return (
                         <MenuItem
                           key={optionKey}
                           value={option}
                         >
-                          {i18n.t(`access:${namespace}.${option}`)}
+                          {i18n.t(`access:${option}`)}
                         </MenuItem>
                       );
                     })}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -21,6 +22,7 @@ import PrivacyType from '../../../proptypes/actor/Privacy';
 import ActorType from '../../../proptypes/Actor';
 import actions from '../../../actions';
 import i18n from '../../../languages';
+import utils from '../../../utils';
 import { Access as ACCESS } from '../../../constants';
 
 const ActorsSettingsPrivacy = (props) => {
@@ -37,22 +39,8 @@ const ActorsSettingsPrivacy = (props) => {
     namespace,
   } = props;
 
-  const accessOptions = {
-    people: [
-      ACCESS.DEFAULT.PUBLIC,
-      ACCESS.DEFAULT.REGISTERED,
-      ACCESS.DEFAULT.FOLLOWERS,
-      ACCESS.DEFAULT.LEADERS,
-      ACCESS.DEFAULT.MUTUALS,
-      ACCESS.DEFAULT.ADMINS,
-    ],
-    [namespace]: [
-      ACCESS.ACTORS.PUBLIC,
-      ACCESS.ACTORS.REGISTERED,
-      ACCESS.ACTORS.FOLLOWERS,
-      ACCESS.ACTORS.ADMINS,
-    ],
-  };
+  const actorType = utils.node.isPerson(actor) ? 'PEOPLE' : 'ACTORS';
+  const accessOptions = _.values(ACCESS[actorType]);
 
   const [entity, setEntity] = useState(privacy);
   const [showDialog, setShowDialog] = useState(false);
@@ -139,14 +127,14 @@ const ActorsSettingsPrivacy = (props) => {
                 onChange={handleOnChange}
                 label="Who can see this profile?"
               >
-                {accessOptions[namespace].map((option) => {
+                {accessOptions.map((option) => {
                   const optionKey = `privacy-${option}`;
                   return (
                     <MenuItem
                       key={optionKey}
                       value={option}
                     >
-                      {i18n.t(`access:${namespace}.${option}`)}
+                      {i18n.t(`access:${option}`)}
                     </MenuItem>
                   );
                 })}
@@ -159,8 +147,8 @@ const ActorsSettingsPrivacy = (props) => {
                   onChange={handleOnChange}
                   name="allowFollowRequest"
                   disabled={[
-                    ACCESS.DEFAULT.PUBLIC,
-                    ACCESS.DEFAULT.REGISTERED,
+                    ACCESS.ACTORS.PUBLIC,
+                    ACCESS.ACTORS.REGISTERED,
                   ].includes(privacy.access)}
                 />
               }

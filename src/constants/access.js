@@ -1,5 +1,5 @@
 export default {
-  DEFAULT: {
+  PEOPLE: {
     PUBLIC: 'public',
     REGISTERED: 'registered',
     FOLLOWERS: 'followers',

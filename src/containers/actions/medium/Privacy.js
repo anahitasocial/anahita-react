@@ -26,8 +26,9 @@ const ActionsMediumPrivacy = (props) => {
   const [access, setAccess] = useState(medium.access);
   const [waiting, setWaiting] = useState(false);
 
-  const isPublic = access === ACCESS.DEFAULT.PUBLIC;
-  const accessLevels = utils.node.isPerson(medium.owner) ? ACCESS.DEFAULT : ACCESS.ACTORS;
+  const actorType = utils.node.isPerson(medium.owner) ? 'PEOPLE' : 'ACTORS';
+  const isPublic = access === ACCESS[actorType].PUBLIC;
+  const accessLevels = ACCESS[actorType];
 
   useEffect(() => {
     if (access !== medium.access) {

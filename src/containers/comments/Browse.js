@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -103,27 +103,26 @@ const CommentsBrowse = (props) => {
 
   return (
     <Card variant="outlined">
-      {useMemo(() =>
-        <InfiniteScroll
-          dataLength={items.allIds.length}
-          next={fetchList}
-          hasMore={hasMore}
-          loader={
-            <Progress key={`${namespace}-progress`} />
-          }
-        >
-          {items.allIds.map((itemId) => {
-            const node = items.byId[itemId];
-            const key = `comment_node_${node.id}`;
-            return (
-              <CommentRead
-                key={key}
-                parent={parent}
-                comment={node}
-              />
-            );
-          })}
-        </InfiniteScroll>, [items.allIds.length, hasMore])}
+      <InfiniteScroll
+        dataLength={items.allIds.length}
+        next={fetchList}
+        hasMore={hasMore}
+        loader={
+          <Progress key={`${namespace}-progress`} />
+        }
+      >
+        {items.allIds.map((itemId) => {
+          const node = items.byId[itemId];
+          const key = `comment_node_${node.id}`;
+          return (
+            <CommentRead
+              key={key}
+              parent={parent}
+              comment={node}
+            />
+          );
+        })}
+      </InfiniteScroll>
       {canAdd &&
         <CommentForm
           fields={fields}
