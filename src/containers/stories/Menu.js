@@ -41,7 +41,7 @@ const StoryMenu = (props) => {
   const { id, owner } = story;
   const canSubscribe = story.object && isSubscribable(story.object);
   const canFollow = permissions.actor.canFollow(owner);
-  const canDelete = story.commands && story.commands.includes('delete');
+  const canDelete = story.commands && story.commands.includes('delete') && false;
 
   if (!canSubscribe && !canFollow && !canDelete) {
     return (<React.Fragment />);
