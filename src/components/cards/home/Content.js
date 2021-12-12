@@ -16,7 +16,7 @@ const HomeCardContent = (props) => {
   } = props;
 
   return (
-    <Card>
+    <Card component="section">
       <CardHeader
         title={
           <Typography variant="h6">

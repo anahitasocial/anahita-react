@@ -24,7 +24,7 @@ import i18n from '../../../languages';
 
 const HomeCardMedia = () => {
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" component="section">
       <CardHeader
         title={
           <Typography variant="h6">

@@ -33,127 +33,140 @@ const LeftMenu = (props) => {
   } = props;
 
   return (
-    <List>
-      <ListItem
-        button
-        component={Link}
-        to="/"
-        selected={pathname === '/'}
-      >
-        <ListItemIcon>
-          <HomeIcon />
-        </ListItemIcon>
-        <ListItemText primary={isAuthenticated ? i18n.t('dashboard:cTitle') : i18n.t('home:cTitle')} />
-      </ListItem>
-      {isAuthenticated &&
+    <nav>
+      <List>
         <ListItem
           button
           component={Link}
-          to="/notifications/"
-          selected={pathname === '/notifications/'}
+          to="/"
+          selected={pathname === '/'}
         >
           <ListItemIcon>
-            <NotificationsIcon />
+            <HomeIcon />
           </ListItemIcon>
-          <ListItemText primary={i18n.t('notifications:cTitle')} />
+          <ListItemText primary={isAuthenticated ? i18n.t('dashboard:cTitle') : i18n.t('home:cTitle')} />
         </ListItem>
-      }
-      <ListItem
-        button
-        component={Link}
-        to="/explore/"
-        selected={pathname === '/explore/'}
-      >
-        <ListItemIcon>
-          <ExploreIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('explore:cTitle')} />
-      </ListItem>
-      {isAuthenticated &&
+        {isAuthenticated &&
+          <ListItem
+            button
+            component={Link}
+            to="/notifications/"
+            selected={pathname === '/notifications/'}
+          >
+            <ListItemIcon>
+              <NotificationsIcon />
+            </ListItemIcon>
+            <ListItemText primary={i18n.t('notifications:cTitle')} />
+          </ListItem>
+        }
         <ListItem
           button
           component={Link}
-          to="/about/"
-          selected={pathname === '/about/'}
+          to="/explore/"
+          selected={pathname === '/explore/'}
         >
           <ListItemIcon>
-            <AboutIcon />
+            <ExploreIcon />
           </ListItemIcon>
-          <ListItemText primary={i18n.t('pages:about')} />
+          <ListItemText primary={i18n.t('explore:cTitle')} />
         </ListItem>
-      }
-      <ListItem
-        button
-        component={Link}
-        to="/blogs/"
-        selected={pathname === '/blogs/'}
-      >
-        <ListItemIcon>
-          <BlogsIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('blogs:cTitle')} />
-      </ListItem>
-      {!isAuthenticated &&
+        {isAuthenticated &&
+          <ListItem
+            button
+            component={Link}
+            to="/about/"
+            selected={pathname === '/about/'}
+          >
+            <ListItemIcon>
+              <AboutIcon />
+            </ListItemIcon>
+            <ListItemText primary={i18n.t('pages:about')} />
+          </ListItem>
+        }
         <ListItem
           button
           component={Link}
-          to="/pages/join/"
-          selected={pathname === '/pages/join/'}
+          to="/blogs/"
+          selected={pathname === '/blogs/'}
         >
           <ListItemIcon>
-            <JoinIcon />
+            <BlogsIcon />
           </ListItemIcon>
-          <ListItemText primary={i18n.t('pages:join')} />
+          <ListItemText primary={i18n.t('blogs:cTitle')} />
         </ListItem>
-      }
-      <ListItem
-        button
-        component={Link}
-        to="/pages/privacy/"
-        selected={pathname === '/pages/privacy/'}
-      >
-        <ListItemIcon>
-          <LegalIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('pages:privacy')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/pages/tos/"
-        selected={pathname === '/pages/tos/'}
-      >
-        <ListItemIcon>
-          <LegalIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('pages:tos')} />
-      </ListItem>
-      {isAuthenticated && permissions.settings.canEdit(viewer) &&
+        {!isAuthenticated &&
+          <ListItem
+            button
+            component={Link}
+            to="/pages/join/"
+            selected={pathname === '/pages/join/'}
+          >
+            <ListItemIcon>
+              <JoinIcon />
+            </ListItemIcon>
+            <ListItemText primary={i18n.t('pages:join')} />
+          </ListItem>
+        }
         <ListItem
           button
           component={Link}
-          to="/settings/"
-          selected={pathname === '/settings/'}
+          to="/pages/privacy/"
+          selected={pathname === '/pages/privacy/'}
         >
           <ListItemIcon>
-            <SettingsIcon />
+            <LegalIcon />
           </ListItemIcon>
-          <ListItemText primary={i18n.t('settings:mTitle')} />
+          <ListItemText primary={i18n.t('pages:privacy')} />
         </ListItem>
-      }
-      {isAuthenticated &&
         <ListItem
           button
-          component="a"
-          onClick={onLogoutClick}
+          component={Link}
+          to="/pages/guideline/"
+          selected={pathname === '/pages/guideline/'}
         >
           <ListItemIcon>
-            <LockOpenIcon />
+            <LegalIcon />
           </ListItemIcon>
-          <ListItemText primary={i18n.t('auth:logout')} />
+          <ListItemText primary={i18n.t('pages:guideline')} />
         </ListItem>
-      }
-    </List>
+        <ListItem
+          button
+          component={Link}
+          to="/pages/tos/"
+          selected={pathname === '/pages/tos/'}
+        >
+          <ListItemIcon>
+            <LegalIcon />
+          </ListItemIcon>
+          <ListItemText primary={i18n.t('pages:tos')} />
+        </ListItem>
+        {isAuthenticated && permissions.settings.canEdit(viewer) &&
+          <ListItem
+            button
+            component={Link}
+            to="/settings/"
+            selected={pathname === '/settings/'}
+          >
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary={i18n.t('settings:mTitle')} />
+          </ListItem>
+        }
+        {isAuthenticated &&
+          <ListItem
+            button
+            component="a"
+            onClick={onLogoutClick}
+          >
+            <ListItemIcon>
+              <LockOpenIcon />
+            </ListItemIcon>
+            <ListItemText primary={i18n.t('auth:logout')} />
+          </ListItem>
+        }
+      </List>
+    </nav>
   );
 };
 

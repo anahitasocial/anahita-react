@@ -67,6 +67,7 @@ const StoryCardPhotoAdd = (props) => {
     <Card
       className={classes.card}
       variant="outlined"
+      component="section"
     >
       {showOwnerHeader &&
         <StoryCardOwner node={story} />

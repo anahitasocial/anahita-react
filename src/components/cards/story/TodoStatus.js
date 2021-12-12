@@ -66,7 +66,7 @@ const StoryCardTodoStatus = (props) => {
   return (
     <Card
       className={classes.root}
-      component="article"
+      component="section"
       variant="outlined"
     >
       {showOwnerHeader &&

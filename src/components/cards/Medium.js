@@ -67,7 +67,7 @@ const MediumCard = (props) => {
 
   return (
     <Card
-      component="article"
+      component="section"
       variant="outlined"
     >
       {medium.author && medium.owner.id !== medium.author.id &&

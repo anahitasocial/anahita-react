@@ -46,6 +46,7 @@ export default {
     privacy: 'Privacy',
     support: 'Support',
     report: 'Report Issues',
+    guideline: 'Tribes Guideline'
   },
   social: {
     cTitle: 'Social Media',
