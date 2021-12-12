@@ -49,7 +49,7 @@ HeaderMeta.propTypes = {
 };
 
 HeaderMeta.defaultProps = {
-  title: '',
+  title: process.env.REACT_APP_NAME,
   description: process.env.REACT_APP_DESCRIPTION,
   image: `${window.location.origin}/statics/media/ogimage.jpg`,
   url: window.location.href,

@@ -38,7 +38,7 @@ const Home = (props) => {
 
   return (
     <React.Fragment>
-      <HeaderMeta title={i18n.t('home:cTitle')} />
+      <HeaderMeta />
       <Particles
         params={{
           particles: {
