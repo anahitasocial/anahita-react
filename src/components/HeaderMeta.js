@@ -17,7 +17,7 @@ const HeaderMeta = (props) => {
   const twitterCard = image ? 'summary_large_image' : 'summary';
 
   return (
-    <Helmet>
+    <Helmet prioritizeSeoTags>
       {metaTitle && [
         <title key="meta-title">{metaTitle}</title>,
         <meta property="og:title" content={metaTitle} key="og-title" />,
@@ -49,7 +49,7 @@ HeaderMeta.propTypes = {
 };
 
 HeaderMeta.defaultProps = {
-  title: process.env.REACT_APP_NAME,
+  title: '',
   description: process.env.REACT_APP_DESCRIPTION,
   image: `${window.location.origin}/statics/media/ogimage.jpg`,
   url: window.location.href,

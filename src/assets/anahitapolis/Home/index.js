@@ -46,7 +46,10 @@ const Home = (props) => {
 
   return (
     <React.Fragment>
-      <HeaderMeta />
+      <HeaderMeta
+        title="Knowledge Networking Platform and Framework"
+        description="Anahita is a platform and framework for developing open science and knowledge-sharing applications on a social networking foundation."
+      />
       <Particles
         params={{
           particles: {
