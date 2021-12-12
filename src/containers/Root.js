@@ -2,6 +2,7 @@ import React from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
+import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { LoadScriptNext } from '@react-google-maps/api';
 import App from '../containers/App';
@@ -27,9 +28,11 @@ const Root = ({ store }) => {
           language={i18n.language}
           loadingElement={<div />}
         >
-          <App>
-            <Routes store={store} />
-          </App>
+          <HelmetProvider>
+            <App>
+              <Routes store={store} />
+            </App>
+          </HelmetProvider>
         </LoadScriptNext>
       </ThemeProvider>
     </Provider>

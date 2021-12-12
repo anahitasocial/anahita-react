@@ -37,7 +37,7 @@ const HomeCardMedia = () => {
         <ListItem
           button
           component={Link}
-          to="explore/notes/"
+          to="/explore/notes/"
         >
           <ListItemAvatar>
             <Avatar>
@@ -49,7 +49,7 @@ const HomeCardMedia = () => {
         <ListItem
           button
           component={Link}
-          to="explore/photos/"
+          to="/explore/photos/"
         >
           <ListItemAvatar>
             <Avatar>
@@ -61,7 +61,7 @@ const HomeCardMedia = () => {
         <ListItem
           button
           component={Link}
-          to="explore/topics/"
+          to="/explore/topics/"
         >
           <ListItemAvatar>
             <Avatar>
@@ -73,7 +73,7 @@ const HomeCardMedia = () => {
         <ListItem
           button
           component={Link}
-          to="explore/articles/"
+          to="/explore/articles/"
         >
           <ListItemAvatar>
             <Avatar>
@@ -85,7 +85,7 @@ const HomeCardMedia = () => {
         <ListItem
           button
           component={Link}
-          to="explore/documents/"
+          to="/explore/documents/"
         >
           <ListItemAvatar>
             <Avatar>
@@ -98,7 +98,7 @@ const HomeCardMedia = () => {
       <CardActions>
         <Button
           fullWidth
-          href="explore/notes"
+          href="/explore/notes"
           various="text"
         >
           View all

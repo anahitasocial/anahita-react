@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import striptags from 'striptags';
 
 const HeaderMeta = (props) => {
@@ -17,7 +17,7 @@ const HeaderMeta = (props) => {
   const twitterCard = image ? 'summary_large_image' : 'summary';
 
   return (
-    <Helmet prioritizeSeoTags>
+    <Helmet>
       {metaTitle && [
         <title key="meta-title">{metaTitle}</title>,
         <meta property="og:title" content={metaTitle} key="og-title" />,
