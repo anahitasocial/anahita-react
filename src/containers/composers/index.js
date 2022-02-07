@@ -27,12 +27,11 @@ const useStyles = makeStyles({
 const Composers = (props) => {
   const classes = useStyles();
   const {
-    selectedTab,
     owner,
   } = props;
 
-  const { composers = [] } = owner;
-  const [tab, setTab] = useState(selectedTab);
+  const { composers = [null] } = owner;
+  const [tab, setTab] = useState(composers[0]);
 
   const changeTab = (event, value) => {
     setTab(value);
@@ -77,11 +76,6 @@ const Composers = (props) => {
 
 Composers.propTypes = {
   owner: ActorType.isRequired,
-  selectedTab: PropTypes.string,
-};
-
-Composers.defaultProps = {
-  selectedTab: 'notes',
 };
 
 export default Composers;
