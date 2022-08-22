@@ -7,6 +7,9 @@ import ActorCard from '../../../components/cards/Actor';
 import permissions from '../../../permissions/actor';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
+import utils from '../../../utils';
+
+const { node } = utils;
 
 const ActorsCard = (props) => {
   const {
@@ -15,7 +18,8 @@ const ActorsCard = (props) => {
   } = props;
 
   const canFollow = permissions.canFollow(actor);
-  const canAdminister = permissions.canAdminister(viewer) && viewer.id !== actor.id;
+  // const canAdminister = permissions.canAdminister(viewer) && viewer.id !== actor.id;
+  const isSuperAdmin = node.isSuperAdmin(viewer) && viewer.id !== actor.id;
 
   return (
     <ActorCard
@@ -23,7 +27,7 @@ const ActorsCard = (props) => {
       viewer={viewer}
       action={[
         canFollow && <FollowAction actor={actor} />,
-        canAdminister && <DeleteAction node={actor} />,
+        isSuperAdmin && <DeleteAction node={actor} />,
       ]}
     />
   );
