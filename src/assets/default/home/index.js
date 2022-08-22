@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import Particles from 'react-particles-js';
+import Particles from 'react-tsparticles';
 
 import IconButton from '@material-ui/core/IconButton';
 
