@@ -35,7 +35,7 @@ const DashboardPage = (props) => {
       </Helmet>
       <Grid
         container
-        justify="center"
+        justifyContent="center"
       >
         <Grid
           item

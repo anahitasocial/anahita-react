@@ -84,7 +84,7 @@ const Home = (props) => {
         container
         spacing={2}
         direction="row"
-        justify="flex-start"
+        justifyContent="flex-start"
         alignItems="stretch"
       >
         <Grid item xs={12}>

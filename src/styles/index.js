@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import { colors } from '@material-ui/core';
 import assets from '../assets';
 
@@ -12,7 +12,7 @@ export default (prefersDarkMode) => {
     },
     prefersDarkMode,
   });
-  return createMuiTheme({
+  return createTheme({
     ...style,
   });
 };

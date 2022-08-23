@@ -79,7 +79,7 @@ const MediumReadDefault = (props) => {
   return (
     <Grid
       container
-      justify="center"
+      justifyContent="center"
     >
       <Grid item xs={12} md={8}>
         <Card

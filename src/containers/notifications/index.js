@@ -18,7 +18,7 @@ const Notifications = (props) => {
   return (
     <Grid
       container
-      justify="center"
+      justifyContent="center"
     >
       <Grid
         item

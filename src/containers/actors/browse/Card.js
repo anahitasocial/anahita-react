@@ -26,8 +26,8 @@ const ActorsCard = (props) => {
       actor={actor}
       viewer={viewer}
       action={[
-        canFollow && <FollowAction actor={actor} />,
-        isSuperAdmin && <DeleteAction node={actor} />,
+        canFollow && <FollowAction actor={actor} key={`actor-action-follow-${actor.id}`} />,
+        isSuperAdmin && <DeleteAction node={actor} key={`actor-action-delete-${actor.id}`} />,
       ]}
     />
   );

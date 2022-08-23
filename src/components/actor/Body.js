@@ -90,7 +90,7 @@ const ActorBody = (props) => {
           container
           spacing={2}
           direction="row"
-          justify="flex-start"
+          justifyContent="flex-start"
           alignItems="flex-start"
         >
           <Grid item xs={12} md={4}>

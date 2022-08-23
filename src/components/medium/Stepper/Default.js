@@ -106,7 +106,7 @@ const MediumStepperDefault = (props) => {
           <Grid
             container
             alignItems="center"
-            justify="space-between"
+            justifyContent="space-between"
           >
             <Grid item md={1}>
               <Box className={classes.buttons}>
