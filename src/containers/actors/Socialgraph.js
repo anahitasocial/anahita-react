@@ -98,7 +98,7 @@ ActorsSocialgraph.propTypes = {
   filter: PropTypes.oneOf([
     'followers',
     'leaders',
-    'mutual',
+    'mutuals',
     'blocked',
   ]).isRequired,
   queryFilters: PropTypes.object,

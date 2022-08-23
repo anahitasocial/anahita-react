@@ -74,7 +74,6 @@ const ActorBody = (props) => {
               <Tab
                 label={label}
                 value={gadget}
-                key={`actor-tab-${gadget}`}
               />
             );
           })}

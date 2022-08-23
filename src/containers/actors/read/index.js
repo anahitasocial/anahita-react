@@ -151,7 +151,7 @@ const ActorsRead = (props) => {
           </React.Fragment>
         }
         headerActions={canViewCommands &&
-          <Commands actor={actor} />
+          <Commands actor={actor} viewer={viewer} />
         }
       />
       <ActorBody
