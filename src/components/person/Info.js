@@ -127,17 +127,17 @@ const PersonInfo = (props) => {
             <FormControlLabel
               value={GENDER.FEMALE}
               control={<Radio />}
-              label="Female"
+              label="Feminine"
             />
             <FormControlLabel
               value={GENDER.MALE}
               control={<Radio />}
-              label="Male"
+              label="Masculine"
             />
             <FormControlLabel
               value={GENDER.NEUTRAL}
               control={<Radio />}
-              label="Neutral"
+              label="Non-binary"
             />
           </RadioGroup>
         </FormControl>

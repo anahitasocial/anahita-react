@@ -131,7 +131,7 @@ const HomeCardNodes = (props) => {
       <CardActions>
         <Button
           fullWidth
-          href={`explore/${namespace}`}
+          href={`/explore/${namespace}`}
           various="text"
         >
           View all
