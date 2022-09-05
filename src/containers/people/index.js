@@ -70,7 +70,7 @@ const People = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {isAdmin(viewer) &&
         <AppBar
           position="sticky"
@@ -121,10 +121,10 @@ const People = (props) => {
           />
         );
       }, [
-          disabled,
-          usertype,
-        ])}
-    </React.Fragment>
+        disabled,
+        usertype,
+      ])}
+    </>
   );
 };
 
@@ -135,7 +135,6 @@ People.propTypes = {
 
 const mapStateToProps = (state) => {
   const { viewer } = state.session;
-
   return { viewer };
 };
 

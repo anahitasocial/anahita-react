@@ -81,7 +81,7 @@ const ActorsRead = (props) => {
       );
     }
 
-    return <React.Fragment />;
+    return <></>;
   }
 
   // @TODO we need a custom Read container for the Project Actors at this point
@@ -124,7 +124,7 @@ const ActorsRead = (props) => {
   });
 
   return (
-    <React.Fragment>
+    <>
       <HeaderMeta
         title={actor.name}
         description={actor.body}
@@ -145,10 +145,10 @@ const ActorsRead = (props) => {
         }
         actor={actor}
         followAction={
-          <React.Fragment>
+          <>
             {canAdminister && <FollowRequests actor={actor} />}
             {canFollow && <FollowAction actor={actor} />}
-          </React.Fragment>
+          </>
         }
         headerActions={canViewCommands &&
           <Commands actor={actor} viewer={viewer} />
@@ -159,35 +159,30 @@ const ActorsRead = (props) => {
         viewer={viewer}
         selectedTab={tab}
         admins={actor.id > 0 && actor.administrators &&
-          <Admins actor={actor} />
-        }
+          <Admins actor={actor} />}
         composers={isAuthenticated && actor.id &&
-          <Composers owner={actor} />
-        }
-        stories={actor.id &&
+          <Composers owner={actor} />}
+        stories={
           <StoriesBrowse
             queryFilters={{
-              oid: actor.id,
+              oid: id,
             }}
           />
         }
         locations={actor.id &&
-          <LocationsGadget node={actor} />
-        }
+          <LocationsGadget node={actor} />}
         socialgraph={
           <SocialgraphTabs
             followers={actor.id &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="followers"
-              />
-            }
+              />}
             leaders={actor.id && isPerson(actor) &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="leaders"
-              />
-            }
+              />}
             blocked={actor.id && isViewer &&
               <ActorsSocialgraph
                 actorNode={actor}
@@ -198,14 +193,13 @@ const ActorsRead = (props) => {
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="mutuals"
-              />
-            }
+              />}
             selectedTab={subtab}
           />
         }
         gadgets={gadgets}
       />
-    </React.Fragment>
+    </>
   );
 };
 
