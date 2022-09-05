@@ -37,10 +37,7 @@ const MediaBrowse = (props) => {
     queryFilters,
   } = props;
 
-  const startKey = `start_${namespace}`;
-  const [start, setStart] = useState({
-    [startKey]: 0,
-  });
+  const [start, setStart] = useState(0);
   const [current, setCurrent] = useState(items.allIds[0]);
   const [stepperOpen, setStepperOpen] = useState(false);
 
@@ -52,11 +49,11 @@ const MediaBrowse = (props) => {
 
   useEffect(() => {
     browseList({
-      start: start[startKey],
+      start,
       limit: LIMIT,
       ...queryFilters,
     }, namespace);
-  }, [start[startKey]]);
+  }, [start]);
 
   const handleClose = () => {
     setStepperOpen(false);
@@ -70,15 +67,13 @@ const MediaBrowse = (props) => {
 */
 
   const fetchList = () => {
-    return setStart({
-      [startKey]: start[startKey] + LIMIT,
-    });
+    return setStart(start + LIMIT);
   };
 
   const Stepper = MediumStepper(namespace);
 
   return (
-    <>
+    <React.Fragment>
       {useMemo(() => {
         if (stepperOpen && current) {
           return (
@@ -91,7 +86,7 @@ const MediaBrowse = (props) => {
         }
 
         return (
-          <></>
+          <React.Fragment />
         );
       }, [stepperOpen, current])}
       <InfiniteScroll
@@ -124,7 +119,7 @@ const MediaBrowse = (props) => {
           }
         </Masonry>
       </InfiniteScroll>
-    </>
+    </React.Fragment>
   );
 };
 

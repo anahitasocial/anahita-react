@@ -2,7 +2,7 @@ import React from 'react';
 
 const withRef = (Component) => {
   return React.forwardRef((props, ref) => {
-    return <Component {...props} forwardedref={ref} />;
+    return <Component {...props} forwardedRef={ref} />;
   });
 };
 

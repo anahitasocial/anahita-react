@@ -3,9 +3,9 @@ import Img from 'react-image';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ImageList from '@material-ui/core/ImageList';
-import ImageListItem from '@material-ui/core/ImageListItem';
-import ImageListItemBar from '@material-ui/core/ImageListItemBar';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
 import Link from '@material-ui/core/Link';
 import MediaType from '../../../proptypes/Media';
 import utils from '../../../utils';
@@ -37,18 +37,18 @@ function SingleLineGridList(props) {
   const { classes, photos } = props;
 
   return (
-    <>
-      <ImageList
+    <React.Fragment>
+      <GridList
         className={classes.gridList}
         cols={1.1}
-        gap={1}
-        rowHeight={320}
+        spacing={1}
+        cellHeight={320}
       >
         {photos.map((photo) => {
           const src = getPortraitURL(photo);
           const url = getURL(photo);
           return (
-            <ImageListItem key={`gridlist-photo-${photo.id}`}>
+            <GridListTile key={`gridlist-photo-${photo.id}`}>
               <Link href={url}>
                 <Img
                   src={src}
@@ -57,18 +57,19 @@ function SingleLineGridList(props) {
                 />
               </Link>
               {photo.name &&
-                <ImageListItemBar
+                <GridListTileBar
                   title={photo.name}
                   classes={{
                     root: classes.titleBar,
                     title: classes.title,
                   }}
-                />}
-            </ImageListItem>
+                />
+              }
+            </GridListTile>
           );
         })}
-      </ImageList>
-    </>
+      </GridList>
+    </React.Fragment>
   );
 }
 
