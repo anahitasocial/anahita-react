@@ -41,14 +41,14 @@ const LikesActionLikeStory = React.forwardRef((props, ref) => {
       aria-label={label}
       ref={ref}
       startIcon={
-        <React.Fragment>
+        <>
           {liked &&
             <UnlikeIcon fontSize={size} />
           }
           {!liked &&
             <LikeIcon fontSize={size} />
           }
-        </React.Fragment>
+        </>
       }
       fullWidth
     >
@@ -62,11 +62,11 @@ LikesActionLikeStory.propTypes = {
   unlikeNode: PropTypes.func.isRequired,
   story: StoryType.isRequired,
   node: NodeType.isRequired,
-  size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
 };
 
 LikesActionLikeStory.defaultProps = {
-  size: 'default',
+  size: 'medium',
 };
 
 const mapStateToProps = () => {

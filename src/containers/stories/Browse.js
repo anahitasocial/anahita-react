@@ -16,7 +16,6 @@ import StoryMenu from './Menu';
 import Progress from '../../components/Progress';
 import StoryCard from '../../components/cards/Story';
 import NodesType from '../../proptypes/Nodes';
-import PersonType from '../../proptypes/Person';
 import StoriesType from '../../proptypes/Stories';
 import commentPerms from '../../permissions/comment';
 import utils from '../../utils';
@@ -46,8 +45,11 @@ const StoriesBrowse = (props) => {
   } = props;
 
   const { oid, filter } = queryFilters;
+  const startKey = (oid && oid > 0) ? `start_${oid}` : `start_${filter}`;
 
-  const [start, setStart] = useState(0);
+  const [start, setStart] = useState({
+    [startKey]: 0,
+  });
   const [openComments, setOpenComments] = useState([]);
 
   useEffect(() => {
@@ -66,13 +68,15 @@ const StoriesBrowse = (props) => {
     browseList({
       oid,
       filter,
-      start,
+      start: start[startKey],
       limit: LIMIT,
     });
-  }, [oid, filter, start]);
+  }, [oid, filter, start[startKey]]);
 
   const fetchList = () => {
-    return setStart(start + LIMIT);
+    return setStart({
+      [startKey]: start[startKey] + LIMIT,
+    });
   };
 
   const getNumOfComments = (node) => {
@@ -116,8 +120,7 @@ const StoriesBrowse = (props) => {
             menu={isAuthenticated &&
               <StoryMenu
                 story={node}
-              />
-            }
+              />}
             stats={[
               node.object && isLikeable(node.object) &&
               <LikesStats
@@ -162,13 +165,11 @@ const StoriesBrowse = (props) => {
                 parent={node.object}
                 comments={node.comments}
                 canAdd={canAddComment}
-              />
-            }
+              />}
             showOwner={queryFilters.filter === 'leaders'}
           />
         );
-      })
-      }
+      })}
     </InfiniteScroll>
   );
 };
@@ -178,11 +179,11 @@ StoriesBrowse.propTypes = {
   resetList: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   queryFilters: PropTypes.objectOf(PropTypes.any).isRequired,
-  viewer: PersonType.isRequired,
   items: StoriesType.isRequired,
   comments: NodesType.isRequired,
   hasMore: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {

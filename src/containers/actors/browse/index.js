@@ -48,7 +48,10 @@ const ActorsBrowse = (props) => {
     queryFilters,
   } = props;
 
-  const [start, setStart] = useState(0);
+  const startKey = `start_${namespace}`;
+  const [start, setStart] = useState({
+    [startKey]: 0,
+  });
 
   useEffect(() => {
     return () => {
@@ -58,20 +61,22 @@ const ActorsBrowse = (props) => {
 
   useEffect(() => {
     browseList({
-      start,
+      start: start[startKey],
       limit: LIMIT,
       ...queryFilters,
     }, namespace);
   }, [start]);
 
   const fetchList = () => {
-    return setStart(start + LIMIT);
+    return setStart({
+      [startKey]: start[startKey] + LIMIT,
+    });
   };
 
   const canAdd = permissions.canAdd(viewer, namespace);
 
   return (
-    <React.Fragment>
+    <>
       {canAdd &&
         <Fab
           aria-label="Add"
@@ -81,8 +86,7 @@ const ActorsBrowse = (props) => {
           to={`/${namespace}/add/`}
         >
           <AddIcon />
-        </Fab>
-      }
+        </Fab>}
       <InfiniteScroll
         dataLength={items.allIds.length}
         next={fetchList}
@@ -103,11 +107,10 @@ const ActorsBrowse = (props) => {
                 <ActorsCard actor={node} viewer={viewer} />
               </div>
             );
-          })
-          }
+          })}
         </Masonry>
       </InfiniteScroll>
-    </React.Fragment>
+    </>
   );
 };
 
