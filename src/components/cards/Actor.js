@@ -84,8 +84,8 @@ const ActorCard = (props) => {
           <ActorTitle
             actor={actor}
             typographyProps={{
-                variant: 'h6',
-                className: classes.title,
+              variant: 'h6',
+              className: classes.title,
             }}
             linked
           />
@@ -109,11 +109,18 @@ const ActorCard = (props) => {
       </CardContent>
       }
       {isAdmin(viewer) &&
-      <CardContent>
-        <Typography variant="caption">
-          Created {moment.utc(actor.creationTime).format('LLL').toString()}
-        </Typography>
-      </CardContent>
+        <CardContent>
+          <div>
+            <Typography variant="caption">
+              Created on {moment.utc(actor.creationTime).format('LLL').toString()}
+            </Typography>
+          </div>
+          <div>
+            <Typography variant="caption">
+              Last visited on {moment.utc(actor.lastVisitDate).format('LLL').toString()}
+            </Typography>
+          </div>
+        </CardContent>
       }
       <CardActions className={classes.actions}>
         {action}

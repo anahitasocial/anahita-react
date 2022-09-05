@@ -7,9 +7,11 @@
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-wrap-multilines": "off",
     "react/forbid-prop-types": [0],
     "react/no-danger": 1,
     "arrow-body-style": ["error", "always"],
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "operator-linebreak": "off"
   }
 }

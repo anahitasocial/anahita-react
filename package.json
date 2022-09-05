@@ -1,6 +1,8 @@
 {
   "name": "anahita-react",
   "description": "Front-end React application for Anahita",
+  "version": "0.1.0",
+  "private": true,
   "main": "index.js",
   "keywords": [
     "socialnetwork",
@@ -15,8 +17,6 @@
   ],
   "bugs": "https://github.com/anahitasocial/anahita-react/issues",
   "license": "MIT",
-  "version": "0.1.0",
-  "private": true,
   "devDependencies": {
     "eslint-config-airbnb": "^18.2.1",
     "react-scripts": "^5.0.1"
