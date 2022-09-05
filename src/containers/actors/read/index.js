@@ -10,7 +10,7 @@ import ActorsSocialgraph from '../Socialgraph';
 import ActorsBrowseGadget from '../browse/Gadget';
 import Admins from '../../../components/actor/body/Admins';
 import Avatar from './Avatar';
-import Composers from '../../composers/';
+import Composers from '../../composers';
 import Commands from './Commands';
 import Cover from './Cover';
 import FollowAction from '../../actions/Follow';
@@ -151,8 +151,7 @@ const ActorsRead = (props) => {
           </>
         }
         headerActions={canViewCommands &&
-          <Commands actor={actor} viewer={viewer} />
-        }
+          <Commands actor={actor} viewer={viewer} />}
       />
       <ActorBody
         actor={actor}
@@ -162,10 +161,10 @@ const ActorsRead = (props) => {
           <Admins actor={actor} />}
         composers={isAuthenticated && actor.id &&
           <Composers owner={actor} />}
-        stories={
+        stories={actor.id &&
           <StoriesBrowse
             queryFilters={{
-              oid: id,
+              oid: actor.id,
             }}
           />
         }
