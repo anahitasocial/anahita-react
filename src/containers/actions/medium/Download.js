@@ -45,11 +45,11 @@ const ActionsMediumDownload = React.forwardRef((props, ref) => {
 
 ActionsMediumDownload.propTypes = {
   node: NodeType.isRequired,
-  size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
 };
 
 ActionsMediumDownload.defaultProps = {
-  size: 'default',
+  size: 'medium',
 };
 
 export default ActionsMediumDownload;

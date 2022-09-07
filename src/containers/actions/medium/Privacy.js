@@ -100,12 +100,12 @@ const ActionsMediumPrivacy = (props) => {
 
 ActionsMediumPrivacy.propTypes = {
   medium: MediumType.isRequired,
-  size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
   editPrivacy: PropTypes.func.isRequired,
 };
 
 ActionsMediumPrivacy.defaultProps = {
-  size: 'default',
+  size: 'medium',
 };
 
 const mapStateToProps = (namespace) => {

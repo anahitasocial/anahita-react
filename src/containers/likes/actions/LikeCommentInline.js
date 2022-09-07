@@ -60,12 +60,12 @@ LikesActionCommentInline.propTypes = {
   unlikeNode: PropTypes.func.isRequired,
   node: NodeType.isRequired,
   comment: CommentType,
-  size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
 };
 
 LikesActionCommentInline.defaultProps = {
   comment: CommentDefault,
-  size: 'default',
+  size: 'medium',
 };
 
 const mapStateToProps = () => {

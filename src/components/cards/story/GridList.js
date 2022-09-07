@@ -3,9 +3,9 @@ import Img from 'react-image';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import Link from '@material-ui/core/Link';
 import MediaType from '../../../proptypes/Media';
 import utils from '../../../utils';
@@ -17,7 +17,7 @@ const {
 
 const styles = (theme) => {
   return {
-    gridList: {
+    imageList: {
       flexWrap: 'nowrap',
       // Promote the list into his own layer on Chrome.
       // This cost memory but helps keeping high FPS.
@@ -33,22 +33,22 @@ const styles = (theme) => {
   };
 };
 
-function SingleLineGridList(props) {
+function SingleLineImageList(props) {
   const { classes, photos } = props;
 
   return (
     <>
-      <GridList
-        className={classes.gridList}
+      <ImageList
+        className={classes.imageList}
         cols={1.1}
-        spacing={1}
-        cellHeight={320}
+        gap={1}
+        rowHeight={320}
       >
         {photos.map((photo) => {
           const src = getPortraitURL(photo);
           const url = getURL(photo);
           return (
-            <GridListTile key={`gridlist-photo-${photo.id}`}>
+            <ImageListItem key={`gridlist-photo-${photo.id}`}>
               <Link href={url}>
                 <Img
                   src={src}
@@ -57,24 +57,24 @@ function SingleLineGridList(props) {
                 />
               </Link>
               {photo.name &&
-                <GridListTileBar
+                <ImageListItemBar
                   title={photo.name}
                   classes={{
                     root: classes.titleBar,
                     title: classes.title,
                   }}
                 />}
-            </GridListTile>
+            </ImageListItem>
           );
         })}
-      </GridList>
+      </ImageList>
     </>
   );
 }
 
-SingleLineGridList.propTypes = {
+SingleLineImageList.propTypes = {
   classes: PropTypes.object.isRequired,
   photos: PropTypes.arrayOf(MediaType.isRequired).isRequired,
 };
 
-export default withStyles(styles)(SingleLineGridList);
+export default withStyles(styles)(SingleLineImageList);

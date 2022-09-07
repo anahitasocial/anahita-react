@@ -55,11 +55,11 @@ LikesActionLike.propTypes = {
   likeNode: PropTypes.func.isRequired,
   unlikeNode: PropTypes.func.isRequired,
   node: NodeType.isRequired,
-  size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
 };
 
 LikesActionLike.defaultProps = {
-  size: 'default',
+  size: 'medium',
 };
 
 const mapStateToProps = () => {
