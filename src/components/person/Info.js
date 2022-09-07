@@ -43,7 +43,7 @@ const PersonInfo = (props) => {
     familyName,
     body,
     website,
-    contact_url,
+    contact_url: contactUrl,
     phone,
   } = fields;
 
@@ -52,7 +52,7 @@ const PersonInfo = (props) => {
     familyName.isValid &&
     body.isValid &&
     website.isValid &&
-    contact_url.isValid &&
+    contactUrl.isValid &&
     phone.isValid
   );
 
@@ -63,8 +63,7 @@ const PersonInfo = (props) => {
           type="hidden"
           name="usertype"
           value={person.usertype}
-        />
-      }
+        />}
       <CardContent>
         {enabled}
         <TextField
@@ -163,15 +162,13 @@ const PersonInfo = (props) => {
               label="Administrator"
             />
             {isSuperAdmin &&
-            <FormControlLabel
-              value={TYPE.SUPER_ADMIN}
-              control={<Radio />}
-              label="Super Administrator"
-            />
-            }
+              <FormControlLabel
+                value={TYPE.SUPER_ADMIN}
+                control={<Radio />}
+                label="Super Administrator"
+              />}
           </RadioGroup>
-        </FormControl>
-        }
+        </FormControl>}
         <ActorsFormsMetadata
           handleOnChange={handleOnChange}
           fields={fields}

@@ -31,7 +31,7 @@ const ActorsCover = (props) => {
   const [isLoaded, setIsLoaded] = useState(!src);
 
   if (cover) {
-    /* global Image */
+    // eslint-disable-next-line no-undef
     const image = new Image();
 
     image.src = cover;

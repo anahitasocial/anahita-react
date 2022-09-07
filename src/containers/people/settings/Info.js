@@ -33,11 +33,12 @@ const PersonSettingsInfo = (props) => {
     editPerson,
     viewer,
     isFetching,
+    person: _Person,
   } = props;
 
   const [person, setPerson] = useState({
-    ...props.person,
-    ...props.person.information,
+    ..._Person,
+    ..._Person.information,
   });
 
   const [fields, setFields] = useState(formFields);
@@ -84,6 +85,7 @@ const PersonSettingsInfo = (props) => {
 
   const isSuperAdmin = viewer.usertype === SUPER_ADMIN;
   const canAdmin = canAdminister(viewer) && viewer.id !== person.id;
+  const joinedDate = moment.utc(person.creationTime).format('LLL').toString();
 
   return (
     <InfoForm
@@ -95,9 +97,9 @@ const PersonSettingsInfo = (props) => {
       canChangeUsertype={canAdmin}
       isSuperAdmin={isSuperAdmin}
       enabled={canAdmin &&
-        <React.Fragment>
+        <>
           <Typography variant="caption" display="block">
-            Joined {moment.utc(person.creationTime).format('LLL').toString()}
+            {`Joined ${joinedDate}`}
           </Typography>
           <FormControlLabel
             control={
@@ -109,8 +111,7 @@ const PersonSettingsInfo = (props) => {
             }
             label="Enabled"
           />
-        </React.Fragment>
-      }
+        </>}
     />
   );
 };

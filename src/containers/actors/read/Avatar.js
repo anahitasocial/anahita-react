@@ -31,7 +31,7 @@ const ActorsAvatar = (props) => {
   const [isLoaded, setIsLoaded] = useState(!src);
 
   if (avatar) {
-    /* global Image */
+    // eslint-disable-next-line no-undef
     const image = new Image();
 
     image.src = avatar;

@@ -35,7 +35,7 @@ const ActorsReadCommands = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <IconButton
         aria-label="More"
         aria-owns={anchorEl ? 'long-menu' : null}
@@ -87,19 +87,19 @@ const ActorsReadCommands = (props) => {
                 />
               );
             default:
-                return (
-                  <div key={command} />
-                );
+              return (
+                <div key={command} />
+              );
           }
         })}
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 
 ActorsReadCommands.propTypes = {
   actor: ActorType,
-  viewer: PersonType,
+  viewer: PersonType.isRequired,
 };
 
 ActorsReadCommands.defaultProps = {

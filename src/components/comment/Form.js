@@ -29,7 +29,7 @@ const CommentForm = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <React.Fragment>
+      <>
         <CardHeader
           avatar={
             <ActorAvatar
@@ -67,8 +67,7 @@ const CommentForm = (props) => {
               fullWidth
             >
               {i18n.t('actions:cancel')}
-            </Button>
-          }
+            </Button>}
           <Button
             type="submit"
             color="primary"
@@ -80,7 +79,7 @@ const CommentForm = (props) => {
             {comment.id ? i18n.t('actions:update') : i18n.t('actions:post')}
           </Button>
         </CardActions>
-      </React.Fragment>
+      </>
     </form>
   );
 };

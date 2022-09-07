@@ -87,24 +87,21 @@ const MediumReadDefault = (props) => {
           component="article"
         >
           {medium.owner.objectType.split('.')[1] !== 'people' &&
-            <CardHeaderOwner node={medium} />
-          }
+            <CardHeaderOwner node={medium} />}
           {cover &&
             <CardMedia
               className={classes.cover}
               title={medium.name}
               image={cover}
               src="picture"
-            />
-          }
+            />}
           {portrait &&
             <CardMedia
               component="img"
               title={medium.name}
               alias={medium.name}
               image={portrait}
-            />
-          }
+            />}
           <CardHeader
             avatar={
               <ActorAvatar
@@ -119,18 +116,17 @@ const MediumReadDefault = (props) => {
               />
             }
             subheader={
-              <React.Fragment>
-                {moment(medium.creationTime).fromNow()} {privacy}
-              </React.Fragment>
+              <>
+                {moment(medium.creationTime).fromNow()}
+                {privacy}
+              </>
             }
             action={menu}
           />
           {editing && form}
           {!editing &&
-            <React.Fragment>
-              {medium.body &&
-                <Player text={medium.body} />
-              }
+            <>
+              {medium.body && <Player text={medium.body} />}
               <CardContent component="article">
                 {medium.name &&
                   <Typography
@@ -138,8 +134,7 @@ const MediumReadDefault = (props) => {
                     className={classes.title}
                   >
                     {medium.name}
-                  </Typography>
-                }
+                  </Typography>}
                 {medium.body &&
                   <EntityBody>
                     {contentfilter({
@@ -150,21 +145,17 @@ const MediumReadDefault = (props) => {
                         'url',
                       ],
                     })}
-                  </EntityBody>
-                }
+                  </EntityBody>}
               </CardContent>
               {stats &&
                 <CardActions>
                   {stats}
-                </CardActions>
-              }
+                </CardActions>}
               {actions &&
                 <CardActions>
                   {actions}
-                </CardActions>
-              }
-            </React.Fragment>
-          }
+                </CardActions>}
+            </>}
         </Card>
         <Tabs
           value={tab}

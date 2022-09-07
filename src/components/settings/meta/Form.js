@@ -72,9 +72,7 @@ const SettingsMetaForm = (props) => {
                     <FormLabel>
                       {value}
                     </FormLabel>
-                    {description !== '' &&
-                      <FormHelperText>{description}</FormHelperText>
-                    }
+                    {description !== '' && <FormHelperText>{description}</FormHelperText>}
                   </FormControl>
                 );
               case 'select':
@@ -112,9 +110,7 @@ const SettingsMetaForm = (props) => {
                         );
                       })}
                     </Select>
-                    {description !== '' &&
-                      <FormHelperText>{description}</FormHelperText>
-                    }
+                    {description !== '' && <FormHelperText>{description}</FormHelperText>}
                   </FormControl>
                 );
               case 'textarea':
@@ -146,9 +142,7 @@ const SettingsMetaForm = (props) => {
                       }}
                       // disabled={disabled}
                     />
-                    {description !== '' &&
-                      <FormHelperText>{description}</FormHelperText>
-                    }
+                    {description !== '' && <FormHelperText>{description}</FormHelperText>}
                   </FormControl>
                 );
             }

@@ -166,8 +166,7 @@ const ActorsRead = (props) => {
             queryFilters={{
               oid: actor.id,
             }}
-          />
-        }
+          />}
         locations={actor.id &&
           <LocationsGadget node={actor} />}
         socialgraph={
@@ -186,8 +185,7 @@ const ActorsRead = (props) => {
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="blocked"
-              />
-            }
+              />}
             mutuals={actor.id && !isViewer && isPerson(actor) &&
               <ActorsSocialgraph
                 actorNode={actor}

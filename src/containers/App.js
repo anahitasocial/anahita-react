@@ -15,7 +15,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import IconButton from '@material-ui/core/IconButton';
-import SearchBox from '../containers/search/SearchBox';
+import SearchBox from './search/SearchBox';
 
 import Viewer from '../components/auth/Viewer';
 import assets from '../assets';
@@ -27,52 +27,54 @@ const drawerWidth = 240;
 const { LeftMenu } = assets.navs;
 
 // Apply some reset
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
+const useStyles = makeStyles((theme) => {
+  return {
+    root: {
+      display: 'flex',
     },
-  },
-  grow: {
-    flex: '1 1 auto',
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
+    appBar: {
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth,
+      },
     },
-  },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
+    grow: {
+      flex: '1 1 auto',
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
+    drawer: {
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+        flexShrink: 0,
+      },
+    },
+    drawerPaper: {
       width: drawerWidth,
-      flexShrink: 0,
     },
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    padding: `0 ${theme.spacing(2)}px`,
-    ...theme.mixins.toolbar,
-  },
-  viewer: {
-    display: 'flex',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    overflow: 'auto',
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-  },
-}));
+    drawerHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      padding: `0 ${theme.spacing(2)}px`,
+      ...theme.mixins.toolbar,
+    },
+    viewer: {
+      display: 'flex',
+    },
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+      flexGrow: 1,
+      overflow: 'auto',
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+    },
+  };
+});
 
 const App = (props) => {
   const classes = useStyles();
@@ -102,7 +104,7 @@ const App = (props) => {
 
   const drawer = () => {
     return (
-      <React.Fragment>
+      <>
         <div className={classes.drawerHeader}>
           <MenuLogo />
         </div>
@@ -114,11 +116,13 @@ const App = (props) => {
           classNames={classes}
         />
         <Divider />
-      </React.Fragment>
+      </>
     );
   };
 
-  const container = window !== undefined ? () => window.document.body : undefined;
+  const container = window !== undefined ? () => {
+    return window.document.body;
+  } : undefined;
 
   return (
     <div className={classes.root}>
@@ -144,8 +148,7 @@ const App = (props) => {
                 noWrap
               >
                 {appBarTitle}
-              </Typography>
-            }
+              </Typography>}
           </Hidden>
           <div className={classes.grow} />
           <Viewer

@@ -102,14 +102,13 @@ const SettingsAppsBrowse = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {current &&
         <AppsEdit
           node={current}
           open={editingOpen}
           handleClose={handleClose}
-        />
-      }
+        />}
       <Card variant="outlined">
         <CardHeader
           title={
@@ -169,8 +168,7 @@ const SettingsAppsBrowse = (props) => {
                           }}
                         >
                           <DragHandleIcon />
-                        </ListItemIcon>
-                      }
+                        </ListItemIcon>}
                     </ListItemSecondaryAction>
                   </ListItem>
                 </Draggable>
@@ -179,10 +177,9 @@ const SettingsAppsBrowse = (props) => {
           </Container>
         </List>
       </Card>
-    </React.Fragment>
+    </>
   );
 };
-
 
 SettingsAppsBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,

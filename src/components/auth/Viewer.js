@@ -51,9 +51,14 @@ const Viewer = (props) => {
   const profile = `/people/${viewer.username}/`;
   const initials = getActorInitials(viewer);
   const avatar = getPortraitURL(viewer);
+  const {
+    givenName,
+    familyName,
+    alias,
+  } = viewer;
 
   return (
-    <React.Fragment>
+    <>
       {!isAuthenticated &&
       <Button
         component={Link}
@@ -62,8 +67,7 @@ const Viewer = (props) => {
         variant="outlined"
       >
         Login
-      </Button>
-      }
+      </Button>}
       {isAuthenticated &&
         <Button
           component={Link}
@@ -77,7 +81,7 @@ const Viewer = (props) => {
               className={classes.name}
               align="right"
             >
-              {viewer.givenName} {viewer.familyName}
+              {`${givenName} ${familyName}`}
             </Typography>
             <Typography
               className={classes.alias}
@@ -85,7 +89,7 @@ const Viewer = (props) => {
               color="inherit"
               align="right"
             >
-              @{viewer.alias}
+              {alias}
             </Typography>
           </div>
           <div className={classes.avatarContent}>
@@ -95,9 +99,8 @@ const Viewer = (props) => {
               className={classes.avatar}
             />
           </div>
-        </Button>
-      }
-    </React.Fragment>
+        </Button>}
+    </>
   );
 };
 

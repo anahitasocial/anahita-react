@@ -99,9 +99,7 @@ const HomeCardNodes = (props) => {
         }
         subheader={subheader || getSubheader(namespace)}
       />
-      {items.length === 0 &&
-        <Progress />
-      }
+      {items.length === 0 && <Progress />}
       <List>
         {items.map((item) => {
           const key = `${namespace}_${item.id}`;

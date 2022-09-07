@@ -186,8 +186,7 @@ const PersonAdd = (props) => {
               value={TYPE.SUPER_ADMIN}
               control={<Radio />}
               label="Super Administrator"
-            />
-            }
+            />}
           </RadioGroup>
         </FormControl>
       </CardContent>
@@ -200,8 +199,7 @@ const PersonAdd = (props) => {
           fullWidth
         >
           Dismiss
-        </Button>
-        }
+        </Button>}
         <Button
           fullWidth
           type="submit"

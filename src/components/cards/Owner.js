@@ -14,7 +14,7 @@ const CardOwner = (props) => {
   const { node: { owner }, actions } = props;
   const url = getURL(owner);
   return (
-    <React.Fragment>
+    <>
       <CardHeader
         avatar={
           <ActorAvatar
@@ -31,7 +31,7 @@ const CardOwner = (props) => {
         actions={actions}
       />
       <Divider />
-    </React.Fragment>
+    </>
   );
 };
 

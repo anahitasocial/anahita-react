@@ -46,7 +46,7 @@ const Locations = (props) => {
   }, [setAppTitle]);
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         position="sticky"
         color="inherit"
@@ -77,7 +77,7 @@ const Locations = (props) => {
           />
         );
       }, [tab])}
-    </React.Fragment>
+    </>
   );
 };
 

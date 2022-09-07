@@ -37,7 +37,7 @@ function SingleLineGridList(props) {
   const { classes, photos } = props;
 
   return (
-    <React.Fragment>
+    <>
       <GridList
         className={classes.gridList}
         cols={1.1}
@@ -63,13 +63,12 @@ function SingleLineGridList(props) {
                     root: classes.titleBar,
                     title: classes.title,
                   }}
-                />
-              }
+                />}
             </GridListTile>
           );
         })}
       </GridList>
-    </React.Fragment>
+    </>
   );
 }
 

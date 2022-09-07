@@ -54,7 +54,7 @@ const ActionsDelete = React.forwardRef((props, ref) => {
 
   return (
     <Button
-    onClick={handleDelete}
+      onClick={handleDelete}
       disabled={waiting}
       aria-label={label}
       ref={ref}

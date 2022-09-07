@@ -23,7 +23,9 @@ const ActionsMediumDownload = React.forwardRef((props, ref) => {
         saveAs(result.data, node.alias);
         setDisabled(false);
       })
-      .catch(err => console.error(err));
+      .catch((err) => {
+        return console.error(err);
+      });
   };
 
   return (

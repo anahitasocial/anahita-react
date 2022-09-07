@@ -108,8 +108,7 @@ const People = (props) => {
               label="Disabled"
             />
           </Toolbar>
-        </AppBar>
-      }
+        </AppBar>}
       {useMemo(() => {
         return (
           <Browse

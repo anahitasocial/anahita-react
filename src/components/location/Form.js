@@ -87,8 +87,7 @@ const LocationForm = (props) => {
             disabled={isFetching}
             fullWidth
             required={requiredFields.includes('city')}
-          />
-        }
+          />}
         {fields.state_province &&
           <FormControl
             variant="outlined"
@@ -107,8 +106,7 @@ const LocationForm = (props) => {
               disabled={location.country === '' || isFetching}
               country={location.country}
             />
-          </FormControl>
-        }
+          </FormControl>}
         {fields.country &&
           <FormControl
             variant="outlined"
@@ -126,14 +124,12 @@ const LocationForm = (props) => {
               value={location.country}
               disabled={isFetching}
             />
-          </FormControl>
-        }
+          </FormControl>}
       </CardContent>
       {actions &&
       <CardActions>
         {actions}
-      </CardActions>
-      }
+      </CardActions>}
     </form>
   );
 };

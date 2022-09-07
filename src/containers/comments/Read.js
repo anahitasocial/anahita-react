@@ -94,15 +94,14 @@ const CommentsRead = (props) => {
           viewer={viewer}
           handleEdit={handleEdit}
           inline={inline}
-        />
-      }
+        />}
       stats={
-        <React.Fragment>
+        <>
           <LikesStats
             node={parent}
             comment={comment}
           />
-        </React.Fragment>
+        </>
       }
       actions={[
         <Like

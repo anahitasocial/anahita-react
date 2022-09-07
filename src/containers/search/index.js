@@ -109,7 +109,7 @@ const Search = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         position="sticky"
         color="inherit"
@@ -207,15 +207,15 @@ const Search = (props) => {
           />
         );
       }, [
-          q,
-          sort,
-          scope,
-          searchRange,
-          searchComments,
-          coordLong,
-          coordLat,
-        ])}
-    </React.Fragment>
+        q,
+        sort,
+        scope,
+        searchRange,
+        searchComments,
+        coordLong,
+        coordLat,
+      ])}
+    </>
   );
 };
 

@@ -106,8 +106,7 @@ const ComposersFile = (props) => {
                 minLength: NAME.MIN_LENGTH,
               }}
               required
-            />
-          }
+            />}
           {fields.body &&
             <TextField
               variant="outlined"
@@ -127,8 +126,7 @@ const ComposersFile = (props) => {
               inputProps={{
                 maxLength: BODY.MAX_LENGTH,
               }}
-            />
-          }
+            />}
         </CardContent>
         <CardActions>
           <Button

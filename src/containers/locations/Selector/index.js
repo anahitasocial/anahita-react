@@ -70,7 +70,7 @@ const LocationsSelector = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Dialog
         open={isOpen}
         onClose={handleClose}
@@ -119,8 +119,7 @@ const LocationsSelector = (props) => {
               setKeyword(newKeyword);
               setTab(TABS.ADD);
             }}
-          />
-        }
+          />}
         {tab === TABS.ADD &&
           <AddLocation
             node={node}
@@ -128,10 +127,9 @@ const LocationsSelector = (props) => {
             callback={() => {
               handleClose();
             }}
-          />
-        }
+          />}
       </Dialog>
-    </React.Fragment>
+    </>
   );
 };
 

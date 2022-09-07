@@ -39,8 +39,7 @@ const LocationsListItem = (props) => {
       {actions &&
       <ListItemSecondaryAction>
         {actions}
-      </ListItemSecondaryAction>
-      }
+      </ListItemSecondaryAction>}
     </ListItem>
   );
 };

@@ -51,7 +51,7 @@ const HashtagsRead = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Card variant="outlined" square>
         <CardHeader
           avatar={
@@ -69,10 +69,8 @@ const HashtagsRead = (props) => {
           })}
         />
       </Card>
-      {hashtag.id > 0 &&
-        <Taggables tag={hashtag} />
-      }
-    </React.Fragment>
+      {hashtag.id > 0 && <Taggables tag={hashtag} />}
+    </>
   );
 };
 

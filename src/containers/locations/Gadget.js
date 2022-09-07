@@ -21,7 +21,6 @@ import LocationType from '../../proptypes/Location';
 import NodeType from '../../proptypes/Node';
 import PersonType from '../../proptypes/Person';
 
-
 import AnahitaMap from '../../components/Map';
 import Selector from './Selector';
 import Progress from '../../components/Progress';
@@ -94,15 +93,14 @@ const LocationsGadget = (props) => {
   const locationsArray = _.map(locations.byId, (value) => { return value; });
 
   return (
-    <React.Fragment>
+    <>
       {canAdd &&
         <Selector
           node={node}
           isOpen={isOpen}
           handleClose={handleClose}
           cardProps={cardProps}
-        />
-      }
+        />}
       <Card variant="outlined" {...cardProps}>
         <CardHeader
           title={
@@ -123,8 +121,7 @@ const LocationsGadget = (props) => {
             loadingElement={<Box style={{ height: '100%' }} />}
             containerElement={<Box className={classes.mapContainer} />}
             mapElement={<Box style={{ height: '100%' }} />}
-          />
-        }
+          />}
         <List>
           {locations.allIds.map((locationId) => {
             const location = locations.byId[locationId];
@@ -148,10 +145,9 @@ const LocationsGadget = (props) => {
             >
               <AddIcon />
             </Button>
-          </CardActions>
-        }
+          </CardActions>}
       </Card>
-    </React.Fragment>
+    </>
   );
 };
 

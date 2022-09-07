@@ -37,7 +37,7 @@ const LocationMenu = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <IconButton
         aria-owns={menuAnchorEl ? `location-card-menu-${location.id}` : undefined}
         aria-haspopup="true"
@@ -61,15 +61,14 @@ const LocationMenu = (props) => {
             disabled={!canEdit}
           >
             Edit
-          </MenuItem>
-        }
+          </MenuItem>}
         <DeleteActionWithRef
           node={location}
           redirect="/locations/"
           key={`location-delete-${location.id}`}
         />
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 

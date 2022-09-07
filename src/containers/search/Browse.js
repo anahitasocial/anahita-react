@@ -114,23 +114,19 @@ const SearchBrowse = (props) => {
     >
       <Masonry>
         {items.allIds.map((itemId) => {
-            const node = items.byId[itemId];
-            const key = `search_node_${node.id}`;
-            return (
-              <div key={key} className={classes.card}>
-                {utils.isActor(node) &&
-                  <ActorsCard actor={node} />
-                }
-                {utils.isMedium(node) &&
-                  <MediaCard medium={node} />
-                }
-                {utils.isComment(node) &&
-                  <CommentCard comment={node} />
-                }
-              </div>
-            );
-          })
-        }
+          const node = items.byId[itemId];
+          const key = `search_node_${node.id}`;
+          return (
+            <div key={key} className={classes.card}>
+              {utils.isActor(node) &&
+                <ActorsCard actor={node} />}
+              {utils.isMedium(node) &&
+                <MediaCard medium={node} />}
+              {utils.isComment(node) &&
+                <CommentCard comment={node} />}
+            </div>
+          );
+        })}
       </Masonry>
     </InfiniteScroll>
   );

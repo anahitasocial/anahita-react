@@ -35,6 +35,7 @@ const AnahitaMap = (props) => {
     ...other
   } = props;
 
+  // eslint-disable-next-line no-unused-vars
   const [map, setMap] = useState(null);
   const history = useHistory();
 

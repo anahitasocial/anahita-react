@@ -56,6 +56,8 @@ const ActorCard = (props) => {
   const cover = getCoverURL(actor);
   const url = getURL(actor);
   const slug = `@${slugify(actor.alias.toLowerCase())}`;
+  const creationTime = moment.utc(actor.creationTime).format('LLL').toString();
+  const lastVisitDate = moment.utc(actor.lastVisitDate).format('LLL').toString();
 
   return (
     <Card
@@ -71,8 +73,7 @@ const ActorCard = (props) => {
             alias={actor.name}
             image={cover}
           />
-        </Link>
-      }
+        </Link>}
       <CardHeader
         avatar={
           <ActorAvatar
@@ -106,22 +107,20 @@ const ActorCard = (props) => {
         <ReadMore charLimit={160} contentFilter>
           {actor.body}
         </ReadMore>
-      </CardContent>
-      }
+      </CardContent>}
       {isAdmin(viewer) &&
         <CardContent>
           <div>
             <Typography variant="caption">
-              Created on {moment.utc(actor.creationTime).format('LLL').toString()}
+              {`Created on ${creationTime}`}
             </Typography>
           </div>
           <div>
             <Typography variant="caption">
-              Last visited on {moment.utc(actor.lastVisitDate).format('LLL').toString()}
+              {`Last visited on ${lastVisitDate}`}
             </Typography>
           </div>
-        </CardContent>
-      }
+        </CardContent>}
       <CardActions className={classes.actions}>
         {action}
       </CardActions>

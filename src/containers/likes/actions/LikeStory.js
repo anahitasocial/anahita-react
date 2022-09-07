@@ -41,14 +41,10 @@ const LikesActionLikeStory = React.forwardRef((props, ref) => {
       aria-label={label}
       ref={ref}
       startIcon={
-        <React.Fragment>
-          {liked &&
-            <UnlikeIcon fontSize={size} />
-          }
-          {!liked &&
-            <LikeIcon fontSize={size} />
-          }
-        </React.Fragment>
+        <>
+          {liked && <UnlikeIcon fontSize={size} />}
+          {!liked && <LikeIcon fontSize={size} />}
+        </>
       }
       fullWidth
     >

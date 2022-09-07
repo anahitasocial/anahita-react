@@ -69,9 +69,7 @@ const StoryCardTodoStatus = (props) => {
       component="section"
       variant="outlined"
     >
-      {showOwnerHeader &&
-        <StoryCardOwner node={story} />
-      }
+      {showOwnerHeader && <StoryCardOwner node={story} />}
       <CardHeader
         avatar={
           <ActorAvatar
@@ -101,24 +99,20 @@ const StoryCardTodoStatus = (props) => {
             <Link href={url}>
               {title}
             </Link>
-          </Typography>
-        }
+          </Typography>}
         {body &&
           <ReadMore contentFilter>
             {body}
-          </ReadMore>
-        }
+          </ReadMore>}
       </CardContent>
       {stats &&
         <CardActions>
           {stats}
-        </CardActions>
-      }
+        </CardActions>}
       {actions &&
         <CardActions>
           {actions}
-        </CardActions>
-      }
+        </CardActions>}
       <Divider />
       {comments}
     </Card>

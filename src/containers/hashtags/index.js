@@ -46,7 +46,7 @@ const Hashtags = (props) => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         position="sticky"
         color="inherit"
@@ -77,7 +77,7 @@ const Hashtags = (props) => {
           />
         );
       }, [tab])}
-    </React.Fragment>
+    </>
   );
 };
 

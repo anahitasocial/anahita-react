@@ -45,7 +45,7 @@ const Blogs = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         position="sticky"
         color="inherit"
@@ -73,7 +73,7 @@ const Blogs = (props) => {
           }}
         />);
       }, [tab])}
-    </React.Fragment>
+    </>
   );
 };
 

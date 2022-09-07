@@ -64,6 +64,8 @@ const MediumCard = (props) => {
   const cover = getCoverURL(medium);
   const url = getURL(medium);
   const author = getAuthor(medium);
+  const creationTime = moment.utc(medium.creationTime).format('LLL').toString();
+  const creationTimeFromNow = moment.utc(medium.creationTime).fromNow();
 
   return (
     <Card
@@ -74,8 +76,7 @@ const MediumCard = (props) => {
         <CardHeaderOwner
           node={medium}
           actions={ownerActions}
-        />
-      }
+        />}
       {cover &&
         <Link href={url}>
           <CardMedia
@@ -84,8 +85,7 @@ const MediumCard = (props) => {
             title={medium.name}
             src="picture"
           />
-        </Link>
-      }
+        </Link>}
       <CardHeader
         avatar={
           <ActorAvatar
@@ -100,14 +100,15 @@ const MediumCard = (props) => {
           />
         }
         subheader={
-          <React.Fragment>
+          <>
             <Link
               href={url}
-              title={moment.utc(medium.creationTime).format('LLL').toString()}
+              title={creationTime}
             >
-              {moment.utc(medium.creationTime).fromNow()}
-            </Link> {privacy}
-          </React.Fragment>
+              {creationTimeFromNow}
+            </Link>
+            {privacy}
+          </>
         }
         action={menu}
       />
@@ -131,11 +132,8 @@ const MediumCard = (props) => {
             alias={medium.name}
             image={portrait}
           />
-        </ButtonBase>
-      }
-      {medium.body &&
-        <Player text={medium.body} />
-      }
+        </ButtonBase>}
+      {medium.body && <Player text={medium.body} />}
       <CardContent component="article" className={classes.content}>
         {medium.name &&
           <Typography
@@ -145,24 +143,20 @@ const MediumCard = (props) => {
             <Link href={url}>
               {medium.name}
             </Link>
-          </Typography>
-        }
+          </Typography>}
         {medium.body &&
           <ReadMore contentFilter>
             {medium.body}
-          </ReadMore>
-        }
+          </ReadMore>}
       </CardContent>
       {stats &&
         <CardActions>
           {stats}
-        </CardActions>
-      }
+        </CardActions>}
       {actions &&
         <CardActions>
           {actions}
-        </CardActions>
-      }
+        </CardActions>}
     </Card>
   );
 };

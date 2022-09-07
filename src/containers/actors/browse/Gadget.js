@@ -38,7 +38,7 @@ const ActorsBrowseGadget = (props) => {
   const ActorsBrowse = Browse(namespace);
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         position="sticky"
         color="inherit"
@@ -64,7 +64,7 @@ const ActorsBrowseGadget = (props) => {
           filter: tab,
         }}
       />
-    </React.Fragment>
+    </>
   );
 };
 

@@ -112,14 +112,13 @@ const SettingsPlugins = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {current &&
         <PluginsEdit
           node={current}
           open={editingOpen}
           handleClose={handleClose}
-        />
-      }
+        />}
       <Card variant="outlined">
         <CardHeader
           title={
@@ -187,8 +186,7 @@ const SettingsPlugins = (props) => {
                           }}
                         >
                           <DragHandleIcon />
-                        </ListItemIcon>
-                      }
+                        </ListItemIcon>}
                     </ListItemSecondaryAction>
                   </ListItem>
                 </Draggable>
@@ -197,10 +195,9 @@ const SettingsPlugins = (props) => {
           </Container>
         </List>
       </Card>
-    </React.Fragment>
+    </>
   );
 };
-
 
 SettingsPlugins.propTypes = {
   browseList: PropTypes.func.isRequired,

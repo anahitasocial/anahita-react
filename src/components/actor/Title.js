@@ -18,7 +18,7 @@ const ActorTitle = (props) => {
   const url = getURL(actor);
 
   return (
-    <React.Fragment>
+    <>
       {linked &&
         <Typography
           {...typographyProps}
@@ -28,8 +28,7 @@ const ActorTitle = (props) => {
               {actor.name}
             </Truncate>
           </Link>
-        </Typography>
-      }
+        </Typography>}
       {!linked &&
         <Typography
           {...typographyProps}
@@ -37,9 +36,8 @@ const ActorTitle = (props) => {
           <Truncate>
             {actor.name}
           </Truncate>
-        </Typography>
-      }
-    </React.Fragment>
+        </Typography>}
+    </>
   );
 };
 

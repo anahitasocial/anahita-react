@@ -130,7 +130,7 @@ const PeopleAdd = (props) => {
   const personInitials = getPersonInitials(person) || <PersonAddIcon />;
 
   return (
-    <React.Fragment>
+    <>
       <Card variant="outlined">
         <CardHeader
           title={personName}
@@ -155,7 +155,7 @@ const PeopleAdd = (props) => {
           dismissPath="/people/"
         />
       </Card>
-    </React.Fragment>
+    </>
   );
 };
 

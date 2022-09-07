@@ -14,11 +14,14 @@ const getRegions = (country) => {
     return [];
   }
 
-  return CountryRegionData[index][2].split('|').map((item) => { return item.split('~') });
+  return CountryRegionData[index][2].split('|').map((item) => {
+    return item.split('~');
+  });
 };
 
 const SelectRegion = (props) => {
-  const regions = getRegions(props.country);
+  const { country } = props;
+  const regions = getRegions(country);
   return (
     <Select {...props}>
       {regions.map((region) => {

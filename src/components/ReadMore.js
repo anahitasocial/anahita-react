@@ -36,7 +36,7 @@ const ReadMore = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Collapse
         in={!isOpen}
         timeout="auto"
@@ -62,7 +62,7 @@ const ReadMore = (props) => {
           {longBody}
         </EntityBody>
       </Collapse>
-    </React.Fragment>
+    </>
   );
 };
 

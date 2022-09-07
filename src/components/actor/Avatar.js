@@ -55,7 +55,7 @@ const ActorAvatar = (props) => {
   const initials = getActorInitials(actor);
 
   return (
-    <React.Fragment>
+    <>
       {linked &&
         <Link
           href={url}
@@ -69,8 +69,7 @@ const ActorAvatar = (props) => {
           >
             {!portrait && initials}
           </Avatar>
-        </Link>
-      }
+        </Link>}
       {!linked &&
         <Avatar
           aria-label={actor.name}
@@ -78,9 +77,8 @@ const ActorAvatar = (props) => {
           src={portrait}
         >
           {!portrait && initials}
-        </Avatar>
-      }
-    </React.Fragment>
+        </Avatar>}
+    </>
   );
 };
 

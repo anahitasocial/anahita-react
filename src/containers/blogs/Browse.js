@@ -81,15 +81,14 @@ const BlogsBrowse = (props) => {
     >
       <Masonry>
         {items.allIds.map((itemId) => {
-            const node = items.byId[itemId];
-            const key = `node_${node.id}`;
-            return (
-              <div key={key} className={classes.card}>
-                <MediaCard medium={node} />
-              </div>
-            );
-          })
-        }
+          const node = items.byId[itemId];
+          const key = `node_${node.id}`;
+          return (
+            <div key={key} className={classes.card}>
+              <MediaCard medium={node} />
+            </div>
+          );
+        })}
       </Masonry>
     </InfiniteScroll>
   );
