@@ -51,10 +51,9 @@ const StaticPage = (props) => {
         <HeaderMeta
           title={title}
         />
-        <ReactMarkdown
-          source={source}
-          escapeHtml={false}
-        />
+        <ReactMarkdown>
+          {source}
+        </ReactMarkdown>
       </div>
     </Container>
   );
