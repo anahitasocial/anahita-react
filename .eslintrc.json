@@ -7,11 +7,12 @@
   },
   "rules": {
     "arrow-body-style": ["error", "always"],
+    "operator-linebreak": "off",
+    "no-unused-vars": 1,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-wrap-multilines": "off",
     "react/jsx-props-no-spreading": "off",
     "react/forbid-prop-types": [0],
-    "react/no-danger": 1,
-    "operator-linebreak": "off"
+    "react/no-danger": 1
   }
 }

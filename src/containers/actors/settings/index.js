@@ -86,7 +86,7 @@ const ActorsSettings = (props) => {
   const canDelete = permissions.canDelete(actor);
 
   return (
-    <React.Fragment>
+    <>
       <Tabs
         variant="scrollable"
         scrollButtons="on"
@@ -98,17 +98,14 @@ const ActorsSettings = (props) => {
       >
         <Tab label="Info" value={TABS.INFO} />
         {namespace === 'people' &&
-          <Tab label="Account" value={TABS.ACCOUNT} />
-        }
+          <Tab label="Account" value={TABS.ACCOUNT} />}
         {namespace !== 'people' &&
-          <Tab label="Admins" value={TABS.ADMINS} />
-        }
+          <Tab label="Admins" value={TABS.ADMINS} />}
         <Tab label="Privacy" value={TABS.PRIVACY} />
         <Tab label="Apps" value={TABS.APPS} />
         <Tab label="Permissions" value={TABS.PERMISSIONS} />
         {canDelete &&
-          <Tab label="Delete" value={TABS.DELETE} />
-        }
+          <Tab label="Delete" value={TABS.DELETE} />}
       </Tabs>
       <ActorSettingCard
         namespace={namespace}
@@ -116,31 +113,23 @@ const ActorsSettings = (props) => {
         subheader={i18n.t(`${namespace}:settings.${tab}`)}
       >
         {namespace === 'people' && tab === TABS.INFO &&
-          <PersonInfo />
-        }
+          <PersonInfo />}
         {namespace !== 'people' && tab === TABS.INFO &&
-          <ActorInfo />
-        }
+          <ActorInfo />}
         {namespace === 'people' && tab === TABS.ACCOUNT &&
-          <PersonAccount />
-        }
+          <PersonAccount />}
         {namespace !== 'people' && tab === TABS.ADMINS &&
-          <ActorAdmins />
-        }
+          <ActorAdmins />}
         {tab === TABS.PRIVACY &&
-          <ActorPrivacy />
-        }
+          <ActorPrivacy />}
         {tab === TABS.APPS &&
-          <ActorApps />
-        }
+          <ActorApps />}
         {tab === TABS.PERMISSIONS &&
-          <ActorPermissionsBrowse />
-        }
+          <ActorPermissionsBrowse />}
         {canDelete && tab === TABS.DELETE &&
-          <ActorDelete />
-        }
+          <ActorDelete />}
       </ActorSettingCard>
-    </React.Fragment>
+    </>
   );
 };
 

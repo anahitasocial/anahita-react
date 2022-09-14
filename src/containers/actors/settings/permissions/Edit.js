@@ -35,7 +35,6 @@ const SettingsPermissionsEdit = (props) => {
     permissions,
     handleClose,
     isFetching,
-    namespace,
   } = props;
 
   const actorType = utils.node.isPerson(actor) ? 'PEOPLE' : 'ACTORS';
@@ -154,7 +153,6 @@ SettingsPermissionsEdit.propTypes = {
   open: PropTypes.bool,
   permissions: PermissionsType.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  namespace: PropTypes.string.isRequired,
 };
 
 SettingsPermissionsEdit.defaultProps = {
