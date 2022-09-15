@@ -85,6 +85,8 @@ const ActorsNotificationsEdit = (props) => {
     );
   }
 
+  console.log(actor);
+
   return (
     <ActorSettingCard
       namespace={namespace}

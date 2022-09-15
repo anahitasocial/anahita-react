@@ -99,7 +99,7 @@ const ActorsSettingsPrivacy = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <DialogAlert
         title="Privacy Alert"
         content="This profile will be publicly visible. Would you like to proceed?"
@@ -184,8 +184,7 @@ const ActorsSettingsPrivacy = (props) => {
                     );
                   })}
                 </Select>
-              </FormControl>
-            }
+              </FormControl>}
           </CardContent>
           <CardActions>
             <Button
@@ -200,7 +199,7 @@ const ActorsSettingsPrivacy = (props) => {
           </CardActions>
         </Card>
       </form>
-    </React.Fragment>
+    </>
   );
 };
 

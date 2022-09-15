@@ -4,7 +4,7 @@ const read = (token) => {
   return axios.get('/people/session.json', {
     params: {
       token,
-    }
+    },
   });
 };
 

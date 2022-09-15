@@ -135,7 +135,7 @@ const MediaRead = (props) => {
       );
     }
 
-    return <React.Fragment />;
+    return <></>;
   }
 
   const canAddComment = isAuthenticated && medium.openToComment;
@@ -146,7 +146,7 @@ const MediaRead = (props) => {
   const canEditMedium = perms.medium.canEdit(viewer, medium);
 
   return (
-    <React.Fragment>
+    <>
       <HeaderMeta
         title={medium.name || medium.body}
         description={medium.body}
@@ -172,43 +172,37 @@ const MediaRead = (props) => {
               medium={medium}
               viewer={viewer}
               handleEdit={handleEdit}
-            />
-          }
+            />}
           actions={[isAuthenticated && isLikeable(medium) &&
             <Like node={medium} key={`medium-like-${medium.id}`} />,
-            namespace === 'documents' &&
+          namespace === 'documents' &&
             <DownloadAction
               node={medium}
               key={`medium-download-${medium.id}`}
             />,
           ]}
           stats={
-            <React.Fragment>
-              {isLikeable(medium) &&
-                <Likes node={medium} />
-              }
+            <>
+              {isLikeable(medium) && <Likes node={medium} />}
               {isCommentable(medium) &&
                 <CommentStats
                   node={{
                     ...medium,
                     numOfComments,
                   }}
-                />
-              }
-            </React.Fragment>
+                />}
+            </>
           }
           comments={isCommentable(medium) &&
             <MediumComments
               parent={medium}
               canAdd={canAddComment}
-            />
-          }
+            />}
           locations={
             <LocationsGadget node={medium} />
           }
-        />
-      }
-    </React.Fragment>
+        />}
+    </>
   );
 };
 

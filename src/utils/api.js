@@ -1,5 +1,3 @@
-/* global FormData */
-
 const constructURLSearchParams = (urlParams) => {
   const params = new URLSearchParams();
   const keys = Object.keys(urlParams);

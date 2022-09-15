@@ -1,7 +1,8 @@
 import actions from '../actions';
 
 // should catch any API errors and act accordingly
-export const apiErrorMiddleware = store => next => action => {
+// eslint-disable-next-line import/prefer-default-export, arrow-body-style
+export const apiErrorMiddleware = (store) => (next) => (action) => {
   const result = next(action);
 
   if (result.payload && result.payload.error) {
@@ -9,7 +10,6 @@ export const apiErrorMiddleware = store => next => action => {
 
     switch (error.status) {
       case 400:
-
         // store.dispatch(alerts.warning('There was an error in your submission: ' + error.data));
         break;
 
@@ -18,13 +18,11 @@ export const apiErrorMiddleware = store => next => action => {
         break;
 
       case 404:
-
         // store.dispatch(alerts.warning(
         // 'Sorry, an error has occurred: this action is not available'));
         break;
 
       default:
-
         // store.dispatch(alerts.warning('Sorry, an error has occurred'));
         break;
     }

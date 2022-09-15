@@ -1,4 +1,3 @@
-/* global FormData, File */
 import axios from 'axios';
 import utils from '../utils';
 

@@ -44,11 +44,11 @@ const StoryMenu = (props) => {
   const canDelete = story.commands && story.commands.includes('delete') && false;
 
   if (!canSubscribe && !canFollow && !canDelete) {
-    return (<React.Fragment />);
+    return (<></>);
   }
 
   return (
-    <React.Fragment>
+    <>
       <IconButton
         aria-owns={menuAnchorEl ? `story-card-menu-${id}` : undefined}
         aria-haspopup="true"
@@ -74,23 +74,20 @@ const StoryMenu = (props) => {
             unfollowLabel={i18n.t('stories:actions.unfollowOwner', {
               name: ownerName,
             })}
-          />
-        }
+          />}
         {canSubscribe &&
           <NotificationActionWithRef
             medium={story.object}
             isSubscribed={story.object.isSubscribed}
             key={`story-notification-${id}`}
-          />
-        }
+          />}
         {canDelete &&
           <DeleteActionWithRef
             node={story}
             key={`story-delete-${id}`}
-          />
-        }
+          />}
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 

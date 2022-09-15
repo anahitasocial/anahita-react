@@ -61,7 +61,7 @@ const ActorsSocialgraph = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <InfiniteScroll
         dataLength={items.allIds.length}
         next={fetchList}
@@ -82,11 +82,10 @@ const ActorsSocialgraph = (props) => {
                 <ActorsCard actor={node} />
               </div>
             );
-          })
-          }
+          })}
         </Masonry>
       </InfiniteScroll>
-    </React.Fragment>
+    </>
   );
 };
 

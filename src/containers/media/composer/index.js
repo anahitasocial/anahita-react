@@ -123,10 +123,9 @@ const MediaComposer = (props) => {
       );
     }
     default:
-      return (<React.Fragment />);
+      return (<></>);
   }
 };
-
 
 MediaComposer.propTypes = {
   owner: AcctorType.isRequired,

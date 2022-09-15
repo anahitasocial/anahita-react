@@ -131,8 +131,7 @@ const CommentsBrowse = (props) => {
           handleOnSubmit={handleOnSubmit}
           isFetching={isFetching}
           cardProps={cardProps}
-        />
-      }
+        />}
     </Card>
   );
 };

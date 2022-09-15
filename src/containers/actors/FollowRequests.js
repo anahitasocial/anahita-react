@@ -62,7 +62,7 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Dialog
         open={isOpen}
         onClose={handleClose}
@@ -133,7 +133,7 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
           <FollowRequestsIcon />
         </Badge>
       </IconButton>
-    </React.Fragment>
+    </>
   );
 });
 
