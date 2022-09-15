@@ -1,13 +1,3 @@
-/**
-  COM-NOTIFICATIONS-ACTOR-EDIT-NOTIFICATION-SETTINGS-TITLE="%s's Notifications"
-  COM-NOTIFICATIONS-ACTOR-EDIT-NOTIFICATION-SETTINGS-DESCRIPTION="Edit your notification settings"
-  COM-NOTIFICATIONS-ACTOR-NOTIFICATION-CHANGE-EMAIL="Change Email"
-  COM-NOTIFICATIONS-ACTOR-SEND-EMAIL="Email notifications to"
-  COM-NOTIFICATIONS-ACTOR-RECIEVE-NOTIFICATIONS="Get notifications for"
-  COM-NOTIFICATIONS-ACTOR-RECIEVE-NOTIFICATIONS-NEW-SB="All the posts"
-  COM-NOTIFICATIONS-ACTOR-RECIEVE-NOTIFICATIONS-ONLY-SB="The posts I am following"
- */
-
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,6 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import Switch from '@material-ui/core/Switch';
 
 import actions from '../../../actions';
 import apis from '../../../api';
@@ -28,6 +19,11 @@ import ActorType from '../../../proptypes/Actor';
 
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 import Progress from '../../../components/Progress';
+
+const initEmailSettings = {
+  email_muted_globally: false,
+  send_email: false,
+};
 
 const ActorsNotificationsEdit = (props) => {
   const {
@@ -48,6 +44,8 @@ const ActorsNotificationsEdit = (props) => {
 
   const [id] = params.id.split('-');
   const [isSubscribed, setIsSubscribed] = useState(actor.isSubscribed ? 0 : 1);
+  const [emailSettings, setEmailSettings] = useState(initEmailSettings);
+  const api = apis[namespace][singularize(namespace)].notifications;
 
   useEffect(() => {
     if (id) {
@@ -60,6 +58,22 @@ const ActorsNotificationsEdit = (props) => {
   }, [readActor, id, namespace, resetActors]);
 
   useEffect(() => {
+    if (actor.id) {
+      api.read(actor)
+        .then((result) => {
+          const { data } = result.data;
+          setEmailSettings({
+            ...emailSettings,
+            ...data,
+          });
+        })
+        .catch((err) => {
+          return console.error(err);
+        });
+    }
+  }, [actor.id]);
+
+  useEffect(() => {
     if (error) {
       alertError('Something went wrong!');
     }
@@ -69,11 +83,28 @@ const ActorsNotificationsEdit = (props) => {
     }
   }, [error, alertError, success, alertSuccess]);
 
-  const handleSubscriptionEdit = () => {
-    apis[namespace][singularize(namespace)].notifications.edit(actor)
+  const handleEditType = () => {
+    api.editType(actor)
       .then(() => {
         alertSuccess(i18n.t('prompts:saved.success'));
         setIsSubscribed(isSubscribed === 1 ? 0 : 1);
+      }).catch(() => {
+        alertError(i18n.t('prompts:saved.error'));
+      });
+  };
+
+  const handleEdit = (event) => {
+    const { target } = event;
+    api.edit({
+      actor,
+      sendEmail: target.checked,
+    })
+      .then(() => {
+        alertSuccess(i18n.t('prompts:saved.success'));
+        setEmailSettings({
+          ...emailSettings,
+          send_email: !target.checked,
+        });
       }).catch(() => {
         alertError(i18n.t('prompts:saved.error'));
       });
@@ -84,8 +115,6 @@ const ActorsNotificationsEdit = (props) => {
       <Progress />
     );
   }
-
-  console.log(actor);
 
   return (
     <ActorSettingCard
@@ -102,7 +131,7 @@ const ActorsNotificationsEdit = (props) => {
           <RadioGroup
             aria-label="gender"
             value={isSubscribed}
-            onChange={handleSubscriptionEdit}
+            onChange={handleEditType}
           >
             <FormControlLabel
               value={0}
@@ -116,6 +145,17 @@ const ActorsNotificationsEdit = (props) => {
             />
           </RadioGroup>
         </FormControl>
+        {!emailSettings.email_muted_globally &&
+        <FormControlLabel
+          control={
+            <Switch
+              checked={emailSettings.send_email}
+              onChange={handleEdit}
+              name="sendEmail"
+            />
+          }
+          label={i18n.t(`${namespace}:notifications.email`)}
+        />}
       </CardContent>
     </ActorSettingCard>
   );
