@@ -13,6 +13,8 @@ import Avatar from './Avatar';
 import Composers from '../../composers';
 import Commands from './Commands';
 import Cover from './Cover';
+import NotificationsDialog from '../notifications/Dialog';
+
 import FollowAction from '../../actions/Follow';
 import LocationsGadget from '../../locations/Gadget';
 import MediaBrowse from '../../media/Browse';
@@ -98,6 +100,7 @@ const ActorsRead = (props) => {
     'unfollow',
     'notifications-settings',
   ]);
+  const canEditNotifications = isAuthenticated && actor.id !== viewer.id;
 
   const isViewer = actor.id === viewer.id;
   const FollowRequests = ActorsFollowRequests(namespace);
@@ -146,6 +149,7 @@ const ActorsRead = (props) => {
         actor={actor}
         followAction={
           <>
+            {canEditNotifications && <NotificationsDialog actor={actor} />}
             {canAdminister && <FollowRequests actor={actor} />}
             {canFollow && <FollowAction actor={actor} />}
           </>

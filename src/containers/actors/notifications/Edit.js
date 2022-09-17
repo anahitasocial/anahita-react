@@ -4,12 +4,6 @@ import { connect } from 'react-redux';
 import { singularize } from 'inflection';
 
 import CardContent from '@material-ui/core/CardContent';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Switch from '@material-ui/core/Switch';
 
 import actions from '../../../actions';
 import apis from '../../../api';
@@ -18,6 +12,7 @@ import ActorType from '../../../proptypes/Actor';
 // import PersonType from '../../../proptypes/Person';
 
 import ActorSettingCard from '../../../components/cards/ActorSetting';
+import ActorsFormsNotifications from '../../../components/actor/forms/Notifications';
 import Progress from '../../../components/Progress';
 
 const initEmailSettings = {
@@ -30,7 +25,6 @@ const ActorsNotificationsEdit = (props) => {
     readActor,
     resetActors,
     actor,
-    // viewer,
     alertSuccess,
     alertError,
     namespace,
@@ -43,8 +37,9 @@ const ActorsNotificationsEdit = (props) => {
   } = props;
 
   const [id] = params.id.split('-');
-  const [isSubscribed, setIsSubscribed] = useState(actor.isSubscribed ? 0 : 1);
+  const [isSubscribed, setIsSubscribed] = useState(actor.isSubscribed);
   const [emailSettings, setEmailSettings] = useState(initEmailSettings);
+
   const api = apis[namespace][singularize(namespace)].notifications;
 
   useEffect(() => {
@@ -87,7 +82,7 @@ const ActorsNotificationsEdit = (props) => {
     api.editType(actor)
       .then(() => {
         alertSuccess(i18n.t('prompts:saved.success'));
-        setIsSubscribed(isSubscribed === 1 ? 0 : 1);
+        setIsSubscribed(!isSubscribed);
       }).catch(() => {
         alertError(i18n.t('prompts:saved.error'));
       });
@@ -123,39 +118,14 @@ const ActorsNotificationsEdit = (props) => {
       subheader={i18n.t(`${namespace}:notifications.cTitle`)}
     >
       <CardContent>
-        <FormControl margin="normal" fullWidth>
-          <FormLabel component="legend">
-            {i18n.t(`${namespace}:notifications.optionsTitle`)}
-            :
-          </FormLabel>
-          <RadioGroup
-            aria-label="gender"
-            value={isSubscribed}
-            onChange={handleEditType}
-          >
-            <FormControlLabel
-              value={0}
-              control={<Radio />}
-              label={i18n.t(`${namespace}:notifications.options.all`)}
-            />
-            <FormControlLabel
-              value={1}
-              control={<Radio />}
-              label={i18n.t(`${namespace}:notifications.options.following`)}
-            />
-          </RadioGroup>
-        </FormControl>
-        {!emailSettings.email_muted_globally &&
-        <FormControlLabel
-          control={
-            <Switch
-              checked={emailSettings.send_email}
-              onChange={handleEdit}
-              name="sendEmail"
-            />
-          }
-          label={i18n.t(`${namespace}:notifications.email`)}
-        />}
+        <ActorsFormsNotifications
+          namespace={namespace}
+          emailMutedGlobally={emailSettings.email_muted_globally}
+          sendEmail={emailSettings.send_email}
+          isSubscribed={isSubscribed}
+          handleEditType={handleEditType}
+          handleEdit={handleEdit}
+        />
       </CardContent>
     </ActorSettingCard>
   );
@@ -163,7 +133,6 @@ const ActorsNotificationsEdit = (props) => {
 
 ActorsNotificationsEdit.propTypes = {
   actor: ActorType.isRequired,
-  // viewer: PersonType.isRequired,
   readActor: PropTypes.func.isRequired,
   resetActors: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
@@ -183,13 +152,8 @@ function mapStateToProps(namespace) {
       }, isFetching, error, success,
     } = state[namespace];
 
-    const {
-      viewer,
-    } = state.session;
-
     return {
       actor,
-      viewer,
       namespace,
       isFetching,
       error,
