@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -16,8 +17,8 @@ import ActorsFormsNotifications from '../../../components/actor/forms/Notificati
 import Progress from '../../../components/Progress';
 
 const initEmailSettings = {
-  email_muted_globally: false,
-  send_email: false,
+  emailMutedGlobally: false,
+  sendEmail: false,
 };
 
 const ActorsNotificationsEdit = (props) => {
@@ -37,7 +38,7 @@ const ActorsNotificationsEdit = (props) => {
   } = props;
 
   const [id] = params.id.split('-');
-  const [isSubscribed, setIsSubscribed] = useState(actor.isSubscribed);
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const [emailSettings, setEmailSettings] = useState(initEmailSettings);
 
   const api = apis[namespace][singularize(namespace)].notifications;
@@ -54,12 +55,14 @@ const ActorsNotificationsEdit = (props) => {
 
   useEffect(() => {
     if (actor.id) {
+      setIsSubscribed(actor.isSubscribed);
+
       api.read(actor)
         .then((result) => {
           const { data } = result.data;
           setEmailSettings({
-            ...emailSettings,
-            ...data,
+            emailMutedGlobally: data.email_muted_globally,
+            sendEmail: data.send_email,
           });
         })
         .catch((err) => {
@@ -98,7 +101,7 @@ const ActorsNotificationsEdit = (props) => {
         alertSuccess(i18n.t('prompts:saved.success'));
         setEmailSettings({
           ...emailSettings,
-          send_email: !target.checked,
+          sendEmail: !target.checked,
         });
       }).catch(() => {
         alertError(i18n.t('prompts:saved.error'));
@@ -111,6 +114,8 @@ const ActorsNotificationsEdit = (props) => {
     );
   }
 
+  console.log(isSubscribed);
+
   return (
     <ActorSettingCard
       namespace={namespace}
@@ -120,8 +125,8 @@ const ActorsNotificationsEdit = (props) => {
       <CardContent>
         <ActorsFormsNotifications
           namespace={namespace}
-          emailMutedGlobally={emailSettings.email_muted_globally}
-          sendEmail={emailSettings.send_email}
+          emailMutedGlobally={emailSettings.emailMutedGlobally}
+          sendEmail={emailSettings.sendEmail}
           isSubscribed={isSubscribed}
           handleEditType={handleEditType}
           handleEdit={handleEdit}

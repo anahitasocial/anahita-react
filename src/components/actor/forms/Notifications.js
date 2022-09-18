@@ -25,7 +25,6 @@ const ActorsFormsNotifications = (props) => {
       <FormControl margin="normal" fullWidth>
         <FormLabel component="legend">
           {i18n.t(`${namespace}:notifications.optionsTitle`)}
-          :
         </FormLabel>
         <RadioGroup
           aria-label="gender"

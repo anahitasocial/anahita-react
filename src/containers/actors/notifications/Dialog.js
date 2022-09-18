@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -20,8 +21,8 @@ import utils from '../../../utils';
 import ActorsFormsNotifications from '../../../components/actor/forms/Notifications';
 
 const initEmailSettings = {
-  email_muted_globally: false,
-  send_email: false,
+  emailMutedGlobally: false,
+  sendEmail: false,
 };
 
 const { node } = utils;
@@ -47,8 +48,8 @@ const ActorsNotificationsDialog = (props) => {
         .then((result) => {
           const { data } = result.data;
           setEmailSettings({
-            ...emailSettings,
-            ...data,
+            emailMutedGlobally: data.email_muted_globally,
+            sendEmail: data.send_email,
           });
         })
         .catch((err) => {
@@ -77,7 +78,7 @@ const ActorsNotificationsDialog = (props) => {
         alertSuccess(i18n.t('prompts:saved.success'));
         setEmailSettings({
           ...emailSettings,
-          send_email: !target.checked,
+          sendEmail: !target.checked,
         });
       }).catch(() => {
         alertError(i18n.t('prompts:saved.error'));
@@ -98,8 +99,8 @@ const ActorsNotificationsDialog = (props) => {
         <DialogContent>
           <ActorsFormsNotifications
             namespace={namespace}
-            emailMutedGlobally={Boolean(emailSettings.email_muted_globally)}
-            sendEmail={Boolean(emailSettings.send_email)}
+            emailMutedGlobally={emailSettings.emailMutedGlobally}
+            sendEmail={emailSettings.sendEmail}
             isSubscribed={isSubscribed}
             handleEditType={handleEditType}
             handleEdit={handleEdit}

@@ -7,7 +7,7 @@ const read = (actor) => {
 const edit = (params) => {
   const { actor, sendEmail } = params;
   return axios.post(`/notifications/settings?oid=${actor.id}`, {
-    email: sendEmail ? 1 : 2,
+    email: sendEmail ? 1 : 0,
   });
 };
 
