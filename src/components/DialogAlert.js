@@ -15,7 +15,7 @@ const DialogAlert = (props) => {
     dismiss,
     handleConfirm,
     handleDismiss,
-    open
+    open,
   } = props;
 
   return (
@@ -60,6 +60,7 @@ DialogAlert.propTypes = {
   confirm: PropTypes.string,
   dismiss: PropTypes.string,
   handleConfirm: PropTypes.func.isRequired,
+  handleDismiss: PropTypes.func.isRequired,
   open: PropTypes.bool,
 };
 

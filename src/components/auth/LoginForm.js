@@ -58,6 +58,7 @@ const LoginForm = (props) => {
             inputProps={{
               maxLength: IDENTIFIER.MAX_LENGTH,
             }}
+            autoComplete="username"
             required
           />
           <TextField
@@ -70,6 +71,7 @@ const LoginForm = (props) => {
             helperText={password.error}
             fullWidth
             margin="normal"
+            autoComplete="current-password"
             inputProps={{
               maxLength: PASSWORD.MAX_LENGTH,
             }}
