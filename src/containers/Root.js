@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { LoadScriptNext } from '@react-google-maps/api';
-import App from '../containers/App';
+import App from './App';
 import Routes from '../routes';
 import styles from '../styles';
 import i18n from '../languages';

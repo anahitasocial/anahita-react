@@ -157,7 +157,7 @@ const LocationsRead = (props) => {
   const canAdminister = permissions.node.canAdminister(viewer);
 
   return (
-    <React.Fragment>
+    <>
       <HeaderMeta
         title={location.name}
       />
@@ -181,8 +181,7 @@ const LocationsRead = (props) => {
               location={location}
               viewer={viewer}
               handleEdit={handleEdit}
-            />
-          }
+            />}
         />
         {isEditing &&
           <LocationForm
@@ -209,8 +208,7 @@ const LocationsRead = (props) => {
                 Update
               </Button>,
             ]}
-          />
-        }
+          />}
         {location.id &&
           <AnahitaMap
             locations={[location]}
@@ -218,8 +216,7 @@ const LocationsRead = (props) => {
             loadingElement={<div style={{ height: '100%' }} />}
             containerElement={<div className={classes.mapContainer} />}
             mapElement={<div style={{ height: '100%' }} />}
-          />
-        }
+          />}
         <CardContent>
           <Typography variant="caption">
             {getAddress(location)}
@@ -227,9 +224,8 @@ const LocationsRead = (props) => {
         </CardContent>
       </Card>
       {location.id > 0 &&
-        <Taggables tag={location} />
-      }
-    </React.Fragment>
+        <Taggables tag={location} />}
+    </>
   );
 };
 

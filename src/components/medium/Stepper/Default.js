@@ -106,7 +106,7 @@ const MediumStepperDefault = (props) => {
           <Grid
             container
             alignItems="center"
-            justify="space-between"
+            justifyContent="space-between"
           >
             <Grid item md={1}>
               <Box className={classes.buttons}>
@@ -119,8 +119,7 @@ const MediumStepperDefault = (props) => {
                   className={classes.portrait}
                   alt={medium.name}
                   src={portrait}
-                />
-              }
+                />}
             </Grid>
             <Grid item md={1}>
               <Box className={classes.buttons}>
@@ -135,8 +134,7 @@ const MediumStepperDefault = (props) => {
               className={classes.portrait}
               alt={medium.name}
               src={portrait}
-            />
-          }
+            />}
           <Box className={classes.buttons}>
             {prevAction}
             {nextAction}
@@ -150,9 +148,7 @@ const MediumStepperDefault = (props) => {
       >
         <div className={classes.scrollingItem}>
           <Card variant="outlined" square>
-            {medium.owner.objectType.split('.')[1] !== 'people' &&
-              <CardHeaderOwner node={medium} />
-            }
+            {medium.owner.objectType.split('.')[1] !== 'people' && <CardHeaderOwner node={medium} />}
             <CardHeader
               avatar={
                 <ActorAvatar
@@ -177,10 +173,8 @@ const MediumStepperDefault = (props) => {
             />
             {editing && form}
             {!editing &&
-              <React.Fragment>
-                {medium.body &&
-                  <Player text={medium.body} />
-                }
+              <>
+                {medium.body && <Player text={medium.body} />}
                 <CardContent component="article">
                   {medium.name &&
                     <Typography
@@ -188,8 +182,7 @@ const MediumStepperDefault = (props) => {
                       className={classes.title}
                     >
                       {medium.name}
-                    </Typography>
-                  }
+                    </Typography>}
                   {medium.body &&
                     <EntityBody>
                       {contentfilter({
@@ -200,21 +193,17 @@ const MediumStepperDefault = (props) => {
                           'url',
                         ],
                       })}
-                    </EntityBody>
-                  }
+                    </EntityBody>}
                   {stats &&
                     <CardActions>
                       {stats}
-                    </CardActions>
-                  }
+                    </CardActions>}
                   {actions &&
                     <CardActions>
                       {actions}
-                    </CardActions>
-                  }
+                    </CardActions>}
                 </CardContent>
-              </React.Fragment>
-            }
+              </>}
           </Card>
           <Tabs
             value={tab}

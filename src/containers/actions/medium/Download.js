@@ -23,7 +23,9 @@ const ActionsMediumDownload = React.forwardRef((props, ref) => {
         saveAs(result.data, node.alias);
         setDisabled(false);
       })
-      .catch(err => console.error(err));
+      .catch((err) => {
+        return console.error(err);
+      });
   };
 
   return (
@@ -43,11 +45,11 @@ const ActionsMediumDownload = React.forwardRef((props, ref) => {
 
 ActionsMediumDownload.propTypes = {
   node: NodeType.isRequired,
-  size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
 };
 
 ActionsMediumDownload.defaultProps = {
-  size: 'default',
+  size: 'medium',
 };
 
 export default ActionsMediumDownload;

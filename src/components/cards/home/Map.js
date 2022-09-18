@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 /* eslint no-console: ["error", { allow: ["log", "error"] }] */
 
 import React, { useEffect, useState } from 'react';
@@ -13,7 +14,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-
 
 import AnahitaMap from '../../Map';
 import Progress from '../../Progress';
@@ -65,9 +65,7 @@ const HomeCardMap = (params) => {
         }
         subheader={subheader}
       />
-      {items.length === 0 &&
-        <Progress />
-      }
+      {items.length === 0 && <Progress />}
       {items.length > 0 &&
         <AnahitaMap
           locations={items}
@@ -75,8 +73,7 @@ const HomeCardMap = (params) => {
           loadingElement={<div style={{ height: '100%' }} />}
           mapElement={<div style={{ height: '100%' }} />}
           height={295}
-        />
-      }
+        />}
       {showList &&
         <List>
           {items.map((item) => {
@@ -91,7 +88,7 @@ const HomeCardMap = (params) => {
               >
                 <ListItemAvatar>
                   <Avatar>
-                    {icons['Locations']}
+                    {icons.Locations}
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
@@ -104,8 +101,7 @@ const HomeCardMap = (params) => {
               </ListItem>
             );
           })}
-        </List>
-      }
+        </List>}
       <CardActions>
         <Button
           fullWidth

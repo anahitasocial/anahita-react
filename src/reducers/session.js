@@ -11,15 +11,14 @@ const {
   SUPER_ADMIN,
 } = PERSON.FIELDS.TYPE;
 
-/* global localStorage */
 const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : { ...PersonDefault, usertype: GUEST };
 
 const initState = {
   viewer,
   isAuthenticated: (
-    viewer.usertype === REGISTERED ||
-    viewer.usertype === ADMIN ||
-    viewer.usertype === SUPER_ADMIN
+    viewer.usertype === REGISTERED
+    || viewer.usertype === ADMIN
+    || viewer.usertype === SUPER_ADMIN
   ),
   isFetching: false,
   success: false,

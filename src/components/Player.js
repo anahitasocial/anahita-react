@@ -23,11 +23,8 @@ const styles = (theme) => {
 
 const Player = (props) => {
   const { text, classes } = props;
-
   const [playing, setPlaying] = useState(false);
-
   const urls = text.match(regex);
-
   const isEmpty = !urls || !urls[0].match(/(youtu|vimeo|soundcloud|dailymotion|mixcloud|twitch)/);
 
   if (isEmpty) {

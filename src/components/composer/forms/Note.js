@@ -68,8 +68,7 @@ const ComposersNote = (props) => {
                 />
               }
               label="Private"
-            />
-          }
+            />}
         </CardContent>
         <CardActions>
           <Button

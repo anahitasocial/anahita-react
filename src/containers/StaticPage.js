@@ -12,13 +12,15 @@ import HeaderMeta from '../components/HeaderMeta';
 import * as actions from '../actions';
 import i18n from '../languages';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& a': {
-      color: theme.palette.primary.main,
+const useStyles = makeStyles((theme) => {
+  return {
+    root: {
+      '& a': {
+        color: theme.palette.primary.main,
+      },
     },
-  },
-}));
+  };
+});
 
 const StaticPage = (props) => {
   const classes = useStyles();
@@ -49,10 +51,9 @@ const StaticPage = (props) => {
         <HeaderMeta
           title={title}
         />
-        <ReactMarkdown
-          source={source}
-          escapeHtml={false}
-        />
+        <ReactMarkdown>
+          {source}
+        </ReactMarkdown>
       </div>
     </Container>
   );

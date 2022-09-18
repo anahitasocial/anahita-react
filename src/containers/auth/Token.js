@@ -51,7 +51,7 @@ const AuthToken = (props) => {
     );
   }
 
-  return (<React.Fragment />);
+  return (<></>);
 };
 
 AuthToken.propTypes = {

@@ -16,7 +16,7 @@ const Progress = () => {
   return (
     <Grid
       container
-      justify="center"
+      justifyContent="center"
       alignItems="center"
     >
       <Grid>

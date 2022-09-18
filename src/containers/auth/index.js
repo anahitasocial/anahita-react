@@ -18,7 +18,7 @@ const Auth = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         position="sticky"
         color="inherit"
@@ -35,13 +35,9 @@ const Auth = (props) => {
           {/* <Tab label="Signup" /> */}
         </Tabs>
       </AppBar>
-      {tab === 0 &&
-        <Login />
-      }
-      {tab === 1 && false &&
-        <Signup />
-      }
-    </React.Fragment>
+      {tab === 0 && <Login />}
+      {tab === 1 && false && <Signup />}
+    </>
   );
 };
 

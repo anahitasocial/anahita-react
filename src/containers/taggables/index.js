@@ -39,7 +39,7 @@ const Taggables = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         position="sticky"
         color="inherit"
@@ -67,10 +67,8 @@ const Taggables = (props) => {
             sort: tab,
           }}
         />);
-      }, [
-          tab,
-        ])}
-    </React.Fragment>
+      }, [tab])}
+    </>
   );
 };
 

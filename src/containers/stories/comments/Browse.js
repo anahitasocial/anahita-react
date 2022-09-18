@@ -82,7 +82,7 @@ const CommentsBrowse = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       {items.allIds.map((itemId) => {
         const node = items.byId[itemId];
         const key = `comment_list_item_${node.id}`;
@@ -102,9 +102,8 @@ const CommentsBrowse = (props) => {
           handleOnChange={handleOnChange}
           handleOnSubmit={handleOnSubmit}
           isFetching={isFetching}
-        />
-      }
-    </React.Fragment>
+        />}
+    </>
   );
 };
 

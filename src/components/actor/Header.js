@@ -77,7 +77,7 @@ const ActorHeader = (props) => {
           </Typography>
         }
         subheader={
-          <React.Fragment>
+          <>
             <Typography
               variant="h3"
               className={classes.subheader}
@@ -86,7 +86,7 @@ const ActorHeader = (props) => {
               {actor.alias && `@${slugify(actor.alias.toLowerCase())}`}
             </Typography>
             <SocialgraphMeta actor={actor} />
-          </React.Fragment>
+          </>
         }
         action={headerActions}
       />
@@ -94,8 +94,7 @@ const ActorHeader = (props) => {
         <CardActions>
           <div className={classes.grow} />
           {followAction}
-        </CardActions>
-      }
+        </CardActions>}
     </Card>
   );
 };

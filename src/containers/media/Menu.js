@@ -99,6 +99,7 @@ const MediaMenu = (props) => {
           node={medium}
           key={`medium-delete-${medium.id}`}
           redirect={inline ? '' : getURL(medium.owner)}
+          component="menuitem"
         />
       </Menu>
     </React.Fragment>

@@ -41,6 +41,7 @@ const LocationsSelectorAdd = (props) => {
   formFields.name.value = name;
 
   const [fields, setFields] = useState(formFields);
+  /* eslint no-unused-vars: "off" */
   const [location, setLocation] = useState({
     ...LocationDefault,
     country: process.env.REACT_APP_LOCATION_FIXED_COUNTRY,

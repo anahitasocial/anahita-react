@@ -53,8 +53,7 @@ const ComposersArticle = (props) => {
                 minLength: NAME.MIN_LENGTH,
               }}
               required
-            />
-          }
+            />}
           {fields.body &&
             <TextField
               variant="outlined"
@@ -78,8 +77,7 @@ const ComposersArticle = (props) => {
               rows={5}
               rowsMax={10}
               required
-            />
-          }
+            />}
           {fields.excerpt &&
             <TextField
               variant="outlined"
@@ -100,8 +98,7 @@ const ComposersArticle = (props) => {
               inputProps={{
                 maxLength: EXCERPT.MAX_LENGTH,
               }}
-            />
-          }
+            />}
         </CardContent>
         <CardActions>
           <Button

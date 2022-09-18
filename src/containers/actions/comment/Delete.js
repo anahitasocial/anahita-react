@@ -49,7 +49,6 @@ ActionsCommentDelete.defaultProps = {
   inline: false,
 };
 
-
 const mapStateToProps = () => {
   return {};
 };

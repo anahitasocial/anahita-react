@@ -46,7 +46,7 @@ const CommentMenu = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <IconButton
         aria-owns={menuAnchorEl ? `comment-card-menu-${comment.id}` : undefined}
         aria-haspopup="true"
@@ -67,8 +67,7 @@ const CommentMenu = (props) => {
             key={`comment-edit-${comment.id}`}
           >
             {i18n.t('actions:edit')}
-          </MenuItem>
-        }
+          </MenuItem>}
         {author && author.id !== viewer.id &&
           <BlockActionActionWithRef
             actor={author}
@@ -80,8 +79,7 @@ const CommentMenu = (props) => {
             unfollowLabel={i18n.t('comments:actions.unfollowAuthor', {
               name: author.name,
             })}
-          />
-        }
+          />}
         {author && author.id !== viewer.id &&
           <FollowActionWithRef
             actor={author}
@@ -93,18 +91,16 @@ const CommentMenu = (props) => {
             unfollowLabel={i18n.t('comments:actions.unfollowAuthor', {
               name: author.name,
             })}
-          />
-        }
+          />}
         {canDelete &&
           <DeleteActionWithRef
             comment={comment}
             node={node}
             key={`comment-delete-${comment.id}`}
             inline={inline}
-          />
-        }
+          />}
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 

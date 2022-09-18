@@ -60,8 +60,7 @@ const SettingsAssignmentsForm = (props) => {
               {app.is_optional &&
                 <MenuItem value={0}>
                   {i18n.t('settings:assignment.options.optional')}
-                </MenuItem>
-              }
+                </MenuItem>}
               <MenuItem value={1}>
                 {i18n.t('settings:assignment.options.always')}
               </MenuItem>

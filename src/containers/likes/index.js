@@ -30,7 +30,7 @@ const Likes = (props) => {
   const LikesStat = LikesBrowse(namespace);
 
   return (
-    <React.Fragment>
+    <>
       <Dialog
         onClose={handleClose}
         fullWidth
@@ -63,7 +63,7 @@ const Likes = (props) => {
       >
         {voteUpCount}
       </Button>
-    </React.Fragment>
+    </>
   );
 };
 

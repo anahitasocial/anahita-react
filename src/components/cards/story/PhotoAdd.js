@@ -69,9 +69,7 @@ const StoryCardPhotoAdd = (props) => {
       variant="outlined"
       component="section"
     >
-      {showOwnerHeader &&
-        <StoryCardOwner node={story} />
-      }
+      {showOwnerHeader && <StoryCardOwner node={story} />}
       <CardHeader
         avatar={
           <ActorAvatar
@@ -89,9 +87,7 @@ const StoryCardPhotoAdd = (props) => {
         }
         action={menu}
       />
-      {portraits &&
-        <GridList photos={portraits} />
-      }
+      {portraits && <GridList photos={portraits} />}
       {!portraits && portrait &&
         <Link href={url}>
           <CardMedia
@@ -99,8 +95,7 @@ const StoryCardPhotoAdd = (props) => {
             title={title}
             image={portrait}
           />
-        </Link>
-      }
+        </Link>}
       <CardContent>
         {title &&
           <Typography
@@ -110,19 +105,16 @@ const StoryCardPhotoAdd = (props) => {
             <Link href={url}>
               {title}
             </Link>
-          </Typography>
-        }
+          </Typography>}
         {body &&
           <ReadMore contentFilter>
             {body}
-          </ReadMore>
-        }
+          </ReadMore>}
       </CardContent>
       {actions &&
         <CardActions>
           {actions}
-        </CardActions>
-      }
+        </CardActions>}
       <Divider />
       {comments}
     </Card>

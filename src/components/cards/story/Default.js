@@ -72,6 +72,8 @@ const StoryCardDefault = (props) => {
   const body = story.object && story.object.body;
   const url = story.object ? getURL(story.object) : '';
   const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
+  const creationTime = moment.utc(story.creationTime).format('LLL').toString();
+  const creationTimeFromNow = moment.utc(story.creationTime).fromNow();
 
   return (
     <Card
@@ -79,9 +81,7 @@ const StoryCardDefault = (props) => {
       component="section"
       variant="outlined"
     >
-      {showOwnerHeader &&
-        <StoryCardOwner node={story} />
-      }
+      {showOwnerHeader && <StoryCardOwner node={story} />}
       <CardHeader
         avatar={
           <ActorAvatar
@@ -95,9 +95,9 @@ const StoryCardDefault = (props) => {
         subheader={
           <Link
             href={url}
-            title={moment.utc(story.creationTime).format('LLL').toString()}
+            title={creationTime}
           >
-            {moment.utc(story.creationTime).fromNow()}
+            {creationTimeFromNow}
           </Link>
         }
         action={menu}
@@ -110,8 +110,7 @@ const StoryCardDefault = (props) => {
             title={title}
             src="picture"
           />
-        </Link>
-      }
+        </Link>}
       {portrait &&
         <Link href={url}>
           <CardMedia
@@ -119,11 +118,8 @@ const StoryCardDefault = (props) => {
             title={title}
             image={portrait}
           />
-        </Link>
-      }
-      {body &&
-        <Player text={body} />
-      }
+        </Link>}
+      {body && <Player text={body} />}
       <CardContent>
         {title &&
           <Typography
@@ -133,24 +129,20 @@ const StoryCardDefault = (props) => {
             <Link href={url}>
               {title}
             </Link>
-          </Typography>
-        }
+          </Typography>}
         {body &&
           <ReadMore contentFilter>
             {body}
-          </ReadMore>
-        }
+          </ReadMore>}
       </CardContent>
       {stats &&
         <CardActions>
           {stats}
-        </CardActions>
-      }
+        </CardActions>}
       {actions &&
         <CardActions>
           {actions}
-        </CardActions>
-      }
+        </CardActions>}
       <Divider />
       {comments}
     </Card>

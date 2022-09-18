@@ -71,7 +71,7 @@ const ActorsBrowse = (props) => {
   const canAdd = permissions.canAdd(viewer, namespace);
 
   return (
-    <React.Fragment>
+    <>
       {canAdd &&
         <Fab
           aria-label="Add"
@@ -81,8 +81,7 @@ const ActorsBrowse = (props) => {
           to={`/${namespace}/add/`}
         >
           <AddIcon />
-        </Fab>
-      }
+        </Fab>}
       <InfiniteScroll
         dataLength={items.allIds.length}
         next={fetchList}
@@ -103,11 +102,10 @@ const ActorsBrowse = (props) => {
                 <ActorsCard actor={node} viewer={viewer} />
               </div>
             );
-          })
-          }
+          })}
         </Masonry>
       </InfiniteScroll>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Particles from 'react-particles-js';
+import Particles from 'react-tsparticles';
 
 import actions from '../../../actions';
 import i18n from '../../../languages';
@@ -84,7 +84,7 @@ const Home = (props) => {
         container
         spacing={2}
         direction="row"
-        justify="flex-start"
+        justifyContent="flex-start"
         alignItems="stretch"
       >
         <Grid item xs={12}>

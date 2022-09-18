@@ -64,7 +64,6 @@ ActionsMediumNotification.defaultProps = {
   unsubscribeLabel: i18n.t('actions:unsubscribe'),
 };
 
-
 const mapStateToProps = (state) => {
   const {
     isFetching,

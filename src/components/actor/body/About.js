@@ -23,7 +23,7 @@ const ActorBodyAbout = (props) => {
     body,
     information: {
       website,
-      contact_url,
+      contact_url: contactUrl,
       phone,
     },
   } = actor;
@@ -43,15 +43,14 @@ const ActorBodyAbout = (props) => {
         }
       />
       {body &&
-        <React.Fragment>
+        <>
           <Player text={body} />
           <CardContent>
             <EntityBody contentFilter>
               {body}
             </EntityBody>
           </CardContent>
-        </React.Fragment>
-      }
+        </>}
       <List>
         {website &&
           <ListItem
@@ -74,13 +73,12 @@ const ActorBodyAbout = (props) => {
                 </Typography>
               }
             />
-          </ListItem>
-        }
-        {contact_url &&
+          </ListItem>}
+        {contactUrl &&
           <ListItem
             button
             component="a"
-            href={contact_url}
+            href={contactUrl}
             target="_blank"
           >
             <ListItemIcon>
@@ -93,12 +91,11 @@ const ActorBodyAbout = (props) => {
                   variant="body1"
                   noWrap
                 >
-                  {contact_url}
+                  {contactUrl}
                 </Typography>
               }
             />
-          </ListItem>
-        }
+          </ListItem>}
         {phone &&
           <ListItem
             button
@@ -120,8 +117,7 @@ const ActorBodyAbout = (props) => {
                 </Typography>
               }
             />
-          </ListItem>
-        }
+          </ListItem>}
       </List>
     </Card>
   );

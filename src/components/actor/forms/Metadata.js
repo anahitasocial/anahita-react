@@ -16,7 +16,7 @@ const ActorFormsMetadata = (props) => {
   } = props;
 
   return (
-    <React.Fragment>
+    <>
       <TextField
         name="website"
         type="url"
@@ -60,10 +60,10 @@ const ActorFormsMetadata = (props) => {
         margin="normal"
         inputProps={{
           maxLength: METADATA.MAX_LENGTH,
-          pattern: "[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          pattern: '[0-9]{3}-[0-9]{3}-[0-9]{4}',
         }}
       />
-    </React.Fragment>
+    </>
   );
 };
 

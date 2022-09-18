@@ -74,7 +74,6 @@ const ActorBody = (props) => {
               <Tab
                 label={label}
                 value={gadget}
-                key={`actor-tab-${gadget}`}
               />
             );
           })}
@@ -90,7 +89,7 @@ const ActorBody = (props) => {
           container
           spacing={2}
           direction="row"
-          justify="flex-start"
+          justifyContent="flex-start"
           alignItems="flex-start"
         >
           <Grid item xs={12} md={4}>
@@ -98,18 +97,15 @@ const ActorBody = (props) => {
               {actor.body &&
                 <Grid item xs={12}>
                   <ActorBodyAbout actor={actor} />
-                </Grid>
-              }
+                </Grid>}
               {admins &&
                 <Grid item xs={12}>
                   {admins }
-                </Grid>
-              }
+                </Grid>}
               {locations &&
-              <Grid item xs={12}>
-                {locations}
-              </Grid>
-              }
+                <Grid item xs={12}>
+                  {locations}
+                </Grid>}
             </Grid>
           </Grid>
           <Grid item xs={12} md={8}>
@@ -120,8 +116,7 @@ const ActorBody = (props) => {
               {stories}
             </Grid>
           </Grid>
-        </Grid>
-      }
+        </Grid>}
       {value === 'socialgraph' && socialgraph}
       {typeof (gadgets[value]) !== 'undefined' && gadgets[value]}
       {actor.id === viewer.id && value === 'mentions' && mentions}

@@ -28,6 +28,10 @@ const isPerson = (node) => {
   return node.objectType ? node.objectType.split('.')[1] === 'people' : false;
 };
 
+const isSuperAdmin = (actor) => {
+  return actor.usertype === SUPER_ADMIN;
+};
+
 const isAdmin = (actor) => {
   return [SUPER_ADMIN, ADMIN].includes(actor.usertype);
 };
@@ -216,6 +220,7 @@ const getSupportedMimetypes = (namespace) => {
 export default {
   isActor,
   isPerson,
+  isSuperAdmin,
   isAdmin,
   isRegistered,
   isMedium,

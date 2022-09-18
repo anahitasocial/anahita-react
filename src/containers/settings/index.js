@@ -31,7 +31,7 @@ const Settings = (props) => {
   });
 
   return (
-    <React.Fragment>
+    <>
       <Tabs
         variant="scrollable"
         scrollButtons="on"
@@ -47,18 +47,14 @@ const Settings = (props) => {
         <Tab label="Plugins" value={TABS.PLUGINS} />
       </Tabs>
       {tab === TABS.ABOUT &&
-        <SettingsAbout />
-      }
+        <SettingsAbout />}
       {tab === TABS.APPS &&
-        <SettingsApps />
-      }
+        <SettingsApps />}
       {tab === TABS.ASSIGNMENTS &&
-        <SettingsAssignments />
-      }
+        <SettingsAssignments />}
       {tab === TABS.PLUGINS &&
-        <SettingsPlugins />
-      }
-    </React.Fragment>
+        <SettingsPlugins />}
+    </>
   );
 };
 

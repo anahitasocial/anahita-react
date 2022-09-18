@@ -10,7 +10,7 @@ import ActorsSocialgraph from '../Socialgraph';
 import ActorsBrowseGadget from '../browse/Gadget';
 import Admins from '../../../components/actor/body/Admins';
 import Avatar from './Avatar';
-import Composers from '../../composers/';
+import Composers from '../../composers';
 import Commands from './Commands';
 import Cover from './Cover';
 import FollowAction from '../../actions/Follow';
@@ -81,7 +81,7 @@ const ActorsRead = (props) => {
       );
     }
 
-    return <React.Fragment />;
+    return <></>;
   }
 
   // @TODO we need a custom Read container for the Project Actors at this point
@@ -124,7 +124,7 @@ const ActorsRead = (props) => {
   });
 
   return (
-    <React.Fragment>
+    <>
       <HeaderMeta
         title={actor.name}
         description={actor.body}
@@ -145,67 +145,58 @@ const ActorsRead = (props) => {
         }
         actor={actor}
         followAction={
-          <React.Fragment>
+          <>
             {canAdminister && <FollowRequests actor={actor} />}
             {canFollow && <FollowAction actor={actor} />}
-          </React.Fragment>
+          </>
         }
         headerActions={canViewCommands &&
-          <Commands actor={actor} />
-        }
+          <Commands actor={actor} viewer={viewer} />}
       />
       <ActorBody
         actor={actor}
         viewer={viewer}
         selectedTab={tab}
         admins={actor.id > 0 && actor.administrators &&
-          <Admins actor={actor} />
-        }
+          <Admins actor={actor} />}
         composers={isAuthenticated && actor.id &&
-          <Composers owner={actor} />
-        }
+          <Composers owner={actor} />}
         stories={actor.id &&
           <StoriesBrowse
             queryFilters={{
               oid: actor.id,
             }}
-          />
-        }
+          />}
         locations={actor.id &&
-          <LocationsGadget node={actor} />
-        }
+          <LocationsGadget node={actor} />}
         socialgraph={
           <SocialgraphTabs
             followers={actor.id &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="followers"
-              />
-            }
+              />}
             leaders={actor.id && isPerson(actor) &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="leaders"
-              />
-            }
+              />}
             blocked={actor.id && isViewer &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="blocked"
-              />
-            }
+              />}
             mutuals={actor.id && !isViewer && isPerson(actor) &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="mutuals"
-              />
-            }
+              />}
             selectedTab={subtab}
           />
         }
         gadgets={gadgets}
       />
-    </React.Fragment>
+    </>
   );
 };
 

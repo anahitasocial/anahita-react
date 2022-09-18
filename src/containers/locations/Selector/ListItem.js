@@ -34,10 +34,9 @@ const LocationsListItem = (props) => {
         secondary={getAddress(location)}
       />
       {actions &&
-      <ListItemSecondaryAction>
-        {actions}
-      </ListItemSecondaryAction>
-      }
+        <ListItemSecondaryAction>
+          {actions}
+        </ListItemSecondaryAction>}
     </ListItem>
   );
 };

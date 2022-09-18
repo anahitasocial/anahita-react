@@ -72,7 +72,7 @@ const SettingsAssignmentsBrowse = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {current.app &&
         <AssignmentEdit
           identifier={current.identifier}
@@ -80,8 +80,7 @@ const SettingsAssignmentsBrowse = (props) => {
           open={editingOpen}
           handleClose={handleClose}
           isFetching={isFetching}
-        />
-      }
+        />}
       <Card variant="outlined">
         <CardHeader
           title={
@@ -131,7 +130,7 @@ const SettingsAssignmentsBrowse = (props) => {
           );
         })}
       </Card>
-    </React.Fragment>
+    </>
   );
 };
 

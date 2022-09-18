@@ -54,7 +54,7 @@ const ActorCoverForm = (props) => {
   } = props;
 
   return (
-    <React.Fragment>
+    <>
       <ButtonBase
         className={classes.button}
         disabled={!canEdit || isFetching}
@@ -68,14 +68,9 @@ const ActorCoverForm = (props) => {
               image={cover}
               src="picture"
             />
-          </Fade>
-        }
-        {!cover &&
-          <div className={classes.coverPlaceholder} />
-        }
-        {isFetching &&
-          <CircularProgress className={classes.progress} />
-        }
+          </Fade>}
+        {!cover && <div className={classes.coverPlaceholder} />}
+        {isFetching && <CircularProgress className={classes.progress} />}
       </ButtonBase>
       <Menu
         id="cover-add-menu"
@@ -100,7 +95,7 @@ const ActorCoverForm = (props) => {
           Delete
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 

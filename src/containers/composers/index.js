@@ -37,11 +37,11 @@ const Composers = (props) => {
   };
 
   if (composers.length === 0) {
-    return (<React.Fragment />);
+    return (<></>);
   }
 
   return (
-    <React.Fragment>
+    <>
       <MediaComposer owner={owner} namespace={tab} />
       <AppBar
         position="sticky"
@@ -69,7 +69,7 @@ const Composers = (props) => {
           })}
         </Tabs>
       </AppBar>
-    </React.Fragment>
+    </>
   );
 };
 

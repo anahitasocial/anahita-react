@@ -62,7 +62,7 @@ const ActorAvatarForm = (props) => {
   const initials = getActorInitials(node);
 
   return (
-    <React.Fragment>
+    <>
       <IconButton
         color="primary"
         component="span"
@@ -104,7 +104,7 @@ const ActorAvatarForm = (props) => {
           Delete
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 

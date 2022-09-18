@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 
 import Grid from '@material-ui/core/Grid';
 
-import Composers from './composers/';
+import Composers from './composers';
 import StoriesBrowse from './stories/Browse';
 import actions from '../actions';
 import i18n from '../languages';
@@ -29,13 +29,13 @@ const DashboardPage = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Helmet>
         <title>{i18n.t('dashboard:cTitle')}</title>
       </Helmet>
       <Grid
         container
-        justify="center"
+        justifyContent="center"
       >
         <Grid
           item
@@ -55,7 +55,7 @@ const DashboardPage = (props) => {
           />
         </Grid>
       </Grid>
-    </React.Fragment>
+    </>
   );
 };
 

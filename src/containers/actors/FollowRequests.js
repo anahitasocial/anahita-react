@@ -128,6 +128,7 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
         <Badge
           color="secondary"
           badgeContent={items.allIds.length}
+          overlap="rectangular"
         >
           <FollowRequestsIcon />
         </Badge>

@@ -46,8 +46,7 @@ const MediumFormEdit = (props) => {
               minLength: NAME.MIN_LENGTH,
             }}
             required
-          />
-        }
+          />}
         {fields.body &&
           <TextField
             name="body"
@@ -64,8 +63,7 @@ const MediumFormEdit = (props) => {
               maxLength: BODY.MAX_LENGTH,
             }}
             required
-          />
-        }
+          />}
       </CardContent>
       <CardActions>
         <Button

@@ -52,14 +52,14 @@ const CommentCard = (props) => {
 
   if (isEditing) {
     return (
-      <React.Fragment>
+      <>
         {commentForm}
-      </React.Fragment>
+      </>
     );
   }
 
   return (
-    <React.Fragment>
+    <>
       <CardHeader
         avatar={
           <ActorAvatar
@@ -92,14 +92,12 @@ const CommentCard = (props) => {
       {stats &&
         <CardActions>
           {stats}
-        </CardActions>
-      }
+        </CardActions>}
       {actions &&
         <CardActions>
           {actions}
-        </CardActions>
-      }
-    </React.Fragment>
+        </CardActions>}
+    </>
   );
 };
 

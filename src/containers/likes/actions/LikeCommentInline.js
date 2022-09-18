@@ -43,14 +43,10 @@ const LikesActionCommentInline = React.forwardRef((props, ref) => {
       aria-label={label}
       ref={ref}
       startIcon={
-        <React.Fragment>
-          {liked &&
-            <UnlikeIcon fontSize={size} />
-          }
-          {!liked &&
-            <LikeIcon fontSize={size} />
-          }
-        </React.Fragment>
+        <>
+          {liked && <UnlikeIcon fontSize={size} />}
+          {!liked && <LikeIcon fontSize={size} />}
+        </>
       }
       fullWidth
     >
@@ -64,12 +60,12 @@ LikesActionCommentInline.propTypes = {
   unlikeNode: PropTypes.func.isRequired,
   node: NodeType.isRequired,
   comment: CommentType,
-  size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
 };
 
 LikesActionCommentInline.defaultProps = {
   comment: CommentDefault,
-  size: 'default',
+  size: 'medium',
 };
 
 const mapStateToProps = () => {

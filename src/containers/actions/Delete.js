@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import actions from '../../actions';
@@ -15,6 +16,7 @@ const ActionsDelete = React.forwardRef((props, ref) => {
     node,
     history,
     redirect,
+    component,
     alertSuccess,
     alertError,
   } = props;
@@ -37,15 +39,28 @@ const ActionsDelete = React.forwardRef((props, ref) => {
 
   const label = i18n.t('actions:delete');
 
+  if (component === 'menuitem') {
+    return (
+      <MenuItem
+        onClick={handleDelete}
+        disabled={waiting}
+        aria-label={label}
+        ref={ref}
+      >
+        {label}
+      </MenuItem>
+    );
+  }
+
   return (
-    <MenuItem
+    <Button
       onClick={handleDelete}
       disabled={waiting}
       aria-label={label}
       ref={ref}
     >
       {label}
-    </MenuItem>
+    </Button>
   );
 });
 
@@ -56,10 +71,12 @@ ActionsDelete.propTypes = {
   node: NodeType.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   redirect: PropTypes.string,
+  component: PropTypes.oneOf(['button', 'menuitem']),
 };
 
 ActionsDelete.defaultProps = {
   redirect: '',
+  component: 'button',
 };
 
 const mapStateToProps = () => {

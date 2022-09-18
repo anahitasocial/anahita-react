@@ -52,8 +52,7 @@ const ComposersTodo = (props) => {
                 minLength: NAME.MIN_LENGTH,
               }}
               required
-            />
-          }
+            />}
           {fields.body &&
             <TextField
               variant="outlined"
@@ -77,8 +76,7 @@ const ComposersTodo = (props) => {
               rows={5}
               rowsMax={10}
               required
-            />
-          }
+            />}
         </CardContent>
         <CardActions>
           <Button

@@ -16,7 +16,8 @@ const NotificationsIcon = () => {
       interval = setInterval(() => {
         api.count()
           .then((response) => {
-            setCount(response.data.new_notifications);
+            const { new_notifications: newNotifications } = response.data;
+            setCount(newNotifications);
           }).catch((err) => {
             setError(err);
           });
@@ -35,7 +36,7 @@ const NotificationsIcon = () => {
   }
 
   return (
-    <Badge badgeContent={count} color="primary">
+    <Badge badgeContent={count} color="primary" overlap="rectangular">
       <Icon />
     </Badge>
   );

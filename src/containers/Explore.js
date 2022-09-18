@@ -84,7 +84,7 @@ const ExplorePage = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <HeaderMeta title={i18n.t('explore:cTitle')} />
       <AppBar
         position="sticky"
@@ -125,17 +125,14 @@ const ExplorePage = (props) => {
             oid: null,
             sort: RECENT,
           }}
-        />
-      }
+        />}
       {tab === TABS.PEOPLE &&
-        <People key={`${tab}-tab`} />
-      }
+        <People key={`${tab}-tab`} />}
       {[TABS.GROUPS].includes(tab) &&
         <NodeBrowse
           key={`${tab}-sort-${tab}`}
-        />
-      }
-    </React.Fragment>
+        />}
+    </>
   );
 };
 

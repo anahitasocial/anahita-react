@@ -28,13 +28,11 @@ const HomeCardContent = (props) => {
       {content &&
         <CardContent>
           {content}
-        </CardContent>
-      }
+        </CardContent>}
       {actions &&
         <CardActions>
           {actions}
-        </CardActions>
-      }
+        </CardActions>}
     </Card>
   );
 };

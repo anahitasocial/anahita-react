@@ -62,19 +62,15 @@ const ActionsMediumPrivacy = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <IconButton
         aria-owns={menuAnchorEl ? `medium-card-menu-${medium.id}` : undefined}
         aria-haspopup="true"
         onClick={handleOpenMenu}
         disabled={waiting}
       >
-        {isPublic &&
-          <PublicIcon fontSize={size} />
-        }
-        {!isPublic &&
-          <PrivateIcon fontSize={size} />
-        }
+        {isPublic && <PublicIcon fontSize={size} />}
+        {!isPublic && <PrivateIcon fontSize={size} />}
       </IconButton>
       <Menu
         id={`medium-privacy-${medium.id}`}
@@ -98,18 +94,18 @@ const ActionsMediumPrivacy = (props) => {
           );
         })}
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 
 ActionsMediumPrivacy.propTypes = {
   medium: MediumType.isRequired,
-  size: PropTypes.oneOf(['small', 'default', 'large', 'inherit']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
   editPrivacy: PropTypes.func.isRequired,
 };
 
 ActionsMediumPrivacy.defaultProps = {
-  size: 'default',
+  size: 'medium',
 };
 
 const mapStateToProps = (namespace) => {
