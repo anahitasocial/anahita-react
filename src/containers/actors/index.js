@@ -47,7 +47,7 @@ const Actors = (props) => {
   const ActorsBrowse = Browse(namespace);
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         position="sticky"
         color="inherit"
@@ -77,11 +77,8 @@ const Actors = (props) => {
             }}
           />
         );
-      }, [
-          owner.id,
-          tab,
-        ])}
-    </React.Fragment>
+      }, [owner.id, tab])}
+    </>
   );
 };
 

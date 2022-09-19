@@ -43,7 +43,7 @@ const Alerts = (props) => {
     );
   }
 
-  return (<React.Fragment />);
+  return (<></>);
 };
 
 Alerts.propTypes = {

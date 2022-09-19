@@ -52,11 +52,11 @@ const MediaMenu = (props) => {
   const canDelete = permissions.canDelete(viewer, medium);
 
   if (!canEdit && !canSubscribe && !canComment && !canDelete) {
-    return (<React.Fragment />);
+    return (<></>);
   }
 
   return (
-    <React.Fragment>
+    <>
       <IconButton
         aria-owns={menuAnchorEl ? `medium-card-menu-${medium.id}` : undefined}
         aria-haspopup="true"
@@ -80,21 +80,18 @@ const MediaMenu = (props) => {
             disabled={!canEdit}
           >
             Edit
-          </MenuItem>
-        }
+          </MenuItem>}
         {isSubscribable(medium) &&
           <NotificationActionWithRef
             medium={medium}
             isSubscribed={medium.isSubscribed}
             key={`medium-notification-${medium.id}`}
-          />
-        }
+          />}
         {isCommentable(medium) &&
           <CommentStatusActionWithRef
             medium={medium}
             key={`medium-comment-status-${medium.id}`}
-          />
-        }
+          />}
         <DeleteActionWithRef
           node={medium}
           key={`medium-delete-${medium.id}`}
@@ -102,7 +99,7 @@ const MediaMenu = (props) => {
           component="menuitem"
         />
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 

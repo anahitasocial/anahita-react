@@ -39,18 +39,15 @@ const MediaCard = (props) => {
           medium={medium}
           viewer={viewer}
           inline
-        />
-      }
+        />}
       privacy={canEditMedium && medium.access && <Privacy medium={medium} size="small" />}
       stats={
-        <React.Fragment>
+        <>
           <LikesStats node={medium} />
           <CommentStats node={medium} />
-        </React.Fragment>
+        </>
       }
-      actions={isAuthenticated &&
-        <Like node={medium} />
-      }
+      actions={isAuthenticated && <Like node={medium} />}
     />
   );
 };

@@ -19,6 +19,7 @@ import Actors from '../containers/actors';
 import ActorsRead from '../containers/actors/read';
 import ActorsAdd from '../containers/actors/Add';
 import ActorsSettings from '../containers/actors/settings';
+import ActorsNotificationsEdit from '../containers/actors/notifications/Edit';
 
 import Blogs from '../containers/blogs';
 
@@ -47,9 +48,11 @@ const GroupsBrowse = Actors('groups');
 const GroupsRead = ActorsRead('groups');
 const GroupsAdd = ActorsAdd('groups');
 const GroupsSettings = ActorsSettings('groups');
+const GroupsNotificationsEdit = ActorsNotificationsEdit('groups');
 
 const PeopleRead = ActorsRead('people');
 const PeopleSettings = ActorsSettings('people');
+const PeopleNotificationsEdit = ActorsNotificationsEdit('people');
 
 const Articles = Media('articles');
 const ArticlesRead = MediaRead('articles');
@@ -166,6 +169,13 @@ const Routes = (props) => {
         exact
         component={PeopleSettings}
       />
+      <AuthenticatedRoute
+        exact
+        path="/people/:id/settings/notifications/"
+        component={(params) => {
+          return <PeopleNotificationsEdit {...params} />;
+        }}
+      />
       <Route
         exact
         path="/people/"
@@ -185,17 +195,17 @@ const Routes = (props) => {
           return <PeopleRead {...params} />;
         }}
       />
-      <AuthenticatedRoute
-        path="/groups/:id/settings/"
-        exact
-        component={GroupsSettings}
-      />
       <Route
         exact
         path="/people/:id/:tab/:subtab"
         component={(params) => {
           return <PeopleRead {...params} />;
         }}
+      />
+      <AuthenticatedRoute
+        path="/groups/:id/settings/"
+        exact
+        component={GroupsSettings}
       />
       <Route
         exact
@@ -221,6 +231,13 @@ const Routes = (props) => {
         path="/groups/:id/settings/"
         component={(params) => {
           return <GroupsSettings {...params} />;
+        }}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/groups/:id/notifications/"
+        component={(params) => {
+          return <GroupsNotificationsEdit {...params} />;
         }}
       />
       <Route

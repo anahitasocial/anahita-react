@@ -70,10 +70,12 @@ const ActorBody = (props) => {
         >
           {actor.gadgets.map((gadget) => {
             const label = gadget === 'stories' ? singularize(namespace) : i18n.t(`${gadget}:mTitle`);
+            const key = `namespace-${gadget}`;
             return (
               <Tab
                 label={label}
                 value={gadget}
+                key={key}
               />
             );
           })}

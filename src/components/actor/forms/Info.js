@@ -82,7 +82,6 @@ const ActorFormsInfo = (props) => {
 ActorFormsInfo.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
-  formTitle: PropTypes.string,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   actor: ActorType.isRequired,
   isFetching: PropTypes.bool.isRequired,

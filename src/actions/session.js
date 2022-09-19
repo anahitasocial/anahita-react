@@ -1,4 +1,3 @@
-/* global localStorage */
 import apis from '../api';
 import { Session as SESSION } from '../constants';
 

@@ -25,7 +25,7 @@ const cards = () => {
     },
     actions: () => {
       return (
-        <React.Fragment>
+        <>
           <Button
             href="https://github.com/anahitasocial/anahita"
             target="_blank"
@@ -46,7 +46,7 @@ const cards = () => {
           >
             Client
           </Button>
-        </React.Fragment>
+        </>
       );
     },
   }, {
@@ -55,7 +55,7 @@ const cards = () => {
     title: 'What is Anahita?',
     content: () => {
       return (
-        <React.Fragment>
+        <>
           <Typography variant="body1" paragraph>
             Anahita is a platform and framework for developing open science and
             knowledge-sharing applications on a social networking foundation.
@@ -99,9 +99,11 @@ const cards = () => {
             Credits
           </Typography>
           <Typography variant="body1">
-            Anahita is developed and maintained by <Link href="https://www.rmdstudio.com" target="_blank">rmd Studio</Link>.
+            Anahita is developed and maintained by
+            <Link href="https://www.rmdstudio.com" target="_blank">rmd Studio</Link>
+            .
           </Typography>
-        </React.Fragment>
+        </>
       );
     },
   }, {
@@ -110,23 +112,24 @@ const cards = () => {
     alias: 'support',
     content: () => {
       return (
-        <React.Fragment>
+        <>
           <Typography variant="h6" paragraph>
             Community
           </Typography>
           <Typography variant="body1" paragraph>
             Join the Anahita tribe and then post your questions
-            on the <Link href="/groups/107732-tribe-support/">Tribe Support</Link> group
-            to get help from the members for free.
+            on the
+            <Link href="/groups/107732-tribe-support/">Tribe Support</Link>
+            group to get help from the members for free.
           </Typography>
           <Typography variant="h6" paragraph>
             Premium
           </Typography>
           <Typography variant="body1">
-            <Link href="https://www.rmdstudio.com/contact/" target="_blank">Send an inquiry</Link> to
-            the company who develops and maintains Anahita.
+            <Link href="https://www.rmdstudio.com/contact/" target="_blank">Send an inquiry</Link>
+            to the company who develops and maintains Anahita.
           </Typography>
-        </React.Fragment>
+        </>
       );
     },
   }, {
@@ -135,7 +138,7 @@ const cards = () => {
     title: 'Follow #Anahita',
     actions: () => {
       return (
-        <React.Fragment>
+        <>
           <IconButton
             href="https://www.rmdstudio.com"
             target="_blank"
@@ -174,7 +177,7 @@ const cards = () => {
           >
             <TwitterIcon />
           </IconButton>
-        </React.Fragment>
+        </>
       );
     },
   }, {

@@ -32,11 +32,12 @@ const ActorsSettingsInfo = (props) => {
     namespace,
     isFetching,
     viewer,
+    actor: defaultActor,
   } = props;
 
   const [actor, setActor] = useState({
-    ...props.actor,
-    ...props.actor.information,
+    ...defaultActor,
+    ...defaultActor.information,
   });
 
   const [fields, setFields] = useState(formFields);
@@ -82,6 +83,7 @@ const ActorsSettingsInfo = (props) => {
   }
 
   const formTitle = `${singularize(namespace)} information`;
+  const created = moment.utc(actor.creationTime).format('LLL').toString();
 
   return (
     <ActorInfoForm
@@ -92,9 +94,9 @@ const ActorsSettingsInfo = (props) => {
       handleOnSubmit={handleOnSubmit}
       isFetching={isFetching}
       enabled={canAdminister(viewer) &&
-        <React.Fragment>
+        <>
           <Typography variant="caption" display="block">
-            Created {moment.utc(actor.creationTime).format('LLL').toString()}
+            {`Created ${created}`}
           </Typography>
           <FormControlLabel
             control={
@@ -106,8 +108,7 @@ const ActorsSettingsInfo = (props) => {
             }
             label="Enabled"
           />
-        </React.Fragment>
-      }
+        </>}
     />
   );
 };

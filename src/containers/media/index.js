@@ -49,7 +49,7 @@ const Media = (props) => {
   const MediaBrowse = Browse(namespace);
 
   return (
-    <React.Fragment>
+    <>
       <AppBar
         position="sticky"
         color="inherit"
@@ -76,13 +76,8 @@ const Media = (props) => {
             sort: tab,
           }}
         />);
-      }, [
-          tab,
-          queryFilters.oid,
-          queryFilters.q,
-          queryFilters.sort,
-        ])}
-    </React.Fragment>
+      }, [tab, queryFilters.oid, queryFilters.q, queryFilters.sort])}
+    </>
   );
 };
 

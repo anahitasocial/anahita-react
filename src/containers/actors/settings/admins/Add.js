@@ -77,7 +77,7 @@ const ActorsSettingsAdminsAdd = (props) => {
       loading={isFetching}
       renderOption={(admin) => {
         return (
-          <React.Fragment>
+          <>
             <ListItemAvatar>
               <ActorAvatar
                 actor={admin}
@@ -87,7 +87,7 @@ const ActorsSettingsAdminsAdd = (props) => {
             <ListItemText
               primary={admin.name}
             />
-          </React.Fragment>
+          </>
         );
       }}
       renderInput={(params) => {
@@ -100,10 +100,10 @@ const ActorsSettingsAdminsAdd = (props) => {
             InputProps={{
               ...params.InputProps,
               endAdornment: (
-                <React.Fragment>
+                <>
                   {isFetching ? <CircularProgress size={20} /> : null}
                   {params.InputProps.endAdornment}
-                </React.Fragment>
+                </>
               ),
             }}
           />

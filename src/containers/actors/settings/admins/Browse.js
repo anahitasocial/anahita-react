@@ -65,7 +65,7 @@ const ActorsSettingsAdminsBrowse = (props) => {
   const AddAdmin = Add(namespace);
 
   return (
-    <React.Fragment>
+    <>
       <div style={{ margin: 16 }}>
         <AddAdmin />
       </div>
@@ -96,7 +96,7 @@ const ActorsSettingsAdminsBrowse = (props) => {
           );
         })}
       </List>
-    </React.Fragment>
+    </>
   );
 };
 

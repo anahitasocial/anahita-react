@@ -20,6 +20,12 @@ export default {
     openComments: 'Open Comments',
     closeComments: 'Close Comments',
   },
+  prompts: {
+    saved: {
+      success: 'Saved successfully',
+      error: "Something went wrong and couldn't save",
+    },
+  },
   access: {
     public: 'Public',
     registered: 'Logged-in People',
@@ -46,7 +52,7 @@ export default {
     privacy: 'Privacy',
     support: 'Support',
     report: 'Report Issues',
-    guideline: 'Tribes Guideline'
+    guideline: 'Tribes Guideline',
   },
   social: {
     cTitle: 'Social Media',
@@ -123,6 +129,17 @@ export default {
       privacy: 'Privacy',
       delete: 'Delete',
     },
+    notifications: {
+      cTitle: 'Notifications',
+      cDescription: 'Edit your notification settings',
+      mTitle: 'Notifications',
+      email: 'Recieve email notifications',
+      optionsTitle: 'Get notifications for',
+      options: {
+        all: 'All the posts',
+        following: 'Only the posts that you are following',
+      },
+    },
   },
   people: {
     cTitle: 'People',
@@ -138,6 +155,17 @@ export default {
       permissions: 'Permissions',
       privacy: 'Privacy',
       delete: 'Delete',
+    },
+    notifications: {
+      cTitle: 'Notifications',
+      cDescription: 'Edit your notification settings',
+      mTitle: 'Notifications',
+      email: 'Recieve email notifications',
+      optionsTitle: 'Get notifications for',
+      options: {
+        all: 'All the posts',
+        following: 'Only the posts that you are following',
+      },
     },
     person: {
       usertype: {

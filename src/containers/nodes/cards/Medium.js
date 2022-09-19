@@ -19,10 +19,10 @@ const MediaCard = (props) => {
       medium={medium}
       handleView={handleView}
       stats={
-        <React.Fragment>
+        <>
           <LikesStats node={medium} />
           <CommentStats node={medium} />
-        </React.Fragment>
+        </>
       }
     />
   );

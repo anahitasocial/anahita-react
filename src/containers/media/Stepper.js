@@ -1,4 +1,3 @@
-/* global Image */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -241,22 +240,20 @@ const MediaStepper = (props) => {
             viewer={viewer}
             handleEdit={handleEdit}
             key={`${namespace}-menu-${medium.id}`}
-          />
-        }
+          />}
         actions={isAuthenticated &&
           <Like
             node={medium}
             key={`like-${medium.id}`}
-          />
-        }
+          />}
         stats={
-          <React.Fragment>
+          <>
             <Likes
               node={medium}
               key={`likes-${medium.id}`}
             />
             <CommentStats node={medium} />
-          </React.Fragment>
+          </>
         }
         comments={
           <MediumComments

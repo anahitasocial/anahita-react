@@ -47,8 +47,7 @@ const SocialgraphMeta = (props) => {
           underline="none"
         >
           {actor.followerCount}
-        </Link>
-      }
+        </Link>}
     </Typography>
   );
 };

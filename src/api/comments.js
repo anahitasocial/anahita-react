@@ -5,7 +5,12 @@ const { constructFormData } = utils.api;
 
 const browse = (namespace) => {
   return (params) => {
-    const { node, start, limit, sort } = params;
+    const {
+      node,
+      start,
+      limit,
+      sort,
+    } = params;
     return axios.get(`/${namespace}/${node.id}/comments.json?`, {
       params: {
         start,

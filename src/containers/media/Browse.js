@@ -59,21 +59,19 @@ const MediaBrowse = (props) => {
     setStepperOpen(false);
   };
 
-/*
-  const handleView = (e, medium) => {
-    setCurrent(medium.id);
-    setStepperOpen(true);
-  };
-*/
+  //  const handleView = (e, medium) => {
+  //    setCurrent(medium.id);
+  //    setStepperOpen(true);
+  //  };
 
-  const fetchList = () => {
+  function fetchList() {
     return setStart(start + LIMIT);
-  };
+  }
 
   const Stepper = MediumStepper(namespace);
 
   return (
-    <React.Fragment>
+    <>
       {useMemo(() => {
         if (stepperOpen && current) {
           return (
@@ -86,11 +84,12 @@ const MediaBrowse = (props) => {
         }
 
         return (
-          <React.Fragment />
+          <></>
         );
       }, [stepperOpen, current])}
       <InfiniteScroll
         dataLength={items.allIds.length}
+        // eslint-disable-next-line react/jsx-no-bind
         next={fetchList}
         hasMore={hasMore}
         loader={
@@ -115,11 +114,10 @@ const MediaBrowse = (props) => {
                 />
               </div>
             );
-          })
-          }
+          })}
         </Masonry>
       </InfiniteScroll>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -67,15 +67,14 @@ const ActorsSettingsPermissionsBrowse = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {current &&
         <Edit
           actor={actor}
           node={current}
           open={editingOpen}
           handleClose={handleClose}
-        />
-      }
+        />}
       <List>
         {permissions.allIds.map((permId) => {
           const permission = permissions.byId[permId];
@@ -98,7 +97,7 @@ const ActorsSettingsPermissionsBrowse = (props) => {
           );
         })}
       </List>
-    </React.Fragment>
+    </>
   );
 };
 
