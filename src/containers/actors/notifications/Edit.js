@@ -18,7 +18,7 @@ import Progress from '../../../components/Progress';
 
 const initEmailSettings = {
   emailMutedGlobally: false,
-  sendEmail: true,
+  sendEmail: false,
 };
 
 const ActorsNotificationsEdit = (props) => {

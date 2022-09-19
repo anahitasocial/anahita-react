@@ -13,6 +13,7 @@ import utils from '../../../utils';
 const { getActorInitials } = utils.node;
 
 const styles = (theme) => {
+  console.log(theme.palette);
   return {
     largeAvatar: {
       width: theme.spacing(20),
@@ -31,6 +32,9 @@ const styles = (theme) => {
     },
     avatar: {
       backgroundColor: theme.palette.background.paper,
+      borderColor: theme.palette.background.paper,
+      borderWidth: 4,
+      borderStyle: 'solid',
     },
     button: {
       position: 'relative',

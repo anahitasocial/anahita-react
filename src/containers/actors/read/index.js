@@ -100,7 +100,7 @@ const ActorsRead = (props) => {
     'unfollow',
     'notifications-settings',
   ]);
-  const canEditNotifications = isAuthenticated && actor.id !== viewer.id;
+  const canEditNotifications = isAuthenticated && actor.isLeader;
 
   const isViewer = actor.id === viewer.id;
   const FollowRequests = ActorsFollowRequests(namespace);
