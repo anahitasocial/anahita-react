@@ -18,7 +18,7 @@ import Progress from '../../../components/Progress';
 
 const initEmailSettings = {
   emailMutedGlobally: false,
-  sendEmail: false,
+  sendEmail: true,
 };
 
 const ActorsNotificationsEdit = (props) => {
@@ -113,8 +113,6 @@ const ActorsNotificationsEdit = (props) => {
       <Progress />
     );
   }
-
-  console.log(isSubscribed);
 
   return (
     <ActorSettingCard
