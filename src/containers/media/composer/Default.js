@@ -26,7 +26,7 @@ const MediaComposerDefault = (props) => {
   } = props;
 
   const [fields, setFields] = useState(formFields);
-  const [medium, setMedium] = useState(MediumDefault);
+  const [medium, setMedium] = useState({ ...MediumDefault });
   const [file, setFile] = useState(null);
 
   useEffect(() => {
@@ -62,6 +62,8 @@ const MediaComposerDefault = (props) => {
 
     const { target } = event;
     const newFields = form.validateForm(target, fields);
+
+    setFields({ ...newFields });
 
     if (form.isValid(newFields)) {
       const formData = {

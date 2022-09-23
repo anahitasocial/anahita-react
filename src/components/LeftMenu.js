@@ -7,7 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import DocumentsIcon from '@material-ui/icons/PictureAsPdf';
-import BlogsIcon from '@material-ui/icons/Announcement';
+import BlogsIcon from '@material-ui/icons/RssFeedOutlined';
 import HomeIcon from '@material-ui/icons/Home';
 import ExploreIcon from '@material-ui/icons/Explore';
 import PeopleIcon from '@material-ui/icons/People';

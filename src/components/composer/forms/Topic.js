@@ -25,8 +25,6 @@ const ComposersTopic = (props) => {
     isFetching,
   } = props;
 
-  const canAdd = fields.name.isValid && fields.body.isValid;
-
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <Card square>
@@ -73,8 +71,8 @@ const ComposersTopic = (props) => {
               inputProps={{
                 maxLength: BODY.MAX_LENGTH,
               }}
-              rows={5}
-              rowsMax={10}
+              minRows={5}
+              maxRows={10}
               required
             />}
         </CardContent>
@@ -83,7 +81,7 @@ const ComposersTopic = (props) => {
             type="submit"
             variant="contained"
             color="primary"
-            disabled={isFetching || !canAdd}
+            disabled={isFetching}
             fullWidth
           >
             {!isFetching && 'Post'}

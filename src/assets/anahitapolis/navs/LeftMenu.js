@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import BlogsIcon from '@material-ui/icons/Announcement';
+import BlogsIcon from '@material-ui/icons/RssFeedOutlined';
 import HomeIcon from '@material-ui/icons/Home';
 import AboutIcon from '@material-ui/icons/Info';
 import ExploreIcon from '@material-ui/icons/Explore';

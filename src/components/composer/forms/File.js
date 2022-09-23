@@ -56,7 +56,6 @@ const ComposersFile = (props) => {
   });
 
   const { ref, ...rootProps } = getRootProps();
-  const canAdd = fields.name ? file && fields.name.isValid : file;
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
@@ -126,6 +125,7 @@ const ComposersFile = (props) => {
               inputProps={{
                 maxLength: BODY.MAX_LENGTH,
               }}
+              required
             />}
         </CardContent>
         <CardActions>
@@ -133,7 +133,7 @@ const ComposersFile = (props) => {
             type="submit"
             variant="contained"
             color="primary"
-            disabled={isFetching || !canAdd}
+            disabled={isFetching}
             fullWidth
           >
             {!isFetching && 'Upload'}

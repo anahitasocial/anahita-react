@@ -5,6 +5,7 @@ const formField = {
   isValid: false,
   error: '',
   helperText: '',
+  required: false,
 };
 
 const createFormFields = (fields = []) => {
@@ -18,14 +19,17 @@ const createFormFields = (fields = []) => {
 };
 
 const validateField = (field, fields, trimmed = []) => {
-  const { name, value } = field;
+  const { name } = field;
+  const value = trimmed.includes(name) ? field.value.trim() : field.value;
+  const isValid = (!field.required && field.value === '') ? true : field.willValidate && field.checkValidity();
 
   return {
     ...fields,
     [name]: {
-      value: trimmed.includes(name) ? value.trim() : value,
-      isValid: field.willValidate && field.checkValidity(),
+      value,
+      isValid,
       error: field.validationMessage,
+      required: field.required,
     },
   };
 };
@@ -36,10 +40,14 @@ const validateForm = (form, fields) => {
 
   keys.forEach((key) => {
     const field = form[key] || formField;
+    const isValid = (!field.required && field.value === '') ? true : field.willValidate && field.checkValidity();
+
+    console.log(isValid);
 
     newFields[key].value = field.value;
-    newFields[key].isValid = field.willValidate && field.checkValidity();
+    newFields[key].isValid = isValid;
     newFields[key].error = field.validationMessage;
+    newFields[key].required = field.required;
   });
 
   return newFields;
