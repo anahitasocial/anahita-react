@@ -171,7 +171,7 @@ const Routes = (props) => {
       />
       <AuthenticatedRoute
         exact
-        path="/people/:id/settings/notifications/"
+        path="/people/:id/notifications/"
         component={(params) => {
           return <PeopleNotificationsEdit {...params} />;
         }}
