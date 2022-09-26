@@ -29,8 +29,8 @@ const Composers = (props) => {
     owner,
   } = props;
 
-  const { composers = [null] } = owner;
-  const [tab, setTab] = useState(composers[0]);
+  const { composers } = owner;
+  const [tab, setTab] = useState(composers[0] || 'notes');
 
   const changeTab = (event, value) => {
     setTab(value);
@@ -40,15 +40,17 @@ const Composers = (props) => {
     return (<></>);
   }
 
+  console.log(composers);
+
   return (
     <>
-      <MediaComposer owner={owner} namespace={tab} />
       <AppBar
         position="sticky"
         color="inherit"
         className={classes.root}
         variant="outlined"
       >
+        <MediaComposer owner={owner} namespace={tab} />
         <Tabs
           value={tab}
           onChange={changeTab}

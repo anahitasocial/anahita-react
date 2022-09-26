@@ -5,7 +5,7 @@ export default {
       MAX_LENGTH: 100,
     },
     BODY: {
-      MAX_LENGTH: 10000,
+      MAX_LENGTH: 8000,
     },
     EXCERPT: {
       MAX_LENGTH: 500,

@@ -12,10 +12,12 @@ import TextField from '@material-ui/core/TextField';
 
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
+import { Medium as MEDIUM } from '../../../constants';
 import MediumType from '../../../proptypes/Medium';
 
 import utils from '../../../utils';
 
+const { BODY } = MEDIUM.FIELDS;
 const { isPerson } = utils.node;
 
 const ComposersNote = (props) => {
@@ -51,7 +53,7 @@ const ComposersNote = (props) => {
             variant="outlined"
             disabled={isFetching}
             inputProps={{
-              maxLength: 280,
+              maxLength: BODY.MAX_LENGTH,
             }}
             placeholder={placeholder}
             required
