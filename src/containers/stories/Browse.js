@@ -144,7 +144,7 @@ const StoriesBrowse = (props) => {
                   openComments.push(node.id);
                   setOpenComments([...openComments]);
                 }}
-                disabled={isCommentsOpen}
+                disabled={isCommentsOpen || !canAddComment}
                 aria-label="Show Comments"
                 key={`story-comment-${node.id}`}
                 fullWidth
@@ -155,11 +155,11 @@ const StoriesBrowse = (props) => {
                 Comment
               </Button>,
             ]}
-            comments={node.object && isCommentable(node.object) && isCommentsOpen &&
+            comments={node.object && isCommentable(node.object) && // isCommentsOpen &&
               <CommentsBrowse
                 parent={node.object}
                 comments={node.comments}
-                canAdd={canAddComment}
+                canAdd={canAddComment && isCommentsOpen}
               />}
             showOwner={queryFilters.filter === 'leaders'}
           />

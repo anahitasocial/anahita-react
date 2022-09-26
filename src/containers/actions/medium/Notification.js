@@ -16,7 +16,6 @@ const ActionsMediumNotification = React.forwardRef((props, ref) => {
     subscribeLabel,
     unsubscribeLabel,
     isFetching,
-    ...other
   } = props;
 
   const [subscribed, setSubscribed] = useState(isSubscribed);
@@ -41,7 +40,6 @@ const ActionsMediumNotification = React.forwardRef((props, ref) => {
       onClick={onClick}
       disabled={isFetching}
       ref={ref}
-      {...other}
     >
       {title}
     </MenuItem>

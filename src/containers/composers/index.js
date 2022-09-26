@@ -40,8 +40,6 @@ const Composers = (props) => {
     return (<></>);
   }
 
-  console.log(composers);
-
   return (
     <>
       <AppBar
