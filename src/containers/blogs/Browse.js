@@ -39,6 +39,7 @@ const BlogsBrowse = (props) => {
     items,
     error,
     hasMore,
+    isFetching,
     queryFilters: {
       sort,
     },
@@ -59,11 +60,13 @@ const BlogsBrowse = (props) => {
   }, [error, alertError]);
 
   useEffect(() => {
-    browseList({
-      sort,
-      start,
-      limit: LIMIT,
-    });
+    if (!isFetching) {
+      browseList({
+        sort,
+        start,
+        limit: LIMIT,
+      });
+    }
   }, [start]);
 
   const fetchList = () => {
@@ -99,12 +102,14 @@ const mapStateToProps = (state) => {
     blogs: items,
     error,
     hasMore,
+    isFetching,
   } = state.blogs;
 
   return {
     items,
     error,
     hasMore,
+    isFetching,
   };
 };
 
@@ -119,6 +124,7 @@ BlogsBrowse.propTypes = {
   }).isRequired,
   error: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {

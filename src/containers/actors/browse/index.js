@@ -45,6 +45,7 @@ const ActorsBrowse = (props) => {
     viewer,
     items,
     hasMore,
+    isFetching,
     queryFilters,
   } = props;
 
@@ -57,11 +58,13 @@ const ActorsBrowse = (props) => {
   }, [resetList]);
 
   useEffect(() => {
-    browseList({
-      start,
-      limit: LIMIT,
-      ...queryFilters,
-    }, namespace);
+    if (!isFetching) {
+      browseList({
+        start,
+        limit: LIMIT,
+        ...queryFilters,
+      }, namespace);
+    }
   }, [start]);
 
   const fetchList = () => {
@@ -117,6 +120,7 @@ ActorsBrowse.propTypes = {
   queryFilters: PropTypes.object,
   items: ActorsType.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 ActorsBrowse.defaultProps = {
@@ -133,6 +137,7 @@ const mapStateToProps = (namespace) => {
     const {
       error,
       hasMore,
+      isFetching,
     } = state[namespace];
 
     const {
@@ -144,6 +149,7 @@ const mapStateToProps = (namespace) => {
       namespace,
       error,
       hasMore,
+      isFetching,
       viewer,
     };
   };

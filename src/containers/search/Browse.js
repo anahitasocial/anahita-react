@@ -43,6 +43,7 @@ const SearchBrowse = (props) => {
     items,
     error,
     hasMore,
+    isFetching,
     queryParams: {
       sort,
       q,
@@ -63,17 +64,19 @@ const SearchBrowse = (props) => {
   }, [resetList]);
 
   useEffect(() => {
-    browseList({
-      sort,
-      start,
-      scope,
-      search_range: searchRange <= 100 ? searchRange : '',
-      search_comments: searchComments,
-      coord_lng: searchRange <= 100 ? coordLong : '',
-      coord_lat: searchRange <= 100 ? coordLat : '',
-      limit: LIMIT,
-      term: q,
-    });
+    if (!isFetching) {
+      browseList({
+        sort,
+        start,
+        scope,
+        search_range: searchRange <= 100 ? searchRange : '',
+        search_comments: searchComments,
+        coord_lng: searchRange <= 100 ? coordLong : '',
+        coord_lat: searchRange <= 100 ? coordLat : '',
+        limit: LIMIT,
+        term: q,
+      });
+    }
   }, [
     sort,
     start,
@@ -137,12 +140,14 @@ const mapStateToProps = (state) => {
     search: items,
     error,
     hasMore,
+    isFetching,
   } = state.search;
 
   return {
     items,
     error,
     hasMore,
+    isFetching,
   };
 };
 
@@ -162,6 +167,7 @@ SearchBrowse.propTypes = {
   }).isRequired,
   error: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -34,6 +34,7 @@ const MediaBrowse = (props) => {
     namespace,
     viewer,
     hasMore,
+    isFetching,
     queryFilters,
   } = props;
 
@@ -48,11 +49,13 @@ const MediaBrowse = (props) => {
   }, [resetList]);
 
   useEffect(() => {
-    browseList({
-      start,
-      limit: LIMIT,
-      ...queryFilters,
-    }, namespace);
+    if (!isFetching) {
+      browseList({
+        start,
+        limit: LIMIT,
+        ...queryFilters,
+      }, namespace);
+    }
   }, [start]);
 
   const handleClose = () => {
@@ -129,6 +132,7 @@ MediaBrowse.propTypes = {
   queryFilters: PropTypes.object,
   items: MediaType.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 MediaBrowse.defaultProps = {
@@ -143,6 +147,7 @@ const mapStateToProps = (namespace) => {
     const {
       error,
       hasMore,
+      isFetching,
     } = state[namespace];
 
     const { viewer } = state.session;
@@ -152,6 +157,7 @@ const mapStateToProps = (namespace) => {
       namespace,
       error,
       hasMore,
+      isFetching,
       viewer,
     };
   };

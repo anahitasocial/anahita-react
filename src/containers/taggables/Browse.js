@@ -45,6 +45,7 @@ const TaggablesBrowse = (props) => {
     items,
     error,
     hasMore,
+    isFetching,
     queryFilters: {
       sort,
     },
@@ -65,12 +66,14 @@ const TaggablesBrowse = (props) => {
   }, [error, alertError]);
 
   useEffect(() => {
-    browseList(tag, {
-      tag,
-      sort,
-      start,
-      limit: LIMIT,
-    });
+    if (!isFetching) {
+      browseList(tag, {
+        tag,
+        sort,
+        start,
+        limit: LIMIT,
+      });
+    }
   }, [start]);
 
   const fetchList = () => {
@@ -111,12 +114,14 @@ const mapStateToProps = (state) => {
     taggables: items,
     error,
     hasMore,
+    isFetching,
   } = state.taggables;
 
   return {
     items,
     error,
     hasMore,
+    isFetching,
   };
 };
 
@@ -132,6 +137,7 @@ TaggablesBrowse.propTypes = {
   }).isRequired,
   error: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {

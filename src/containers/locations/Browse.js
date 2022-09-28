@@ -28,6 +28,7 @@ const LocationsBrowse = (props) => {
     items,
     error,
     hasMore,
+    isFetching,
     queryFilters,
   } = props;
 
@@ -40,11 +41,13 @@ const LocationsBrowse = (props) => {
   }, [resetList]);
 
   useEffect(() => {
-    browseList({
-      start,
-      limit: LIMIT,
-      ...queryFilters,
-    });
+    if (!isFetching) {
+      browseList({
+        start,
+        limit: LIMIT,
+        ...queryFilters,
+      });
+    }
   }, [start]);
 
   useEffect(() => {
@@ -95,6 +98,7 @@ LocationsBrowse.propTypes = {
   items: LocationsType.isRequired,
   error: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 LocationsBrowse.defaultProps = {

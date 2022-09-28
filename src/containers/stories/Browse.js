@@ -40,6 +40,7 @@ const StoriesBrowse = (props) => {
     items,
     comments,
     hasMore,
+    isFetching,
     isAuthenticated,
     error,
   } = props;
@@ -62,12 +63,14 @@ const StoriesBrowse = (props) => {
   }, [error]);
 
   useEffect(() => {
-    browseList({
-      oid,
-      filter,
-      start,
-      limit: LIMIT,
-    });
+    if (!isFetching) {
+      browseList({
+        oid,
+        filter,
+        start,
+        limit: LIMIT,
+      });
+    }
   }, [oid, filter, start]);
 
   const fetchList = () => {
@@ -177,6 +180,7 @@ StoriesBrowse.propTypes = {
   items: StoriesType.isRequired,
   comments: NodesType.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
@@ -190,6 +194,7 @@ const mapStateToProps = (state) => {
   const {
     stories: items,
     hasMore,
+    isFetching,
     error,
   } = state.stories;
 
@@ -201,6 +206,7 @@ const mapStateToProps = (state) => {
     items,
     comments,
     hasMore,
+    isFetching,
     error,
     isAuthenticated,
     viewer,

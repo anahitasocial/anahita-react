@@ -31,6 +31,7 @@ const HashtagsBrowse = (props) => {
     items,
     error,
     hasMore,
+    isFetching,
     queryFilters,
   } = props;
 
@@ -43,11 +44,13 @@ const HashtagsBrowse = (props) => {
   }, [resetList]);
 
   useEffect(() => {
-    browseList({
-      start,
-      limit: LIMIT,
-      ...queryFilters,
-    });
+    if (!isFetching) {
+      browseList({
+        start,
+        limit: LIMIT,
+        ...queryFilters,
+      });
+    }
   }, [start]);
 
   useEffect(() => {
@@ -102,6 +105,7 @@ HashtagsBrowse.propTypes = {
   items: HashtagsType.isRequired,
   error: PropTypes.string.isRequired,
   hasMore: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 HashtagsBrowse.defaultProps = {
