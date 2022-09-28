@@ -37,7 +37,7 @@ const LikesBrowse = (props) => {
     browseList(node, comment);
 
     return () => {
-      resetList();
+      resetList(comment);
     };
   }, [browseList, node, comment, resetList]);
 
@@ -102,9 +102,17 @@ const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
       browseList: (node, comment = CommentDefault) => {
+        if (comment) {
+          return dispatch(actions.comments(namespace).likes.browse(node, comment));
+        }
+
         return dispatch(actions[namespace].likes.browse(node, comment));
       },
-      resetList: () => {
+      resetList: (comment = CommentDefault) => {
+        if (comment) {
+          return dispatch(actions.comments(namespace).likes.reset());
+        }
+
         return dispatch(actions[namespace].likes.reset());
       },
     };

@@ -10,7 +10,7 @@ import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
 import PersonType from '../../proptypes/Person';
 
-import LikesStats from '../likes';
+import Likes from '../likes';
 
 import ActionLikeComment from '../likes/actions/LikeComment';
 import ActionLikeCommentInline from '../likes/actions/LikeCommentInline';
@@ -95,14 +95,7 @@ const CommentsRead = (props) => {
           handleEdit={handleEdit}
           inline={inline}
         />}
-      stats={
-        <>
-          <LikesStats
-            node={parent}
-            comment={comment}
-          />
-        </>
-      }
+      stats={<Likes node={parent} comment={comment} />}
       actions={[
         <Like
           node={parent}
