@@ -31,6 +31,7 @@ const LikesBrowse = (props) => {
     isFetching,
     error,
     namespace,
+    isAuthenticated,
   } = props;
 
   useEffect(() => {
@@ -71,9 +72,10 @@ const LikesBrowse = (props) => {
             <ListItemText
               primary={actor.name}
             />
+            {isAuthenticated &&
             <ListItemSecondaryAction>
               <ActionFollow actor={actor} />
-            </ListItemSecondaryAction>
+            </ListItemSecondaryAction>}
           </ListItem>
         );
       })}
@@ -89,11 +91,16 @@ const mapStateToProps = (namespace) => {
       error,
     } = state.likes;
 
+    const {
+      isAuthenticated,
+    } = state.session;
+
     return {
       items,
       isFetching,
       error,
       namespace,
+      isAuthenticated,
     };
   };
 };
@@ -128,6 +135,7 @@ LikesBrowse.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   namespace: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 LikesBrowse.defaultProps = {
