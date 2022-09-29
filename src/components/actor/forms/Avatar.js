@@ -13,7 +13,6 @@ import utils from '../../../utils';
 const { getActorInitials } = utils.node;
 
 const styles = (theme) => {
-  console.log(theme.palette);
   return {
     largeAvatar: {
       width: theme.spacing(20),

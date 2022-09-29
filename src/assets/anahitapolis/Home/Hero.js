@@ -22,9 +22,11 @@ const useStyles = makeStyles((theme) => {
       marginTop: theme.spacing(10),
     },
     avatar: {
-      width: theme.spacing(19),
-      height: theme.spacing(19),
-      border: '2px solid white',
+      width: theme.spacing(20),
+      height: theme.spacing(20),
+      borderWidth: 4,
+      borderStyle: 'solid',
+      borderColor: theme.palette.background.paper,
     },
     hContent: {
       marginTop: theme.spacing(4),

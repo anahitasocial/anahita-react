@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Particles from 'react-tsparticles';
+import { loadFull } from 'tsparticles';
+import { loadLinksPreset } from 'tsparticles-preset-links';
 
 import actions from '../../../actions';
 import i18n from '../../../languages';
@@ -22,6 +24,11 @@ const useStyles = makeStyles((theme) => {
     card: {
       marginBottom: theme.spacing(2),
     },
+    tsparticles: {
+      position: 'fixed',
+      zIndex: -1,
+    },
+    canvas: {},
   };
 });
 
@@ -40,6 +47,17 @@ const Home = (props) => {
   const cards = content();
   const { width: winWidth } = getWindowDimensions();
 
+  const particlesInit = useCallback(async (engine) => {
+    console.log(engine);
+
+    await loadLinksPreset(engine);
+    await loadFull(engine);
+  }, []);
+
+  const particlesLoaded = useCallback(async (container) => {
+    await console.log(container);
+  }, []);
+
   useEffect(() => {
     setAppTitle(i18n.t('home:cTitle'));
   }, [setAppTitle]);
@@ -51,7 +69,20 @@ const Home = (props) => {
         description="Anahita is a platform and framework for developing open science and knowledge-sharing applications on a social networking foundation."
       />
       <Particles
-        params={{
+        id="tsparticles"
+        init={particlesInit}
+        loaded={particlesLoaded}
+        className={classes.tsparticles}
+        canvasClassName={classes.canvas}
+        options={{
+          preset: 'links',
+          fullScreen: true,
+          background: {
+            color: {
+              value: 'transparent',
+            },
+          },
+          fpsLimit: 120,
           particles: {
             number: {
               value: Math.ceil(winWidth / 8),
@@ -71,13 +102,6 @@ const Home = (props) => {
               },
             },
           },
-        }}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          backgroundColor: 'transparent',
-          zIndex: -10,
         }}
       />
       <Grid
