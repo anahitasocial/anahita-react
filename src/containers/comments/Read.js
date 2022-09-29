@@ -96,14 +96,12 @@ const CommentsRead = (props) => {
           inline={inline}
         />}
       stats={<Likes node={parent} comment={comment} />}
-      actions={[
-        <Like
-          node={parent}
-          comment={comment}
-          key={`comment-like-${comment.id}`}
-          size="small"
-        />,
-      ]}
+      actions={isAuthenticated && <Like
+        node={parent}
+        comment={comment}
+        key={`comment-like-${comment.id}`}
+        size="small"
+      />}
       commentForm={
         <CommentForm
           fields={fields}
