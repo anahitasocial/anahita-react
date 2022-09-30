@@ -8,7 +8,7 @@ const {
   deleteItem,
 } = utils.reducer;
 
-export default function (state = {
+export default (state = {
   isFetching: false,
   stories: {
     byId: {},
@@ -18,19 +18,19 @@ export default function (state = {
   error: '',
   total: 0,
   hasMore: true,
-}, action) {
+}, action) => {
   switch (action.type) {
     case STORIES.BROWSE.RESET:
       return {
         ...state,
+        isFetching: false,
         stories: {
           byId: {},
           allIds: [],
           current: { ...storyDefault },
         },
-        total: 0,
-        isFetching: false,
         error: '',
+        total: 0,
         hasMore: true,
       };
     case STORIES.BROWSE.REQUEST:
@@ -111,4 +111,4 @@ export default function (state = {
     default:
       return state;
   }
-}
+};

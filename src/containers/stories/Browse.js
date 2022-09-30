@@ -54,7 +54,7 @@ const StoriesBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, []);
+  }, [oid, filter]);
 
   useEffect(() => {
     if (error) {
@@ -64,6 +64,7 @@ const StoriesBrowse = (props) => {
 
   useEffect(() => {
     if (!isFetching) {
+      // console.debug(`Fetch Stories ${oid} ${start}`);
       browseList({
         oid,
         filter,
@@ -71,7 +72,7 @@ const StoriesBrowse = (props) => {
         limit: LIMIT,
       });
     }
-  }, [oid, filter, start]);
+  }, [start]);
 
   const fetchList = () => {
     return setStart(start + LIMIT);

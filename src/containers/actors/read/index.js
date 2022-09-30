@@ -87,10 +87,13 @@ const ActorsRead = (props) => {
   }
 
   // @TODO we need a custom Read container for the Project Actors at this point
-  if (isPerson(actor)) {
+  if (isPerson(actor) && !actor.gadgets.includes('groups')) {
     actor.gadgets.splice(1, 0, 'groups');
   }
-  actor.gadgets.splice(1, 0, 'socialgraph');
+
+  if (!actor.gadgets.includes('socialgraph')) {
+    actor.gadgets.splice(1, 0, 'socialgraph');
+  }
 
   const canFollow = permissions.canFollow(actor);
   const canEdit = permissions.canEdit(actor);

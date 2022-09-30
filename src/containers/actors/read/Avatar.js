@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../../actions/avatar';
@@ -30,20 +30,22 @@ const ActorsAvatar = (props) => {
   const [avatar, setAvatar] = useState(src);
   const [isLoaded, setIsLoaded] = useState(!src);
 
-  if (avatar) {
-    // eslint-disable-next-line no-undef
-    const image = new Image();
+  useEffect(() => {
+    if (avatar) {
+      // eslint-disable-next-line no-undef
+      const image = new Image();
 
-    image.src = avatar;
+      image.src = avatar;
 
-    image.onload = () => {
-      setIsLoaded(true);
-    };
+      image.onload = () => {
+        setIsLoaded(true);
+      };
 
-    image.onError = () => {
-      setIsLoaded(false);
-    };
-  }
+      image.onError = () => {
+        setIsLoaded(false);
+      };
+    }
+  }, []);
 
   const handleFieldChange = (event) => {
     const { files } = event.target;
