@@ -4,7 +4,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
 
 import PersonType from '../../proptypes/Person';
 import utils from '../../utils';
@@ -27,7 +26,6 @@ const styles = (theme) => {
       flex: '1 1 auto',
     },
     avatar: {
-      textDecoration: 'none',
       fontSize: 16,
     },
     name: {
@@ -61,8 +59,7 @@ const Viewer = (props) => {
     <>
       {!isAuthenticated &&
       <Button
-        component={Link}
-        to="/auth"
+        href="/auth"
         color="inherit"
         variant="outlined"
       >
@@ -70,8 +67,7 @@ const Viewer = (props) => {
       </Button>}
       {isAuthenticated &&
         <Button
-          component={Link}
-          to={profile}
+          href={profile}
           color="inherit"
         >
           <div className={classes.content}>

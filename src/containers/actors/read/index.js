@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -43,7 +43,6 @@ const ActorsRead = (props) => {
   const {
     namespace,
     readItem,
-    resetList,
     setAppTitle,
     items: {
       current: actor,
@@ -62,13 +61,10 @@ const ActorsRead = (props) => {
   } = props;
 
   useEffect(() => {
+    console.debug('Reading actor', id);
     setAppTitle(i18n.t(`${namespace}:cTitle`));
     readItem(id, namespace);
-
-    return () => {
-      resetList();
-    };
-  }, [setAppTitle, readItem, resetList, id, namespace]);
+  }, [id, namespace]);
 
   if (!actor.id) {
     if (isFetching) {
@@ -209,7 +205,6 @@ const ActorsRead = (props) => {
 
 ActorsRead.propTypes = {
   readItem: PropTypes.func.isRequired,
-  resetList: PropTypes.func.isRequired,
   items: ActorsType.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -248,9 +243,6 @@ const mapDispatchToProps = (namespace) => {
     return {
       readItem: (id) => {
         return dispatch(actions[namespace].read(id, namespace));
-      },
-      resetList: () => {
-        return dispatch(actions[namespace].reset());
       },
       setAppTitle: (title) => {
         return dispatch(actions.app.setAppTitle(title));

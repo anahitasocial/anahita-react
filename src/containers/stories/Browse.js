@@ -40,9 +40,9 @@ const StoriesBrowse = (props) => {
     items,
     comments,
     hasMore,
-    isFetching,
     isAuthenticated,
     error,
+    isFetching,
   } = props;
 
   const { oid, filter } = queryFilters;
@@ -51,20 +51,7 @@ const StoriesBrowse = (props) => {
   const [openComments, setOpenComments] = useState([]);
 
   useEffect(() => {
-    return () => {
-      resetList();
-    };
-  }, [oid, filter]);
-
-  useEffect(() => {
-    if (error) {
-      alertError(error);
-    }
-  }, [error]);
-
-  useEffect(() => {
     if (!isFetching) {
-      // console.debug(`Fetch Stories ${oid} ${start}`);
       browseList({
         oid,
         filter,
@@ -72,7 +59,17 @@ const StoriesBrowse = (props) => {
         limit: LIMIT,
       });
     }
+
+    return () => {
+      resetList();
+    };
   }, [start]);
+
+  useEffect(() => {
+    if (error) {
+      alertError(error);
+    }
+  }, [error]);
 
   const fetchList = () => {
     return setStart(start + LIMIT);
@@ -195,8 +192,8 @@ const mapStateToProps = (state) => {
   const {
     stories: items,
     hasMore,
-    isFetching,
     error,
+    isFetching,
   } = state.stories;
 
   const {
@@ -207,8 +204,8 @@ const mapStateToProps = (state) => {
     items,
     comments,
     hasMore,
-    isFetching,
     error,
+    isFetching,
     isAuthenticated,
     viewer,
   };
