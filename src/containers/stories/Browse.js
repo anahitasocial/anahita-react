@@ -51,6 +51,12 @@ const StoriesBrowse = (props) => {
   const [openComments, setOpenComments] = useState([]);
 
   useEffect(() => {
+    return () => {
+      resetList();
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isFetching) {
       browseList({
         oid,
@@ -59,10 +65,6 @@ const StoriesBrowse = (props) => {
         limit: LIMIT,
       });
     }
-
-    return () => {
-      resetList();
-    };
   }, [start]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -61,7 +61,6 @@ const ActorsRead = (props) => {
   } = props;
 
   useEffect(() => {
-    console.debug('Reading actor', id);
     setAppTitle(i18n.t(`${namespace}:cTitle`));
     readItem(id, namespace);
   }, [id, namespace]);
