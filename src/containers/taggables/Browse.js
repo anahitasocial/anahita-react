@@ -57,13 +57,13 @@ const TaggablesBrowse = (props) => {
     return () => {
       resetList(tag);
     };
-  }, [resetList, tag]);
+  }, [tag]);
 
   useEffect(() => {
     if (error) {
       alertError(error);
     }
-  }, [error, alertError]);
+  }, [error]);
 
   useEffect(() => {
     if (!isFetching) {

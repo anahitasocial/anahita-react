@@ -39,6 +39,7 @@ const MediaBrowse = (props) => {
   } = props;
 
   const [start, setStart] = useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [current, setCurrent] = useState(items.allIds[0]);
   const [stepperOpen, setStepperOpen] = useState(false);
 
@@ -46,7 +47,7 @@ const MediaBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     if (!isFetching) {

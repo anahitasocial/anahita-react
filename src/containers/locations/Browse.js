@@ -38,7 +38,7 @@ const LocationsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     if (!isFetching) {
@@ -54,7 +54,7 @@ const LocationsBrowse = (props) => {
     if (error) {
       alertError(error);
     }
-  }, [alertError, error]);
+  }, [error]);
 
   const fetchList = () => {
     return setStart(start + LIMIT);

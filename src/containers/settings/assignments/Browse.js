@@ -48,7 +48,7 @@ const SettingsAssignmentsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [browseList, resetList]);
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -58,7 +58,7 @@ const SettingsAssignmentsBrowse = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [alertError, error, alertSuccess, success]);
+  }, [error, success]);
 
   const handleClose = () => {
     setEditingOpen(false);

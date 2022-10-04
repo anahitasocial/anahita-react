@@ -38,7 +38,7 @@ const NotificationsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     browseList({
@@ -51,7 +51,7 @@ const NotificationsBrowse = (props) => {
     if (error) {
       alertError(error);
     }
-  }, [error, alertError]);
+  }, [error]);
 
   const fetchList = () => {
     return setStart(start + LIMIT);

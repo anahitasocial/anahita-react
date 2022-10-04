@@ -55,7 +55,7 @@ const ActorsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     if (!isFetching) {

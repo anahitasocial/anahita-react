@@ -55,7 +55,7 @@ const CommentsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     browseList({

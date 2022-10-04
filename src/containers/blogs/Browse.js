@@ -51,13 +51,13 @@ const BlogsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     if (error) {
       alertError(error);
     }
-  }, [error, alertError]);
+  }, [error]);
 
   useEffect(() => {
     if (!isFetching) {

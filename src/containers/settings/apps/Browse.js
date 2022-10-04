@@ -63,7 +63,7 @@ const SettingsAppsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [browseList, resetList, sort]);
+  }, [sort]);
 
   useEffect(() => {
     if (error) {
@@ -73,7 +73,7 @@ const SettingsAppsBrowse = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [alertError, error, alertSuccess, success]);
+  }, [error, success]);
 
   const handleClose = () => {
     setEditingOpen(false);

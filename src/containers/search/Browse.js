@@ -61,7 +61,7 @@ const SearchBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     if (!isFetching) {

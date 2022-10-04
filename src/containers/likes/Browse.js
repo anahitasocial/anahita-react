@@ -40,7 +40,7 @@ const LikesBrowse = (props) => {
     return () => {
       resetList(comment);
     };
-  }, [browseList, node, comment, resetList]);
+  }, []);
 
   if (isFetching) {
     return (

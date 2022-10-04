@@ -41,7 +41,7 @@ const HashtagsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     if (!isFetching) {
@@ -57,7 +57,7 @@ const HashtagsBrowse = (props) => {
     if (error) {
       alertError(error);
     }
-  }, [error, alertError]);
+  }, [error]);
 
   const fetchList = () => {
     return setStart(start + LIMIT);

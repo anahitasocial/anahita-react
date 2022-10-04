@@ -43,7 +43,7 @@ const ActorsSocialgraph = (props) => {
     return () => {
       resetList();
     };
-  }, [resetList]);
+  }, []);
 
   useEffect(() => {
     browseList({

@@ -76,7 +76,7 @@ const SettingsPlugins = (props) => {
     if (success) {
       alertSuccess('Updated successfully.');
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [error, success]);
 
   const handleClose = () => {
     setEditingOpen(false);
