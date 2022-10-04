@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import apis from '../api';
 import { Session as SESSION } from '../constants';
 
@@ -20,6 +21,7 @@ function readRequest() {
 function readSuccess(response) {
   const { data } = response;
   localStorage.setItem('viewer', JSON.stringify(data));
+
   return {
     type: SESSION.READ.SUCCESS,
     viewer: data,
@@ -27,6 +29,7 @@ function readSuccess(response) {
 }
 
 function readFailure(error) {
+  localStorage.removeItem('viewer');
   return {
     type: SESSION.READ.FAILURE,
     error: error.message,
@@ -62,6 +65,7 @@ function addRequest() {
 function addSuccess(response) {
   const { data } = response;
   localStorage.setItem('viewer', JSON.stringify(data));
+
   return {
     type: SESSION.ADD.SUCCESS,
     viewer: data,
@@ -104,6 +108,7 @@ function deleteRequest() {
 function deleteSuccess(response) {
   const { data } = response;
   localStorage.removeItem('viewer');
+
   return {
     type: SESSION.DELETE.SUCCESS,
     viewer: data,
