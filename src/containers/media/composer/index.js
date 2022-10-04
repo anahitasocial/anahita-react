@@ -26,8 +26,10 @@ const MediaComposer = (props) => {
         'body',
         'excerpt',
       ]);
+      const ArticlesComposer = ComposerDefault('articles');
+
       return (
-        <ComposerDefault
+        <ArticlesComposer
           owner={owner}
           namespace={namespace}
           formFields={formFields}
@@ -46,8 +48,10 @@ const MediaComposer = (props) => {
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       ];
+      const DocumentsComposer = ComposerDefault('documents');
+
       return (
-        <ComposerDefault
+        <DocumentsComposer
           owner={owner}
           namespace={namespace}
           formFields={formFields}
@@ -65,9 +69,10 @@ const MediaComposer = (props) => {
         'image/jpeg',
         'image/png',
       ];
+      const PhotosComposer = ComposerDefault('photos');
 
       return (
-        <ComposerDefault
+        <PhotosComposer
           owner={owner}
           namespace={namespace}
           formFields={formFields}
@@ -82,8 +87,10 @@ const MediaComposer = (props) => {
         'name',
         'body',
       ]);
+      const NotesComposer = ComposerDefault('notes');
+
       return (
-        <ComposerDefault
+        <NotesComposer
           owner={owner}
           namespace={namespace}
           formFields={formFields}
@@ -97,8 +104,10 @@ const MediaComposer = (props) => {
         'name',
         'body',
       ]);
+      const TodosComposer = ComposerDefault('todos');
+
       return (
-        <ComposerDefault
+        <TodosComposer
           owner={owner}
           namespace={namespace}
           formFields={formFields}
@@ -112,8 +121,10 @@ const MediaComposer = (props) => {
         'name',
         'body',
       ]);
+      const TopicsComposer = ComposerDefault('topics');
+
       return (
-        <ComposerDefault
+        <TopicsComposer
           owner={owner}
           namespace={namespace}
           formFields={formFields}

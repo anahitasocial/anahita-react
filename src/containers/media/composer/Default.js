@@ -22,7 +22,6 @@ const MediaComposerDefault = (props) => {
     formComponent: FormComponent,
     formFields,
     supportedMimetypes,
-    namespace,
   } = props;
 
   const [fields, setFields] = useState(formFields);
@@ -41,10 +40,19 @@ const MediaComposerDefault = (props) => {
 
   const handleOnChange = (event) => {
     const { target } = event;
-    const { name, value } = target;
+    const {
+      name,
+      value,
+      type,
+      checked,
+    } = target;
     const { form } = utils;
 
-    medium[name] = value;
+    if (type === 'checkbox') {
+      medium[name] = checked;
+    } else {
+      medium[name] = value;
+    }
 
     const newFields = form.validateField(target, fields);
 
@@ -58,8 +66,8 @@ const MediaComposerDefault = (props) => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    const { form } = utils;
 
+    const { form } = utils;
     const { target } = event;
     const newFields = form.validateForm(target, fields);
 
@@ -74,7 +82,7 @@ const MediaComposerDefault = (props) => {
       addItem({
         ...formData,
         composed: 1,
-      }, namespace, owner).then(() => {
+      }, owner).then(() => {
         setMedium({
           ...medium,
           name: '',
@@ -115,45 +123,51 @@ MediaComposerDefault.propTypes = {
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  namespace: PropTypes.string.isRequired,
 };
 
 MediaComposerDefault.defaultProps = {
   supportedMimetypes: [],
 };
 
-const mapStateToProps = (state) => {
-  const {
-    success,
-    error,
-    isFetching,
-  } = state.documents;
+const mapStateToProps = (namespace) => {
+  return (state) => {
+    const {
+      success,
+      error,
+      isFetching,
+    } = state[namespace];
 
-  const { viewer } = state.session;
+    const { viewer } = state.session;
 
-  return {
-    viewer,
-    error,
-    success,
-    isFetching,
+    return {
+      viewer,
+      error,
+      success,
+      isFetching,
+      namespace,
+    };
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addItem: (medium, namespace, owner) => {
-      return dispatch(actions[namespace].add(medium, owner));
-    },
-    alertSuccess: (message) => {
-      return dispatch(actions.app.alert.success(message));
-    },
-    alertError: (message) => {
-      return dispatch(actions.app.alert.error(message));
-    },
+const mapDispatchToProps = (namespace) => {
+  return (dispatch) => {
+    return {
+      addItem: (medium, owner) => {
+        return dispatch(actions[namespace].add(medium, owner));
+      },
+      alertSuccess: (message) => {
+        return dispatch(actions.app.alert.success(message));
+      },
+      alertError: (message) => {
+        return dispatch(actions.app.alert.error(message));
+      },
+    };
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(MediaComposerDefault);
+export default (namespace) => {
+  return connect(
+    mapStateToProps(namespace),
+    mapDispatchToProps(namespace),
+  )(MediaComposerDefault);
+};

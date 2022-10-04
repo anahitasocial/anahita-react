@@ -63,8 +63,7 @@ const ComposersNote = (props) => {
               control={
                 <Switch
                   name="is_private"
-                  value={1}
-                  checked={medium.is_private}
+                  value
                   onChange={handleOnChange}
                 />
               }
