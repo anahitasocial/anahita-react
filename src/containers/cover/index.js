@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import actions from '../../../actions/cover';
-import CoverForm from '../../../components/actor/forms/Cover';
+import actions from '../../actions/cover';
+import CoverForm from '../../components/actor/forms/Cover';
 
-import NodesType from '../../../proptypes/Nodes';
-import NodeType from '../../../proptypes/Node';
+import NodesType from '../../proptypes/Nodes';
+import NodeType from '../../proptypes/Node';
 
-const ActorsCover = (props) => {
+const Cover = (props) => {
   const {
     addCover,
     deleteCover,
@@ -87,7 +87,7 @@ const ActorsCover = (props) => {
   );
 };
 
-ActorsCover.propTypes = {
+Cover.propTypes = {
   addCover: PropTypes.func.isRequired,
   deleteCover: PropTypes.func.isRequired,
   nodes: NodesType.isRequired,
@@ -126,4 +126,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActorsCover);
+)(Cover);

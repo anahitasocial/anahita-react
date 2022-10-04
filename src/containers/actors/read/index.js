@@ -12,7 +12,7 @@ import Admins from '../../../components/actor/body/Admins';
 import Avatar from './Avatar';
 import Composers from '../../composers';
 import Commands from './Commands';
-import Cover from './Cover';
+import Cover from '../../cover';
 import NotificationsDialog from '../notifications/Dialog';
 
 import FollowAction from '../../actions/Follow';

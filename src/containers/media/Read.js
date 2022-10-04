@@ -13,6 +13,7 @@ import Likes from '../likes';
 import LikeAction from '../likes/actions/Like';
 import LocationsGadget from '../locations/Gadget';
 import MediumComments from '../comments/Browse';
+import Cover from '../cover';
 import MediumMenu from './Menu';
 import Medium from '../../components/medium/Read';
 import MediumForm from '../../components/medium/forms/Edit';
@@ -143,7 +144,7 @@ const MediaRead = (props) => {
   const cover = getCoverURL(medium, 'large');
   const Like = LikeAction(namespace);
   const Privacy = PrivacyAction(namespace);
-  const canEditMedium = perms.medium.canEdit(viewer, medium);
+  const canEdit = perms.medium.canEdit(viewer, medium);
 
   return (
     <>
@@ -155,8 +156,14 @@ const MediaRead = (props) => {
       {medium.id &&
         <Medium
           medium={medium}
-          privacy={canEditMedium && medium.access && <Privacy medium={medium} size="small" />}
+          privacy={canEdit && medium.access && <Privacy medium={medium} size="small" />}
           editing={isEditing}
+          cover={
+            <Cover
+              node={medium}
+              canEdit={canEdit}
+            />
+          }
           form={
             <MediumForm
               medium={medium}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import MediumType from '../../../proptypes/Medium';
 
+import Article from './Article';
 import Default from './Default';
 
 const Medium = (props) => {
@@ -13,6 +14,10 @@ const Medium = (props) => {
   } = props;
 
   switch (objectType) {
+    case 'com.articles.article':
+      return (
+        <Article {...props} />
+      );
     default:
       return (
         <Default {...props} />
