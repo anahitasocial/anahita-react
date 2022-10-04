@@ -11,6 +11,7 @@ const {
   SUPER_ADMIN,
 } = PERSON.FIELDS.TYPE;
 
+// eslint-disable-next-line no-undef
 const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : { ...PersonDefault, usertype: GUEST };
 
 const initState = {
@@ -36,7 +37,6 @@ export default (state = { ...initState }, action) => {
       };
     case SESSION.READ.REQUEST:
     case SESSION.ADD.REQUEST:
-    case SESSION.DELETE.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -53,15 +53,6 @@ export default (state = { ...initState }, action) => {
         success: true,
         error: '',
       };
-    case SESSION.DELETE.SUCCESS:
-      return {
-        ...state,
-        viewer: { ...PersonDefault },
-        isAuthenticated: false,
-        isFetching: false,
-        success: true,
-        error: '',
-      };
     case SESSION.READ.FAILURE:
     case SESSION.ADD.FAILURE:
       return {
@@ -72,10 +63,27 @@ export default (state = { ...initState }, action) => {
         success: false,
         error: action.error,
       };
+    case SESSION.DELETE.REQUEST:
+      return {
+        ...state,
+        isAuthenticated: false,
+        isFetching: true,
+        success: false,
+        error: '',
+      };
+    case SESSION.DELETE.SUCCESS:
+      return {
+        ...state,
+        viewer: { ...PersonDefault },
+        isAuthenticated: false,
+        isFetching: false,
+        error: '',
+      };
     case SESSION.DELETE.FAILURE:
       return {
         ...state,
         isFetching: false,
+        isAuthenticated: true,
         success: false,
         error: action.error,
       };
