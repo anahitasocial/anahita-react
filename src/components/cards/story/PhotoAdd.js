@@ -62,6 +62,8 @@ const StoryCardPhotoAdd = (props) => {
   const body = story.object && story.object.body;
   const url = story.object ? getURL(story.object) : '';
   const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
+  const creationTime = moment.utc(story.creationTime).local().format('LLL').toString();
+  const creationTimeFromNow = moment.utc(story.creationTime).fromNow();
 
   return (
     <Card
@@ -81,8 +83,11 @@ const StoryCardPhotoAdd = (props) => {
           <StoryMessage story={story} />
         }
         subheader={
-          <Link href={url}>
-            {moment(story.creationType).fromNow()}
+          <Link
+            href={url}
+            title={creationTime}
+          >
+            {creationTimeFromNow}
           </Link>
         }
         action={menu}

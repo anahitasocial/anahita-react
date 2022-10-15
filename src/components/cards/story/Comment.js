@@ -67,7 +67,7 @@ const StoryCardComment = (props) => {
   const title = story.object && story.object.name;
   const body = story.object && story.object.body;
   const url = story.object ? getURL(story.object) : '';
-  const creationTime = moment.utc(story.creationTime).format('LLL').toString();
+  const creationTime = moment.utc(story.creationTime).local().format('LLL').toString();
   const creationTimeFromNow = moment.utc(story.creationTime).fromNow();
 
   return (

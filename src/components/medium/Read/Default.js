@@ -75,7 +75,7 @@ const MediumReadDefault = (props) => {
   const portrait = getPortraitURL(medium, 'large');
   const cover = getCoverURL(medium);
   const author = getAuthor(medium);
-  const creationTime = moment.utc(medium.creationTime).format('LLL').toString();
+  const creationTime = moment.utc(medium.creationTime).local().format('LLL').toString();
 
   return (
     <Grid

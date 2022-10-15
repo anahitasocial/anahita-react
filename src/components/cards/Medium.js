@@ -64,7 +64,7 @@ const MediumCard = (props) => {
   const cover = getCoverURL(medium);
   const url = getURL(medium);
   const author = getAuthor(medium);
-  const creationTime = moment.utc(medium.creationTime).format('LLL').toString();
+  const creationTime = moment.utc(medium.creationTime).local().format('LLL').toString();
   const creationTimeFromNow = moment.utc(medium.creationTime).fromNow();
 
   return (

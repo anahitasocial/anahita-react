@@ -62,6 +62,8 @@ const StoryCardTodoStatus = (props) => {
   const body = story.object && story.object.body;
   const url = story.object ? getURL(story.object) : '';
   const showOwnerHeader = showOwner && (story.subject.id !== story.owner.id);
+  const creationTime = moment.utc(story.creationTime).local().format('LLL').toString();
+  const creationTimeFromNow = moment.utc(story.creationTime).fromNow();
 
   return (
     <Card
@@ -83,9 +85,9 @@ const StoryCardTodoStatus = (props) => {
         subheader={
           <Link
             href={url}
-            title={moment.utc(story.creationTime).format('LLL').toString()}
+            title={creationTime}
           >
-            {moment.utc(story.creationTime).fromNow()}
+            {creationTimeFromNow}
           </Link>
         }
         action={menu}

@@ -46,9 +46,10 @@ const CommentCard = (props) => {
     commentForm,
   } = props;
 
-  const { creationTime } = comment;
   const author = getAuthor(comment);
   const url = getCommentURL(comment);
+  const creationTime = moment.utc(comment.creationTime).local().format('LLL').toString();
+  const creationTimeFromNow = moment.utc(comment.creationTime).fromNow();
 
   if (isEditing) {
     return (
@@ -77,9 +78,9 @@ const CommentCard = (props) => {
         subheader={
           <Link
             href={url}
-            title={moment.utc(creationTime).format('LLL').toString()}
+            title={creationTime}
           >
-            {moment.utc(creationTime).fromNow()}
+            {creationTimeFromNow}
           </Link>
         }
         action={menu}
