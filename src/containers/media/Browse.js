@@ -63,10 +63,10 @@ const MediaBrowse = (props) => {
     setStepperOpen(false);
   };
 
-  //  const handleView = (e, medium) => {
-  //    setCurrent(medium.id);
-  //    setStepperOpen(true);
-  //  };
+  // const handleView = (e, medium) => {
+  // setCurrent(medium.id);
+  //  setStepperOpen(true);
+  // };
 
   function fetchList() {
     return setStart(start + LIMIT);

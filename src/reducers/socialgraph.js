@@ -20,9 +20,9 @@ const DEFAULT_STATE = {
   success: false,
 };
 
-export default function (state = {
+export default (state = {
   ...DEFAULT_STATE,
-}, action) {
+}, action) => {
   switch (action.type) {
     case SOCIALGRAPH.BROWSE.RESET:
       return {
@@ -86,4 +86,4 @@ export default function (state = {
     default:
       return state;
   }
-}
+};

@@ -18,9 +18,9 @@ const DEFAULT_STATE = {
   success: false,
 };
 
-export default function (state = {
+export default (state = {
   ...DEFAULT_STATE,
-}, action) {
+}, action) => {
   switch (action.type) {
     case AVATAR.ADD.REQUEST:
     case AVATAR.DELETE.REQUEST:
@@ -57,4 +57,4 @@ export default function (state = {
     default:
       return state;
   }
-}
+};

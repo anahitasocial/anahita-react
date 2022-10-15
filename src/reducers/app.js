@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import { App as APP } from '../constants';
 
-export default function (state = {
+export default (state = {
   appBarTitle: '',
   alerts: [],
-}, action) {
+}, action) => {
   switch (action.type) {
     case APP.TITLE.UPDATE:
       return {
@@ -33,4 +33,4 @@ export default function (state = {
     default:
       return state;
   }
-}
+};
