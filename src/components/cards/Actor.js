@@ -23,6 +23,7 @@ const {
   getURL,
   getCoverURL,
   isAdmin,
+  isPerson,
 } = utils.node;
 
 const styles = (theme) => {
@@ -56,8 +57,8 @@ const ActorCard = (props) => {
   const cover = getCoverURL(actor);
   const url = getURL(actor);
   const slug = `@${slugify(actor.alias.toLowerCase())}`;
-  const creationTime = moment.utc(actor.creationTime).format('LLL').toString();
-  const lastVisitDate = moment.utc(actor.lastVisitDate).format('LLL').toString();
+  const creationTime = moment.utc(actor.creationTime).local().format('LLL').toString();
+  const lastVisitDate = isPerson(actor) ? moment.utc(actor.lastVisitDate).local().format('LLL').toString() : null;
 
   return (
     <Card
@@ -116,9 +117,10 @@ const ActorCard = (props) => {
             </Typography>
           </div>
           <div>
+            {lastVisitDate &&
             <Typography variant="caption">
               {`Last visited on ${lastVisitDate}`}
-            </Typography>
+            </Typography>}
           </div>
         </CardContent>}
       <CardActions className={classes.actions}>
