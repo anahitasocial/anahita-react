@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 
-import CommentRead from './Read';
+import CommentRead from '../../comments/Read';
 import CommentForm from '../../../components/comment/Form';
 
 import actions from '../../../actions';
@@ -85,21 +85,18 @@ const CommentsBrowse = (props) => {
 
   return (
     <>
-      {items.allIds.length > 0 &&
-      <List>
-        {items.allIds.map((itemId) => {
-          const node = items.byId[itemId];
-          const key = `comment_list_item_${node.id}`;
-          return (
-            <CommentRead
-              key={key}
-              parent={parent}
-              comment={node}
-              inline
-            />
-          );
-        })}
-      </List>}
+      {items.allIds.map((itemId) => {
+        const node = items.byId[itemId];
+        const key = `comment_list_item_${node.id}`;
+        return (
+          <CommentRead
+            key={key}
+            parent={parent}
+            comment={node}
+            inline
+          />
+        );
+      })}
       {canAdd &&
         <CommentForm
           fields={fields}
