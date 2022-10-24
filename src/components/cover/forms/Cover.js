@@ -53,6 +53,10 @@ const ActorCoverForm = (props) => {
     handleDelete,
   } = props;
 
+  if (!canEdit && !cover) {
+    return (<></>);
+  }
+
   return (
     <>
       <ButtonBase

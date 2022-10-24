@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import withStyles from '@material-ui/core/styles/withStyles';
-// import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -19,26 +17,9 @@ const {
   getAuthor,
 } = utils.node;
 
-const styles = (theme) => {
-  return {
-    title: {
-      fontSize: 16,
-      fontWeight: 500,
-      marginBottom: theme.spacing(2),
-    },
-    authorName: {
-      fontSize: 16,
-    },
-    content: {
-      paddingTop: 0,
-    },
-  };
-};
-
 const CommentCard = (props) => {
   const {
     comment,
-    classes,
     stats,
     actions,
     menu,
@@ -46,10 +27,9 @@ const CommentCard = (props) => {
     commentForm,
   } = props;
 
+  const { creationTime } = comment;
   const author = getAuthor(comment);
   const url = getCommentURL(comment);
-  const creationTime = moment.utc(comment.creationTime).local().format('LLL').toString();
-  const creationTimeFromNow = moment.utc(comment.creationTime).fromNow();
 
   if (isEditing) {
     return (
@@ -78,14 +58,14 @@ const CommentCard = (props) => {
         subheader={
           <Link
             href={url}
-            title={creationTime}
+            title={moment.utc(creationTime).format('LLL').toString()}
           >
-            {creationTimeFromNow}
+            {moment.utc(creationTime).fromNow()}
           </Link>
         }
         action={menu}
       />
-      <CardContent className={classes.content}>
+      <CardContent>
         <EntityBody contentFilter>
           {comment.body}
         </EntityBody>
@@ -103,7 +83,6 @@ const CommentCard = (props) => {
 };
 
 CommentCard.propTypes = {
-  classes: PropTypes.object.isRequired,
   stats: PropTypes.node,
   actions: PropTypes.node,
   menu: PropTypes.node,
@@ -120,4 +99,4 @@ CommentCard.defaultProps = {
   stats: null,
 };
 
-export default withStyles(styles)(CommentCard);
+export default CommentCard;

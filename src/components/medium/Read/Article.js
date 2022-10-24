@@ -73,7 +73,6 @@ const MediumReadArticle = (props) => {
   };
 
   const portrait = getPortraitURL(medium, 'large');
-  // const cover = getCoverURL(medium);
   const author = getAuthor(medium);
   const creationTime = moment.utc(medium.creationTime).local().format('LLL').toString();
 
