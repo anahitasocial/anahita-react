@@ -31,7 +31,7 @@ const AuthPasswordReset = (props) => {
     return () => {
       reset();
     };
-  }, [error, alertError, success, alertSuccess, reset]);
+  }, [error, success]);
 
   const handleOnChange = (event) => {
     const { target } = event;

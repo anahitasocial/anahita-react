@@ -37,7 +37,7 @@ const AuthToken = (props) => {
     return () => {
       reset();
     };
-  }, [token, read, reset, alertSuccess, alertError]);
+  }, [token]);
 
   if (isAuthenticated) {
     if (resetPassword) {
