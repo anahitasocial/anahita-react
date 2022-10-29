@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -17,6 +17,7 @@ import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import CardHeaderOwner from './Owner';
 import Player from '../Player';
+import Progress from '../Progress';
 import ReadMore from '../ReadMore';
 import utils from '../../utils';
 
@@ -67,6 +68,21 @@ const MediumCard = (props) => {
   const creationTime = moment.utc(medium.creationTime).local().format('LLL').toString();
   const creationTimeFromNow = moment.utc(medium.creationTime).fromNow();
 
+  const [isPortraitLoaded, setIsPortraitLoaded] = useState(!portrait);
+
+  useEffect(() => {
+    if (portrait) {
+      // eslint-disable-next-line no-undef
+      const image = new Image();
+
+      image.src = portrait;
+
+      image.onload = () => {
+        setIsPortraitLoaded(true);
+      };
+    }
+  }, [portrait]);
+
   return (
     <Card
       component="section"
@@ -112,7 +128,7 @@ const MediumCard = (props) => {
         }
         action={menu}
       />
-      {portrait &&
+      {portrait && isPortraitLoaded &&
         <ButtonBase
           style={{
             width: '100%',
@@ -133,6 +149,10 @@ const MediumCard = (props) => {
             image={portrait}
           />
         </ButtonBase>}
+      {!isPortraitLoaded &&
+        <CardContent>
+          <Progress />
+        </CardContent>}
       {medium.body && <Player text={medium.body} />}
       <CardContent component="article" className={classes.content}>
         {medium.name &&

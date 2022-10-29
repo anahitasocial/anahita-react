@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -65,6 +65,21 @@ const StoryCardPhotoAdd = (props) => {
   const creationTime = moment.utc(story.creationTime).local().format('LLL').toString();
   const creationTimeFromNow = moment.utc(story.creationTime).fromNow();
 
+  const [isLoaded, setIsLoaded] = useState(!portrait);
+
+  useEffect(() => {
+    if (portrait) {
+      // eslint-disable-next-line no-undef
+      const image = new Image();
+
+      image.src = portrait;
+
+      image.onload = () => {
+        setIsLoaded(true);
+      };
+    }
+  }, [portrait]);
+
   return (
     <Card
       className={classes.card}
@@ -93,7 +108,7 @@ const StoryCardPhotoAdd = (props) => {
         action={menu}
       />
       {portraits && <GridList photos={portraits} />}
-      {!portraits && portrait &&
+      {!portraits && portrait && isLoaded &&
         <Link href={url}>
           <CardMedia
             component="img"

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -18,6 +18,7 @@ import ActorTitle from '../../actor/Title';
 import ActorAvatar from '../../actor/Avatar';
 import CardHeaderOwner from '../../cards/Owner';
 import Player from '../../Player';
+import Progress from '../../Progress';
 import EntityBody from '../../EntityBody';
 import contentfilter from '../../contentfilter';
 import utils from '../../../utils';
@@ -77,6 +78,21 @@ const MediumReadDefault = (props) => {
   const author = getAuthor(medium);
   const creationTime = moment.utc(medium.creationTime).local().format('LLL').toString();
 
+  const [isLoaded, setIsLoaded] = useState(!portrait);
+
+  useEffect(() => {
+    if (portrait) {
+      // eslint-disable-next-line no-undef
+      const image = new Image();
+
+      image.src = portrait;
+
+      image.onload = () => {
+        setIsLoaded(true);
+      };
+    }
+  }, [portrait]);
+
   return (
     <Grid
       container
@@ -96,13 +112,17 @@ const MediumReadDefault = (props) => {
               image={cover}
               src="picture"
             />}
-          {portrait &&
+          {portrait && isLoaded &&
             <CardMedia
               component="img"
               title={medium.name}
               alias={medium.name}
               image={portrait}
             />}
+          {!isLoaded &&
+            <CardContent>
+              <Progress />
+            </CardContent>}
           <CardHeader
             avatar={
               <ActorAvatar
