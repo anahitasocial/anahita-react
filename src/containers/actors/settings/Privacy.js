@@ -57,7 +57,7 @@ const ActorsSettingsPrivacy = (props) => {
     if (success) {
       alertSuccess('Privacy updated.');
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [error, success]);
 
   const handleOnChange = (event) => {
     const {
@@ -71,7 +71,7 @@ const ActorsSettingsPrivacy = (props) => {
 
     privacy[name] = (type === 'checkbox') ? checked : value;
 
-    if (name === 'access' && value === accessOptions[namespace][0]) {
+    if (name === 'access' && value === accessOptions[0]) {
       setShowDialog(true);
     }
 
