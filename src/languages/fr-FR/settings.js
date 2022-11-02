@@ -1,4 +1,21 @@
 export default {
+  about: {
+    mTitle: 'About',
+    cTitle: 'About',
+    apiVersion: 'API Version',
+    clientVersion: 'Client Version',
+    license: 'License',
+    website: 'Website',
+  },
+  appAssignments: {
+    mTitle: 'App Assignments',
+    cTitle: 'App Assignments',
+    cDescription: 'Manage items of apps to actors',
+  },
+  apps: {
+    mTitle: 'Apps',
+    cTitle: 'Apps',
+  },
   app: {
     blogs: {
       ownerIds: 'Owner Ids',
@@ -79,6 +96,10 @@ export default {
       optional: 'Optional',
       never: 'Never',
     },
+  },
+  plugins: {
+    mTitle: 'Plugins',
+    cTitle: 'Plugins',
   },
   plugin: {
     local: {

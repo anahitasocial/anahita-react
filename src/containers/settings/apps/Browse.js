@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import AppsIcon from '@material-ui/icons/Apps';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 
+import i18n from '../../../languages';
 import AppsEdit from './Edit';
 import Progress from '../../../components/Progress';
 import SelectSort from '../../../components/settings/apps/SelectSort';
@@ -67,11 +68,11 @@ const SettingsAppsBrowse = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Updated successfully.');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
   }, [error, success]);
 
@@ -112,7 +113,9 @@ const SettingsAppsBrowse = (props) => {
       <Card variant="outlined">
         <CardHeader
           title={
-            <Typography variant="h4">Apps</Typography>
+            <Typography variant="h4">
+              {i18n.t('settings:apps.cTitle')}
+            </Typography>
           }
           avatar={
             <Avatar>
@@ -127,7 +130,7 @@ const SettingsAppsBrowse = (props) => {
               const { target: { value } } = event;
               setSort(value);
             }}
-            label="Sort by"
+            label={i18n.t('commons:sortBy')}
           />
         </CardContent>
         <List>

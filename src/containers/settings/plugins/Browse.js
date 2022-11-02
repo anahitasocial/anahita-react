@@ -21,6 +21,7 @@ import Progress from '../../../components/Progress';
 import SelectType from '../../../components/settings/plugins/SelectType';
 import SelectSort from '../../../components/settings/plugins/SelectSort';
 
+import i18n from '../../../languages';
 import actions from '../../../actions';
 import PluginsType from '../../../proptypes/settings/Plugins';
 import PluginsEdit from './Edit';
@@ -70,11 +71,11 @@ const SettingsPlugins = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Updated successfully.');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
   }, [error, success]);
 
@@ -122,7 +123,9 @@ const SettingsPlugins = (props) => {
       <Card variant="outlined">
         <CardHeader
           title={
-            <Typography variant="h4">Plugins</Typography>
+            <Typography variant="h4">
+              {i18n.t('settings:plugins.cTitle')}
+            </Typography>
           }
           avatar={
             <Avatar>
@@ -137,7 +140,7 @@ const SettingsPlugins = (props) => {
               const { target: { value } } = event;
               setSort(value);
             }}
-            label="Sort by"
+            label={i18n.t('commons:sortBy')}
           />
           <SelectType
             value={type}
@@ -145,7 +148,7 @@ const SettingsPlugins = (props) => {
               const { target: { value } } = event;
               setType(value);
             }}
-            label="Filter by type"
+            label={i18n.t('commons:filterByType')}
           />
         </CardContent>
         <List>

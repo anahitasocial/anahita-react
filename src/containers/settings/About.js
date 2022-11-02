@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -14,10 +15,20 @@ import Typography from '@material-ui/core/Typography';
 
 import AboutIcon from '@material-ui/icons/Info';
 
+import i18n from '../../languages';
 import Progress from '../../components/Progress';
 import actions from '../../actions';
 import AboutType from '../../proptypes/settings/About';
 import packageInfo from '../../../package.json';
+
+const useStyles = makeStyles((theme) => {
+  return {
+    logo: {
+      width: theme.spacing(5),
+      height: theme.spacing(5),
+    },
+  };
+});
 
 const SettingsAbout = (props) => {
   const {
@@ -31,6 +42,7 @@ const SettingsAbout = (props) => {
     },
     isFetching,
   } = props;
+  const classes = useStyles();
 
   useEffect(() => {
     readAbout();
@@ -46,7 +58,9 @@ const SettingsAbout = (props) => {
     <Card variant="outlined">
       <CardHeader
         title={
-          <Typography variant="h4">About</Typography>
+          <Typography variant="h4">
+            {i18n.t('settings:about.cTitle')}
+          </Typography>
         }
         avatar={
           <Avatar>
@@ -57,7 +71,11 @@ const SettingsAbout = (props) => {
       <List>
         <ListItem divider>
           <ListItemAvatar>
-            <Avatar src={logo} alt={title} />
+            <Avatar
+              src={logo}
+              alt={title}
+              className={classes.logo}
+            />
           </ListItemAvatar>
           <ListItemText
             primary={title}
@@ -65,19 +83,19 @@ const SettingsAbout = (props) => {
         </ListItem>
         <ListItem divider>
           <ListItemText
-            primary="API Version"
+            primary={i18n.t('settings:about.apiVersion')}
             secondary={version}
           />
         </ListItem>
         <ListItem divider>
           <ListItemText
-            primary="Client Version"
+            primary={i18n.t('settings:about.clientVersion')}
             secondary={packageInfo.version}
           />
         </ListItem>
         <ListItem divider>
           <ListItemText
-            primary="License"
+            primary={i18n.t('settings:about.license')}
             secondary={
               <Link
                 href={license.url}
@@ -90,7 +108,7 @@ const SettingsAbout = (props) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary="Website"
+            primary={i18n.t('settings:about.website')}
             secondary={
               <Link
                 href={website.url}

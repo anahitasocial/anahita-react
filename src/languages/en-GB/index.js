@@ -21,6 +21,10 @@ export default {
     closeComments: 'Close Comments',
   },
   prompts: {
+    updated: {
+      success: 'Updated successfully',
+      error: "Something went wrong and couldn't update",
+    },
     saved: {
       success: 'Saved successfully',
       error: "Something went wrong and couldn't save",
@@ -267,5 +271,7 @@ export default {
   commons: {
     readMore: 'Read more',
     close: 'Close',
+    sortBy: 'Sort by',
+    filterByType: 'Filter by type',
   },
 };

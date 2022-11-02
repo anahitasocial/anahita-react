@@ -41,10 +41,10 @@ const Settings = (props) => {
         }}
         aria-label="Site Settings"
       >
-        <Tab label="About" value={TABS.ABOUT} />
-        <Tab label="Apps" value={TABS.APPS} />
-        <Tab label="App Assignments" value={TABS.ASSIGNMENTS} />
-        <Tab label="Plugins" value={TABS.PLUGINS} />
+        <Tab label={i18n.t('settings:about.mTitle')} value={TABS.ABOUT} />
+        <Tab label={i18n.t('settings:apps.mTitle')} value={TABS.APPS} />
+        <Tab label={i18n.t('settings:appAssignments.mTitle')} value={TABS.ASSIGNMENTS} />
+        <Tab label={i18n.t('settings:plugins.mTitle')} value={TABS.PLUGINS} />
       </Tabs>
       {tab === TABS.ABOUT &&
         <SettingsAbout />}

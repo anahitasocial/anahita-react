@@ -52,11 +52,11 @@ const SettingsAssignmentsBrowse = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Updated successfully.');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
   }, [error, success]);
 
@@ -84,9 +84,11 @@ const SettingsAssignmentsBrowse = (props) => {
       <Card variant="outlined">
         <CardHeader
           title={
-            <Typography variant="h4">App Assignments</Typography>
+            <Typography variant="h4">
+              {i18n.t('settings:appAssignments.cTitle')}
+            </Typography>
           }
-          subheader="Manage items of apps to actors"
+          subheader={i18n.t('settings:appAssignments.cDescription')}
           avatar={
             <Avatar>
               <AssignmentsIcon />
