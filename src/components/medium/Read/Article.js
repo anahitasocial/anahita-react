@@ -19,7 +19,6 @@ import ActorAvatar from '../../actor/Avatar';
 import CardHeaderOwner from '../../cards/Owner';
 import Player from '../../Player';
 import EntityBody from '../../EntityBody';
-import contentfilter from '../../contentfilter';
 import utils from '../../../utils';
 
 const {

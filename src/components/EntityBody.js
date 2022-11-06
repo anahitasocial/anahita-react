@@ -66,7 +66,7 @@ EntityBody.defaultProps = {
   filters: [
     'hashtag',
     'mention',
-    'url',
+    // 'url',
   ],
 };
 
