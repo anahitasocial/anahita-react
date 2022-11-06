@@ -157,15 +157,8 @@ const MediumReadDefault = (props) => {
                     {medium.name}
                   </Typography>}
                 {medium.body &&
-                  <EntityBody>
-                    {contentfilter({
-                      text: medium.body,
-                      filters: [
-                        'hashtag',
-                        'mention',
-                        'url',
-                      ],
-                    })}
+                  <EntityBody contentFilter>
+                    {medium.body}
                   </EntityBody>}
               </CardContent>
               {stats &&

@@ -28,6 +28,7 @@ const EntityBody = (props) => {
     children,
     size,
     contentFilter,
+    filters,
   } = props;
 
   let body = `${children}`;
@@ -35,11 +36,7 @@ const EntityBody = (props) => {
   if (contentFilter) {
     body = cFilter({
       text: children,
-      filters: [
-        'hashtag',
-        'mention',
-        'url',
-      ],
+      filters,
     });
   }
 
@@ -60,11 +57,17 @@ EntityBody.propTypes = {
   children: PropTypes.string.isRequired,
   size: PropTypes.oneOf(['body1', 'body2']),
   contentFilter: PropTypes.bool,
+  filters: PropTypes.arrayOf(PropTypes.string),
 };
 
 EntityBody.defaultProps = {
   size: 'body1',
   contentFilter: false,
+  filters: [
+    'hashtag',
+    'mention',
+    'url',
+  ],
 };
 
 export default EntityBody;
