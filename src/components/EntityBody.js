@@ -16,6 +16,14 @@ const useStyles = makeStyles((theme) => {
         textDecoration: 'none',
         wordWrap: 'break-word',
       },
+      '& pre': {
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing(1),
+        overflowX: 'scroll',
+      },
+      '& code': {
+        overflowX: 'scroll',
+      },
     },
     body1,
     body2,
