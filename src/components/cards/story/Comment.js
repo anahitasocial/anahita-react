@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -23,7 +23,7 @@ const {
   getCoverURL,
 } = utils.node;
 
-const styles = (theme) => {
+const useStyles = makeStyles((theme) => {
   return {
     card: {
       marginBottom: theme.spacing(2),
@@ -37,9 +37,15 @@ const styles = (theme) => {
       marginBottom: theme.spacing(2),
     },
     content: {
+      /*
       marginLeft: theme.spacing(2),
-      borderLeft: 1,
+      borderLeft: theme.spacing(2),
+      borderColor: theme.palette.background.default,
       borderLeftStyle: 'solid',
+      */
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
+      backgroundColor: theme.palette.background.default,
     },
     authorName: {
       fontSize: 16,
@@ -48,11 +54,10 @@ const styles = (theme) => {
       fontSize: 14,
     },
   };
-};
+});
 
 const StoryCardComment = (props) => {
   const {
-    classes,
     story,
     actions,
     stats,
@@ -60,6 +65,7 @@ const StoryCardComment = (props) => {
     comments,
     showOwner,
   } = props;
+  const classes = useStyles();
 
   // @Todo add support for array objects
   const portrait = story.object && getPortraitURL(story.object, 'large');
@@ -138,7 +144,6 @@ const StoryCardComment = (props) => {
 };
 
 StoryCardComment.propTypes = {
-  classes: PropTypes.object.isRequired,
   stats: PropTypes.node,
   actions: PropTypes.node,
   menu: PropTypes.node,
@@ -154,4 +159,4 @@ StoryCardComment.defaultProps = {
   menu: null,
 };
 
-export default withStyles(styles)(StoryCardComment);
+export default StoryCardComment;
