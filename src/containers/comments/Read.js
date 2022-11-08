@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import CommentCard from '../../components/cards/Comment';
+import CommentItem from '../../components/comment/CommentItem';
 import CommentForm from '../../components/comment/Form';
 
 import actions from '../../actions';
@@ -85,7 +85,7 @@ const CommentsRead = (props) => {
     ActionLikeComment(commentObjectType);
 
   return (
-    <CommentCard
+    <CommentItem
       comment={comment}
       menu={isAuthenticated &&
         <CommentMenu

@@ -37,15 +37,10 @@ const useStyles = makeStyles((theme) => {
       marginBottom: theme.spacing(2),
     },
     content: {
-      /*
       marginLeft: theme.spacing(2),
-      borderLeft: theme.spacing(2),
+      borderLeft: 4,
       borderColor: theme.palette.background.default,
       borderLeftStyle: 'solid',
-      */
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(2),
-      backgroundColor: theme.palette.background.default,
     },
     authorName: {
       fontSize: 16,

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -18,7 +17,7 @@ const {
   getAuthor,
 } = utils.node;
 
-const CommentCard = (props) => {
+const CommentItem = (props) => {
   const {
     comment,
     stats,
@@ -41,10 +40,7 @@ const CommentCard = (props) => {
   }
 
   return (
-    <Card
-      component="section"
-      variant="outlined"
-    >
+    <>
       <CardHeader
         avatar={
           <ActorAvatar
@@ -82,11 +78,11 @@ const CommentCard = (props) => {
         <CardActions>
           {actions}
         </CardActions>}
-    </Card>
+    </>
   );
 };
 
-CommentCard.propTypes = {
+CommentItem.propTypes = {
   stats: PropTypes.node,
   actions: PropTypes.node,
   menu: PropTypes.node,
@@ -95,7 +91,7 @@ CommentCard.propTypes = {
   isEditing: PropTypes.bool,
 };
 
-CommentCard.defaultProps = {
+CommentItem.defaultProps = {
   actions: null,
   menu: null,
   commentForm: null,
@@ -103,4 +99,4 @@ CommentCard.defaultProps = {
   stats: null,
 };
 
-export default CommentCard;
+export default CommentItem;

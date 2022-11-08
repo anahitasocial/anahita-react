@@ -46,6 +46,7 @@ const StoryCardPhotoAdd = (props) => {
   const {
     classes,
     story,
+    stats,
     actions,
     menu,
     showOwner,
@@ -131,6 +132,10 @@ const StoryCardPhotoAdd = (props) => {
             {body}
           </ReadMore>}
       </CardContent>
+      {stats &&
+        <CardActions>
+          {stats}
+        </CardActions>}
       {actions &&
         <CardActions>
           {actions}
@@ -143,6 +148,7 @@ const StoryCardPhotoAdd = (props) => {
 
 StoryCardPhotoAdd.propTypes = {
   classes: PropTypes.object.isRequired,
+  stats: PropTypes.node,
   actions: PropTypes.node,
   menu: PropTypes.node,
   comments: PropTypes.node,
@@ -153,6 +159,7 @@ StoryCardPhotoAdd.propTypes = {
 StoryCardPhotoAdd.defaultProps = {
   showOwner: false,
   actions: null,
+  stats: null,
   menu: null,
   comments: null,
 };
