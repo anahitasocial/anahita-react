@@ -117,17 +117,16 @@ const cards = () => {
             Community
           </Typography>
           <Typography variant="body1" paragraph>
-            Join the Anahita tribe and then post your questions
-            on the
+            {'Join the Anahita tribe and then post your questions on the '}
             <Link href="/groups/107732-tribe-support/">Tribe Support</Link>
-            group to get help from the members for free.
+            {' group to get help from the members for free.'}
           </Typography>
           <Typography variant="h6" paragraph>
             Premium
           </Typography>
           <Typography variant="body1">
             <Link href="https://www.rmdstudio.com/contact/" target="_blank">Send an inquiry</Link>
-            to the company who develops and maintains Anahita.
+            {' to the company who develops and maintains Anahita.'}
           </Typography>
         </>
       );
