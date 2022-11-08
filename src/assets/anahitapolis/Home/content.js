@@ -99,7 +99,7 @@ const cards = () => {
             Credits
           </Typography>
           <Typography variant="body1">
-            Anahita is developed and maintained by
+            {'Anahita is developed and maintained by '}
             <Link href="https://www.rmdstudio.com" target="_blank">rmd Studio</Link>
             .
           </Typography>
