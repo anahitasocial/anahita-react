@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 
 import ActorType from '../../../proptypes/Actor';
 import { Actor as ACTOR } from '../../../constants';
+import i18n from '../../../languages';
 
 const { METADATA } = ACTOR.FIELDS;
 
@@ -22,7 +23,7 @@ const ActorFormsMetadata = (props) => {
         type="url"
         value={actor.website || ''}
         onChange={handleOnChange}
-        label="Website"
+        label={i18n.t('actor:meta.website')}
         placeholder="https://www.example.com"
         error={fields.website.error !== ''}
         helperText={fields.website.error}
@@ -37,7 +38,7 @@ const ActorFormsMetadata = (props) => {
         type="url"
         value={actor.contact_url || ''}
         onChange={handleOnChange}
-        label="Contact URL"
+        label={i18n.t('actor:meta.contactUrl')}
         placeholder="https://www.example.com/contact"
         error={fields.contact_url.error !== ''}
         helperText={fields.contact_url.error}
@@ -53,7 +54,7 @@ const ActorFormsMetadata = (props) => {
         placeholder="000-000-0000"
         value={actor.phone || ''}
         onChange={handleOnChange}
-        label="Phone"
+        label={i18n.t('actor:meta.phone')}
         error={fields.phone.error !== ''}
         helperText={fields.phone.error}
         fullWidth

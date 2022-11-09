@@ -22,7 +22,7 @@ const ActorsSettingsAppsBrowse = (props) => {
       />
       <ListItemSecondaryAction>
         <Switch
-          checked={app.enabled}
+          checked={app.enabled === true}
           onChange={() => {
             handleEdit(app);
           }}

@@ -16,9 +16,11 @@ export default {
     edit: 'Edit',
     update: 'Update',
     cancel: 'Cancel',
+    create: 'Create',
     post: 'Post',
     openComments: 'Open Comments',
     closeComments: 'Close Comments',
+    login: 'Login',
   },
   prompts: {
     updated: {
@@ -28,6 +30,10 @@ export default {
     saved: {
       success: 'Saved successfully',
       error: "Something went wrong and couldn't save",
+    },
+    deleted: {
+      success: 'Deleted successfully',
+      error: 'Something went wrong and couldn\'t delete',
     },
   },
   access: {
@@ -87,9 +93,44 @@ export default {
   },
   auth: {
     logout: 'Logout',
+    login: 'Please log in',
+    username: 'Email or Username',
+    password: 'Password',
+    forgotPassword: 'Forgot password?',
+    passwordResetEmail: 'What is your email?',
+    actions: {
+      resetPassword: 'Reset password',
+    },
+    signup: {
+      cTitle: 'Please signup',
+      mTitle: 'Signup',
+      firstName: 'First name',
+      lastName: 'Last name',
+      username: 'Username',
+      email: 'Email',
+      password: 'Password',
+      actions: {
+        signup: 'Signup',
+      },
+    },
   },
   actor: {
+    about: 'About',
+    name: 'Name',
+    body: 'Description',
     unknown: 'Unknown',
+    delete: {
+      prompts: {
+        challenge: 'Type the exact alias: {{ alias }}',
+        inProgress: 'Deleting in progress ...',
+      },
+    },
+    meta: {
+      website: 'Website',
+      contact: 'Contact',
+      contactUrl: 'Contact URL',
+      phone: 'Phone',
+    },
   },
   blogs: {
     cTitle: 'Blogs',
@@ -252,6 +293,10 @@ export default {
   socialgraph: {
     cTitle: 'Social Graph',
     mTitle: 'Social Graph',
+    followers: 'Followers',
+    leaders: 'Leaders',
+    mutuals: 'Mutualls',
+    blocked: 'Blocked',
   },
   hashtags: {
     cTitle: 'Hashtags',

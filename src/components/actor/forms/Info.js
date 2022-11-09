@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 
+import i18n from '../../../languages';
 import ActorType from '../../../proptypes/Actor';
 import { Actor as ACTOR } from '../../../constants';
 import ActorsFormsMetadata from './Metadata';
@@ -31,7 +32,7 @@ const ActorFormsInfo = (props) => {
           name="name"
           value={actor.name}
           onChange={handleOnChange}
-          label="Name"
+          label={i18n.t('actor:name')}
           error={fields.name.error !== ''}
           helperText={fields.name.error}
           margin="normal"
@@ -48,7 +49,7 @@ const ActorFormsInfo = (props) => {
           onChange={handleOnChange}
           error={fields.body.error !== ''}
           helperText={fields.body.error}
-          label="Description"
+          label={i18n.t('actor:body')}
           margin="normal"
           fullWidth
           multiline
@@ -72,7 +73,7 @@ const ActorFormsInfo = (props) => {
           disabled={isFetching || !enableSubmit}
           fullWidth
         >
-          Save
+          {actor.id ? i18n.t('actions:update') : i18n.t('actions:create')}
         </Button>
       </CardActions>
     </form>

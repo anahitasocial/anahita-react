@@ -165,6 +165,24 @@ const Routes = (props) => {
         selectedTab="account"
       />
       <AuthenticatedRoute
+        path="/people/:id/settings/privacy"
+        exact
+        component={PeopleSettings}
+        selectedTab="privacy"
+      />
+      <AuthenticatedRoute
+        path="/people/:id/settings/apps"
+        exact
+        component={PeopleSettings}
+        selectedTab="apps"
+      />
+      <AuthenticatedRoute
+        path="/people/:id/settings/permissions"
+        exact
+        component={PeopleSettings}
+        selectedTab="permissions"
+      />
+      <AuthenticatedRoute
         path="/people/:id/settings/"
         exact
         component={PeopleSettings}

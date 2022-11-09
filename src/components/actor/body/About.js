@@ -13,6 +13,7 @@ import WebsiteIcon from '@material-ui/icons/Web';
 import MailIcon from '@material-ui/icons/Mail';
 import PhoneIcon from '@material-ui/icons/Phone';
 
+import i18n from '../../../languages';
 import Player from '../../Player';
 import EntityBody from '../../EntityBody';
 import ActorType from '../../../proptypes/Actor';
@@ -38,7 +39,7 @@ const ActorBodyAbout = (props) => {
               fontSize: 24,
             }}
           >
-            About
+            {i18n.t('actor:about')}
           </Typography>
         }
       />
@@ -63,7 +64,7 @@ const ActorBodyAbout = (props) => {
               <WebsiteIcon />
             </ListItemIcon>
             <ListItemText
-              primary="Website"
+              primary={i18n.t('actor:meta.website')}
               secondary={
                 <Typography
                   variant="body1"
@@ -85,7 +86,7 @@ const ActorBodyAbout = (props) => {
               <MailIcon />
             </ListItemIcon>
             <ListItemText
-              primary="Contact"
+              primary={i18n.t('actor:meta.contact')}
               secondary={
                 <Typography
                   variant="body1"
@@ -107,7 +108,7 @@ const ActorBodyAbout = (props) => {
               <PhoneIcon />
             </ListItemIcon>
             <ListItemText
-              primary="Phone"
+              primary={i18n.t('actor:meta.phone')}
               secondary={
                 <Typography
                   variant="body1"

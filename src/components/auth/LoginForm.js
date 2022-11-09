@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import LoginIcon from '@material-ui/icons/Person';
 
 import { Auth as AUTH } from '../../constants';
+import i18n from '../../languages';
 
 const LoginForm = (props) => {
   const {
@@ -40,7 +41,7 @@ const LoginForm = (props) => {
           }
           title={
             <Typography variant="h6">
-              Please Log In
+              {i18n.t('auth:login')}
             </Typography>
           }
         />
@@ -49,7 +50,7 @@ const LoginForm = (props) => {
             name="username"
             value={username.value}
             onChange={handleOnChange}
-            label="Email or username"
+            label={i18n.t('auth:username')}
             error={username.error !== ''}
             helperText={username.error}
             autoFocus
@@ -66,7 +67,7 @@ const LoginForm = (props) => {
             name="password"
             value={password.value}
             onChange={handleOnChange}
-            label="Password"
+            label={i18n.t('auth:password')}
             error={password.error !== ''}
             helperText={password.error}
             fullWidth
@@ -86,7 +87,7 @@ const LoginForm = (props) => {
             disabled={isFetching || !enableSubmit}
             fullWidth
           >
-            Login
+            {i18n.t('actions:login')}
           </Button>
         </CardActions>
         <CardActions>
@@ -94,7 +95,7 @@ const LoginForm = (props) => {
             href="/passwordreset/"
             fullWidth
           >
-            Forgot password?
+            {i18n.t('auth:forgotPassword')}
           </Button>
         </CardActions>
       </Card>

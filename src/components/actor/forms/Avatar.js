@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import NodeType from '../../../proptypes/Node';
 import utils from '../../../utils';
+import i18n from '../../../languages';
 
 const { getActorInitials } = utils.node;
 
@@ -100,11 +101,11 @@ const ActorAvatarForm = (props) => {
               disabled={!canEdit || isFetching}
               onChange={handleFieldChange}
             />
-            Upload Avatar
+            {i18n.t('actions:update')}
           </label>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
-          Delete
+          {i18n.t('actions:delete')}
         </MenuItem>
       </Menu>
     </>

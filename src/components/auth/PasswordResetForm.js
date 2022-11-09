@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import HelpIcon from '@material-ui/icons/Help';
 
 import { Password as PASSWORD } from '../../constants';
+import i18n from '../../languages';
 
 const PasswordResetForm = (props) => {
   const {
@@ -39,7 +40,7 @@ const PasswordResetForm = (props) => {
           }
           title={
             <Typography variant="h6">
-              Forgot Password?
+              {i18n.t('auth:forgotPassword')}
             </Typography>
           }
         />
@@ -48,7 +49,7 @@ const PasswordResetForm = (props) => {
             name="email"
             value={email.value}
             onChange={handleOnChange}
-            label="What is your email?"
+            label={i18n.t('auth:passwordResetEmail')}
             error={email.error !== ''}
             helperText={email.error}
             autoFocus
@@ -69,7 +70,7 @@ const PasswordResetForm = (props) => {
             disabled={isFetching || !enableSubmit}
             fullWidth
           >
-            Reset Password
+            {i18n.t('auth:actions.resetPassword')}
           </Button>
         </CardActions>
       </Card>

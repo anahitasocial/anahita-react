@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import i18n from '../../../languages';
+
 const styles = (theme) => {
   return {
     root: {
@@ -50,10 +52,10 @@ const SocialgraphTabs = (props) => {
           variant="fullWidth"
           aria-label="Socialgraph Tabs"
         >
-          <Tab label="Followers" value="followers" id="socialgraph-tab-followers" />
-          {leaders && <Tab label="Leaders" value="leaders" id="socialgraph-tab-leaders" />}
-          {mutuals && <Tab label="Mutuals" value="mutuals" id="socialgraph-tab-mutuals" />}
-          {blocked && <Tab label="Blocked" value="blocked" id="socialgraph-tab-blocked" />}
+          <Tab label={i18n.t('socialgraph:followers')} value="followers" id="socialgraph-tab-followers" />
+          {leaders && <Tab label={i18n.t('socialgraph:leaders')} value="leaders" id="socialgraph-tab-leaders" />}
+          {mutuals && <Tab label={i18n.t('socialgraph:mutuals')} value="mutuals" id="socialgraph-tab-mutuals" />}
+          {blocked && <Tab label={i18n.t('socialgraph:blocked')} value="blocked" id="socialgraph-tab-blocked" />}
         </Tabs>
       </AppBar>
       {value === 'followers' && followers}

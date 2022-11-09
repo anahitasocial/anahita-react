@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import ActorAvatar from '../Avatar';
 import ActorType from '../../../proptypes/Actor';
 import utils from '../../../utils';
+import i18n from '../../../languages';
 
 const { getURL } = utils.node;
 
@@ -19,6 +20,7 @@ const ActorBodyAdmins = (props) => {
   } = props;
 
   const { administrators: admins } = actor;
+  const namespace = utils.node.getNamespace(actor);
 
   return (
     <Card variant="outlined">
@@ -30,7 +32,7 @@ const ActorBodyAdmins = (props) => {
               fontSize: 24,
             }}
           >
-            Admins
+            {i18n.t(`${namespace}:settings.admins`)}
           </Typography>
         }
       />

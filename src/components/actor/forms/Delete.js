@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 
 import ActorType from '../../../proptypes/Actor';
 import { Actor as ACTOR } from '../../../constants';
+import i18n from '../../../languages';
 
 const { ALIAS } = ACTOR.FIELDS;
 
@@ -43,7 +44,9 @@ const ActorDeleteForm = (props) => {
           required
         />
         <FormHelperText>
-          {`Type the exact alias: "${actor.alias}"`}
+          {i18n.t('actor:delete.prompts.challenge', {
+            alias: actor.alias,
+          })}
         </FormHelperText>
       </CardContent>
       <CardActions>
@@ -54,7 +57,7 @@ const ActorDeleteForm = (props) => {
           disabled={isFetching || !enableDelete}
           fullWidth
         >
-          {isFetching ? 'Deleting in progress ...' : 'Delete'}
+          {isFetching ? i18n.t('actor:delete.prompts.inProgress') : i18n.t('actions:delete')}
         </Button>
       </CardActions>
     </form>

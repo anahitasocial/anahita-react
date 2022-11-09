@@ -5,6 +5,7 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import ActorType from '../../../proptypes/Actor';
 import utils from '../../../utils';
+import i18n from '../../../languages';
 
 const { getURL } = utils.node;
 
@@ -32,7 +33,7 @@ const SocialgraphMeta = (props) => {
       align="center"
       className={classes.root}
     >
-      <b>Followers: </b>
+      <b>{`${i18n.t('socialgraph:followers')}: `}</b>
       <Link
         href={`${actorURL}socialgraph/followers/`}
         underline="none"
@@ -40,7 +41,7 @@ const SocialgraphMeta = (props) => {
         {actor.followerCount}
       </Link>
       {isPerson && <span className={classes.space} />}
-      {isPerson && <b>Leaders: </b>}
+      {isPerson && <b>{`${i18n.t('socialgraph:leaders')}: `}</b>}
       {isPerson &&
         <Link
           href={`${actorURL}socialgraph/leaders/`}

@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import SignUpIcon from '@material-ui/icons/PersonAdd';
 
 import { Signup as SIGNUP } from '../../constants';
+import i18n from '../../languages';
 
 const SignupForm = (props) => {
   const {
@@ -55,7 +56,7 @@ const SignupForm = (props) => {
           }
           title={
             <Typography variant="h6">
-              Please Sign Up
+              {i18n.t('auth:signup.cTitle')}
             </Typography>
           }
         />
@@ -64,7 +65,7 @@ const SignupForm = (props) => {
             name="givenName"
             value={givenName.value}
             onChange={handleOnChange}
-            label="First Name"
+            label={i18n.t('auth:signup.firstName')}
             error={givenName.error !== ''}
             helperText={givenName.error}
             autoFocus
@@ -81,7 +82,7 @@ const SignupForm = (props) => {
             name="familyName"
             value={familyName.value}
             onChange={handleOnChange}
-            label="Last Name"
+            label={i18n.t('auth:signup.lastName')}
             error={familyName.error !== ''}
             helperText={familyName.error}
             fullWidth
@@ -98,7 +99,7 @@ const SignupForm = (props) => {
             value={username.value}
             onChange={handleOnChange}
             onBlur={handleOnBlur}
-            label="Username"
+            label={i18n.t('auth:signup.username')}
             error={username.error !== ''}
             helperText={username.error}
             fullWidth
@@ -116,7 +117,7 @@ const SignupForm = (props) => {
             value={email.value}
             onChange={handleOnChange}
             onBlur={handleOnBlur}
-            label="Email"
+            label={i18n.t('auth:signup.email')}
             error={email.error !== ''}
             helperText={email.error}
             fullWidth
@@ -133,7 +134,7 @@ const SignupForm = (props) => {
             name="password"
             value={password.value}
             onChange={handleOnChange}
-            label="Password"
+            label={i18n.t('auth:signup.password')}
             error={password.error !== ''}
             helperText={password.error}
             fullWidth
@@ -154,7 +155,7 @@ const SignupForm = (props) => {
             disabled={success || isFetching || !canSubmit}
             fullWidth
           >
-            Signup
+            {i18n.t('auth:signup.actions.signup')}
           </Button>
         </CardActions>
       </Card>

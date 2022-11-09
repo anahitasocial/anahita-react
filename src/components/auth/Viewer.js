@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 import PersonType from '../../proptypes/Person';
 import utils from '../../utils';
+import i18n from '../../languages';
 
 const {
   getActorInitials,
@@ -63,7 +64,7 @@ const Viewer = (props) => {
         color="inherit"
         variant="outlined"
       >
-        Login
+        {i18n.t('actions:login')}
       </Button>}
       {isAuthenticated &&
         <Button
