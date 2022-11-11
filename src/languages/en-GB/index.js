@@ -18,6 +18,7 @@ export default {
     cancel: 'Cancel',
     create: 'Create',
     post: 'Post',
+    publish: 'Publish',
     openComments: 'Open Comments',
     closeComments: 'Close Comments',
     login: 'Login',
@@ -143,6 +144,15 @@ export default {
   home: {
     cTitle: 'Home',
     mTitle: 'Home',
+  },
+  files: {
+    composer: {
+      select: 'Select or Drop a file here',
+      name: 'Name',
+      namePlaceholder: 'Name this file ...',
+      body: 'Description',
+      bodyPlaceholder: 'Write a description ...',
+    },
   },
   documents: {
     cTitle: 'Documents',
@@ -278,6 +288,14 @@ export default {
   articles: {
     cTitle: 'Articles',
     mTitle: 'Articles',
+    composer: {
+      title: 'Title',
+      titlePlaceholder: 'Article\'s title ...',
+      body: 'Description',
+      bodyPlaceholder: 'Write a description ...',
+      excerpt: 'Excerpt',
+      excerptPlaceholder: 'Write a excerpt ...',
+    },
     settings: {
       article: {
         add: 'Who can publish an article on this profile?',
@@ -318,5 +336,7 @@ export default {
     close: 'Close',
     sortBy: 'Sort by',
     filterByType: 'Filter by type',
+    viewAll: 'View all',
+    posts: 'Posts',
   },
 };

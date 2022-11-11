@@ -28,7 +28,7 @@ const HomeCardMedia = () => {
       <CardHeader
         title={
           <Typography variant="h6">
-            Posts
+            {i18n.t('commons:posts')}
           </Typography>
         }
         subheader="Media nodes"
@@ -101,7 +101,7 @@ const HomeCardMedia = () => {
           href="/explore/notes"
           various="text"
         >
-          View all
+          {i18n.t('commons:viewAll')}
         </Button>
       </CardActions>
     </Card>

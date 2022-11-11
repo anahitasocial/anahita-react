@@ -132,7 +132,7 @@ const HomeCardNodes = (props) => {
           href={`/explore/${namespace}`}
           various="text"
         >
-          View all
+          {i18n.t('commons:viewAll')}
         </Button>
       </CardActions>
     </Card>

@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { Medium as MEDIUM } from '../../../constants';
 import MediumType from '../../../proptypes/Medium';
+import i18n from '../../../languages';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -80,7 +81,7 @@ const ComposersFile = (props) => {
                 {...getInputProps()}
                 required
               />
-              {!file && 'Select or Drop a file here'}
+              {!file && i18n.t('files:composer.select')}
               {file && file.name}
             </Button>
           </RootRef>
@@ -90,11 +91,11 @@ const ComposersFile = (props) => {
               name="name"
               value={medium.name}
               onChange={handleOnChange}
-              label="Name"
+              label={i18n.t('files:composer.name')}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Name this file ..."
+              placeholder={i18n.t('files:composer.namePlaceholder')}
               error={fields.name.error !== ''}
               helperText={fields.name.error}
               fullWidth
@@ -112,11 +113,11 @@ const ComposersFile = (props) => {
               name="body"
               value={medium.body}
               onChange={handleOnChange}
-              label="Description"
+              label={i18n.t('files:composer.body')}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Write a description ..."
+              placeholder={i18n.t('files:composer.bodyPlaceholder')}
               error={fields.body.error !== ''}
               helperText={fields.body.error}
               fullWidth
@@ -136,7 +137,7 @@ const ComposersFile = (props) => {
             disabled={isFetching}
             fullWidth
           >
-            {!isFetching && 'Upload'}
+            {!isFetching && i18n.t('actions:post')}
             {isFetching && <CircularProgress size={24} />}
           </Button>
         </CardActions>

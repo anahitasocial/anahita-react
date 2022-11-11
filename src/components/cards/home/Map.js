@@ -21,6 +21,7 @@ import { App as APP } from '../../../constants';
 import icons from '../../app/Icons';
 import api from '../../../api';
 import utils from '../../../utils';
+import i18n from '../../../languages';
 
 const { getURL } = utils.node;
 const { SORTING } = APP.BROWSE;
@@ -108,7 +109,7 @@ const HomeCardMap = (params) => {
           href="/explore/locations/"
           various="text"
         >
-          View all
+          {i18n.t('commons:viewAll')}
         </Button>
       </CardActions>
     </Card>

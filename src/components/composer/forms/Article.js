@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { Medium as MEDIUM } from '../../../constants';
 import MediumType from '../../../proptypes/Medium';
+import i18n from '../../../languages';
 
 const {
   NAME,
@@ -106,7 +107,7 @@ const ComposersArticle = (props) => {
             disabled={isFetching}
             fullWidth
           >
-            {!isFetching && 'Post'}
+            {!isFetching && i18n.t('actions:publish')}
             {isFetching && <CircularProgress size={24} />}
           </Button>
         </CardActions>
