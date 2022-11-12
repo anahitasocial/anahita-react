@@ -9,6 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Fade from '@material-ui/core/Fade';
 
 import NodeType from '../../../proptypes/Node';
+import i18n from '../../../languages';
 
 const styles = (theme) => {
   return {
@@ -88,11 +89,11 @@ const ActorCoverForm = (props) => {
               disabled={!canEdit || isFetching}
               onChange={handleFieldChange}
             />
-            Upload Cover
+            {i18n.t('actions:Update')}
           </label>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
-          Delete
+          {i18n.t('actions:delete')}
         </MenuItem>
       </Menu>
     </>

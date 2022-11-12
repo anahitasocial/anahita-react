@@ -51,7 +51,7 @@ const CommentListItem = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <ActorAvatar
@@ -62,23 +62,23 @@ const CommentListItem = (props) => {
         </ListItemAvatar>
         <ListItemText
           primary={
-            <React.Fragment>
+            <>
               <ActorTitle
                 actor={author}
                 linked={Boolean(author.id)}
               />
               {moment(creationTime).fromNow()}
-            </React.Fragment>
+            </>
           }
           secondary={
-            <React.Fragment>
+            <>
               <EntityBody size="small">
                 {comment.body}
               </EntityBody>
               <div>
                 {actions}
               </div>
-            </React.Fragment>
+            </>
           }
         />
         <ListItemSecondaryAction>
@@ -86,7 +86,7 @@ const CommentListItem = (props) => {
         </ListItemSecondaryAction>
       </ListItem>
       <Divider variant="inset" component="li" />
-    </React.Fragment>
+    </>
   );
 };
 

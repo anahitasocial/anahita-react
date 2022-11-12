@@ -344,6 +344,13 @@ export default {
   locations: {
     cTitle: 'Locations',
     mTitle: 'Locations',
+    location: {
+      name: 'Name',
+      address: 'Address',
+      city: 'City',
+      province: 'Province',
+      country: 'Country',
+    },
   },
   search: {
     cTitle: 'Search',

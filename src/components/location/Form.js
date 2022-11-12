@@ -11,6 +11,8 @@ import LocationType from '../../proptypes/Location';
 import CountrySelect from '../select/Country';
 import RegionSelect from '../select/Region';
 
+import i18n from '../../languages';
+
 const {
   TITLE,
   ADDRESS,
@@ -39,7 +41,7 @@ const LocationForm = (props) => {
           id="location-name"
           margin="normal"
           variant="outlined"
-          label="Name"
+          label={i18n.t('locations:location.name')}
           onChange={handleOnChange}
           name="name"
           value={location.name}
@@ -57,7 +59,7 @@ const LocationForm = (props) => {
           id="location-address"
           margin="normal"
           variant="outlined"
-          label="Address"
+          label={i18n.t('locations:location.address')}
           onChange={handleOnChange}
           name="address"
           value={location.address}
@@ -75,7 +77,7 @@ const LocationForm = (props) => {
             id="location-city"
             margin="normal"
             variant="outlined"
-            label="City"
+            label={i18n.t('locations:location.city')}
             onChange={handleOnChange}
             name="city"
             value={location.city}
@@ -88,6 +90,24 @@ const LocationForm = (props) => {
             fullWidth
             required={requiredFields.includes('city')}
           />}
+        {fields.country &&
+          <FormControl
+            variant="outlined"
+            fullWidth
+            margin="normal"
+          >
+            <InputLabel id="location-country-label">
+              {i18n.t('locations:location.country')}
+            </InputLabel>
+            <CountrySelect
+              id="location-country"
+              name="country"
+              label="Country"
+              onChange={handleOnChange}
+              value={location.country}
+              disabled={isFetching}
+            />
+          </FormControl>}
         {fields.state_province &&
           <FormControl
             variant="outlined"
@@ -95,7 +115,7 @@ const LocationForm = (props) => {
             margin="normal"
           >
             <InputLabel id="location-country-label">
-              Province
+              {i18n.t('locations:location.province')}
             </InputLabel>
             <RegionSelect
               id="state_province"
@@ -105,24 +125,6 @@ const LocationForm = (props) => {
               value={location.state_province}
               disabled={location.country === '' || isFetching}
               country={location.country}
-            />
-          </FormControl>}
-        {fields.country &&
-          <FormControl
-            variant="outlined"
-            fullWidth
-            margin="normal"
-          >
-            <InputLabel id="location-country-label">
-              Country
-            </InputLabel>
-            <CountrySelect
-              id="location-country"
-              name="country"
-              label="Country"
-              onChange={handleOnChange}
-              value={location.country}
-              disabled={isFetching}
             />
           </FormControl>}
       </CardContent>
