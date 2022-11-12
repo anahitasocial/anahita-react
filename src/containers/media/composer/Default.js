@@ -22,6 +22,7 @@ const MediaComposerDefault = (props) => {
     formComponent: FormComponent,
     formFields,
     supportedMimetypes,
+    namespace,
   } = props;
 
   const [fields, setFields] = useState(formFields);
@@ -107,6 +108,7 @@ const MediaComposerDefault = (props) => {
       supportedMimetypes={supportedMimetypes}
       success={success}
       file={file}
+      namespace={namespace}
     />
   );
 };
@@ -117,12 +119,13 @@ MediaComposerDefault.propTypes = {
   alertError: PropTypes.func.isRequired,
   owner: AcctorType.isRequired,
   viewer: PersonType.isRequired,
-  formComponent: PropTypes.func.isRequired,
+  formComponent: PropTypes.node.isRequired,
   formFields: PropTypes.objectOf(PropTypes.any).isRequired,
   supportedMimetypes: PropTypes.arrayOf(PropTypes.string),
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+  namespace: PropTypes.string.isRequired,
 };
 
 MediaComposerDefault.defaultProps = {

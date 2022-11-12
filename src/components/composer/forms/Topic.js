@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { Medium as MEDIUM } from '../../../constants';
 import MediumType from '../../../proptypes/Medium';
+import i18n from '../../../languages';
 
 const {
   NAME,
@@ -35,11 +36,11 @@ const ComposersTopic = (props) => {
               name="name"
               value={medium.name}
               onChange={handleOnChange}
-              label="Title"
+              label={i18n.t('topics:composer.title')}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Topic's title ..."
+              placeholder={i18n.t('topics:composer.titlePlaceholder')}
               error={fields.name.error !== ''}
               helperText={fields.name.error}
               fullWidth
@@ -57,11 +58,11 @@ const ComposersTopic = (props) => {
               name="body"
               value={medium.body}
               onChange={handleOnChange}
-              label="Description"
+              label={i18n.t('topics:composer.body')}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Write a description ..."
+              placeholder={i18n.t('topics:composer.bodyPlaceholder')}
               error={fields.body.error !== ''}
               helperText={fields.body.error}
               fullWidth
@@ -84,7 +85,7 @@ const ComposersTopic = (props) => {
             disabled={isFetching}
             fullWidth
           >
-            {!isFetching && 'Post'}
+            {!isFetching && i18n.t('actions:post')}
             {isFetching && <CircularProgress size={24} />}
           </Button>
         </CardActions>

@@ -16,6 +16,7 @@ import { Medium as MEDIUM } from '../../../constants';
 import MediumType from '../../../proptypes/Medium';
 
 import utils from '../../../utils';
+import i18n from '../../../languages';
 
 const { BODY } = MEDIUM.FIELDS;
 const { isPerson } = utils.node;
@@ -33,7 +34,10 @@ const ComposersNote = (props) => {
     isFetching,
   } = props;
 
-  const placeholder = (owner.id === viewer.id) ? `What's on your mind ${viewer.name}` : 'Share a note';
+  const placeholder = isPerson(owner) && owner.id !== viewer.id ? i18n.t('notes:composer.bodyPlaceholderPerson', {
+    name: owner.name,
+  }) : i18n.t('notes:composer.bodyPlaceholder');
+
   const canPrivatePost = isPerson(owner) && owner.id !== viewer.id;
 
   return (
@@ -78,7 +82,7 @@ const ComposersNote = (props) => {
             disabled={isFetching}
             fullWidth
           >
-            {!isFetching && 'Post'}
+            {!isFetching && i18n.t('actions:post')}
             {isFetching && <CircularProgress size={24} />}
           </Button>
         </CardActions>

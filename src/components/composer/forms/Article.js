@@ -37,11 +37,11 @@ const ComposersArticle = (props) => {
               name="name"
               value={medium.name}
               onChange={handleOnChange}
-              label="Title"
+              label={i18n.t('articles:composer.title')}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Article's title ..."
+              placeholder={i18n.t('articles:composer.titlePlaceholder')}
               error={fields.name.error !== ''}
               helperText={fields.name.error}
               fullWidth
@@ -59,11 +59,11 @@ const ComposersArticle = (props) => {
               name="body"
               value={medium.body}
               onChange={handleOnChange}
-              label="Description"
+              label={i18n.t('articles:composer.body')}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Write a description ..."
+              placeholder={i18n.t('articles:composer.bodyPlaceholder')}
               error={fields.body.error !== ''}
               helperText={fields.body.error}
               fullWidth
@@ -83,11 +83,11 @@ const ComposersArticle = (props) => {
               name="excerpt"
               value={medium.excerpt}
               onChange={handleOnChange}
-              label="Excerpt"
+              label={i18n.t('articles:composer.excerpt')}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Write a excerpt ..."
+              placeholder={i18n.t('articles:composer.excerptPlaceholder')}
               error={fields.excerpt.error !== ''}
               helperText={fields.excerpt.error}
               fullWidth

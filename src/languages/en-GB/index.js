@@ -145,18 +145,16 @@ export default {
     cTitle: 'Home',
     mTitle: 'Home',
   },
-  files: {
-    composer: {
-      select: 'Select or Drop a file here',
-      name: 'Name',
-      namePlaceholder: 'Name this file ...',
-      body: 'Description',
-      bodyPlaceholder: 'Write a description ...',
-    },
-  },
   documents: {
     cTitle: 'Documents',
     mTitle: 'Documents',
+    composer: {
+      select: 'Select or Drop a document file here',
+      name: 'Name',
+      namePlaceholder: 'Name this document ...',
+      body: 'Description',
+      bodyPlaceholder: 'Write a description ...',
+    },
     settings: {
       document: {
         add: 'Who can post a document on this profile?',
@@ -238,6 +236,10 @@ export default {
   notes: {
     cTitle: 'Notes',
     mTitle: 'Notes',
+    composer: {
+      bodyPlaceholderPerson: "Posting on {{ name }}'s profile",
+      bodyPlaceholder: 'What\'s new?',
+    },
     settings: {
       note: {
         add: 'Who can post a note on this profile?',
@@ -248,6 +250,13 @@ export default {
   photos: {
     cTitle: 'Photos',
     mTitle: 'Photos',
+    composer: {
+      select: 'Select or Drop a photo file here',
+      name: 'Title',
+      namePlaceholder: "Photo's title ...",
+      body: 'Description',
+      bodyPlaceholder: 'Write a description ...',
+    },
     settings: {
       photo: {
         add: 'Who can post photos on this profile?',
@@ -268,6 +277,12 @@ export default {
   topics: {
     cTitle: 'Topics',
     mTitle: 'Topics',
+    composer: {
+      title: 'Title',
+      titlePlaceholder: 'What topic are we talking about today?',
+      body: 'Description',
+      bodyPlaceholder: 'Start your conversation ...',
+    },
     settings: {
       topic: {
         add: 'Who can start a topic on this profile?',
@@ -278,6 +293,12 @@ export default {
   todos: {
     cTitle: 'Todos',
     mTitle: 'Todos',
+    composer: {
+      title: 'Title',
+      titlePlaceholder: "Todo's title",
+      body: 'Description',
+      bodyPlaceholder: 'Write a description ...',
+    },
     settings: {
       todo: {
         add: 'Who can add a todo on this profile?',
@@ -290,11 +311,11 @@ export default {
     mTitle: 'Articles',
     composer: {
       title: 'Title',
-      titlePlaceholder: 'Article\'s title ...',
+      titlePlaceholder: "Article's title ...",
       body: 'Description',
-      bodyPlaceholder: 'Write a description ...',
+      bodyPlaceholder: 'Start writing ...',
       excerpt: 'Excerpt',
-      excerptPlaceholder: 'Write a excerpt ...',
+      excerptPlaceholder: 'Write an excerpt ...',
     },
     settings: {
       article: {

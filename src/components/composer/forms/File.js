@@ -31,7 +31,7 @@ const {
   BODY,
 } = MEDIUM.FIELDS;
 
-const ComposersFile = (props) => {
+const ComposersFile = React.forwardRef((props, ref) => {
   const classes = useStyles();
 
   const {
@@ -43,6 +43,7 @@ const ComposersFile = (props) => {
     medium,
     file,
     isFetching,
+    namespace,
   } = props;
 
   const {
@@ -56,46 +57,44 @@ const ComposersFile = (props) => {
     },
   });
 
-  const { ref, ...rootProps } = getRootProps();
+  const { ...rootProps } = getRootProps();
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <Card square>
         <CardContent>
-          <RootRef rootRef={ref}>
-            <Button
-              {...rootProps}
-              disabled={isFetching}
-              fullWidth
-              size="large"
-              className={classes.button}
-              variant="outlined"
-              color="primary"
-            >
-              <input
-                accept={supportedMimetypes.join(',')}
-                style
-                id="addFileAttachment"
-                type="file"
-                name="file"
-                {...getInputProps()}
-                required
-              />
-              {!file && i18n.t('files:composer.select')}
-              {file && file.name}
-            </Button>
-          </RootRef>
+          <Button
+            {...rootProps}
+            disabled={isFetching}
+            fullWidth
+            size="large"
+            className={classes.button}
+            variant="outlined"
+            color="primary"
+          >
+            <input
+              accept={supportedMimetypes.join(',')}
+              style
+              id="addFileAttachment"
+              type="file"
+              name="file"
+              {...getInputProps()}
+              required
+            />
+            {!file && i18n.t(`${namespace}:composer.select`)}
+            {file && file.name}
+          </Button>
           {fields.name &&
             <TextField
               variant="outlined"
               name="name"
               value={medium.name}
               onChange={handleOnChange}
-              label={i18n.t('files:composer.name')}
+              label={i18n.t(`${namespace}:composer.name`)}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder={i18n.t('files:composer.namePlaceholder')}
+              placeholder={i18n.t(`${namespace}:composer.namePlaceholder`)}
               error={fields.name.error !== ''}
               helperText={fields.name.error}
               fullWidth
@@ -113,11 +112,11 @@ const ComposersFile = (props) => {
               name="body"
               value={medium.body}
               onChange={handleOnChange}
-              label={i18n.t('files:composer.body')}
+              label={i18n.t(`${namespace}:composer.body`)}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder={i18n.t('files:composer.bodyPlaceholder')}
+              placeholder={i18n.t(`${namespace}:composer.bodyPlaceholder`)}
               error={fields.body.error !== ''}
               helperText={fields.body.error}
               fullWidth
@@ -144,7 +143,7 @@ const ComposersFile = (props) => {
       </Card>
     </form>
   );
-};
+});
 
 ComposersFile.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
@@ -156,6 +155,7 @@ ComposersFile.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   success: PropTypes.bool.isRequired,
   supportedMimetypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  namespace: PropTypes.string.isRequired,
 };
 
 ComposersFile.defaultProps = {
