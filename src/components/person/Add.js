@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 
 import PersonType from '../../proptypes/Person';
 import { Person as PERSON } from '../../constants';
+import i18n from '../../languages';
 
 const {
   GIVEN_NAME,
@@ -58,7 +59,7 @@ const PersonAdd = (props) => {
           name="givenName"
           value={person.givenName}
           onChange={handleOnChange}
-          label="First Name"
+          label={i18n.t('people:person.givenName')}
           error={givenName.error !== ''}
           helperText={givenName.error}
           autoFocus
@@ -74,7 +75,7 @@ const PersonAdd = (props) => {
           name="familyName"
           value={person.familyName}
           onChange={handleOnChange}
-          label="Last Name"
+          label={i18n.t('people:person.familyName')}
           error={familyName.error !== ''}
           helperText={familyName.error}
           fullWidth
@@ -90,7 +91,7 @@ const PersonAdd = (props) => {
           value={person.username}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
-          label="Username"
+          label={i18n.t('people:person.username')}
           error={username.error !== ''}
           helperText={username.error}
           fullWidth
@@ -107,7 +108,7 @@ const PersonAdd = (props) => {
           value={person.email}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
-          label="Email"
+          label={i18n.t('people:person.email')}
           error={email.error !== ''}
           helperText={email.error}
           fullWidth
@@ -122,7 +123,7 @@ const PersonAdd = (props) => {
           name="body"
           value={person.body}
           onChange={handleOnChange}
-          label="Bio"
+          label={i18n.t('people:person.body')}
           error={body.error !== ''}
           helperText={body.error}
           margin="normal"
@@ -136,7 +137,7 @@ const PersonAdd = (props) => {
         />
         <FormControl margin="normal" fullWidth>
           <FormLabel component="legend">
-            What pronoun do you use?
+            {i18n.t('people:person.pronouns')}
           </FormLabel>
           <RadioGroup
             aria-label="gender"
@@ -147,23 +148,23 @@ const PersonAdd = (props) => {
             <FormControlLabel
               value={GENDER.FEMALE}
               control={<Radio />}
-              label="Female"
+              label={i18n.t('people:person.pronounOptions.feminine')}
             />
             <FormControlLabel
               value={GENDER.MALE}
               control={<Radio />}
-              label="Male"
+              label={i18n.t('people:person.pronounOptions.masculine')}
             />
             <FormControlLabel
               value={GENDER.NEUTRAL}
               control={<Radio />}
-              label="Neutral"
+              label={i18n.t('people:person.pronounOptions.nonbinary')}
             />
           </RadioGroup>
         </FormControl>
         <FormControl margin="normal" fullWidth>
           <FormLabel component="legend">
-            User Type
+            {i18n.t('people:person.usertype')}
           </FormLabel>
           <RadioGroup
             aria-label="usertype"
@@ -174,18 +175,18 @@ const PersonAdd = (props) => {
             <FormControlLabel
               value={TYPE.REGISTERED}
               control={<Radio />}
-              label="Registered"
+              label={i18n.t('people:person.usertypeOptions.registered')}
             />
             <FormControlLabel
               value={TYPE.ADMIN}
               control={<Radio />}
-              label="Administrator"
+              label={i18n.t('people:person.usertypeOptions.administrator')}
             />
             {isSuperAdmin &&
             <FormControlLabel
               value={TYPE.SUPER_ADMIN}
               control={<Radio />}
-              label="Super Administrator"
+              label={i18n.t('people:person.usertypeOptions.super-administrator')}
             />}
           </RadioGroup>
         </FormControl>
@@ -198,7 +199,7 @@ const PersonAdd = (props) => {
           to={dismissPath}
           fullWidth
         >
-          Dismiss
+          {i18n.t('actions:cancel')}
         </Button>}
         <Button
           fullWidth
@@ -207,7 +208,7 @@ const PersonAdd = (props) => {
           color="primary"
           disabled={isFetching || !enableSubmit}
         >
-          Save
+          {i18n.t('actions:add')}
         </Button>
       </CardActions>
     </form>

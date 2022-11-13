@@ -6,8 +6,8 @@ import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 
 import PersonType from '../../proptypes/Person';
-
 import { Person as PERSON } from '../../constants';
+import i18n from '../../languages';
 
 const PersonAccount = (props) => {
   const {
@@ -37,7 +37,7 @@ const PersonAccount = (props) => {
           value={person.username}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
-          label="Username"
+          label={i18n.t('people:person.username')}
           error={username.error !== ''}
           helperText={username.error}
           fullWidth
@@ -54,7 +54,7 @@ const PersonAccount = (props) => {
           value={person.email}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
-          label="Email"
+          label={i18n.t('people:person.email')}
           error={email.error !== ''}
           helperText={email.error}
           fullWidth
@@ -71,7 +71,7 @@ const PersonAccount = (props) => {
           value={person.password}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
-          label="New password"
+          label={i18n.t('people:person.newPassword')}
           error={password.error !== ''}
           helperText={password.error}
           fullWidth
@@ -92,7 +92,7 @@ const PersonAccount = (props) => {
           disabled={isFetching}
           fullWidth
         >
-          Save
+          {i18n.t('actions:update')}
         </Button>
       </CardActions>
     </form>

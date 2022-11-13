@@ -71,7 +71,7 @@ const MediumFormEdit = (props) => {
           fullWidth
           onClick={handleCancel}
         >
-          Cancel
+          {i18n.t('actions:cancel')}
         </Button>
         <Button
           type="submit"
@@ -80,7 +80,7 @@ const MediumFormEdit = (props) => {
           disabled={isFetching}
           fullWidth
         >
-          Save
+          {i18n.t('actions:update')}
         </Button>
       </CardActions>
     </form>

@@ -58,7 +58,7 @@ const PeopleAdd = (props) => {
     if (success) {
       alertSuccess('Person profile added successfully.');
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [error, success]);
 
   const handleOnChange = (event) => {
     const { target } = event;

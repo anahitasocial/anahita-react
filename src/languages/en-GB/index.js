@@ -221,11 +221,27 @@ export default {
       },
     },
     person: {
-      usertype: {
+      givenName: 'First name',
+      familyName: 'Last name',
+      username: 'Username',
+      email: 'Email',
+      newPassword: 'New password',
+      body: 'Bio',
+      pronouns: 'Pronouns',
+      pronounOptions: {
+        feminine: 'Femminine',
+        masculine: 'Masculine',
+        nonbinary: 'Nonbinary',
+      },
+      usertype: 'User type',
+      usertypeOptions: {
         guest: 'Guest',
         registered: 'Registered',
         administrator: 'Admin',
         'super-administrator': 'Super Admin',
+      },
+      prompts: {
+        whatPronouns: '----- What pronouns do you use?',
       },
     },
   },
