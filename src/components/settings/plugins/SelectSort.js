@@ -6,6 +6,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
+import i18n from '../../../languages';
+
 const SORT = {
   ELEMENT: 'element',
   ENABLED: 'enabled',
@@ -35,11 +37,21 @@ const SettingsPluginsSelectSort = (props) => {
         onChange={handleOnChange}
         label={label}
       >
-        <MenuItem value={SORT.ELEMENT}>Element</MenuItem>
-        <MenuItem value={SORT.ENABLED}>Enabled</MenuItem>
-        <MenuItem value={SORT.NAME}>Name</MenuItem>
-        <MenuItem value={SORT.ORDERING}>Ordering</MenuItem>
-        <MenuItem value={SORT.TYPE}>Type</MenuItem>
+        <MenuItem value={SORT.ELEMENT}>
+          {i18n.t('commons:sortByOptions.element')}
+        </MenuItem>
+        <MenuItem value={SORT.ENABLED}>
+          {i18n.t('commons:sortByOptions.enabled')}
+        </MenuItem>
+        <MenuItem value={SORT.NAME}>
+          {i18n.t('commons:sortByOptions.name')}
+        </MenuItem>
+        <MenuItem value={SORT.ORDERING}>
+          {i18n.t('commons:sortByOptions.ordering')}
+        </MenuItem>
+        <MenuItem value={SORT.TYPE}>
+          {i18n.t('commons:sortByOptions.type')}
+        </MenuItem>
       </Select>
     </FormControl>
   );

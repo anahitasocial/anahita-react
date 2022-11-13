@@ -8,7 +8,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import RootRef from '@material-ui/core/RootRef';
 import TextField from '@material-ui/core/TextField';
 
 import { Medium as MEDIUM } from '../../../constants';
@@ -65,6 +64,7 @@ const ComposersFile = React.forwardRef((props, ref) => {
         <CardContent>
           <Button
             {...rootProps}
+            ref={ref}
             disabled={isFetching}
             fullWidth
             size="large"

@@ -15,6 +15,7 @@ import ActorsFormsMetadata from '../actor/forms/Metadata';
 
 import PersonType from '../../proptypes/Person';
 import { Person as PERSON } from '../../constants';
+import i18n from '../../languages';
 
 const {
   GIVEN_NAME,
@@ -70,7 +71,7 @@ const PersonInfo = (props) => {
           name="givenName"
           value={person.givenName}
           onChange={handleOnChange}
-          label="First Name"
+          label={i18n.t('people:person.givenName')}
           error={givenName.error !== ''}
           helperText={givenName.error}
           autoFocus
@@ -86,7 +87,7 @@ const PersonInfo = (props) => {
           name="familyName"
           value={person.familyName}
           onChange={handleOnChange}
-          label="Last Name"
+          label={i18n.t('people:person.familyName')}
           error={familyName.error !== ''}
           helperText={familyName.error}
           fullWidth
@@ -101,7 +102,7 @@ const PersonInfo = (props) => {
           name="body"
           value={person.body || ''}
           onChange={handleOnChange}
-          label="Bio"
+          label={i18n.t('people:person.body')}
           error={body.error !== ''}
           helperText={body.error}
           margin="normal"
@@ -115,7 +116,7 @@ const PersonInfo = (props) => {
         />
         <FormControl margin="normal" fullWidth>
           <FormLabel component="legend">
-            What pronoun do you use?
+            {i18n.t('people:person.whatPronouns')}
           </FormLabel>
           <RadioGroup
             aria-label="gender"
@@ -126,24 +127,24 @@ const PersonInfo = (props) => {
             <FormControlLabel
               value={GENDER.FEMALE}
               control={<Radio />}
-              label="Feminine"
+              label={i18n.t('people:person.pronounOptions.feminine')}
             />
             <FormControlLabel
               value={GENDER.MALE}
               control={<Radio />}
-              label="Masculine"
+              label={i18n.t('people:person.pronounOptions.masculine')}
             />
             <FormControlLabel
               value={GENDER.NEUTRAL}
               control={<Radio />}
-              label="Non-binary"
+              label={i18n.t('people:person.pronounOptions.nonbinary')}
             />
           </RadioGroup>
         </FormControl>
         {canChangeUsertype &&
         <FormControl margin="normal" fullWidth>
           <FormLabel component="legend">
-            User Type
+            {i18n.t('people:person.usertype')}
           </FormLabel>
           <RadioGroup
             aria-label="usertype"
@@ -154,18 +155,18 @@ const PersonInfo = (props) => {
             <FormControlLabel
               value={TYPE.REGISTERED}
               control={<Radio />}
-              label="Registered"
+              label={i18n.t('people:person.usertypeOptions.registered')}
             />
             <FormControlLabel
               value={TYPE.ADMIN}
               control={<Radio />}
-              label="Administrator"
+              label={i18n.t('people:person.usertypeOptions.administrator')}
             />
             {isSuperAdmin &&
               <FormControlLabel
                 value={TYPE.SUPER_ADMIN}
                 control={<Radio />}
-                label="Super Administrator"
+                label={i18n.t('people:person.usertypeOptions.super-administrator')}
               />}
           </RadioGroup>
         </FormControl>}

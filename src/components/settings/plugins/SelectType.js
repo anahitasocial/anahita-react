@@ -6,6 +6,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
+import i18n from '../../../languages';
+
 const TYPE = {
   ALL: '-',
   AUTHENTICATION: 'authentication',
@@ -37,13 +39,27 @@ const SettingsPluginsSelectType = (props) => {
         onChange={handleOnChange}
         label={label}
       >
-        <MenuItem value={TYPE.ALL}>Show all</MenuItem>
-        <MenuItem value={TYPE.AUTHENTICATION}>Authentication</MenuItem>
-        <MenuItem value={TYPE.CONNECT}>Connect</MenuItem>
-        <MenuItem value={TYPE.PROFILE}>Profile</MenuItem>
-        <MenuItem value={TYPE.USER}>User</MenuItem>
-        <MenuItem value={TYPE.STORAGE}>Storage</MenuItem>
-        <MenuItem value={TYPE.SYSTEM}>System</MenuItem>
+        <MenuItem value={TYPE.ALL}>
+          {i18n.t('commons:filterByOptions.all')}
+        </MenuItem>
+        <MenuItem value={TYPE.AUTHENTICATION}>
+          {i18n.t('commons:filterByOptions.authentication')}
+        </MenuItem>
+        <MenuItem value={TYPE.CONNECT}>
+          {i18n.t('commons:filterByOptions.connect')}
+        </MenuItem>
+        <MenuItem value={TYPE.PROFILE}>
+          {i18n.t('commons:filterByOptions.profile')}
+        </MenuItem>
+        <MenuItem value={TYPE.USER}>
+          {i18n.t('commons:filterByOptions.user')}
+        </MenuItem>
+        <MenuItem value={TYPE.STORAGE}>
+          {i18n.t('commons:filterByOptions.storage')}
+        </MenuItem>
+        <MenuItem value={TYPE.SYSTEM}>
+          {i18n.t('commons:filterByOptions.system')}
+        </MenuItem>
       </Select>
     </FormControl>
   );

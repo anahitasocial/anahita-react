@@ -5,6 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import i18n from '../../../languages';
 
 const SORT = {
   NAME: 'name',
@@ -32,8 +33,12 @@ const SettingsAppsSelectSort = (props) => {
         onChange={handleOnChange}
         label={label}
       >
-        <MenuItem value={SORT.NAME}>Name</MenuItem>
-        <MenuItem value={SORT.ORDERING}>Ordering</MenuItem>
+        <MenuItem value={SORT.NAME}>
+          {i18n.t('commons:sortByOptions.name')}
+        </MenuItem>
+        <MenuItem value={SORT.ORDERING}>
+          {i18n.t('commons:sortByOptions.ordering')}
+        </MenuItem>
       </Select>
     </FormControl>
   );

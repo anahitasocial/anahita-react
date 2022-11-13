@@ -153,7 +153,7 @@ const SettingsMetaForm = (props) => {
             onClick={handleClose}
             fullWidth
           >
-            Close
+            {i18n.t('actions:close')}
           </Button>
           <Button
             type="submit"
@@ -162,7 +162,7 @@ const SettingsMetaForm = (props) => {
             variant="contained"
             disabled={isFetching}
           >
-            Save
+            {i18n.t('actions:update')}
           </Button>
         </CardActions>
       </Card>

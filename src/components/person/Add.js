@@ -55,87 +55,89 @@ const PersonAdd = (props) => {
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <CardContent>
-        <TextField
-          name="givenName"
-          value={person.givenName}
-          onChange={handleOnChange}
-          label={i18n.t('people:person.givenName')}
-          error={givenName.error !== ''}
-          helperText={givenName.error}
-          autoFocus
-          fullWidth
-          margin="normal"
-          inputProps={{
-            maxLength: GIVEN_NAME.MAX_LENGTH,
-            minLength: GIVEN_NAME.MIN_LENGTH,
-          }}
-          required
-        />
-        <TextField
-          name="familyName"
-          value={person.familyName}
-          onChange={handleOnChange}
-          label={i18n.t('people:person.familyName')}
-          error={familyName.error !== ''}
-          helperText={familyName.error}
-          fullWidth
-          margin="normal"
-          inputProps={{
-            maxLength: FAMILY_NAME.MAX_LENGTH,
-            minLength: FAMILY_NAME.MIN_LENGTH,
-          }}
-          required
-        />
-        <TextField
-          name="username"
-          value={person.username}
-          onChange={handleOnChange}
-          onBlur={handleOnBlur}
-          label={i18n.t('people:person.username')}
-          error={username.error !== ''}
-          helperText={username.error}
-          fullWidth
-          margin="normal"
-          inputProps={{
-            maxLength: USERNAME.MAX_LENGTH,
-            minLength: USERNAME.MIN_LENGTH,
-          }}
-          required
-        />
-        <TextField
-          type="email"
-          name="email"
-          value={person.email}
-          onChange={handleOnChange}
-          onBlur={handleOnBlur}
-          label={i18n.t('people:person.email')}
-          error={email.error !== ''}
-          helperText={email.error}
-          fullWidth
-          margin="normal"
-          inputProps={{
-            maxLength: EMAIL.MAX_LENGTH,
-            minLength: EMAIL.MIN_LENGTH,
-          }}
-          required
-        />
-        <TextField
-          name="body"
-          value={person.body}
-          onChange={handleOnChange}
-          label={i18n.t('people:person.body')}
-          error={body.error !== ''}
-          helperText={body.error}
-          margin="normal"
-          fullWidth
-          multiline
-          inputProps={{
-            maxLength: BODY.MAX_LENGTH,
-            minLength: BODY.MIN_LENGTH,
-          }}
-          required
-        />
-        <FormControl margin="normal" fullWidth>
+        <FormControl component="fieldset" margin="normal" fullWidth>
+          <TextField
+            name="givenName"
+            value={person.givenName}
+            onChange={handleOnChange}
+            label={i18n.t('people:person.givenName')}
+            error={givenName.error !== ''}
+            helperText={givenName.error}
+            autoFocus
+            fullWidth
+            margin="normal"
+            inputProps={{
+              maxLength: GIVEN_NAME.MAX_LENGTH,
+              minLength: GIVEN_NAME.MIN_LENGTH,
+            }}
+            required
+          />
+          <TextField
+            name="familyName"
+            value={person.familyName}
+            onChange={handleOnChange}
+            label={i18n.t('people:person.familyName')}
+            error={familyName.error !== ''}
+            helperText={familyName.error}
+            fullWidth
+            margin="normal"
+            inputProps={{
+              maxLength: FAMILY_NAME.MAX_LENGTH,
+              minLength: FAMILY_NAME.MIN_LENGTH,
+            }}
+            required
+          />
+          <TextField
+            name="username"
+            value={person.username}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+            label={i18n.t('people:person.username')}
+            error={username.error !== ''}
+            helperText={username.error}
+            fullWidth
+            margin="normal"
+            inputProps={{
+              maxLength: USERNAME.MAX_LENGTH,
+              minLength: USERNAME.MIN_LENGTH,
+            }}
+            required
+          />
+          <TextField
+            type="email"
+            name="email"
+            value={person.email}
+            onChange={handleOnChange}
+            onBlur={handleOnBlur}
+            label={i18n.t('people:person.email')}
+            error={email.error !== ''}
+            helperText={email.error}
+            fullWidth
+            margin="normal"
+            inputProps={{
+              maxLength: EMAIL.MAX_LENGTH,
+              minLength: EMAIL.MIN_LENGTH,
+            }}
+            required
+          />
+          <TextField
+            name="body"
+            value={person.body}
+            onChange={handleOnChange}
+            label={i18n.t('people:person.body')}
+            error={body.error !== ''}
+            helperText={body.error}
+            margin="normal"
+            fullWidth
+            multiline
+            inputProps={{
+              maxLength: BODY.MAX_LENGTH,
+              minLength: BODY.MIN_LENGTH,
+            }}
+            required
+          />
+        </FormControl>
+        <FormControl component="fieldset" margin="normal" fullWidth>
           <FormLabel component="legend">
             {i18n.t('people:person.pronouns')}
           </FormLabel>
@@ -162,7 +164,7 @@ const PersonAdd = (props) => {
             />
           </RadioGroup>
         </FormControl>
-        <FormControl margin="normal" fullWidth>
+        <FormControl component="fieldset" margin="normal" fullWidth>
           <FormLabel component="legend">
             {i18n.t('people:person.usertype')}
           </FormLabel>

@@ -119,7 +119,10 @@ MediaComposerDefault.propTypes = {
   alertError: PropTypes.func.isRequired,
   owner: AcctorType.isRequired,
   viewer: PersonType.isRequired,
-  formComponent: PropTypes.node.isRequired,
+  formComponent: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.func,
+  ]).isRequired,
   formFields: PropTypes.objectOf(PropTypes.any).isRequired,
   supportedMimetypes: PropTypes.arrayOf(PropTypes.string),
   success: PropTypes.bool.isRequired,

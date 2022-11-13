@@ -84,7 +84,7 @@ const SettingsAssignmentsForm = (props) => {
             variant="contained"
             disabled={isFetching}
           >
-            Save
+            {i18n.t('actions:update')}
           </Button>
         </CardActions>
       </Card>
