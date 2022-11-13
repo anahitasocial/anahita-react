@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import {
   Person as PERSON,
   Session as SESSION,
@@ -11,8 +12,9 @@ const {
   SUPER_ADMIN,
 } = PERSON.FIELDS.TYPE;
 
-// eslint-disable-next-line no-undef
-const viewer = localStorage.getItem('viewer') ? JSON.parse(localStorage.getItem('viewer')) : { ...PersonDefault, usertype: GUEST };
+const viewer = localStorage.getItem('viewer') ?
+  JSON.parse(localStorage.getItem('viewer')) :
+  { ...PersonDefault, usertype: GUEST };
 
 const initState = {
   viewer,
