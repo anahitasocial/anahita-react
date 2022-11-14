@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import List from '@material-ui/core/List';
 
 import CommentRead from '../../comments/Read';
 import CommentForm from '../../../components/comment/Form';
