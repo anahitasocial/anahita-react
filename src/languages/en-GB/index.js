@@ -24,6 +24,7 @@ export default {
     openComments: 'Open Comments',
     closeComments: 'Close Comments',
     login: 'Login',
+    download: 'Download',
   },
   prompts: {
     updated: {
@@ -128,6 +129,15 @@ export default {
         inProgress: 'Deleting in progress ...',
       },
     },
+    privacy: {
+      title: 'Privacy Alert',
+      content: 'This profile will be publicly visible. Would you like to proceed?',
+      labels: {
+        whoCanSee: 'Who can see this profile?',
+        othersCanRequestToFollow: 'Others can request to follow',
+        whoCanAddNewFollowers: 'Who can can add new followers?',
+      },
+    },
     meta: {
       website: 'Website',
       contact: 'Contact',
@@ -183,6 +193,8 @@ export default {
       permissions: 'Permissions',
       privacy: 'Privacy',
       delete: 'Delete',
+      notifications: 'Notification settings',
+      followRequests: 'Follow requests',
     },
     notifications: {
       cTitle: 'Notifications',
@@ -210,6 +222,8 @@ export default {
       permissions: 'Permissions',
       privacy: 'Privacy',
       delete: 'Delete',
+      notifications: 'Notification settings',
+      followRequests: 'Follow requests',
     },
     notifications: {
       cTitle: 'Notifications',
@@ -376,8 +390,12 @@ export default {
     count: '{{count}} nodes',
   },
   commons: {
+    all: 'All',
+    following: 'Following',
+    administering: 'Administering',
     readMore: 'Read more',
     close: 'Close',
+    enabled: 'Enabled',
     sortBy: 'Sort by',
     sortByOptions: {
       element: 'Element',
@@ -398,5 +416,8 @@ export default {
     },
     viewAll: 'View all',
     posts: 'Posts',
+    settings: 'Settings',
+    ignore: 'Ignore',
+    accept: 'Accpet',
   },
 };

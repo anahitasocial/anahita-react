@@ -7,6 +7,7 @@ import DownloadIcon from '@material-ui/icons/CloudDownload';
 
 import api from '../../../api';
 import NodeType from '../../../proptypes/Node';
+import i18n from '../../../languages';
 
 const ActionsMediumDownload = React.forwardRef((props, ref) => {
   const {
@@ -38,7 +39,7 @@ const ActionsMediumDownload = React.forwardRef((props, ref) => {
         <DownloadIcon fontSize={size} />
       }
     >
-      Download
+      {i18n.t('actions:download')}
     </Button>
   );
 });

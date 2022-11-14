@@ -9,6 +9,7 @@ import AppRead from './Read';
 import AppsType from '../../../../proptypes/actor/Apps';
 import ActorType from '../../../../proptypes/Actor';
 import actions from '../../../../actions';
+import i18n from '../../../../languages';
 
 const ActorsSettingsAppsBrowse = (props) => {
   const {
@@ -34,11 +35,11 @@ const ActorsSettingsAppsBrowse = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Updated successfully.');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
   }, [error, success]);
 

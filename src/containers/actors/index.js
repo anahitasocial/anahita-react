@@ -62,9 +62,9 @@ const Actors = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="All" value="" />
-          {isAuthenticated && <Tab label="Following" value={FILTER.FOLLOWING} />}
-          {isAuthenticated && <Tab label="Administering" value={FILTER.ADMINISTERING} />}
+          <Tab label={i18n.t('commons:all')} value="" />
+          {isAuthenticated && <Tab label={i18n.t('commons:following')} value={FILTER.FOLLOWING} />}
+          {isAuthenticated && <Tab label={i18n.t('commons:administering')} value={FILTER.ADMINISTERING} />}
         </Tabs>
       </AppBar>
       {useMemo(() => {

@@ -94,7 +94,7 @@ const ActorsNotificationsDialog = (props) => {
         }}
       >
         <DialogTitle>
-          Notifications Settings
+          {i18n.t(`${namespace}:settings.notifications`)}
         </DialogTitle>
         <DialogContent>
           <ActorsFormsNotifications
@@ -114,7 +114,7 @@ const ActorsNotificationsDialog = (props) => {
             fullWidth
             variant="contained"
           >
-            Close
+            {i18n.t('actions:done')}
           </Button>
         </DialogActions>
       </Dialog>

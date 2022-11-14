@@ -15,6 +15,7 @@ import form from '../../../utils/form';
 
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
+import i18n from '../../../languages';
 
 const formFields = form.createFormFields([
   'name',
@@ -106,7 +107,7 @@ const ActorsSettingsInfo = (props) => {
                 onChange={handleOnChange}
               />
             }
-            label="Enabled"
+            label={i18n.t('commons:enabled')}
           />
         </>}
     />

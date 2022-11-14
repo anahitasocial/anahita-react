@@ -153,7 +153,7 @@ const SettingsMetaForm = (props) => {
             onClick={handleClose}
             fullWidth
           >
-            {i18n.t('actions:close')}
+            {i18n.t('commons:close')}
           </Button>
           <Button
             type="submit"

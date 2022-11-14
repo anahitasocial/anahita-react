@@ -8,7 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import Browse from './index';
 import { Actor as ACTOR } from '../../../constants';
 import PersonType from '../../../proptypes/Person';
-// import i18n from '../../../languages';
+import i18n from '../../../languages';
 
 const { FILTER } = ACTOR;
 
@@ -53,8 +53,14 @@ const ActorsBrowseGadget = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="Following" value={FILTER.FOLLOWING} />
-          <Tab label="Administering" value={FILTER.ADMINISTERING} />
+          <Tab
+            label={i18n.t('commons:following')}
+            value={FILTER.FOLLOWING}
+          />
+          <Tab
+            label={i18n.t('commons:administering')}
+            value={FILTER.ADMINISTERING}
+          />
         </Tabs>
       </AppBar>
       <ActorsBrowse

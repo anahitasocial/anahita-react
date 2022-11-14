@@ -9,6 +9,7 @@ import DeleteAction from '../../actions/Delete';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import utils from '../../../utils';
+import i18n from '../../../languages';
 
 const ITEM_HEIGHT = 48;
 
@@ -74,7 +75,7 @@ const ActorsReadCommands = (props) => {
                   component="a"
                   href={`${node.getURL(actor)}settings`}
                 >
-                  Settings
+                  {i18n.t('commons:settings')}
                 </MenuItem>
               );
             case 'delete':

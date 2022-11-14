@@ -18,6 +18,7 @@ import Progress from '../../../../components/Progress';
 import ActorsType from '../../../../proptypes/Actors';
 import ActorType from '../../../../proptypes/Actor';
 import actions from '../../../../actions';
+import i18n from '../../../../languages';
 
 const ActorsSettingsAdminsBrowse = (props) => {
   const {
@@ -46,17 +47,17 @@ const ActorsSettingsAdminsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [browseList, actor, resetList]);
+  }, [actor.id]);
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Updated successfully');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [error, success]);
 
   const handleRemove = (admin) => {
     removeAdmin({ actor, admin });

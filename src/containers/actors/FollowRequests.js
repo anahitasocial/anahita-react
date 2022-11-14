@@ -21,6 +21,7 @@ import ActorAvatar from '../../components/actor/Avatar';
 import actions from '../../actions';
 import ActorsType from '../../proptypes/Actors';
 import ActorType from '../../proptypes/Actor';
+import i18n from '../../languages';
 
 const ActorsFollowRequests = React.forwardRef((props, ref) => {
   const {
@@ -49,13 +50,13 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Request Updated');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [error, success]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -70,7 +71,7 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
         fullWidth
       >
         <DialogTitle>
-          Follow Requests
+          {i18n.t(`${namespace}:settings.followRequests`)}
         </DialogTitle>
         <List>
           {items.allIds.map((itemId) => {
@@ -92,7 +93,7 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
                       });
                     }}
                   >
-                    Ignore
+                    {i18n.t('commons:ignore')}
                   </Button>
                   <Button
                     color="primary"
@@ -102,7 +103,7 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
                       });
                     }}
                   >
-                    Accept
+                    {i18n.t('commons:accept')}
                   </Button>
                 </ListItemSecondaryAction>
               </ListItem>
@@ -114,7 +115,7 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
             onClick={handleClose}
             fullWidth
           >
-            Close
+            {i18n.t('commons:close')}
           </Button>
         </DialogActions>
       </Dialog>

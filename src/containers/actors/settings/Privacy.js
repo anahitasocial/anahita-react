@@ -51,11 +51,11 @@ const ActorsSettingsPrivacy = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Privacy updated.');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
   }, [error, success]);
 
@@ -101,8 +101,8 @@ const ActorsSettingsPrivacy = (props) => {
   return (
     <>
       <DialogAlert
-        title="Privacy Alert"
-        content="This profile will be publicly visible. Would you like to proceed?"
+        title={i18n.t('actor:privacyAlert.title')}
+        content={i18n.t('actor:privacyAlert.content')}
         handleConfirm={handleOnSubmit}
         handleDismiss={handleDismiss}
         open={showDialog}
@@ -117,7 +117,7 @@ const ActorsSettingsPrivacy = (props) => {
               <InputLabel
                 id={`${namespace}-privacy-access-label-id`}
               >
-                Who can see this profile?
+                {i18n.t('actor:privacy.labels.whoCanSee')}
               </InputLabel>
               <Select
                 id={`${namespace}-privacy-access-id`}
@@ -125,7 +125,7 @@ const ActorsSettingsPrivacy = (props) => {
                 name="access"
                 value={privacy.access}
                 onChange={handleOnChange}
-                label="Who can see this profile?"
+                label={i18n.t('actor:privacy.labels.whoCanSee')}
               >
                 {accessOptions.map((option) => {
                   const optionKey = `privacy-${option}`;
@@ -152,7 +152,7 @@ const ActorsSettingsPrivacy = (props) => {
                   ].includes(privacy.access)}
                 />
               }
-              label="Others can request to follow"
+              label={i18n.t('actor:privacy.labels.othersCanRequestToFollow')}
             />
             {actor.isAdministrated &&
               <FormControl
@@ -162,7 +162,7 @@ const ActorsSettingsPrivacy = (props) => {
                 <InputLabel
                   id={`${namespace}-privacy-leadable-add-label-id`}
                 >
-                  Who can can add new followers?
+                  {i18n.t('actor:privacy.labels.whoCanAddNewFollowers')}
                 </InputLabel>
                 <Select
                   id={`${namespace}-privacy-leadable-add-id`}
@@ -170,7 +170,7 @@ const ActorsSettingsPrivacy = (props) => {
                   name="leadable:add"
                   value={privacy['leadable:add']}
                   onChange={handleOnChange}
-                  label="Who can can add new followers?"
+                  label={i18n.t('actor:privacy.labels.whoCanAddNewFollowers')}
                 >
                   {Object.keys(accessOptions).map((key) => {
                     const option = accessOptions[key];
@@ -194,7 +194,7 @@ const ActorsSettingsPrivacy = (props) => {
               disabled={isFetching}
               fullWidth
             >
-              Save
+              {i18n.t('actions:update')}
             </Button>
           </CardActions>
         </Card>

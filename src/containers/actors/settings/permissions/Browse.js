@@ -39,17 +39,17 @@ const ActorsSettingsPermissionsBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [browseList, actor, resetList]);
+  }, [actor.id]);
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Permissions updated.');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [error, success]);
 
   useEffect(() => {
     Edit = PermissionsEdit(namespace);

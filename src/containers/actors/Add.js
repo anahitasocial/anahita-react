@@ -46,13 +46,13 @@ const ActorsAdd = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Added successfully.');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [error, success]);
 
   const handleOnChange = (event) => {
     const { target } = event;

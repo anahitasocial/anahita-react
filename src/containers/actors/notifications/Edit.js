@@ -51,7 +51,7 @@ const ActorsNotificationsEdit = (props) => {
     return () => {
       resetActors();
     };
-  }, [readActor, id, namespace, resetActors]);
+  }, [id, namespace]);
 
   useEffect(() => {
     if (actor.id) {
@@ -73,11 +73,11 @@ const ActorsNotificationsEdit = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Updated successfully!');
+      alertSuccess(i18n.t('prompts:updated.sucess'));
     }
   }, [error, alertError, success, alertSuccess]);
 

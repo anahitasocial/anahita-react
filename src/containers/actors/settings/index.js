@@ -58,15 +58,15 @@ const ActorsSettings = (props) => {
     return () => {
       resetActors();
     };
-  }, [readActor, id, namespace, resetActors]);
+  }, [id, namespace]);
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Updated successfully!');
+      alertSuccess(i18n.t('prompts:updated.sucess'));
     }
   }, [error, alertError, success, alertSuccess]);
 
@@ -94,18 +94,18 @@ const ActorsSettings = (props) => {
         onChange={(e, newTab) => {
           setTab(newTab);
         }}
-        aria-label="Actor Settings"
+        aria-label={i18n.t('commons:settings')}
       >
-        <Tab label="Info" value={TABS.INFO} />
+        <Tab label={i18n.t(`${namespace}:settings.info`)} value={TABS.INFO} />
         {namespace === 'people' &&
-          <Tab label="Account" value={TABS.ACCOUNT} />}
+          <Tab label={i18n.t(`${namespace}:settings.account`)} value={TABS.ACCOUNT} />}
         {namespace !== 'people' &&
-          <Tab label="Admins" value={TABS.ADMINS} />}
-        <Tab label="Privacy" value={TABS.PRIVACY} />
-        <Tab label="Apps" value={TABS.APPS} />
-        <Tab label="Permissions" value={TABS.PERMISSIONS} />
+          <Tab label={i18n.t(`${namespace}:settings.admins`)} value={TABS.ADMINS} />}
+        <Tab label={i18n.t(`${namespace}:settings.privacy`)} value={TABS.PRIVACY} />
+        <Tab label={i18n.t(`${namespace}:settings.apps`)} value={TABS.APPS} />
+        <Tab label={i18n.t(`${namespace}:settings.permissions`)} value={TABS.PERMISSIONS} />
         {canDelete &&
-          <Tab label="Delete" value={TABS.DELETE} />}
+          <Tab label={i18n.t(`${namespace}:settings.delete`)} value={TABS.DELETE} />}
       </Tabs>
       <ActorSettingCard
         namespace={namespace}
