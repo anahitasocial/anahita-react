@@ -413,6 +413,8 @@ export default {
       name: 'Name',
       ordering: 'Ordering',
       type: 'Type',
+      recent: 'Recent',
+      updated: 'Updated',
     },
     filterByType: 'Filter by type',
     filterByOptions: {

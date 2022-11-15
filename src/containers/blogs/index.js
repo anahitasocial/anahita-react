@@ -60,8 +60,8 @@ const Blogs = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="Recent" value={RECENT} />
-          <Tab label="Updated" value={UPDATED} />
+          <Tab label={i18n.t('commons:sortByOptions.recent')} value={RECENT} />
+          <Tab label={i18n.t('commons:sortByOptions.updated')} value={UPDATED} />
         </Tabs>
       </AppBar>
       {useMemo(() => {
