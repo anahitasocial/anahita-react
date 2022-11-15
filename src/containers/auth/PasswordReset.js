@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PasswordResetForm from '../../components/auth/PasswordResetForm';
 import actions from '../../actions';
 import form from '../../utils/form';
+import i18n from '../../languages';
 
 const formFields = form.createFormFields(['email']);
 
@@ -21,11 +22,11 @@ const AuthPasswordReset = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('auth:prompts.error'));
     }
 
     if (success) {
-      alertSuccess('We emailed you a link. Please click on that link and follow the instructions!');
+      alertSuccess(i18n.t('auth:prompts.passwordResetEmailSuccess'));
     }
 
     return () => {

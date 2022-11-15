@@ -117,6 +117,14 @@ export default {
         signup: 'Signup',
       },
     },
+    prompts: {
+      error: 'Something went wrong!',
+      errorSignupUsernameTaken: 'Username is already taken!',
+      errorSignupEmailTaken: 'Email is already available in our system!',
+      errorTokenInvalid: 'This is an invalid token!',
+      passwordResetEmailSuccess: 'We emailed you a link. Please click on that link and follow the instructions!',
+      signupEmailSuccess: 'Thank you! We just emailed you an account activation link.',
+    },
   },
   actor: {
     about: 'About',

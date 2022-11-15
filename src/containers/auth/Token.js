@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import api from '../../api';
 import actions from '../../actions';
 import PersonType from '../../proptypes/Person';
+import i18n from '../../languages';
 
 const AuthToken = (props) => {
   const {
@@ -31,7 +32,7 @@ const AuthToken = (props) => {
         alertSuccess('Welcome!');
         return read();
       }, () => {
-        alertError('This is an invalid token!');
+        alertError(i18n.t('auth:prompts.errorTokenInvalid'));
       });
 
     return () => {

@@ -17,6 +17,8 @@ const Auth = (props) => {
     setTab(newTab);
   };
 
+  const signupClosed = process.env.REACT_APP_SIGNUP_CLOSED || false;
+
   return (
     <>
       <AppBar
@@ -32,11 +34,11 @@ const Auth = (props) => {
           textColor="primary"
         >
           <Tab label="Login" />
-          {/* <Tab label="Signup" /> */}
+          {!signupClosed && <Tab label="Signup" />}
         </Tabs>
       </AppBar>
       {tab === 0 && <Login />}
-      {tab === 1 && false && <Signup />}
+      {tab === 1 && !signupClosed && <Signup />}
     </>
   );
 };

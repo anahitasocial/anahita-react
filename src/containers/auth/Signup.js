@@ -6,6 +6,7 @@ import SignupForm from '../../components/auth/SignupForm';
 import actions from '../../actions';
 import api from '../../api';
 import form from '../../utils/form';
+import i18n from '../../languages';
 
 const formFields = form.createFormFields([
   'givenName',
@@ -30,13 +31,13 @@ const AuthSignup = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('auth:prompts.error'));
     }
 
     if (success) {
-      alertSuccess('Thank you! We just emailed you an account activation link.');
+      alertSuccess(i18n.t('auth:prompts.signupEmailSuccess'));
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [error, success]);
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -59,7 +60,7 @@ const AuthSignup = (props) => {
           username: {
             ...fields.username,
             isValid: false,
-            error: 'Username is already taken!',
+            error: i18n.t('auth:prompts.errorSignupUsernameTaken'),
           },
         });
       });
@@ -72,7 +73,7 @@ const AuthSignup = (props) => {
           email: {
             ...fields.email,
             isValid: false,
-            error: 'Email is already available in our system!',
+            error: i18n.t('auth:prompts.errorSignupEmailTaken'),
           },
         });
       });
