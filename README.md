@@ -38,6 +38,7 @@ Edit the `.env` file as follows:
 | REACT_APP_NOTIFICATIONS_CHECK_INTERVAL | Integer value representing time in milliseconds to check for the number of new notifications. A reasonable number would be 15000 |
 | REACT_APP_ASSETS | An (optional) string value for the name of your custom assets directory that goes under the `src/assets/` directory. If you leave this field empty, the default assets directory is used. |
 | DISABLE_ESLINT_PLUGIN | `true` on Staging and Prod servers, `false` for development environment |
+| REACT_APP_SIGNUP_CLOSED | `true` to hide Signup form, `false` to show the signup form |
 
 Now run the following command to start the App.
 
