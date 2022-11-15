@@ -415,6 +415,8 @@ export default {
       type: 'Type',
       recent: 'Recent',
       updated: 'Updated',
+      trending: 'Trending',
+      top: 'Top',
     },
     filterByType: 'Filter by type',
     filterByOptions: {
