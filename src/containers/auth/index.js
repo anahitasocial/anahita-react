@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 
 import Login from './Login';
 import Signup from './Signup';
+import i18n from '../../languages';
 
 const Auth = (props) => {
   const { match: { params } } = props;
@@ -33,8 +34,8 @@ const Auth = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="Login" />
-          {!signupClosed && <Tab label="Signup" />}
+          <Tab label={i18n.t('auth:mTitle')} />
+          {!signupClosed && <Tab label={i18n.t('auth:signup.mTitle')} />}
         </Tabs>
       </AppBar>
       {tab === 0 && <Login />}

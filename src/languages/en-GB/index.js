@@ -96,6 +96,8 @@ export default {
     },
   },
   auth: {
+    cTitle: 'Please log in',
+    mTitle: 'Login',
     logout: 'Logout',
     login: 'Please log in',
     username: 'Email or Username',
