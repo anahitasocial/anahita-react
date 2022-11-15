@@ -8,6 +8,7 @@ import api from '../../../api';
 
 import PersonType from '../../../proptypes/Person';
 import form from '../../../utils/form';
+import i18n from '../../../languages';
 
 const formFields = form.createFormFields([
   'username',
@@ -57,7 +58,7 @@ const PeopleSettingsAccount = (props) => {
           username: {
             ...fields.username,
             isValid: false,
-            error: 'Username is already taken!',
+            error: i18n.t('people:account.prompts.errorUsernameTaken'),
           },
         });
       });
@@ -74,7 +75,7 @@ const PeopleSettingsAccount = (props) => {
           email: {
             ...fields.email,
             isValid: false,
-            error: 'Email is already available in our system!',
+            error: i18n.t('people:account.prompts.errorEmailTaken'),
           },
         });
       });

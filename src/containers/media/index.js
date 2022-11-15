@@ -64,8 +64,8 @@ const Media = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="Updated" value={UPDATED} />
-          <Tab label="Recent" value={RECENT} />
+          <Tab label={i18n.t('commons:sortByOptions.updated')} value={UPDATED} />
+          <Tab label={i18n.t('commons:sortByOptions.recent')} value={RECENT} />
         </Tabs>
       </AppBar>
       {useMemo(() => {

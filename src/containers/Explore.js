@@ -18,13 +18,13 @@ import Media from './media';
 import HeaderMeta from '../components/HeaderMeta';
 
 const TABS = {
-  ARTICLES: 'articles',
-  DOCUMENTS: 'documents',
   GROUPS: 'groups',
+  PEOPLE: 'people',
   HASHTAGS: 'hashtags',
   LOCATIONS: 'locations',
+  ARTICLES: 'articles',
+  DOCUMENTS: 'documents',
   NOTES: 'notes',
-  PEOPLE: 'people',
   PHOTOS: 'photos',
   TODOS: 'todos',
   TOPICS: 'topics',
@@ -97,16 +97,15 @@ const ExplorePage = (props) => {
           onChange={changeTab}
           variant="scrollable"
         >
-          <Tab label="Groups" value={TABS.GROUPS} />
-          <Tab label="People" value={TABS.PEOPLE} />
-          <Tab label="Hashtags" value={TABS.HASHTAGS} />
-          <Tab label="Locations" value={TABS.LOCATIONS} />
-          <Tab label="Articles" value={TABS.ARTICLES} />
-          <Tab label="Documents" value={TABS.DOCUMENTS} />
-          <Tab label="Notes" value={TABS.NOTES} />
-          <Tab label="Photos" value={TABS.PHOTOS} />
-          <Tab label="Todos" value={TABS.TODOS} />
-          <Tab label="Topics" value={TABS.TOPICS} />
+          {Object.keys({ ...TABS }).map((t) => {
+            const value = TABS[t];
+            const label = i18n.t(`explore:tabs.${value}`);
+            const key = `explore-tab-${value}`;
+
+            return (
+              <Tab label={label} value={value} key={key} />
+            );
+          })}
         </Tabs>
       </AppBar>
       {[

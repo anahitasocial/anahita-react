@@ -25,8 +25,13 @@ export default {
     closeComments: 'Close Comments',
     login: 'Login',
     download: 'Download',
+    search: 'Search',
   },
   prompts: {
+    added: {
+      success: 'Added successfully',
+      error: "Something went wrong and couldn't add",
+    },
     updated: {
       success: 'Updated successfully',
       error: "Something went wrong and couldn't update",
@@ -34,6 +39,10 @@ export default {
     saved: {
       success: 'Saved successfully',
       error: "Something went wrong and couldn't save",
+    },
+    posted: {
+      success: 'Posted successfully',
+      error: "Something went wrong and couldn't post",
     },
     deleted: {
       success: 'Deleted successfully',
@@ -267,6 +276,14 @@ export default {
         administrator: 'Admin',
         'super-administrator': 'Super Admin',
       },
+      joinedDate: 'Joined on {{ date }}',
+    },
+    account: {
+      prompts: {
+        error: 'Something went wrong!',
+        errorUsernameTaken: 'Username is already taken!',
+        errorEmailTaken: 'Email is already available in our system!',
+      },
     },
   },
   notifications: {
@@ -368,6 +385,18 @@ export default {
   explore: {
     cTitle: 'Explore',
     mTitle: 'Explore',
+    tabs: {
+      groups: 'Groups',
+      people: 'People',
+      hashtags: 'Hashtags',
+      locations: 'Locations',
+      articles: 'Articles',
+      documents: 'Documents',
+      notes: 'Notes',
+      photos: 'Photos',
+      todos: 'Todos',
+      topics: 'Topics',
+    },
   },
   socialgraph: {
     cTitle: 'Social Graph',
@@ -395,6 +424,28 @@ export default {
   search: {
     cTitle: 'Search',
     mTitle: 'Search',
+    filterRadius: '{{ radius }} km',
+    sort: 'Sort by',
+    sortOptions: {
+      relevant: 'Most relevant',
+      recent: 'Most recent',
+    },
+    includeComments: 'Include comments',
+    filterNodeTypes: {
+      all: 'All',
+      posts: {
+        notes: 'Notes',
+        photos: 'Photos',
+        articles: 'Articles',
+        documents: 'Documents',
+        topics: 'Todos',
+      },
+      actors: {
+        people: 'People',
+        groups: 'Groups',
+      },
+    },
+    boxPlaceholder: 'Search...',
   },
   taggables: {
     count: '{{count}} nodes',
@@ -406,6 +457,7 @@ export default {
     readMore: 'Read more',
     close: 'Close',
     enabled: 'Enabled',
+    disabled: 'Disabled',
     sortBy: 'Sort by',
     sortByOptions: {
       element: 'Element',
@@ -433,5 +485,8 @@ export default {
     settings: 'Settings',
     ignore: 'Ignore',
     accept: 'Accpet',
+    errors: {
+      404: '404: Page not found!',
+    },
   },
 };

@@ -79,13 +79,13 @@ const MediaRead = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:updated.error'));
     }
 
     if (success) {
-      alertSuccess('Updated successfully.');
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
-  }, [alertError, alertSuccess, error, success]);
+  }, [error, success]);
 
   const handleEdit = () => {
     setIsEditing(true);

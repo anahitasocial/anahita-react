@@ -86,7 +86,7 @@ const People = (props) => {
               className={classes.filter}
             >
               <InputLabel id="person-type-filter-label">
-                Person Type
+                {i18n.t('people:person.usertype')}
               </InputLabel>
               <SelectUsertype
                 id="person-type-filter-label"
@@ -105,7 +105,7 @@ const People = (props) => {
                 />
               }
               className={classes.filter}
-              label="Disabled"
+              label={i18n.t('commons:disabled')}
             />
           </Toolbar>
         </AppBar>}

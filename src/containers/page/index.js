@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 import Container from '@material-ui/core/Container';
 import _ from 'lodash';
 
@@ -13,10 +14,19 @@ import assets from '../../assets';
 
 const useStyles = makeStyles((theme) => {
   return {
-    article: {
-      fontSize: theme.typography.htmlFontSize,
+    root: {
       '& a': {
         color: theme.palette.primary.main,
+        textDecoration: 'none',
+        wordWrap: 'break-word',
+      },
+      '& pre': {
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing(1),
+        overflowX: 'scroll',
+      },
+      '& code': {
+        overflowX: 'scroll',
       },
     },
   };
@@ -52,8 +62,8 @@ const StaticPage = (props) => {
       <HeaderMeta
         title={title}
       />
-      <article className={classes.article}>
-        <ReactMarkdown>
+      <article className={classes.root}>
+        <ReactMarkdown remarkPlugins={[gfm]}>
           {source}
         </ReactMarkdown>
       </article>

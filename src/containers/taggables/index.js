@@ -8,6 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import TaggablesBrowse from './Browse';
 import NodeType from '../../proptypes/Node';
 import { App as APP } from '../../constants';
+import i18n from '../../languages';
 
 const {
   SORTING: {
@@ -54,8 +55,14 @@ const Taggables = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="Top" value={TOP} />
-          <Tab label="Recent" value={RECENT} />
+          <Tab
+            label={i18n.t('commons:sortByOptions.top')}
+            value={TOP}
+          />
+          <Tab
+            label={i18n.t('commons:sortByOptions.recent')}
+            value={RECENT}
+          />
         </Tabs>
       </AppBar>
       {useMemo(() => {

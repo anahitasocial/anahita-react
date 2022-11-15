@@ -22,7 +22,7 @@ const SelectPersontype = (props) => {
         const key = `usertype_${usertype}`;
         return (
           <MenuItem key={key} value={usertype}>
-            {i18n.t(`people:person.usertype.${usertype}`)}
+            {i18n.t(`people:person.usertypeOptions.${usertype}`)}
           </MenuItem>
         );
       })}

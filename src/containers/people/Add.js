@@ -14,6 +14,7 @@ import utils from '../../utils';
 
 import PersonType from '../../proptypes/Person';
 import PeopleType from '../../proptypes/People';
+import i18n from '../../languages';
 
 const { form } = utils;
 const {
@@ -52,11 +53,11 @@ const PeopleAdd = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:added.error'));
     }
 
     if (success) {
-      alertSuccess('Person profile added successfully.');
+      alertSuccess(i18n.t('prompts:added.success'));
     }
   }, [error, success]);
 
@@ -84,7 +85,7 @@ const PeopleAdd = (props) => {
           username: {
             ...fields.username,
             isValid: false,
-            error: 'Username is already taken!',
+            error: i18n.t('people:account.prompts.errorUsernameTaken'),
           },
         });
       });
@@ -97,7 +98,7 @@ const PeopleAdd = (props) => {
           email: {
             ...fields.email,
             isValid: false,
-            error: 'Email is already available in our system!',
+            error: i18n.t('people:account.prompts.errorEmailTaken'),
           },
         });
       });

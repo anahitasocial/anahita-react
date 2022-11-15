@@ -50,19 +50,19 @@ const useStyles = makeStyles((theme) => {
 const marks = [
   {
     value: 25,
-    label: '25 km',
+    label: i18n.t('search:filterRadius', { radius: 25 }),
   },
   {
     value: 50,
-    label: '50 km',
+    label: i18n.t('search:filterRadius', { radius: 50 }),
   },
   {
     value: 75,
-    label: '75 km',
+    label: i18n.t('search:filterRadius', { radius: 75 }),
   },
   {
     value: 100,
-    label: '100 km',
+    label: i18n.t('search:filterRadius', { radius: 100 }),
   },
   {
     value: 125,
@@ -126,7 +126,9 @@ const Search = (props) => {
               variant="outlined"
               className={classes.formControl}
             >
-              <InputLabel id="search-sort-label">Sort</InputLabel>
+              <InputLabel id="search-sort-label">
+                {i18n.t('search:sort')}
+              </InputLabel>
               <Select
                 labelId="search-sort-label"
                 id="search-sort-select"
@@ -134,10 +136,14 @@ const Search = (props) => {
                 onChange={(event) => {
                   setSort(event.target.value);
                 }}
-                label="Sort"
+                label={i18n.t('search:sort')}
               >
-                <MenuItem value={SORTING.RELEVANT}>Most Relevant</MenuItem>
-                <MenuItem value={SORTING.RECENT}>Most Recent</MenuItem>
+                <MenuItem value={SORTING.RELEVANT}>
+                  {i18n.t('search:sortOptions.relevant')}
+                </MenuItem>
+                <MenuItem value={SORTING.RECENT}>
+                  {i18n.t('search:sortOptions.recent')}
+                </MenuItem>
               </Select>
             </FormControl>
             <FormControl
@@ -169,7 +175,7 @@ const Search = (props) => {
                   }}
                 />
               }
-              label="Include comments"
+              label={i18n.t('search:includeComments')}
             />
           </FormGroup>
         </Toolbar>
@@ -180,15 +186,42 @@ const Search = (props) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="All" value={SCOPE.ALL} />
-          <Tab label="Notes" value={SCOPE.POSTS.NOTES} />
-          <Tab label="Photos" value={SCOPE.POSTS.PHOTOS} />
-          <Tab label="Articles" value={SCOPE.POSTS.ARTICLES} />
-          <Tab label="Documents" value={SCOPE.POSTS.DOCUMENTS} />
-          <Tab label="Topics" value={SCOPE.POSTS.TOPICS} />
-          <Tab label="Todos" value={SCOPE.POSTS.TODOS} />
-          <Tab label="People" value={SCOPE.ACTORS.PEOPLE} />
-          <Tab label="Groups" value={SCOPE.ACTORS.GROUPS} />
+          <Tab
+            label={i18n.t('search:filterNodeTypes.all')}
+            value={SCOPE.ALL}
+          />
+          <Tab
+            label={i18n.t('search:filterNodeTypes.posts.notes')}
+            value={SCOPE.POSTS.NOTES}
+          />
+          <Tab
+            label={i18n.t('search:filterNodeTypes.posts.photos')}
+            value={SCOPE.POSTS.PHOTOS}
+          />
+          <Tab
+            label={i18n.t('search:filterNodeTypes.posts.articles')}
+            value={SCOPE.POSTS.ARTICLES}
+          />
+          <Tab
+            label={i18n.t('search:filterNodeTypes.posts.documents')}
+            value={SCOPE.POSTS.DOCUMENTS}
+          />
+          <Tab
+            label={i18n.t('search:filterNodeTypes.posts.topics')}
+            value={SCOPE.POSTS.TOPICS}
+          />
+          <Tab
+            label={i18n.t('search:filterNodeTypes.posts.todos')}
+            value={SCOPE.POSTS.TODOS}
+          />
+          <Tab
+            label={i18n.t('search:filterNodeTypes.actors.people')}
+            value={SCOPE.ACTORS.PEOPLE}
+          />
+          <Tab
+            label={i18n.t('search:filterNodeTypes.actors.groups')}
+            value={SCOPE.ACTORS.GROUPS}
+          />
         </Tabs>
       </AppBar>
       {useMemo(() => {

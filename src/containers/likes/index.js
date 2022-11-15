@@ -11,6 +11,7 @@ import LikesBrowse from './Browse';
 import CommentType from '../../proptypes/Comment';
 import NodeType from '../../proptypes/Node';
 import utils from '../../utils';
+import i18n from '../../languages';
 
 const Likes = (props) => {
   const {
@@ -48,7 +49,7 @@ const Likes = (props) => {
             onClick={handleClose}
             fullWidth
           >
-            Close
+            {i18n.t('commons:close')}
           </Button>
         </DialogActions>
       </Dialog>

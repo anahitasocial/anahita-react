@@ -17,6 +17,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import NodeType from '../../../proptypes/Node';
 import BrowseLocations from './Browse';
 import AddLocation from './Add';
+import i18n from '../../../languages';
 
 const TABS = {
   SEARCH: 'search',
@@ -103,8 +104,8 @@ const LocationsSelector = (props) => {
             indicatorColor="primary"
             textColor="primary"
           >
-            <Tab label="Search" value={TABS.SEARCH} />
-            <Tab label="Add" value={TABS.ADD} />
+            <Tab label={i18n.t('actions:search')} value={TABS.SEARCH} />
+            <Tab label={i18n.t('actions:add')} value={TABS.ADD} />
           </Tabs>
         </AppBar>
         {tab === TABS.SEARCH &&

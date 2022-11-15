@@ -8,6 +8,7 @@ import utils from '../../../utils';
 import AcctorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import MediumDefault from '../../../proptypes/MediumDefault';
+import i18n from '../../../languages';
 
 const MediaComposerDefault = (props) => {
   const {
@@ -31,11 +32,11 @@ const MediaComposerDefault = (props) => {
 
   useEffect(() => {
     if (error) {
-      alertError('Something went wrong!');
+      alertError(i18n.t('prompts:posted.error'));
     }
 
     if (success) {
-      alertSuccess('Item posted successfully!');
+      alertSuccess(i18n.t('prompts:posted.success'));
     }
   }, [error, success]);
 

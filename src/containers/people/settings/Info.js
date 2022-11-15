@@ -14,6 +14,7 @@ import permissions from '../../../permissions';
 import { Person as PERSON } from '../../../constants';
 import PersonType from '../../../proptypes/Person';
 import form from '../../../utils/form';
+import i18n from '../../../languages';
 
 const { SUPER_ADMIN } = PERSON.FIELDS.TYPE;
 
@@ -99,7 +100,7 @@ const PersonSettingsInfo = (props) => {
       enabled={canAdmin &&
         <>
           <Typography variant="caption" display="block">
-            {`Joined ${joinedDate}`}
+            {i18n.t('people:person.joinedDate', { date: joinedDate })}
           </Typography>
           <FormControlLabel
             control={
@@ -109,7 +110,7 @@ const PersonSettingsInfo = (props) => {
                 onChange={handleOnChange}
               />
             }
-            label="Enabled"
+            label={i18n.t('commons:enabled')}
           />
         </>}
     />
