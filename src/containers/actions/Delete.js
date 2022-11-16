@@ -9,6 +9,7 @@ import actions from '../../actions';
 import NodeType from '../../proptypes/Node';
 import i18n from '../../languages';
 import utils from '../../utils';
+import DialogConfirm from '../../components/DialogConfirm';
 
 const ActionsDelete = React.forwardRef((props, ref) => {
   const {
@@ -27,13 +28,14 @@ const ActionsDelete = React.forwardRef((props, ref) => {
     setWaiting(true);
     deleteItem(node)
       .then(() => {
-        alertSuccess('Deleted successfully.');
+        alertSuccess(i18n.t('prompts:deleted.success'));
+
         if (redirect !== '') {
           history.push(redirect);
         }
       }).catch((err) => {
         console.error(err);
-        alertError('Something went wrong!');
+        alertError(i18n.t('prompts:deleted.error'));
       });
   };
 
@@ -41,26 +43,30 @@ const ActionsDelete = React.forwardRef((props, ref) => {
 
   if (component === 'menuitem') {
     return (
-      <MenuItem
+      <DialogConfirm>
+        <MenuItem
+          onClick={handleDelete}
+          disabled={waiting}
+          aria-label={label}
+          ref={ref}
+        >
+          {label}
+        </MenuItem>
+      </DialogConfirm>
+    );
+  }
+
+  return (
+    <DialogConfirm>
+      <Button
         onClick={handleDelete}
         disabled={waiting}
         aria-label={label}
         ref={ref}
       >
         {label}
-      </MenuItem>
-    );
-  }
-
-  return (
-    <Button
-      onClick={handleDelete}
-      disabled={waiting}
-      aria-label={label}
-      ref={ref}
-    >
-      {label}
-    </Button>
+      </Button>
+    </DialogConfirm>
   );
 });
 

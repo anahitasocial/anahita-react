@@ -18,6 +18,7 @@ import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
 import ReadMore from '../ReadMore';
 import utils from '../../utils';
+import i18n from '../../languages';
 
 const {
   getURL,
@@ -113,13 +114,17 @@ const ActorCard = (props) => {
         <CardContent>
           <div>
             <Typography variant="caption">
-              {`Created on ${creationTime}`}
+              {i18n.t('people:person.joinedDate', {
+                date: creationTime,
+              })}
             </Typography>
           </div>
           <div>
             {lastVisitDate &&
             <Typography variant="caption">
-              {`Last visited on ${lastVisitDate}`}
+              {i18n.t('people:person.lastVisitOn', {
+                date: lastVisitDate,
+              })}
             </Typography>}
           </div>
         </CardContent>}

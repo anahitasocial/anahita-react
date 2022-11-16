@@ -18,6 +18,7 @@ export default {
     save: 'Save',
     done: 'Done',
     cancel: 'Cancel',
+    confirm: 'Confirm',
     create: 'Create',
     post: 'Post',
     publish: 'Publish',
@@ -47,6 +48,10 @@ export default {
     deleted: {
       success: 'Deleted successfully',
       error: 'Something went wrong and couldn\'t delete',
+    },
+    confirm: {
+      title: 'Please confirm',
+      delete: 'Are you sure that you want to delete?',
     },
   },
   access: {
@@ -277,6 +282,7 @@ export default {
         'super-administrator': 'Super Admin',
       },
       joinedDate: 'Joined on {{ date }}',
+      lastVisitOn: 'Last visit on {{ date }}',
     },
     account: {
       prompts: {
