@@ -16,4 +16,18 @@ export default {
       RELEVANT: 'relevant',
     },
   },
+  TABS: {
+    EXPLORE: {
+      GROUPS: 'groups',
+      PEOPLE: 'people',
+      HASHTAGS: 'hashtags',
+      LOCATIONS: 'locations',
+      ARTICLES: 'articles',
+      DOCUMENTS: 'documents',
+      NOTES: 'notes',
+      PHOTOS: 'photos',
+      TODOS: 'todos',
+      TOPICS: 'topics',
+    },
+  },
 };

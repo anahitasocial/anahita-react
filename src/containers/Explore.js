@@ -17,18 +17,7 @@ import Locations from './locations';
 import Media from './media';
 import HeaderMeta from '../components/HeaderMeta';
 
-const TABS = {
-  GROUPS: 'groups',
-  PEOPLE: 'people',
-  HASHTAGS: 'hashtags',
-  LOCATIONS: 'locations',
-  ARTICLES: 'articles',
-  DOCUMENTS: 'documents',
-  NOTES: 'notes',
-  PHOTOS: 'photos',
-  TODOS: 'todos',
-  TOPICS: 'topics',
-};
+const { EXPLORE: TABS } = APP.TABS;
 
 const {
   SORTING: {
