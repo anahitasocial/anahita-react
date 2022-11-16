@@ -50,8 +50,8 @@ export default {
       error: 'Something went wrong and couldn\'t delete',
     },
     confirm: {
-      title: 'Please confirm',
-      delete: 'Are you sure that you want to delete?',
+      title: 'Please confirm!',
+      message: 'Are you sure?',
     },
   },
   access: {
@@ -107,6 +107,9 @@ export default {
       unfollowAuthor: 'Unfollow {{name}}',
       blockAuthor: 'Block {{name}}',
       unblockAuthor: 'Unblock {{name}}',
+    },
+    confirm: {
+      delete: 'Do you want to delete this comment?',
     },
   },
   auth: {
@@ -231,6 +234,10 @@ export default {
         following: 'Only the posts that you are following',
       },
     },
+    confirm: {
+      delete: "Do you want to delete {{ name }}'s profile?",
+      block: "Do you want to block {{ name }}'s profile?",
+    },
   },
   people: {
     cTitle: 'People',
@@ -284,6 +291,10 @@ export default {
       joinedDate: 'Joined on {{ date }}',
       lastVisitOn: 'Last visit on {{ date }}',
     },
+    confirm: {
+      delete: "Do you want to delete {{ name }}'s profile?",
+      block: "Do you want to block {{ name }}'s profile?",
+    },
     account: {
       prompts: {
         error: 'Something went wrong!',
@@ -335,6 +346,9 @@ export default {
     medium: {
       description: 'Description',
       title: 'Title',
+    },
+    confirm: {
+      delete: 'Do you want to delete this post?',
     },
   },
   topics: {
@@ -426,6 +440,9 @@ export default {
       province: 'Province',
       country: 'Country',
     },
+    confirm: {
+      delete: 'Do you want to delete this location?',
+    },
   },
   search: {
     cTitle: 'Search',
@@ -462,6 +479,7 @@ export default {
     administering: 'Administering',
     readMore: 'Read more',
     close: 'Close',
+    dismiss: 'Dismiss',
     enabled: 'Enabled',
     disabled: 'Disabled',
     sortBy: 'Sort by',

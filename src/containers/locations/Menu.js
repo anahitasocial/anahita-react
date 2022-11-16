@@ -8,6 +8,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import permissions from '../../permissions/node';
 import utils from '../../utils';
+import i18n from '../../languages';
 
 import DeleteAction from '../actions/Delete';
 
@@ -66,6 +67,7 @@ const LocationMenu = (props) => {
           node={location}
           redirect="/locations/"
           key={`location-delete-${location.id}`}
+          confirmMessage={i18n.t('locations:confirm.delete')}
         />
       </Menu>
     </>

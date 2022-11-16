@@ -15,6 +15,7 @@ import DeleteAction from '../actions/Delete';
 
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
+import i18n from '../../languages';
 
 const { withRef } = utils.component;
 const {
@@ -97,6 +98,7 @@ const MediaMenu = (props) => {
           key={`medium-delete-${medium.id}`}
           redirect={inline ? '' : getURL(medium.owner)}
           component="menuitem"
+          confirmMessage={i18n.t('media:confirm.delete')}
         />
       </Menu>
     </>

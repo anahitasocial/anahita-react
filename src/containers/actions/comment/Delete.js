@@ -8,6 +8,7 @@ import CommentType from '../../../proptypes/Comment';
 import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';
 import utils from '../../../utils';
+import DialogConfirm from '../../../components/DialogConfirm';
 
 const ActionsCommentDelete = React.forwardRef((props, ref) => {
   const {
@@ -27,13 +28,17 @@ const ActionsCommentDelete = React.forwardRef((props, ref) => {
   };
 
   return (
-    <MenuItem
-      onClick={handleDelete}
-      aria-label={label}
-      ref={ref}
+    <DialogConfirm
+      message={i18n.t('comments:confirm.delete')}
     >
-      {label}
-    </MenuItem>
+      <MenuItem
+        onClick={handleDelete}
+        aria-label={label}
+        ref={ref}
+      >
+        {label}
+      </MenuItem>
+    </DialogConfirm>
   );
 });
 

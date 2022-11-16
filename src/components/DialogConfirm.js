@@ -57,11 +57,11 @@ const DialogConfirm = (props) => {
             onClick={handleClose}
             fullWidth
           >
-            {i18n.t('actions:cancel')}
+            {i18n.t('commons:dismiss')}
           </Button>
           <Button
             fullWidth
-            color="primary"
+            color="secondary"
             variant="contained"
             onClick={handleConfirm}
           >
@@ -76,13 +76,13 @@ const DialogConfirm = (props) => {
 
 DialogConfirm.propTypes = {
   children: PropTypes.node.isRequired,
-  message: PropTypes.string,
   title: PropTypes.string,
+  message: PropTypes.string,
 };
 
 DialogConfirm.defaultProps = {
   title: i18n.t('prompts:confirm.title'),
-  message: i18n.t('prompts:confirm.delete'),
+  message: i18n.t('prompts:confirm.message'),
 };
 
 export default DialogConfirm;

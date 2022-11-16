@@ -30,6 +30,7 @@ const ActorsReadCommands = (props) => {
   };
 
   const isSuperAdmin = node.isSuperAdmin(viewer) && viewer.id !== actor.id;
+  const namespace = node.getNamespace(actor);
 
   if (isSuperAdmin && !actor.commands.includes('delete')) {
     actor.commands.push('delete');
@@ -85,6 +86,9 @@ const ActorsReadCommands = (props) => {
                   node={actor}
                   component="menuitem"
                   redirect={`/explore/${node.getNamespace(actor)}`}
+                  confirmMessage={i18n.t(`${namespace}:confirm.delete`, {
+                    name: actor.name,
+                  })}
                 />
               );
             default:

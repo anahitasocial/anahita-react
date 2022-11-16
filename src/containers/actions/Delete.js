@@ -20,6 +20,8 @@ const ActionsDelete = React.forwardRef((props, ref) => {
     component,
     alertSuccess,
     alertError,
+    confirmTitle,
+    confirmMessage,
   } = props;
 
   const [waiting, setWaiting] = useState(false);
@@ -43,7 +45,10 @@ const ActionsDelete = React.forwardRef((props, ref) => {
 
   if (component === 'menuitem') {
     return (
-      <DialogConfirm>
+      <DialogConfirm
+        title={confirmTitle}
+        message={confirmMessage}
+      >
         <MenuItem
           onClick={handleDelete}
           disabled={waiting}
@@ -57,7 +62,10 @@ const ActionsDelete = React.forwardRef((props, ref) => {
   }
 
   return (
-    <DialogConfirm>
+    <DialogConfirm
+      title={confirmTitle}
+      message={confirmMessage}
+    >
       <Button
         onClick={handleDelete}
         disabled={waiting}
@@ -78,11 +86,15 @@ ActionsDelete.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   redirect: PropTypes.string,
   component: PropTypes.oneOf(['button', 'menuitem']),
+  confirmTitle: PropTypes.string,
+  confirmMessage: PropTypes.string,
 };
 
 ActionsDelete.defaultProps = {
   redirect: '',
   component: 'button',
+  confirmTitle: i18n.t('prompts:confirm.title'),
+  confirmMessage: i18n.t('prompts:confirm.message'),
 };
 
 const mapStateToProps = () => {

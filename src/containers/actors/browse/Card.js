@@ -8,6 +8,7 @@ import permissions from '../../../permissions/actor';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import utils from '../../../utils';
+import i18n from '../../../languages';
 
 const { node } = utils;
 
@@ -20,14 +21,24 @@ const ActorsCard = (props) => {
   const canFollow = permissions.canFollow(actor);
   // const canAdminister = permissions.canAdminister(viewer) && viewer.id !== actor.id;
   const isSuperAdmin = node.isSuperAdmin(viewer) && viewer.id !== actor.id;
+  const namespace = node.getNamespace(actor);
 
   return (
     <ActorCard
       actor={actor}
       viewer={viewer}
       action={[
-        canFollow && <FollowAction actor={actor} key={`actor-action-follow-${actor.id}`} />,
-        isSuperAdmin && <DeleteAction node={actor} key={`actor-action-delete-${actor.id}`} />,
+        canFollow && <FollowAction
+          actor={actor}
+          key={`actor-action-follow-${actor.id}`}
+        />,
+        isSuperAdmin && <DeleteAction
+          node={actor}
+          key={`actor-action-delete-${actor.id}`}
+          confirmMessage={i18n.t(`${namespace}:confirm.delete`, {
+            name: actor.name,
+          })}
+        />,
       ]}
     />
   );
