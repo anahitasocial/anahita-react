@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 
 import GithubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
 import WebsiteIcon from '@material-ui/icons/Web';
 
 const cards = () => {
@@ -168,13 +167,6 @@ const cards = () => {
             aria-label="facebook"
           >
             <FacebookIcon />
-          </IconButton>
-          <IconButton
-            href="https://www.twitter.com/anahita_io"
-            target="_blank"
-            aria-label="twitter"
-          >
-            <TwitterIcon />
           </IconButton>
         </>
       );

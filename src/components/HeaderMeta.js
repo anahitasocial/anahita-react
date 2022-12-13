@@ -13,8 +13,7 @@ const HeaderMeta = (props) => {
   } = props;
 
   const metaTitle = title ? `${title} - ${process.env.REACT_APP_NAME}` : process.env.REACT_APP_NAME;
-  const metaDesc = striptags(description).substr(0, 160);
-  const twitterCard = image ? 'summary_large_image' : 'summary';
+  const metaDesc = striptags(description).substring(0, 160);
 
   return (
     <Helmet>
@@ -27,7 +26,6 @@ const HeaderMeta = (props) => {
         <meta property="og:description" content={metaDesc} key="og-description" />,
       ]}
       {image && [
-        <meta name="twitter:card" content={twitterCard} key="twitter-card" />,
         <meta property="og:image" content={image} key="og-image" />,
       ]}
       {url && [

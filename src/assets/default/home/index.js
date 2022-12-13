@@ -10,7 +10,6 @@ import IconButton from '@material-ui/core/IconButton';
 
 import GithubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
 import WebsiteIcon from '@material-ui/icons/Web';
 
 import actions from '../../../actions';
@@ -37,7 +36,7 @@ const Home = (props) => {
   }, [setAppTitle]);
 
   return (
-    <React.Fragment>
+    <>
       <HeaderMeta />
       <Particles
         params={{
@@ -107,15 +106,8 @@ const Home = (props) => {
         >
           <FacebookIcon />
         </IconButton>
-        <IconButton
-          href="https://www.twitter.com/anahita_io"
-          target="_blank"
-          aria-label="twitter"
-        >
-          <TwitterIcon />
-        </IconButton>
       </Box>
-    </React.Fragment>
+    </>
   );
 };
 
