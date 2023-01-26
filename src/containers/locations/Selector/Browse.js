@@ -59,7 +59,7 @@ const LocationsSelectorBrowse = (props) => {
     return () => {
       resetList();
     };
-  }, [browseList, resetList, node, queryFilters]);
+  }, [node.id, queryFilters]);
 
   const handleOnChange = (event) => {
     const { value } = event.target;

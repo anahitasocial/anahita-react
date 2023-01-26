@@ -5,14 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import actions from '../../actions';
+import actions from '../../../actions';
 
-import ActorType from '../../proptypes/Actor';
-import ActorsType from '../../proptypes/Actors';
-import ActorsCard from './browse/Card';
-import Masonry from '../../components/BreakpointMasonry';
-import Progress from '../../components/Progress';
-import { App as APP } from '../../constants';
+import ActorType from '../../../proptypes/Actor';
+import ActorsType from '../../../proptypes/Actors';
+import ActorsCard from '../browse/Card';
+import Masonry from '../../../components/BreakpointMasonry';
+import Progress from '../../../components/Progress';
+import { App as APP } from '../../../constants';
 
 const { LIMIT } = APP.BROWSE;
 

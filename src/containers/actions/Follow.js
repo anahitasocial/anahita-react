@@ -30,18 +30,20 @@ const FollowAction = React.forwardRef((props, ref) => {
 
   const handleFollow = () => {
     setWaiting(true);
-    followActor(viewer, actor).then(() => {
-      setWaiting(false);
-      setLeader(true);
-    });
+    followActor(viewer, actor)
+      .then(() => {
+        setWaiting(false);
+        setLeader(true);
+      });
   };
 
   const handleUnfollow = () => {
     setWaiting(true);
-    unfollowActor(viewer, actor).then(() => {
-      setWaiting(false);
-      setLeader(false);
-    });
+    unfollowActor(viewer, actor)
+      .then(() => {
+        setWaiting(false);
+        setLeader(false);
+      });
   };
 
   const title = leader ? unfollowLabel : followLabel;

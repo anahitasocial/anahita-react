@@ -425,6 +425,10 @@ export default {
     leaders: 'Leaders',
     mutuals: 'Mutualls',
     blocked: 'Blocked',
+    add: {
+      cTitle: 'Add Followers',
+      mTitle: 'Followers',
+    },
   },
   hashtags: {
     cTitle: 'Hashtags',
@@ -439,6 +443,10 @@ export default {
       city: 'City',
       province: 'Province',
       country: 'Country',
+    },
+    add: {
+      cTitle: 'Add Locations',
+      mTitle: 'Add Locations',
     },
     confirm: {
       delete: 'Do you want to delete this location?',

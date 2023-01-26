@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import ActorHeader from '../../../components/actor/Header';
 import ActorBody from '../../../components/actor/Body';
 import ActorsFollowRequests from '../FollowRequests';
-import ActorsSocialgraph from '../Socialgraph';
+import ActorsSocialgraph from '../socialgraph';
 import ActorsBrowseGadget from '../browse/Gadget';
 import Admins from '../../../components/actor/body/Admins';
 import Avatar from './Avatar';
@@ -31,6 +31,8 @@ import { Node as NODE } from '../../../constants';
 
 import ActorsType from '../../../proptypes/Actors';
 import PersonType from '../../../proptypes/Person';
+
+import AddFollower from '../socialgraph/Add';
 
 const {
   isPerson,
@@ -148,6 +150,7 @@ const ActorsRead = (props) => {
         followAction={
           <>
             {canEditNotifications && <NotificationsDialog actor={actor} />}
+            {canAdminister && <AddFollower actor={actor} />}
             {canAdminister && <FollowRequests actor={actor} />}
             {canFollow && <FollowAction actor={actor} />}
           </>

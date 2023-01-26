@@ -1,3 +1,4 @@
+import addfollowers from './addfollowers';
 import admins from './admins';
 import apps from './apps';
 import followrequests from './followrequests';
@@ -7,6 +8,7 @@ import privacy from './privacy';
 
 export default (namespace) => {
   return {
+    addfollowers: addfollowers(namespace),
     admins: admins(namespace),
     apps: apps(namespace),
     followrequests: followrequests(namespace),

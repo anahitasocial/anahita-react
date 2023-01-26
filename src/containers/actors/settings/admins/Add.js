@@ -28,10 +28,6 @@ const ActorsSettingsAdminsAdd = (props) => {
   const fetchList = (q) => {
     const path = `/${namespace}/${actor.id}/adminscandidates.json`;
 
-    if (q.length < 3) {
-      return;
-    }
-
     setIsFetching(true);
 
     axios.get(path, {

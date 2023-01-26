@@ -79,7 +79,7 @@ const LocationsSelector = (props) => {
         fullWidth
       >
         <DialogTitle>
-          Add Location
+          {i18n.t('locations:add.cTitle')}
           <IconButton
             onClick={handleClose}
             style={{
