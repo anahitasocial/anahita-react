@@ -24,7 +24,7 @@ const ActorsCard = (props) => {
 
   const canFollow = leaderNamespace === 'people' && permissions.canFollow(actor);
   const canBlock = leaderNamespace === 'people' && permissions.canBlock(actor);
-  const canAdminister = leaderNamespace !== 'people' && permissions.canAdminister(viewer) && viewer.id !== actor.id;
+  const canAdminister = leaderNamespace !== 'people' && permissions.canAdminister(actor) && viewer.id !== actor.id;
 
   return (
     <ActorCard
