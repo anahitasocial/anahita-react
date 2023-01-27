@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import StoryCardDefault from './story/Default';
+import StoryCardActor from './story/Actor';
 import StoryCardComment from './story/Comment';
 import StoryCardPhotoAdd from './story/PhotoAdd';
 import StoryCardTodoStatus from './story/TodoStatus';
@@ -19,6 +20,18 @@ const StoryCard = (props) => {
   } = props;
 
   switch (story.name) {
+    case 'actor_follow':
+    case 'actor_follower_add':
+      return (
+        <StoryCardActor
+          story={story}
+          stats={stats}
+          actions={actions}
+          menu={menu}
+          comments={comments}
+          showOwner={showOwner}
+        />
+      );
     case 'article_comment':
     case 'photo_comment':
     case 'note_comment':
