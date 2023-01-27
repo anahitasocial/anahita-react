@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import ActorHeader from '../../../components/actor/Header';
 import ActorBody from '../../../components/actor/Body';
 import ActorsFollowRequests from '../FollowRequests';
-import ActorsSocialgraph from '../socialgraph';
+import ActorsSocialgraph from '../socialgraph/index';
 import ActorsBrowseGadget from '../browse/Gadget';
 import Admins from '../../../components/actor/body/Admins';
 import Avatar from './Avatar';
