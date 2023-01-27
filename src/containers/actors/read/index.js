@@ -95,6 +95,7 @@ const ActorsRead = (props) => {
   const canFollow = permissions.canFollow(actor);
   const canEdit = permissions.canEdit(actor);
   const canAdminister = permissions.canAdminister(actor);
+  const canAddFollower = permissions.canAdminister(actor) && namespace !== 'people';
   const canViewCommands = permissions.canViewCommands(actor, [
     'follow',
     'unfollow',
@@ -150,7 +151,7 @@ const ActorsRead = (props) => {
         followAction={
           <>
             {canEditNotifications && <NotificationsDialog actor={actor} />}
-            {canAdminister && <AddFollower actor={actor} />}
+            {canAddFollower && <AddFollower actor={actor} />}
             {canAdminister && <FollowRequests actor={actor} />}
             {canFollow && <FollowAction actor={actor} />}
           </>
