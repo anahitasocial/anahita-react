@@ -30,7 +30,17 @@ const deleteItem = (namespaces) => {
   return (params) => {
     const { follower, actor } = params;
     return axios.post(`/${namespaces}/${actor.id}.json`, constructFormData({
-      action: 'deletefollower',
+      action: 'removefollower',
+      actor: follower.id,
+    }));
+  };
+};
+
+const block = (namespaces) => {
+  return (params) => {
+    const { follower, actor } = params;
+    return axios.post(`/${namespaces}/${actor.id}.json`, constructFormData({
+      action: 'blockfollower',
       actor: follower.id,
     }));
   };
@@ -41,5 +51,6 @@ export default (namespace) => {
     browse: browse(namespace),
     add: add(namespace),
     deleteItem: deleteItem(namespace),
+    block,
   };
 };

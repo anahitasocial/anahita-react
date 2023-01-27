@@ -7,6 +7,7 @@ export default {
     unfollow: 'Unfollow',
     block: 'Block',
     unblock: 'Unblock',
+    remove: 'Remove',
     like: 'Like',
     unlike: 'Unlike',
     delete: 'Delete',
@@ -48,6 +49,10 @@ export default {
     deleted: {
       success: 'Deleted successfully',
       error: 'Something went wrong and couldn\'t delete',
+    },
+    removed: {
+      success: 'Removed successfully',
+      error: 'Something went wrong and couldn\'t remove',
     },
     confirm: {
       title: 'Please confirm!',

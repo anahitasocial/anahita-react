@@ -5,6 +5,7 @@ import utils from '../utils';
 
 const {
   editItem,
+  deleteItem,
 } = utils.reducer;
 
 const DEFAULT_STATE = {
@@ -46,6 +47,14 @@ export default (state = {
         success: false,
         error: '',
       };
+    case SOCIALGRAPH.REMOVE_FOLLOWER.REQUEST:
+    case SOCIALGRAPH.BLOCK_FOLLOWER.REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        success: false,
+        error: '',
+      };
     case SOCIALGRAPH.BROWSE.SUCCESS:
       return {
         ...state,
@@ -71,11 +80,21 @@ export default (state = {
         actors: editItem(state.actors, action.actor),
         success: true,
       };
+    case SOCIALGRAPH.REMOVE_FOLLOWER.SUCCESS:
+    case SOCIALGRAPH.BLOCK_FOLLOWER.SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        actors: deleteItem(state.actors, action.actor),
+        success: true,
+      };
     case SOCIALGRAPH.BROWSE.FAILURE:
     case SOCIALGRAPH.FOLLOW.FAILURE:
     case SOCIALGRAPH.UNFOLLOW.FAILURE:
     case SOCIALGRAPH.BLOCK.FAILURE:
     case SOCIALGRAPH.UNBLOCK.FAILURE:
+    case SOCIALGRAPH.REMOVE_FOLLOWER.FAILURE:
+    case SOCIALGRAPH.BLOCK_FOLLOWER.FAILURE:
       return {
         ...state,
         isFetching: false,

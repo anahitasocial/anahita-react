@@ -13,6 +13,8 @@ const DialogConfirm = (props) => {
     children,
     title,
     message,
+    confirm,
+    dismiss,
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -42,7 +44,7 @@ const DialogConfirm = (props) => {
         onClose={handleClose}
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-description"
-        maxWidth="md"
+        fullWidth
       >
         <DialogTitle id="alert-dialog-title">
           {title}
@@ -57,7 +59,7 @@ const DialogConfirm = (props) => {
             onClick={handleClose}
             fullWidth
           >
-            {i18n.t('commons:dismiss')}
+            {dismiss}
           </Button>
           <Button
             fullWidth
@@ -65,7 +67,7 @@ const DialogConfirm = (props) => {
             variant="contained"
             onClick={handleConfirm}
           >
-            {i18n.t('actions:confirm')}
+            {confirm}
           </Button>
         </DialogActions>
       </Dialog>
@@ -78,11 +80,15 @@ DialogConfirm.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
   message: PropTypes.string,
+  confirm: PropTypes.string,
+  dismiss: PropTypes.string,
 };
 
 DialogConfirm.defaultProps = {
   title: i18n.t('prompts:confirm.title'),
   message: i18n.t('prompts:confirm.message'),
+  confirm: i18n.t('actions:confirm'),
+  dismiss: i18n.t('commons:dismiss'),
 };
 
 export default DialogConfirm;

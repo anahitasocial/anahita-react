@@ -27,18 +27,20 @@ const BlockAction = React.forwardRef((props, ref) => {
 
   const handleBlock = () => {
     setWaiting(true);
-    blockPerson(viewer, actor).then(() => {
-      setWaiting(false);
-      setBlocked(true);
-    });
+    blockPerson(viewer, actor)
+      .then(() => {
+        setWaiting(false);
+        setBlocked(true);
+      });
   };
 
   const handleUnblock = () => {
     setWaiting(true);
-    unblockPerson(viewer, actor).then(() => {
-      setWaiting(false);
-      setBlocked(false);
-    });
+    unblockPerson(viewer, actor)
+      .then(() => {
+        setWaiting(false);
+        setBlocked(false);
+      });
   };
 
   const title = blocked ? unblockLabel : blockLabel;

@@ -1,8 +1,12 @@
+import { singularize } from 'inflection';
 import apis from '../api';
+import utils from '../utils';
 import { Socialgraph as SOCIALGRAPH } from '../constants';
 import createAction from './create';
 
-const { socialgraph: api } = apis;
+const {
+  socialgraph: api,
+} = apis;
 
 const sgActions = createAction('socialgraph')(api);
 
@@ -80,6 +84,48 @@ function unfollow(viewer, actor) {
           return resolve();
         }, (response) => {
           dispatch(unfollowFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
+// -- Remove Follower
+
+function removefollowerRequest(follower) {
+  return {
+    type: SOCIALGRAPH.REMOVE_FOLLOWER.REQUEST,
+    follower,
+  };
+}
+
+function removefollowerSuccess(follower) {
+  return {
+    type: SOCIALGRAPH.REMOVE_FOLLOWER.SUCCESS,
+    actor: follower,
+  };
+}
+
+function removefollowerFailure(error) {
+  return {
+    type: SOCIALGRAPH.REMOVE_FOLLOWER.FAILURE,
+    error: error.message,
+  };
+}
+
+function removefollower(actor, follower) {
+  return (dispatch) => {
+    dispatch(removefollowerRequest(actor));
+    return new Promise((resolve, reject) => {
+      const namespace = utils.node.getNamespace(actor);
+      apis[namespace][singularize(namespace)].addfollowers.deleteItem({ actor, follower })
+        .then(() => {
+          dispatch(removefollowerSuccess(follower));
+          return resolve();
+        }, (response) => {
+          dispatch(removefollowerFailure(response));
           return reject(response);
         }).catch((error) => {
           throw new Error(error);
@@ -170,6 +216,48 @@ function unblock(viewer, actor) {
   };
 }
 
+// -- Block Follower
+
+function blockfollowerRequest(follower) {
+  return {
+    type: SOCIALGRAPH.BLOCK_FOLLOWER.REQUEST,
+    follower,
+  };
+}
+
+function blockfollowerSuccess(follower) {
+  return {
+    type: SOCIALGRAPH.BLOCK_FOLLOWER.SUCCESS,
+    actor: follower,
+  };
+}
+
+function blockfollowerFailure(error) {
+  return {
+    type: SOCIALGRAPH.REMOVE_FOLLOWER.FAILURE,
+    error: error.message,
+  };
+}
+
+function blockfollower(actor, follower) {
+  return (dispatch) => {
+    dispatch(blockfollowerRequest(actor));
+    return new Promise((resolve, reject) => {
+      const namespace = utils.node.getNamespace(actor);
+      apis[namespace][singularize(namespace)].addfollowers.block({ actor, follower })
+        .then(() => {
+          dispatch(blockfollowerSuccess(follower));
+          return resolve();
+        }, (response) => {
+          dispatch(blockfollowerFailure(response));
+          return reject(response);
+        }).catch((error) => {
+          throw new Error(error);
+        });
+    });
+  };
+}
+
 export default {
   reset: () => {
     return sgActions.reset();
@@ -179,6 +267,8 @@ export default {
   },
   follow,
   unfollow,
+  removefollower,
   block,
   unblock,
+  blockfollower,
 };

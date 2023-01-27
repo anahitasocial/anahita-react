@@ -9,7 +9,7 @@ import actions from '../../../actions';
 
 import ActorType from '../../../proptypes/Actor';
 import ActorsType from '../../../proptypes/Actors';
-import ActorsCard from '../browse/Card';
+import ActorsCard from './Card';
 import Masonry from '../../../components/BreakpointMasonry';
 import Progress from '../../../components/Progress';
 import { App as APP } from '../../../constants';
@@ -72,14 +72,14 @@ const ActorsSocialgraph = (props) => {
       >
         <Masonry>
           {items.allIds.map((itemId) => {
-            const node = items.byId[itemId];
-            const key = `socialgraph_node_${node.id}`;
+            const follower = items.byId[itemId];
+            const key = `socialgraph_node_${follower.id}`;
             return (
               <div
                 className={classes.card}
                 key={key}
               >
-                <ActorsCard actor={node} />
+                <ActorsCard leader={actorNode} actor={follower} />
               </div>
             );
           })}
