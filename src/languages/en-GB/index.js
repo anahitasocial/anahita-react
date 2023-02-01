@@ -475,6 +475,7 @@ export default {
         articles: 'Articles',
         documents: 'Documents',
         topics: 'Todos',
+        todos: 'Todos',
       },
       actors: {
         people: 'People',
