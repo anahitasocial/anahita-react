@@ -26,6 +26,7 @@ const styles = (theme) => {
     },
     hAction: {
       alignSelf: 'flex-end',
+      marginTop: -theme.spacing(6),
     },
     title: {
       fontSize: 24,
