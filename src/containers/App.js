@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme) => {
     content: {
       flexGrow: 1,
       overflow: 'auto',
-      marginTop: -1,
       paddingBottom: theme.spacing(2),
     },
   };
