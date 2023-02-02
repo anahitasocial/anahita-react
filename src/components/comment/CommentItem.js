@@ -5,6 +5,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
+import Divider from '@material-ui/core/Divider';
 
 import ActorTitle from '../actor/Title';
 import ActorAvatar from '../actor/Avatar';
@@ -41,6 +42,7 @@ const CommentItem = (props) => {
 
   return (
     <>
+      <Divider />
       <CardHeader
         avatar={
           <ActorAvatar

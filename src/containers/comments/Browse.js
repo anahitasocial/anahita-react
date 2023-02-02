@@ -102,7 +102,7 @@ const CommentsBrowse = (props) => {
   };
 
   return (
-    <Card variant="outlined">
+    <Card>
       <InfiniteScroll
         dataLength={items.allIds.length}
         next={fetchList}

@@ -7,7 +7,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
@@ -131,7 +130,6 @@ const StoryCardComment = (props) => {
         <CardActions>
           {actions}
         </CardActions>}
-      <Divider />
       {comments}
     </Card>
   );
