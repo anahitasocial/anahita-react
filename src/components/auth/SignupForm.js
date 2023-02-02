@@ -47,7 +47,7 @@ const SignupForm = (props) => {
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
-      <Card variant="outlined">
+      <Card>
         <CardHeader
           avatar={
             <Avatar>

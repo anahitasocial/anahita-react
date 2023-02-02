@@ -28,7 +28,7 @@ const ActorSettingCard = (props) => {
   const url = getURL(actor);
 
   return (
-    <Card variant="outlined">
+    <Card>
       <CardHeader
         avatar={
           <Button

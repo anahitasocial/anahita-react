@@ -63,7 +63,6 @@ const ActorCard = (props) => {
 
   return (
     <Card
-      variant="outlined"
       component="section"
       className={!actor.enabled ? classes.disabled : ''}
     >

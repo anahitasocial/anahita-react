@@ -30,7 +30,7 @@ const ActorBodyAbout = (props) => {
   } = actor;
 
   return (
-    <Card variant="outlined" component="section">
+    <Card component="section">
       <CardHeader
         title={
           <Typography

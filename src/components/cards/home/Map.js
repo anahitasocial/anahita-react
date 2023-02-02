@@ -57,7 +57,7 @@ const HomeCardMap = (params) => {
   }, []);
 
   return (
-    <Card variant="outlined" component="section">
+    <Card component="section">
       <CardHeader
         title={
           <Typography variant="h6">

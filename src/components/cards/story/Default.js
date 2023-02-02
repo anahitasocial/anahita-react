@@ -79,7 +79,6 @@ const StoryCardDefault = (props) => {
     <Card
       className={classes.root}
       component="section"
-      variant="outlined"
     >
       {showOwnerHeader && <StoryCardOwner node={story} />}
       <CardHeader

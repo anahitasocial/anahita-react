@@ -101,7 +101,7 @@ const LocationsGadget = (props) => {
           handleClose={handleClose}
           cardProps={cardProps}
         />}
-      <Card variant="outlined" {...cardProps}>
+      <Card {...cardProps}>
         <CardHeader
           title={
             <Typography

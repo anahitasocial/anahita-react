@@ -41,10 +41,7 @@ const CommentCard = (props) => {
   }
 
   return (
-    <Card
-      component="section"
-      variant="outlined"
-    >
+    <Card component="section">
       <CardHeader
         avatar={
           <ActorAvatar

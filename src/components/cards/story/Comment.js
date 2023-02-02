@@ -75,7 +75,6 @@ const StoryCardComment = (props) => {
     <Card
       className={classes.card}
       component="article"
-      variant="outlined"
     >
       {showOwner && <StoryCardOwner node={story} />}
       <CardHeader

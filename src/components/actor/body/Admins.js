@@ -23,7 +23,7 @@ const ActorBodyAdmins = (props) => {
   const namespace = utils.node.getNamespace(actor);
 
   return (
-    <Card variant="outlined">
+    <Card>
       <CardHeader
         title={
           <Typography
