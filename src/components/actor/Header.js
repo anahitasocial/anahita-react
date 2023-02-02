@@ -56,6 +56,7 @@ const ActorHeader = (props) => {
   return (
     <Card
       variant="outlined"
+      square
       className={!actor.enabled ? classes.disabled : ''}
     >
       {cover}

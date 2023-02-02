@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => {
       display: 'flex',
     },
     appBar: {
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('lg')]: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
       },
@@ -43,12 +43,12 @@ const useStyles = makeStyles((theme) => {
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('lg')]: {
         display: 'none',
       },
     },
     drawer: {
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('lg')]: {
         width: drawerWidth,
         flexShrink: 0,
       },
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => {
     content: {
       flexGrow: 1,
       overflow: 'auto',
-      paddingTop: theme.spacing(2),
+      marginTop: -1,
       paddingBottom: theme.spacing(2),
     },
   };
@@ -158,7 +158,7 @@ const App = (props) => {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>
-        <Hidden smUp implementation="css">
+        <Hidden lgUp implementation="css">
           <Drawer
             container={container}
             variant="temporary"
@@ -175,7 +175,7 @@ const App = (props) => {
             {drawer()}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden mdDown implementation="css">
           <Drawer
             classes={{
               paper: classes.drawerPaper,
@@ -189,9 +189,14 @@ const App = (props) => {
       </nav>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container>
+        <Hidden mdDown implementation="css">
+          <Container fixed maxWidth="false">
+            {children}
+          </Container>
+        </Hidden>
+        <Hidden lgUp implementation="css">
           {children}
-        </Container>
+        </Hidden>
       </main>
     </div>
   );
