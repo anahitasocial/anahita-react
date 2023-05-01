@@ -48,7 +48,7 @@ const Home = (props) => {
   const { width: winWidth } = getWindowDimensions();
 
   const particlesInit = useCallback(async (engine) => {
-    console.log(engine);
+    // console.log(engine);
 
     await loadLinksPreset(engine);
     await loadFull(engine);

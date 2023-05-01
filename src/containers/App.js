@@ -189,7 +189,7 @@ const App = (props) => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Hidden mdDown implementation="css">
-          <Container fixed maxWidth="false">
+          <Container fixed maxWidth={false}>
             {children}
           </Container>
         </Hidden>
