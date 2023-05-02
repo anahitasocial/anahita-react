@@ -43,10 +43,6 @@ import SearchPage from '../containers/search';
 import Settings from '../containers/settings';
 import StaticPage from '../containers/page';
 import NotFoundPage from '../containers/NotFound';
-import SocialMediaPreviewRedirect from './SocialMediaPreviewRedirect';
-import utils from '../utils';
-
-const { isSocialMediaAgent } = utils.app;
 
 const GroupsBrowse = Actors('groups');
 const GroupsRead = ActorsRead('groups');
@@ -216,10 +212,6 @@ const Routes = (props) => {
         exact
         path="/people/:id/"
         component={(params) => {
-          if (isSocialMediaAgent()) {
-            return <SocialMediaPreviewRedirect {...params} />;
-          }
-
           return <PeopleRead {...params} />;
         }}
       />
@@ -251,10 +243,6 @@ const Routes = (props) => {
         exact
         path="/groups/:id/"
         component={(params) => {
-          if (isSocialMediaAgent()) {
-            return <SocialMediaPreviewRedirect {...params} />;
-          }
-
           return <GroupsRead {...params} />;
         }}
       />
@@ -298,10 +286,6 @@ const Routes = (props) => {
         exact
         path="/articles/:id/"
         component={(params) => {
-          if (isSocialMediaAgent()) {
-            return <SocialMediaPreviewRedirect {...params} />;
-          }
-
           return <ArticlesRead {...params} />;
         }}
       />
@@ -314,10 +298,6 @@ const Routes = (props) => {
         exact
         path="/documents/:id/"
         component={(params) => {
-          if (isSocialMediaAgent()) {
-            return <SocialMediaPreviewRedirect {...params} />;
-          }
-
           return <DocumentsRead {...params} />;
         }}
       />
@@ -330,10 +310,6 @@ const Routes = (props) => {
         exact
         path="/notes/:id/"
         component={(params) => {
-          if (isSocialMediaAgent()) {
-            return <SocialMediaPreviewRedirect {...params} />;
-          }
-
           return <NotesRead {...params} />;
         }}
       />
@@ -351,10 +327,6 @@ const Routes = (props) => {
         exact
         path="/photos/:id/"
         component={(params) => {
-          if (isSocialMediaAgent()) {
-            return <SocialMediaPreviewRedirect {...params} />;
-          }
-
           return <PhotosRead {...params} />;
         }}
       />
@@ -367,10 +339,6 @@ const Routes = (props) => {
         exact
         path="/todos/:id/"
         component={(params) => {
-          if (isSocialMediaAgent()) {
-            return <SocialMediaPreviewRedirect {...params} />;
-          }
-
           return <TodosRead {...params} />;
         }}
       />
@@ -383,10 +351,6 @@ const Routes = (props) => {
         exact
         path="/topics/:id/"
         component={(params) => {
-          if (isSocialMediaAgent()) {
-            return <SocialMediaPreviewRedirect {...params} />;
-          }
-
           return <TopicsRead {...params} />;
         }}
       />
