@@ -6,9 +6,8 @@ const { constructFormData } = utils.api;
 
 const browse = (namespace) => {
   return (params) => {
-    return axios.get(`/${namespace}.json`, {
+    return axios.get(`/${namespace}/`, {
       params: {
-        start: params.offset,
         q: params.keywordFilter,
         ...params,
       },
@@ -18,34 +17,34 @@ const browse = (namespace) => {
 
 const read = (namespace) => {
   return (id) => {
-    return axios.get(`/${namespace}/${id}.json`);
+    return axios.get(`/${namespace}/${id}`);
   };
 };
 
 const edit = (namespace) => {
   return (node) => {
-    return axios.post(`/${namespace}/${node.id}.json`, constructFormData(node));
+    return axios.post(`/${namespace}/${node.id}`, constructFormData(node));
   };
 };
 
 const add = (namespace) => {
   return (node, owner = null) => {
     const path = (owner) ?
-      `/${namespace}/@${owner.id}/${singularize(namespace)}.json` :
-      `/${namespace}.json`;
+      `/${namespace}/@${owner.id}/${singularize(namespace)}/` :
+      `/${namespace}/`;
     return axios.post(path, constructFormData(node));
   };
 };
 
 const deleteItem = (namespace) => {
   return (node) => {
-    return axios.delete(`/${namespace}/${node.id}.json`);
+    return axios.delete(`/${namespace}/${node.id}`);
   };
 };
 
 const download = (namespace) => {
   return (id) => {
-    return axios.get(`/${namespace}/${id}.file`, { responseType: 'blob' });
+    return axios.get(`/${namespace}/${id}/download`, { responseType: 'blob' });
   };
 };
 

@@ -4,15 +4,19 @@ import utils from '../utils';
 const { constructFormData } = utils.api;
 
 const read = () => {
-  return axios.get('/people/session.json');
+  return axios.get('/whoami');
 };
 
 const add = (credentials) => {
-  return axios.post('/people/session.json', constructFormData(credentials));
+  const { username, password } = credentials;
+  return axios.post('/authenticate/', constructFormData({
+    identifier: username,
+    password,
+  }));
 };
 
 const deleteItem = () => {
-  return axios.delete('/people/session.json');
+  return axios.delete('/authenticate/');
 };
 
 export default {
