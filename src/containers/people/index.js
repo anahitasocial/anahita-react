@@ -109,20 +109,13 @@ const People = (props) => {
             />
           </Toolbar>
         </AppBar>}
-      {useMemo(() => {
-        return (
-          <Browse
-            queryFilters={{
-              'filter[disabled]': disabled ? 1 : 0,
-              'filter[usertype]': usertype,
-            }}
-            key={key}
-          />
-        );
-      }, [
-        disabled,
-        usertype,
-      ])}
+      <Browse
+        queryFilters={{
+          disabled,
+          usertype,
+        }}
+        key={key}
+      />
     </>
   );
 };

@@ -44,9 +44,9 @@ const ActorsBrowse = (props) => {
     namespace,
     viewer,
     items,
-    hasMore,
     isFetching,
     queryFilters,
+    total,
   } = props;
 
   const [start, setStart] = useState(0);
@@ -65,13 +65,14 @@ const ActorsBrowse = (props) => {
         ...queryFilters,
       }, namespace);
     }
-  }, [start]);
+  }, [start, queryFilters]);
 
   const fetchList = () => {
     return setStart(start + LIMIT);
   };
 
   const canAdd = permissions.canAdd(viewer, namespace);
+  const hasMore = total > items.allIds.length;
 
   return (
     <>
@@ -119,8 +120,8 @@ ActorsBrowse.propTypes = {
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   items: ActorsType.isRequired,
-  hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  total: PropTypes.number,
 };
 
 ActorsBrowse.defaultProps = {
@@ -130,13 +131,14 @@ ActorsBrowse.defaultProps = {
     oid: 0,
     filter: '',
   },
+  total: 0,
 };
 
 const mapStateToProps = (namespace) => {
   return (state) => {
     const {
       error,
-      hasMore,
+      total,
       isFetching,
     } = state[namespace];
 
@@ -148,9 +150,9 @@ const mapStateToProps = (namespace) => {
       items: state[namespace][namespace],
       namespace,
       error,
-      hasMore,
       isFetching,
       viewer,
+      total,
     };
   };
 };

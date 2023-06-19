@@ -24,19 +24,20 @@ const browseSuccess = (results, namespace) => {
   const { pagination } = data;
 
   const limit = pagination.limit || 20;
+  const start = pagination.offset || 0;
   const total = pagination.total || 0;
 
   const node = new schema.Entity(namespace);
   const nodes = [node];
-  const normalized = normalize(data.data, nodes);
-  const hasMore = data.data.length >= limit;
+  const normalized = normalize(data.data ? data.data : {}, nodes);
 
   return {
     type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
     [namespace]: normalized.entities[namespace] || {},
     ids: normalized.result || [],
     total,
-    hasMore,
+    limit,
+    start,
   };
 };
 
