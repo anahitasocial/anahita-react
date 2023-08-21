@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import {
+  Auth as AUTH,
   Person as PERSON,
   Session as SESSION,
 } from '../constants';
@@ -12,8 +13,10 @@ const {
   SUPER_ADMIN,
 } = PERSON.FIELDS.TYPE;
 
-const viewer = localStorage.getItem('viewer') ?
-  JSON.parse(localStorage.getItem('viewer')) :
+const { VIEWER_STORAGE_KEY } = AUTH;
+
+const viewer = localStorage.getItem(VIEWER_STORAGE_KEY) ?
+  JSON.parse(localStorage.getItem(VIEWER_STORAGE_KEY)) :
   { ...PersonDefault, usertype: GUEST };
 
 const initState = {

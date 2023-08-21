@@ -1,7 +1,11 @@
 /* eslint-disable no-undef */
 import apis from '../api';
-import { Session as SESSION } from '../constants';
+import {
+  Session as SESSION,
+  Auth as AUTH,
+} from '../constants';
 
+const { VIEWER_STORAGE_KEY } = AUTH;
 const { session: api } = apis;
 
 function reset() {
@@ -20,7 +24,7 @@ function readRequest() {
 
 function readSuccess(response) {
   const { data } = response;
-  localStorage.setItem('viewer', JSON.stringify(data));
+  localStorage.setItem(VIEWER_STORAGE_KEY, JSON.stringify(data));
 
   return {
     type: SESSION.READ.SUCCESS,
@@ -29,7 +33,7 @@ function readSuccess(response) {
 }
 
 function readFailure(error) {
-  localStorage.removeItem('viewer');
+  localStorage.removeItem(VIEWER_STORAGE_KEY);
   return {
     type: SESSION.READ.FAILURE,
     error: error.message,
@@ -64,7 +68,7 @@ function addRequest() {
 
 function addSuccess(response) {
   const { data } = response;
-  localStorage.setItem('viewer', JSON.stringify(data));
+  localStorage.setItem(VIEWER_STORAGE_KEY, JSON.stringify(data));
 
   return {
     type: SESSION.ADD.SUCCESS,
@@ -107,7 +111,7 @@ function deleteRequest() {
 
 function deleteSuccess(response) {
   const { data } = response;
-  localStorage.removeItem('viewer');
+  localStorage.removeItem(VIEWER_STORAGE_KEY);
 
   return {
     type: SESSION.DELETE.SUCCESS,

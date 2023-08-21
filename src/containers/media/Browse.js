@@ -33,9 +33,9 @@ const MediaBrowse = (props) => {
     items,
     namespace,
     viewer,
-    hasMore,
     isFetching,
     queryFilters,
+    total,
   } = props;
 
   const [start, setStart] = useState(0);
@@ -57,7 +57,7 @@ const MediaBrowse = (props) => {
         ...queryFilters,
       }, namespace);
     }
-  }, [start]);
+  }, [start, queryFilters]);
 
   const handleClose = () => {
     setStepperOpen(false);
@@ -73,6 +73,7 @@ const MediaBrowse = (props) => {
   }
 
   const Stepper = MediumStepper(namespace);
+  const hasMore = total > items.allIds.length;
 
   return (
     <>
@@ -132,8 +133,8 @@ MediaBrowse.propTypes = {
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   items: MediaType.isRequired,
-  hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  total: PropTypes.number,
 };
 
 MediaBrowse.defaultProps = {
@@ -141,13 +142,14 @@ MediaBrowse.defaultProps = {
     q: '',
     oid: 0,
   },
+  total: 0,
 };
 
 const mapStateToProps = (namespace) => {
   return (state) => {
     const {
       error,
-      hasMore,
+      total,
       isFetching,
     } = state[namespace];
 
@@ -157,9 +159,9 @@ const mapStateToProps = (namespace) => {
       items: state[namespace][namespace],
       namespace,
       error,
-      hasMore,
       isFetching,
       viewer,
+      total,
     };
   };
 };

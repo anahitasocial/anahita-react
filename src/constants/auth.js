@@ -1,4 +1,5 @@
 export default {
+  VIEWER_STORAGE_KEY: 'anahita-viewer',
   FIELDS: {
     IDENTIFIER: {
       MAX_LENGTH: 100,
