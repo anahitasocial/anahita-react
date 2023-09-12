@@ -30,9 +30,9 @@ const HashtagsBrowse = (props) => {
     alertError,
     items,
     error,
-    hasMore,
     isFetching,
     queryFilters,
+    total,
   } = props;
 
   const [start, setStart] = useState(0);
@@ -51,7 +51,7 @@ const HashtagsBrowse = (props) => {
         ...queryFilters,
       });
     }
-  }, [start]);
+  }, [start, queryFilters]);
 
   useEffect(() => {
     if (error) {
@@ -62,6 +62,8 @@ const HashtagsBrowse = (props) => {
   const fetchList = () => {
     return setStart(start + LIMIT);
   };
+
+  const hasMore = total > items.allIds.length;
 
   return (
     <List>
@@ -104,8 +106,8 @@ HashtagsBrowse.propTypes = {
   queryFilters: PropTypes.object,
   items: HashtagsType.isRequired,
   error: PropTypes.string.isRequired,
-  hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  total: PropTypes.number,
 };
 
 HashtagsBrowse.defaultProps = {
@@ -113,6 +115,7 @@ HashtagsBrowse.defaultProps = {
     q: '',
     sort: TRENDING,
   },
+  total: 0,
 };
 
 const mapStateToProps = (state) => {
@@ -120,14 +123,14 @@ const mapStateToProps = (state) => {
     hashtags: items,
     error,
     isFetching,
-    hasMore,
+    total,
   } = state.hashtags;
 
   return {
     items,
     error,
     isFetching,
-    hasMore,
+    total,
   };
 };
 

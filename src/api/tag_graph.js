@@ -16,7 +16,7 @@ const getNodeType = (node) => {
 const browse = (node) => {
   return (params) => {
     const { objectType } = params;
-    return axios.get(`/${objectType.split('.')[1]}.json?`, {
+    return axios.get(`/${objectType.split('.')[1]}/`, {
       params: {
         taggable_id: node.id,
         ...params,
@@ -29,7 +29,7 @@ const add = (node) => {
   return (tag) => {
     const namespace = getNamespace(node);
     const tagType = getNodeType(tag);
-    return axios.post(`/${namespace}/${node.id}.json?`, constructFormData({
+    return axios.post(`/${namespace}/${node.id}`, constructFormData({
       action: `add${tagType}`,
       [`${tagType}_id`]: tag.id,
     }));
@@ -40,7 +40,7 @@ const deleteItem = (node) => {
   return (tag) => {
     const namespace = getNamespace(node);
     const tagType = getNodeType(tag);
-    return axios.post(`/${namespace}/${node.id}.json`, constructFormData({
+    return axios.post(`/${namespace}/${node.id}`, constructFormData({
       action: `delete${tagType}`,
       [`${tagType}_id`]: tag.id,
     }));
