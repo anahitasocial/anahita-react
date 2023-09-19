@@ -129,7 +129,7 @@ ActorAvatarForm.propTypes = {
 ActorAvatarForm.defaultProps = {
   isFetching: false,
   canEdit: false,
-  avatar: '',
+  avatar: null,
   anchorEl: null,
   size: 'default',
 };
