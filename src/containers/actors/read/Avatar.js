@@ -18,9 +18,9 @@ const ActorsAvatar = (props) => {
   } = props;
 
   const getAvatarSrc = (actor) => {
-    const src = actor.imageURL &&
-    actor.imageURL.large &&
-    actor.imageURL.large.url;
+    const src = actor.avatarURL &&
+    actor.avatarURL.large &&
+    actor.avatarURL.large.url;
 
     return src || null;
   };

@@ -10,11 +10,10 @@ const getNamespace = (node) => {
 
 const browse = (tag) => {
   return (params) => {
-    const { id } = tag;
     const namespace = getNamespace(tag);
     const { start, limit, sort } = params;
 
-    return axios.get(`/${namespace}/${id}.json?`, {
+    return axios.get(`/${namespace}/${tag.id}/taggables?`, {
       params: {
         start,
         limit,
@@ -29,7 +28,7 @@ const add = (tag) => {
     const namespace = getNamespace(taggable);
     const { id, objectType } = tag;
 
-    return axios.post(`/${namespace}/${taggable.id}.json`, constructFormData({
+    return axios.post(`/${namespace}/${taggable.id}`, constructFormData({
       action: `add${objectType.split('.')[2]}`,
       location_id: id,
     }));
@@ -41,7 +40,7 @@ const deleteItem = (tag) => {
     const namespace = getNamespace(taggable);
     const { id, objectType } = tag;
 
-    return axios.post(`/${namespace}/${taggable.id}.json`, constructFormData({
+    return axios.post(`/${namespace}/${taggable.id}`, constructFormData({
       action: `delete${objectType.split('.')[2]}`,
       location_id: id,
     }));

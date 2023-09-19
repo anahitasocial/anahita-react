@@ -26,7 +26,7 @@ export default shape({
   gadgets: arrayOf(string),
   composers: arrayOf(string),
   commands: arrayOf(string),
-  imageURL,
+  avatarURL: imageURL,
   coverURL: imageURL,
   administrators: arrayOf(personType),
   followerCount: number,

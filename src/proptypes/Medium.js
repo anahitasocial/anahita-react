@@ -26,7 +26,7 @@ export default shape({
   name: string,
   alias: string,
   body: string,
-  imageURL: ImageURL,
+  portraitURL: ImageURL,
   coverURL: ImageURL,
   commands: arrayOf(string),
   subscriberCount: number,

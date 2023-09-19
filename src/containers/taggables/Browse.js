@@ -44,7 +44,7 @@ const TaggablesBrowse = (props) => {
     tag,
     items,
     error,
-    hasMore,
+    total,
     isFetching,
     queryFilters: {
       sort,
@@ -80,6 +80,8 @@ const TaggablesBrowse = (props) => {
     return setStart(start + LIMIT);
   };
 
+  const hasMore = total > items.allIds.length;
+
   return (
     <InfiniteScroll
       dataLength={items.allIds.length}
@@ -113,14 +115,14 @@ const mapStateToProps = (state) => {
   const {
     taggables: items,
     error,
-    hasMore,
+    total,
     isFetching,
   } = state.taggables;
 
   return {
     items,
     error,
-    hasMore,
+    total,
     isFetching,
   };
 };
@@ -136,8 +138,12 @@ TaggablesBrowse.propTypes = {
     q: PropTypes.string,
   }).isRequired,
   error: PropTypes.string.isRequired,
-  hasMore: PropTypes.bool.isRequired,
+  total: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
+};
+
+TaggablesBrowse.defaultProps = {
+  total: 0,
 };
 
 const mapDispatchToProps = (dispatch) => {

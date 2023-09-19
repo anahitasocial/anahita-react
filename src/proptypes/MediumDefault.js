@@ -8,7 +8,7 @@ export default {
   name: '',
   alias: '',
   body: '',
-  imageURL: ImageURLDefault,
+  portraitURL: ImageURLDefault,
   coverURL: ImageURLDefault,
   commands: [],
   subscriberCount: 0,

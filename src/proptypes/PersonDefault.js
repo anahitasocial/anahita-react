@@ -18,7 +18,7 @@ export default {
   gadgets: [],
   composers: [],
   gender: GENDER.NEUTRAL,
-  imageURL: imageURLDefault,
+  avatarURL: imageURLDefault,
   coverURL: imageURLDefault,
   followerCount: 0,
   leaderCount: 0,

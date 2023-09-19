@@ -149,7 +149,17 @@ const getOwnerName = (node) => {
 };
 
 const getPortraitURL = (node, size = 'medium') => {
-  const path = node.imageURL && node.imageURL[size] && node.imageURL[size].url;
+  const path = node.portraitURL && node.portraitURL[size] && node.portraitURL[size].url;
+
+  if (path) {
+    return path.substring(0, 4) === 'http' ? path : new URL(path, process.env.REACT_APP_API_BASE_URL).href;
+  }
+
+  return '';
+};
+
+const getAvatarURL = (node, size = 'medium') => {
+  const path = node.avatarURL && node.avatarURL[size] && node.avatarURL[size].url;
 
   if (path) {
     return path.substring(0, 4) === 'http' ? path : new URL(path, process.env.REACT_APP_API_BASE_URL).href;
@@ -237,6 +247,7 @@ export default {
   getActorInitials,
   getAddress,
   getAuthor,
+  getAvatarURL,
   getCommentURL,
   getCoverURL,
   getOwnerName,

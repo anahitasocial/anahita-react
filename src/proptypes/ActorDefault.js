@@ -10,7 +10,7 @@ export default {
   gadgets: [],
   composers: [],
   commands: [],
-  imageURL: imageURLDefault,
+  avatarURL: imageURLDefault,
   coverURL: imageURLDefault,
   administrators: [],
   followerCount: 0,

@@ -40,7 +40,7 @@ export default shape({
   body: string,
   gadgets: arrayOf(string),
   composers: arrayOf(string),
-  imageURL,
+  avatarURL: imageURL,
   coverURL: imageURL,
   followerCount: number,
   leaderCount: number,

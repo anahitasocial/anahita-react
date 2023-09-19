@@ -11,7 +11,7 @@ import i18n from '../../languages';
 
 const {
   getActorInitials,
-  getPortraitURL,
+  getAvatarURL,
 } = utils.node;
 
 const styles = (theme) => {
@@ -49,7 +49,7 @@ const Viewer = (props) => {
 
   const profile = `/people/${viewer.username}/`;
   const initials = getActorInitials(viewer);
-  const avatar = getPortraitURL(viewer);
+  const avatar = getAvatarURL(viewer);
   const {
     givenName,
     familyName,

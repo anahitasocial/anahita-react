@@ -20,20 +20,24 @@ function browseRequest() {
 }
 
 function browseSuccess(results) {
-  const { data, pagination } = results.data.taggables;
-  const { total, limit } = pagination;
+  const { data } = results;
+  const { pagination } = data;
 
-  const taggable = new schema.Entity('taggables');
-  const taggables = [taggable];
-  const normalized = normalize(data, taggables);
-  const hasMore = data.length >= limit;
+  const limit = pagination.limit || 20;
+  const start = pagination.offset || 0;
+  const total = pagination.total || 0;
+
+  const node = new schema.Entity('taggables');
+  const nodes = [node];
+  const normalized = normalize(data.data ? data.data : {}, nodes);
 
   return {
     type: 'TAGGABLES_BROWSE_SUCCESS',
     taggables: normalized.entities.taggables,
     ids: normalized.result,
     total,
-    hasMore,
+    limit,
+    start,
   };
 }
 
