@@ -10,7 +10,7 @@ export default {
     LIMIT: 20,
     SORTING: {
       TRENDING: 'trending',
-      TOP: 'top',
+      TOP: 'popular',
       RECENT: 'recent',
       UPDATED: 'updated',
       RELEVANT: 'relevant',

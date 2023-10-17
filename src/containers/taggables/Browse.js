@@ -74,7 +74,7 @@ const TaggablesBrowse = (props) => {
         limit: LIMIT,
       });
     }
-  }, [start]);
+  }, [start, sort]);
 
   const fetchList = () => {
     return setStart(start + LIMIT);
@@ -136,7 +136,7 @@ TaggablesBrowse.propTypes = {
   queryFilters: PropTypes.shape({
     sort: PropTypes.oneOf([TOP, RECENT]),
     q: PropTypes.string,
-  }).isRequired,
+  }),
   error: PropTypes.string.isRequired,
   total: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
@@ -144,6 +144,10 @@ TaggablesBrowse.propTypes = {
 
 TaggablesBrowse.defaultProps = {
   total: 0,
+  queryFilters: {
+    sort: TOP,
+    q: '',
+  },
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -244,7 +244,8 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      readItem: (id) => {
+      readItem: (slug) => {
+        const id = slug.split('-')[0];
         return dispatch(actions[namespace].read(id, namespace));
       },
       setAppTitle: (title) => {

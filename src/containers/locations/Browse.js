@@ -27,9 +27,9 @@ const LocationsBrowse = (props) => {
     alertError,
     items,
     error,
-    hasMore,
     isFetching,
     queryFilters,
+    total,
   } = props;
 
   const [start, setStart] = useState(0);
@@ -48,7 +48,7 @@ const LocationsBrowse = (props) => {
         ...queryFilters,
       });
     }
-  }, [start]);
+  }, [start, queryFilters]);
 
   useEffect(() => {
     if (error) {
@@ -60,13 +60,7 @@ const LocationsBrowse = (props) => {
     return setStart(start + LIMIT);
   };
 
-  if (error) {
-    return (
-      <Typography variant="body1" color="error" align="center">
-        {error}
-      </Typography>
-    );
-  }
+  const hasMore = total > items.allIds.length;
 
   return (
     <InfiniteScroll
@@ -97,8 +91,8 @@ LocationsBrowse.propTypes = {
   queryFilters: PropTypes.object,
   items: LocationsType.isRequired,
   error: PropTypes.string.isRequired,
-  hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  total: PropTypes.number,
 };
 
 LocationsBrowse.defaultProps = {
@@ -106,6 +100,7 @@ LocationsBrowse.defaultProps = {
     q: '',
     sort: TRENDING,
   },
+  total: 0,
 };
 
 const mapStateToProps = (state) => {
@@ -113,14 +108,14 @@ const mapStateToProps = (state) => {
     locations: items,
     error,
     isFetching,
-    hasMore,
+    total,
   } = state.locations;
 
   return {
     items,
     error,
     isFetching,
-    hasMore,
+    total,
   };
 };
 

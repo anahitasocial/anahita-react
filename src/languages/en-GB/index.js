@@ -506,7 +506,7 @@ export default {
       recent: 'Recent',
       updated: 'Updated',
       trending: 'Trending',
-      top: 'Top',
+      top: 'Popular',
     },
     filterByType: 'Filter by type',
     filterByOptions: {

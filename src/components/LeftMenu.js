@@ -62,8 +62,7 @@ const LeftMenu = (props) => {
             <NotificationsIcon />
           </ListItemIcon>
           <ListItemText primary={i18n.t('notifications:cTitle')} />
-        </ListItem>
-      }
+        </ListItem>}
       <ListItem
         button
         component={Link}
@@ -185,8 +184,7 @@ const LeftMenu = (props) => {
             <SettingsIcon />
           </ListItemIcon>
           <ListItemText primary={i18n.t('settings:mTitle')} />
-        </ListItem>
-      }
+        </ListItem>}
       <ListItem
         button
         component={Link}
@@ -208,8 +206,7 @@ const LeftMenu = (props) => {
             <LockOpenIcon />
           </ListItemIcon>
           <ListItemText primary={i18n.t('auth:logout')} />
-        </ListItem>
-      }
+        </ListItem>}
     </List>
   );
 };

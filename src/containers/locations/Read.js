@@ -272,7 +272,8 @@ LocationsRead.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readItem: (id) => {
+    readItem: (slug) => {
+      const id = slug.split('-')[0];
       return dispatch(actions.locations.read(id));
     },
     editItem: (node) => {

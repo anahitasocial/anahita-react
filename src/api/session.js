@@ -9,14 +9,14 @@ const read = () => {
 
 const add = (credentials) => {
   const { username, password } = credentials;
-  return axios.post('/authenticate/', constructFormData({
+  return axios.post('/auth/', constructFormData({
     identifier: username,
     password,
   }));
 };
 
 const deleteItem = () => {
-  return axios.delete('/authenticate/');
+  return axios.delete('/auth/');
 };
 
 export default {

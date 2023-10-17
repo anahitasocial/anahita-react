@@ -140,8 +140,8 @@ const MediaRead = (props) => {
   }
 
   const canAddComment = isAuthenticated && medium.openToComment;
-  const portrait = getPortraitURL(medium, 'large');
-  const cover = getCoverURL(medium, 'large');
+  const portrait = getPortraitURL(medium, 'original');
+  const cover = getCoverURL(medium, 'original');
   const Like = LikeAction(namespace);
   const Privacy = PrivacyAction(namespace);
   const canEdit = perms.medium.canEdit(viewer, medium);
@@ -258,7 +258,8 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      readItem: (id) => {
+      readItem: (slug) => {
+        const id = slug.split('-')[0];
         return dispatch(actions[namespace].read(id));
       },
       editItem: (node) => {
