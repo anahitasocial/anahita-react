@@ -62,7 +62,7 @@ const StoryCardComment = (props) => {
   const classes = useStyles();
 
   // @Todo add support for array objects
-  const portrait = story.object && getPortraitURL(story.object, 'large');
+  const portrait = story.object && getPortraitURL(story.object, 'medium');
   const cover = story.object && getCoverURL(story.object);
   const title = story.object && story.object.name;
   const body = story.object && story.object.body;

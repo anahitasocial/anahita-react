@@ -29,7 +29,7 @@ const NotificationsBrowse = (props) => {
     alertError,
     items,
     error,
-    hasMore,
+    total,
   } = props;
 
   const [start, setStart] = useState(0);
@@ -56,6 +56,8 @@ const NotificationsBrowse = (props) => {
   const fetchList = () => {
     return setStart(start + LIMIT);
   };
+
+  const hasMore = total > items.allIds.length;
 
   return (
     <List>
@@ -100,22 +102,26 @@ NotificationsBrowse.propTypes = {
   alertError: PropTypes.func.isRequired,
   items: NotificationsType.isRequired,
   error: PropTypes.string.isRequired,
-  hasMore: PropTypes.bool.isRequired,
+  total: PropTypes.number,
+};
+
+NotificationsBrowse.defaultProps = {
+  total: 0,
 };
 
 const mapStateToProps = (state) => {
   const {
     notifications: items,
     error,
+    total,
     isFetching,
-    hasMore,
   } = state.notifications;
 
   return {
     items,
     error,
+    total,
     isFetching,
-    hasMore,
   };
 };
 
