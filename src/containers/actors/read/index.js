@@ -187,12 +187,12 @@ const ActorsRead = (props) => {
                 actorNode={actor}
                 filter="leaders"
               />}
-            blocked={actor.id && isViewer &&
+            blocked={actor.id && (isViewer || canAdminister) &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="blocked"
               />}
-            mutuals={actor.id && !isViewer && isPerson(actor) &&
+            mutuals={actor.id && !isViewer &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="mutuals"

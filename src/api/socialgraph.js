@@ -8,46 +8,52 @@ function browse(params) {
     filter,
     actor,
     start,
+    limit,
     q,
   } = params;
-  const component = utils.node.getNamespace(actor);
-  return axios.get(`/${component}/${actor.id}/graph/${filter}.json`, {
+
+  return axios.get(`/socialgraph/${actor.id}/${filter}/`, {
     params: {
       start,
+      limit,
       q,
     },
   });
 }
 
 function follow(viewer, actor) {
-  const component = utils.node.getNamespace(actor);
-  return axios.post(`/${component}/${actor.id}.json`, constructFormData({
-    actor: viewer.id,
-    action: 'follow',
+  return axios.post(`/socialgraph/${actor.id}/followers/`, constructFormData({
+    follower_id: viewer.id,
   }));
 }
 
 function unfollow(viewer, actor) {
-  const component = utils.node.getNamespace(actor);
-  return axios.post(`/${component}/${actor.id}.json`, constructFormData({
-    actor: viewer.id,
-    action: 'unfollow',
+  return axios.delete(`/socialgraph/${actor.id}/followers/`, constructFormData({
+    follower_id: viewer.id,
+  }));
+}
+
+function lead(viewer, actor) {
+  return axios.post(`/socialgraph/${actor.id}/leaders/`, constructFormData({
+    leader_id: viewer.id,
+  }));
+}
+
+function unlead(viewer, actor) {
+  return axios.delete(`/socialgraph/${actor.id}/leaders/`, constructFormData({
+    leader_id: viewer.id,
   }));
 }
 
 function block(viewer, actor) {
-  const component = utils.node.getNamespace(actor);
-  return axios.post(`/${component}/${actor.id}.json`, constructFormData({
-    actor: viewer.id,
-    action: 'block',
+  return axios.post(`/socialgraph/${actor.id}/blocks/`, constructFormData({
+    blocked_id: viewer.id,
   }));
 }
 
 function unblock(viewer, actor) {
-  const component = utils.node.getNamespace(actor);
-  return axios.post(`/${component}/${actor.id}.json`, constructFormData({
-    actor: viewer.id,
-    action: 'unblock',
+  return axios.delete(`socialgraph/${actor.id}/blocks/`, constructFormData({
+    blocked_id: viewer.id,
   }));
 }
 
@@ -55,6 +61,8 @@ export default {
   browse,
   follow,
   unfollow,
+  lead,
+  unlead,
   block,
   unblock,
 };

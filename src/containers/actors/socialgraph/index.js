@@ -31,7 +31,7 @@ const ActorsSocialgraph = (props) => {
     resetList,
     items,
     actorNode,
-    hasMore,
+    total,
     filter,
     queryFilters,
   } = props;
@@ -59,6 +59,8 @@ const ActorsSocialgraph = (props) => {
   const fetchList = () => {
     return setStart(start + LIMIT);
   };
+
+  const hasMore = total > items.allIds.length;
 
   return (
     <>
@@ -101,13 +103,14 @@ ActorsSocialgraph.propTypes = {
     'blocked',
   ]).isRequired,
   queryFilters: PropTypes.object,
-  hasMore: PropTypes.bool.isRequired,
+  total: PropTypes.number,
 };
 
 ActorsSocialgraph.defaultProps = {
   queryFilters: {
     q: '',
   },
+  total: 0,
 };
 
 const mapStateToProps = () => {
@@ -115,7 +118,7 @@ const mapStateToProps = () => {
     const {
       actors: items,
       error,
-      hasMore,
+      total,
     } = state.socialgraph;
 
     const {
@@ -125,7 +128,7 @@ const mapStateToProps = () => {
     return {
       items,
       error,
-      hasMore,
+      total,
       viewer,
     };
   };
