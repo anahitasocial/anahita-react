@@ -78,7 +78,7 @@ const StoriesBrowse = (props) => {
   };
 
   const getNumOfComments = (node) => {
-    if (node.object && isCommentable(node.object)) {
+    if (node.object && node.object.id && isCommentable(node.object)) {
       if (comments.byId[node.object.id]) {
         return comments.byId[node.object.id].allIds.length;
       }
@@ -107,7 +107,7 @@ const StoriesBrowse = (props) => {
 
         let Like = null;
 
-        if (node.object && isLikeable(node.object)) {
+        if (node.object && node.object.id && isLikeable(node.object)) {
           Like = LikeAction('stories');
         }
 
@@ -120,12 +120,12 @@ const StoriesBrowse = (props) => {
                 story={node}
               />}
             stats={[
-              node.object && isLikeable(node.object) &&
+              node.object && node.object.id && isLikeable(node.object) &&
               <LikesStats
                 key={`story-like-stat-${node.object.id}`}
                 node={node.object}
               />,
-              node.object && isCommentable(node.object) &&
+              node.object && node.object.id && isCommentable(node.object) &&
               <CommentStats
                 key={`story-comment-stat-${node.object.id}`}
                 node={{
@@ -135,13 +135,13 @@ const StoriesBrowse = (props) => {
               />,
             ]}
             actions={isAuthenticated && [
-              node.object && isLikeable(node.object) &&
+              node.object && node.object.id && isLikeable(node.object) &&
               <Like
                 story={node}
                 node={node.object}
                 key={`story-like-${node.object.id}`}
               />,
-              node.object && isCommentable(node.object) &&
+              node.object && node.object.id && isCommentable(node.object) &&
               <Button
                 onClick={() => {
                   openComments.push(node.id);
@@ -158,7 +158,7 @@ const StoriesBrowse = (props) => {
                 Comment
               </Button>,
             ]}
-            comments={node.object && isCommentable(node.object) && // isCommentsOpen &&
+            comments={node.object && node.object.id && isCommentable(node.object) &&
               <CommentsBrowse
                 parent={node.object}
                 comments={node.comments}

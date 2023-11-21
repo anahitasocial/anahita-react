@@ -30,12 +30,12 @@ const CommentsBrowse = (props) => {
     resetList,
     addItem,
     items,
-    hasMore,
     canAdd,
     parent,
     viewer,
     isFetching,
     cardProps,
+    total,
   } = props;
 
   const namespace = utils.node.getNamespace(parent);
@@ -101,6 +101,8 @@ const CommentsBrowse = (props) => {
     setFields({ ...newFields });
   };
 
+  const hasMore = total > items.allIds.length;
+
   return (
     <Card>
       <InfiniteScroll
@@ -142,16 +144,16 @@ const mapStateToProps = (state) => {
   const {
     comments: items,
     error,
-    hasMore,
     isFetching,
+    total,
   } = state.comments;
 
   return {
     viewer,
     items,
     error,
-    hasMore,
     isFetching,
+    total,
   };
 };
 
@@ -177,14 +179,15 @@ CommentsBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
-  hasMore: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   cardProps: PropTypes.objectOf(PropTypes.any),
+  total: PropTypes.number,
 };
 
 CommentsBrowse.defaultProps = {
   canAdd: false,
   cardProps: {},
+  total: 0,
 };
 
 export default (connect(

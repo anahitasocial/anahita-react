@@ -474,7 +474,7 @@ export default {
         photos: 'Photos',
         articles: 'Articles',
         documents: 'Documents',
-        topics: 'Todos',
+        topics: 'Topics',
         todos: 'Todos',
       },
       actors: {

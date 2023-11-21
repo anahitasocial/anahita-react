@@ -50,7 +50,7 @@ const DashboardPage = (props) => {
           md={8}
         >
           <StoriesBrowse
-            key="com:stories.story"
+            key="com.stories.story"
             queryFilters={filters}
           />
         </Grid>

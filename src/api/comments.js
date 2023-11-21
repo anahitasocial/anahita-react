@@ -11,7 +11,7 @@ const browse = (namespace) => {
       limit,
       sort,
     } = params;
-    return axios.get(`/${namespace}/${node.id}/comments.json?`, {
+    return axios.get(`/${namespace}/${node.id}/comments/?`, {
       params: {
         start,
         limit,

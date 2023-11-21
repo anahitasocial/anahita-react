@@ -5,7 +5,7 @@ const { constructFormData } = utils.api;
 
 const browse = (node, comment = null) => {
   const namespace = utils.node.getNamespace(node);
-  let url = `/${namespace}/${node.id}.json?get=voters&avatar=1`;
+  let url = `/${namespace}/${node.id}/voteups/?limit=1000`;
 
   if (comment) {
     url += `&cid=${comment.id}`;

@@ -39,7 +39,7 @@ const StoryMenu = (props) => {
 
   const ownerName = getOwnerName(story);
   const { id, owner } = story;
-  const canSubscribe = story.object && isSubscribable(story.object);
+  const canSubscribe = story.object && story.object.id && isSubscribable(story.object);
   const canFollow = permissions.actor.canFollow(owner);
   const canDelete = story.commands && story.commands.includes('delete') && false;
 
