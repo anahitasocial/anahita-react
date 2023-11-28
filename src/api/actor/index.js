@@ -11,7 +11,7 @@ export default (namespace) => {
     addfollowers: addfollowers(namespace),
     admins: admins(namespace),
     apps: apps(namespace),
-    followrequests: followrequests(namespace),
+    followrequests,
     notifications: notifications(namespace),
     permissions: permissions(namespace),
     privacy: privacy(namespace),
