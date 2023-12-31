@@ -42,7 +42,6 @@ const SearchBrowse = (props) => {
     alertError,
     items,
     error,
-    isFetching,
     total,
     queryParams: {
       sort,
@@ -171,7 +170,6 @@ SearchBrowse.propTypes = {
     coordLat: PropTypes.number,
   }).isRequired,
   error: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   total: PropTypes.number,
 };
 

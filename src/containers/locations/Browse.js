@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 
 import ListItem from './ListItem';
 import Progress from '../../components/Progress';
