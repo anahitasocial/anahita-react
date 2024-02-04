@@ -22,7 +22,7 @@ const browseRequest = (namespace) => {
 };
 
 const browseSuccess = (namespace) => {
-  return () => {
+  return (parent) => {
     return (results) => {
       const { data } = results;
       const { pagination } = data;
@@ -42,6 +42,7 @@ const browseSuccess = (namespace) => {
         total,
         limit,
         start,
+        parent,
       };
     };
   };

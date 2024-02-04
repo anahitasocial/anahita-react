@@ -63,7 +63,7 @@ const LocationsGadget = (props) => {
       taggable_id: node.id,
       offset: 0,
     });
-  }, [browse, node]);
+  }, []);
 
   const handleClose = () => {
     setIsOpen(false);

@@ -19,7 +19,6 @@ const browse = (node) => {
     return axios.get(`/${objectType.split('.')[1]}/`, {
       params: {
         taggable_id: node.id,
-        ...params,
       },
     });
   };
