@@ -21,7 +21,7 @@ const LikesActionCommentInline = React.forwardRef((props, ref) => {
     size,
   } = props;
 
-  const { isVotedUp: liked } = comment;
+  const { isLiked: liked } = comment;
 
   const handleLike = () => {
     likeNode(node, comment);
@@ -74,22 +74,18 @@ const mapStateToProps = () => {
   };
 };
 
-const mapDispatchToProps = (namespace) => {
-  return (dispatch) => {
-    return {
-      likeNode: (node, comment = CommentDefault) => {
-        return dispatch(actions.commentsInline(namespace).likes.add({ node, comment }));
-      },
-      unlikeNode: (node, comment = CommentDefault) => {
-        return dispatch(actions.commentsInline(namespace).likes.deleteItem({ node, comment }));
-      },
-    };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    likeNode: (node, comment = CommentDefault) => {
+      return dispatch(actions.commentsInline.likes.add({ node, comment }));
+    },
+    unlikeNode: (node, comment = CommentDefault) => {
+      return dispatch(actions.commentsInline.likes.deleteItem({ node, comment }));
+    },
   };
 };
 
-export default (namespace) => {
-  return connect(
-    mapStateToProps(namespace),
-    mapDispatchToProps(namespace),
-  )(LikesActionCommentInline);
-};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LikesActionCommentInline);

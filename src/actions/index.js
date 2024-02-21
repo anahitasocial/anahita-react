@@ -86,11 +86,9 @@ namespaces.nodes.forEach((namespace) => {
   actions[namespace] = createAction(namespace)(apis[namespace]);
 });
 
-actions.comments = (namespace) => {
-  return {
-    ...createAction('comments')(apis.comments(namespace)),
-    likes: likes('comments')(apis.likes),
-  };
+actions.comments = {
+  ...createAction('comments')(apis.comments),
+  likes: likes('comments')(apis.likes),
 };
 
 actions.commentStatus = (namespace) => {

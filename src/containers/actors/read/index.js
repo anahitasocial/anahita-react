@@ -96,11 +96,7 @@ const ActorsRead = (props) => {
   const canEdit = permissions.canEdit(actor);
   const canAdminister = permissions.canAdminister(actor);
   const canAddFollower = permissions.canAdminister(actor) && namespace !== 'people';
-  const canViewCommands = permissions.canViewCommands(actor, [
-    'follow',
-    'unfollow',
-    'notifications-settings',
-  ]);
+  const canViewCommands = isAuthenticated;
   const canEditNotifications = isAuthenticated && actor.isLeader;
 
   const isViewer = actor.id === viewer.id;
@@ -157,7 +153,10 @@ const ActorsRead = (props) => {
           </>
         }
         headerActions={canViewCommands &&
-          <Commands actor={actor} viewer={viewer} />}
+          <Commands
+            actor={actor}
+            isAuthenticated={isAuthenticated}
+          />}
       />
       <ActorBody
         actor={actor}

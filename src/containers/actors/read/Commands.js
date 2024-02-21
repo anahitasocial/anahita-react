@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
@@ -7,16 +8,19 @@ import BlockAction from '../../actions/Block';
 import DeleteAction from '../../actions/Delete';
 
 import ActorType from '../../../proptypes/Actor';
-import PersonType from '../../../proptypes/Person';
 import utils from '../../../utils';
 import i18n from '../../../languages';
+import perms from '../../../permissions/actor';
 
 const ITEM_HEIGHT = 48;
 
 const { node } = utils;
 
 const ActorsReadCommands = (props) => {
-  const { actor, viewer } = props;
+  const {
+    actor,
+    isAuthenticated,
+  } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -29,12 +33,10 @@ const ActorsReadCommands = (props) => {
     setAnchorEl(currentTarget);
   };
 
-  const isSuperAdmin = node.isSuperAdmin(viewer) && viewer.id !== actor.id;
   const namespace = node.getNamespace(actor);
-
-  if (isSuperAdmin && !actor.commands.includes('delete')) {
-    actor.commands.push('delete');
-  }
+  const canBlock = isAuthenticated;
+  const canEdit = perms.canEdit(actor);
+  const canDelete = perms.canDelete(actor);
 
   return (
     <>
@@ -58,45 +60,29 @@ const ActorsReadCommands = (props) => {
           },
         }}
       >
-        {actor.commands.map((command) => {
-          switch (command) {
-            case 'block':
-            case 'unblock':
-              return (
-                <BlockAction
-                  actor={actor}
-                  key={`actor-${command}`}
-                  component="menuitem"
-                />
-              );
-            case 'edit':
-              return (
-                <MenuItem
-                  key={`actor-${command}`}
-                  component="a"
-                  href={`${node.getURL(actor)}settings`}
-                >
-                  {i18n.t('commons:settings')}
-                </MenuItem>
-              );
-            case 'delete':
-              return (
-                <DeleteAction
-                  key={`actor-${command}`}
-                  node={actor}
-                  component="menuitem"
-                  redirect={`/explore/${node.getNamespace(actor)}`}
-                  confirmMessage={i18n.t(`${namespace}:confirm.delete`, {
-                    name: actor.name,
-                  })}
-                />
-              );
-            default:
-              return (
-                <div key={command} />
-              );
-          }
-        })}
+        {canBlock &&
+          <BlockAction
+            actor={actor}
+            key="actor-socialgraph-block"
+            component="menuitem"
+          />}
+        {canEdit &&
+          <MenuItem
+            key={`actor-edit-${actor.id}`}
+            component="a"
+            href={`${node.getURL(actor)}settings`}
+          >
+            {i18n.t('commons:settings')}
+          </MenuItem>}
+        {canDelete &&
+          <DeleteAction
+            key={`actor-delete-${actor.id}`}
+            node={actor}
+            component="menuitem"
+            confirmMessage={i18n.t(`${namespace}:confirm.delete`, {
+              name: actor.name,
+            })}
+          />}
       </Menu>
     </>
   );
@@ -104,13 +90,14 @@ const ActorsReadCommands = (props) => {
 
 ActorsReadCommands.propTypes = {
   actor: ActorType,
-  viewer: PersonType.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
 ActorsReadCommands.defaultProps = {
   actor: {
     commands: [],
   },
+  isAuthenticated: false,
 };
 
 export default ActorsReadCommands;

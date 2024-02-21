@@ -26,7 +26,7 @@ const Likes = (props) => {
   };
 
   const likeableNode = comment || node;
-  const { voteUpCount } = likeableNode;
+  const { likesCount } = likeableNode;
   const namespace = utils.node.getNamespace(likeableNode);
   const LikesStat = LikesBrowse(namespace);
 
@@ -39,7 +39,7 @@ const Likes = (props) => {
         open={open}
       >
         <DialogTitle>
-          {`${voteUpCount} Likes`}
+          {`${likesCount} Likes`}
         </DialogTitle>
         <DialogContent dividers style={{ padding: 0 }}>
           {open && <LikesStat node={node} comment={comment} />}
@@ -58,11 +58,11 @@ const Likes = (props) => {
         onClick={() => {
           setOpen(true);
         }}
-        disabled={!voteUpCount}
+        disabled={!likesCount}
         startIcon={<LikeIcon />}
         size="small"
       >
-        {voteUpCount}
+        {likesCount}
       </Button>
     </>
   );

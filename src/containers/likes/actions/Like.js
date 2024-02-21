@@ -18,7 +18,9 @@ const LikesActionLike = React.forwardRef((props, ref) => {
     size,
   } = props;
 
-  const { isVotedUp: liked } = node;
+  const { isLiked: liked } = node;
+
+  console.debug(liked);
 
   const handleLike = () => {
     likeNode(node);

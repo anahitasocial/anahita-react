@@ -127,11 +127,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setList: (nodes, parent, namespace) => {
-      return dispatch(actions.commentsInline(namespace).setList(nodes, parent));
+    setList: (nodes, parent) => {
+      return dispatch(actions.commentsInline.setList(nodes, parent));
     },
-    addItem: (node, namespace) => {
-      return dispatch(actions.commentsInline(namespace).add(node));
+    addItem: (node) => {
+      return dispatch(actions.commentsInline.add(node));
     },
   };
 };

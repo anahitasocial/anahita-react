@@ -79,10 +79,7 @@ const CommentsRead = (props) => {
     setFields({ ...newFields });
   };
 
-  const commentObjectType = utils.node.getNamespace(comment);
-  const Like = inline ?
-    ActionLikeCommentInline(commentObjectType) :
-    ActionLikeComment(commentObjectType);
+  const Like = inline ? ActionLikeCommentInline : ActionLikeComment;
 
   return (
     <CommentItem
@@ -135,11 +132,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editItem: (node, namespace) => {
-      return dispatch(actions.comments(namespace).edit(node));
+    editItem: (node) => {
+      return dispatch(actions.comments.edit(node));
     },
-    editItemInline: (node, namespace) => {
-      return dispatch(actions.commentsInline(namespace).edit(node));
+    editItemInline: (node) => {
+      return dispatch(actions.commentsInline.edit(node));
     },
   };
 };

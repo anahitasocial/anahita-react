@@ -12,7 +12,7 @@ const edit = (namespace) => {
       access: medium.access,
     };
 
-    return axios.post(`/${namespace}/${medium.id}.json`, constructFormData(data));
+    return axios.post(`/${namespace}/${medium.id}`, constructFormData(data));
   };
 };
 

@@ -6,7 +6,7 @@ const { constructFormData } = utils.api;
 const edit = (namespace) => {
   return (node) => {
     const { openToComment } = node;
-    return axios.post(`/${namespace}/${node.id}.json`, constructFormData({
+    return axios.post(`/${namespace}/${node.id}`, constructFormData({
       action: 'commentstatus',
       status: openToComment ? 1 : 0,
     }));

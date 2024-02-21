@@ -28,15 +28,16 @@ const setComments = (action, state) => {
   };
 };
 
-const updateComments = (action, state) => {
+const updateComment = (action, state) => {
   const { node } = action;
   const parents = { ...state.parents };
 
   parents.byId[node.parentId] = editItem(
-    parents.byId[node.parentId] ?
-      parents.byId[node.parentId] :
+    parents.byId[node.parent.id] ?
+      parents.byId[node.parent.id] :
       CommentsDefault,
     node,
+    CommentDefault,
   );
 
   return parents;
@@ -46,10 +47,10 @@ const deleteComment = (action, state) => {
   const { node } = action;
   const parents = { ...state.parents };
 
-  parents.byId[node.parentId] = deleteItem(
-    parents.byId[node.parentId],
+  parents.byId[node.parent.id] = deleteItem(
+    parents.byId[node.parent.id],
     node,
-    NodeDefault,
+    CommentDefault,
   );
 
   return parents;
@@ -104,7 +105,7 @@ export default (state = initState, action) => {
     case 'COMMENTS_INLINE_LIKES_DELETE_SUCCESS':
       return {
         ...state,
-        parents: updateComments(action, state),
+        parents: updateComment(action, state),
         isFetching: false,
         error: '',
       };

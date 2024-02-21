@@ -55,6 +55,18 @@ const LikesBrowse = (props) => {
     );
   }
 
+  if (!items.allIds.length) {
+    return (
+      <List>
+        <ListItem>
+          <ListItemText
+            primary="No likes yet"
+          />
+        </ListItem>
+      </List>
+    );
+  }
+
   return (
     <List>
       {items.allIds.map((actorId) => {
@@ -109,14 +121,14 @@ const mapDispatchToProps = (namespace) => {
     return {
       browseList: (node, comment = CommentDefault) => {
         if (comment) {
-          return dispatch(actions.comments(namespace).likes.browse(node, comment));
+          return dispatch(actions.comments.likes.browse(node, comment));
         }
 
         return dispatch(actions[namespace].likes.browse(node, comment));
       },
       resetList: (comment = CommentDefault) => {
         if (comment) {
-          return dispatch(actions.comments(namespace).likes.reset());
+          return dispatch(actions.comments.likes.reset());
         }
 
         return dispatch(actions[namespace].likes.reset());

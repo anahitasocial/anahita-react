@@ -17,9 +17,7 @@ import { App as APP } from '../../constants';
 import utils from '../../utils';
 
 const { form } = utils;
-
 const { LIMIT } = APP.BROWSE;
-
 const formFields = form.createFormFields([
   'body',
 ]);
@@ -63,8 +61,8 @@ const CommentsBrowse = (props) => {
       start,
       limit: LIMIT,
       sort: 'oldest',
-    }, namespace);
-  }, [start]);
+    });
+  }, [id, objectType, start]);
 
   const fetchList = () => {
     return setStart(start + LIMIT);
@@ -89,13 +87,14 @@ const CommentsBrowse = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      addItem(comment, namespace).then(() => {
-        setComment({
-          ...CommentDefault,
-          author: viewer,
-          parentId: parent.id,
+      addItem(comment)
+        .then(() => {
+          setComment({
+            ...CommentDefault,
+            author: viewer,
+            parentId: parent.id,
+          });
         });
-      });
     }
 
     setFields({ ...newFields });
@@ -159,14 +158,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    browseList: (params, namespace) => {
-      return dispatch(actions.comments(namespace).browse(params));
+    browseList: (params) => {
+      return dispatch(actions.comments.browse(params));
     },
-    resetList: (namespace) => {
-      return dispatch(actions.comments(namespace).reset());
+    resetList: () => {
+      return dispatch(actions.comments.reset());
     },
-    addItem: (node, namespace) => {
-      return dispatch(actions.comments(namespace).add(node));
+    addItem: (node) => {
+      return dispatch(actions.comments.add(node));
     },
   };
 };

@@ -3,6 +3,7 @@ import {
   number,
   string,
   oneOf,
+  bool,
 } from 'prop-types';
 
 import PersonType from './Person';
@@ -23,5 +24,7 @@ export default shape({
   creationTime: string,
   editor: PersonType,
   updateTime: string,
-  voteUpCount: number,
+  likesCount: number,
+  dislikesCount: number,
+  isLiked: bool,
 });

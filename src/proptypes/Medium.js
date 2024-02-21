@@ -4,6 +4,7 @@ import {
   string,
   oneOf,
   arrayOf,
+  bool,
 } from 'prop-types';
 
 import ActorType from './Actor';
@@ -38,5 +39,7 @@ export default shape({
   lastComment: CommentType,
   lastCommenter: PersonType,
   lastCommentTime: string,
-  voteUpCount: number,
+  likesCount: number,
+  dislikesCount: number,
+  isLiked: bool,
 });

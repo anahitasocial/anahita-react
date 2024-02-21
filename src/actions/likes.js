@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint no-console: ["error", { allow: ["log", "error"] }] */
 import { normalize, schema } from 'normalizr';
 
@@ -19,10 +20,9 @@ const browseRequest = () => {
 
 const browseSuccess = (results) => {
   const { data } = results;
-
   const person = new schema.Entity('people');
   const people = [person];
-  const normalized = normalize(data.data, people);
+  const normalized = normalize(data.data || [], people);
 
   return {
     type: 'LIKES_BROWSE_SUCCESS',
@@ -72,21 +72,14 @@ const addSuccess = (namespace) => {
   return (params) => {
     const {
       results,
-      node,
-      comment = null,
       story,
     } = params;
 
     const { data } = results;
-    const newNode = comment ? { ...comment } : { ...node };
-
-    newNode.voteUpCount = data.data.length;
-    newNode.isVotedUp = true;
-    newNode.voteups = data.data;
 
     return {
       type: `${namespace.toUpperCase()}_LIKES_ADD_SUCCESS`,
-      node: newNode,
+      node: data,
       story,
     };
   };
@@ -141,17 +134,14 @@ const deleteRequest = (namespace) => {
 const deleteSuccess = (namespace) => {
   return (params) => {
     const {
-      results,
       node,
       comment = null,
       story,
     } = params;
-    const { data } = results;
     const newNode = comment ? { ...comment } : { ...node };
 
-    newNode.voteUpCount = data.data.length;
-    newNode.isVotedUp = false;
-    newNode.voteups = data.data;
+    newNode.likesCount -= 1;
+    newNode.isLiked = false;
 
     return {
       type: `${namespace.toUpperCase()}_LIKES_DELETE_SUCCESS`,
@@ -177,9 +167,8 @@ const deleteItem = (namespace) => {
         dispatch(deleteRequest(namespace)());
         return new Promise((resolve, reject) => {
           api.deleteItem(node, comment)
-            .then((results) => {
+            .then(() => {
               dispatch(deleteSuccess(namespace)({
-                results,
                 story,
                 node,
                 comment,

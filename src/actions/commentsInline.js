@@ -15,10 +15,8 @@ const setList = () => {
   };
 };
 
-export default (namespace) => {
-  return {
-    setList: setList(),
-    ...createAction('comments_inline')(apis.comments(namespace)),
-    likes: likes('comments_inline')(apis.likes),
-  };
+export default {
+  setList: setList(),
+  ...createAction('comments_inline')(apis.comments),
+  likes: likes('comments_inline')(apis.likes),
 };

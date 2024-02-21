@@ -20,5 +20,7 @@ export default {
   lastComment: {},
   lastCommenter: PersonDefault,
   lastCommentTime: '0000-00-00 00:00:00',
-  voteUpCount: 0,
+  likesCount: 0,
+  dislikesCount: 0,
+  isLiked: false,
 };

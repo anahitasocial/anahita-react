@@ -3,65 +3,55 @@ import utils from '../utils';
 
 const { constructFormData } = utils.api;
 
-const browse = (namespace) => {
-  return (params) => {
-    const {
-      node,
+const browse = (params) => {
+  const {
+    node,
+    start,
+    limit,
+    sort,
+  } = params;
+
+  const path = `/comments/${node.id}/`;
+  return axios.get(path, {
+    params: {
       start,
       limit,
       sort,
-    } = params;
-    return axios.get(`/${namespace}/${node.id}/comments/?`, {
-      params: {
-        start,
-        limit,
-        sort,
-      },
-    });
-  };
+    },
+  });
 };
 
-const read = (namespace) => {
-  return (cid, node) => {
-    return axios.get(`/${namespace}/${node.id}/${cid}.json`);
-  };
+const read = (cid, node) => {
+  const path = `/comments/${node.id}/comments/${cid}`;
+  return axios.get(path);
 };
 
-const edit = (namespace) => {
-  return (comment) => {
-    const { id, parentId, body } = comment;
-    return axios.post(`/${namespace}/${parentId}.json?cid=${id}`, constructFormData({
-      action: 'editcomment',
-      body,
-    }));
-  };
+const edit = (comment) => {
+  const { id, parentId, body } = comment;
+  const path = `/comments/${parentId}/${id}`;
+  return axios.patch(path, constructFormData({
+    body,
+  }));
 };
 
-const add = (namespace) => {
-  return (comment) => {
-    const { body, parentId } = comment;
-    return axios.post(`/${namespace}/${parentId}.json?`, constructFormData({
-      action: 'addcomment',
-      body,
-    }));
-  };
+const add = (comment) => {
+  const { body, parentId } = comment;
+  const path = `/comments/${parentId}/`;
+  return axios.post(path, constructFormData({
+    body,
+  }));
 };
 
-const deleteItem = (namespace) => {
-  return (comment) => {
-    const { id, parentId } = comment;
-    return axios.post(`/${namespace}/${parentId}.json?cid=${id}`, constructFormData({
-      action: 'deletecomment',
-    }));
-  };
+const deleteItem = (comment) => {
+  const { id, parentId } = comment;
+  const path = `/comments/${parentId}/comments/${id}`;
+  return axios.delete(path);
 };
 
-export default (namespace) => {
-  return {
-    browse: browse(namespace),
-    read: read(namespace),
-    edit: edit(namespace),
-    add: add(namespace),
-    deleteItem: deleteItem(namespace),
-  };
+export default {
+  browse,
+  read,
+  edit,
+  add,
+  deleteItem,
 };

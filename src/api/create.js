@@ -23,7 +23,7 @@ const read = (namespace) => {
 
 const edit = (namespace) => {
   return (node) => {
-    return axios.post(`/${namespace}/${node.id}`, constructFormData(node));
+    return axios.patch(`/${namespace}/${node.id}`, constructFormData(node));
   };
 };
 

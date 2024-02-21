@@ -1,43 +1,18 @@
 import axios from 'axios';
-import utils from '../utils';
-
-const { constructFormData } = utils.api;
 
 const browse = (node, comment = null) => {
-  const namespace = utils.node.getNamespace(node);
-  let url = `/${namespace}/${node.id}/voteups/?limit=1000`;
-
-  if (comment) {
-    url += `&cid=${comment.id}`;
-  }
-
-  return axios.get(url);
+  const path = comment && comment.id > 0 ? `/likes/${comment.id}/?limit=1000` : `/likes/${node.id}/?limit=1000`;
+  return axios.get(path);
 };
 
 const add = (node, comment = null) => {
-  const namespace = utils.node.getNamespace(node);
-  let url = `/${namespace}/${node.id}.json`;
-  let action = 'vote';
-
-  if (comment) {
-    url += `?cid=${comment.id}`;
-    action += 'comment';
-  }
-
-  return axios.post(url, constructFormData({ action }));
+  const path = comment && comment.id > 0 ? `/likes/${comment.id}/` : `/likes/${node.id}/`;
+  return axios.post(path);
 };
 
 const deleteItem = (node, comment = null) => {
-  const namespace = utils.node.getNamespace(node);
-  let url = `/${namespace}/${node.id}.json`;
-  let action = 'unvote';
-
-  if (comment) {
-    url += `?cid=${comment.id}`;
-    action += 'comment';
-  }
-
-  return axios.post(url, constructFormData({ action }));
+  const path = comment && comment.id > 0 ? `/likes/${comment.id}/` : `/likes/${node.id}/`;
+  return axios.delete(path);
 };
 
 export default {
