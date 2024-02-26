@@ -35,16 +35,16 @@ const edit = (comment) => {
 };
 
 const add = (comment) => {
-  const { body, parentId } = comment;
-  const path = `/comments/${parentId}/`;
+  const { body, parent } = comment;
+  const path = `/comments/${parent.id}/`;
   return axios.post(path, constructFormData({
     body,
   }));
 };
 
 const deleteItem = (comment) => {
-  const { id, parentId } = comment;
-  const path = `/comments/${parentId}/comments/${id}`;
+  const { id, parent } = comment;
+  const path = `/comments/${parent.id}/${id}`;
   return axios.delete(path);
 };
 

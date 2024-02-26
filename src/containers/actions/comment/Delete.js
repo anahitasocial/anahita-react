@@ -5,9 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import actions from '../../../actions';
 import CommentType from '../../../proptypes/Comment';
-import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';
-import utils from '../../../utils';
 import DialogConfirm from '../../../components/DialogConfirm';
 
 const ActionsCommentDelete = React.forwardRef((props, ref) => {
@@ -15,16 +13,14 @@ const ActionsCommentDelete = React.forwardRef((props, ref) => {
     deleteItem,
     deleteItemInline,
     comment,
-    node,
     inline,
   } = props;
 
   const label = i18n.t('actions:delete');
-  const namespace = utils.node.getNamespace(node);
   const deleteFunc = inline ? deleteItemInline : deleteItem;
 
   const handleDelete = () => {
-    deleteFunc(comment, namespace);
+    deleteFunc(comment);
   };
 
   return (
@@ -46,7 +42,6 @@ ActionsCommentDelete.propTypes = {
   deleteItem: PropTypes.func.isRequired,
   deleteItemInline: PropTypes.func.isRequired,
   comment: CommentType.isRequired,
-  node: NodeType.isRequired,
   inline: PropTypes.bool,
 };
 
@@ -60,11 +55,11 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: (comment, namespace) => {
-      return dispatch(actions.comments(namespace).deleteItem(comment));
+    deleteItem: (comment) => {
+      return dispatch(actions.comments.deleteItem(comment));
     },
-    deleteItemInline: (comment, namespace) => {
-      return dispatch(actions.commentsInline(namespace).deleteItem(comment));
+    deleteItemInline: (comment) => {
+      return dispatch(actions.commentsInline.deleteItem(comment));
     },
   };
 };

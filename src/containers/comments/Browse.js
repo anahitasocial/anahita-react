@@ -46,7 +46,7 @@ const CommentsBrowse = (props) => {
   const [comment, setComment] = useState({
     ...CommentDefault,
     author: viewer,
-    parentId: parent.id,
+    parent,
   });
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const CommentsBrowse = (props) => {
           setComment({
             ...CommentDefault,
             author: viewer,
-            parentId: parent.id,
+            parent,
           });
         });
     }
@@ -164,8 +164,8 @@ const mapDispatchToProps = (dispatch) => {
     resetList: () => {
       return dispatch(actions.comments.reset());
     },
-    addItem: (node) => {
-      return dispatch(actions.comments.add(node));
+    addItem: (comment) => {
+      return dispatch(actions.comments.add(comment));
     },
   };
 };

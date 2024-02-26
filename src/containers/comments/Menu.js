@@ -95,7 +95,6 @@ const CommentMenu = (props) => {
         {canDelete &&
           <DeleteActionWithRef
             comment={comment}
-            node={node}
             key={`comment-delete-${comment.id}`}
             inline={inline}
           />}
