@@ -47,7 +47,7 @@ const SocialgraphMeta = (props) => {
           href={`${actorURL}socialgraph/leaders/`}
           underline="none"
         >
-          {actor.followerCount}
+          {actor.leaderCount}
         </Link>}
     </Typography>
   );

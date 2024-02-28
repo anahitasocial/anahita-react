@@ -22,15 +22,11 @@ function browse(params) {
 }
 
 function follow(viewer, actor) {
-  return axios.post(`/socialgraph/${actor.id}/followers/`, constructFormData({
-    follower_id: viewer.id,
-  }));
+  return axios.post(`/socialgraph/${actor.id}/followers/`);
 }
 
 function unfollow(viewer, actor) {
-  return axios.delete(`/socialgraph/${actor.id}/followers/`, constructFormData({
-    follower_id: viewer.id,
-  }));
+  return axios.delete(`/socialgraph/${actor.id}/followers/`);
 }
 
 function lead(viewer, actor) {
