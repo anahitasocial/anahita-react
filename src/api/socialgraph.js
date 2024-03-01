@@ -21,11 +21,11 @@ function browse(params) {
   });
 }
 
-function follow(viewer, actor) {
+function follow(actor) {
   return axios.post(`/socialgraph/${actor.id}/followers/`);
 }
 
-function unfollow(viewer, actor) {
+function unfollow(actor) {
   return axios.delete(`/socialgraph/${actor.id}/followers/`);
 }
 
@@ -41,16 +41,12 @@ function unlead(viewer, actor) {
   }));
 }
 
-function block(viewer, actor) {
-  return axios.post(`/socialgraph/${actor.id}/blocks/`, constructFormData({
-    blocked_id: viewer.id,
-  }));
+function block(actor) {
+  return axios.post(`/socialgraph/${actor.id}/blocks/`);
 }
 
-function unblock(viewer, actor) {
-  return axios.delete(`socialgraph/${actor.id}/blocks/`, constructFormData({
-    blocked_id: viewer.id,
-  }));
+function unblock(actor) {
+  return axios.delete(`socialgraph/${actor.id}/blocks/`);
 }
 
 export default {

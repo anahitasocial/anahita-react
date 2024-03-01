@@ -33,11 +33,11 @@ function followFailure(error) {
   };
 }
 
-function follow(viewer, actor) {
+function follow(actor) {
   return (dispatch) => {
     dispatch(followRequest(actor));
     return new Promise((resolve, reject) => {
-      api.follow(viewer, actor)
+      api.follow(actor)
         .then((result) => {
           dispatch(followSuccess(result));
           return resolve();
@@ -74,11 +74,11 @@ function unfollowFailure(error) {
   };
 }
 
-function unfollow(viewer, actor) {
+function unfollow(actor) {
   return (dispatch) => {
     dispatch(unfollowRequest(actor));
     return new Promise((resolve, reject) => {
-      api.unfollow(viewer, actor)
+      api.unfollow(actor)
         .then((result) => {
           dispatch(unfollowSuccess(result));
           return resolve();
@@ -157,11 +157,11 @@ function blockFailure(error) {
   };
 }
 
-function block(viewer, actor) {
+function block(actor) {
   return (dispatch) => {
     dispatch(blockRequest(actor));
     return new Promise((resolve, reject) => {
-      api.block(viewer, actor)
+      api.block(actor)
         .then((result) => {
           dispatch(blockSuccess(result));
           return resolve();
@@ -198,11 +198,11 @@ function unblockFailure(error) {
   };
 }
 
-function unblock(viewer, actor) {
+function unblock(actor) {
   return (dispatch) => {
     dispatch(unblockRequest(actor));
     return new Promise((resolve, reject) => {
-      api.unblock(viewer, actor)
+      api.unblock(actor)
         .then((result) => {
           dispatch(unblockSuccess(result));
           return resolve();

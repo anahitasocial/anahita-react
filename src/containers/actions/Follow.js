@@ -7,7 +7,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import actions from '../../actions/socialgraph';
 import permissions from '../../permissions/actor';
 import ActorsType from '../../proptypes/Actors';
-import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
 const FollowAction = React.forwardRef((props, ref) => {
@@ -16,7 +15,6 @@ const FollowAction = React.forwardRef((props, ref) => {
     unfollowActor,
     actor,
     actors,
-    viewer,
     component,
     followLabel,
     unfollowLabel,
@@ -30,7 +28,7 @@ const FollowAction = React.forwardRef((props, ref) => {
 
   const handleFollow = () => {
     setWaiting(true);
-    followActor(viewer, actor)
+    followActor(actor)
       .then(() => {
         setWaiting(false);
         setLeader(true);
@@ -39,7 +37,7 @@ const FollowAction = React.forwardRef((props, ref) => {
 
   const handleUnfollow = () => {
     setWaiting(true);
-    unfollowActor(viewer, actor)
+    unfollowActor(actor)
       .then(() => {
         setWaiting(false);
         setLeader(false);
@@ -79,7 +77,6 @@ FollowAction.propTypes = {
   unfollowActor: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
   actors: ActorsType.isRequired,
-  viewer: PersonType.isRequired,
   component: PropTypes.oneOf(['button', 'menuitem']),
   followLabel: PropTypes.string,
   unfollowLabel: PropTypes.string,
@@ -93,7 +90,6 @@ FollowAction.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    viewer,
     isAuthenticated,
   } = state.session;
 
@@ -103,18 +99,17 @@ const mapStateToProps = (state) => {
 
   return {
     actors,
-    viewer,
     isAuthenticated,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    followActor: (viewer, actor) => {
-      return dispatch(actions.follow(viewer, actor));
+    followActor: (actor) => {
+      return dispatch(actions.follow(actor));
     },
-    unfollowActor: (viewer, actor) => {
-      return dispatch(actions.unfollow(viewer, actor));
+    unfollowActor: (actor) => {
+      return dispatch(actions.unfollow(actor));
     },
   };
 };
