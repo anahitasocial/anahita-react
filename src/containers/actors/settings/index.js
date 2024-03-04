@@ -53,12 +53,14 @@ const ActorsSettings = (props) => {
   const [tab, setTab] = useState(selectedTab);
 
   useEffect(() => {
-    readActor(id, namespace);
+    if (id && !actor.id && !isFetching) {
+      readActor(id, namespace);
+    }
 
     return () => {
       resetActors();
     };
-  }, [id, namespace]);
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -68,7 +70,7 @@ const ActorsSettings = (props) => {
     if (success) {
       alertSuccess(i18n.t('prompts:updated.sucess'));
     }
-  }, [error, alertError, success, alertSuccess]);
+  }, [error, success]);
 
   if (!actor.id && isFetching) {
     return (
@@ -102,7 +104,7 @@ const ActorsSettings = (props) => {
         {namespace !== 'people' &&
           <Tab label={i18n.t(`${namespace}:settings.admins`)} value={TABS.ADMINS} />}
         <Tab label={i18n.t(`${namespace}:settings.privacy`)} value={TABS.PRIVACY} />
-        <Tab label={i18n.t(`${namespace}:settings.apps`)} value={TABS.APPS} />
+        {/* <Tab label={i18n.t(`${namespace}:settings.apps`)} value={TABS.APPS} /> */}
         <Tab label={i18n.t(`${namespace}:settings.permissions`)} value={TABS.PERMISSIONS} />
         {canDelete &&
           <Tab label={i18n.t(`${namespace}:settings.delete`)} value={TABS.DELETE} />}

@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 
 import ActorAvatar from '../../../../components/actor/Avatar';
 import ActorType from '../../../../proptypes/Actor';
+import PersonType from '../../../../proptypes/Person';
 import actions from '../../../../actions';
 
 const ActorsSettingsAdminsAdd = (props) => {
@@ -18,6 +19,7 @@ const ActorsSettingsAdminsAdd = (props) => {
     actor,
     addAdmin,
     namespace,
+    viewer,
   } = props;
 
   const [keyword, setkeyword] = useState('');
@@ -26,7 +28,12 @@ const ActorsSettingsAdminsAdd = (props) => {
   const [isFetching, setIsFetching] = useState(false);
 
   const fetchList = (q) => {
-    const path = `/${namespace}/${actor.id}/adminscandidates.json`;
+    const path = `/socialgraph/${viewer.id}/mutuals/`;
+
+    if (q.length === 0) {
+      setOptions([]);
+      return;
+    }
 
     setIsFetching(true);
 
@@ -111,6 +118,7 @@ const ActorsSettingsAdminsAdd = (props) => {
 
 ActorsSettingsAdminsAdd.propTypes = {
   actor: ActorType.isRequired,
+  viewer: PersonType.isRequired,
   addAdmin: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
 };
@@ -123,7 +131,12 @@ const mapStateToProps = (namespace) => {
       },
     } = state[namespace];
 
+    const {
+      viewer,
+    } = state.session;
+
     return {
+      viewer,
       actor,
       namespace,
     };

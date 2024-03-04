@@ -5,16 +5,15 @@ const { constructFormData } = utils.api;
 
 const browse = (namespace) => {
   return (actor) => {
-    return axios.get(`/${namespace}/${actor.id}/admins.json`);
+    return axios.get(`/${namespace}/${actor.id}/admins/`);
   };
 };
 
 const add = (namespaces) => {
   return (params) => {
     const { actor, admin } = params;
-    return axios.post(`/${namespaces}/${actor.id}.json`, constructFormData({
-      action: 'addadmin',
-      adminid: admin.id,
+    return axios.post(`/${namespaces}/${actor.id}/admins/`, constructFormData({
+      admin_id: admin.id,
     }));
   };
 };
@@ -22,10 +21,7 @@ const add = (namespaces) => {
 const deleteItem = (namespaces) => {
   return (params) => {
     const { admin, actor } = params;
-    return axios.post(`/${namespaces}/${actor.id}.json`, constructFormData({
-      action: 'removeadmin',
-      adminid: admin.id,
-    }));
+    return axios.delete(`/${namespaces}/${actor.id}/admins/${admin.id}`);
   };
 };
 

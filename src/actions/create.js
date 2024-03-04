@@ -21,7 +21,13 @@ const browseRequest = (namespace) => {
 
 const browseSuccess = (results, namespace) => {
   const { data } = results;
-  const { pagination } = data;
+  const paginationDefault = {
+    limit: 20,
+    offset: 0,
+    total: 0,
+  };
+
+  const pagination = { paginationDefault, ...data.pagination };
 
   const limit = pagination.limit || 20;
   const start = pagination.offset || 0;
