@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import actions from '../../actions/socialgraph';
 import ActorsType from '../../proptypes/Actors';
+import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
 const BlockAction = React.forwardRef((props, ref) => {
@@ -17,6 +18,7 @@ const BlockAction = React.forwardRef((props, ref) => {
     component,
     blockLabel,
     unblockLabel,
+    viewer,
   } = props;
 
   const isBlocked = actors.byId[actor.id] ? actors.byId[actor.id].isBlocked : actor.isBlocked;
@@ -25,7 +27,7 @@ const BlockAction = React.forwardRef((props, ref) => {
 
   const handleBlock = () => {
     setWaiting(true);
-    blockPerson(actor)
+    blockPerson({ actor, viewer })
       .then(() => {
         setWaiting(false);
         setBlocked(true);
@@ -34,7 +36,7 @@ const BlockAction = React.forwardRef((props, ref) => {
 
   const handleUnblock = () => {
     setWaiting(true);
-    unblockPerson(actor)
+    unblockPerson({ actor, viewer })
       .then(() => {
         setWaiting(false);
         setBlocked(false);
@@ -77,6 +79,7 @@ BlockAction.propTypes = {
   component: PropTypes.oneOf(['button', 'menuitem']),
   blockLabel: PropTypes.string,
   unblockLabel: PropTypes.string,
+  viewer: PersonType.isRequired,
 };
 
 BlockAction.defaultProps = {
@@ -90,18 +93,23 @@ const mapStateToProps = (state) => {
     actors,
   } = state.socialgraph;
 
+  const {
+    viewer,
+  } = state.session;
+
   return {
     actors,
+    viewer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    blockPerson: (actor) => {
-      return dispatch(actions.block(actor));
+    blockPerson: (param) => {
+      return dispatch(actions.block(param));
     },
-    unblockPerson: (actor) => {
-      return dispatch(actions.unblock(actor));
+    unblockPerson: (param) => {
+      return dispatch(actions.unblock(param));
     },
   };
 };

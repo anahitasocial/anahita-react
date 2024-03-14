@@ -26,7 +26,7 @@ const ActionsBlockFollower = React.forwardRef((props, ref) => {
 
   const handleAction = () => {
     setWaiting(true);
-    blockfollower(actor, follower)
+    blockfollower({ actor, follower })
       .then(() => {
         alertSuccess(i18n.t('prompts:removed.success'));
       }).catch((err) => {
@@ -76,8 +76,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    blockfollower: (actor, follower) => {
-      return dispatch(actions.socialgraph.blockfollower(actor, follower));
+    blockfollower: (params) => {
+      return dispatch(actions.socialgraph.blockfollower(params));
     },
     alertSuccess: (message) => {
       return dispatch(actions.app.alert.success(message));

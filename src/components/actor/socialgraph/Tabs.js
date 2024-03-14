@@ -26,7 +26,7 @@ const SocialgraphTabs = (props) => {
     followers,
     leaders,
     mutuals,
-    blocked,
+    blocks,
     selectedTab,
   } = props;
 
@@ -55,13 +55,13 @@ const SocialgraphTabs = (props) => {
           <Tab label={i18n.t('socialgraph:followers')} value="followers" id="socialgraph-tab-followers" />
           {leaders && <Tab label={i18n.t('socialgraph:leaders')} value="leaders" id="socialgraph-tab-leaders" />}
           {mutuals && <Tab label={i18n.t('socialgraph:mutuals')} value="mutuals" id="socialgraph-tab-mutuals" />}
-          {blocked && <Tab label={i18n.t('socialgraph:blocked')} value="blocked" id="socialgraph-tab-blocked" />}
+          {blocks && <Tab label={i18n.t('socialgraph:blocks')} value="blocks" id="socialgraph-tab-blocks" />}
         </Tabs>
       </AppBar>
       {value === 'followers' && followers}
       {value === 'leaders' && leaders}
       {value === 'mutuals' && mutuals}
-      {value === 'blocked' && blocked}
+      {value === 'blocks' && blocks}
     </Box>
   );
 };
@@ -71,15 +71,15 @@ SocialgraphTabs.propTypes = {
   followers: PropTypes.node,
   leaders: PropTypes.node,
   mutuals: PropTypes.node,
-  blocked: PropTypes.node,
-  selectedTab: PropTypes.oneOf(['followers', 'leaders', 'mutuals', 'blocked']),
+  blocks: PropTypes.node,
+  selectedTab: PropTypes.oneOf(['followers', 'leaders', 'mutuals', 'blocks']),
 };
 
 SocialgraphTabs.defaultProps = {
   followers: null,
   leaders: null,
   mutuals: null,
-  blocked: null,
+  blocks: null,
   selectedTab: 'followers',
 };
 

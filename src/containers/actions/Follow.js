@@ -5,8 +5,8 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import actions from '../../actions/socialgraph';
-import permissions from '../../permissions/actor';
 import ActorsType from '../../proptypes/Actors';
+import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
 const FollowAction = React.forwardRef((props, ref) => {
@@ -18,17 +18,17 @@ const FollowAction = React.forwardRef((props, ref) => {
     component,
     followLabel,
     unfollowLabel,
+    viewer,
   } = props;
 
   const isLeader = actors.byId[actor.id] ? actors.byId[actor.id].isLeader : actor.isLeader;
-  const canFollow = permissions.canFollow(actor);
 
   const [leader, setLeader] = useState(isLeader);
   const [waiting, setWaiting] = useState(false);
 
   const handleFollow = () => {
     setWaiting(true);
-    followActor(actor)
+    followActor({ actor, viewer })
       .then(() => {
         setWaiting(false);
         setLeader(true);
@@ -37,7 +37,7 @@ const FollowAction = React.forwardRef((props, ref) => {
 
   const handleUnfollow = () => {
     setWaiting(true);
-    unfollowActor(actor)
+    unfollowActor({ actor, viewer })
       .then(() => {
         setWaiting(false);
         setLeader(false);
@@ -52,7 +52,7 @@ const FollowAction = React.forwardRef((props, ref) => {
     return (
       <MenuItem
         onClick={onClick}
-        disabled={!canFollow || waiting}
+        disabled={waiting}
         ref={ref}
       >
         {title}
@@ -63,7 +63,7 @@ const FollowAction = React.forwardRef((props, ref) => {
   return (
     <Button
       onClick={onClick}
-      disabled={!canFollow || waiting}
+      disabled={waiting}
       color={color}
       ref={ref}
     >
@@ -80,6 +80,7 @@ FollowAction.propTypes = {
   component: PropTypes.oneOf(['button', 'menuitem']),
   followLabel: PropTypes.string,
   unfollowLabel: PropTypes.string,
+  viewer: PersonType.isRequired,
 };
 
 FollowAction.defaultProps = {
@@ -91,6 +92,7 @@ FollowAction.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     isAuthenticated,
+    viewer,
   } = state.session;
 
   const {
@@ -100,16 +102,17 @@ const mapStateToProps = (state) => {
   return {
     actors,
     isAuthenticated,
+    viewer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    followActor: (actor) => {
-      return dispatch(actions.follow(actor));
+    followActor: (params) => {
+      return dispatch(actions.follow(params));
     },
-    unfollowActor: (actor) => {
-      return dispatch(actions.unfollow(actor));
+    unfollowActor: (params) => {
+      return dispatch(actions.unfollow(params));
     },
   };
 };

@@ -33,11 +33,11 @@ function followFailure(error) {
   };
 }
 
-function follow(actor) {
+function follow({ actor, viewer }) {
   return (dispatch) => {
     dispatch(followRequest(actor));
     return new Promise((resolve, reject) => {
-      api.follow(actor)
+      api.follow({ actor, viewer })
         .then((result) => {
           dispatch(followSuccess(result));
           return resolve();
@@ -74,11 +74,11 @@ function unfollowFailure(error) {
   };
 }
 
-function unfollow(actor) {
+function unfollow({ actor, viewer }) {
   return (dispatch) => {
     dispatch(unfollowRequest(actor));
     return new Promise((resolve, reject) => {
-      api.unfollow(actor)
+      api.unfollow({ actor, viewer })
         .then((result) => {
           dispatch(unfollowSuccess(result));
           return resolve();
@@ -115,7 +115,7 @@ function removefollowerFailure(error) {
   };
 }
 
-function removefollower(actor, follower) {
+function removefollower({ actor, follower }) {
   return (dispatch) => {
     dispatch(removefollowerRequest(actor));
     return new Promise((resolve, reject) => {
@@ -157,11 +157,11 @@ function blockFailure(error) {
   };
 }
 
-function block(actor) {
+function block({ actor, viewer }) {
   return (dispatch) => {
     dispatch(blockRequest(actor));
     return new Promise((resolve, reject) => {
-      api.block(actor)
+      api.block({ actor, viewer })
         .then((result) => {
           dispatch(blockSuccess(result));
           return resolve();
@@ -198,11 +198,11 @@ function unblockFailure(error) {
   };
 }
 
-function unblock(actor) {
+function unblock({ actor, viewer }) {
   return (dispatch) => {
     dispatch(unblockRequest(actor));
     return new Promise((resolve, reject) => {
-      api.unblock(actor)
+      api.unblock({ actor, viewer })
         .then((result) => {
           dispatch(unblockSuccess(result));
           return resolve();
@@ -239,7 +239,7 @@ function blockfollowerFailure(error) {
   };
 }
 
-function blockfollower(actor, follower) {
+function blockfollower({ actor, follower }) {
   return (dispatch) => {
     dispatch(blockfollowerRequest(actor));
     return new Promise((resolve, reject) => {

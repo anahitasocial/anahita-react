@@ -22,8 +22,8 @@ const ActorsCard = (props) => {
 
   const leaderNamespace = node.getNamespace(leader);
 
-  const canFollow = leaderNamespace === 'people' && permissions.canFollow(actor);
-  const canBlock = leaderNamespace === 'people' && permissions.canBlock(actor);
+  const canFollow = leaderNamespace === 'people' && permissions.canFollow(actor, viewer);
+  const canBlock = leaderNamespace === 'people' && permissions.canBlock(actor, viewer);
   const canAdminister = leaderNamespace !== 'people' && permissions.canAdminister(actor) && viewer.id !== actor.id;
 
   return (

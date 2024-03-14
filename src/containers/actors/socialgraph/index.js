@@ -100,7 +100,7 @@ ActorsSocialgraph.propTypes = {
     'followers',
     'leaders',
     'mutuals',
-    'blocked',
+    'blocks',
   ]).isRequired,
   queryFilters: PropTypes.object,
   total: PropTypes.number,

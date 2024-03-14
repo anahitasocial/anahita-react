@@ -429,7 +429,7 @@ export default {
     followers: 'Followers',
     leaders: 'Leaders',
     mutuals: 'Mutualls',
-    blocked: 'Blocked',
+    blocks: 'Blocked',
     add: {
       cTitle: 'Add Followers',
       mTitle: 'Followers',

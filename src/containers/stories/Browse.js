@@ -16,6 +16,7 @@ import StoryMenu from './Menu';
 import Progress from '../../components/Progress';
 import StoryCard from '../../components/cards/Story';
 import NodesType from '../../proptypes/Nodes';
+import PersonType from '../../proptypes/Person';
 import StoriesType from '../../proptypes/Stories';
 import commentPerms from '../../permissions/comment';
 import utils from '../../utils';
@@ -41,6 +42,7 @@ const StoriesBrowse = (props) => {
     comments,
     hasMore,
     isAuthenticated,
+    viewer,
     error,
     isFetching,
   } = props;
@@ -118,6 +120,7 @@ const StoriesBrowse = (props) => {
             menu={isAuthenticated &&
               <StoryMenu
                 story={node}
+                viewer={viewer}
               />}
             stats={[
               node.object && node.object.id && isLikeable(node.object) &&
@@ -183,6 +186,7 @@ StoriesBrowse.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 const mapStateToProps = (state) => {

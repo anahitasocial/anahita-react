@@ -8,6 +8,7 @@ import BlockAction from '../../actions/Block';
 import DeleteAction from '../../actions/Delete';
 
 import ActorType from '../../../proptypes/Actor';
+import PersonType from '../../../proptypes/Person';
 import utils from '../../../utils';
 import i18n from '../../../languages';
 import perms from '../../../permissions/actor';
@@ -20,6 +21,7 @@ const ActorsReadCommands = (props) => {
   const {
     actor,
     isAuthenticated,
+    viewer,
   } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,9 +36,9 @@ const ActorsReadCommands = (props) => {
   };
 
   const namespace = node.getNamespace(actor);
-  const canBlock = isAuthenticated;
-  const canEdit = perms.canEdit(actor);
-  const canDelete = perms.canDelete(actor);
+  const showBlock = isAuthenticated && perms.canBlock(actor, viewer);
+  const showEdit = perms.canEdit(actor);
+  const showDelete = perms.canDelete(actor);
 
   return (
     <>
@@ -60,13 +62,13 @@ const ActorsReadCommands = (props) => {
           },
         }}
       >
-        {canBlock &&
+        {showBlock &&
           <BlockAction
             actor={actor}
             key="actor-socialgraph-block"
             component="menuitem"
           />}
-        {canEdit &&
+        {showEdit &&
           <MenuItem
             key={`actor-edit-${actor.id}`}
             component="a"
@@ -74,7 +76,7 @@ const ActorsReadCommands = (props) => {
           >
             {i18n.t('commons:settings')}
           </MenuItem>}
-        {canDelete &&
+        {showDelete &&
           <DeleteAction
             key={`actor-delete-${actor.id}`}
             node={actor}
@@ -91,6 +93,7 @@ const ActorsReadCommands = (props) => {
 ActorsReadCommands.propTypes = {
   actor: ActorType,
   isAuthenticated: PropTypes.bool,
+  viewer: PersonType.isRequired,
 };
 
 ActorsReadCommands.defaultProps = {

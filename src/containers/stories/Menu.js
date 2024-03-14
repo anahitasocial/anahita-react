@@ -11,6 +11,7 @@ import NotificationAction from '../actions/medium/Notification';
 import DeleteAction from '../actions/Delete';
 import FollowAction from '../actions/Follow';
 
+import PersonType from '../../proptypes/Person';
 import StoryType from '../../proptypes/Story';
 import permissions from '../../permissions';
 
@@ -25,7 +26,7 @@ const NotificationActionWithRef = withRef(NotificationAction);
 const DeleteActionWithRef = withRef(DeleteAction);
 
 const StoryMenu = (props) => {
-  const { story } = props;
+  const { story, viewer } = props;
 
   const [menuAnchorEl, setAnchorEl] = useState(null);
 
@@ -40,7 +41,7 @@ const StoryMenu = (props) => {
   const ownerName = getOwnerName(story);
   const { id, owner } = story;
   const canSubscribe = story.object && story.object.id && isSubscribable(story.object);
-  const canFollow = permissions.actor.canFollow(owner);
+  const canFollow = permissions.actor.canFollow(owner, viewer);
   const canDelete = story.commands && story.commands.includes('delete') && false;
 
   if (!canSubscribe && !canFollow && !canDelete) {
@@ -93,6 +94,7 @@ const StoryMenu = (props) => {
 
 StoryMenu.propTypes = {
   story: StoryType.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 export default StoryMenu;

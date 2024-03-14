@@ -92,12 +92,15 @@ const ActorsRead = (props) => {
     actor.gadgets.splice(1, 0, 'socialgraph');
   }
 
-  const canFollow = permissions.canFollow(actor);
   const canEdit = permissions.canEdit(actor);
   const canAdminister = permissions.canAdminister(actor);
-  const canAddFollower = permissions.canAdminister(actor) && namespace !== 'people';
-  const canViewCommands = isAuthenticated;
-  const canEditNotifications = isAuthenticated && actor.isLeader;
+  const canFollow = permissions.canFollow(actor, viewer);
+
+  const showFollow = isAuthenticated && canFollow;
+  const showAddFollower = isAuthenticated && canAdminister && !utils.node.isPerson(actor);
+  const showCommands = isAuthenticated && canAdminister;
+  const showEditNotifications = isAuthenticated && actor.isLeader;
+  const showFollowRequests = isAuthenticated && canAdminister;
 
   const isViewer = actor.id === viewer.id;
   const FollowRequests = ActorsFollowRequests(namespace);
@@ -146,15 +149,16 @@ const ActorsRead = (props) => {
         actor={actor}
         followAction={
           <>
-            {canEditNotifications && <NotificationsDialog actor={actor} />}
-            {canAddFollower && <AddFollower actor={actor} />}
-            {canAdminister && <FollowRequests actor={actor} />}
-            {canFollow && <FollowAction actor={actor} />}
+            {showEditNotifications && <NotificationsDialog actor={actor} />}
+            {showAddFollower && <AddFollower actor={actor} />}
+            {showFollowRequests && <FollowRequests actor={actor} />}
+            {showFollow && <FollowAction actor={actor} />}
           </>
         }
-        headerActions={canViewCommands &&
+        headerActions={showCommands &&
           <Commands
             actor={actor}
+            viewer={viewer}
             isAuthenticated={isAuthenticated}
           />}
       />
@@ -186,10 +190,10 @@ const ActorsRead = (props) => {
                 actorNode={actor}
                 filter="leaders"
               />}
-            blocked={actor.id && (isViewer || canAdminister) &&
+            blocks={actor.id && (isViewer || canAdminister) &&
               <ActorsSocialgraph
                 actorNode={actor}
-                filter="blocked"
+                filter="blocks"
               />}
             mutuals={actor.id && !isViewer &&
               <ActorsSocialgraph

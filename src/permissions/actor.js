@@ -1,8 +1,12 @@
 import _ from 'lodash';
 import utils from '../utils';
 
-const isAdmin = (actor) => {
-  return utils.node.isAdmin(actor);
+const isAdmin = (person) => {
+  if (person.usertype) {
+    return person.usertype === 'administrator' || person.usertype === 'super-administrator';
+  }
+
+  return false;
 };
 
 const isRegistered = (actor) => {
@@ -32,20 +36,12 @@ const canAdminister = (actor) => {
   return Boolean(authorized && authorized.administration);
 };
 
-const canFollow = (actor) => {
-  return !actor.isBlocked &&
-  _.intersection(
-    actor.commands,
-    ['follow', 'unfollow'],
-  ).length > 0;
+const canFollow = (actor, viewer) => {
+  return actor.id !== viewer.id && !actor.isBlocked && !actor.isBlocked;
 };
 
-const canBlock = (actor) => {
-  return !isAdmin(actor) &&
-  _.intersection(
-    actor.commands,
-    ['block', 'unblock'],
-  ).length > 0;
+const canBlock = (actor, viewer) => {
+  return utils.node.isPerson(actor) && actor.id !== viewer.id;
 };
 
 const canNotificationSettings = (actor) => {

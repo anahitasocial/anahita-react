@@ -1,7 +1,7 @@
 import axios from 'axios';
-import utils from '../utils';
+// import utils from '../utils';
 
-const { constructFormData } = utils.api;
+// const { constructFormData } = utils.api;
 
 function browse(params) {
   const {
@@ -21,32 +21,28 @@ function browse(params) {
   });
 }
 
-function follow(actor) {
-  return axios.post(`/socialgraph/${actor.id}/followers/`);
+function follow({ actor, viewer }) {
+  return axios.post(`/socialgraph/${actor.id}/followers/${viewer.id}`);
 }
 
-function unfollow(actor) {
-  return axios.delete(`/socialgraph/${actor.id}/followers/`);
+function unfollow({ actor, viewer }) {
+  return axios.delete(`/socialgraph/${actor.id}/followers/${viewer.id}`);
 }
 
 function lead(viewer, actor) {
-  return axios.post(`/socialgraph/${actor.id}/leaders/`, constructFormData({
-    leader_id: viewer.id,
-  }));
+  return axios.post(`/socialgraph/${actor.id}/leaders/${viewer.id}`);
 }
 
 function unlead(viewer, actor) {
-  return axios.delete(`/socialgraph/${actor.id}/leaders/`, constructFormData({
-    leader_id: viewer.id,
-  }));
+  return axios.delete(`/socialgraph/${actor.id}/leaders/${viewer.id}`);
 }
 
-function block(actor) {
-  return axios.post(`/socialgraph/${actor.id}/blocks/`);
+function block({ actor, viewer }) {
+  return axios.post(`/socialgraph/${actor.id}/blocks/${viewer.id}`);
 }
 
-function unblock(actor) {
-  return axios.delete(`socialgraph/${actor.id}/blocks/`);
+function unblock({ actor, viewer }) {
+  return axios.delete(`socialgraph/${actor.id}/blocks/${viewer.id}`);
 }
 
 export default {
