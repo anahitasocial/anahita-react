@@ -59,7 +59,7 @@ const browse = (namespace, api) => {
     return (dispatch) => {
       dispatch(browseRequest(namespace));
       return new Promise((resolve, reject) => {
-        api.browse(params)
+        return api.browse(params)
           .then((results) => {
             dispatch(browseSuccess(results, namespace));
             return resolve();
@@ -101,7 +101,7 @@ const read = (namespace, api) => {
     return (dispatch) => {
       dispatch(readRequest(namespace));
       return new Promise((resolve, reject) => {
-        api.read(id)
+        return api.read(id)
           .then((result) => {
             dispatch(readSuccess(result, namespace));
             return resolve();
@@ -143,7 +143,7 @@ const edit = (namespace, api) => {
     return (dispatch) => {
       dispatch(editRequest(namespace));
       return new Promise((resolve, reject) => {
-        api.edit(node)
+        return api.edit(node)
           .then((result) => {
             dispatch(editSuccess(result, namespace));
             return resolve();
@@ -188,7 +188,7 @@ const add = (namespace, api) => {
     return (dispatch) => {
       dispatch(addRequest(namespace));
       return new Promise((resolve, reject) => {
-        api.add(node, owner)
+        return api.add(node, owner)
           .then((result) => {
             if (result.data && result.data.objectType === 'com.stories.story') {
               dispatch(stories.add(result.data));
@@ -234,7 +234,7 @@ const deleteItem = (namespace, api) => {
     return (dispatch) => {
       dispatch(deleteRequest(node, namespace));
       return new Promise((resolve, reject) => {
-        api.deleteItem(node)
+        return api.deleteItem(node)
           .then(() => {
             dispatch(deleteSuccess(node, namespace));
             return resolve();

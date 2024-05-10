@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 
 import LocationForm from '../../../components/location/Form';
-import actions from '../../../actions';
 import api from '../../../api';
 import i18n from '../../../languages';
 import form from '../../../utils/form';
@@ -32,7 +31,6 @@ const formFields = form.createFormFields(fieldNames);
 
 const LocationsSelectorAdd = (props) => {
   const {
-    addTag,
     node,
     name,
     callback,
@@ -47,6 +45,7 @@ const LocationsSelectorAdd = (props) => {
     country: process.env.REACT_APP_LOCATION_FIXED_COUNTRY,
     state_province: process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE,
     city: process.env.REACT_APP_LOCATION_FIXED_CITY,
+    taggable_id: node.id,
   });
   const [isFetching, setIsFetching] = useState(false);
 
@@ -77,16 +76,7 @@ const LocationsSelectorAdd = (props) => {
       formData.country = process.env.REACT_APP_LOCATION_FIXED_COUNTRY || formData.country;
 
       setIsFetching(true);
-      api.locations.add(formData).then((result) => {
-        addTag(node, result.data).then(() => {
-          setIsFetching(true);
-          return callback(location);
-        }).catch((err) => {
-          return console.error(err);
-        });
-      }).catch((err) => {
-        return console.error(err);
-      });
+      api.locations.add(formData);
     }
 
     setFields({ ...newFields });
@@ -118,25 +108,9 @@ const LocationsSelectorAdd = (props) => {
 };
 
 LocationsSelectorAdd.propTypes = {
-  addTag: PropTypes.func.isRequired,
   node: NodeType.isRequired,
   name: PropTypes.string.isRequired,
   callback: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = () => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addTag: (node, tag) => {
-      return dispatch(actions.locationsGraph.add(node)(tag));
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LocationsSelectorAdd);
+export default LocationsSelectorAdd;

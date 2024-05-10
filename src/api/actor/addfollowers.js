@@ -1,56 +1,34 @@
 import axios from 'axios';
-import utils from '../../utils';
 
-const { constructFormData } = utils.api;
-
-const browse = (namespace) => {
-  return (params) => {
-    const { actor, limit, q } = params;
-    return axios.get(`/${namespace}/${actor.id}/graph/leadables.json`, {
-      params: {
-        start: params.offset,
-        limit,
-        q,
-      },
-    });
-  };
+const browse = (params) => {
+  const { viewer, limit, q } = params;
+  return axios.get(`/socialgraph/${viewer.id}/mutuals`, {
+    params: {
+      start: params.offset,
+      limit,
+      q,
+    },
+  });
 };
 
-const add = (namespaces) => {
-  return (params) => {
-    const { actor, follower } = params;
-    return axios.post(`/${namespaces}/${actor.id}.json`, constructFormData({
-      action: 'addfollower',
-      actor: follower.id,
-    }));
-  };
+const add = (params) => {
+  const { actor, follower } = params;
+  return axios.post(`/socialgraph/${actor.id}/followers/${follower.id}`);
 };
 
-const deleteItem = (namespaces) => {
-  return (params) => {
-    const { follower, actor } = params;
-    return axios.post(`/${namespaces}/${actor.id}.json`, constructFormData({
-      action: 'removefollower',
-      actor: follower.id,
-    }));
-  };
+const deleteItem = (params) => {
+  const { follower, actor } = params;
+  return axios.delete(`/socialgraph/${actor.id}/followers/${follower.id}`);
 };
 
-const block = (namespaces) => {
-  return (params) => {
-    const { follower, actor } = params;
-    return axios.post(`/${namespaces}/${actor.id}.json`, constructFormData({
-      action: 'blockfollower',
-      actor: follower.id,
-    }));
-  };
+const block = (params) => {
+  const { follower, actor } = params;
+  return axios.post(`/socialgraph/${actor.id}/blocks/${follower.id}`);
 };
 
-export default (namespace) => {
-  return {
-    browse: browse(namespace),
-    add: add(namespace),
-    deleteItem: deleteItem(namespace),
-    block,
-  };
+export default {
+  browse,
+  add,
+  deleteItem,
+  block,
 };

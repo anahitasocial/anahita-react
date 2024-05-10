@@ -30,7 +30,7 @@ function add(node, file) {
   return (dispatch) => {
     dispatch(addRequest(node));
     return new Promise((resolve, reject) => {
-      api.edit(node, file)
+      return api.edit(node, file)
         .then((result) => {
           dispatch(addSuccess(result));
           return resolve();
@@ -72,7 +72,7 @@ function deleteItem(node) {
   return (dispatch) => {
     dispatch(deleteRequest(node));
     return new Promise((resolve, reject) => {
-      api.edit(node)
+      return api.edit(node)
         .then((result) => {
           dispatch(deleteSuccess(result));
           return resolve();

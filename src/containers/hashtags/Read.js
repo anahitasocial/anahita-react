@@ -10,9 +10,12 @@ import withWidth from '@material-ui/core/withWidth';
 
 import actions from '../../actions';
 import i18n from '../../languages';
+import permissions from '../../permissions';
 import HashtagDefault from '../../proptypes/HashtagDefault';
 import HashtagsType from '../../proptypes/Hashtags';
+import PersonType from '../../proptypes/Person';
 
+import HashtagMenu from './Menu';
 import Progress from '../../components/Progress';
 import Taggables from '../taggables';
 
@@ -31,6 +34,7 @@ const HashtagsRead = (props) => {
         alias,
       },
     },
+    viewer,
   } = props;
 
   useEffect(() => {
@@ -50,6 +54,8 @@ const HashtagsRead = (props) => {
     );
   }
 
+  const canAdminister = permissions.node.canAdminister(viewer);
+
   return (
     <>
       <Card variant="outlined" square>
@@ -67,6 +73,10 @@ const HashtagsRead = (props) => {
           subheader={i18n.t('taggables:count', {
             count: taggablesCount,
           })}
+          action={canAdminister &&
+            <HashtagMenu
+              hashtag={hashtag}
+            />}
         />
       </Card>
       {hashtag.id > 0 && <Taggables tag={hashtag} />}
@@ -87,11 +97,14 @@ const mapStateToProps = (state) => {
 
   const taggablesCount = total;
 
+  const { viewer } = state.session;
+
   return {
     hashtags,
     taggablesCount,
     error,
     isFetching,
+    viewer,
   };
 };
 
@@ -103,6 +116,7 @@ HashtagsRead.propTypes = {
   taggablesCount: PropTypes.number.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {

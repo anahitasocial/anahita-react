@@ -8,7 +8,7 @@ import privacy from './privacy';
 
 export default (namespace) => {
   return {
-    addfollowers: addfollowers(namespace),
+    addfollowers,
     admins: admins(namespace),
     apps: apps(namespace),
     followrequests,

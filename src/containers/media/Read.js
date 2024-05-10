@@ -34,7 +34,6 @@ const {
 
 const MediaRead = (props) => {
   const {
-    numOfComments,
     namespace,
     readItem,
     editItem,
@@ -193,10 +192,7 @@ const MediaRead = (props) => {
               {isLikeable(medium) && <Likes node={medium} />}
               {isCommentable(medium) &&
                 <CommentStats
-                  node={{
-                    ...medium,
-                    numOfComments,
-                  }}
+                  node={medium}
                 />}
             </>
           }
@@ -206,7 +202,10 @@ const MediaRead = (props) => {
               canAdd={canAddComment}
             />}
           locations={
-            <LocationsGadget node={medium} />
+            <LocationsGadget
+              node={medium}
+              viewer={viewer}
+            />
           }
         />}
     </>
@@ -219,7 +218,6 @@ MediaRead.propTypes = {
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   media: MediaType.isRequired,
-  numOfComments: PropTypes.number.isRequired,
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,

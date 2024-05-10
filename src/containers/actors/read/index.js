@@ -177,7 +177,10 @@ const ActorsRead = (props) => {
             }}
           />}
         locations={actor.id &&
-          <LocationsGadget node={actor} />}
+          <LocationsGadget
+            node={actor}
+            viewer={viewer}
+          />}
         socialgraph={
           <SocialgraphTabs
             followers={actor.id &&

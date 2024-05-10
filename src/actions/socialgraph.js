@@ -37,7 +37,7 @@ function follow({ actor, viewer }) {
   return (dispatch) => {
     dispatch(followRequest(actor));
     return new Promise((resolve, reject) => {
-      api.follow({ actor, viewer })
+      return api.follow({ actor, viewer })
         .then((result) => {
           dispatch(followSuccess(result));
           return resolve();
@@ -78,7 +78,7 @@ function unfollow({ actor, viewer }) {
   return (dispatch) => {
     dispatch(unfollowRequest(actor));
     return new Promise((resolve, reject) => {
-      api.unfollow({ actor, viewer })
+      return api.unfollow({ actor, viewer })
         .then((result) => {
           dispatch(unfollowSuccess(result));
           return resolve();
@@ -120,7 +120,7 @@ function removefollower({ actor, follower }) {
     dispatch(removefollowerRequest(actor));
     return new Promise((resolve, reject) => {
       const namespace = utils.node.getNamespace(actor);
-      apis[namespace][singularize(namespace)].addfollowers.deleteItem({ actor, follower })
+      return apis[namespace][singularize(namespace)].addfollowers.deleteItem({ actor, follower })
         .then(() => {
           dispatch(removefollowerSuccess(follower));
           return resolve();
@@ -161,7 +161,7 @@ function block({ actor, viewer }) {
   return (dispatch) => {
     dispatch(blockRequest(actor));
     return new Promise((resolve, reject) => {
-      api.block({ actor, viewer })
+      return api.block({ actor, viewer })
         .then((result) => {
           dispatch(blockSuccess(result));
           return resolve();
@@ -202,7 +202,7 @@ function unblock({ actor, viewer }) {
   return (dispatch) => {
     dispatch(unblockRequest(actor));
     return new Promise((resolve, reject) => {
-      api.unblock({ actor, viewer })
+      return api.unblock({ actor, viewer })
         .then((result) => {
           dispatch(unblockSuccess(result));
           return resolve();
@@ -244,7 +244,7 @@ function blockfollower({ actor, follower }) {
     dispatch(blockfollowerRequest(actor));
     return new Promise((resolve, reject) => {
       const namespace = utils.node.getNamespace(actor);
-      apis[namespace][singularize(namespace)].addfollowers.block({ actor, follower })
+      return apis[namespace][singularize(namespace)].addfollowers.block({ actor, follower })
         .then(() => {
           dispatch(blockfollowerSuccess(follower));
           return resolve();

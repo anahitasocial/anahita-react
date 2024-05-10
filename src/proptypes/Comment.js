@@ -11,7 +11,7 @@ import PersonType from './Person';
 export default shape({
   id: number,
   objectType: oneOf([
-    'com.media.medium',
+    'com.comments.comment',
     'com.articles.comment',
     'com.media.comment',
     'com.notes.comment',

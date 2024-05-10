@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { singularize } from 'inflection';
 import utils from '../utils';
 
 const { constructFormData } = utils.api;
@@ -30,7 +29,7 @@ const edit = (namespace) => {
 const add = (namespace) => {
   return (node, owner = null) => {
     const path = (owner) ?
-      `/${namespace}/@${owner.id}/${singularize(namespace)}/` :
+      `/${namespace}/${owner.id}/` :
       `/${namespace}/`;
     return axios.post(path, constructFormData(node));
   };

@@ -34,8 +34,6 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
     namespace,
     items,
     actor,
-    error,
-    success,
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -47,16 +45,6 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
       resetList();
     };
   }, [browseList, actor, resetList]);
-
-  useEffect(() => {
-    if (error) {
-      alertError(i18n.t('prompts:updated.error'));
-    }
-
-    if (success) {
-      alertSuccess(i18n.t('prompts:updated.success'));
-    }
-  }, [error, success]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -88,9 +76,13 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
                 <ListItemSecondaryAction>
                   <Button
                     onClick={() => {
-                      deleteItem({ actor, followRequest: node }).then(() => {
-                        return handleClose();
-                      });
+                      deleteItem({ actor, followRequest: node })
+                        .then(() => {
+                          alertSuccess(i18n.t('prompts:deleted.success'));
+                          return handleClose();
+                        }).catch(() => {
+                          alertError(i18n.t('prompts:deleted.error'));
+                        });
                     }}
                   >
                     {i18n.t('commons:ignore')}
@@ -98,9 +90,13 @@ const ActorsFollowRequests = React.forwardRef((props, ref) => {
                   <Button
                     color="primary"
                     onClick={() => {
-                      addItem({ actor, followRequest: node }).then(() => {
-                        return handleClose();
-                      });
+                      addItem({ actor, followRequest: node })
+                        .then(() => {
+                          alertSuccess(i18n.t('prompts:added.success'));
+                          return handleClose();
+                        }).catch(() => {
+                          alertError(i18n.t('prompts:added.error'));
+                        });
                     }}
                   >
                     {i18n.t('commons:accept')}
@@ -147,8 +143,6 @@ ActorsFollowRequests.propTypes = {
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   items: ActorsType.isRequired,
-  error: PropTypes.string.isRequired,
-  success: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
 };
 

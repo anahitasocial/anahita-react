@@ -30,7 +30,7 @@ const Composers = (props) => {
   } = props;
 
   let { composers } = owner;
-  composers = ['notes', 'photos', 'articles'];
+  composers = ['notes', 'photos', 'articles', 'topics'];
   const [tab, setTab] = useState(composers[0] || 'notes');
 
   const changeTab = (event, value) => {

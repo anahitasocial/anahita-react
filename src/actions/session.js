@@ -44,7 +44,7 @@ function read() {
   return (dispatch) => {
     dispatch(readRequest());
     return new Promise((resolve, reject) => {
-      api.read()
+      return api.read()
         .then((response) => {
           dispatch(readSuccess(response));
           return resolve();
@@ -87,7 +87,7 @@ function add(credentials) {
   return (dispatch) => {
     dispatch(addRequest());
     return new Promise((resolve, reject) => {
-      api.add(credentials)
+      return api.add(credentials)
         .then((response) => {
           dispatch(addSuccess(response));
           return resolve();
@@ -130,7 +130,7 @@ function deleteItem() {
   return (dispatch) => {
     dispatch(deleteRequest());
     return new Promise((resolve, reject) => {
-      api.deleteItem()
+      return api.deleteItem()
         .then((response) => {
           dispatch(deleteSuccess(response));
           return resolve();

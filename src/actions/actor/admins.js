@@ -43,7 +43,7 @@ const browse = (namespace, api) => {
     return (dispatch) => {
       dispatch(browseRequest(namespace));
       return new Promise((resolve, reject) => {
-        api.browse(params)
+        return api.browse(params)
           .then((results) => {
             dispatch(browseSuccess(results, namespace));
             return resolve();
@@ -88,7 +88,7 @@ const add = (namespace, api) => {
     return (dispatch) => {
       dispatch(addRequest(namespace));
       return new Promise((resolve, reject) => {
-        api.add(params)
+        return api.add(params)
           .then((result) => {
             dispatch(addSuccess(result, namespace));
             return resolve();
@@ -131,7 +131,7 @@ const deleteItem = (namespace, api) => {
     return (dispatch) => {
       dispatch(deleteRequest(params, namespace));
       return new Promise((resolve, reject) => {
-        api.deleteItem(params)
+        return api.deleteItem(params)
           .then(() => {
             dispatch(deleteSuccess(params, namespace));
             return resolve();

@@ -7,10 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import List from '@material-ui/core/List';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 
 import ListItem from './ListItem';
-import Progress from '../../../components/Progress';
 import LocationsType from '../../../proptypes/Locations';
 import NodeType from '../../../proptypes/Node';
 import AddAction from '../../actions/tags/location/Add';
@@ -40,9 +38,9 @@ const LocationsSelectorBrowse = (props) => {
     node,
     queryFilters,
     handleClose,
-    error,
     isFetching,
     cardProps,
+    selectedLocations,
   } = props;
 
   const [keyword, setKeyword] = useState('');
@@ -51,49 +49,27 @@ const LocationsSelectorBrowse = (props) => {
     browseList({
       start: 0,
       limit: LIMIT,
-      layout: 'list_selector',
-      taggable_id: node.id,
+      q: keyword,
       ...queryFilters,
     });
 
     return () => {
       resetList();
     };
-  }, [node.id, queryFilters]);
+  }, [node.id, keyword]);
 
   const handleOnChange = (event) => {
+    event.preventDefault();
     const { value } = event.target;
     setKeyword(value);
   };
 
-  const handleOnSubmit = (event) => {
-    event.preventDefault();
-    resetList();
-    browseList({
-      start: 0,
-      limit: LIMIT,
-      layout: 'list_selector',
-      taggable_id: node.id,
-      q: keyword,
-    });
-  };
+  const selectedLocationIds = selectedLocations.map((location) => {
+    return location.id;
+  });
 
   if (keyword !== '' && !isFetching && items.allIds.length === 0 && noResultsCallback) {
     noResultsCallback(keyword);
-  }
-
-  if (isFetching) {
-    return (
-      <Progress key="locations-progress" />
-    );
-  }
-
-  if (error) {
-    return (
-      <Typography variant="body1" color="error" align="center">
-        {error}
-      </Typography>
-    );
   }
 
   return (
@@ -102,34 +78,32 @@ const LocationsSelectorBrowse = (props) => {
       {...cardProps}
     >
       <CardContent>
-        <form onSubmit={handleOnSubmit}>
-          <FormControl fullWidth>
-            <TextField
-              name="keyword"
-              value={keyword}
-              onChange={handleOnChange}
-              variant="outlined"
-              placeholder="Search location ..."
-              fullWidth
-              autoFocus
-            />
-          </FormControl>
-        </form>
+        <FormControl fullWidth>
+          <TextField
+            name="keyword"
+            value={keyword}
+            onChange={handleOnChange}
+            variant="outlined"
+            placeholder="Search location ..."
+            fullWidth
+            autoFocus
+          />
+        </FormControl>
       </CardContent>
       <List className={classes.list}>
         {items.allIds.map((itemId) => {
           const location = items.byId[itemId];
+          const showAction = !selectedLocationIds.includes(location.id);
           return (
             <ListItem
               key={`location-graph-list-item-${itemId}`}
               location={location}
-              actions={
+              actions={showAction &&
                 <AddAction
                   tag={location}
                   node={node}
                   callback={handleClose}
-                />
-              }
+                />}
             />
           );
         })}
@@ -149,6 +123,7 @@ LocationsSelectorBrowse.propTypes = {
   handleClose: PropTypes.func.isRequired,
   noResultsCallback: PropTypes.func,
   cardProps: PropTypes.objectOf(PropTypes.any),
+  selectedLocations: PropTypes.arrayOf(NodeType),
 };
 
 LocationsSelectorBrowse.defaultProps = {
@@ -160,6 +135,7 @@ LocationsSelectorBrowse.defaultProps = {
   },
   noResultsCallback: null,
   cardProps: {},
+  selectedLocations: [],
 };
 
 const mapStateToProps = (state) => {

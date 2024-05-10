@@ -15,9 +15,8 @@ import Typography from '@material-ui/core/Typography';
 
 import AddIcon from '@material-ui/icons/Add';
 
-import actions from '../../actions';
+import api from '../../api';
 import permissions from '../../permissions/node';
-import LocationType from '../../proptypes/Location';
 import NodeType from '../../proptypes/Node';
 import PersonType from '../../proptypes/Person';
 
@@ -36,61 +35,50 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
+const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+const GOOGLE_MAP_URL = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`;
+
 const LocationsGadget = (props) => {
   const classes = useStyles();
   const {
     node,
     viewer,
-    locationsGraph,
-    isFetching,
-    error,
-    browse,
     cardProps,
   } = props;
 
-  const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
   const [isOpen, setIsOpen] = useState(false);
-
-  const locations = locationsGraph[node.id] || {
-    allIds: [],
-    byId: {},
-  };
+  const [locations, setLocations] = useState([]);
+  const [waiting, setWaiting] = useState(false);
 
   useEffect(() => {
-    browse(node, {
-      objectType: 'com.locations.location',
+    setWaiting(true);
+    api.locations.browse({
       taggable_id: node.id,
-      offset: 0,
-    });
-  }, []);
+      start: 0,
+      limit: 20,
+    })
+      .then((response) => {
+        const { data } = response.data;
+        setLocations(data || []);
+        setWaiting(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [node.id]);
 
   const handleClose = () => {
     setIsOpen(false);
   };
 
-  if (locations.byId.length === 0 && isFetching[node.id]) {
+  const canDelete = permissions.canEdit(viewer, node);
+  const canAdd = permissions.canAdd(viewer, node);
+
+  if (locations.length === 0 && waiting) {
     return (
       <Progress />
     );
   }
-
-  if (error[node.id]) {
-    return (
-      <Typography
-        variant="body1"
-        color="error"
-        align="center"
-        gutterBottom
-      >
-        {error[node.id]}
-      </Typography>
-    );
-  }
-
-  const canDelete = permissions.canEdit(viewer, node);
-  const canAdd = permissions.canAdd(viewer, node);
-  const locationsArray = _.map(locations.byId, (value) => { return value; });
 
   return (
     <>
@@ -100,6 +88,7 @@ const LocationsGadget = (props) => {
           isOpen={isOpen}
           handleClose={handleClose}
           cardProps={cardProps}
+          selectedLocations={locations}
         />}
       <Card {...cardProps}>
         <CardHeader
@@ -114,20 +103,19 @@ const LocationsGadget = (props) => {
             </Typography>
           }
         />
-        {locationsArray.length > 0 &&
+        {locations.length !== 0 &&
           <AnahitaMap
-            locations={locationsArray}
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
+            locations={locations}
+            googleMapURL={GOOGLE_MAP_URL}
             loadingElement={<Box style={{ height: '100%' }} />}
             containerElement={<Box className={classes.mapContainer} />}
             mapElement={<Box style={{ height: '100%' }} />}
           />}
         <List>
-          {locations.allIds.map((locationId) => {
-            const location = locations.byId[locationId];
+          {locations.map((location) => {
             return (
               <ListItem
-                key={`location-graph-list-item-${locationId}`}
+                key={`location-graph-list-item-${location.id}`}
                 location={location}
                 actions={canDelete && <DeleteAction tag={location} node={node} />}
               />
@@ -154,10 +142,6 @@ const LocationsGadget = (props) => {
 LocationsGadget.propTypes = {
   node: NodeType.isRequired,
   viewer: PersonType.isRequired,
-  locationsGraph: PropTypes.objectOf(LocationType).isRequired,
-  browse: PropTypes.func.isRequired,
-  isFetching: PropTypes.objectOf(PropTypes.bool).isRequired,
-  error: PropTypes.objectOf(PropTypes.string).isRequired,
   cardProps: PropTypes.objectOf(PropTypes.any),
 };
 
@@ -165,34 +149,4 @@ LocationsGadget.defaultProps = {
   cardProps: {},
 };
 
-const mapStateToProps = (state) => {
-  const {
-    locations: locationsGraph,
-    error,
-    isFetching,
-  } = state.locationsGraph;
-
-  const {
-    viewer,
-  } = state.session;
-
-  return {
-    locationsGraph,
-    error,
-    isFetching,
-    viewer,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    browse: (node, params) => {
-      return dispatch(actions.locationsGraph.browse(node)(params));
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LocationsGadget);
+export default LocationsGadget;

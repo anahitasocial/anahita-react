@@ -53,7 +53,7 @@ const Viewer = (props) => {
   const {
     givenName,
     familyName,
-    alias,
+    username,
   } = viewer;
 
   return (
@@ -86,7 +86,7 @@ const Viewer = (props) => {
               color="inherit"
               align="right"
             >
-              {alias}
+              {`@${username}`}
             </Typography>
           </div>
           <div className={classes.avatarContent}>

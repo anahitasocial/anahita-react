@@ -1,10 +1,9 @@
-const canAdd = (parent) => {
-  const { commands } = parent;
-  return commands ? commands.includes('comment') : false;
+import utils from '../utils';
+
+const canAdd = (node) => {
+  return utils.node.isCommentable(node) && utils.node.isCommentable(node);
 };
 
 export default {
   canAdd,
-//  canEdit,
-//  canFollow,
 };

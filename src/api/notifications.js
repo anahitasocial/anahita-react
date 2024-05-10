@@ -10,17 +10,13 @@ function browse(params) {
 }
 
 function add(node) {
-  const namespace = utils.node.getNamespace(node);
-  return axios.post(`/${namespace}/${node.id}`, constructFormData({
-    action: 'subscribe',
+  return axios.post('/notifications/subscriptions', constructFormData({
+    target_id: node.id,
   }));
 }
 
 function deleteItem(node) {
-  const namespace = utils.node.getNamespace(node);
-  return axios.post(`/${namespace}/${node.id}`, constructFormData({
-    action: 'unsubscribe',
-  }));
+  return axios.delete(`/notifications/subscriptions/${node.id}`);
 }
 
 function count() {

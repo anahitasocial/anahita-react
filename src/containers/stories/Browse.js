@@ -79,18 +79,6 @@ const StoriesBrowse = (props) => {
     return setStart(start + LIMIT);
   };
 
-  const getNumOfComments = (node) => {
-    if (node.object && node.object.id && isCommentable(node.object)) {
-      if (comments.byId[node.object.id]) {
-        return comments.byId[node.object.id].allIds.length;
-      }
-
-      return node.comments.allIds.length;
-    }
-
-    return 0;
-  };
-
   return (
     <InfiniteScroll
       dataLength={items.allIds.length}
@@ -103,9 +91,12 @@ const StoriesBrowse = (props) => {
       {items.allIds.map((itemId) => {
         const node = items.byId[itemId];
         const key = `stories_node_${node.id}`;
-        const canAddComment = commentPerms.canAdd(node);
-        const numOfComments = getNumOfComments(node);
+        const canAddComment = commentPerms.canAdd(node.object);
         const isCommentsOpen = openComments.includes(node.id);
+        const showComments = isCommentsOpen &&
+          node.object &&
+          node.object.id &&
+          isCommentable(node.object);
 
         let Like = null;
 
@@ -131,10 +122,7 @@ const StoriesBrowse = (props) => {
               node.object && node.object.id && isCommentable(node.object) &&
               <CommentStats
                 key={`story-comment-stat-${node.object.id}`}
-                node={{
-                  ...node.object,
-                  numOfComments,
-                }}
+                node={node.object}
               />,
             ]}
             actions={isAuthenticated && [
@@ -161,7 +149,7 @@ const StoriesBrowse = (props) => {
                 Comment
               </Button>,
             ]}
-            comments={node.object && node.object.id && isCommentable(node.object) &&
+            comments={showComments &&
               <CommentsBrowse
                 parent={node.object}
                 comments={node.comments}

@@ -26,7 +26,14 @@ const ActionsTagsLocationDelete = React.forwardRef((props, ref) => {
       ref={ref}
       onClick={() => {
         setIsWaiting(true);
-        deleteTag(node, tag);
+        deleteTag(node, tag)
+          .then(() => {
+            setIsWaiting(false);
+          })
+          .catch((err) => {
+            setIsWaiting(false);
+            console.error(err);
+          });
       }}
     >
       {!isWaiting && <RemoveIcon />}

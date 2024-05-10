@@ -40,11 +40,10 @@ const CommentsBrowse = (props) => {
   const namespace = utils.node.getNamespace(parent);
 
   const [fields, setFields] = useState(formFields);
-
   const [comment, setComment] = useState({
     ...CommentDefault,
     author: viewer,
-    parentId: parent.id,
+    parent,
   });
 
   useEffect(() => {
@@ -70,13 +69,14 @@ const CommentsBrowse = (props) => {
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      addItem(comment, namespace).then(() => {
-        setComment({
-          ...CommentDefault,
-          author: viewer,
-          parentId: parent.id,
+      addItem(comment)
+        .then(() => {
+          setComment({
+            ...CommentDefault,
+            author: viewer,
+            parent,
+          });
         });
-      });
     }
 
     setFields({ ...newFields });
@@ -130,8 +130,8 @@ const mapDispatchToProps = (dispatch) => {
     setList: (nodes, parent) => {
       return dispatch(actions.commentsInline.setList(nodes, parent));
     },
-    addItem: (node) => {
-      return dispatch(actions.commentsInline.add(node));
+    addItem: (comment) => {
+      return dispatch(actions.commentsInline.add(comment));
     },
   };
 };

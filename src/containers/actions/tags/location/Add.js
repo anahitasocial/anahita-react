@@ -27,10 +27,15 @@ const ActionsTagsLocationAdd = React.forwardRef((props, ref) => {
       ref={ref}
       onClick={() => {
         setIsWaiting(true);
-        addTag(node, tag).then(() => {
-          setIsWaiting(false);
-          callback();
-        });
+        addTag(node, tag)
+          .then(() => {
+            setIsWaiting(false);
+            callback();
+          })
+          .catch((err) => {
+            setIsWaiting(false);
+            console.error(err);
+          });
       }}
     >
       {!isWaiting && <AddIcon />}

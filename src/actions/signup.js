@@ -30,7 +30,7 @@ function add(credentials) {
   return (dispatch) => {
     dispatch(addRequest());
     return new Promise((resolve, reject) => {
-      api.add(credentials)
+      return api.add(credentials)
         .then((response) => {
           dispatch(addSuccess(response));
           return resolve();

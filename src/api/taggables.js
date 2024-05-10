@@ -25,25 +25,17 @@ const browse = (tag) => {
 
 const add = (tag) => {
   return (taggable) => {
-    const namespace = getNamespace(taggable);
-    const { id, objectType } = tag;
-
-    return axios.post(`/${namespace}/${taggable.id}`, constructFormData({
-      action: `add${objectType.split('.')[2]}`,
-      location_id: id,
+    const namespace = getNamespace(tag);
+    return axios.post(`/${namespace}/${tag.id}/taggables/`, constructFormData({
+      taggable_id: taggable.id,
     }));
   };
 };
 
 const deleteItem = (tag) => {
   return (taggable) => {
-    const namespace = getNamespace(taggable);
-    const { id, objectType } = tag;
-
-    return axios.post(`/${namespace}/${taggable.id}`, constructFormData({
-      action: `delete${objectType.split('.')[2]}`,
-      location_id: id,
-    }));
+    const namespace = getNamespace(tag);
+    return axios.delete(`/${namespace}/${tag.id}/taggables/${taggable.id}`);
   };
 };
 

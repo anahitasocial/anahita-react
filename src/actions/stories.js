@@ -84,7 +84,7 @@ const browse = (params) => {
   return (dispatch) => {
     dispatch(browseRequest());
     return new Promise((resolve, reject) => {
-      api.browse(params)
+      return api.browse(params)
         .then((result) => {
           dispatch(browseSuccess(result));
           return resolve();
@@ -134,7 +134,7 @@ const deleteItem = (story) => {
   return (dispatch) => {
     dispatch(deleteRequest(story));
     return new Promise((resolve, reject) => {
-      api.deleteItem(story)
+      return api.deleteItem(story)
         .then((result) => {
           dispatch(deleteSuccess(result));
           return resolve();

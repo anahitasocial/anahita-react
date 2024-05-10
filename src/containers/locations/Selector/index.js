@@ -44,6 +44,7 @@ const LocationsSelector = (props) => {
     coords,
     isGeolocationAvailable,
     isGeolocationEnabled,
+    selectedLocations,
   } = props;
 
   const [tab, setTab] = useState(TABS.SEARCH);
@@ -120,6 +121,7 @@ const LocationsSelector = (props) => {
               setKeyword(newKeyword);
               setTab(TABS.ADD);
             }}
+            selectedLocations={selectedLocations}
           />}
         {tab === TABS.ADD &&
           <AddLocation
@@ -138,7 +140,12 @@ LocationsSelector.propTypes = {
   node: NodeType.isRequired,
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  selectedLocations: PropTypes.arrayOf(NodeType),
   ...geoPropTypes,
+};
+
+LocationsSelector.defaultProps = {
+  selectedLocations: [],
 };
 
 export default geolocated({

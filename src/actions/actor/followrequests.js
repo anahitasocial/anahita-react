@@ -29,7 +29,7 @@ const add = (namespace, api) => {
     return (dispatch) => {
       dispatch(addRequest(params, namespace));
       return new Promise((resolve, reject) => {
-        api.add(params)
+        return api.add(params)
           .then((result) => {
             dispatch(addSuccess(result, namespace));
             return resolve();
@@ -74,7 +74,7 @@ const deleteItem = (namespace, api) => {
     return (dispatch) => {
       dispatch(deleteRequest(params, namespace));
       return new Promise((resolve, reject) => {
-        api.deleteItem(params)
+        return api.deleteItem(params)
           .then(() => {
             dispatch(deleteSuccess(params, namespace));
             return resolve();

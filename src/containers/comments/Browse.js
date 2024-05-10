@@ -42,7 +42,6 @@ const CommentsBrowse = (props) => {
 
   const [start, setStart] = useState(0);
   const [fields, setFields] = useState(formFields);
-
   const [comment, setComment] = useState({
     ...CommentDefault,
     author: viewer,
