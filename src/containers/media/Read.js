@@ -139,8 +139,8 @@ const MediaRead = (props) => {
   }
 
   const canAddComment = isAuthenticated && medium.openToComment;
-  const portrait = getPortraitURL(medium, 'original');
-  const cover = getCoverURL(medium, 'original');
+  const portrait = getPortraitURL(medium, 'large');
+  const cover = getCoverURL(medium, 'large');
   const Like = LikeAction(namespace);
   const Privacy = PrivacyAction(namespace);
   const canEdit = perms.medium.canEdit(viewer, medium);

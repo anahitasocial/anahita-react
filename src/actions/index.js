@@ -6,9 +6,7 @@ import createGraphAction from './createGraph';
 import createActorFollowRequests from './actor/followrequests';
 import createActorAdminsAction from './actor/admins';
 import app from './app';
-import avatar from './avatar';
 import commentsInline from './commentsInline';
-import cover from './cover';
 import likes from './likes';
 import password from './password';
 import session from './session';
@@ -43,9 +41,7 @@ const namespaces = {
 
 const actions = {
   app,
-  avatar,
   commentsInline,
-  cover,
   likes,
   password,
   session,

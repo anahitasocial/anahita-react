@@ -1,66 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import actions from '../../../actions/avatar';
+import api from '../../../api/avatar';
 import AvatarForm from '../../../components/actor/forms/Avatar';
-
-import NodesType from '../../../proptypes/Nodes';
 import NodeType from '../../../proptypes/Node';
 
 const ActorsAvatar = (props) => {
   const {
-    addAvatar,
-    deleteAvatar,
-    nodes,
     node,
-    isFetching,
     canEdit,
   } = props;
 
-  const getAvatarSrc = (actor) => {
-    const src = actor.avatarURL &&
-    actor.avatarURL.large &&
-    actor.avatarURL.large.url;
-
-    return src || null;
-  };
-
-  const src = getAvatarSrc(node);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [avatar, setAvatar] = useState(src);
-  const [isLoaded, setIsLoaded] = useState(!src);
+  const [avatar, setAvatar] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [waiting, setWaiting] = useState(false);
+
+  useEffect(() => {
+    const src = node.avatarURL && node.avatarURL.large && node.avatarURL.large.url;
+    if (src) {
+      setAvatar(src);
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (avatar) {
       // eslint-disable-next-line no-undef
       const image = new Image();
 
+      setIsLoading(true);
       image.src = avatar;
 
       image.onload = () => {
-        setIsLoaded(true);
+        setIsLoading(false); // Image loaded successfully
       };
 
       image.onError = () => {
-        setIsLoaded(false);
+        setIsLoading(false); // Error loading image
       };
     }
-  }, []);
+  }, [avatar]);
 
   const handleFieldChange = (event) => {
     const { files } = event.target;
 
     setAnchorEl(null);
-    addAvatar(node, files[0]).then(() => {
-      const newSrc = getAvatarSrc(nodes.byId[node.id]);
-      setAvatar(newSrc);
+    if (!files.length) {
+      return;
+    }
+
+    setWaiting(true);
+    api.add(node, files[0]).then((result) => {
+      const { data } = result;
+      setAvatar(data.large.url);
+      setWaiting(false);
     });
   };
 
   const handleDelete = () => {
     setAnchorEl(null);
-    setAvatar(null);
-    deleteAvatar(node);
+    setWaiting(true);
+    api.deleteItem(node).then(() => {
+      setAvatar(null);
+      setWaiting(false);
+    });
   };
 
   const handleOpen = (event) => {
@@ -74,7 +78,7 @@ const ActorsAvatar = (props) => {
 
   return (
     <AvatarForm
-      isFetching={isFetching || !isLoaded}
+      isFetching={waiting || isLoading}
       node={node}
       avatar={avatar}
       anchorEl={anchorEl}
@@ -89,42 +93,8 @@ const ActorsAvatar = (props) => {
 };
 
 ActorsAvatar.propTypes = {
-  addAvatar: PropTypes.func.isRequired,
-  deleteAvatar: PropTypes.func.isRequired,
-  nodes: NodesType.isRequired,
   node: NodeType.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const {
-    nodes,
-    isFetching,
-    success,
-    error,
-  } = state.avatar;
-
-  return {
-    nodes,
-    isFetching,
-    success,
-    error,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addAvatar: (node, file) => {
-      return dispatch(actions.add(node, file));
-    },
-    deleteAvatar: (node) => {
-      return dispatch(actions.deleteItem(node));
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ActorsAvatar);
+export default ActorsAvatar;

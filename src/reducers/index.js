@@ -2,8 +2,6 @@ import { combineReducers } from 'redux';
 import createReducer from './create';
 
 import app from './app';
-import avatar from './avatar';
-import cover from './cover';
 import commentsInline from './commentsInline';
 import locations from './locations';
 import locationsGraph from './locationsGraph';
@@ -53,8 +51,6 @@ const namespaces = {
 
 const reducers = {
   app,
-  avatar,
-  cover,
   commentsInline,
   locations,
   locationsGraph,

@@ -63,6 +63,7 @@ const MediaComposer = (props) => {
     }
     case 'photos': {
       const formFields = form.createFormFields([
+        'name',
         'body',
       ]);
       const supportedMimetypes = [

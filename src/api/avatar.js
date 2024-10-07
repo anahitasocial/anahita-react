@@ -1,16 +1,12 @@
 import axios from 'axios';
-import utils from '../utils';
 
-const edit = (node, file) => {
-  const namespace = utils.node.getNamespace(node);
+const add = (node, file) => {
   const { id } = node;
   const formData = new FormData();
 
-  if (!file) {
-    const newFile = new File([], '');
-    formData.append('portrait', newFile);
-  } else {
-    formData.append('portrait', file);
+  // Only append the file if it exists
+  if (file) {
+    formData.append('avatar', file);
   }
 
   const config = {
@@ -19,7 +15,15 @@ const edit = (node, file) => {
     },
   };
 
-  return axios.post(`/${namespace}/${id}.json?edit=avatar`, formData, config);
+  return axios.post(`/avatars/${id}/`, formData, config);
 };
 
-export default { edit };
+const deleteItem = (node) => {
+  const { id } = node;
+  return axios.delete(`/avatars/${id}/`);
+};
+
+export default {
+  add,
+  deleteItem,
+};

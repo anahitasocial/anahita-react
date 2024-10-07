@@ -1,16 +1,11 @@
-/* eslint-disable no-undef */
 import axios from 'axios';
-import utils from '../utils';
 
-const edit = (node, file) => {
-  const namespace = utils.node.getNamespace(node);
+const add = (node, file) => {
   const { id } = node;
   const formData = new FormData();
 
-  if (!file) {
-    const newFile = new File([], '');
-    formData.append('cover', newFile);
-  } else {
+  // Only append the file if it exists
+  if (file) {
     formData.append('cover', file);
   }
 
@@ -20,7 +15,15 @@ const edit = (node, file) => {
     },
   };
 
-  return axios.post(`/${namespace}/${id}.json?edit=cover`, formData, config);
+  return axios.post(`/covers/${id}/`, formData, config);
 };
 
-export default { edit };
+const deleteItem = (node) => {
+  const { id } = node;
+  return axios.delete(`/covers/${id}/`);
+};
+
+export default {
+  add,
+  deleteItem,
+};

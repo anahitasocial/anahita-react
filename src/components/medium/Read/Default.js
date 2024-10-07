@@ -72,7 +72,7 @@ const MediumReadDefault = (props) => {
     setTab(value);
   };
 
-  const portrait = getPortraitURL(medium, 'original');
+  const portrait = getPortraitURL(medium, 'large');
   const cover = getCoverURL(medium, 'large');
   const author = getAuthor(medium);
   const creationTime = moment.utc(medium.creationTime).local().format('LLL').toString();

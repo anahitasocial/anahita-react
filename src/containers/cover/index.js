@@ -1,66 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import actions from '../../actions/cover';
+import api from '../../api/cover';
 import CoverForm from '../../components/cover/forms/Cover';
-
-import NodesType from '../../proptypes/Nodes';
 import NodeType from '../../proptypes/Node';
 
 const Cover = (props) => {
   const {
-    addCover,
-    deleteCover,
-    nodes,
     node,
-    isFetching,
     canEdit,
   } = props;
 
-  const getCoverSrc = (newNode) => {
-    const src = newNode.coverURL &&
-    newNode.coverURL.large &&
-    newNode.coverURL.large.url;
-
-    return src || null;
-  };
-
-  const src = getCoverSrc(node);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [cover, setCover] = useState(src);
-  const [isLoaded, setIsLoaded] = useState(!src);
+  const [cover, setCover] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [waiting, setWaiting] = useState(false);
+
+  useEffect(() => {
+    const src = node.coverURL && node.coverURL.large && node.coverURL.large.url;
+    if (src) {
+      setCover(src);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (cover) {
       // eslint-disable-next-line no-undef
       const image = new Image();
 
+      setIsLoading(true);
       image.src = cover;
 
       image.onload = () => {
-        setIsLoaded(true);
+        setIsLoading(false); // Image loaded successfully
       };
 
       image.onError = () => {
-        setIsLoaded(false);
+        setIsLoading(false); // Error loading image
       };
     }
-  }, []);
+  }, [cover]);
 
   const handleFieldChange = (event) => {
     const { files } = event.target;
 
     setAnchorEl(null);
-    addCover(node, files[0]).then(() => {
-      const newSrc = getCoverSrc(nodes.byId[node.id]);
-      setCover(newSrc);
+    if (!files.length) {
+      return;
+    }
+
+    setWaiting(true);
+    api.add(node, files[0]).then((result) => {
+      const { data } = result;
+      setCover(data.large.url);
+      setWaiting(false);
     });
   };
 
   const handleDelete = () => {
     setAnchorEl(null);
-    setCover(null);
-    deleteCover(node);
+    setWaiting(true);
+    api.deleteItem(node).then(() => {
+      setCover(null);
+      setWaiting(false);
+    });
   };
 
   const handleOpen = (event) => {
@@ -74,7 +79,7 @@ const Cover = (props) => {
 
   return (
     <CoverForm
-      isFetching={isFetching || !isLoaded}
+      isFetching={waiting || isLoading}
       node={node}
       cover={cover}
       anchorEl={anchorEl}
@@ -88,42 +93,8 @@ const Cover = (props) => {
 };
 
 Cover.propTypes = {
-  addCover: PropTypes.func.isRequired,
-  deleteCover: PropTypes.func.isRequired,
-  nodes: NodesType.isRequired,
   node: NodeType.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const {
-    nodes,
-    isFetching,
-    success,
-    error,
-  } = state.cover;
-
-  return {
-    nodes,
-    isFetching,
-    success,
-    error,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addCover: (node, file) => {
-      return dispatch(actions.add(node, file));
-    },
-    deleteCover: (node) => {
-      return dispatch(actions.deleteItem(node));
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Cover);
+export default Cover;
