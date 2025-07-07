@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
@@ -11,18 +11,21 @@ import actions from '../actions';
 import i18n from '../languages';
 
 import PersonType from '../proptypes/Person';
+import PersonDefault from '../proptypes/PersonDefault';
 
 const DashboardPage = (props) => {
   const {
     setAppTitle,
     sessionRead,
+    readPerson,
     viewer,
+    person,
   } = props;
 
   useEffect(() => {
     setAppTitle(i18n.t('dashboard:cTitle'));
-    sessionRead();
-  }, [setAppTitle, sessionRead]);
+    readPerson(viewer.username);
+  }, [setAppTitle, readPerson]);
 
   const filters = {
     filter: 'leaders',
@@ -42,7 +45,7 @@ const DashboardPage = (props) => {
           xs={12}
           md={8}
         >
-          <Composers owner={viewer} />
+          <Composers actor={person} />
         </Grid>
         <Grid
           item
@@ -62,7 +65,9 @@ const DashboardPage = (props) => {
 DashboardPage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   sessionRead: PropTypes.func.isRequired,
+  readPerson: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
+  person: PersonType.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -70,8 +75,15 @@ const mapStateToProps = (state) => {
     viewer,
   } = state.session;
 
+  const {
+    people: {
+      current: person,
+    },
+  } = state.people;
+
   return {
     viewer,
+    person,
   };
 };
 
@@ -82,6 +94,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     sessionRead: () => {
       return dispatch(actions.session.read());
+    },
+    readPerson: (alias) => {
+      return dispatch(actions.people.read(alias, 'people'));
     },
   };
 };
