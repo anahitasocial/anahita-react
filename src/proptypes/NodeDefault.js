@@ -3,7 +3,7 @@ import ImageURLDefault from './ImageURLDefault';
 
 export default {
   id: 0,
-  objectType: 'com.nodes.node',
+  objectType: '',
   name: '',
   alias: '',
   body: '',

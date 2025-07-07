@@ -11,21 +11,20 @@ const {
   REGISTERED,
   ADMIN,
   SUPER_ADMIN,
-} = PERSON.FIELDS.TYPE;
+} = PERSON.FIELDS.USERTYPE;
 
 const OWNER_NAME_CHAR_LIMIT = 16;
 
 const {
-  OBJECT_TYPES,
-  MEDIUM_WITH_HTML_BODY,
+  TYPES,
 } = NODE;
 
 const isActor = (node) => {
-  return node.objectType ? OBJECT_TYPES.ACTOR.includes(node.objectType) : false;
+  return node.type ? TYPES.ACTOR.includes(node.type) : false;
 };
 
 const isPerson = (node) => {
-  return node.objectType ? node.objectType.split('.')[1] === 'people' : false;
+  return node.type ? node.type.split('.')[3] === 'person' : false;
 };
 
 const isSuperAdmin = (actor) => {
@@ -41,23 +40,23 @@ const isRegistered = (actor) => {
 };
 
 const isMedium = (node) => {
-  return node.objectType ? OBJECT_TYPES.MEDIUM.includes(node.objectType) : false;
+  return node.type ? TYPES.MEDIUM.includes(node.type) : false;
 };
 
 const isComment = (node) => {
-  return node.objectType.split('.')[2] === 'comment';
+  return node.type.split('.')[3] === 'comment';
 };
 
 const isCommentable = (medium) => {
-  return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
+  return TYPES.MEDIUM.includes(medium.type);
 };
 
 const isLikeable = (medium) => {
-  return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
+  return TYPES.MEDIUM.includes(medium.type);
 };
 
 const isSubscribable = (medium) => {
-  return OBJECT_TYPES.MEDIUM.includes(medium.objectType);
+  return TYPES.MEDIUM.includes(medium.type);
 };
 
 const isFollowable = (actor) => {
@@ -66,10 +65,6 @@ const isFollowable = (actor) => {
 
 const isLeadable = (actor) => {
   return isPerson(actor);
-};
-
-const isBodyHtml = (medium) => {
-  return MEDIUM_WITH_HTML_BODY.includes(medium.objectType);
 };
 
 const getActorInitials = (actor) => {
@@ -118,16 +113,16 @@ const getAuthor = (node) => {
     name: i18n.t('actor:unknown'),
     givenName: '?',
     familyName: '?',
-    objectType: OBJECT_TYPES.ACTOR.PERSON,
+    type: TYPES.ACTOR.PERSON,
     imageURL: {},
   };
 };
 
 const getCommentURL = (comment) => {
-  const { id, parentId, objectType } = comment;
-  const namespace = objectType.split('.')[1];
+  const { id, parentId, type } = comment;
+  const service = type.split('.')[2];
 
-  return `/${namespace}/${parentId}/#${id}`;
+  return `/${pluralize(service)}/${parentId}/#${id}`;
 };
 
 const getCoverURL = (node, size = 'medium') => {
@@ -181,17 +176,17 @@ const getStorySubject = (story) => {
     name: i18n.t('actor:unknown'),
     givenName: '?',
     familyName: '?',
-    objectType: OBJECT_TYPES.ACTOR.PERSON,
+    type: TYPES.ACTOR.PERSON,
     imageURL: {},
   };
 };
 
 const getURL = (node) => {
-  if (node.id && node.objectType) {
-    const namespace = pluralize(node.objectType.split('.')[2]);
+  if (node.id && node.type) {
+    const service = pluralize(node.type.split('.')[3]);
     let slug = '';
 
-    if (['people', 'hashtags'].includes(namespace)) {
+    if (['people', 'hashtags'].includes(pluralize(service))) {
       slug = node.alias;
     } else if (node.alias) {
       slug = `${node.id}-${slugify(node.alias)}`;
@@ -199,14 +194,19 @@ const getURL = (node) => {
       slug = node.id;
     }
 
-    return `/${namespace}/${slug}/`;
+    return `/${pluralize(service)}/${slug}/`;
   }
 
   return '/';
 };
 
+const getServiceName = (node) => {
+  return node.type.split('.')[2];
+};
+
 const getNamespace = (node) => {
-  return pluralize(node.objectType.split('.')[2]);
+  const service = node.type.split('.')[2];
+  return pluralize(service.split('-')[0]);
 };
 
 const getSupportedMimetypes = (namespace) => {
@@ -240,8 +240,7 @@ export default {
   isSubscribable,
   isFollowable,
   isLeadable,
-  isBodyHtml,
-  getNamespace,
+  getServiceName,
   getPersonInitials,
   getPersonName,
   getActorInitials,
@@ -256,4 +255,5 @@ export default {
   getStorySubject,
   getSupportedMimetypes,
   getURL,
+  getNamespace,
 };

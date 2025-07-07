@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import inflector from 'inflector-js';
 
 import ActorHeader from '../../../components/actor/Header';
 import ActorBody from '../../../components/actor/Body';
 import ActorsFollowRequests from '../FollowRequests';
 import ActorsSocialgraph from '../socialgraph/index';
-import ActorsBrowseGadget from '../browse/Gadget';
+import ActorsBrowseFeature from '../browse/Gadget';
 import Admins from '../../../components/actor/body/Admins';
 import Avatar from './Avatar';
 import Composers from '../../composers';
@@ -27,7 +28,7 @@ import actions from '../../../actions';
 import i18n from '../../../languages';
 import permissions from '../../../permissions/actor';
 import utils from '../../../utils';
-import { Node as NODE } from '../../../constants';
+import { Actor as ACTOR } from '../../../constants';
 
 import ActorsType from '../../../proptypes/Actors';
 import PersonType from '../../../proptypes/Person';
@@ -39,7 +40,7 @@ const {
   getPortraitURL,
 } = utils.node;
 
-const { NAMESPACES } = NODE;
+const { GADGETS } = ACTOR;
 
 const ActorsRead = (props) => {
   const {
@@ -83,15 +84,6 @@ const ActorsRead = (props) => {
     return <></>;
   }
 
-  // @TODO we need a custom Read container for the Project Actors at this point
-  if (isPerson(actor) && !actor.gadgets.includes('groups')) {
-    actor.gadgets.splice(1, 0, 'groups');
-  }
-
-  if (!actor.gadgets.includes('socialgraph')) {
-    actor.gadgets.splice(1, 0, 'socialgraph');
-  }
-
   const canEdit = permissions.canEdit(actor);
   const canAdminister = permissions.canAdminister(actor);
   const canFollow = permissions.canFollow(actor, viewer);
@@ -105,25 +97,29 @@ const ActorsRead = (props) => {
   const isViewer = actor.id === viewer.id;
   const FollowRequests = ActorsFollowRequests(namespace);
 
-  const gadgets = [];
-  actor.gadgets.map((gadget) => {
-    if (NAMESPACES.ACTOR.includes(gadget)) {
-      gadgets[gadget] = (<ActorsBrowseGadget
-        key={`actor-gadget-${actor.id}`}
-        owner={actor}
-        namespace={gadget}
-      />);
+  const tabs = [];
+  actor.features.forEach((key) => {
+    const pluralKey = inflector.pluralize(key);
+
+    if (GADGETS.ACTOR.includes(pluralKey)) {
+      tabs[pluralKey] = (
+        <ActorsBrowseFeature
+          key={`actor-feed-${key}`}
+          owner={actor}
+          queryFilters={{ oid: actor.id }}
+        />
+      );
     }
 
-    if (NAMESPACES.MEDIUM.includes(gadget)) {
-      const MediaGadget = MediaBrowse(gadget);
-      gadgets[gadget] = (<MediaGadget
-        key={`medium-gadget-${actor.id}`}
-        queryFilters={{ oid: actor.id }}
-      />);
+    if (GADGETS.MEDIUM.includes(pluralKey)) {
+      const MediaFeature = MediaBrowse(pluralKey);
+      tabs[pluralKey] = (
+        <MediaFeature
+          key={`medium-feed-${key}`}
+          queryFilters={{ oid: actor.id }}
+        />
+      );
     }
-
-    return true;
   });
 
   return (
@@ -166,17 +162,17 @@ const ActorsRead = (props) => {
         actor={actor}
         viewer={viewer}
         selectedTab={tab}
-        admins={actor.id > 0 && actor.administrators &&
+        admins={actor.gadgets.includes('admins') && actor.administrators &&
           <Admins actor={actor} />}
-        composers={isAuthenticated && actor.id &&
-          <Composers owner={actor} />}
-        stories={actor.id &&
+        composers={isAuthenticated && actor.composers.length > 0 &&
+          <Composers actor={actor} />}
+        stories={actor.gadgets.includes('stories') &&
           <StoriesBrowse
             queryFilters={{
               oid: actor.id,
             }}
           />}
-        locations={actor.id &&
+        locations={actor.gadgets.includes('locations') &&
           <LocationsGadget
             node={actor}
             viewer={viewer}
@@ -206,7 +202,7 @@ const ActorsRead = (props) => {
             selectedTab={subtab}
           />
         }
-        gadgets={gadgets}
+        tabs={tabs}
       />
     </>
   );

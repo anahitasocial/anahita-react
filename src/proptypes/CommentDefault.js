@@ -2,7 +2,7 @@ import PersonDefault from './PersonDefault';
 
 export default {
   id: 0,
-  objectType: 'com.comments.comment',
+  type: 'node.base.comment-service.comment.v1',
   body: '',
   author: PersonDefault,
   creationTime: '0000-00-00 00:00:00',

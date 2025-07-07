@@ -4,7 +4,7 @@ import PERSON_DEFAULT from '../proptypes/PersonDefault';
 import { Person as PERSON } from '../constants';
 
 export default (namespace) => {
-  const { REGISTERED } = PERSON.FIELDS.TYPE;
+  const { REGISTERED } = PERSON.FIELDS.USERTYPE;
   const DEFAULT_NODE = namespace === 'people' ?
     { ...PERSON_DEFAULT, usertype: REGISTERED } :
     ACTOR_DEFAULT;

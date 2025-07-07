@@ -6,7 +6,7 @@ import CommentStats from '../../components/comment/Stats';
 import LikeAction from '../likes/actions/Like';
 import LikesStats from '../likes';
 import MediumCard from '../../components/cards/Medium';
-import PrivacyAction from '../actions/medium/Privacy';
+import EditAccessAction from '../actions/medium/Access';
 
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
@@ -27,7 +27,7 @@ const MediaCard = (props) => {
 
   const namespace = getNamespace(medium);
   const Like = LikeAction(namespace);
-  const Privacy = PrivacyAction(namespace);
+  const Access = EditAccessAction(namespace);
   const canEditMedium = perms.medium.canEdit(viewer, medium);
 
   return (
@@ -40,7 +40,7 @@ const MediaCard = (props) => {
           viewer={viewer}
           inline
         />}
-      privacy={canEditMedium && medium.access && <Privacy medium={medium} size="small" />}
+      access={canEditMedium && medium.access && <Access medium={medium} size="small" />}
       stats={
         <>
           <LikesStats node={medium} />

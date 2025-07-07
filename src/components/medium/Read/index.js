@@ -14,7 +14,7 @@ const Medium = (props) => {
   } = props;
 
   switch (objectType) {
-    case 'com.articles.article':
+    case 'node.medium.article-service.article.v1':
       return (
         <Article {...props} />
       );

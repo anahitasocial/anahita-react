@@ -2,7 +2,6 @@ import {
   shape,
   number,
   string,
-  oneOf,
   bool,
 } from 'prop-types';
 
@@ -10,15 +9,7 @@ import PersonType from './Person';
 
 export default shape({
   id: number,
-  objectType: oneOf([
-    'com.comments.comment',
-    'com.articles.comment',
-    'com.media.comment',
-    'com.notes.comment',
-    'com.photos.comment',
-    'com.todos.comment',
-    'com.topics.comment',
-  ]),
+  type: string,
   body: string,
   author: PersonType,
   creationTime: string,

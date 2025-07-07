@@ -4,7 +4,7 @@ import ImageURLDefault from './ImageURLDefault';
 
 export default {
   id: null,
-  objectType: 'com.media.medium',
+  objectType: '',
   name: '',
   alias: '',
   body: '',

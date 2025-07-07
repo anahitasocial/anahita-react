@@ -1,6 +1,6 @@
 export default {
   id: 0,
-  objectType: 'com.hashtags.hashtag',
+  type: 'node.tag.hashtag-service.hashtag.v1',
   name: '',
   alias: '',
   creationTime: '0000-00-00 00:00:00',

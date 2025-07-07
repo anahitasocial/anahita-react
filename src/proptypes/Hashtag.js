@@ -7,7 +7,7 @@ import {
 
 export default shape({
   id: number,
-  objectType: oneOf(['com.hashtags.hashtag']),
+  type: oneOf(['node.tag.hashtag-service.hashtag.v1']),
   alias: string,
   name: string,
   creationTime: string,

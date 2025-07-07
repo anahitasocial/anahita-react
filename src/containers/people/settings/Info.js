@@ -16,7 +16,7 @@ import PersonType from '../../../proptypes/Person';
 import form from '../../../utils/form';
 import i18n from '../../../languages';
 
-const { SUPER_ADMIN } = PERSON.FIELDS.TYPE;
+const { SUPER_ADMIN } = PERSON.FIELDS.USERTYPE;
 
 const formFields = form.createFormFields([
   'givenName',

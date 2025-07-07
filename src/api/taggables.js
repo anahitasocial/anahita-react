@@ -2,11 +2,7 @@ import axios from 'axios';
 import utils from '../utils';
 
 const { constructFormData } = utils.api;
-
-const getNamespace = (node) => {
-  const { objectType } = node;
-  return objectType.split('.')[1];
-};
+const { getNamespace } = utils.node;
 
 const browse = (tag) => {
   return (params) => {

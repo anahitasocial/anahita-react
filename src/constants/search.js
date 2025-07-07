@@ -1,18 +1,8 @@
 export default {
   SCOPE: {
     ALL: 'all',
-    POSTS: {
-      ARTICLES: 'articles',
-      DOCUMENTS: 'documents',
-      NOTES: 'notes',
-      PHOTOS: 'photos',
-      TOPICS: 'topics',
-      TODOS: 'todos',
-    },
-    ACTORS: {
-      PEOPLE: 'people',
-      GROUPS: 'groups',
-    },
+    MEDIA: 'media',
+    ACTORS: 'actors',
   },
   SORTING: {
     RELEVANT: 'relevant',

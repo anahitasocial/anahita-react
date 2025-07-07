@@ -30,15 +30,15 @@ const ComposersNote = (props) => {
     },
     medium,
     viewer,
-    owner,
+    actor,
     isFetching,
   } = props;
 
-  const placeholder = isPerson(owner) && owner.id !== viewer.id ? i18n.t('notes:composer.bodyPlaceholderPerson', {
-    name: owner.name,
+  const placeholder = isPerson(actor) && actor.id !== viewer.id ? i18n.t('notes:composer.bodyPlaceholderPerson', {
+    name: actor.name,
   }) : i18n.t('notes:composer.bodyPlaceholder');
 
-  const canPrivatePost = isPerson(owner) && owner.id !== viewer.id;
+  const canPrivatePost = isPerson(actor) && actor.id !== viewer.id;
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
@@ -95,7 +95,7 @@ ComposersNote.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
-  owner: ActorType.isRequired,
+  actor: ActorType.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   medium: MediumType.isRequired,
   isFetching: PropTypes.bool.isRequired,

@@ -54,7 +54,7 @@ const MediumReadArticle = (props) => {
   const {
     classes,
     medium,
-    privacy,
+    access,
     actions,
     menu,
     locations,
@@ -108,7 +108,7 @@ const MediumReadArticle = (props) => {
             subheader={
               <>
                 {creationTime}
-                {privacy}
+                {access}
               </>
             }
             action={menu}
@@ -163,7 +163,7 @@ MediumReadArticle.propTypes = {
   actions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
-  privacy: PropTypes.node,
+  access: PropTypes.node,
   locations: PropTypes.node,
   comments: PropTypes.node,
   form: PropTypes.node,
@@ -174,7 +174,7 @@ MediumReadArticle.propTypes = {
 
 MediumReadArticle.defaultProps = {
   actions: null,
-  privacy: null,
+  access: null,
   menu: null,
   locations: null,
   comments: null,

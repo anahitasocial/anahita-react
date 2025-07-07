@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Person as PERSON } from '../constants';
 
-const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.TYPE;
+const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.USERTYPE;
 
 const canEdit = (viewer, node) => {
   if (node.authorized && node.authorized.edit) {

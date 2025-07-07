@@ -1,17 +1,17 @@
 import PERSON from '../constants/person';
 import imageURLDefault from './ImageURLDefault';
 
-const { TYPE, GENDER } = PERSON.FIELDS;
+const { USERTYPE, GENDER } = PERSON.FIELDS;
 
 export default {
   id: null,
-  objectType: 'com.people.person',
+  type: 'node.actor.person-service.person.v1',
   name: '',
   alias: '',
   username: '',
   email: '',
   password: '',
-  usertype: TYPE.PUBLIC,
+  usertype: USERTYPE.PUBLIC,
   givenName: '',
   familyName: '',
   body: '',

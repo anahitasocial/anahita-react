@@ -29,7 +29,7 @@ export default {
       MAX_LENGTH: 80,
       MIN_LENGTH: 8,
     },
-    TYPE: {
+    USERTYPE: {
       GUEST: 'guest',
       REGISTERED: 'registered',
       ADMIN: 'administrator',

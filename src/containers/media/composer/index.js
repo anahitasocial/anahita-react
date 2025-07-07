@@ -5,7 +5,6 @@ import ComposerDefault from './Default';
 import ArticleForm from '../../../components/composer/forms/Article';
 import FileForm from '../../../components/composer/forms/File';
 import NoteForm from '../../../components/composer/forms/Note';
-import TodoForm from '../../../components/composer/forms/Todo';
 import TopicForm from '../../../components/composer/forms/Topic';
 
 import AcctorType from '../../../proptypes/Actor';
@@ -15,7 +14,7 @@ const { form } = utils;
 
 const MediaComposer = (props) => {
   const {
-    owner,
+    actor,
     namespace,
   } = props;
 
@@ -26,11 +25,11 @@ const MediaComposer = (props) => {
         'body',
         'excerpt',
       ]);
-      const ArticlesComposer = ComposerDefault('articles');
+      const ArticleComposer = ComposerDefault('articles');
 
       return (
-        <ArticlesComposer
-          owner={owner}
+        <ArticleComposer
+          actor={actor}
           namespace={namespace}
           formFields={formFields}
           formComponent={ArticleForm}
@@ -48,11 +47,11 @@ const MediaComposer = (props) => {
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       ];
-      const DocumentsComposer = ComposerDefault('documents');
+      const DocumentComposer = ComposerDefault('documents');
 
       return (
-        <DocumentsComposer
-          owner={owner}
+        <DocumentComposer
+          actor={actor}
           namespace={namespace}
           formFields={formFields}
           formComponent={FileForm}
@@ -70,11 +69,11 @@ const MediaComposer = (props) => {
         'image/jpeg',
         'image/png',
       ];
-      const PhotosComposer = ComposerDefault('photos');
+      const PhotoComposer = ComposerDefault('photos');
 
       return (
-        <PhotosComposer
-          owner={owner}
+        <PhotoComposer
+          actor={actor}
           namespace={namespace}
           formFields={formFields}
           formComponent={FileForm}
@@ -88,31 +87,14 @@ const MediaComposer = (props) => {
         'name',
         'body',
       ]);
-      const NotesComposer = ComposerDefault('notes');
+      const NoteComposer = ComposerDefault('notes');
 
       return (
-        <NotesComposer
-          owner={owner}
+        <NoteComposer
+          actor={actor}
           namespace={namespace}
           formFields={formFields}
           formComponent={NoteForm}
-          key={`composer-${namespace}`}
-        />
-      );
-    }
-    case 'todos': {
-      const formFields = form.createFormFields([
-        'name',
-        'body',
-      ]);
-      const TodosComposer = ComposerDefault('todos');
-
-      return (
-        <TodosComposer
-          owner={owner}
-          namespace={namespace}
-          formFields={formFields}
-          formComponent={TodoForm}
           key={`composer-${namespace}`}
         />
       );
@@ -122,11 +104,11 @@ const MediaComposer = (props) => {
         'name',
         'body',
       ]);
-      const TopicsComposer = ComposerDefault('topics');
+      const TopicComposer = ComposerDefault('topics');
 
       return (
-        <TopicsComposer
-          owner={owner}
+        <TopicComposer
+          actor={actor}
           namespace={namespace}
           formFields={formFields}
           formComponent={TopicForm}
@@ -140,7 +122,7 @@ const MediaComposer = (props) => {
 };
 
 MediaComposer.propTypes = {
-  owner: AcctorType.isRequired,
+  actor: AcctorType.isRequired,
   namespace: PropTypes.string.isRequired,
 };
 

@@ -158,6 +158,47 @@ const edit = (namespace, api) => {
   };
 };
 
+// -- Edit Access
+const editAccessRequest = (namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_EDIT_ACCESS_REQUEST`,
+  };
+};
+
+const editAccessSuccess = (result, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_EDIT_ACCESS_SUCCESS`,
+    node: result.data,
+  };
+};
+
+const editAccessFailure = (response, namespace) => {
+  return {
+    type: `${namespace.toUpperCase()}_EDIT_ACCESS_FAILURE`,
+    error: response.message,
+  };
+};
+
+const editAccess = (namespace, api) => {
+  return (node, owner = null) => {
+    return (dispatch) => {
+      dispatch(editAccessRequest(namespace));
+      return new Promise((resolve, reject) => {
+        return api.editAccess(node, owner)
+          .then((result) => {
+            dispatch(editAccessSuccess(result, namespace));
+            return resolve();
+          }, (response) => {
+            dispatch(editAccessFailure(response, namespace));
+            return reject(response);
+          }).catch((error) => {
+            console.error(error);
+          });
+      });
+    };
+  };
+};
+
 // -- Add
 
 const addRequest = (namespace) => {
@@ -256,6 +297,7 @@ export default (namespace) => {
       browse: browse(namespace, api),
       read: read(namespace, api),
       edit: edit(namespace, api),
+      editAccess: editAccess(namespace, api),
       add: add(namespace, api),
       deleteItem: deleteItem(namespace, api),
     };

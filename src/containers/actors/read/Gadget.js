@@ -106,12 +106,11 @@ const ActorsGadget = (props) => {
             variant="outlined"
             fullWidth
             component="a"
-            href="/projects/add/"
+            href="/groups/add/"
           >
             <AddIcon />
           </Button>
-        </CardActions>
-      }
+        </CardActions>}
     </Card>
   );
 };

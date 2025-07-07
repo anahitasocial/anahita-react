@@ -8,6 +8,7 @@ import {
   oneOfType,
   bool,
   any,
+  object,
 } from 'prop-types';
 
 import personType from './Person';
@@ -15,15 +16,15 @@ import imageURL from './ImageURL';
 
 export default shape({
   id: number,
-  objectType: oneOf([
-    'com.actors.actor',
-    'com.people.person',
-    'com.groups.group',
+  type: oneOf([
+    'node.actor.person-service.person.v1',
+    'node.actor.group-service.group.v1',
   ]),
   name: string,
   alias: string,
   body: string,
   gadgets: arrayOf(string),
+  features: arrayOf(string),
   composers: arrayOf(string),
   commands: arrayOf(string),
   avatarURL: imageURL,

@@ -5122,6 +5122,11 @@ inflection@^1.12.0:
   resolved "https://registry.yarnpkg.com/inflection/-/inflection-1.13.4.tgz#65aa696c4e2da6225b148d7a154c449366633a32"
   integrity sha512-6I/HUDeYFfuNCVS3td055BaXBwKYuzw7K3ExVMStBowKo9oOAMJIXIHvdyR3iboTCp1b+1i5DSkIZTcwIktuDw==
 
+inflector-js@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/inflector-js/-/inflector-js-1.0.1.tgz#8f2b8dae06ba8c1a846e40a196a5e132721be0e0"
+  integrity sha512-GYvCqr8mGKPoYH+08e76PV8JoIygIVC9Jxw2jA5QjBm/mK+mJqGdzEcs3L5nugnvP03yHajXpBRMRgHx0e770A==
+
 inflight@^1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/inflight/-/inflight-1.0.6.tgz#49bd6331d7d02d0c09bc910a1075ba8165b56df9"

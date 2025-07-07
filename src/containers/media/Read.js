@@ -17,7 +17,7 @@ import Cover from '../cover';
 import MediumMenu from './Menu';
 import Medium from '../../components/medium/Read';
 import MediumForm from '../../components/medium/forms/Edit';
-import PrivacyAction from '../actions/medium/Privacy';
+import EditAccessAction from '../actions/medium/Access';
 import Progress from '../../components/Progress';
 
 import actions from '../../actions';
@@ -142,7 +142,7 @@ const MediaRead = (props) => {
   const portrait = getPortraitURL(medium, 'large');
   const cover = getCoverURL(medium, 'large');
   const Like = LikeAction(namespace);
-  const Privacy = PrivacyAction(namespace);
+  const Access = EditAccessAction(namespace);
   const canEdit = perms.medium.canEdit(viewer, medium);
 
   return (
@@ -155,7 +155,7 @@ const MediaRead = (props) => {
       {medium.id &&
         <Medium
           medium={medium}
-          privacy={canEdit && medium.access && <Privacy medium={medium} size="small" />}
+          access={canEdit && medium.access && <Access medium={medium} size="small" />}
           editing={isEditing}
           cover={
             <Cover

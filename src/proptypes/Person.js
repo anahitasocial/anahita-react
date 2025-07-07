@@ -12,21 +12,21 @@ import {
 import PERSON from '../constants/person';
 import imageURL from './ImageURL';
 
-const { TYPE, GENDER } = PERSON.FIELDS;
+const { USERTYPE, GENDER } = PERSON.FIELDS;
 
 export default shape({
   id: number,
-  objectType: oneOf(['com.people.person']),
+  type: oneOf(['node.actor.person-service.person.v1']),
   name: string,
   alias: string,
   username: string,
   email: string,
   password: string,
-  type: oneOf([
-    TYPE.GUEST,
-    TYPE.REGISTERED,
-    TYPE.ADMIN,
-    TYPE.SUPER_ADMIN,
+  usertype: oneOf([
+    USERTYPE.GUEST,
+    USERTYPE.REGISTERED,
+    USERTYPE.ADMIN,
+    USERTYPE.SUPER_ADMIN,
   ]),
   givenName: string,
   familyName: string,

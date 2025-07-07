@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -15,76 +15,61 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 
-import Progress from '../../../components/Progress';
 import DialogAlert from '../../../components/DialogAlert';
 
-import PrivacyType from '../../../proptypes/actor/Privacy';
 import ActorType from '../../../proptypes/Actor';
 import actions from '../../../actions';
 import i18n from '../../../languages';
 import utils from '../../../utils';
 import { Access as ACCESS } from '../../../constants';
 
-const ActorsSettingsPrivacy = (props) => {
+const ActorsSettingsAccess = (props) => {
   const {
-    readPrivacy,
-    editPrivacy,
+    editAccess,
     alertError,
     alertSuccess,
-    privacy,
     actor,
-    isFetching,
-    success,
-    error,
     namespace,
   } = props;
 
   const actorType = utils.node.isPerson(actor) ? 'PEOPLE' : 'ACTORS';
   const accessOptions = _.values(ACCESS[actorType]);
 
-  const [entity, setEntity] = useState(privacy);
   const [showDialog, setShowDialog] = useState(false);
-
-  useEffect(() => {
-    readPrivacy(actor);
-  }, [readPrivacy, actor]);
-
-  useEffect(() => {
-    if (error) {
-      alertError(i18n.t('prompts:updated.error'));
-    }
-
-    if (success) {
-      alertSuccess(i18n.t('prompts:updated.success'));
-    }
-  }, [error, success]);
+  const [access, setAccess] = useState(actor.access);
+  const [allowFollowRequest, setAllowFollowRequest] = useState(actor.allowFollowRequest);
+  const [waiting, setWaiting] = useState(false);
 
   const handleOnChange = (event) => {
-    const {
-      target: {
-        name,
-        value,
-        type,
-        checked,
-      },
-    } = event;
+    const { name, value, checked } = event.target;
 
-    privacy[name] = (type === 'checkbox') ? checked : value;
-
-    if (name === 'access' && value === accessOptions[0]) {
+    if (name === 'access') {
+      setAccess(value);
       setShowDialog(true);
+    } else if (name === 'allowFollowRequest') {
+      setAllowFollowRequest(checked);
     }
 
-    setEntity({
-      ...entity,
-      [name]: type === 'checkbox' ? checked : value,
-    });
+    // else if (name.startsWith('leadable:')) {
+    //   const key = name.split(':')[1];
+    //   actor.privacy[key] = value;
+    // }
   };
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    editPrivacy({ actor, privacy }).then(() => {
-      setShowDialog(false);
+
+    setWaiting(true);
+    editAccess({
+      ...actor,
+      access,
+      allowFollowRequest,
+    }).then(() => {
+      alertSuccess(i18n.t('actor:access.alerts.success'));
+      setWaiting(false);
+    }).catch((error) => {
+      alertError(i18n.t('actor:access.alerts.error', { error }));
+      setWaiting(false);
     });
   };
 
@@ -92,17 +77,11 @@ const ActorsSettingsPrivacy = (props) => {
     setShowDialog(false);
   };
 
-  if (privacy.access === '' && isFetching) {
-    return (
-      <Progress />
-    );
-  }
-
   return (
     <>
       <DialogAlert
-        title={i18n.t('actor:privacyAlert.title')}
-        content={i18n.t('actor:privacyAlert.content')}
+        title={i18n.t('actor:access.title')}
+        content={i18n.t('actor:access.content')}
         handleConfirm={handleOnSubmit}
         handleDismiss={handleDismiss}
         open={showDialog}
@@ -115,20 +94,20 @@ const ActorsSettingsPrivacy = (props) => {
               margin="normal"
             >
               <InputLabel
-                id={`${namespace}-privacy-access-label-id`}
+                id={`${namespace}-access-label-id`}
               >
-                {i18n.t('actor:privacy.labels.whoCanSee')}
+                {i18n.t('actor:access.labels.whoCanSee')}
               </InputLabel>
               <Select
-                id={`${namespace}-privacy-access-id`}
-                labelId={`${namespace}-privacy-access-label-id`}
+                id={`${namespace}-access-id`}
+                labelId={`${namespace}-access-label-id`}
                 name="access"
-                value={privacy.access}
+                value={actor.access}
                 onChange={handleOnChange}
-                label={i18n.t('actor:privacy.labels.whoCanSee')}
+                label={i18n.t('actor:access.labels.whoCanSee')}
               >
                 {accessOptions.map((option) => {
-                  const optionKey = `privacy-${option}`;
+                  const optionKey = `access-${option}`;
                   return (
                     <MenuItem
                       key={optionKey}
@@ -143,18 +122,18 @@ const ActorsSettingsPrivacy = (props) => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={privacy.allowFollowRequest}
+                  checked={allowFollowRequest}
                   onChange={handleOnChange}
                   name="allowFollowRequest"
                   disabled={[
                     ACCESS.ACTORS.PUBLIC,
                     ACCESS.ACTORS.REGISTERED,
-                  ].includes(privacy.access)}
+                  ].includes(actor.access)}
                 />
               }
-              label={i18n.t('actor:privacy.labels.othersCanRequestToFollow')}
+              label={i18n.t('actor:access.labels.othersCanRequestToFollow')}
             />
-            {actor.isAdministrated &&
+            {/* {actor.isAdministrated &&
               <FormControl
                 fullWidth
                 margin="normal"
@@ -184,15 +163,16 @@ const ActorsSettingsPrivacy = (props) => {
                     );
                   })}
                 </Select>
-              </FormControl>}
+              </FormControl>} */}
           </CardContent>
           <CardActions>
             <Button
               type="submit"
               variant="contained"
               color="primary"
-              disabled={isFetching}
+              disabled={waiting}
               fullWidth
+              onClick={handleOnSubmit}
             >
               {i18n.t('actions:update')}
             </Button>
@@ -203,16 +183,11 @@ const ActorsSettingsPrivacy = (props) => {
   );
 };
 
-ActorsSettingsPrivacy.propTypes = {
+ActorsSettingsAccess.propTypes = {
   actor: ActorType.isRequired,
-  readPrivacy: PropTypes.func.isRequired,
-  editPrivacy: PropTypes.func.isRequired,
+  editAccess: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
-  privacy: PrivacyType.isRequired,
-  error: PropTypes.string.isRequired,
-  success: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
 };
 
@@ -224,22 +199,9 @@ const mapStateToProps = (namespace) => {
       },
     } = state[namespace];
 
-    const {
-      [`${namespace}_privacy`]: {
-        current: privacy,
-      },
-      isFetching,
-      error,
-      success,
-    } = state[`${namespace}Privacy`];
-
     return {
       actor,
-      privacy,
       namespace,
-      error,
-      success,
-      isFetching,
     };
   };
 };
@@ -247,11 +209,8 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      readPrivacy: (actor) => {
-        return dispatch(actions[namespace].settings.privacy.read(actor));
-      },
-      editPrivacy: (params) => {
-        return dispatch(actions[namespace].settings.privacy.edit(params));
+      editAccess: (params) => {
+        return dispatch(actions[namespace].editAccess(params));
       },
       alertSuccess: (message) => {
         return dispatch(actions.app.alert.success(message));
@@ -267,5 +226,5 @@ export default (namespace) => {
   return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(ActorsSettingsPrivacy);
+  )(ActorsSettingsAccess);
 };

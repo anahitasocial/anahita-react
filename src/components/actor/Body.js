@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import inflector from 'inflector-js';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
@@ -38,12 +39,12 @@ const ActorBody = (props) => {
     stories,
     locations,
     socialgraph,
-    gadgets,
+    tabs,
     mentions,
     selectedTab,
   } = props;
 
-  const [value, setValue] = useState(selectedTab || actor.gadgets[0]);
+  const [value, setValue] = useState(selectedTab || 'stories');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -68,13 +69,14 @@ const ActorBody = (props) => {
           scrollButtons="auto"
           aria-label="Profile Tabs"
         >
-          {actor.gadgets.map((gadget) => {
-            const label = gadget === 'stories' ? singularize(namespace) : i18n.t(`${gadget}:mTitle`);
-            const key = `${namespace}-${gadget}-gadget`;
+          {actor.features.map((feature) => {
+            const tab = feature === 'socialgraph' ? feature : inflector.pluralize(feature);
+            const label = tab === 'stories' ? singularize(namespace) : i18n.t(`${tab}:mTitle`);
+            const key = `${namespace}-${tab}-feed`;
             return (
               <Tab
                 label={label}
-                value={gadget}
+                value={tab}
                 key={key}
               />
             );
@@ -120,7 +122,7 @@ const ActorBody = (props) => {
           </Grid>
         </Grid>}
       {value === 'socialgraph' && socialgraph}
-      {typeof (gadgets[value]) !== 'undefined' && gadgets[value]}
+      {typeof (tabs[value]) !== 'undefined' && tabs[value]}
       {actor.id === viewer.id && value === 'mentions' && mentions}
     </Box>
   );
@@ -135,7 +137,7 @@ ActorBody.propTypes = {
   locations: PropTypes.node,
   admins: PropTypes.node,
   socialgraph: PropTypes.node,
-  gadgets: PropTypes.arrayOf(PropTypes.node).isRequired,
+  tabs: PropTypes.arrayOf(PropTypes.node),
   mentions: PropTypes.node,
   selectedTab: PropTypes.string,
 };
@@ -147,6 +149,7 @@ ActorBody.defaultProps = {
   locations: null,
   socialgraph: null,
   mentions: null,
+  tabs: null,
   selectedTab: null,
 };
 

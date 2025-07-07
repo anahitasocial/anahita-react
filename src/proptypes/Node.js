@@ -14,7 +14,7 @@ import CommentsType from './Comments';
 export default shape({
   id: number,
   owner: ActorType,
-  objectType: string,
+  type: string,
   name: string,
   alias: string,
   body: string,

@@ -5,7 +5,7 @@ import NodeDefault from './NodeDefault';
 export default {
   id: null,
   name: '',
-  objectType: 'com.notifications.notification',
+  type: '',
   component: '',
   creationTime: '0000-00-00 00:00:00',
   owner: ActorDefault,

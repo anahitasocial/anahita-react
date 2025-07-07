@@ -2,7 +2,6 @@ import {
   shape,
   number,
   string,
-  oneOf,
   arrayOf,
   bool,
 } from 'prop-types';
@@ -14,16 +13,7 @@ import ImageURL from './ImageURL';
 
 export default shape({
   id: number,
-  objectType: oneOf([
-    'com.articles.article',
-    'com.documents.document',
-    'com.media.medium',
-    'com.notes.note',
-    'com.photos.photo',
-    'com.photos.set',
-    'com.topics.topic',
-    'com.todos.todo',
-  ]),
+  type: string,
   name: string,
   alias: string,
   body: string,

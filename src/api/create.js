@@ -26,6 +26,18 @@ const edit = (namespace) => {
   };
 };
 
+const editAccess = (namespace) => {
+  return (node, owner = null) => {
+    const path = (owner) ?
+      `/${namespace}/${owner.id}/${node.id}/access` :
+      `/${namespace}/${node.id}/access`;
+    return axios.patch(path, constructFormData({
+      access: node.access,
+      allowFollowRequest: node.allowFollowRequest,
+    }));
+  };
+};
+
 const add = (namespace) => {
   return (node, owner = null) => {
     const path = (owner) ?
@@ -52,6 +64,7 @@ export default (namespace) => {
     browse: browse(namespace),
     read: read(namespace),
     edit: edit(namespace),
+    editAccess: editAccess(namespace),
     add: add(namespace),
     deleteItem: deleteItem(namespace),
     download: download(namespace),

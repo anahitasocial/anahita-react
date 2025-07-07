@@ -5,7 +5,7 @@ import NodeDefault from './NodeDefault';
 export default {
   id: null,
   name: '',
-  objectType: 'com.stories.story',
+  objectType: 'node.story.story-service.story.v1',
   component: '',
   creationTime: '0000-00-00 00:00:00',
   commands: [],

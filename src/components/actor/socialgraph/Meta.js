@@ -7,7 +7,7 @@ import ActorType from '../../../proptypes/Actor';
 import utils from '../../../utils';
 import i18n from '../../../languages';
 
-const { getURL } = utils.node;
+const { getURL, isPerson } = utils.node;
 
 const styles = (theme) => {
   return {
@@ -24,7 +24,7 @@ const styles = (theme) => {
 
 const SocialgraphMeta = (props) => {
   const { actor, classes } = props;
-  const isPerson = actor.objectType.split('.')[1] === 'people';
+  const isActorPerson = isPerson(actor);
   const actorURL = getURL(actor);
 
   return (
@@ -40,9 +40,9 @@ const SocialgraphMeta = (props) => {
       >
         {actor.followerCount}
       </Link>
-      {isPerson && <span className={classes.space} />}
-      {isPerson && <b>{`${i18n.t('socialgraph:leaders')}: `}</b>}
-      {isPerson &&
+      {isActorPerson && <span className={classes.space} />}
+      {isActorPerson && <b>{`${i18n.t('socialgraph:leaders')}: `}</b>}
+      {isActorPerson &&
         <Link
           href={`${actorURL}socialgraph/leaders/`}
           underline="none"

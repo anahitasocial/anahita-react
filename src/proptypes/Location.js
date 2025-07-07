@@ -9,7 +9,7 @@ import PersonType from './Person';
 
 export default shape({
   id: number,
-  objectType: string,
+  type: string,
   name: string,
   alias: string,
   body: string,

@@ -3,11 +3,12 @@ import imageURLDefault from './ImageURLDefault';
 
 export default {
   id: null,
-  objectType: 'com.actors.actor',
+  type: '',
   name: '',
   alias: '',
   body: '',
   gadgets: [],
+  features: {},
   composers: [],
   commands: [],
   avatarURL: imageURLDefault,

@@ -2,7 +2,7 @@ import PersonDefault from './PersonDefault';
 
 export default {
   id: 0,
-  objectType: 'com.locations.location',
+  type: 'node.tag.location-service.location.v1',
   name: '',
   alias: '',
   body: '',

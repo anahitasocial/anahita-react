@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import inflector from 'inflector-js';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -26,12 +27,11 @@ const useStyles = makeStyles({
 const Composers = (props) => {
   const classes = useStyles();
   const {
-    owner,
+    actor,
   } = props;
 
-  let { composers } = owner;
-  composers = ['notes', 'photos', 'articles', 'topics'];
-  const [tab, setTab] = useState(composers[0] || 'notes');
+  const { composers } = actor;
+  const [tab, setTab] = useState(composers[0] || 'note');
 
   const changeTab = (event, value) => {
     setTab(value);
@@ -49,7 +49,10 @@ const Composers = (props) => {
         className={classes.root}
         variant="outlined"
       >
-        <MediaComposer owner={owner} namespace={tab} />
+        <MediaComposer
+          actor={actor}
+          namespace={inflector.pluralize(tab)}
+        />
         <Tabs
           value={tab}
           onChange={changeTab}
@@ -75,7 +78,7 @@ const Composers = (props) => {
 };
 
 Composers.propTypes = {
-  owner: ActorType.isRequired,
+  actor: ActorType.isRequired,
 };
 
 export default Composers;

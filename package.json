@@ -37,6 +37,7 @@
     "i18next-browser-languagedetector": "^3.0.1",
     "inflected": "^2.0.4",
     "inflection": "^1.12.0",
+    "inflector-js": "^1.0.1",
     "javascript-time-ago": "^2.0.1",
     "lodash": "^4.17.15",
     "moment": "^2.29.1",

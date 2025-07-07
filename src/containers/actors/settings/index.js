@@ -14,7 +14,7 @@ import Info from './Info';
 import PermissionsBrowse from './permissions/Browse';
 import PersonAccount from '../../people/settings/Account';
 import PersonInfo from '../../people/settings/Info';
-import Privacy from './Privacy';
+import Access from './Access';
 import Progress from '../../../components/Progress';
 
 import actions from '../../../actions';
@@ -28,7 +28,7 @@ const TABS = {
   APPS: 'apps',
   INFO: 'info',
   PERMISSIONS: 'permissions',
-  PRIVACY: 'privacy',
+  ACCESS: 'access',
   DELETE: 'delete',
 };
 
@@ -82,7 +82,7 @@ const ActorsSettings = (props) => {
   const ActorApps = Apps(namespace);
   const ActorInfo = Info(namespace);
   const ActorPermissionsBrowse = PermissionsBrowse(namespace);
-  const ActorPrivacy = Privacy(namespace);
+  const ActorAccess = Access(namespace);
   const ActorDelete = Delete(namespace);
 
   const canDelete = permissions.canDelete(actor);
@@ -103,7 +103,7 @@ const ActorsSettings = (props) => {
           <Tab label={i18n.t(`${namespace}:settings.account`)} value={TABS.ACCOUNT} />}
         {namespace !== 'people' &&
           <Tab label={i18n.t(`${namespace}:settings.admins`)} value={TABS.ADMINS} />}
-        <Tab label={i18n.t(`${namespace}:settings.privacy`)} value={TABS.PRIVACY} />
+        <Tab label={i18n.t(`${namespace}:settings.access`)} value={TABS.ACCESS} />
         {/* <Tab label={i18n.t(`${namespace}:settings.apps`)} value={TABS.APPS} /> */}
         <Tab label={i18n.t(`${namespace}:settings.permissions`)} value={TABS.PERMISSIONS} />
         {canDelete &&
@@ -122,8 +122,8 @@ const ActorsSettings = (props) => {
           <PersonAccount />}
         {namespace !== 'people' && tab === TABS.ADMINS &&
           <ActorAdmins />}
-        {tab === TABS.PRIVACY &&
-          <ActorPrivacy />}
+        {tab === TABS.ACCESS &&
+          <ActorAccess />}
         {tab === TABS.APPS &&
           <ActorApps />}
         {tab === TABS.PERMISSIONS &&

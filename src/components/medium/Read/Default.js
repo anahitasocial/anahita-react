@@ -56,7 +56,7 @@ const MediumReadDefault = (props) => {
   const {
     classes,
     medium,
-    privacy,
+    access,
     actions,
     menu,
     locations,
@@ -72,7 +72,7 @@ const MediumReadDefault = (props) => {
     setTab(value);
   };
 
-  const portrait = getPortraitURL(medium, 'large');
+  const portrait = getPortraitURL(medium, 'original');
   const cover = getCoverURL(medium, 'large');
   const author = getAuthor(medium);
   const creationTime = moment.utc(medium.creationTime).local().format('LLL').toString();
@@ -99,7 +99,7 @@ const MediumReadDefault = (props) => {
     >
       <Grid item xs={12} md={8}>
         <Card component="article">
-          {medium.owner.objectType.split('.')[1] !== 'people' &&
+          {medium.owner.type.includes('person') &&
             <CardHeaderOwner node={medium} />}
           {cover &&
             <CardMedia
@@ -135,7 +135,7 @@ const MediumReadDefault = (props) => {
             subheader={
               <>
                 {creationTime}
-                {privacy}
+                {access}
               </>
             }
             action={menu}
@@ -190,7 +190,7 @@ MediumReadDefault.propTypes = {
   actions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
-  privacy: PropTypes.node,
+  access: PropTypes.node,
   locations: PropTypes.node,
   comments: PropTypes.node,
   form: PropTypes.node,
@@ -200,7 +200,7 @@ MediumReadDefault.propTypes = {
 
 MediumReadDefault.defaultProps = {
   actions: null,
-  privacy: null,
+  access: null,
   menu: null,
   locations: null,
   comments: null,

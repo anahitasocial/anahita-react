@@ -30,6 +30,7 @@ export default (namespace, defaultNode) => {
       case `${namespace.toUpperCase()}_BROWSE_REQUEST`:
       case `${namespace.toUpperCase()}_READ_REQUEST`:
       case `${namespace.toUpperCase()}_EDIT_REQUEST`:
+      case `${namespace.toUpperCase()}_EDIT_ACCESS_REQUEST`:
       case `${namespace.toUpperCase()}_ADD_REQUEST`:
         return {
           ...state,
@@ -75,6 +76,7 @@ export default (namespace, defaultNode) => {
           success: false,
         };
       case `${namespace.toUpperCase()}_EDIT_SUCCESS`:
+      case `${namespace.toUpperCase()}_EDIT_ACCESS_SUCCESS`:
       case `${namespace.toUpperCase()}_ADD_SUCCESS`:
         return {
           ...state,
@@ -100,6 +102,7 @@ export default (namespace, defaultNode) => {
       case `${namespace.toUpperCase()}_BROWSE_FAILURE`:
       case `${namespace.toUpperCase()}_READ_FAILURE`:
       case `${namespace.toUpperCase()}_EDIT_FAILURE`:
+      case `${namespace.toUpperCase()}_EDIT_ACCESS_FAILURE`:
       case `${namespace.toUpperCase()}_ADD_FAILURE`:
       case `${namespace.toUpperCase()}_DELETE_FAILURE`:
         return {

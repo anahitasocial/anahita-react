@@ -12,7 +12,7 @@ import i18n from '../../../languages';
 
 const MediaComposerDefault = (props) => {
   const {
-    owner,
+    actor,
     viewer,
     addItem,
     success,
@@ -84,7 +84,7 @@ const MediaComposerDefault = (props) => {
       addItem({
         ...formData,
         composed: 1,
-      }, owner).then(() => {
+      }, actor).then(() => {
         setMedium({
           ...medium,
           name: '',
@@ -98,7 +98,7 @@ const MediaComposerDefault = (props) => {
 
   return (
     <FormComponent
-      owner={owner}
+      actor={actor}
       viewer={viewer}
       medium={medium}
       fields={fields}
@@ -118,7 +118,7 @@ MediaComposerDefault.propTypes = {
   addItem: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
-  owner: AcctorType.isRequired,
+  actor: AcctorType.isRequired,
   viewer: PersonType.isRequired,
   formComponent: PropTypes.oneOfType([
     PropTypes.object,

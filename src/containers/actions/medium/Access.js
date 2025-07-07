@@ -14,10 +14,10 @@ import utils from '../../../utils';
 import MediumType from '../../../proptypes/Medium';
 import { Access as ACCESS } from '../../../constants';
 
-const ActionsMediumPrivacy = (props) => {
+const ActionsMediumAccess = (props) => {
   const {
     medium,
-    editPrivacy,
+    editAccess,
     size,
   } = props;
 
@@ -33,7 +33,7 @@ const ActionsMediumPrivacy = (props) => {
   useEffect(() => {
     if (access !== medium.access) {
       setWaiting(true);
-      editPrivacy({
+      editAccess({
         ...medium,
         access,
       }).then(() => {
@@ -98,13 +98,13 @@ const ActionsMediumPrivacy = (props) => {
   );
 };
 
-ActionsMediumPrivacy.propTypes = {
+ActionsMediumAccess.propTypes = {
   medium: MediumType.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
-  editPrivacy: PropTypes.func.isRequired,
+  editAccess: PropTypes.func.isRequired,
 };
 
-ActionsMediumPrivacy.defaultProps = {
+ActionsMediumAccess.defaultProps = {
   size: 'medium',
 };
 
@@ -119,8 +119,8 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      editPrivacy: (medium) => {
-        return dispatch(actions[namespace].privacy.edit(medium));
+      editAccess: (medium) => {
+        return dispatch(actions[namespace].editAccess(medium));
       },
     };
   };
@@ -130,5 +130,5 @@ export default (namespace) => {
   return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(ActionsMediumPrivacy);
+  )(ActionsMediumAccess);
 };

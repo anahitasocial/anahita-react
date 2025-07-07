@@ -14,8 +14,8 @@ import PersonType from './Person';
 export default shape({
   id: number,
   name: string,
-  objectType: oneOf([
-    'com.stories.story',
+  type: oneOf([
+    'node.story.story-service.story.v1',
   ]),
   component: string,
   creationTime: string,

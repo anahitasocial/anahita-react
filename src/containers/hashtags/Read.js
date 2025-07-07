@@ -56,6 +56,8 @@ const HashtagsRead = (props) => {
 
   const canAdminister = permissions.node.canAdminister(viewer);
 
+  console.debug('HashtagsRead', hashtag);
+
   return (
     <>
       <Card variant="outlined" square>

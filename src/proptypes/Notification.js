@@ -2,7 +2,6 @@ import {
   shape,
   number,
   string,
-  oneOf,
   oneOfType,
 } from 'prop-types';
 
@@ -13,9 +12,7 @@ import PersonType from './Person';
 export default shape({
   id: number,
   name: string,
-  objectType: oneOf([
-    'com.notifications.notification',
-  ]),
+  type: string,
   component: string,
   creationTime: string,
   owner: ActorType,

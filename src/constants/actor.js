@@ -18,4 +18,18 @@ export default {
       MAX_LENGTH: 100,
     },
   },
+  GADGETS: {
+    ACTOR: [
+      'groups',
+      'persons',
+    ],
+    MEDIUM: [
+      'articles',
+      'documents',
+      'notes',
+      'topics',
+      'photos',
+      'todos',
+    ],
+  },
 };

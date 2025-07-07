@@ -61,7 +61,7 @@ export default {
   },
   access: {
     public: 'Public',
-    registered: 'Logged-in People',
+    registered: 'Registered',
     followers: 'Followers',
     leaders: 'Leaders',
     mutuals: 'Mutuals',
@@ -82,7 +82,7 @@ export default {
     about: 'About',
     tos: 'Terms Of Service',
     join: 'Join Us',
-    privacy: 'Privacy',
+    access: 'Access',
     support: 'Support',
     report: 'Report Issues',
     guideline: 'Tribes Guideline',
@@ -161,8 +161,8 @@ export default {
         inProgress: 'Deleting in progress ...',
       },
     },
-    privacy: {
-      title: 'Privacy Alert',
+    access: {
+      title: 'Access Alert',
       content: 'This profile will be publicly visible. Would you like to proceed?',
       labels: {
         whoCanSee: 'Who can see this profile?',
@@ -223,7 +223,7 @@ export default {
       admins: 'Admins',
       apps: 'Apps',
       permissions: 'Permissions',
-      privacy: 'Privacy',
+      access: 'Access',
       delete: 'Delete',
       notifications: 'Notification settings',
       followRequests: 'Follow requests',
@@ -256,7 +256,7 @@ export default {
       account: 'Account',
       apps: 'Apps',
       permissions: 'Permissions',
-      privacy: 'Privacy',
+      access: 'Access',
       delete: 'Delete',
       notifications: 'Notification settings',
       followRequests: 'Follow requests',
@@ -469,18 +469,8 @@ export default {
     includeComments: 'Include comments',
     filterNodeTypes: {
       all: 'All',
-      posts: {
-        notes: 'Notes',
-        photos: 'Photos',
-        articles: 'Articles',
-        documents: 'Documents',
-        topics: 'Topics',
-        todos: 'Todos',
-      },
-      actors: {
-        people: 'People',
-        groups: 'Groups',
-      },
+      media: 'Media',
+      actors: 'Actors',
     },
     boxPlaceholder: 'Search...',
   },

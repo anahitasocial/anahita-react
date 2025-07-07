@@ -191,36 +191,12 @@ const Search = (props) => {
             value={SCOPE.ALL}
           />
           <Tab
-            label={i18n.t('search:filterNodeTypes.posts.notes')}
-            value={SCOPE.POSTS.NOTES}
+            label={i18n.t('search:filterNodeTypes.media')}
+            value={SCOPE.MEDIA}
           />
           <Tab
-            label={i18n.t('search:filterNodeTypes.posts.photos')}
-            value={SCOPE.POSTS.PHOTOS}
-          />
-          <Tab
-            label={i18n.t('search:filterNodeTypes.posts.articles')}
-            value={SCOPE.POSTS.ARTICLES}
-          />
-          <Tab
-            label={i18n.t('search:filterNodeTypes.posts.documents')}
-            value={SCOPE.POSTS.DOCUMENTS}
-          />
-          <Tab
-            label={i18n.t('search:filterNodeTypes.posts.topics')}
-            value={SCOPE.POSTS.TOPICS}
-          />
-          <Tab
-            label={i18n.t('search:filterNodeTypes.posts.todos')}
-            value={SCOPE.POSTS.TODOS}
-          />
-          <Tab
-            label={i18n.t('search:filterNodeTypes.actors.people')}
-            value={SCOPE.ACTORS.PEOPLE}
-          />
-          <Tab
-            label={i18n.t('search:filterNodeTypes.actors.groups')}
-            value={SCOPE.ACTORS.GROUPS}
+            label={i18n.t('search:filterNodeTypes.actors')}
+            value={SCOPE.ACTORS}
           />
         </Tabs>
       </AppBar>
