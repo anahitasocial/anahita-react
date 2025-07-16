@@ -12,7 +12,7 @@ import utils from '../../utils';
 
 const {
   getActorInitials,
-  getPortraitURL,
+  getAvatarURL,
   getURL,
 } = utils.node;
 
@@ -23,7 +23,7 @@ const ActorSettingCard = (props) => {
     children,
   } = props;
 
-  const src = getPortraitURL(actor, 'medium');
+  const src = getAvatarURL(actor, 'medium');
   const initials = getActorInitials(actor);
   const url = getURL(actor);
 

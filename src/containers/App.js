@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -84,10 +84,15 @@ const App = (props) => {
     appBarTitle,
     location,
     history,
+    whoami,
   } = props;
 
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    whoami();
+  }, []);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -206,6 +211,7 @@ App.propTypes = {
   children: PropTypes.node.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
+  whoami: PropTypes.func.isRequired,
   appBarTitle: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
@@ -230,6 +236,9 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps(dispatch) {
   return {
+    whoami: () => {
+      return dispatch(actions.session.read());
+    },
     logout: () => {
       return dispatch(actions.session.deleteItem());
     },
