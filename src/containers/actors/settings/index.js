@@ -8,7 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import ActorSettingCard from '../../../components/cards/ActorSetting';
 
 import Admins from './admins/Browse';
-import Apps from './apps/Browse';
+import Features from './Features';
 import Delete from './Delete';
 import Info from './Info';
 import PermissionsBrowse from './permissions/Browse';
@@ -25,7 +25,7 @@ import i18n from '../../../languages';
 const TABS = {
   ADMINS: 'admins',
   ACCOUNT: 'account',
-  APPS: 'apps',
+  FEATURES: 'features',
   INFO: 'info',
   PERMISSIONS: 'permissions',
   ACCESS: 'access',
@@ -79,7 +79,7 @@ const ActorsSettings = (props) => {
   }
 
   const ActorAdmins = Admins(namespace);
-  const ActorApps = Apps(namespace);
+  const ActorFeatures = Features(namespace);
   const ActorInfo = Info(namespace);
   const ActorPermissionsBrowse = PermissionsBrowse(namespace);
   const ActorAccess = Access(namespace);
@@ -104,7 +104,7 @@ const ActorsSettings = (props) => {
         {namespace !== 'people' &&
           <Tab label={i18n.t(`${namespace}:settings.admins`)} value={TABS.ADMINS} />}
         <Tab label={i18n.t(`${namespace}:settings.access`)} value={TABS.ACCESS} />
-        {/* <Tab label={i18n.t(`${namespace}:settings.apps`)} value={TABS.APPS} /> */}
+        <Tab label={i18n.t(`${namespace}:settings.features`)} value={TABS.FEATURES} />
         <Tab label={i18n.t(`${namespace}:settings.permissions`)} value={TABS.PERMISSIONS} />
         {canDelete &&
           <Tab label={i18n.t(`${namespace}:settings.delete`)} value={TABS.DELETE} />}
@@ -124,8 +124,8 @@ const ActorsSettings = (props) => {
           <ActorAdmins />}
         {tab === TABS.ACCESS &&
           <ActorAccess />}
-        {tab === TABS.APPS &&
-          <ActorApps />}
+        {tab === TABS.FEATURES &&
+          <ActorFeatures />}
         {tab === TABS.PERMISSIONS &&
           <ActorPermissionsBrowse />}
         {canDelete && tab === TABS.DELETE &&

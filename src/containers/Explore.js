@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
-import appActions from '../actions/app';
 import i18n from '../languages';
 import { App as APP } from '../constants';
 
@@ -16,6 +14,7 @@ import Hashtags from './hashtags';
 import Locations from './locations';
 import Media from './media';
 import HeaderMeta from '../components/HeaderMeta';
+import actions from '../actions';
 
 const { EXPLORE: TABS } = APP.TABS;
 
@@ -136,7 +135,7 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
+      dispatch(actions.app.setAppTitle(title));
     },
   };
 };

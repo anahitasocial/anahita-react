@@ -227,6 +227,34 @@ const getSupportedMimetypes = (namespace) => {
   }
 };
 
+const getComposers = (actor) => {
+  const composers = [];
+  if (actor && actor.features) {
+    actor.features.forEach((feature) => {
+      if (feature.enabled && feature.composers && feature.composers.length > 0) {
+        composers.push(...feature.composers);
+      }
+    });
+  }
+
+  return composers;
+};
+
+const getEnabledFeatures = (actor) => {
+  const features = [];
+  if (actor && actor.features) {
+    return actor.features
+      .filter((feature) => {
+        return feature.enabled;
+      })
+      .map((feature) => {
+        return feature.service.split('-')[0];
+      });
+  }
+
+  return features;
+};
+
 export default {
   isActor,
   isPerson,
@@ -256,4 +284,6 @@ export default {
   getSupportedMimetypes,
   getURL,
   getNamespace,
+  getComposers,
+  getEnabledFeatures,
 };

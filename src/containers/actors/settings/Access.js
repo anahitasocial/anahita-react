@@ -35,9 +35,15 @@ const ActorsSettingsAccess = (props) => {
   const actorType = utils.node.isPerson(actor) ? 'PEOPLE' : 'ACTORS';
   const accessOptions = _.values(ACCESS[actorType]);
 
+  const whoCanAddFollowersOptions = [
+    ACCESS.ACTORS.ADMINS,
+    ACCESS.ACTORS.FOLLOWERS,
+  ];
+
   const [showDialog, setShowDialog] = useState(false);
   const [access, setAccess] = useState(actor.access);
   const [allowFollowRequest, setAllowFollowRequest] = useState(actor.allowFollowRequest);
+  const [whoCanAddFollowers, setWhoCanAddFollowers] = useState(actor.whoCanAddFollowers);
   const [waiting, setWaiting] = useState(false);
 
   const handleOnChange = (event) => {
@@ -48,12 +54,9 @@ const ActorsSettingsAccess = (props) => {
       setShowDialog(true);
     } else if (name === 'allowFollowRequest') {
       setAllowFollowRequest(checked);
+    } else if (name === 'whoCanAddFollowers') {
+      setWhoCanAddFollowers(value);
     }
-
-    // else if (name.startsWith('leadable:')) {
-    //   const key = name.split(':')[1];
-    //   actor.privacy[key] = value;
-    // }
   };
 
   const handleOnSubmit = (event) => {
@@ -64,6 +67,7 @@ const ActorsSettingsAccess = (props) => {
       ...actor,
       access,
       allowFollowRequest,
+      whoCanAddFollowers,
     }).then(() => {
       alertSuccess(i18n.t('actor:access.alerts.success'));
       setWaiting(false);
@@ -71,6 +75,7 @@ const ActorsSettingsAccess = (props) => {
       alertError(i18n.t('actor:access.alerts.error', { error }));
       setWaiting(false);
     });
+    setShowDialog(false);
   };
 
   const handleDismiss = () => {
@@ -82,8 +87,8 @@ const ActorsSettingsAccess = (props) => {
       <DialogAlert
         title={i18n.t('actor:access.title')}
         content={i18n.t('actor:access.content')}
-        handleConfirm={handleOnSubmit}
         handleDismiss={handleDismiss}
+        handleConfirm={handleOnSubmit}
         open={showDialog}
       />
       <form onSubmit={handleOnSubmit}>
@@ -102,7 +107,7 @@ const ActorsSettingsAccess = (props) => {
                 id={`${namespace}-access-id`}
                 labelId={`${namespace}-access-label-id`}
                 name="access"
-                value={actor.access}
+                value={access}
                 onChange={handleOnChange}
                 label={i18n.t('actor:access.labels.whoCanSee')}
               >
@@ -128,34 +133,34 @@ const ActorsSettingsAccess = (props) => {
                   disabled={[
                     ACCESS.ACTORS.PUBLIC,
                     ACCESS.ACTORS.REGISTERED,
-                  ].includes(actor.access)}
+                  ].includes(access)}
                 />
               }
               label={i18n.t('actor:access.labels.othersCanRequestToFollow')}
             />
-            {/* {actor.isAdministrated &&
+            {actor.isAdministrated &&
               <FormControl
                 fullWidth
                 margin="normal"
               >
                 <InputLabel
-                  id={`${namespace}-privacy-leadable-add-label-id`}
+                  id={`${namespace}-access-who-can-add-followers-label-id`}
                 >
-                  {i18n.t('actor:privacy.labels.whoCanAddNewFollowers')}
+                  {i18n.t('actor:access.labels.whoCanAddFollowers')}
                 </InputLabel>
                 <Select
-                  id={`${namespace}-privacy-leadable-add-id`}
-                  labelId={`${namespace}-privacy-leadable-add-label-id`}
-                  name="leadable:add"
-                  value={privacy['leadable:add']}
+                  id={`${namespace}-access-who-can-add-followers-id`}
+                  labelId={`${namespace}-access-who-can-add-followers-label-id`}
+                  name="whoCanAddFollowers"
+                  value={whoCanAddFollowers}
                   onChange={handleOnChange}
-                  label={i18n.t('actor:privacy.labels.whoCanAddNewFollowers')}
+                  label={i18n.t('actor:access.labels.whoCanAddFollowers')}
                 >
-                  {Object.keys(accessOptions).map((key) => {
-                    const option = accessOptions[key];
+                  {Object.keys(whoCanAddFollowersOptions).map((key) => {
+                    const option = whoCanAddFollowersOptions[key];
                     return (
                       <MenuItem
-                        key={`people-privacy-leadable-add-${option}`}
+                        key={`actor-access-who-can-add-followers-${option}`}
                         value={option}
                       >
                         {i18n.t(`access:${option}`)}
@@ -163,7 +168,7 @@ const ActorsSettingsAccess = (props) => {
                     );
                   })}
                 </Select>
-              </FormControl>} */}
+              </FormControl>}
           </CardContent>
           <CardActions>
             <Button
@@ -210,7 +215,7 @@ const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
       editAccess: (params) => {
-        return dispatch(actions[namespace].editAccess(params));
+        return dispatch(actions[namespace].settings.access.edit(params));
       },
       alertSuccess: (message) => {
         return dispatch(actions.app.alert.success(message));

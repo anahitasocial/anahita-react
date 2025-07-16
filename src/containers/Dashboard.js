@@ -11,12 +11,10 @@ import actions from '../actions';
 import i18n from '../languages';
 
 import PersonType from '../proptypes/Person';
-import PersonDefault from '../proptypes/PersonDefault';
 
 const DashboardPage = (props) => {
   const {
     setAppTitle,
-    sessionRead,
     readPerson,
     viewer,
     person,
@@ -45,7 +43,7 @@ const DashboardPage = (props) => {
           xs={12}
           md={8}
         >
-          <Composers actor={person} />
+          {person.id && <Composers actor={person} />}
         </Grid>
         <Grid
           item
@@ -64,7 +62,6 @@ const DashboardPage = (props) => {
 
 DashboardPage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
-  sessionRead: PropTypes.func.isRequired,
   readPerson: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   person: PersonType.isRequired,

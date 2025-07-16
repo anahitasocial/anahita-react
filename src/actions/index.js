@@ -57,6 +57,7 @@ namespaces.actors.forEach((namespace) => {
     ...createAction(namespace)(apis[namespace]),
     followRequests: createActorFollowRequests(namespace)(api.followrequests),
     settings: {
+      access: createAction(`${namespace}_access`)(api.access),
       admins: createActorAdminsAction(`${namespace}_admins`)(api.admins),
       apps: createAction(`${namespace}_apps`)(api.apps),
       permissions: createAction(`${namespace}_permissions`)(api.permissions),
@@ -95,10 +96,6 @@ actions.locationsGraph = createGraphAction('locations')(apis.tagGraph);
 
 actions.settings = {
   about: createAction('settings_about')(apis.settings.about),
-  apps: createAction('settings_apps')(apis.settings.apps),
-  assignments: createAction('settings_assignments')(apis.settings.assignments),
-  configs: createAction('settings_configs')(apis.settings.configs),
-  plugins: createAction('settings_plugins')(apis.settings.plugins),
 };
 
 export default actions;

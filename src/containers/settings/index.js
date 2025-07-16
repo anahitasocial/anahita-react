@@ -8,15 +8,9 @@ import actions from '../../actions';
 import i18n from '../../languages';
 
 import SettingsAbout from './About';
-import SettingsApps from './apps/Browse';
-import SettingsAssignments from './assignments/Browse';
-import SettingsPlugins from './plugins/Browse';
 
 const TABS = {
   ABOUT: 'about',
-  APPS: 'apps',
-  ASSIGNMENTS: 'assignments',
-  PLUGINS: 'plugins',
 };
 
 const Settings = (props) => {
@@ -42,18 +36,9 @@ const Settings = (props) => {
         aria-label="Site Settings"
       >
         <Tab label={i18n.t('settings:about.mTitle')} value={TABS.ABOUT} />
-        <Tab label={i18n.t('settings:apps.mTitle')} value={TABS.APPS} />
-        <Tab label={i18n.t('settings:appAssignments.mTitle')} value={TABS.ASSIGNMENTS} />
-        <Tab label={i18n.t('settings:plugins.mTitle')} value={TABS.PLUGINS} />
       </Tabs>
       {tab === TABS.ABOUT &&
         <SettingsAbout />}
-      {tab === TABS.APPS &&
-        <SettingsApps />}
-      {tab === TABS.ASSIGNMENTS &&
-        <SettingsAssignments />}
-      {tab === TABS.PLUGINS &&
-        <SettingsPlugins />}
     </>
   );
 };

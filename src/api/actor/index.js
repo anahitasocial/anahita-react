@@ -1,19 +1,19 @@
+import access from './access';
 import addfollowers from './addfollowers';
 import admins from './admins';
-import apps from './apps';
+import features from './features';
 import followrequests from './followrequests';
 import notifications from './notifications';
 import permissions from './permissions';
-import privacy from './privacy';
 
 export default (namespace) => {
   return {
+    access: access(namespace),
     addfollowers,
     admins: admins(namespace),
-    apps: apps(namespace),
+    features: features(namespace),
     followrequests,
     notifications: notifications(namespace),
     permissions: permissions(namespace),
-    privacy: privacy(namespace),
   };
 };

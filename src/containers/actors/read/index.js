@@ -38,6 +38,7 @@ import AddFollower from '../socialgraph/Add';
 const {
   isPerson,
   getPortraitURL,
+  getEnabledFeatures,
 } = utils.node;
 
 const { GADGETS } = ACTOR;
@@ -56,16 +57,18 @@ const ActorsRead = (props) => {
     error,
     match: {
       params: {
-        id,
+        id: slug,
         tab,
         subtab,
       },
     },
   } = props;
 
+  const [id] = slug.split('-');
+
   useEffect(() => {
     setAppTitle(i18n.t(`${namespace}:cTitle`));
-    readItem(id, namespace);
+    readItem(id);
   }, [id, namespace]);
 
   if (!actor.id) {
@@ -97,8 +100,10 @@ const ActorsRead = (props) => {
   const isViewer = actor.id === viewer.id;
   const FollowRequests = ActorsFollowRequests(namespace);
 
+  const actorFeatures = getEnabledFeatures(actor);
+
   const tabs = [];
-  actor.features.forEach((key) => {
+  actorFeatures.forEach((key) => {
     const pluralKey = inflector.pluralize(key);
 
     if (GADGETS.ACTOR.includes(pluralKey)) {
@@ -162,17 +167,17 @@ const ActorsRead = (props) => {
         actor={actor}
         viewer={viewer}
         selectedTab={tab}
-        admins={actor.gadgets.includes('admins') && actor.administrators &&
+        admins={actor.administrators &&
           <Admins actor={actor} />}
-        composers={isAuthenticated && actor.composers.length > 0 &&
+        composers={isAuthenticated && actor.id &&
           <Composers actor={actor} />}
-        stories={actor.gadgets.includes('stories') &&
+        stories={actor.id &&
           <StoriesBrowse
             queryFilters={{
               oid: actor.id,
             }}
           />}
-        locations={actor.gadgets.includes('locations') &&
+        locations={actor.id &&
           <LocationsGadget
             node={actor}
             viewer={viewer}
@@ -246,8 +251,7 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      readItem: (slug) => {
-        const id = slug.split('-')[0];
+      readItem: (id) => {
         return dispatch(actions[namespace].read(id, namespace));
       },
       setAppTitle: (title) => {

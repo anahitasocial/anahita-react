@@ -11,6 +11,7 @@ import MediaComposer from '../media/composer';
 import i18n from '../../languages';
 import appIcons from '../../components/app/Icons';
 import ActorType from '../../proptypes/Actor';
+import utils from '../../utils';
 
 const useStyles = makeStyles({
   root: {
@@ -30,8 +31,8 @@ const Composers = (props) => {
     actor,
   } = props;
 
-  const { composers } = actor;
-  const [tab, setTab] = useState(composers[0] || 'note');
+  const composers = utils.node.getComposers(actor);
+  const [tab, setTab] = useState(composers[0]);
 
   const changeTab = (event, value) => {
     setTab(value);

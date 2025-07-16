@@ -8,7 +8,6 @@ import {
   oneOfType,
   bool,
   any,
-  object,
 } from 'prop-types';
 
 import personType from './Person';
@@ -23,9 +22,13 @@ export default shape({
   name: string,
   alias: string,
   body: string,
-  gadgets: arrayOf(string),
-  features: arrayOf(string),
-  composers: arrayOf(string),
+  features: arrayOf(shape({
+    service: string,
+    composers: arrayOf(string),
+    optional: bool,
+    enabled: bool,
+    ordering: number, // The order in which the feature should be processed
+  })),
   commands: arrayOf(string),
   avatarURL: imageURL,
   coverURL: imageURL,

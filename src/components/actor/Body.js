@@ -51,6 +51,7 @@ const ActorBody = (props) => {
   };
 
   const namespace = getNamespace(actor);
+  const actorFeatures = utils.node.getEnabledFeatures(actor);
 
   return (
     <Box className={classes.root}>
@@ -69,7 +70,7 @@ const ActorBody = (props) => {
           scrollButtons="auto"
           aria-label="Profile Tabs"
         >
-          {actor.features.map((feature) => {
+          {actorFeatures.map((feature) => {
             const tab = feature === 'socialgraph' ? feature : inflector.pluralize(feature);
             const label = tab === 'stories' ? singularize(namespace) : i18n.t(`${tab}:mTitle`);
             const key = `${namespace}-${tab}-feed`;

@@ -65,15 +65,33 @@ export default {
     followers: 'Followers',
     leaders: 'Leaders',
     mutuals: 'Mutuals',
-    admins: 'Only You',
+    admins: 'Admins',
   },
-  apps: {
-    articles: 'Articles',
-    documents: 'Documents',
-    notes: 'Notes',
-    photos: 'Photos',
-    todos: 'Todos',
-    topics: 'Topics',
+  features: {
+    story: {
+      title: 'Stories',
+      description: 'Recieve updates from your socialgraph.',
+    },
+    socialgraph: {
+      title: 'Social Graph',
+      description: 'See your social graph and manage your followers.',
+    },
+    note: {
+      title: 'Notes',
+      description: 'Share your thoughts with your followers.',
+    },
+    photo: {
+      title: 'Photos',
+      description: 'Share your photos with your followers.',
+    },
+    topic: {
+      title: 'Topics',
+      description: 'Start a conversation with your followers.',
+    },
+    article: {
+      title: 'Articles',
+      description: 'Write and share your articles with your followers.',
+    },
   },
   translation: {
     stories,
@@ -167,7 +185,7 @@ export default {
       labels: {
         whoCanSee: 'Who can see this profile?',
         othersCanRequestToFollow: 'Others can request to follow',
-        whoCanAddNewFollowers: 'Who can can add new followers?',
+        whoCanAddFollowers: 'Who can can add followers?',
       },
     },
     meta: {
@@ -221,7 +239,7 @@ export default {
     settings: {
       info: 'Info',
       admins: 'Admins',
-      apps: 'Apps',
+      features: 'Features',
       permissions: 'Permissions',
       access: 'Access',
       delete: 'Delete',
@@ -254,7 +272,7 @@ export default {
     settings: {
       info: 'Info',
       account: 'Account',
-      apps: 'Apps',
+      features: 'Features',
       permissions: 'Permissions',
       access: 'Access',
       delete: 'Delete',

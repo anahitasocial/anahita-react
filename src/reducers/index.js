@@ -10,9 +10,6 @@ import notifications from './notifications';
 import password from './password';
 import search from './search';
 import settingsAbout from './settings/about';
-import settingsApps from './settings/apps';
-import settingsAssignments from './settings/assignments';
-import settingsPlugins from './settings/plugins';
 import session from './session';
 import signup from './signup';
 import socialgraph from './socialgraph';
@@ -59,9 +56,6 @@ const reducers = {
   password,
   search,
   settingsAbout,
-  settingsApps,
-  settingsAssignments,
-  settingsPlugins,
   session,
   signup,
   socialgraph,
