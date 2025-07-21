@@ -15,7 +15,6 @@ const edit = (namespace) => {
     return axios.patch(`/${namespace}/${node.id}/access`, constructFormData({
       access: node.access,
       allowFollowRequest: node.allowFollowRequest,
-      whoCanAddFollowers: node.whoCanAddFollowers,
     }));
   };
 };

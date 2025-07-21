@@ -35,15 +35,9 @@ const ActorsSettingsAccess = (props) => {
   const actorType = utils.node.isPerson(actor) ? 'PEOPLE' : 'ACTORS';
   const accessOptions = _.values(ACCESS[actorType]);
 
-  const whoCanAddFollowersOptions = [
-    ACCESS.ACTORS.ADMINS,
-    ACCESS.ACTORS.FOLLOWERS,
-  ];
-
   const [showDialog, setShowDialog] = useState(false);
   const [access, setAccess] = useState(actor.access);
   const [allowFollowRequest, setAllowFollowRequest] = useState(actor.allowFollowRequest);
-  const [whoCanAddFollowers, setWhoCanAddFollowers] = useState(actor.whoCanAddFollowers);
   const [waiting, setWaiting] = useState(false);
 
   const handleOnChange = (event) => {
@@ -54,8 +48,6 @@ const ActorsSettingsAccess = (props) => {
       setShowDialog(true);
     } else if (name === 'allowFollowRequest') {
       setAllowFollowRequest(checked);
-    } else if (name === 'whoCanAddFollowers') {
-      setWhoCanAddFollowers(value);
     }
   };
 
@@ -67,7 +59,6 @@ const ActorsSettingsAccess = (props) => {
       ...actor,
       access,
       allowFollowRequest,
-      whoCanAddFollowers,
     }).then(() => {
       alertSuccess(i18n.t('actor:access.alerts.success'));
       setWaiting(false);
@@ -138,37 +129,6 @@ const ActorsSettingsAccess = (props) => {
               }
               label={i18n.t('actor:access.labels.othersCanRequestToFollow')}
             />
-            {actor.isAdministrated &&
-              <FormControl
-                fullWidth
-                margin="normal"
-              >
-                <InputLabel
-                  id={`${namespace}-access-who-can-add-followers-label-id`}
-                >
-                  {i18n.t('actor:access.labels.whoCanAddFollowers')}
-                </InputLabel>
-                <Select
-                  id={`${namespace}-access-who-can-add-followers-id`}
-                  labelId={`${namespace}-access-who-can-add-followers-label-id`}
-                  name="whoCanAddFollowers"
-                  value={whoCanAddFollowers}
-                  onChange={handleOnChange}
-                  label={i18n.t('actor:access.labels.whoCanAddFollowers')}
-                >
-                  {Object.keys(whoCanAddFollowersOptions).map((key) => {
-                    const option = whoCanAddFollowersOptions[key];
-                    return (
-                      <MenuItem
-                        key={`actor-access-who-can-add-followers-${option}`}
-                        value={option}
-                      >
-                        {i18n.t(`access:${option}`)}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>}
           </CardContent>
           <CardActions>
             <Button

@@ -60,7 +60,6 @@ namespaces.actors.forEach((namespace) => {
       access: createAction(`${namespace}_access`)(api.access),
       admins: createActorAdminsAction(`${namespace}_admins`)(api.admins),
       apps: createAction(`${namespace}_apps`)(api.apps),
-      permissions: createAction(`${namespace}_permissions`)(api.permissions),
       privacy: createAction(`${namespace}_privacy`)(api.privacy),
     },
   };

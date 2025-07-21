@@ -27,6 +27,10 @@ export default shape({
     composers: arrayOf(string),
     optional: bool,
     enabled: bool,
+    addPermissions: arrayOf(shape({
+      entity: string, // The type of entity that can be added (e.g., 'person', 'group')
+      access: string, // The access level for the entity (e.g., 'admins', 'followers')
+    })),
     ordering: number, // The order in which the feature should be processed
   })),
   commands: arrayOf(string),
