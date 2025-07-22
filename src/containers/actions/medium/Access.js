@@ -73,7 +73,7 @@ const ActionsMediumAccess = (props) => {
         {!isPublic && <PrivateIcon fontSize={size} />}
       </IconButton>
       <Menu
-        id={`medium-privacy-${medium.id}`}
+        id={`medium-access-${medium.id}`}
         anchorEl={menuAnchorEl}
         keepMounted
         open={Boolean(menuAnchorEl)}
@@ -83,7 +83,7 @@ const ActionsMediumAccess = (props) => {
           const level = accessLevels[key];
           return (
             <MenuItem
-              key={`privacy-level-${level}-${medium.id}`}
+              key={`access-level-${level}-${medium.id}`}
               onClick={() => {
                 handlePrivacy(level);
               }}

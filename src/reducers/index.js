@@ -19,7 +19,6 @@ import stories from './stories';
 import createActorAdmins from './actor/admins';
 import createActorApps from './actor/apps';
 import createActorFollowRequests from './actor/followrequests';
-import createActorPrivacy from './actor/privacy';
 import createActorsReducer from './createActors';
 import createCommentReducer from './createComment';
 import createMediaReducer from './createMedia';
@@ -71,7 +70,6 @@ namespaces.actors.forEach((ns) => {
   }
   reducers[`${ns}Apps`] = createActorApps(`${ns}_apps`);
   reducers[`${ns}FollowRequests`] = createActorFollowRequests(`${ns}_followrequests`);
-  reducers[`${ns}Privacy`] = createActorPrivacy(`${ns}_privacy`);
 });
 
 namespaces.media.forEach((ns) => {

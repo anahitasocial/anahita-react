@@ -221,9 +221,7 @@ export default {
     settings: {
       info: 'Info',
       admins: 'Admins',
-      apps: 'Apps',
-      permissions: 'Permissions',
-      privacy: 'Privacy',
+      features: 'Features',
       delete: 'Delete',
       notifications: 'Notification settings',
       followRequests: 'Follow requests',
@@ -254,9 +252,8 @@ export default {
     settings: {
       info: 'Info',
       account: 'Account',
-      apps: 'Apps',
-      permissions: 'Permissions',
-      privacy: 'Privacy',
+      features: 'Features',
+      access: 'Access',
       delete: 'Delete',
       notifications: 'Notification settings',
       followRequests: 'Follow requests',

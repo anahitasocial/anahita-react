@@ -54,7 +54,7 @@ const MediumCard = (props) => {
     medium,
     stats,
     actions,
-    privacy,
+    access,
     ownerActions,
     menu,
     handleView,
@@ -120,7 +120,7 @@ const MediumCard = (props) => {
             >
               {creationTimeFromNow}
             </Link>
-            {privacy}
+            {access}
           </>
         }
         action={menu}
@@ -182,7 +182,7 @@ MediumCard.propTypes = {
   classes: PropTypes.object.isRequired,
   stats: PropTypes.node,
   actions: PropTypes.node,
-  privacy: PropTypes.node,
+  access: PropTypes.node,
   ownerActions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
@@ -192,7 +192,7 @@ MediumCard.propTypes = {
 
 MediumCard.defaultProps = {
   actions: null,
-  privacy: null,
+  access: null,
   ownerActions: null,
   menu: null,
   stats: null,

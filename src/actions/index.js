@@ -60,7 +60,6 @@ namespaces.actors.forEach((namespace) => {
       access: createAction(`${namespace}_access`)(api.access),
       admins: createActorAdminsAction(`${namespace}_admins`)(api.admins),
       apps: createAction(`${namespace}_apps`)(api.apps),
-      privacy: createAction(`${namespace}_privacy`)(api.privacy),
     },
   };
 });
@@ -70,7 +69,7 @@ namespaces.media.forEach((namespace) => {
   actions[namespace] = {
     ...createAction(namespace)(apis[namespace]),
     likes: likes(namespace)(apis.likes),
-    privacy: createAction(`${namespace}_privacy`)(api.privacy),
+    access: createAction(`${namespace}_access`)(api.access),
   };
 });
 

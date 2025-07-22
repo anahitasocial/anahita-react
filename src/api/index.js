@@ -3,7 +3,6 @@ import { singularize } from 'inflection';
 
 import createApi from './create';
 import createActor from './actor';
-import createMedium from './medium';
 
 import avatar from './avatar';
 import comments from './comments';
@@ -86,7 +85,7 @@ namespaces.actors.forEach((ns) => {
 namespaces.media.forEach((ns) => {
   apis[ns] = {
     ...createApi(ns),
-    [singularize(ns)]: createMedium(ns),
+    [singularize(ns)]: createApi(ns),
   };
 });
 
