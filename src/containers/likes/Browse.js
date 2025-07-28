@@ -18,6 +18,7 @@ import CommentType from '../../proptypes/Comment';
 import CommentDefault from '../../proptypes/CommentDefault';
 import NodeType from '../../proptypes/Node';
 import NodesType from '../../proptypes/Nodes';
+import PersonType from '../../proptypes/Person';
 import ActionFollow from '../actions/Follow';
 
 const LikesBrowse = (props) => {
@@ -29,6 +30,7 @@ const LikesBrowse = (props) => {
     comment,
     isFetching,
     error,
+    viewer,
     namespace,
     isAuthenticated,
   } = props;
@@ -85,7 +87,7 @@ const LikesBrowse = (props) => {
             />
             {isAuthenticated &&
             <ListItemSecondaryAction>
-              <ActionFollow actor={actor} />
+              {viewer.id !== actor.id && <ActionFollow actor={actor} />}
             </ListItemSecondaryAction>}
           </ListItem>
         );
@@ -104,6 +106,7 @@ const mapStateToProps = (namespace) => {
 
     const {
       isAuthenticated,
+      viewer,
     } = state.session;
 
     return {
@@ -112,6 +115,7 @@ const mapStateToProps = (namespace) => {
       error,
       namespace,
       isAuthenticated,
+      viewer,
     };
   };
 };
@@ -147,6 +151,7 @@ LikesBrowse.propTypes = {
   error: PropTypes.string.isRequired,
   namespace: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 LikesBrowse.defaultProps = {

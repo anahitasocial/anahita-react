@@ -11,6 +11,7 @@ import MediaComposer from '../media/composer';
 import i18n from '../../languages';
 import appIcons from '../../components/app/Icons';
 import ActorType from '../../proptypes/Actor';
+import PersonType from '../../proptypes/Person';
 import utils from '../../utils';
 
 const useStyles = makeStyles({
@@ -29,9 +30,10 @@ const Composers = (props) => {
   const classes = useStyles();
   const {
     actor,
+    viewer,
   } = props;
 
-  const composers = utils.node.getComposers(actor);
+  const composers = utils.node.getComposers(actor, viewer);
   const [tab, setTab] = useState(composers[0]);
 
   const changeTab = (event, value) => {
@@ -80,6 +82,7 @@ const Composers = (props) => {
 
 Composers.propTypes = {
   actor: ActorType.isRequired,
+  viewer: PersonType.isRequired,
 };
 
 export default Composers;

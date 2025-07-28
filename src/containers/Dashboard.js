@@ -43,7 +43,11 @@ const DashboardPage = (props) => {
           xs={12}
           md={8}
         >
-          {person.id && <Composers actor={person} />}
+          {person.id &&
+            <Composers
+              actor={person}
+              viewer={viewer}
+            />}
         </Grid>
         <Grid
           item

@@ -227,12 +227,30 @@ const getSupportedMimetypes = (namespace) => {
   }
 };
 
-const getComposers = (actor) => {
+const getComposers = (actor, viewer) => {
   const composers = [];
   if (actor && actor.features) {
     actor.features.forEach((feature) => {
       if (feature.enabled && feature.composers && feature.composers.length > 0) {
-        composers.push(...feature.composers);
+        if (actor.id !== viewer.id && !isAdmin(viewer)) {
+          if (feature.add_permissions) {
+            const hasAddPermission = feature.add_permissions.some((permission) => {
+              if (permission.access === 'followers') {
+                return viewer.following && viewer.following.includes(actor.id);
+              }
+              if (permission.access === 'admins') {
+                return viewer.administering && viewer.administering.includes(actor.id);
+              }
+              return false;
+            });
+
+            if (hasAddPermission) {
+              composers.push(...feature.composers);
+            }
+          }
+        } else {
+          composers.push(...feature.composers);
+        }
       }
     });
   }
@@ -253,6 +271,15 @@ const getEnabledFeatures = (actor) => {
   }
 
   return features;
+};
+
+const mergeNodes = (node, current, ignore) => {
+  return Object.keys(node).reduce((acc, field) => {
+    if (!ignore.includes(field)) {
+      acc[field] = node[field];
+    }
+    return acc;
+  }, { ...current });
 };
 
 export default {
@@ -286,4 +313,5 @@ export default {
   getNamespace,
   getComposers,
   getEnabledFeatures,
+  mergeNodes,
 };

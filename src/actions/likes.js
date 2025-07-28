@@ -61,9 +61,10 @@ const browse = (api) => {
 // -- add like
 
 const addRequest = (namespace) => {
-  return () => {
+  return (node) => {
     return {
       type: `${namespace.toUpperCase()}_LIKES_ADD_REQUEST`,
+      node,
     };
   };
 };
@@ -98,7 +99,7 @@ const add = (namespace) => {
   return (api) => {
     return ({ story, node, comment = null }) => {
       return (dispatch) => {
-        dispatch(addRequest(namespace)());
+        dispatch(addRequest(namespace)(node));
         return new Promise((resolve, reject) => {
           return api.add(node, comment)
             .then((results) => {

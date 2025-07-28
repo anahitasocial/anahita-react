@@ -13,7 +13,6 @@ export default (namespace) => {
     switch (type) {
       case `${namespace.toUpperCase()}_LIKES_ADD_REQUEST`:
       case `${namespace.toUpperCase()}_LIKES_DELETE_REQUEST`:
-      case `${namespace.toUpperCase()}_PRIVACY_EDIT_REQUEST`:
         return {
           ...state,
           isFetching: true,
@@ -22,7 +21,6 @@ export default (namespace) => {
         };
       case `${namespace.toUpperCase()}_LIKES_ADD_SUCCESS`:
       case `${namespace.toUpperCase()}_LIKES_DELETE_SUCCESS`:
-      case `${namespace.toUpperCase()}_PRIVACY_EDIT_SUCCESS`:
         return {
           ...state,
           [namespace]: editItem(
@@ -36,7 +34,6 @@ export default (namespace) => {
         };
       case `${namespace.toUpperCase()}_LIKES_ADD_FAILURE`:
       case `${namespace.toUpperCase()}_LIKES_DELETE_FAILURE`:
-      case `${namespace.toUpperCase()}_PRIVACY_EDIT_FAILURE`:
         return {
           ...state,
           isFetching: false,

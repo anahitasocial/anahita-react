@@ -169,8 +169,11 @@ const ActorsRead = (props) => {
         selectedTab={tab}
         admins={actor.administrators &&
           <Admins actor={actor} />}
-        composers={isAuthenticated && actor.id &&
-          <Composers actor={actor} />}
+        composers={isAuthenticated && actor.id && viewer.id &&
+          <Composers
+            actor={actor}
+            viewer={viewer}
+          />}
         stories={actor.id &&
           <StoriesBrowse
             queryFilters={{

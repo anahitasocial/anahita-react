@@ -66,31 +66,61 @@ export default {
     leaders: 'Leaders',
     mutuals: 'Mutuals',
     admins: 'Admins',
+    owner: 'Owner',
   },
   features: {
     story: {
       title: 'Stories',
       description: 'Recieve updates from your socialgraph.',
+      addPermissions: {},
     },
     socialgraph: {
       title: 'Social Graph',
       description: 'See your social graph and manage your followers.',
+      addPermissions: {
+        title: 'Permissions',
+        follower: 'Who can add a follower?',
+      },
     },
     note: {
       title: 'Notes',
       description: 'Share your thoughts with your followers.',
+      addPermissions: {
+        title: 'Permissions',
+        note: 'Who can post a note?',
+        comment: 'Who can comment?',
+        like: 'Who can like?',
+      },
     },
     photo: {
       title: 'Photos',
       description: 'Share your photos with your followers.',
+      addPermissions: {
+        title: 'Permissions',
+        photo: 'Who can post a photo?',
+        comment: 'Who can comment?',
+        like: 'Who can like?',
+      },
     },
     topic: {
       title: 'Topics',
       description: 'Start a conversation with your followers.',
+      addPermissions: {
+        title: 'Permissions',
+        topic: 'Who can start a topic?',
+        comment: 'Who can comment?',
+        like: 'Who can like?',
+      },
     },
     article: {
       title: 'Articles',
       description: 'Write and share your articles with your followers.',
+      addPermissions: {
+        title: 'Permissions',
+        article: 'Who can post an article?',
+        comment: 'Who can comment?',
+        like: 'Who can like?',
+      },
     },
   },
   translation: {
