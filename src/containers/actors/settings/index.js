@@ -34,7 +34,6 @@ const ActorsSettings = (props) => {
   const {
     readActor,
     actor,
-    resetActors,
     alertSuccess,
     alertError,
     namespace,
@@ -51,13 +50,9 @@ const ActorsSettings = (props) => {
   const [tab, setTab] = useState(selectedTab);
 
   useEffect(() => {
-    if (id && !actor.id && !isFetching) {
+    if (id && !actor.id) {
       readActor(id, namespace);
     }
-
-    return () => {
-      resetActors();
-    };
   }, []);
 
   useEffect(() => {
@@ -132,7 +127,6 @@ const ActorsSettings = (props) => {
 ActorsSettings.propTypes = {
   readActor: PropTypes.func.isRequired,
   actor: ActorType.isRequired,
-  resetActors: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -180,9 +174,6 @@ const mapDispatchToProps = (namespace) => {
     return {
       readActor: (id) => {
         return dispatch(actions[namespace].read(id, namespace));
-      },
-      resetActors: () => {
-        return dispatch(actions[namespace].reset());
       },
       alertSuccess: (message) => {
         return dispatch(actions.app.alert.success(message));
