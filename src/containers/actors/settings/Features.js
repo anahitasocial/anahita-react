@@ -27,12 +27,14 @@ import utils from '../../../utils';
 
 const ACCESS = {
   PERSON: {
+    REGISTERED: 'registered',
     FOLLOWERS: 'followers',
     LEADERS: 'leaders',
     MUTUALS: 'mutuals',
     ADMINS: 'admins',
   },
   ACTOR: {
+    REGISTERED: 'registered',
     FOLLOWERS: 'followers',
     ADMINS: 'admins',
   },
@@ -153,6 +155,14 @@ const ActorsSettingsAppsBrowse = (props) => {
                 />
                 {addPermissions.map((permission) => {
                   const permissionKey = `feature_${featureName}_${permission.entity}`;
+
+                  // if permission.entity is not like or comment
+                  // then filter out the REGISTERED access
+                  const filteredAccessOptions = permission.entity !== 'like' && permission.entity !== 'comment'
+                    ? accessOptions.filter((option) => {
+                      return option !== ACCESS[actorType].REGISTERED;
+                    }) : accessOptions;
+
                   return (
                     <FormControl
                       key={permissionKey}
@@ -177,7 +187,7 @@ const ActorsSettingsAppsBrowse = (props) => {
                         }}
                         label={i18n.t(`features:${featureName}.addPermissions.${permission.entity}`)}
                       >
-                        {accessOptions.map((option) => {
+                        {filteredAccessOptions.map((option) => {
                           const optionKey = `${key}-${option}`;
                           return (
                             <MenuItem
