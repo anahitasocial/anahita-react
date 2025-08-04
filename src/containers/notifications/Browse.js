@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import ActorAvatar from '../../components/actor/Avatar';
 import Progress from '../../components/Progress';
-import StoryMessage from '../../components/cards/story/StoryMessage';
+import NotificationMessage from '../../components/cards/NotificationMessage';
 
 import NotificationsType from '../../proptypes/Notifications';
 
@@ -70,23 +70,23 @@ const NotificationsBrowse = (props) => {
         }
       >
         {items.allIds.map((itemId) => {
-          const node = items.byId[itemId];
+          const item = items.byId[itemId];
           return (
             <ListItem
-              key={`node_list_item_${node.id}`}
+              key={`node_list_item_${item.id}`}
               divider
             >
               <ListItemAvatar>
                 <ActorAvatar
-                  actor={node.subject}
-                  linked={Boolean(node.subject.id)}
+                  actor={item.subject}
+                  linked={Boolean(item.subject.id)}
                 />
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <StoryMessage story={node} />
+                  <NotificationMessage notification={item} />
                 }
-                secondary={moment.utc(node.creationTime).fromNow()}
+                secondary={moment.utc(item.creationTime).fromNow()}
               />
             </ListItem>
           );

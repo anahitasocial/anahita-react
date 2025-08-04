@@ -3,6 +3,7 @@ import {
   number,
   string,
   oneOfType,
+  bool,
 } from 'prop-types';
 
 import ActorType from './Actor';
@@ -11,11 +12,9 @@ import PersonType from './Person';
 
 export default shape({
   id: number,
-  name: string,
   type: string,
-  component: string,
+  service: string,
   creationTime: string,
-  owner: ActorType,
   subject: PersonType,
   object: oneOfType([
     MediumType,
@@ -26,4 +25,5 @@ export default shape({
     PersonType,
     ActorType,
   ]),
+  isRead: bool,
 });

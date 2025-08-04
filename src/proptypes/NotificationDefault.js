@@ -4,12 +4,11 @@ import NodeDefault from './NodeDefault';
 
 export default {
   id: null,
-  name: '',
   type: '',
-  component: '',
+  service: '',
   creationTime: '0000-00-00 00:00:00',
-  owner: ActorDefault,
   subject: PersonDefault,
   object: NodeDefault,
   target: ActorDefault,
+  isRead: false,
 };
