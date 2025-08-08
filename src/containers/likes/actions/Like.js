@@ -20,8 +20,6 @@ const LikesActionLike = React.forwardRef((props, ref) => {
 
   const { isLiked: liked } = node;
 
-  console.debug(liked);
-
   const handleLike = () => {
     likeNode(node);
   };

@@ -15,7 +15,12 @@ import MediumCard from './Card';
 import Progress from '../../components/Progress';
 import { App as APP } from '../../constants';
 
-const { LIMIT } = APP.BROWSE;
+const {
+  LIMIT,
+  SORTING: {
+    RECENT,
+  },
+} = APP.BROWSE;
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -51,6 +56,7 @@ const MediaBrowse = (props) => {
 
   useEffect(() => {
     if (!isFetching) {
+      console.debug('queryFilters', queryFilters);
       browseList({
         start,
         limit: LIMIT,
@@ -141,6 +147,7 @@ MediaBrowse.defaultProps = {
   queryFilters: {
     q: '',
     oid: 0,
+    sort: RECENT,
   },
   total: 0,
 };

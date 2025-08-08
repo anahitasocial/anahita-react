@@ -5,7 +5,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import api from '../../api/notifications';
 
 let interval = null;
-const PERIOD = 5000; // process.env.REACT_APP_NOTIFICATIONS_CHECK_INTERVAL || 15000;
+const PERIOD = 15000; // process.env.REACT_APP_NOTIFICATIONS_CHECK_INTERVAL || 15000;
 
 const NotificationsIcon = () => {
   const [count, setCount] = useState(0);

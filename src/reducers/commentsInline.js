@@ -32,8 +32,6 @@ const updateComment = (action, state) => {
   const { node } = action;
   const parents = { ...state.parents };
 
-  console.debug(node);
-
   parents.byId[node.parent.id] = editItem(
     parents.byId[node.parent.id] ?
       parents.byId[node.parent.id] :
