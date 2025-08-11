@@ -7,7 +7,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import utils from '../../utils';
 import i18n from '../../languages';
 
-import NotificationAction from '../actions/medium/Notification';
+import NotificationSubAction from '../actions/medium/NotificationSub';
 import DeleteAction from '../actions/Delete';
 import FollowAction from '../actions/Follow';
 
@@ -22,7 +22,7 @@ const {
 } = utils.node;
 
 const FollowActionWithRef = withRef(FollowAction);
-const NotificationActionWithRef = withRef(NotificationAction);
+const NotificationSubActionWithRef = withRef(NotificationSubAction);
 const DeleteActionWithRef = withRef(DeleteAction);
 
 const StoryMenu = (props) => {
@@ -77,7 +77,7 @@ const StoryMenu = (props) => {
             })}
           />}
         {canSubscribe &&
-          <NotificationActionWithRef
+          <NotificationSubActionWithRef
             medium={story.object}
             isSubscribed={story.object.isSubscribed}
             key={`story-notification-${id}`}

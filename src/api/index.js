@@ -12,9 +12,9 @@ import is from './is';
 import likes from './likes';
 import node from './node';
 import notifications from './notifications';
+import notificationsSub from './notifications/sub';
 import password from './password';
 import session from './session';
-import settings from './settings';
 import signup from './signup';
 import socialgraph from './socialgraph';
 import taggables from './taggables';
@@ -65,9 +65,9 @@ const apis = {
   likes,
   node,
   notifications,
+  notificationsSub,
   password,
   session,
-  settings,
   signup,
   socialgraph,
   taggables,

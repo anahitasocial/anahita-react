@@ -9,7 +9,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import permissions from '../../permissions/medium';
 import utils from '../../utils';
 
-import NotificationAction from '../actions/medium/Notification';
+import NotificationSubAction from '../actions/medium/NotificationSub';
 import CommentStatusAction from '../actions/medium/CommentStatus';
 import DeleteAction from '../actions/Delete';
 
@@ -25,7 +25,7 @@ const {
   isSubscribable,
 } = utils.node;
 
-const NotificationActionWithRef = withRef(NotificationAction);
+const NotificationSubActionWithRef = withRef(NotificationSubAction);
 const CommentStatusActionWithRef = withRef(CommentStatusAction);
 const DeleteActionWithRef = withRef(DeleteAction);
 
@@ -83,7 +83,7 @@ const MediaMenu = (props) => {
             Edit
           </MenuItem>}
         {isSubscribable(medium) &&
-          <NotificationActionWithRef
+          <NotificationSubActionWithRef
             medium={medium}
             isSubscribed={medium.isSubscribed}
             key={`medium-notification-${medium.id}`}

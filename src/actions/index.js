@@ -34,7 +34,6 @@ const namespaces = {
   ],
   nodes: [
     'search',
-    'notifications',
     'blogs',
   ],
 };
@@ -92,8 +91,9 @@ actions.commentStatus = (namespace) => {
 
 actions.locationsGraph = createGraphAction('locations')(apis.tagGraph);
 
-actions.settings = {
-  about: createAction('settings_about')(apis.settings.about),
+actions.notifications = {
+  ...createAction('notifications')(apis.notifications),
+  subs: createAction('notifications_sub')(apis.notificationsSub),
 };
 
 export default actions;

@@ -75,10 +75,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     subscribe: (medium) => {
-      return dispatch(actions.notifications.add(medium));
+      return dispatch(actions.notifications.subs.add(medium));
     },
     unsubscribe: (medium) => {
-      return dispatch(actions.notifications.deleteItem(medium));
+      return dispatch(actions.notifications.subs.remove(medium));
     },
   };
 };

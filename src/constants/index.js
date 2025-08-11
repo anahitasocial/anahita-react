@@ -6,7 +6,6 @@ import Avatar from './avatar';
 import Comments from './comments';
 import Cover from './cover';
 import CommentsInline from './commentsInline';
-import Feature from './app';
 import Is from './is';
 import Likes from './likes';
 import Locations from './locations';
@@ -30,7 +29,6 @@ export {
   Comments,
   Cover,
   CommentsInline,
-  Feature,
   Is,
   Likes,
   Locations,
