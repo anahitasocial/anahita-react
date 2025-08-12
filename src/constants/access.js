@@ -5,7 +5,7 @@ export default {
     FOLLOWERS: 'followers',
     LEADERS: 'leaders',
     MUTUALS: 'mutuals',
-    ADMINS: 'admins',
+    MYSELF: 'myself',
   },
   ACTORS: {
     PUBLIC: 'public',

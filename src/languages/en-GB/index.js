@@ -66,7 +66,7 @@ export default {
     leaders: 'Leaders',
     mutuals: 'Mutuals',
     admins: 'Admins',
-    owner: 'Owner',
+    myself: 'Myself',
   },
   features: {
     story: {
