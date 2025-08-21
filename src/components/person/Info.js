@@ -22,7 +22,7 @@ const {
   FAMILY_NAME,
   BODY,
   GENDER,
-  TYPE,
+  USERTYPE,
 } = PERSON.FIELDS;
 
 const PersonInfo = (props) => {
@@ -153,18 +153,18 @@ const PersonInfo = (props) => {
             onChange={handleOnChange}
           >
             <FormControlLabel
-              value={TYPE.REGISTERED}
+              value={USERTYPE.REGISTERED}
               control={<Radio />}
               label={i18n.t('people:person.usertypeOptions.registered')}
             />
             <FormControlLabel
-              value={TYPE.ADMIN}
+              value={USERTYPE.ADMIN}
               control={<Radio />}
               label={i18n.t('people:person.usertypeOptions.administrator')}
             />
             {isSuperAdmin &&
               <FormControlLabel
-                value={TYPE.SUPER_ADMIN}
+                value={USERTYPE.SUPER_ADMIN}
                 control={<Radio />}
                 label={i18n.t('people:person.usertypeOptions.super-administrator')}
               />}

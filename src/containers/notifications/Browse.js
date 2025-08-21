@@ -77,7 +77,7 @@ const NotificationsBrowse = (props) => {
   };
 
   const handleEdit = (item) => {
-    if (item.isRead) {
+    if (!item.isRead) {
       editItem(item).then(() => {
         successAlert('Notification marked as read');
       });

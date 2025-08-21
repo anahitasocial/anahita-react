@@ -7,7 +7,7 @@ function browse(params) {
 }
 
 function edit(item) {
-  return axios.put(`/notifications/${item.id}`);
+  return axios.patch(`/notifications/${item.id}`);
 }
 
 function deleteItem(item) {
