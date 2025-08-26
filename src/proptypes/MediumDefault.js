@@ -12,6 +12,7 @@ export default {
   coverURL: ImageURLDefault,
   commands: [],
   subscriberCount: 0,
+  isSubscribedByViewer: false,
   owner: ActorDefault,
   author: PersonDefault,
   creationTime: '0000-00-00 00:00:00',
@@ -22,5 +23,5 @@ export default {
   lastCommentTime: '0000-00-00 00:00:00',
   likesCount: 0,
   dislikesCount: 0,
-  isLiked: false,
+  isLikedByViewer: false,
 };

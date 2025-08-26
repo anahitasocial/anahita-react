@@ -39,6 +39,7 @@ export default shape({
   administrators: arrayOf(personType),
   followerCount: number,
   subscriberCount: number,
+  isSubscribedByViewer: true,
   author: personType,
   creationTime: string,
   editor: personType,

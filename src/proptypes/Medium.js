@@ -21,6 +21,7 @@ export default shape({
   coverURL: ImageURL,
   commands: arrayOf(string),
   subscriberCount: number,
+  isSubscribedByViewer: bool,
   owner: ActorType,
   author: PersonType,
   creationTime: string,
@@ -31,5 +32,5 @@ export default shape({
   lastCommentTime: string,
   likesCount: number,
   dislikesCount: number,
-  isLiked: bool,
+  isLikedByViewer: bool,
 });

@@ -85,7 +85,7 @@ const MediaMenu = (props) => {
         {isSubscribable(medium) &&
           <NotificationSubActionWithRef
             medium={medium}
-            isSubscribed={medium.isSubscribed}
+            isSubscribedByViewer={medium.isSubscribedByViewer}
             key={`medium-notification-${medium.id}`}
           />}
         {isCommentable(medium) &&

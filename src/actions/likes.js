@@ -142,7 +142,7 @@ const deleteSuccess = (namespace) => {
     const newNode = comment ? { ...comment } : { ...node };
 
     newNode.likesCount -= 1;
-    newNode.isLiked = false;
+    newNode.isLikedByViewer = false;
 
     return {
       type: `${namespace.toUpperCase()}_LIKES_DELETE_SUCCESS`,

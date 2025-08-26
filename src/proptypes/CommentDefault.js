@@ -10,5 +10,5 @@ export default {
   updateTime: '0000-00-00 00:00:00',
   likesCount: 0,
   dislikesCount: 0,
-  isLiked: false,
+  isLikedByViewer: false,
 };

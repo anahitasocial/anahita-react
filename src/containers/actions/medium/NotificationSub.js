@@ -12,13 +12,13 @@ const ActionsMediumNotification = React.forwardRef((props, ref) => {
     subscribe,
     unsubscribe,
     medium,
-    isSubscribed,
+    isSubscribedByViewer,
     subscribeLabel,
     unsubscribeLabel,
     isFetching,
   } = props;
 
-  const [subscribed, setSubscribed] = useState(isSubscribed);
+  const [subscribed, setSubscribed] = useState(isSubscribedByViewer);
 
   const handleSubscribe = () => {
     subscribe(medium).then(() => {
@@ -50,14 +50,14 @@ ActionsMediumNotification.propTypes = {
   subscribe: PropTypes.func.isRequired,
   unsubscribe: PropTypes.func.isRequired,
   medium: MediumType.isRequired,
-  isSubscribed: PropTypes.bool,
+  isSubscribedByViewer: PropTypes.bool,
   subscribeLabel: PropTypes.string,
   unsubscribeLabel: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
 };
 
 ActionsMediumNotification.defaultProps = {
-  isSubscribed: false,
+  isSubscribedByViewer: false,
   subscribeLabel: i18n.t('actions:subscribe'),
   unsubscribeLabel: i18n.t('actions:unsubscribe'),
 };

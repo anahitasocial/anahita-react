@@ -21,7 +21,7 @@ const LikesActionLikeComment = React.forwardRef((props, ref) => {
     size,
   } = props;
 
-  const { isLiked: liked } = comment;
+  const { isLikedByViewer: liked } = comment;
 
   const handleLike = () => {
     likeNode(node, comment);

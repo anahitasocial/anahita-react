@@ -14,6 +14,7 @@ export default {
   administrators: [],
   followerCount: 0,
   subscriberCount: 0,
+  isSubscribedByViewer: false,
   author: personDefault,
   creationTime: '0000-00-00 00:00:00',
   editor: personDefault,

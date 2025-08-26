@@ -20,7 +20,7 @@ const LikesActionLikeStory = React.forwardRef((props, ref) => {
     size,
   } = props;
 
-  const { isLiked: liked } = node;
+  const { isLikedByViewer: liked } = node;
 
   const handleLike = () => {
     likeNode(story, node);

@@ -17,5 +17,5 @@ export default shape({
   updateTime: string,
   likesCount: number,
   dislikesCount: number,
-  isLiked: bool,
+  isLikedByViewer: bool,
 });
