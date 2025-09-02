@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import Grid from '@material-ui/core/Grid';
 
 import Composers from './composers';
-import StoriesBrowse from './stories/Browse';
+import FeedBrowse from './feed/Leaders';
 import actions from '../actions';
 import i18n from '../languages';
 
@@ -54,10 +54,7 @@ const DashboardPage = (props) => {
           xs={12}
           md={8}
         >
-          <StoriesBrowse
-            key="com.stories.story"
-            queryFilters={filters}
-          />
+          <FeedBrowse />
         </Grid>
       </Grid>
     </>

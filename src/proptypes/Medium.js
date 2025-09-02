@@ -25,7 +25,7 @@ export default shape({
   owner: ActorType,
   author: PersonType,
   creationTime: string,
-  editor: PersonType,
+  // editor: PersonType,
   updateTime: string,
   lastComment: CommentType,
   lastCommenter: PersonType,

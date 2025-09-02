@@ -14,8 +14,9 @@ export default {
   subscriberCount: 0,
   author: PersonDefault,
   creationTime: '0000-00-00 00:00:00',
-  editor: PersonDefault,
+  // editor: PersonDefault,
   updateTime: '0000-00-00 00:00:00',
   isAdministrated: false,
   isLeader: false,
+  isSubscribedByViewer: false,
 };

@@ -126,13 +126,7 @@ const getCommentURL = (comment) => {
 };
 
 const getCoverURL = (node, size = 'medium') => {
-  const path = node.coverURL && node.coverURL[size] && node.coverURL[size].url;
-
-  if (path) {
-    return path.substring(0, 4) === 'http' ? path : new URL(path, process.env.REACT_APP_API_BASE_URL).href;
-  }
-
-  return '';
+  return node.coverURL && node.coverURL[size] && node.coverURL[size].url;
 };
 
 const getOwnerName = (node) => {

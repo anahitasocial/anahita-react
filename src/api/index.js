@@ -8,6 +8,7 @@ import avatar from './avatar';
 import comments from './comments';
 import commentStatus from './commentsStatus';
 import cover from './cover';
+import feed from './feed';
 import is from './is';
 import likes from './likes';
 import node from './node';
@@ -61,6 +62,7 @@ const apis = {
   comments,
   commentStatus,
   cover,
+  feed,
   is,
   likes,
   node,

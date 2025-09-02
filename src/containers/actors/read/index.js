@@ -21,7 +21,7 @@ import LocationsGadget from '../../locations/Gadget';
 import MediaBrowse from '../../media/Browse';
 import Progress from '../../../components/Progress';
 import SocialgraphTabs from '../../../components/actor/socialgraph/Tabs';
-import StoriesBrowse from '../../stories/Browse';
+import FeedActorBrowse from '../../feed/Actor';
 import HeaderMeta from '../../../components/HeaderMeta';
 
 import actions from '../../../actions';
@@ -174,11 +174,9 @@ const ActorsRead = (props) => {
             actor={actor}
             viewer={viewer}
           />}
-        stories={actor.id &&
-          <StoriesBrowse
-            queryFilters={{
-              oid: actor.id,
-            }}
+        feed={actor.id &&
+          <FeedActorBrowse
+            actor={actor}
           />}
         locations={actor.id &&
           <LocationsGadget

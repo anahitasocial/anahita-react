@@ -36,7 +36,7 @@ const ActorBody = (props) => {
     viewer,
     admins,
     composers,
-    stories,
+    feed,
     locations,
     socialgraph,
     tabs,
@@ -118,7 +118,7 @@ const ActorBody = (props) => {
               {composers}
             </Grid>
             <Grid item xs={12}>
-              {stories}
+              {feed}
             </Grid>
           </Grid>
         </Grid>}
@@ -134,7 +134,7 @@ ActorBody.propTypes = {
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
   composers: PropTypes.node,
-  stories: PropTypes.node,
+  feed: PropTypes.node,
   locations: PropTypes.node,
   admins: PropTypes.node,
   socialgraph: PropTypes.node,
@@ -146,7 +146,7 @@ ActorBody.propTypes = {
 ActorBody.defaultProps = {
   admins: null,
   composers: null,
-  stories: null,
+  feed: null,
   locations: null,
   socialgraph: null,
   mentions: null,

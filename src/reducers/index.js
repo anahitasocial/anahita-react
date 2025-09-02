@@ -82,4 +82,7 @@ namespaces.nodes.forEach((ns) => {
 
 reducers.comments = createCommentReducer('comments');
 
+reducers.feedLeaders = createReducer('feed_leaders', DEFAULT_NODE);
+reducers.feedActor = createReducer('feed_actor', DEFAULT_NODE);
+
 export default combineReducers(reducers);

@@ -89,6 +89,11 @@ actions.commentStatus = (namespace) => {
   return createAction('commentStatus')(apis.commentStatus(namespace));
 };
 
+actions.feed = {
+  leaders: createAction('feed_leaders')(apis.feed.leaders),
+  actor: createAction('feed_actor')(apis.feed.actor),
+};
+
 actions.locationsGraph = createGraphAction('locations')(apis.tagGraph);
 
 actions.notifications = {
