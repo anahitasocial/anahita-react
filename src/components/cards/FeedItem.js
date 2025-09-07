@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import FeedCardDefault from './feed/Default';
 import FeedCardComment from './feed/Comment';
+import FeedCardRepost from './feed/Repost';
 
 import NodeType from '../../proptypes/Node';
 import utils from '../../utils';
@@ -17,10 +18,23 @@ const StoryCard = (props) => {
   } = props;
 
   const isComment = utils.node.isComment(node);
+  const isRepost = utils.node.isRepost(node);
 
   if (isComment) {
     return (
       <FeedCardComment
+        node={node}
+        stats={stats}
+        actions={actions}
+        menu={menu}
+        showOwner={showOwner}
+      />
+    );
+  }
+
+  if (isRepost) {
+    return (
+      <FeedCardRepost
         node={node}
         stats={stats}
         actions={actions}

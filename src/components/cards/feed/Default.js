@@ -69,7 +69,7 @@ const FeedCardDefault = ({
   return (
     <Card
       className={classes.root}
-      component="section"
+      component="article"
     >
       {showOwner && <CardOwner node={node} />}
       <CardHeader

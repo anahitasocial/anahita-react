@@ -84,7 +84,7 @@ const MediumCard = (props) => {
   }, [portrait]);
 
   return (
-    <Card component="section">
+    <Card component="section" elevation={0}>
       {medium.author && medium.owner.id !== medium.author.id &&
         <CardHeaderOwner
           node={medium}

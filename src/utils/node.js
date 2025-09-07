@@ -43,8 +43,12 @@ const isMedium = (node) => {
   return node.type ? TYPES.MEDIUM.includes(node.type) : false;
 };
 
+const isRepost = (node) => {
+  return node.type.includes('repost');
+};
+
 const isComment = (node) => {
-  return node.type.split('.')[3] === 'comment';
+  return node.type.includes('comment');
 };
 
 const isCommentable = (medium) => {
@@ -283,6 +287,7 @@ export default {
   isAdmin,
   isRegistered,
   isMedium,
+  isRepost,
   isComment,
   isCommentable,
   isLikeable,

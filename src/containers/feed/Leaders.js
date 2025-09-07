@@ -47,8 +47,9 @@ const FeedLeadersBrowse = ({
   useEffect(() => {
     if (!isFetching) {
       browseList({
-        show_comments: true,
-        show_liked: true,
+        include_comments: true,
+        include_liked: true,
+        include_reposts: true,
         start,
         limit: LIMIT,
       });

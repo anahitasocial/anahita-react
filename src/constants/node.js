@@ -14,6 +14,9 @@ export default {
       'node.medium.todo-service.todo.v1',
       'node.medium.todo-service.todo.v1',
     ],
+    FEED: [
+      'node.base.feed-service.repost.v1',
+    ],
   },
   SERVICES: {
     ACTOR: [

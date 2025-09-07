@@ -48,6 +48,7 @@ const FeedActorBrowse = ({
     if (!isFetching) {
       browseList({
         id: actor.id,
+        include_reposts: true,
         start,
         limit: LIMIT,
       });

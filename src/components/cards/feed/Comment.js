@@ -8,7 +8,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
 
 import ActorAvatar from '../../actor/Avatar';
 import ReadMore from '../../ReadMore';
