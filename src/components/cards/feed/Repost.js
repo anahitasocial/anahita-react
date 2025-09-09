@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
 
 import MediumCard from '../Medium';
@@ -31,21 +32,20 @@ const useStyles = makeStyles((theme) => {
       textTransform: 'capitalize',
       marginBottom: theme.spacing(2),
     },
-    mediaCard: {
-      margin: theme.spacing(2),
-      border: `1px solid ${theme.palette.divider}`,
-    },
     authorName: {
       fontSize: 16,
     },
     ownerName: {
       fontSize: 14,
     },
+    content: {},
   };
 });
 
 const FeedCardRepost = ({
   node,
+  stats,
+  actions,
   menu,
   showOwner,
 }) => {
@@ -78,15 +78,28 @@ const FeedCardRepost = ({
         }
         action={menu}
       />
-      <Box className={classes.mediaCard}>
-        <MediumCard medium={node.parent} />
-      </Box>
+      <CardContent className={classes.content}>
+        <MediumCard
+          medium={node.parent}
+          cardProps={{ variant: 'outlined' }}
+        />
+      </CardContent>
+      {stats &&
+        <CardActions>
+          {stats}
+        </CardActions>}
+      {actions &&
+        <CardActions>
+          {actions}
+        </CardActions>}
     </Card>
   );
 };
 
 FeedCardRepost.propTypes = {
   menu: PropTypes.node,
+  stats: PropTypes.node,
+  actions: PropTypes.node,
   node: NodeType.isRequired,
   showOwner: PropTypes.bool,
 };
@@ -94,6 +107,8 @@ FeedCardRepost.propTypes = {
 FeedCardRepost.defaultProps = {
   showOwner: false,
   menu: null,
+  stats: null,
+  actions: null,
 };
 
 export default FeedCardRepost;

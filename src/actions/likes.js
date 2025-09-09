@@ -73,7 +73,7 @@ const addSuccess = (namespace) => {
   return (params) => {
     const {
       results,
-      story,
+      child,
     } = params;
 
     const { data } = results;
@@ -81,7 +81,7 @@ const addSuccess = (namespace) => {
     return {
       type: `${namespace.toUpperCase()}_LIKES_ADD_SUCCESS`,
       node: data,
-      story,
+      child,
     };
   };
 };
@@ -97,7 +97,7 @@ const addFailure = (namespace) => {
 
 const add = (namespace) => {
   return (api) => {
-    return ({ story, node, comment = null }) => {
+    return ({ child, node, comment = null }) => {
       return (dispatch) => {
         dispatch(addRequest(namespace)(node));
         return new Promise((resolve, reject) => {
@@ -105,7 +105,7 @@ const add = (namespace) => {
             .then((results) => {
               dispatch(addSuccess(namespace)({
                 results,
-                story,
+                child,
                 node,
                 comment,
               }));
@@ -137,7 +137,7 @@ const deleteSuccess = (namespace) => {
     const {
       node,
       comment = null,
-      story,
+      child,
     } = params;
     const newNode = comment ? { ...comment } : { ...node };
 
@@ -147,7 +147,7 @@ const deleteSuccess = (namespace) => {
     return {
       type: `${namespace.toUpperCase()}_LIKES_DELETE_SUCCESS`,
       node: newNode,
-      story,
+      child,
     };
   };
 };
@@ -163,14 +163,14 @@ const deleteFailure = (namespace) => {
 
 const deleteItem = (namespace) => {
   return (api) => {
-    return ({ story, node, comment = null }) => {
+    return ({ child, node, comment = null }) => {
       return (dispatch) => {
         dispatch(deleteRequest(namespace)());
         return new Promise((resolve, reject) => {
           return api.deleteItem(node, comment)
             .then(() => {
               dispatch(deleteSuccess(namespace)({
-                story,
+                child,
                 node,
                 comment,
               }));

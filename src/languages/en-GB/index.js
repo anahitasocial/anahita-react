@@ -28,6 +28,7 @@ export default {
     login: 'Login',
     download: 'Download',
     search: 'Search',
+    repost: 'Repost',
   },
   prompts: {
     added: {

@@ -20,11 +20,11 @@ const {
 } = NODE;
 
 const isActor = (node) => {
-  return node.type ? TYPES.ACTOR.includes(node.type) : false;
+  return node.type ? node.type.includes('actor') : false;
 };
 
 const isPerson = (node) => {
-  return node.type ? node.type.split('.')[3] === 'person' : false;
+  return node.type && node.type.includes('person');
 };
 
 const isSuperAdmin = (actor) => {
@@ -40,15 +40,15 @@ const isRegistered = (actor) => {
 };
 
 const isMedium = (node) => {
-  return node.type ? TYPES.MEDIUM.includes(node.type) : false;
+  return node.type && node.type.includes('medium');
 };
 
 const isRepost = (node) => {
-  return node.type.includes('repost');
+  return node.type && node.type.includes('repost');
 };
 
 const isComment = (node) => {
-  return node.type.includes('comment');
+  return node.type && node.type.includes('comment');
 };
 
 const isCommentable = (medium) => {

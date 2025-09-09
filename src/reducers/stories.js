@@ -78,12 +78,12 @@ export default (state = {
     case 'STORIES_LIKES_ADD_SUCCESS':
     case 'STORIES_LIKES_DELETE_SUCCESS': {
       // const { current: story } = state.stories;
-      const { node, story } = action;
-      story.object = node;
+      const { node, child } = action;
+      child.object = node;
       return {
         ...state,
         isFetching: false,
-        stories: editItem(state.stories, story, storyDefault),
+        stories: editItem(state.stories, child, storyDefault),
         success: true,
       };
     }

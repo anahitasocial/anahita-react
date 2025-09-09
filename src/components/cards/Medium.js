@@ -48,19 +48,18 @@ const styles = (theme) => {
   };
 };
 
-const MediumCard = (props) => {
-  const {
-    classes,
-    medium,
-    stats,
-    actions,
-    access,
-    ownerActions,
-    menu,
-    handleView,
-    history,
-  } = props;
-
+const MediumCard = ({
+  classes,
+  medium,
+  stats,
+  actions,
+  access,
+  ownerActions,
+  menu,
+  handleView,
+  history,
+  cardProps,
+}) => {
   const portrait = getPortraitURL(medium);
   const cover = getCoverURL(medium);
   const url = getURL(medium);
@@ -84,7 +83,7 @@ const MediumCard = (props) => {
   }, [portrait]);
 
   return (
-    <Card component="section" elevation={0}>
+    <Card {...cardProps}>
       {medium.author && medium.owner.id !== medium.author.id &&
         <CardHeaderOwner
           node={medium}
@@ -188,6 +187,7 @@ MediumCard.propTypes = {
   medium: MediumType.isRequired,
   handleView: PropTypes.func,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  cardProps: PropTypes.objectOf(PropTypes.any),
 };
 
 MediumCard.defaultProps = {
@@ -197,6 +197,11 @@ MediumCard.defaultProps = {
   menu: null,
   stats: null,
   handleView: null,
+  cardProps: {
+    variant: 'elevation',
+    elevation: 0,
+    component: 'section',
+  },
 };
 
 export default withRouter(withStyles(styles)(MediumCard));

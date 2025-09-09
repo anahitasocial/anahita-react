@@ -8,26 +8,26 @@ import UnlikeIcon from '@material-ui/icons/Favorite';
 
 import actions from '../../../actions';
 import NodeType from '../../../proptypes/Node';
-import StoryType from '../../../proptypes/Story';
 import i18n from '../../../languages';
 
 const LikesActionLikeStory = React.forwardRef((props, ref) => {
   const {
-    story,
+    repostNode,
     node,
     likeNode,
     unlikeNode,
     size,
   } = props;
 
-  const { isLikedByViewer: liked } = node;
+  const likeableNode = node;
+  const { isLikedByViewer: liked } = likeableNode;
 
   const handleLike = () => {
-    likeNode(story, node);
+    likeNode(repostNode, node);
   };
 
   const handleUnlike = () => {
-    unlikeNode(story, node);
+    unlikeNode(repostNode, node);
   };
 
   const label = liked ? i18n.t('actions:unlike') : i18n.t('actions:like');
@@ -56,13 +56,14 @@ const LikesActionLikeStory = React.forwardRef((props, ref) => {
 LikesActionLikeStory.propTypes = {
   likeNode: PropTypes.func.isRequired,
   unlikeNode: PropTypes.func.isRequired,
-  story: StoryType.isRequired,
+  repostNode: NodeType,
   node: NodeType.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
 };
 
 LikesActionLikeStory.defaultProps = {
   size: 'medium',
+  repostNode: null,
 };
 
 const mapStateToProps = () => {
@@ -74,11 +75,11 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      likeNode: (story, node) => {
-        return dispatch(actions[namespace].likes.add({ story, node }));
+      likeNode: (child, node) => {
+        return dispatch(actions[namespace].likes.add({ child, node }));
       },
-      unlikeNode: (story, node) => {
-        return dispatch(actions[namespace].likes.deleteItem({ story, node }));
+      unlikeNode: (child, node) => {
+        return dispatch(actions[namespace].likes.deleteItem({ child, node }));
       },
     };
   };

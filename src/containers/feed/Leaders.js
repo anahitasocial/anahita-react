@@ -7,7 +7,8 @@ import CommentIcon from '@material-ui/icons/Comment';
 
 import actions from '../../actions';
 
-// import LikeAction from '../likes/actions/Like';
+import LikeAction from '../likes/actions/LikeFeed';
+import RepostAction from '../actions/medium/Repost';
 import LikesStats from '../likes';
 import CommentStats from '../../components/comment/Stats';
 import FeedMenu from './Menu';
@@ -20,7 +21,12 @@ import commentPerms from '../../permissions/comment';
 import { App as APP } from '../../constants';
 import utils from '../../utils';
 
-const { isPerson } = utils.node;
+const {
+  isPerson,
+  isMedium,
+  isRepost,
+  isComment,
+} = utils.node;
 
 const { LIMIT } = APP.BROWSE;
 
@@ -77,9 +83,13 @@ const FeedLeadersBrowse = ({
     >
       {items.allIds.map((itemId) => {
         const node = items.byId[itemId];
+        const isMediumNode = isMedium(node);
+        const isRepostNode = isRepost(node);
+        const isCommentNode = isComment(node);
         const key = `feed_nodes_${node.id}`;
-        const canAddComment = commentPerms.canAdd(node);
+        const canAddComment = commentPerms.canAdd(isMediumNode ? node : node.parent);
         const isCommentsOpen = openComments.includes(node.id);
+        const Like = LikeAction('feed_leaders');
 
         return (
           <FeedItemCard
@@ -87,25 +97,27 @@ const FeedLeadersBrowse = ({
             key={key}
             menu={isAuthenticated &&
               <FeedMenu
-                node={node}
+                node={isMediumNode ? node : node.parent}
                 viewer={viewer}
               />}
             stats={[
               <LikesStats
                 key={`node-like-stat-${node.id}`}
-                node={node}
+                node={isRepostNode ? node.parent : node}
+                comment={isCommentNode && node}
               />,
-              <CommentStats
+              !isCommentNode && <CommentStats
                 key={`node-comment-stat-${node.id}`}
-                node={node}
+                node={isMediumNode ? node : node.parent}
                 viewer={viewer}
               />,
             ]}
             actions={isAuthenticated && [
-              // <LikeAction
-              //   node={node}
-              //   key={`node-like-${node.id}`}
-              // />,
+              <Like
+                node={isRepostNode ? node.parent : node}
+                repostNode={isRepostNode ? node : null}
+                key={`node-like-${node.id}`}
+              />,
               <Button
                 onClick={() => {
                   openComments.push(node.id);
@@ -121,6 +133,10 @@ const FeedLeadersBrowse = ({
               >
                 Comment
               </Button>,
+              <RepostAction
+                key={`node-repost-${node.id}`}
+                node={isRepostNode ? node.parent : node}
+              />,
             ]}
             showOwner={node.owner && !isPerson(node.owner)}
           />
@@ -172,10 +188,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseList: (params) => {
-      return dispatch(actions.feed.leaders.browse(params));
+      return dispatch(actions.feed_leaders.browse(params));
     },
     resetList: () => {
-      return dispatch(actions.feed.leaders.reset());
+      return dispatch(actions.feed_leaders.reset());
     },
     alertError: (message) => {
       return dispatch(actions.app.alert.error(message));

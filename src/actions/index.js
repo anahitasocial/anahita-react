@@ -36,6 +36,10 @@ const namespaces = {
     'search',
     'blogs',
   ],
+  feeds: [
+    'feed_leaders',
+    'feed_actor',
+  ],
 };
 
 const actions = {
@@ -89,10 +93,12 @@ actions.commentStatus = (namespace) => {
   return createAction('commentStatus')(apis.commentStatus(namespace));
 };
 
-actions.feed = {
-  leaders: createAction('feed_leaders')(apis.feed.leaders),
-  actor: createAction('feed_actor')(apis.feed.actor),
-};
+namespaces.feeds.forEach((namespace) => {
+  actions[namespace] = {
+    ...createAction(namespace)(apis[namespace]),
+    likes: likes(namespace)(apis.likes),
+  };
+});
 
 actions.locationsGraph = createGraphAction('locations')(apis.tagGraph);
 

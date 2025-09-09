@@ -22,6 +22,7 @@ import createActorFollowRequests from './actor/followrequests';
 import createActorsReducer from './createActors';
 import createCommentReducer from './createComment';
 import createMediaReducer from './createMedia';
+import createFeed from './createFeed';
 
 import DEFAULT_NODE from '../proptypes/NodeDefault';
 
@@ -82,7 +83,7 @@ namespaces.nodes.forEach((ns) => {
 
 reducers.comments = createCommentReducer('comments');
 
-reducers.feedLeaders = createReducer('feed_leaders', DEFAULT_NODE);
-reducers.feedActor = createReducer('feed_actor', DEFAULT_NODE);
+reducers.feedLeaders = createFeed('feed_leaders');
+reducers.feedActor = createFeed('feed_actor');
 
 export default combineReducers(reducers);
