@@ -20,6 +20,7 @@ import PersonType from '../../proptypes/Person';
 import commentPerms from '../../permissions/comment';
 import { App as APP } from '../../constants';
 import utils from '../../utils';
+import is from '../../constants/is';
 
 const {
   isPerson,
@@ -135,7 +136,8 @@ const FeedLeadersBrowse = ({
               </Button>,
               <RepostAction
                 key={`node-repost-${node.id}`}
-                node={isRepostNode ? node.parent : node}
+                parent={isRepostNode ? node.parent : node}
+                repost={isRepostNode ? node : null}
               />,
             ]}
             showOwner={node.owner && !isPerson(node.owner)}

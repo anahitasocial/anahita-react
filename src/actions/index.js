@@ -97,6 +97,7 @@ namespaces.feeds.forEach((namespace) => {
   actions[namespace] = {
     ...createAction(namespace)(apis[namespace]),
     likes: likes(namespace)(apis.likes),
+    reposts: createAction('reposts')(apis.reposts),
   };
 });
 

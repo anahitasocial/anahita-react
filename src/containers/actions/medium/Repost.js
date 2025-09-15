@@ -7,18 +7,40 @@ import api from '../../../api';
 import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';
 
-const ActionsMediumRepost = React.forwardRef(({ node }, ref) => {
-  const [reposted, setReposted] = useState(node.isRepostedByViewer);
+const ActionsMediumRepost = React.forwardRef(({ repost, parent }, ref) => {
+  const [reposted, setReposted] = useState(parent.isRepostedByViewer);
 
-  const handleRepost = async () => {
+  const handleAdd = async () => {
     try {
-      const response = await api.feed.repost.add(node.id);
-      if (response.status === 200) {
+      const response = await api.repost.add(parent);
+      if (response.status === 201) {
         setReposted(true);
       }
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleRemove = async () => {
+    if (!repost || !repost.id) {
+      return;
+    }
+
+    try {
+      const response = await api.repost.deleteItem(repost);
+      if (response.status === 200) {
+        setReposted(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const action = reposted ? handleRemove : handleAdd;
+
+  const handleRepost = (event) => {
+    event.preventDefault();
+    action();
   };
 
   return (
@@ -35,7 +57,12 @@ const ActionsMediumRepost = React.forwardRef(({ node }, ref) => {
 });
 
 ActionsMediumRepost.propTypes = {
-  node: NodeType.isRequired,
+  parent: NodeType.isRequired,
+  repost: NodeType,
+};
+
+ActionsMediumRepost.defaultProps = {
+  repost: null,
 };
 
 export default connect()(ActionsMediumRepost);

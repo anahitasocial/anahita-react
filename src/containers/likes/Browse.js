@@ -36,7 +36,11 @@ const LikesBrowse = (props) => {
   } = props;
 
   useEffect(() => {
-    browseList(node, comment);
+    browseList({
+      node,
+      comment,
+      limit: 1000, // TODO: Paginate likes
+    });
 
     return () => {
       resetList(comment);
@@ -123,12 +127,12 @@ const mapStateToProps = (namespace) => {
 const mapDispatchToProps = (namespace) => {
   return (dispatch) => {
     return {
-      browseList: (node, comment = CommentDefault) => {
-        if (comment) {
-          return dispatch(actions.comments.likes.browse(node, comment));
+      browseList: (params) => {
+        if (params.comment) {
+          return dispatch(actions.comments.likes.browse(params));
         }
 
-        return dispatch(actions[namespace].likes.browse(node, comment));
+        return dispatch(actions[namespace].likes.browse(params));
       },
       resetList: (comment = CommentDefault) => {
         if (comment) {

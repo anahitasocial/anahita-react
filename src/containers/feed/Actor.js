@@ -143,7 +143,8 @@ const FeedActorBrowse = ({
               </Button>,
               <RepostAction
                 key={`node-repost-${node.id}`}
-                node={isRepostNode ? node.parent : node}
+                parent={isRepostNode ? node.parent : node}
+                repost={isRepostNode ? node : null}
               />,
             ]}
           />

@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const browse = (node, comment = null) => {
-  const path = comment && comment.id > 0 ? `/likes/${comment.id}/?limit=1000` : `/likes/${node.id}/?limit=1000`;
-  return axios.get(path);
+const browse = (params) => {
+  const { node, comment } = params;
+  const path = comment && comment.id > 0 ? `/likes/${comment.id}/` : `/likes/${node.id}/`;
+  return axios.get(path, { params });
 };
 
 const add = (node, comment = null) => {
