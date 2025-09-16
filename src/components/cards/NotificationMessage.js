@@ -34,7 +34,7 @@ const NotificationMessage = (props) => {
   return (
     <Typography variant="body1">
       <Trans
-        i18nKey={`stories.${i18nKey}`}
+        i18nKey={`notifications.${i18nKey}`}
         values={{
           subject: subjectName,
           object: objectName,

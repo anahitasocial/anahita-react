@@ -1,5 +1,5 @@
 import settings from './settings';
-import stories from './stories';
+import notifications from './notifications';
 
 export default {
   actions: {
@@ -125,7 +125,7 @@ export default {
     },
   },
   translation: {
-    stories,
+    notifications,
   },
   pages: {
     about: 'About',
