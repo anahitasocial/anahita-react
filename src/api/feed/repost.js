@@ -10,9 +10,9 @@ const add = (node) => {
   return axios.post(`/reposts/${parentId}/`);
 };
 
-const deleteItem = (repost) => {
-  const { id } = repost;
-  return axios.delete(`/reposts/${id}`);
+const deleteItem = (node) => {
+  const { id: parentId } = node;
+  return axios.delete(`/reposts/${parentId}/`);
 };
 
 export default {

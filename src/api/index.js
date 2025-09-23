@@ -15,7 +15,7 @@ import node from './node';
 import notifications from './notifications';
 import notificationsSub from './notifications/sub';
 import password from './password';
-import repost from './repost';
+import repost from './feed/repost';
 import session from './session';
 import signup from './signup';
 import socialgraph from './socialgraph';

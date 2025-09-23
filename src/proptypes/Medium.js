@@ -33,4 +33,9 @@ export default shape({
   likesCount: number,
   dislikesCount: number,
   isLikedByViewer: bool,
+  repostCount: number,
+  isRepostedByViewer: bool,
+  quoteCount: number,
+  isQuotedByViewer: bool,
+  commentCount: number,
 });

@@ -24,4 +24,9 @@ export default {
   likesCount: 0,
   dislikesCount: 0,
   isLikedByViewer: false,
+  repostCount: 0,
+  isRepostedByViewer: false,
+  quoteCount: 0,
+  isQuotedByViewer: false,
+  commentCount: 0,
 };

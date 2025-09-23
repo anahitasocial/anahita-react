@@ -50,7 +50,7 @@ const LikesActionLikeComment = React.forwardRef((props, ref) => {
       }
       fullWidth
     >
-      Like
+      {comment.likesCount > 0 && comment.likesCount}
     </Button>
   );
 });

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import FeedCardDefault from './feed/Default';
 import FeedCardComment from './feed/Comment';
 import FeedCardRepost from './feed/Repost';
-
 import NodeType from '../../proptypes/Node';
 import utils from '../../utils';
 

@@ -3,18 +3,19 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import RepostIcon from '@material-ui/icons/Repeat';
 
-import api from '../../../api';
-import NodeType from '../../../proptypes/Node';
-import i18n from '../../../languages';
+import api from '../../api';
+import NodeType from '../../proptypes/Node';
 
-const ActionsMediumRepost = React.forwardRef(({ repost, parent }, ref) => {
+const ActionsFeedRepost = React.forwardRef(({ parent }, ref) => {
   const [reposted, setReposted] = useState(parent.isRepostedByViewer);
+  const [count, setCount] = useState(parent.repostCount);
 
   const handleAdd = async () => {
     try {
       const response = await api.repost.add(parent);
       if (response.status === 201) {
         setReposted(true);
+        setCount(count + 1);
       }
     } catch (error) {
       console.error(error);
@@ -22,14 +23,11 @@ const ActionsMediumRepost = React.forwardRef(({ repost, parent }, ref) => {
   };
 
   const handleRemove = async () => {
-    if (!repost || !repost.id) {
-      return;
-    }
-
     try {
-      const response = await api.repost.deleteItem(repost);
+      const response = await api.repost.deleteItem(parent);
       if (response.status === 200) {
         setReposted(false);
+        setCount(count - 1);
       }
     } catch (error) {
       console.error(error);
@@ -51,18 +49,13 @@ const ActionsMediumRepost = React.forwardRef(({ repost, parent }, ref) => {
       color={reposted ? 'primary' : 'default'}
       fullWidth
     >
-      {i18n.t('actions:repost')}
+      {count > 0 && count}
     </Button>
   );
 });
 
-ActionsMediumRepost.propTypes = {
+ActionsFeedRepost.propTypes = {
   parent: NodeType.isRequired,
-  repost: NodeType,
 };
 
-ActionsMediumRepost.defaultProps = {
-  repost: null,
-};
-
-export default connect()(ActionsMediumRepost);
+export default connect()(ActionsFeedRepost);

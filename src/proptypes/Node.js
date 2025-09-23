@@ -31,4 +31,9 @@ export default shape({
   isLeader: bool,
   comments: CommentsType,
   isSubscribedByViewer: bool,
+  repostCount: number,
+  isRepostedByViewer: bool,
+  quoteCount: number,
+  isQuotedByViewer: bool,
+  commentCount: number,
 });

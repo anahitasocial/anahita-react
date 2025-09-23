@@ -19,4 +19,9 @@ export default {
   isAdministrated: false,
   isLeader: false,
   isSubscribedByViewer: false,
+  repostCount: 0,
+  isRepostedByViewer: false,
+  quoteCount: 0,
+  isQuotedByViewer: false,
+  commentCount: 0,
 };

@@ -3,7 +3,7 @@ import axios from 'axios';
 const browse = (params) => {
   const { node, comment } = params;
   const path = comment && comment.id > 0 ? `/likes/${comment.id}/` : `/likes/${node.id}/`;
-  return axios.get(path, { params });
+  return axios.get(path);
 };
 
 const add = (node, comment = null) => {

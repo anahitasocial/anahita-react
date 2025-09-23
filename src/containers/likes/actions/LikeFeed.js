@@ -48,7 +48,7 @@ const LikesActionLikeStory = React.forwardRef((props, ref) => {
       }
       fullWidth
     >
-      Like
+      {node.likesCount > 0 && node.likesCount}
     </Button>
   );
 });
