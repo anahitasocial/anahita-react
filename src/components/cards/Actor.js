@@ -109,7 +109,7 @@ const ActorCard = (props) => {
           {actor.body}
         </ReadMore>
       </CardContent>}
-      {isAdmin(viewer) &&
+      {viewer && isAdmin(viewer) &&
         <CardContent>
           <div>
             <Typography variant="caption">
@@ -138,11 +138,12 @@ ActorCard.propTypes = {
   classes: PropTypes.object.isRequired,
   action: PropTypes.node,
   actor: ActorType.isRequired,
-  viewer: PersonType.isRequired,
+  viewer: PersonType,
 };
 
 ActorCard.defaultProps = {
   action: null,
+  viewer: null,
 };
 
 export default withStyles(styles)(ActorCard);

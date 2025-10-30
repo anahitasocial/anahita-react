@@ -11,7 +11,7 @@ import NodeType from '../../proptypes/Node';
 import NodesType from '../../proptypes/Nodes';
 
 import CommentCard from '../../components/cards/Comment';
-import ActorsCard from '../actors/browse/Card';
+import ActorsCard from '../../components/cards/Actor';
 import Masonry from '../../components/BreakpointMasonry';
 import MediaCard from '../nodes/cards/Medium';
 import Progress from '../../components/Progress';

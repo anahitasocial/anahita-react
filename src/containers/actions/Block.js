@@ -14,15 +14,13 @@ const BlockAction = React.forwardRef((props, ref) => {
     blockPerson,
     unblockPerson,
     actor,
-    actors,
     component,
     blockLabel,
     unblockLabel,
     viewer,
   } = props;
 
-  const isBlocked = actors.byId[actor.id] ? actors.byId[actor.id].isBlocked : actor.isBlocked;
-  const [blocked, setBlocked] = useState(isBlocked);
+  const [blocked, setBlocked] = useState(actor.isBlockedByViewer);
   const [waiting, setWaiting] = useState(false);
 
   const handleBlock = () => {
@@ -75,7 +73,6 @@ BlockAction.propTypes = {
   blockPerson: PropTypes.func.isRequired,
   unblockPerson: PropTypes.func.isRequired,
   actor: PropTypes.object.isRequired,
-  actors: ActorsType.isRequired,
   component: PropTypes.oneOf(['button', 'menuitem']),
   blockLabel: PropTypes.string,
   unblockLabel: PropTypes.string,
@@ -90,15 +87,10 @@ BlockAction.defaultProps = {
 
 const mapStateToProps = (state) => {
   const {
-    actors,
-  } = state.socialgraph;
-
-  const {
     viewer,
   } = state.session;
 
   return {
-    actors,
     viewer,
   };
 };

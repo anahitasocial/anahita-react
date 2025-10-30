@@ -50,7 +50,7 @@ const ActorsCard = (props) => {
 };
 
 ActorsCard.propTypes = {
-  actor: PersonType.isRequired,
+  actor: ActorType.isRequired,
   leader: ActorType.isRequired,
   viewer: PersonType.isRequired,
 };

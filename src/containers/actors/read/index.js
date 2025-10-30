@@ -96,11 +96,15 @@ const ActorsRead = (props) => {
   const showCommands = isAuthenticated && canAdminister;
   const showEditNotifications = isAuthenticated && actor.isLeader;
   const showFollowRequests = isAuthenticated && canAdminister;
-
   const isViewer = actor.id === viewer.id;
   const FollowRequests = ActorsFollowRequests(namespace);
-
   const actorFeatures = getEnabledFeatures(actor);
+
+  // socialgraph tabs
+  const showFollowers = actor.id;
+  const showLeaders = actor.id && utils.node.isPerson(actor);
+  const showBlocks = isViewer;
+  const showMutuals = false;
 
   const tabs = [];
   actorFeatures.forEach((key) => {
@@ -185,22 +189,22 @@ const ActorsRead = (props) => {
           />}
         socialgraph={
           <SocialgraphTabs
-            followers={actor.id &&
+            followers={showFollowers &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="followers"
               />}
-            leaders={actor.id && isPerson(actor) &&
+            leaders={showLeaders &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="leaders"
               />}
-            blocks={actor.id && (isViewer || canAdminister) &&
+            blocks={showBlocks &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="blocks"
               />}
-            mutuals={actor.id && !isViewer &&
+            mutuals={showMutuals &&
               <ActorsSocialgraph
                 actorNode={actor}
                 filter="mutuals"
