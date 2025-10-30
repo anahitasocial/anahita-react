@@ -104,7 +104,7 @@ const ActorsRead = (props) => {
   const showFollowers = actor.id;
   const showLeaders = actor.id && utils.node.isPerson(actor);
   const showBlocks = isViewer;
-  const showMutuals = false;
+  const showMutuals = viewer.id && viewer.id !== actor.id;
 
   const tabs = [];
   actorFeatures.forEach((key) => {
