@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { singularize } from 'inflection';
-
+import _ from 'lodash';
 import createApi from './create';
 import createActor from './actor';
 
@@ -32,7 +32,9 @@ axios.interceptors.request.use((config) => {
     ...config,
     ...{ headers },
   };
-}, (error) => { return Promise.reject(error); });
+}, (error) => {
+  return Promise.reject(error);
+});
 
 const namespaces = {
   actors: [

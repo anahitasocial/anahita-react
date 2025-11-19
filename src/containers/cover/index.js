@@ -16,7 +16,7 @@ const Cover = (props) => {
   const [waiting, setWaiting] = useState(false);
 
   useEffect(() => {
-    const src = node.coverURL && node.coverURL.large && node.coverURL.large.url;
+    const src = node.coverUrls && node.coverUrls.large && node.coverUrls.large.url;
     if (src) {
       setCover(src);
       setIsLoading(false);

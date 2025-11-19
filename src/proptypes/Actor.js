@@ -11,7 +11,7 @@ import {
 } from 'prop-types';
 
 import personType from './Person';
-import imageURL from './ImageURL';
+import imageUrls from './ImageUrls';
 
 export default shape({
   id: number,
@@ -34,8 +34,8 @@ export default shape({
     ordering: number, // The order in which the feature should be processed
   })),
   commands: arrayOf(string),
-  avatarURL: imageURL,
-  coverURL: imageURL,
+  avatarUrls: imageUrls,
+  coverUrls: imageUrls,
   administrators: arrayOf(personType),
   followerCount: number,
   subscriberCount: number,

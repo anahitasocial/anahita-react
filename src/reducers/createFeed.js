@@ -26,7 +26,6 @@ export default (namespace) => {
         if (hasChild) {
           child.parent = node;
         }
-        console.debug('reducers/createFeed.LIKES_SUCCESS', child, node);
         return {
           ...state,
           [namespace]: editItem(

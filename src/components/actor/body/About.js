@@ -22,11 +22,7 @@ const ActorBodyAbout = (props) => {
   const { actor } = props;
   const {
     body,
-    information: {
-      website,
-      contact_url: contactUrl,
-      phone,
-    },
+    information = {},
   } = actor;
 
   return (
@@ -53,11 +49,11 @@ const ActorBodyAbout = (props) => {
           </CardContent>
         </>}
       <List>
-        {website &&
+        {information && information.website &&
           <ListItem
             button
             component="a"
-            href={website}
+            href={information.website}
             target="_blank"
           >
             <ListItemIcon>
@@ -70,16 +66,16 @@ const ActorBodyAbout = (props) => {
                   variant="body1"
                   noWrap
                 >
-                  {website}
+                  {information.website}
                 </Typography>
               }
             />
           </ListItem>}
-        {contactUrl &&
+        {information && information.contact_url &&
           <ListItem
             button
             component="a"
-            href={contactUrl}
+            href={information.contact_url}
             target="_blank"
           >
             <ListItemIcon>
@@ -92,16 +88,16 @@ const ActorBodyAbout = (props) => {
                   variant="body1"
                   noWrap
                 >
-                  {contactUrl}
+                  {information.contact_url}
                 </Typography>
               }
             />
           </ListItem>}
-        {phone &&
+        {information && information.phone &&
           <ListItem
             button
             component="a"
-            href={`tel:${phone}`}
+            href={`tel:${information.phone}`}
             target="_blank"
           >
             <ListItemIcon>
@@ -114,7 +110,7 @@ const ActorBodyAbout = (props) => {
                   variant="body1"
                   noWrap
                 >
-                  {phone}
+                  {information.phone}
                 </Typography>
               }
             />

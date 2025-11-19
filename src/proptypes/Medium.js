@@ -9,7 +9,7 @@ import {
 import ActorType from './Actor';
 import CommentType from './Comment';
 import PersonType from './Person';
-import ImageURL from './ImageURL';
+import ImageUrls from './ImageUrls';
 
 export default shape({
   id: number,
@@ -17,8 +17,8 @@ export default shape({
   name: string,
   alias: string,
   body: string,
-  portraitURL: ImageURL,
-  coverURL: ImageURL,
+  portraitUrls: ImageUrls,
+  coverUrls: ImageUrls,
   commands: arrayOf(string),
   subscriberCount: number,
   isSubscribedByViewer: bool,

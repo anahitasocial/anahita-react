@@ -100,8 +100,8 @@ const getAddress = (node) => {
     fields.push(node.city);
   }
 
-  if (node.state_province) {
-    fields.push(node.state_province);
+  if (node.stateProvince) {
+    fields.push(node.stateProvince);
   }
 
   if (node.country) {
@@ -130,11 +130,15 @@ const getCommentURL = (comment) => {
 };
 
 const getCoverURL = (node, size = 'medium') => {
-  return node.coverURL && node.coverURL[size] && node.coverURL[size].url;
+  return node.coverUrls && node.coverUrls[size] && node.coverUrls[size].url;
 };
 
 const getOwnerName = (node) => {
-  const { owner: { name } } = node;
+  if (!node || !node.owner || !node.owner.name) {
+    return '';
+  }
+
+  const { name } = node.owner;
   if (name.length > OWNER_NAME_CHAR_LIMIT) {
     return `${name.substring(0, OWNER_NAME_CHAR_LIMIT)}...`;
   }
@@ -142,7 +146,7 @@ const getOwnerName = (node) => {
 };
 
 const getPortraitURL = (node, size = 'medium') => {
-  const path = node.portraitURL && node.portraitURL[size] && node.portraitURL[size].url;
+  const path = node.portraitUrls && node.portraitUrls[size] && node.portraitUrls[size].url;
 
   if (path) {
     return path.substring(0, 4) === 'http' ? path : new URL(path, process.env.REACT_APP_API_BASE_URL).href;
@@ -152,7 +156,7 @@ const getPortraitURL = (node, size = 'medium') => {
 };
 
 const getAvatarURL = (node, size = 'medium') => {
-  const path = node.avatarURL && node.avatarURL[size] && node.avatarURL[size].url;
+  const path = node.avatarUrls && node.avatarUrls[size] && node.avatarUrls[size].url;
 
   if (path) {
     return path.substring(0, 4) === 'http' ? path : new URL(path, process.env.REACT_APP_API_BASE_URL).href;

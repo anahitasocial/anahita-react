@@ -69,9 +69,6 @@ const ActorsSettingsAppsBrowse = (props) => {
 
   const handleChange = (event) => {
     const { name, value, checked } = event.target;
-
-    // console.debug('Feature change:', name, value, checked);
-
     const updatedFeatures = features.map((feature) => {
       if (feature.service === name) {
         return {
@@ -99,8 +96,6 @@ const ActorsSettingsAppsBrowse = (props) => {
 
       return feature; // Ensure a value is returned for every iteration
     });
-
-    // console.debug('Updated features:', updatedFeatures);
 
     setFeatures([...updatedFeatures]);
   };

@@ -10,7 +10,7 @@ import {
 } from 'prop-types';
 
 import PERSON from '../constants/person';
-import imageURL from './ImageURL';
+import ImageUrls from './ImageUrls';
 
 const { USERTYPE, GENDER } = PERSON.FIELDS;
 
@@ -40,8 +40,8 @@ export default shape({
   body: string,
   gadgets: arrayOf(string),
   composers: arrayOf(string),
-  avatarURL: imageURL,
-  coverURL: imageURL,
+  avatarURLs: ImageUrls,
+  coverURLs: ImageUrls,
   followerCount: number,
   leaderCount: number,
   mutualCount: number,

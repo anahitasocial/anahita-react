@@ -8,7 +8,7 @@ import {
 
 import ActorType from './Actor';
 import PersonType from './Person';
-import ImageURL from './ImageURL';
+import ImageUrls from './ImageUrls';
 import CommentsType from './Comments';
 
 export default shape({
@@ -18,8 +18,8 @@ export default shape({
   name: string,
   alias: string,
   body: string,
-  imageURL: ImageURL,
-  coverURL: ImageURL,
+  imageURLs: ImageUrls,
+  coverURLs: ImageUrls,
   administrators: arrayOf(PersonType),
   followerCount: number,
   subscriberCount: number,

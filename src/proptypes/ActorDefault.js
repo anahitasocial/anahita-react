@@ -1,5 +1,5 @@
 import personDefault from './PersonDefault';
-import imageURLDefault from './ImageURLDefault';
+import imageUrlsDefault from './ImageUrlsDefault';
 
 export default {
   id: null,
@@ -9,8 +9,8 @@ export default {
   body: '',
   features: [],
   commands: [],
-  avatarURL: imageURLDefault,
-  coverURL: imageURLDefault,
+  avatarUrls: imageUrlsDefault,
+  coverUrls: imageUrlsDefault,
   administrators: [],
   followerCount: 0,
   subscriberCount: 0,

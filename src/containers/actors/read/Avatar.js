@@ -16,7 +16,7 @@ const ActorsAvatar = (props) => {
   const [waiting, setWaiting] = useState(false);
 
   useEffect(() => {
-    const src = node.avatarURL && node.avatarURL.large && node.avatarURL.large.url;
+    const src = node.avatarUrls && node.avatarUrls.large && node.avatarUrls.large.url;
     if (src) {
       setAvatar(src);
     } else {

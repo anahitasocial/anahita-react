@@ -56,7 +56,6 @@ const MediaBrowse = (props) => {
 
   useEffect(() => {
     if (!isFetching) {
-      console.debug('queryFilters', queryFilters);
       browseList({
         start,
         limit: LIMIT,

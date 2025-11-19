@@ -50,6 +50,7 @@ const Viewer = (props) => {
   const profile = `/people/${viewer.username}/`;
   const initials = getActorInitials(viewer);
   const avatar = getAvatarURL(viewer);
+
   const {
     givenName,
     familyName,

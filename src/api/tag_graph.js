@@ -9,12 +9,6 @@ const getNamespace = (node) => {
   return objectType.split('.')[1];
 };
 
-const getNodeType = (node) => {
-  const { objectType } = node;
-
-  return objectType.split('.')[2];
-};
-
 const browse = (node) => {
   return (params) => {
     const { objectType, ...rest } = params;

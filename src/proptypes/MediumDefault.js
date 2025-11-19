@@ -1,6 +1,6 @@
 import ActorDefault from './ActorDefault';
 import PersonDefault from './PersonDefault';
-import ImageURLDefault from './ImageURLDefault';
+import ImageUrlsDefault from './ImageUrlsDefault';
 
 export default {
   id: null,
@@ -8,8 +8,8 @@ export default {
   name: '',
   alias: '',
   body: '',
-  portraitURL: ImageURLDefault,
-  coverURL: ImageURLDefault,
+  portraitURL: ImageUrlsDefault,
+  coverURL: ImageUrlsDefault,
   commands: [],
   subscriberCount: 0,
   isSubscribedByViewer: false,

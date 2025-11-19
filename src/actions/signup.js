@@ -1,5 +1,6 @@
 import apis from '../api';
 import { Signup as SIGNUP } from '../constants';
+import formatting from '../utils/formatting';
 
 const { signup: api } = apis;
 
@@ -12,7 +13,7 @@ function addRequest() {
 }
 
 function addSuccess(response) {
-  const { data } = response;
+  const data = formatting.snakeToCamel(response.data);
   return {
     type: SIGNUP.ADD.SUCCESS,
     result: data,
