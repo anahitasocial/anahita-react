@@ -16,10 +16,10 @@ const CommentStats = (props) => {
       component="a"
       href={url}
       startIcon={<CommentIcon />}
-      disabled={node.numOfComments === 0}
+      disabled={node.commentCount === 0}
       size="small"
     >
-      {node.numOfComments}
+      {node.commentCount}
     </Button>
   );
 };

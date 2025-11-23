@@ -25,7 +25,7 @@ export default shape({
   subscriberCount: number,
   author: PersonType,
   creationTime: string,
-  // editor: PersonType,
+  editor: PersonType,
   updateTime: string,
   isAdministrated: bool,
   isLeader: bool,

@@ -22,6 +22,7 @@ const {
   getPortraitURL,
   getCoverURL,
   getOwnerName,
+  getPersonName,
 } = utils.node;
 
 const styles = (theme) => {
@@ -58,7 +59,7 @@ const FeedCardDefault = ({
   menu,
   showOwner,
 }) => {
-  const ownerName = getOwnerName(node);
+  const authorName = getPersonName(node.author);
   const portrait = getPortraitURL(node, 'medium');
   const cover = getCoverURL(node, 'medium');
   const { title, body } = node;
@@ -79,7 +80,11 @@ const FeedCardDefault = ({
             linked={node.author.id > 0}
           />
         }
-        title={ownerName}
+        title={node.author.id > 0 ? (
+          <Link href={getURL(node.author)}>
+            {authorName}
+          </Link>
+        ) : authorName}
         subheader={
           <Link
             href={url}

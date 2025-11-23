@@ -16,7 +16,7 @@ export default {
   owner: ActorDefault,
   author: PersonDefault,
   creationTime: '0000-00-00 00:00:00',
-  // editor: PersonDefault,
+  editor: PersonDefault,
   updateTime: '0000-00-00 00:00:00',
   lastComment: {},
   lastCommenter: PersonDefault,

@@ -72,11 +72,19 @@ const isLeadable = (actor) => {
 };
 
 const getActorInitials = (actor) => {
+  if (!actor) {
+    return '??';
+  }
+
   if (actor.givenName && actor.familyName) {
     return `${actor.givenName.charAt(0).toUpperCase()}${actor.familyName.charAt(0).toUpperCase()}`;
   }
 
-  return actor.name.substring(0, 2).toUpperCase();
+  if (actor.name) {
+    return actor.name.substring(0, 2).toUpperCase();
+  }
+
+  return '??';
 };
 
 const getPersonInitials = (person) => {
@@ -86,6 +94,13 @@ const getPersonInitials = (person) => {
 };
 
 const getPersonName = (person) => {
+  if (!person) {
+    return i18n.t('actor:unknown');
+  }
+
+  if (person.name) {
+    return person.name;
+  }
   return `${person.givenName} ${person.familyName}`.trim();
 };
 
