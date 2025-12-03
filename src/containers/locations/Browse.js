@@ -26,7 +26,6 @@ const LocationsBrowse = (props) => {
     alertError,
     items,
     error,
-    isFetching,
     queryFilters,
     total,
   } = props;
@@ -40,14 +39,13 @@ const LocationsBrowse = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!isFetching) {
-      browseList({
-        start,
-        limit: LIMIT,
-        ...queryFilters,
-      });
-    }
-  }, [start, queryFilters]);
+    browseList({
+      start,
+      limit: LIMIT,
+      time_window: queryFilters.sort === TRENDING ? 'weekly' : undefined,
+      ...queryFilters,
+    });
+  }, [start, queryFilters.q, queryFilters.sort]);
 
   useEffect(() => {
     if (error) {
@@ -90,7 +88,6 @@ LocationsBrowse.propTypes = {
   queryFilters: PropTypes.object,
   items: LocationsType.isRequired,
   error: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   total: PropTypes.number,
 };
 
@@ -106,14 +103,12 @@ const mapStateToProps = (state) => {
   const {
     locations: items,
     error,
-    isFetching,
     total,
   } = state.locations;
 
   return {
     items,
     error,
-    isFetching,
     total,
   };
 };

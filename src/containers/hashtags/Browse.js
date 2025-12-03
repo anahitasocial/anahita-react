@@ -30,7 +30,6 @@ const HashtagsBrowse = (props) => {
     alertError,
     items,
     error,
-    isFetching,
     queryFilters,
     total,
   } = props;
@@ -44,14 +43,13 @@ const HashtagsBrowse = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!isFetching) {
-      browseList({
-        start,
-        limit: LIMIT,
-        ...queryFilters,
-      });
-    }
-  }, [start, queryFilters]);
+    browseList({
+      start,
+      limit: LIMIT,
+      time_window: queryFilters.sort === TRENDING ? 'weekly' : undefined,
+      ...queryFilters,
+    });
+  }, [start, queryFilters.q, queryFilters.sort]);
 
   useEffect(() => {
     if (error) {
@@ -106,7 +104,6 @@ HashtagsBrowse.propTypes = {
   queryFilters: PropTypes.object,
   items: HashtagsType.isRequired,
   error: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   total: PropTypes.number,
 };
 
@@ -122,14 +119,12 @@ const mapStateToProps = (state) => {
   const {
     hashtags: items,
     error,
-    isFetching,
     total,
   } = state.hashtags;
 
   return {
     items,
     error,
-    isFetching,
     total,
   };
 };

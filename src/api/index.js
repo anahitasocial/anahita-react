@@ -9,8 +9,10 @@ import comments from './comments';
 import commentStatus from './commentsStatus';
 import cover from './cover';
 import feed from './feed';
+import hashtags from './hashtags';
 import is from './is';
 import likes from './likes';
+import locations from './locations';
 import node from './node';
 import notifications from './notifications';
 import notificationsSub from './notifications/sub';
@@ -49,10 +51,6 @@ const namespaces = {
     'todos',
     'topics',
   ],
-  tags: [
-    'hashtags',
-    'locations',
-  ],
   nodes: [
     'search',
     'stories',
@@ -67,8 +65,10 @@ const apis = {
   cover,
   feed_leaders: feed.leaders,
   feed_actor: feed.actor,
+  hashtags,
   is,
   likes,
+  locations,
   node,
   notifications,
   notificationsSub,
@@ -94,10 +94,6 @@ namespaces.media.forEach((ns) => {
     ...createApi(ns),
     [singularize(ns)]: createApi(ns),
   };
-});
-
-namespaces.tags.forEach((ns) => {
-  apis[ns] = createApi(ns);
 });
 
 namespaces.nodes.forEach((ns) => {
