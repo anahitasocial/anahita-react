@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { singularize } from 'inflection';
-import _ from 'lodash';
 import createApi from './create';
 import createActor from './actor';
 
