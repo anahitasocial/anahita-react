@@ -199,7 +199,7 @@ const getStorySubject = (story) => {
 };
 
 const getURL = (node) => {
-  if (node.id && node.type) {
+  if (node && node.id && node.type) {
     const service = pluralize(node.type.split('.')[3]);
     let slug = '';
 

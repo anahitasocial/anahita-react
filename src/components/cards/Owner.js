@@ -11,8 +11,9 @@ import utils from '../../utils';
 const { getURL } = utils.node;
 
 const CardOwner = (props) => {
-  const { node: { owner }, actions } = props;
+  const { owner, actions } = props;
   const url = getURL(owner);
+
   return (
     <>
       <CardHeader
@@ -36,7 +37,7 @@ const CardOwner = (props) => {
 };
 
 CardOwner.propTypes = {
-  node: NodeType.isRequired,
+  owner: NodeType.isRequired,
   actions: PropTypes.node,
 };
 

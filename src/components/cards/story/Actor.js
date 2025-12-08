@@ -64,7 +64,7 @@ const StoryCardActor = (props) => {
       className={classes.root}
       component="section"
     >
-      {showOwnerHeader && <StoryCardOwner node={story} />}
+      {showOwnerHeader && <StoryCardOwner owner={story} />}
       <CardHeader
         avatar={
           <ActorAvatar

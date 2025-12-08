@@ -21,7 +21,6 @@ const {
   getURL,
   getPortraitURL,
   getCoverURL,
-  getOwnerName,
   getPersonName,
 } = utils.node;
 
@@ -72,7 +71,7 @@ const FeedCardDefault = ({
       className={classes.root}
       component="article"
     >
-      {showOwner && <CardOwner node={node} />}
+      {showOwner && node.owner && <CardOwner owner={node.owner} />}
       <CardHeader
         avatar={
           <ActorAvatar

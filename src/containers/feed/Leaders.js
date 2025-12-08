@@ -189,7 +189,7 @@ const FeedLeadersBrowse = ({
                   parent={node.parent}
                 />,
               ]}
-              showOwner={node.parent.owner && !isPerson(node.parent.owner)}
+              showOwner={node.parent && node.parent.owner && !isPerson(node.parent.owner)}
             />
           );
         }

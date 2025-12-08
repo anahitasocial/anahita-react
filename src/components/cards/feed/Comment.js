@@ -74,7 +74,7 @@ const FeedCardComment = ({
       className={classes.card}
       component="article"
     >
-      {showOwner && <CardOwner node={node.parent} />}
+      {showOwner && node.parent.owner && <CardOwner owner={node.parent.owner} />}
       {cover &&
         <Link href={url}>
           <CardMedia

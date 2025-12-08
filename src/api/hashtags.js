@@ -16,6 +16,11 @@ const browse = (params) => {
   });
 };
 
+const read = (id) => {
+  return axios.get(`/hashtags/${id}`);
+};
+
 export default {
   browse,
+  read,
 };
