@@ -12,6 +12,12 @@ const { getURL } = utils.node;
 
 const CardOwner = (props) => {
   const { owner, actions } = props;
+
+  if (!owner) {
+    console.debug('CardOwner: No owner provided', props);
+    return null;
+  }
+
   const url = getURL(owner);
 
   return (

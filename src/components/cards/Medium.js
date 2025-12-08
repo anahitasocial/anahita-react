@@ -86,7 +86,7 @@ const MediumCard = ({
     <Card {...cardProps}>
       {medium.author && medium.owner.id !== medium.author.id &&
         <CardHeaderOwner
-          node={medium}
+          owner={medium.owner}
           actions={ownerActions}
         />}
       {cover &&

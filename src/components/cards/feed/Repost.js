@@ -59,7 +59,7 @@ const FeedCardRepost = ({
       className={classes.card}
       component="section"
     >
-      {showOwner && node.parent && node.parent.owner && <CardOwner owner={node.parent.owner} />}
+      {showOwner && node.owner && <CardOwner owner={node.owner} />}
       <CardHeader
         avatar={
           <ActorAvatar
