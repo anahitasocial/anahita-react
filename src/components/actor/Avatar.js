@@ -51,7 +51,7 @@ const ActorAvatar = (props) => {
   } = props;
 
   const url = getURL(actor);
-  const portrait = getAvatarURL(actor);
+  const avatar = getAvatarURL(actor);
   const initials = getActorInitials(actor);
 
   return (
@@ -64,19 +64,19 @@ const ActorAvatar = (props) => {
           <Avatar
             aria-label={actor.name}
             alt={actor.name}
-            src={portrait}
+            src={avatar}
             className={clsx(classes[`${size}Avatar`], classes.avatar)}
           >
-            {!portrait && initials}
+            {!avatar && initials}
           </Avatar>
         </Link>}
       {!linked &&
         <Avatar
           aria-label={actor.name}
           alt={actor.name}
-          src={portrait}
+          src={avatar}
         >
-          {!portrait && initials}
+          {!avatar && initials}
         </Avatar>}
     </>
   );

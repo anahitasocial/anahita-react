@@ -13,6 +13,7 @@ import ActorAvatar from '../../../../components/actor/Avatar';
 import ActorType from '../../../../proptypes/Actor';
 import PersonType from '../../../../proptypes/Person';
 import actions from '../../../../actions';
+import formatting from '../../../../utils/formatting';
 
 const ActorsSettingsAdminsAdd = (props) => {
   const {
@@ -44,7 +45,7 @@ const ActorsSettingsAdminsAdd = (props) => {
     })
       .then((response) => {
         const { data } = response.data;
-        return setOptions(data);
+        return setOptions(formatting.snakeToCamel(data));
       })
       .catch((err) => {
         return console.error(err);

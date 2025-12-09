@@ -1,4 +1,5 @@
 import createAction from '../create';
+import formatting from '../../utils/formatting';
 
 // -- Add
 
@@ -13,7 +14,7 @@ const addRequest = (params, namespace) => {
 const addSuccess = (result, namespace) => {
   return {
     type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_CONFIRM_SUCCESS`,
-    node: result.data,
+    node: formatting.snakeToCamel(result.data),
   };
 };
 
