@@ -18,6 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchBox from './search/SearchBox';
 
 import Viewer from '../components/auth/Viewer';
+import ViewerType from '../proptypes/Viewer';
 import assets from '../assets';
 import Alerts from './Alerts';
 import MenuLogo from '../components/Logo';
@@ -207,7 +208,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  viewer: PropTypes.object.isRequired,
+  viewer: ViewerType.isRequired,
   children: PropTypes.node.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,

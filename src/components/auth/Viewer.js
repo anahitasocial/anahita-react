@@ -5,7 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import PersonType from '../../proptypes/Person';
+import ViewerType from '../../proptypes/Viewer';
 import utils from '../../utils';
 import i18n from '../../languages';
 
@@ -59,7 +59,7 @@ const Viewer = (props) => {
 
   return (
     <>
-      {!isAuthenticated &&
+      {!isAuthenticated && !viewer.id &&
       <Button
         href="/auth"
         color="inherit"
@@ -67,7 +67,7 @@ const Viewer = (props) => {
       >
         {i18n.t('actions:login')}
       </Button>}
-      {isAuthenticated &&
+      {viewer.id &&
         <Button
           href={profile}
           color="inherit"
@@ -104,7 +104,7 @@ const Viewer = (props) => {
 
 Viewer.propTypes = {
   classes: PropTypes.object.isRequired,
-  viewer: PersonType,
+  viewer: ViewerType,
   isAuthenticated: PropTypes.bool,
 };
 
