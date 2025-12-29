@@ -250,8 +250,9 @@ const getComposers = (actor, viewer) => {
     actor.features.forEach((feature) => {
       if (feature.enabled && feature.composers && feature.composers.length > 0) {
         if (actor.id !== viewer.id && !isAdmin(viewer)) {
-          if (feature.add_permissions) {
-            const hasAddPermission = feature.add_permissions.some((permission) => {
+          const { addPermissions = [] } = feature;
+          if (addPermissions) {
+            const hasAddPermission = addPermissions.some((permission) => {
               if (permission.access === 'followers') {
                 return viewer.following && viewer.following.includes(actor.id);
               }
@@ -264,6 +265,9 @@ const getComposers = (actor, viewer) => {
             if (hasAddPermission) {
               composers.push(...feature.composers);
             }
+          } else {
+            // If no add permissions are specified, allow all composers
+            composers.push(...feature.composers);
           }
         } else {
           composers.push(...feature.composers);
@@ -271,6 +275,8 @@ const getComposers = (actor, viewer) => {
       }
     });
   }
+
+  console.debug('getComposers', { actor, viewer, composers });
 
   return composers;
 };
