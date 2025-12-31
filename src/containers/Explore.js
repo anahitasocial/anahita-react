@@ -103,7 +103,6 @@ const ExplorePage = (props) => {
         TABS.PHOTOS,
         TABS.LOCATIONS,
         TABS.NOTES,
-        TABS.TODOS,
         TABS.TOPICS,
       ].includes(tab) &&
         <NodeBrowse

@@ -154,7 +154,8 @@ const LocationsRead = (props) => {
     );
   }
 
-  const canAdminister = permissions.node.canAdminister(viewer);
+  const { authorized } = location;
+  const canAdminister = authorized && authorized.administration;
 
   return (
     <>

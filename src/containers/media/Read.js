@@ -138,7 +138,7 @@ const MediaRead = (props) => {
     return <></>;
   }
 
-  const canAddComment = isAuthenticated && medium.openToComment;
+  const canAddComment = isAuthenticated && medium.commentStatus;
   const portrait = getPortraitURL(medium, 'large');
   const cover = getCoverURL(medium, 'large');
   const Like = LikeAction(namespace);

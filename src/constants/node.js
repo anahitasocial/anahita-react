@@ -11,8 +11,6 @@ export default {
       'node.medium.topic-service.topic.v1',
       'node.medium.photo-service.photo.v1',
       'node.medium.photo-service.photo-set.v1',
-      'node.medium.todo-service.todo.v1',
-      'node.medium.todo-service.todo.v1',
     ],
     FEED: [
       'node.base.feed-service.repost.v1',
@@ -29,7 +27,6 @@ export default {
       'note-service',
       'topic-service',
       'photo-service',
-      'todo-service',
     ],
   },
 };

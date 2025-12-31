@@ -38,4 +38,5 @@ export default shape({
   quoteCount: number,
   isQuotedByViewer: bool,
   commentCount: number,
+  commentStatus: bool,
 });

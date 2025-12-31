@@ -26,7 +26,6 @@ export default {
       DOCUMENTS: 'documents',
       NOTES: 'notes',
       PHOTOS: 'photos',
-      TODOS: 'todos',
       TOPICS: 'topics',
     },
   },

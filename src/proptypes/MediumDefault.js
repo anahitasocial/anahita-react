@@ -29,4 +29,5 @@ export default {
   quoteCount: 0,
   isQuotedByViewer: false,
   commentCount: 0,
+  commentStatus: false,
 };

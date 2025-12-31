@@ -67,7 +67,7 @@ const ActorAvatar = (props) => {
             src={avatar}
             className={clsx(classes[`${size}Avatar`], classes.avatar)}
           >
-            {!avatar && initials}
+            {!actor && initials}
           </Avatar>
         </Link>}
       {!linked &&
