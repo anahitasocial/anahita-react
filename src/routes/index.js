@@ -69,9 +69,6 @@ const PhotosRead = MediaRead('photos');
 const Topics = Media('topics');
 const TopicsRead = MediaRead('topics');
 
-const Todos = Media('todos');
-const TodosRead = MediaRead('todos');
-
 const scrollUp = () => {
   window.scrollTo(0, 0);
 };
@@ -310,18 +307,6 @@ const Routes = (props) => {
         path="/photos/:id/"
         component={(params) => {
           return <PhotosRead {...params} />;
-        }}
-      />
-      <Route
-        exact
-        path="/todos/"
-        component={Todos}
-      />
-      <Route
-        exact
-        path="/todos/:id/"
-        component={(params) => {
-          return <TodosRead {...params} />;
         }}
       />
       <Route

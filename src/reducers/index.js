@@ -37,7 +37,6 @@ const namespaces = {
     'notes',
     'photos',
     'topics',
-    'todos',
   ],
   nodes: [
     'taggables',

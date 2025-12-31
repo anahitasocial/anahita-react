@@ -47,7 +47,6 @@ const namespaces = {
     'documents',
     'notes',
     'photos',
-    'todos',
     'topics',
   ],
   nodes: [

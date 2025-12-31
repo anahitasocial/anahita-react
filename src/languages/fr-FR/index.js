@@ -72,7 +72,6 @@ export default {
     documents: 'Documents',
     notes: 'Notes',
     photos: 'Photos',
-    todos: 'Todos',
     topics: 'Topics',
   },
   translation: {
@@ -369,22 +368,6 @@ export default {
       },
     },
   },
-  todos: {
-    cTitle: 'Todos',
-    mTitle: 'Todos',
-    composer: {
-      title: 'Title',
-      titlePlaceholder: "Todo's title",
-      body: 'Description',
-      bodyPlaceholder: 'Write a description ...',
-    },
-    settings: {
-      todo: {
-        add: 'Who can add a todo on this profile?',
-        addcomment: 'Who can comment on todos?',
-      },
-    },
-  },
   articles: {
     cTitle: 'Articles',
     mTitle: 'Articles',
@@ -416,7 +399,6 @@ export default {
       documents: 'Documents',
       notes: 'Notes',
       photos: 'Photos',
-      todos: 'Todos',
       topics: 'Topics',
     },
   },
@@ -472,7 +454,6 @@ export default {
         articles: 'Articles',
         documents: 'Documents',
         topics: 'Todos',
-        todos: 'Todos',
       },
       actors: {
         people: 'People',
