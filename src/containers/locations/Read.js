@@ -20,7 +20,6 @@ import actions from '../../actions';
 import form from '../../utils/form';
 import i18n from '../../languages';
 import utils from '../../utils';
-import permissions from '../../permissions';
 
 import LocationsType from '../../proptypes/Locations';
 
