@@ -222,8 +222,8 @@ const getServiceName = (node) => {
 };
 
 const getNamespace = (node) => {
-  const service = node.type.split('.')[2];
-  return pluralize(service.split('-')[0]);
+  const entityName = node.type.split('.')[3];
+  return pluralize(entityName);
 };
 
 const getSupportedMimetypes = (namespace) => {
@@ -275,8 +275,6 @@ const getComposers = (actor, viewer) => {
       }
     });
   }
-
-  console.debug('getComposers', { actor, viewer, composers });
 
   return composers;
 };
