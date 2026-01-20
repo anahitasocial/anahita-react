@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
@@ -23,11 +23,7 @@ const DashboardPage = (props) => {
   useEffect(() => {
     setAppTitle(i18n.t('dashboard:cTitle'));
     readPerson(viewer.username);
-  }, [setAppTitle, readPerson]);
-
-  const filters = {
-    filter: 'leaders',
-  };
+  }, [setAppTitle, readPerson, viewer.username]);
 
   return (
     <>

@@ -13,7 +13,6 @@ import BlockAction from '../actions/Block';
 import DeleteAction from '../actions/comment/Delete';
 
 import PersonType from '../../proptypes/Person';
-import NodeType from '../../proptypes/Node';
 import CommentType from '../../proptypes/Comment';
 
 const { withRef } = utils.component;
@@ -26,7 +25,6 @@ const CommentMenu = (props) => {
   const {
     comment,
     viewer,
-    node,
     handleEdit,
     inline,
   } = props;
@@ -104,7 +102,6 @@ const CommentMenu = (props) => {
 };
 
 CommentMenu.propTypes = {
-  node: NodeType.isRequired,
   comment: CommentType.isRequired,
   viewer: PersonType.isRequired,
   handleEdit: PropTypes.func.isRequired,

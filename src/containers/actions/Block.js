@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import actions from '../../actions/socialgraph';
-import ActorsType from '../../proptypes/Actors';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
