@@ -44,7 +44,7 @@ const ActorBody = (props) => {
     selectedTab,
   } = props;
 
-  const [value, setValue] = useState(selectedTab || 'stories');
+  const [value, setValue] = useState(selectedTab || 'feeds');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -72,7 +72,7 @@ const ActorBody = (props) => {
         >
           {actorFeatures.map((feature) => {
             const tab = feature === 'socialgraph' ? feature : inflector.pluralize(feature);
-            const label = tab === 'stories' ? singularize(namespace) : i18n.t(`${tab}:mTitle`);
+            const label = tab === 'feeds' ? singularize(namespace) : i18n.t(`${tab}:mTitle`);
             const key = `${namespace}-${tab}-feed`;
             return (
               <Tab
@@ -89,7 +89,7 @@ const ActorBody = (props) => {
           */}
         </Tabs>
       </AppBar>
-      {value === 'stories' &&
+      {value === 'feeds' &&
         <Grid
           container
           spacing={2}

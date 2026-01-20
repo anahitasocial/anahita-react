@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const constructURLSearchParams = (urlParams) => {
   const params = new URLSearchParams();
   const keys = Object.keys(urlParams);
@@ -20,7 +21,45 @@ const constructFormData = (params) => {
   return formData;
 };
 
+const camelCaseKeys = (obj) => {
+  if (Array.isArray(obj)) {
+    return obj.map((v) => {
+      return camelCaseKeys(v);
+    });
+  }
+  if (obj !== null && obj.constructor === Object) {
+    return Object.keys(obj).reduce((result, key) => {
+      const camelKey = _.camelCase(key);
+      return {
+        ...result,
+        [camelKey]: camelCaseKeys(obj[key]),
+      };
+    }, {});
+  }
+  return obj;
+};
+
+const snakeCaseKeys = (obj) => {
+  if (Array.isArray(obj)) {
+    return obj.map((v) => {
+      return snakeCaseKeys(v);
+    });
+  }
+  if (obj !== null && obj.constructor === Object) {
+    return Object.keys(obj).reduce((result, key) => {
+      const snakeKey = _.snakeCase(key);
+      return {
+        ...result,
+        [snakeKey]: snakeCaseKeys(obj[key]),
+      };
+    }, {});
+  }
+  return obj;
+};
+
 export default {
   constructURLSearchParams,
   constructFormData,
+  camelCaseKeys,
+  snakeCaseKeys,
 };

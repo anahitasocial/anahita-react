@@ -1,5 +1,7 @@
+/* eslint-disable no-undef */
 import axios from 'axios';
 import { singularize } from 'inflection';
+import _ from 'lodash';
 import createApi from './create';
 import createActor from './actor';
 
@@ -23,19 +25,41 @@ import socialgraph from './socialgraph';
 import taggables from './taggables';
 import tagGraph from './tag_graph';
 import token from './token';
+import api from '../utils/api';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
+axios.defaults.maxRedirects = 0;
 
 axios.interceptors.request.use((config) => {
-  const headers = { ...config.headers };
+  let { data } = config;
+
+  if (data && typeof data === 'object' && !(data instanceof FormData)) {
+    data = api.snakeCaseKeys(data);
+  }
+
   return {
     ...config,
-    ...{ headers },
+    data,
   };
 }, (error) => {
   return Promise.reject(error);
 });
+
+axios.interceptors.response.use(
+  (response) => {
+    // console.debug('API Response before camelCaseKeys:', response);
+    if (response.data && response.config.baseURL === axios.defaults.baseURL) {
+      // Convert response data keys to camelCase
+      response.data = api.camelCaseKeys(response.data);
+      // console.debug('CamelCased Response Data:', response.data);
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 const namespaces = {
   actors: [

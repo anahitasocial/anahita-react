@@ -1,6 +1,5 @@
 import { normalize, schema } from 'normalizr';
 import stories from './stories';
-import formatting from '../utils/formatting';
 
 // -- Reset
 
@@ -36,7 +35,7 @@ const browseSuccess = (results, namespace) => {
 
   const node = new schema.Entity(namespace);
   const nodes = [node];
-  const normalized = normalize(formatting.snakeToCamel(data.data) || [], nodes);
+  const normalized = normalize(data.data || [], nodes);
 
   return {
     type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
@@ -86,7 +85,7 @@ const readRequest = (namespace) => {
 const readSuccess = (result, namespace) => {
   return {
     type: `${namespace.toUpperCase()}_READ_SUCCESS`,
-    node: formatting.snakeToCamel(result.data),
+    node: result.data,
   };
 };
 

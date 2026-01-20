@@ -40,6 +40,8 @@ const ACCESS = {
   },
 };
 
+const PUBLIC_ENTITIES = ['like', 'comment'];
+
 const useStyles = makeStyles((theme) => {
   return {
     formControl: {
@@ -64,25 +66,35 @@ const ActorsSettingsAppsBrowse = (props) => {
   const actorType = utils.node.isPerson(actor) ? 'PERSON' : 'ACTOR';
   const accessOptions = _.values(ACCESS[actorType]);
 
-  const [features, setFeatures] = useState(actor.features);
+  const [features, setFeatures] = useState(actor.features || []);
   const [expanded, setExpanded] = useState(false);
 
-  const handleChange = (event) => {
-    const { name, value, checked } = event.target;
-    const updatedFeatures = features.map((feature) => {
-      if (feature.service === name) {
-        return {
-          ...feature,
-          enabled: checked,
-        };
-      }
+  const handleToggleEnabled = (serviceName, checked) => {
+    setFeatures((prevFeatures) => {
+      return prevFeatures.map((feature) => {
+        if (feature.service === serviceName) {
+          return {
+            ...feature,
+            enabled: checked,
+          };
+        }
+        return feature;
+      });
+    });
+  };
 
-      if (feature.add_permissions) {
-        const addPermissions = feature.add_permissions.map((permission) => {
-          if (permission.entity === name.split('.add_permissions.')[1]) {
+  const handlePermissionChange = (serviceName, entityName, newAccess) => {
+    setFeatures((prevFeatures) => {
+      return prevFeatures.map((feature) => {
+        if (feature.service !== serviceName) {
+          return feature;
+        }
+
+        const addPermissions = (feature.addPermissions || []).map((permission) => {
+          if (permission.entity === entityName) {
             return {
               ...permission,
-              access: value,
+              access: newAccess,
             };
           }
           return permission;
@@ -90,22 +102,29 @@ const ActorsSettingsAppsBrowse = (props) => {
 
         return {
           ...feature,
-          add_permissions: addPermissions,
+          addPermissions,
         };
-      }
-
-      return feature; // Ensure a value is returned for every iteration
+      });
     });
-
-    setFeatures([...updatedFeatures]);
   };
 
   const handleEdit = () => {
-    api[namespace][singularize(namespace)].features.edit(actor.id, features).then(() => {
-      alertSuccess(i18n.t('prompts:updated.success'));
-    }).catch((err) => {
-      alertError(i18n.t('prompts:updated.error'));
-      console.error('Error updating feature:', err);
+    api[namespace][singularize(namespace)].features.edit(actor.id, features)
+      .then(() => {
+        alertSuccess(i18n.t('prompts:updated.success'));
+      })
+      .catch((err) => {
+        alertError(i18n.t('prompts:updated.error'));
+        console.error('Error updating feature:', err);
+      });
+  };
+
+  const getAccessOptions = (entity) => {
+    if (PUBLIC_ENTITIES.includes(entity)) {
+      return accessOptions;
+    }
+    return accessOptions.filter((option) => {
+      return option !== ACCESS[actorType].REGISTERED;
     });
   };
 
@@ -114,13 +133,14 @@ const ActorsSettingsAppsBrowse = (props) => {
       {features.map((feature) => {
         const featureName = feature.service.split('-')[0];
         const key = `feature_${featureName}`;
-        const addPermissions = feature.add_permissions || [];
+        const addPermissions = feature.addPermissions || [];
+
         return (
           <Accordion
             key={key}
             expanded={expanded === key}
             onChange={() => {
-              return setExpanded(expanded === key ? false : key);
+              setExpanded(expanded === key ? false : key);
             }}
           >
             <AccordionSummary
@@ -141,22 +161,16 @@ const ActorsSettingsAppsBrowse = (props) => {
                       name={feature.service}
                       checked={feature.enabled}
                       onChange={(e) => {
-                        handleChange(e);
+                        handleToggleEnabled(feature.service, e.target.checked);
                       }}
                       disabled={!feature.optional}
                     />
                   }
-                  label="Enabled"
+                  label={i18n.t('commons:enabled')}
                 />
                 {addPermissions.map((permission) => {
-                  const permissionKey = `feature_${featureName}_${permission.entity}`;
-
-                  // if permission.entity is not like or comment
-                  // then filter out the REGISTERED access
-                  const filteredAccessOptions = permission.entity !== 'like' && permission.entity !== 'comment'
-                    ? accessOptions.filter((option) => {
-                      return option !== ACCESS[actorType].REGISTERED;
-                    }) : accessOptions;
+                  const permissionKey = `${key}_${permission.entity}`;
+                  const filteredAccessOptions = getAccessOptions(permission.entity);
 
                   return (
                     <FormControl
@@ -164,7 +178,11 @@ const ActorsSettingsAppsBrowse = (props) => {
                       fullWidth
                       className={classes.formControl}
                     >
-                      <InputLabel id={`${permissionKey}-label`} htmlFor={permissionKey} className={classes.inputLabel}>
+                      <InputLabel
+                        id={`${permissionKey}-label`}
+                        htmlFor={permissionKey}
+                        className={classes.inputLabel}
+                      >
                         {i18n.t(`features:${featureName}.addPermissions.${permission.entity}`)}
                       </InputLabel>
                       <Select
@@ -172,23 +190,20 @@ const ActorsSettingsAppsBrowse = (props) => {
                         labelId={`${permissionKey}-label`}
                         variant="outlined"
                         value={permission.access}
-                        onChange={(event) => {
-                          handleChange({
-                            target: {
-                              name: `${feature.service}.add_permissions.${permission.entity}`,
-                              value: event.target.value,
-                            },
-                          });
+                        onChange={(e) => {
+                          handlePermissionChange(
+                            feature.service,
+                            permission.entity,
+                            e.target.value,
+                          );
                         }}
                         label={i18n.t(`features:${featureName}.addPermissions.${permission.entity}`)}
                       >
                         {filteredAccessOptions.map((option) => {
-                          const optionKey = `${key}-${option}`;
                           return (
                             <MenuItem
-                              key={optionKey}
+                              key={`${permissionKey}-${option}`}
                               value={option}
-                              fullWidth
                             >
                               {i18n.t(`access:${option}`)}
                             </MenuItem>
@@ -206,7 +221,6 @@ const ActorsSettingsAppsBrowse = (props) => {
       <CardActions>
         <Button
           type="button"
-          className="btn btn-primary"
           onClick={handleEdit}
           fullWidth
           variant="contained"

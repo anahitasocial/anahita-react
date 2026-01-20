@@ -36,7 +36,6 @@ import PersonType from '../../../proptypes/Person';
 import AddFollower from '../socialgraph/Add';
 
 const {
-  isPerson,
   getPortraitURL,
   getEnabledFeatures,
 } = utils.node;

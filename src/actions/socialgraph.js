@@ -3,7 +3,6 @@ import apis from '../api';
 import utils from '../utils';
 import { Socialgraph as SOCIALGRAPH } from '../constants';
 import createAction from './create';
-import formatting from '../utils/formatting';
 
 const {
   socialgraph: api,
@@ -21,7 +20,7 @@ function followRequest(actor) {
 }
 
 function followSuccess(response) {
-  const data = formatting.snakeToCamel(response.data);
+  const { data } = response;
   return {
     type: SOCIALGRAPH.FOLLOW.SUCCESS,
     actor: data,

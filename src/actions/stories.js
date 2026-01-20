@@ -2,7 +2,6 @@ import { normalize, schema } from 'normalizr';
 import apis from '../api';
 import likes from './likes';
 import { Stories as STORIES } from '../constants';
-import formatting from '../utils/formatting';
 
 const {
   stories: api,
@@ -38,7 +37,7 @@ const normalizeComments = (story) => {
   if (node.comments) {
     const normalized = normalizeNodes(node.comments, 'comments');
     node.comments = {
-      byId: formatting.snakeToCamel(normalized.entities.comments) || {},
+      byId: normalized.entities.comments || {},
       allIds: normalized.result,
     };
   } else {

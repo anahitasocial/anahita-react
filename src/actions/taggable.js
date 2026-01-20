@@ -1,6 +1,5 @@
 import { normalize, schema } from 'normalizr';
 import apis from '../api';
-import formatting from '../utils/formatting';
 
 const { taggables: api } = apis;
 
@@ -30,7 +29,7 @@ function browseSuccess(results) {
 
   const node = new schema.Entity('taggables');
   const nodes = [node];
-  const normalized = normalize(data.data ? formatting.snakeToCamel(data.data) : {}, nodes);
+  const normalized = normalize(data.data ? data.data : {}, nodes);
 
   return {
     type: 'TAGGABLES_BROWSE_SUCCESS',

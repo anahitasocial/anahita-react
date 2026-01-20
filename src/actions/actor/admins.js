@@ -1,5 +1,4 @@
 import { normalize, schema } from 'normalizr';
-import formatting from '../../utils/formatting';
 
 // -- Reset
 
@@ -23,7 +22,7 @@ const browseSuccess = (results, namespace) => {
   const { data } = results;
   const node = new schema.Entity(namespace);
   const nodes = [node];
-  const normalized = normalize(formatting.snakeToCamel(data.data) || [], nodes);
+  const normalized = normalize(data.data || [], nodes);
 
   return {
     type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
@@ -73,7 +72,7 @@ const addSuccess = (result, namespace) => {
     result.data;
   return {
     type: `${namespace.toUpperCase()}_ADD_SUCCESS`,
-    node: formatting.snakeToCamel(node),
+    node,
   };
 };
 

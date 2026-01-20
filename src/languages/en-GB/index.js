@@ -72,7 +72,12 @@ export default {
   features: {
     story: {
       title: 'Stories',
-      description: 'Recieve updates from your socialgraph.',
+      description: 'Share ephemeral updates with your followers.',
+      addPermissions: {},
+    },
+    feed: {
+      title: 'Feed',
+      description: 'Recieve updates from your socialgraph in chronological order.',
       addPermissions: {},
     },
     socialgraph: {
@@ -83,9 +88,9 @@ export default {
         follower: 'Who can add a follower?',
       },
     },
-    note: {
-      title: 'Notes',
-      description: 'Share your thoughts with your followers.',
+    text: {
+      title: 'Text',
+      description: 'Text-based posts to share with your followers.',
       addPermissions: {
         title: 'Permissions',
         note: 'Who can post a note?',
@@ -99,26 +104,6 @@ export default {
       addPermissions: {
         title: 'Permissions',
         photo: 'Who can post a photo?',
-        comment: 'Who can comment?',
-        like: 'Who can like?',
-      },
-    },
-    topic: {
-      title: 'Topics',
-      description: 'Start a conversation with your followers.',
-      addPermissions: {
-        title: 'Permissions',
-        topic: 'Who can start a topic?',
-        comment: 'Who can comment?',
-        like: 'Who can like?',
-      },
-    },
-    article: {
-      title: 'Articles',
-      description: 'Write and share your articles with your followers.',
-      addPermissions: {
-        title: 'Permissions',
-        article: 'Who can post an article?',
         comment: 'Who can comment?',
         like: 'Who can like?',
       },

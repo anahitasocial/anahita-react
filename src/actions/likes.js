@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 /* eslint no-console: ["error", { allow: ["log", "error"] }] */
 import { normalize, schema } from 'normalizr';
-import formatting from '../utils/formatting';
 
 const reset = () => {
   return () => {
@@ -23,7 +22,7 @@ const browseSuccess = (results) => {
   const { data } = results;
   const person = new schema.Entity('people');
   const people = [person];
-  const normalized = normalize(formatting.snakeToCamel(data.data) || [], people);
+  const normalized = normalize(data.data || [], people);
 
   return {
     type: 'LIKES_BROWSE_SUCCESS',
@@ -77,7 +76,7 @@ const addSuccess = (namespace) => {
       child,
     } = params;
 
-    const data = formatting.snakeToCamel(results.data);
+    const { data } = results;
 
     return {
       type: `${namespace.toUpperCase()}_LIKES_ADD_SUCCESS`,

@@ -4,7 +4,6 @@ import {
   Session as SESSION,
   Auth as AUTH,
 } from '../constants';
-import formatting from '../utils/formatting';
 
 const { VIEWER_STORAGE_KEY } = AUTH;
 const { session: api } = apis;
@@ -24,7 +23,7 @@ function readRequest() {
 }
 
 function readSuccess(response) {
-  const data = formatting.snakeToCamel(response.data);
+  const { data } = response;
   localStorage.setItem(VIEWER_STORAGE_KEY, JSON.stringify(data));
 
   return {
@@ -68,7 +67,7 @@ function addRequest() {
 }
 
 function addSuccess(response) {
-  const data = formatting.snakeToCamel(response.data);
+  const { data } = response;
   localStorage.setItem(VIEWER_STORAGE_KEY, JSON.stringify(data));
 
   return {

@@ -245,38 +245,46 @@ const getSupportedMimetypes = (namespace) => {
 };
 
 const getComposers = (actor, viewer) => {
-  const composers = [];
-  if (actor && actor.features) {
-    actor.features.forEach((feature) => {
-      if (feature.enabled && feature.composers && feature.composers.length > 0) {
-        if (actor.id !== viewer.id && !isAdmin(viewer)) {
-          const { addPermissions = [] } = feature;
-          if (addPermissions) {
-            const hasAddPermission = addPermissions.some((permission) => {
-              if (permission.access === 'followers') {
-                return viewer.following && viewer.following.includes(actor.id);
-              }
-              if (permission.access === 'admins') {
-                return viewer.administering && viewer.administering.includes(actor.id);
-              }
-              return false;
-            });
-
-            if (hasAddPermission) {
-              composers.push(...feature.composers);
-            }
-          } else {
-            // If no add permissions are specified, allow all composers
-            composers.push(...feature.composers);
-          }
-        } else {
-          composers.push(...feature.composers);
-        }
-      }
-    });
+  if (!actor.features) {
+    return [];
   }
 
-  return composers;
+  console.debug('actor', actor);
+
+  const isOwnerOrAdmin = actor.id === viewer.id || isAdmin(viewer);
+
+  return actor.features.reduce((composers, feature) => {
+    if (!feature.enabled || !feature.composers.length) {
+      return composers;
+    }
+
+    if (isOwnerOrAdmin) {
+      return [...composers, ...feature.composers];
+    }
+
+    const { addPermissions = [] } = feature;
+
+    if (addPermissions.length === 0) {
+      return [...composers, ...feature.composers];
+    }
+
+    const hasAddPermission = addPermissions.some((permission) => {
+      switch (permission.access) {
+        case 'followers':
+          return actor.isLeadingViewer;
+        case 'admins':
+          return actor.isAdminedByViewer;
+        default:
+          return false;
+      }
+    });
+
+    if (hasAddPermission) {
+      return [...composers, ...feature.composers];
+    }
+
+    return composers;
+  }, []);
 };
 
 const getEnabledFeatures = (actor) => {

@@ -24,12 +24,10 @@ export default {
       'persons',
     ],
     MEDIUM: [
-      'articles',
-      'documents',
       'notes',
+      'articles',
       'topics',
       'photos',
-      'todos',
     ],
   },
 };

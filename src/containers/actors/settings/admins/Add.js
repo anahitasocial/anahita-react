@@ -13,7 +13,7 @@ import ActorAvatar from '../../../../components/actor/Avatar';
 import ActorType from '../../../../proptypes/Actor';
 import PersonType from '../../../../proptypes/Person';
 import actions from '../../../../actions';
-import formatting from '../../../../utils/formatting';
+import api from '../../../../utils/api';
 
 const ActorsSettingsAdminsAdd = (props) => {
   const {
@@ -29,7 +29,7 @@ const ActorsSettingsAdminsAdd = (props) => {
   const [isFetching, setIsFetching] = useState(false);
 
   const fetchList = (q) => {
-    const path = `/socialgraph/${viewer.id}/mutuals/`;
+    const path = api.socialgraph.mutuals(viewer.id);
 
     if (q.length === 0) {
       setOptions([]);
@@ -44,8 +44,8 @@ const ActorsSettingsAdminsAdd = (props) => {
       },
     })
       .then((response) => {
-        const { data } = response.data;
-        return setOptions(formatting.snakeToCamel(data));
+        const { data } = response;
+        return setOptions(api.snakeToCamel(data));
       })
       .catch((err) => {
         return console.error(err);
