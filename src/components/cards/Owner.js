@@ -43,11 +43,12 @@ const CardOwner = (props) => {
 };
 
 CardOwner.propTypes = {
-  owner: NodeType.isRequired,
+  owner: NodeType,
   actions: PropTypes.node,
 };
 
 CardOwner.defaultProps = {
+  owner: null,
   actions: null,
 };
 

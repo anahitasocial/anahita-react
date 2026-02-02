@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import inflector from 'inflector-js';
 
 import ActorHeader from '../../../components/actor/Header';
 import ActorBody from '../../../components/actor/Body';
@@ -37,10 +36,10 @@ import AddFollower from '../socialgraph/Add';
 
 const {
   getPortraitURL,
-  getEnabledFeatures,
+  getActorFeatureTabs,
 } = utils.node;
 
-const { GADGETS } = ACTOR;
+const { TAB_COMPONENTS } = ACTOR;
 
 const ActorsRead = (props) => {
   const {
@@ -97,7 +96,7 @@ const ActorsRead = (props) => {
   const showFollowRequests = isAuthenticated && canAdminister;
   const isViewer = actor.id === viewer.id;
   const FollowRequests = ActorsFollowRequests(namespace);
-  const actorFeatures = getEnabledFeatures(actor);
+  const featureTabs = getActorFeatureTabs(actor);
 
   // socialgraph tabs
   const showFollowers = actor.id;
@@ -105,25 +104,27 @@ const ActorsRead = (props) => {
   const showBlocks = isViewer;
   const showMutuals = viewer.id && viewer.id !== actor.id;
 
-  const tabs = [];
-  actorFeatures.forEach((key) => {
-    const pluralKey = inflector.pluralize(key);
+  const tabPanels = {};
 
-    if (GADGETS.ACTOR.includes(pluralKey)) {
-      tabs[pluralKey] = (
+  // eslint-disable-next-line no-shadow
+  featureTabs.forEach((tab) => {
+    const componentType = TAB_COMPONENTS[tab];
+
+    if (componentType === 'actor') {
+      tabPanels[tab] = (
         <ActorsBrowseFeature
-          key={`actor-feed-${key}`}
+          key={`actor-browse-${tab}`}
           owner={actor}
           queryFilters={{ oid: actor.id }}
         />
       );
     }
 
-    if (GADGETS.MEDIUM.includes(pluralKey)) {
-      const MediaFeature = MediaBrowse(pluralKey);
-      tabs[pluralKey] = (
+    if (componentType === 'medium') {
+      const MediaFeature = MediaBrowse(tab);
+      tabPanels[tab] = (
         <MediaFeature
-          key={`medium-feed-${key}`}
+          key={`medium-browse-${tab}`}
           queryFilters={{ oid: actor.id }}
         />
       );
@@ -170,6 +171,7 @@ const ActorsRead = (props) => {
         actor={actor}
         viewer={viewer}
         selectedTab={tab}
+        tabPanels={tabPanels}
         admins={actor.administrators &&
           <Admins actor={actor} />}
         composers={isAuthenticated && actor.id && viewer.id &&
@@ -211,7 +213,6 @@ const ActorsRead = (props) => {
             selectedTab={subtab}
           />
         }
-        tabs={tabs}
       />
     </>
   );

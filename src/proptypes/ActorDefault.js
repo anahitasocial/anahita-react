@@ -3,7 +3,7 @@ import imageUrlsDefault from './ImageUrlsDefault';
 
 export default {
   id: null,
-  type: '',
+  type: 'node.actor.person-service.person.v1',
   name: '',
   alias: '',
   body: '',

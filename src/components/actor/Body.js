@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import inflector from 'inflector-js';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { singularize } from 'inflection';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
@@ -15,7 +13,7 @@ import ActorBodyAbout from './body/About';
 import i18n from '../../languages';
 import utils from '../../utils';
 
-const { getNamespace } = utils.node;
+const { getNamespace, getActorFeatureTabs } = utils.node;
 
 const styles = (theme) => {
   return {
@@ -39,19 +37,30 @@ const ActorBody = (props) => {
     feed,
     locations,
     socialgraph,
-    tabs,
+    tabPanels,
     mentions,
     selectedTab,
   } = props;
 
-  const [value, setValue] = useState(selectedTab || 'feeds');
+  const namespace = getNamespace(actor);
+  const featureTabs = getActorFeatureTabs(actor);
+  const defaultTab = featureTabs[0] || 'feed';
+
+  const [value, setValue] = useState(selectedTab || defaultTab);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const namespace = getNamespace(actor);
-  const actorFeatures = utils.node.getEnabledFeatures(actor);
+  const getTabLabel = (tab) => {
+    if (tab === 'feed') {
+      return i18n.t(`${namespace}:mTitle`);
+    }
+    if (tab === 'socialgraph') {
+      return i18n.t('socialgraph:mTitle');
+    }
+    return i18n.t(`${tab}:mTitle`);
+  };
 
   return (
     <Box className={classes.root}>
@@ -70,26 +79,19 @@ const ActorBody = (props) => {
           scrollButtons="auto"
           aria-label="Profile Tabs"
         >
-          {actorFeatures.map((feature) => {
-            const tab = feature === 'socialgraph' ? feature : inflector.pluralize(feature);
-            const label = tab === 'feeds' ? singularize(namespace) : i18n.t(`${tab}:mTitle`);
-            const key = `${namespace}-${tab}-feed`;
+          {featureTabs.map((tab) => {
             return (
               <Tab
-                label={label}
+                label={getTabLabel(tab)}
                 value={tab}
-                key={key}
+                key={`${namespace}-${tab}-tab`}
               />
             );
           })}
-          {/*
-          {actor.id === viewer.id &&
-            <Tab label="Mentions" value="mentions" id="actor-tab-mentions" />
-          }
-          */}
         </Tabs>
       </AppBar>
-      {value === 'feeds' &&
+
+      {value === 'feed' && (
         <Grid
           container
           spacing={2}
@@ -99,18 +101,21 @@ const ActorBody = (props) => {
         >
           <Grid item xs={12} md={4}>
             <Grid container spacing={2}>
-              {actor.body &&
+              {actor.body && (
                 <Grid item xs={12}>
                   <ActorBodyAbout actor={actor} />
-                </Grid>}
-              {admins &&
+                </Grid>
+              )}
+              {admins && (
                 <Grid item xs={12}>
-                  {admins }
-                </Grid>}
-              {locations &&
+                  {admins}
+                </Grid>
+              )}
+              {locations && (
                 <Grid item xs={12}>
                   {locations}
-                </Grid>}
+                </Grid>
+              )}
             </Grid>
           </Grid>
           <Grid item xs={12} md={8}>
@@ -121,9 +126,13 @@ const ActorBody = (props) => {
               {feed}
             </Grid>
           </Grid>
-        </Grid>}
+        </Grid>
+      )}
+
       {value === 'socialgraph' && socialgraph}
-      {typeof (tabs[value]) !== 'undefined' && tabs[value]}
+
+      {tabPanels[value] && tabPanels[value]}
+
       {actor.id === viewer.id && value === 'mentions' && mentions}
     </Box>
   );
@@ -138,7 +147,7 @@ ActorBody.propTypes = {
   locations: PropTypes.node,
   admins: PropTypes.node,
   socialgraph: PropTypes.node,
-  tabs: PropTypes.arrayOf(PropTypes.node),
+  tabPanels: PropTypes.objectOf(PropTypes.node),
   mentions: PropTypes.node,
   selectedTab: PropTypes.string,
 };
@@ -150,7 +159,7 @@ ActorBody.defaultProps = {
   locations: null,
   socialgraph: null,
   mentions: null,
-  tabs: null,
+  tabPanels: {},
   selectedTab: null,
 };
 

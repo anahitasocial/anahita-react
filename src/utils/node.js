@@ -249,8 +249,6 @@ const getComposers = (actor, viewer) => {
     return [];
   }
 
-  console.debug('actor', actor);
-
   const isOwnerOrAdmin = actor.id === viewer.id || isAdmin(viewer);
 
   return actor.features.reduce((composers, feature) => {
@@ -287,19 +285,52 @@ const getComposers = (actor, viewer) => {
   }, []);
 };
 
-const getEnabledFeatures = (actor) => {
-  const features = [];
-  if (actor && actor.features) {
-    return actor.features
-      .filter((feature) => {
-        return feature.enabled;
-      })
-      .map((feature) => {
-        return feature.service.split('-')[0];
-      });
-  }
+// Updated utility function - replaces getEnabledFeatures
+const getEnabledNodeTypes = (actor) => {
+  if (!actor.features) return [];
 
-  return features;
+  const specialServices = ['feed-service', 'socialgraph-service'];
+
+  return actor.features
+    .filter((feature) => {
+      return feature.enabled;
+    })
+    .sort((a, b) => {
+      return a.ordering - b.ordering;
+    })
+    .flatMap((feature) => {
+      // Special services don't have node_types, skip them here
+      if (specialServices.includes(feature.service)) {
+        return [];
+      }
+      // Return the node_types for content services
+      return feature.node_types || [];
+    });
+};
+
+const getActorFeatureTabs = (actor) => {
+  if (!actor.features) return [];
+
+  const directMappings = {
+    'feed-service': ['feed'],
+    'socialgraph-service': ['socialgraph'],
+  };
+
+  return actor.features
+    .filter((feature) => {
+      return feature.enabled;
+    })
+    .sort((a, b) => {
+      return a.ordering - b.ordering;
+    })
+    .flatMap((feature) => {
+      if (directMappings[feature.service]) {
+        return directMappings[feature.service];
+      }
+      return (feature.nodeTypes || []).map((nodeType) => {
+        return pluralize(nodeType);
+      });
+    });
 };
 
 const mergeNodes = (node, current, ignore) => {
@@ -342,6 +373,7 @@ export default {
   getURL,
   getNamespace,
   getComposers,
-  getEnabledFeatures,
+  getEnabledNodeTypes,
+  getActorFeatureTabs,
   mergeNodes,
 };

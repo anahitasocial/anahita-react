@@ -18,16 +18,15 @@ export default {
       MAX_LENGTH: 100,
     },
   },
-  GADGETS: {
-    ACTOR: [
-      'groups',
-      'persons',
-    ],
-    MEDIUM: [
-      'notes',
-      'articles',
-      'topics',
-      'photos',
-    ],
+  TAB_COMPONENTS: {
+    // Actor types
+    groups: 'actor',
+    people: 'actor',
+    // Medium types
+    notes: 'medium',
+    articles: 'medium',
+    topics: 'medium',
+    photos: 'medium',
+    'photo-sets': 'medium',
   },
 };
