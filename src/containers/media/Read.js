@@ -26,7 +26,6 @@ import i18n from '../../languages';
 import perms from '../../permissions';
 
 const {
-  isLikeable,
   getPortraitURL,
   getCoverURL,
 } = utils.node;
