@@ -30,32 +30,42 @@ axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 axios.defaults.maxRedirects = 0;
 
+const convertFormDataKey = (key) => {
+  // Convert camelCase parts while preserving bracket structure
+  return key.replace(/[^[\]]+/g, (match) => {
+    return _.snakeCase(match);
+  });
+};
+
 axios.interceptors.request.use((config) => {
   let { data } = config;
 
-  if (data && typeof data === 'object' && !(data instanceof FormData)) {
+  if (data instanceof FormData) {
+    const newFormData = new FormData();
+    Array.from(data.entries()).forEach(([key, value]) => {
+      newFormData.append(convertFormDataKey(key), value);
+    });
+    data = newFormData;
+  } else if (data && typeof data === 'object') {
     data = api.snakeCaseKeys(data);
   }
 
-  return {
-    ...config,
-    data,
-  };
-}, (error) => {
-  return Promise.reject(error);
+  return { ...config, data };
 });
 
 axios.interceptors.response.use(
   (response) => {
-    // console.debug('API Response before camelCaseKeys:', response);
     if (response.data && response.config.baseURL === axios.defaults.baseURL) {
-      // Convert response data keys to camelCase
-      response.data = api.camelCaseKeys(response.data);
-      // console.debug('CamelCased Response Data:', response.data);
+      return { ...response, data: api.camelCaseKeys(response.data) };
     }
     return response;
   },
   (error) => {
+    if (error.response.data && error.config.baseURL === axios.defaults.baseURL) {
+      const updatedError = { ...error };
+      updatedError.response = { ...error.response, data: api.camelCaseKeys(error.response.data) };
+      return Promise.reject(updatedError);
+    }
     return Promise.reject(error);
   },
 );

@@ -78,7 +78,7 @@ const CommentMenu = (props) => {
               name: author.name,
             })}
           />}
-        {author && author.id !== viewer.id &&
+        {author && author.id !== viewer.id && false &&
           <FollowActionWithRef
             actor={author}
             component="menuitem"

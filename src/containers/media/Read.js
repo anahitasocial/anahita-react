@@ -27,7 +27,6 @@ import perms from '../../permissions';
 
 const {
   isLikeable,
-  isCommentable,
   getPortraitURL,
   getCoverURL,
 } = utils.node;
@@ -179,7 +178,7 @@ const MediaRead = (props) => {
               viewer={viewer}
               handleEdit={handleEdit}
             />}
-          actions={[isAuthenticated && isLikeable(medium) &&
+          actions={[isAuthenticated &&
             <Like node={medium} key={`medium-like-${medium.id}`} />,
           namespace === 'documents' &&
             <DownloadAction
@@ -189,18 +188,16 @@ const MediaRead = (props) => {
           ]}
           stats={
             <>
-              {isLikeable(medium) && <Likes node={medium} />}
-              {isCommentable(medium) &&
-                <CommentStats
-                  node={medium}
-                />}
+              <Likes node={medium} />
+              <CommentStats node={medium} />
             </>
           }
-          comments={isCommentable(medium) &&
+          comments={
             <MediumComments
               parent={medium}
               canAdd={canAddComment}
-            />}
+            />
+          }
           locations={
             <LocationsGadget
               node={medium}
