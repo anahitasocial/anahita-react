@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
 import ViewerType from '../../proptypes/Viewer';
 import utils from '../../utils';
@@ -14,28 +14,13 @@ const {
   getAvatarURL,
 } = utils.node;
 
-const styles = (theme) => {
+const styles = () => {
   return {
-    content: {
-      flex: '0 0 auto',
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.down('md')]: {
-        display: 'none',
-      },
-    },
     avatarContent: {
       flex: '1 1 auto',
     },
     avatar: {
       fontSize: 16,
-    },
-    name: {
-      textTransform: 'capitalize',
-      fontSize: 16,
-    },
-    alias: {
-      textTransform: 'lowercase',
-      fontSize: 14,
     },
   };
 };
@@ -51,12 +36,6 @@ const Viewer = (props) => {
   const initials = getActorInitials(viewer);
   const avatar = getAvatarURL(viewer);
 
-  const {
-    givenName,
-    familyName,
-    username,
-  } = viewer;
-
   return (
     <>
       {!isAuthenticated && !viewer.id &&
@@ -68,36 +47,21 @@ const Viewer = (props) => {
         {i18n.t('actions:login')}
       </Button>}
       {viewer.id &&
-        <Button
+        <IconButton
           href={profile}
           color="inherit"
+          size="small"
         >
-          <div className={classes.content}>
-            <Typography
-              variant="h4"
-              color="inherit"
-              className={classes.name}
-              align="right"
-            >
-              {`${givenName} ${familyName}`}
-            </Typography>
-            <Typography
-              className={classes.alias}
-              variant="subtitle1"
-              color="inherit"
-              align="right"
-            >
-              {`@${username}`}
-            </Typography>
-          </div>
           <div className={classes.avatarContent}>
             <Avatar
-              alt={initials}
-              src={avatar}
+              alt={viewer.username}
+              src={avatar || undefined}
               className={classes.avatar}
-            />
+            >
+              {initials}
+            </Avatar>
           </div>
-        </Button>}
+        </IconButton>}
     </>
   );
 };

@@ -1,7 +1,12 @@
 import settings from './settings';
-import stories from './stories';
+import notifications from './notifications';
 
 export default {
+  notifications: {
+    cTitle: 'Notifications',
+    mTitle: 'Notifications',
+    ...notifications,
+  },
   actions: {
     follow: 'Follow',
     unfollow: 'Unfollow',
@@ -73,9 +78,6 @@ export default {
     notes: 'Notes',
     photos: 'Photos',
     topics: 'Topics',
-  },
-  translation: {
-    stories,
   },
   pages: {
     about: 'About',
@@ -303,10 +305,6 @@ export default {
         errorEmailTaken: 'Email is already available in our system!',
       },
     },
-  },
-  notifications: {
-    cTitle: 'Notifications',
-    mTitle: 'Notifications',
   },
   notes: {
     cTitle: 'Notes',

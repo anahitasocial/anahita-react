@@ -23,7 +23,6 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 import { Link, withRouter } from 'react-router-dom';
 
-import NotificationsIcon from '../containers/notifications/Icon';
 import i18n from '../languages';
 import PersonType from '../proptypes/Person';
 import permissions from '../permissions';
@@ -51,18 +50,6 @@ const LeftMenu = (props) => {
         </ListItemIcon>
         <ListItemText primary={isAuthenticated ? i18n.t('dashboard:cTitle') : i18n.t('home:cTitle')} />
       </ListItem>
-      {isAuthenticated &&
-        <ListItem
-          button
-          component={Link}
-          to="/notifications/"
-          selected={pathname === '/notifications/'}
-        >
-          <ListItemIcon>
-            <NotificationsIcon />
-          </ListItemIcon>
-          <ListItemText primary={i18n.t('notifications:cTitle')} />
-        </ListItem>}
       <ListItem
         button
         component={Link}

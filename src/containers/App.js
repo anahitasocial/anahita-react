@@ -23,6 +23,7 @@ import assets from '../assets';
 import Alerts from './Alerts';
 import MenuLogo from '../components/Logo';
 import actions from '../actions';
+import NotificationButton from './notifications/Button';
 
 const drawerWidth = 240;
 const { LeftMenu } = assets.navs;
@@ -156,6 +157,7 @@ const App = (props) => {
               </Typography>}
           </Hidden>
           <div className={classes.grow} />
+          {isAuthenticated && <NotificationButton viewer={viewer} />}
           <Viewer
             viewer={viewer}
             isAuthenticated={isAuthenticated}

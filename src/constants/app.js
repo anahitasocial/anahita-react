@@ -23,7 +23,6 @@ export default {
       HASHTAGS: 'hashtags',
       LOCATIONS: 'locations',
       ARTICLES: 'articles',
-      DOCUMENTS: 'documents',
       NOTES: 'notes',
       PHOTOS: 'photos',
       TOPICS: 'topics',

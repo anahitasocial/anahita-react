@@ -1,6 +1,5 @@
 export default {
   articleAdd: '<0>{{subject}}</0> published an <1>article</1>',
-  articleComment: '<0>{{subject}}</0> commented on <1>article</1>',
   documentAdd: '<0>{{subject}}</0> posted a <1>document</1>',
   noteAdd: '<0>{{subject}}</0> posted a <1>note</1>',
   photoAdd: '<0>{{subject}}</0> posted a <1>photo</1>',
@@ -14,5 +13,8 @@ export default {
   actorMentionComment: '<0>{{subject}}</0> mentioned you in a <1>comment</1>',
   voteup: '<0>{{subject}}</0> liked your <1>post</1>',
   repostAdd: '<0>{{subject}}</0> reposted your <1>post</1>',
-  commentAdd: '<0>{{subject}}</0> commented on your <1>post</1>',
+  noteComment: '<0>{{subject}}</0> commented on your <1>note</1>',
+  articleComment: '<0>{{subject}}</0> commented on your <1>article</1>',
+  topicComment: '<0>{{subject}}</0> commented on your <1>topic</1>',
+  photoComment: '<0>{{subject}}</0> commented on your <1>photo</1>',
 };

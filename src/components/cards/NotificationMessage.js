@@ -28,13 +28,12 @@ const NotificationMessage = (props) => {
   const { target } = notification;
   const targetName = target.id ? target.name : i18n.t('actor:unknown');
   const targetURL = target.id ? getURL(target) : '/';
-
-  const i18nKey = _.camelCase(`${notification.type}`);
+  const i18nKey = _.camelCase(notification.type);
 
   return (
     <Typography variant="body1">
       <Trans
-        i18nKey={`notifications.${i18nKey}`}
+        i18nKey={`notifications:${i18nKey}`}
         values={{
           subject: subjectName,
           object: objectName,
