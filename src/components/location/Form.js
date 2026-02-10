@@ -122,7 +122,7 @@ const LocationForm = (props) => {
               name="state_province"
               label="Province"
               onChange={handleOnChange}
-              value={location.state_province}
+              value={location.stateProvince}
               disabled={location.country === '' || isFetching}
               country={location.country}
             />

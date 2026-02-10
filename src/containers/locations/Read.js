@@ -147,12 +147,6 @@ const LocationsRead = (props) => {
     );
   }
 
-  if (error !== '') {
-    return (
-      <Redirect push to="/404/" />
-    );
-  }
-
   const { authorized } = location;
   const canAdminister = authorized && authorized.administration;
 
