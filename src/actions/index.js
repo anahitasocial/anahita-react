@@ -13,7 +13,7 @@ import session from './session';
 import signup from './signup';
 import socialgraph from './socialgraph';
 import stories from './stories';
-import taggables from './taggable';
+import inbounds from './inbound';
 
 const namespaces = {
   actors: [
@@ -50,7 +50,7 @@ const actions = {
   signup,
   socialgraph,
   stories,
-  taggables,
+  inbounds,
 };
 
 namespaces.actors.forEach((namespace) => {

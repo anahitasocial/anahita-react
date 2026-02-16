@@ -24,7 +24,7 @@ import LocationsType from '../../proptypes/Locations';
 
 import PersonType from '../../proptypes/Person';
 import AnahitaMap from '../../components/Map';
-import Taggables from '../taggables';
+import Inbounds from '../inbounds';
 import Progress from '../../components/Progress';
 import HeaderMeta from '../../components/HeaderMeta';
 
@@ -65,7 +65,7 @@ const LocationsRead = (props) => {
     items: {
       current: location,
     },
-    taggablesCount,
+    inboundsCount,
     isFetching,
     error,
     success,
@@ -166,8 +166,8 @@ const LocationsRead = (props) => {
               {location.name}
             </Typography>
           }
-          subheader={i18n.t('taggables:count', {
-            count: taggablesCount,
+          subheader={i18n.t('inbounds:count', {
+            count: inboundsCount,
           })}
           action={canAdminister &&
             <LocationMenu
@@ -217,7 +217,7 @@ const LocationsRead = (props) => {
         </CardContent>
       </Card>
       {location.id > 0 &&
-        <Taggables tag={location} />}
+        <Inbounds tag={location} />}
     </>
   );
 };
@@ -232,15 +232,15 @@ const mapStateToProps = (state) => {
 
   const {
     total,
-  } = state.taggables;
+  } = state.inbounds;
 
-  const taggablesCount = total;
+  const inboundsCount = total;
 
   const { viewer } = state.session;
 
   return {
     items,
-    taggablesCount,
+    inboundsCount,
     error,
     success,
     isFetching,
@@ -256,7 +256,7 @@ LocationsRead.propTypes = {
   alertSuccess: PropTypes.func.isRequired,
   items: LocationsType.isRequired,
   match: PropTypes.object.isRequired,
-  taggablesCount: PropTypes.number.isRequired,
+  inboundsCount: PropTypes.number.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,

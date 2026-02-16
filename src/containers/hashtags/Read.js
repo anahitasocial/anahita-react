@@ -17,7 +17,7 @@ import PersonType from '../../proptypes/Person';
 
 import HashtagMenu from './Menu';
 import Progress from '../../components/Progress';
-import Taggables from '../taggables';
+import Inbounds from '../inbounds';
 
 const HashtagsRead = (props) => {
   const {
@@ -26,7 +26,7 @@ const HashtagsRead = (props) => {
     hashtags: {
       current: hashtag = { ...HashtagDefault },
     },
-    taggablesCount,
+    inboundsCount,
     isFetching,
     error,
     match: {
@@ -40,7 +40,7 @@ const HashtagsRead = (props) => {
   useEffect(() => {
     readHashtag(alias);
     setAppTitle(i18n.t('hashtags:cTitle'));
-  }, []);
+  }, [alias, setAppTitle]);
 
   if (isFetching) {
     return (
@@ -70,8 +70,8 @@ const HashtagsRead = (props) => {
               {hashtag.name}
             </Typography>
           }
-          subheader={i18n.t('taggables:count', {
-            count: taggablesCount,
+          subheader={i18n.t('inbounds:count', {
+            count: inboundsCount,
           })}
           action={canAdminister &&
             <HashtagMenu
@@ -79,7 +79,7 @@ const HashtagsRead = (props) => {
             />}
         />
       </Card>
-      {hashtag.id > 0 && <Taggables tag={hashtag} />}
+      {hashtag.id > 0 && <Inbounds tag={hashtag} />}
     </>
   );
 };
@@ -93,15 +93,15 @@ const mapStateToProps = (state) => {
 
   const {
     total,
-  } = state.taggables;
+  } = state.inbounds;
 
-  const taggablesCount = total;
+  const inboundsCount = total;
 
   const { viewer } = state.session;
 
   return {
     hashtags,
-    taggablesCount,
+    inboundsCount,
     error,
     isFetching,
     viewer,
@@ -113,7 +113,7 @@ HashtagsRead.propTypes = {
   readHashtag: PropTypes.func.isRequired,
   hashtags: HashtagsType.isRequired,
   match: PropTypes.object.isRequired,
-  taggablesCount: PropTypes.number.isRequired,
+  inboundsCount: PropTypes.number.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,

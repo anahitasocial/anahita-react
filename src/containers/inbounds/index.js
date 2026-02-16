@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import TaggablesBrowse from './Browse';
+import InboundsBrowse from './Browse';
 import NodeType from '../../proptypes/Node';
 import { App as APP } from '../../constants';
 import i18n from '../../languages';
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Taggables = (props) => {
+const Inbounds = (props) => {
   const classes = useStyles();
   const {
     selectedTab,
@@ -66,8 +66,8 @@ const Taggables = (props) => {
         </Tabs>
       </AppBar>
       {useMemo(() => {
-        return (<TaggablesBrowse
-          key={`taggable-tab-${tab}`}
+        return (<InboundsBrowse
+          key={`inbound-tab-${tab}`}
           tag={tag}
           queryFilters={{
             q: '',
@@ -79,7 +79,7 @@ const Taggables = (props) => {
   );
 };
 
-Taggables.propTypes = {
+Inbounds.propTypes = {
   tag: NodeType.isRequired,
   selectedTab: PropTypes.oneOf([
     TOP,
@@ -87,8 +87,8 @@ Taggables.propTypes = {
   ]),
 };
 
-Taggables.defaultProps = {
+Inbounds.defaultProps = {
   selectedTab: TOP,
 };
 
-export default Taggables;
+export default Inbounds;

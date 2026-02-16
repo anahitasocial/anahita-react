@@ -45,7 +45,7 @@ const LocationsSelectorAdd = (props) => {
     country: process.env.REACT_APP_LOCATION_FIXED_COUNTRY,
     state_province: process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE,
     city: process.env.REACT_APP_LOCATION_FIXED_CITY,
-    taggable_id: node.id,
+    source_id: node.id,
   });
   const [isFetching, setIsFetching] = useState(false);
 
@@ -76,7 +76,12 @@ const LocationsSelectorAdd = (props) => {
       formData.country = process.env.REACT_APP_LOCATION_FIXED_COUNTRY || formData.country;
 
       setIsFetching(true);
-      api.locations.add(formData);
+      api.locations.add(formData).then(() => {
+        setIsFetching(false);
+        callback();
+      }).catch(() => {
+        setIsFetching(false);
+      });
     }
 
     setFields({ ...newFields });

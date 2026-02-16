@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const TaggablesBrowse = (props) => {
+const InboundsBrowse = (props) => {
   const classes = useStyles();
   const {
     browseList,
@@ -113,11 +113,11 @@ const TaggablesBrowse = (props) => {
 
 const mapStateToProps = (state) => {
   const {
-    taggables: items,
+    inbounds: items,
     error,
     total,
     isFetching,
-  } = state.taggables;
+  } = state.inbounds;
 
   return {
     items,
@@ -127,7 +127,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-TaggablesBrowse.propTypes = {
+InboundsBrowse.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
@@ -142,7 +142,7 @@ TaggablesBrowse.propTypes = {
   isFetching: PropTypes.bool.isRequired,
 };
 
-TaggablesBrowse.defaultProps = {
+InboundsBrowse.defaultProps = {
   total: 0,
   queryFilters: {
     sort: TOP,
@@ -153,10 +153,10 @@ TaggablesBrowse.defaultProps = {
 const mapDispatchToProps = (dispatch) => {
   return {
     browseList: (tag, params) => {
-      return dispatch(actions.taggables(tag).browse(params));
+      return dispatch(actions.inbounds(tag).browse(params));
     },
     resetList: (tag) => {
-      return dispatch(actions.taggables(tag).reset());
+      return dispatch(actions.inbounds(tag).reset());
     },
     alertError: (message) => {
       return dispatch(actions.app.alert.error(message));
@@ -167,4 +167,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TaggablesBrowse);
+)(InboundsBrowse);

@@ -9,31 +9,31 @@ const getNamespace = (node) => {
   return objectType.split('.')[1];
 };
 
-const browse = (node) => {
+const browse = (nodeA) => {
   return (params) => {
     const { objectType, ...rest } = params;
     return axios.get(`/${objectType.split('.')[1]}/`, {
       params: {
-        taggable_id: node.id,
+        source_id: nodeA.id,
         ...rest,
       },
     });
   };
 };
 
-const add = (node) => {
-  return (tag) => {
-    const namespace = getNamespace(tag);
-    return axios.post(`/${namespace}/${tag.id}/taggables/`, constructFormData({
-      taggable_id: node.id,
+const add = (nodeA) => {
+  return (nodeB) => {
+    const namespace = getNamespace(nodeB);
+    return axios.post(`/${namespace}/${nodeB.id}/inbounds/`, constructFormData({
+      source_id: nodeA.id,
     }));
   };
 };
 
-const deleteItem = (node) => {
-  return (tag) => {
-    const namespace = getNamespace(tag);
-    return axios.delete(`/${namespace}/${tag.id}/taggables/${node.id}`);
+const deleteItem = (nodeA) => {
+  return (nodeB) => {
+    const namespace = getNamespace(nodeB);
+    return axios.delete(`/${namespace}/${nodeB.id}/inbounds/${nodeA.id}`);
   };
 };
 

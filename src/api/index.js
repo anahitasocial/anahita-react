@@ -21,7 +21,7 @@ import repost from './feed/repost';
 import session from './session';
 import signup from './signup';
 import socialgraph from './socialgraph';
-import taggables from './taggables';
+import inbounds from './inbounds';
 import tagGraph from './tag_graph';
 import token from './token';
 import api from '../utils/api';
@@ -108,7 +108,7 @@ const apis = {
   session,
   signup,
   socialgraph,
-  taggables,
+  inbounds,
   tagGraph,
   token,
 };

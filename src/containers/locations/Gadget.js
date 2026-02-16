@@ -51,7 +51,7 @@ const LocationsGadget = (props) => {
   useEffect(() => {
     setWaiting(true);
     api.locations.browse({
-      taggable_id: node.id,
+      source_id: node.id,
       start: 0,
       limit: 20,
     })

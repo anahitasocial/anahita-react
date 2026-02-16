@@ -39,7 +39,7 @@ const namespaces = {
     'topics',
   ],
   nodes: [
-    'taggables',
+    'inbounds',
     'blogs',
   ],
 };

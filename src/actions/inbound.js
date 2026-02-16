@@ -1,13 +1,13 @@
 import { normalize, schema } from 'normalizr';
 import apis from '../api';
 
-const { taggables: api } = apis;
+const { inbounds: api } = apis;
 
 // -- Reset
 
 function reset() {
   return {
-    type: 'TAGGABLES_BROWSE_RESET',
+    type: 'INBOUNDS_BROWSE_RESET',
   };
 }
 
@@ -15,7 +15,7 @@ function reset() {
 
 function browseRequest() {
   return {
-    type: 'TAGGABLES_BROWSE_REQUEST',
+    type: 'INBOUNDS_BROWSE_REQUEST',
   };
 }
 
@@ -27,13 +27,13 @@ function browseSuccess(results) {
   const start = pagination.offset || 0;
   const total = pagination.total || 0;
 
-  const node = new schema.Entity('taggables');
+  const node = new schema.Entity('inbounds');
   const nodes = [node];
   const normalized = normalize(data.data ? data.data : {}, nodes);
 
   return {
-    type: 'TAGGABLES_BROWSE_SUCCESS',
-    taggables: normalized.entities.taggables,
+    type: 'INBOUNDS_BROWSE_SUCCESS',
+    inbounds: normalized.entities.inbounds,
     ids: normalized.result,
     total,
     limit,
@@ -43,7 +43,7 @@ function browseSuccess(results) {
 
 function browseFailure(error) {
   return {
-    type: 'TAGGABLES_BROWSE_FAILURE',
+    type: 'INBOUNDS_BROWSE_FAILURE',
     error: error.message,
   };
 }

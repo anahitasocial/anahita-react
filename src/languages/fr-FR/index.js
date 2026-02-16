@@ -460,7 +460,7 @@ export default {
     },
     boxPlaceholder: 'Search...',
   },
-  taggables: {
+  inbounds: {
     count: '{{count}} nodes',
   },
   commons: {
