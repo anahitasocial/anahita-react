@@ -20,7 +20,7 @@ import PersonType from '../../proptypes/Person';
 
 import AnahitaMap from '../../components/Map';
 import Selector from './Selector';
-// import Progress from '../../components/Progress';
+import Progress from '../../components/Progress';
 import ListItem from './ListItem';
 import DeleteAction from '../actions/tags/location/Delete';
 
@@ -72,11 +72,11 @@ const LocationsGadget = (props) => {
   const canDelete = permissions.canEdit(viewer, node);
   const canAdd = permissions.canAdd(viewer, node);
 
-  // if (locations.length === 0 && waiting) {
-  //   return (
-  //     <Progress />
-  //   );
-  // }
+  if (locations.length === 0 && waiting) {
+    return (
+      <Progress />
+    );
+  }
 
   return (
     <>
