@@ -44,19 +44,30 @@ const LocationsSelectorBrowse = (props) => {
   } = props;
 
   const [keyword, setKeyword] = useState('');
+  const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedKeyword(keyword);
+    }, 400); // 400ms debounce
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [keyword]);
 
   useEffect(() => {
     browseList({
       start: 0,
       limit: LIMIT,
-      q: keyword,
+      q: debouncedKeyword,
       ...queryFilters,
     });
 
     return () => {
       resetList();
     };
-  }, [node.id, keyword]);
+  }, [node.id, debouncedKeyword]);
 
   const handleOnChange = (event) => {
     event.preventDefault();

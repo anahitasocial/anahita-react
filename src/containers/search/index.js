@@ -208,7 +208,7 @@ const Search = (props) => {
               q,
               sort,
               scope,
-              searchRange,
+              searchRange: searchRange * 1000,
               searchComments,
               coordLong,
               coordLat,
