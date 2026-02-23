@@ -72,16 +72,23 @@ const LocationsSelectorAdd = (props) => {
       formData.state_province =
       process.env.REACT_APP_LOCATION_FIXED_STATE_PROVINCE ||
       formData.state_province;
-
       formData.country = process.env.REACT_APP_LOCATION_FIXED_COUNTRY || formData.country;
 
       setIsFetching(true);
-      api.locations.add(formData).then(() => {
-        setIsFetching(false);
-        callback();
-      }).catch(() => {
-        setIsFetching(false);
-      });
+      api.locations.add(formData)
+        .then((response) => {
+          api.tagGraph(node)
+            .add(response.data)
+            .then(() => {
+              setIsFetching(false);
+              callback();
+            })
+            .catch((err) => {
+              console.error('Error adding location to tag graph', err);
+            });
+        }).catch(() => {
+          setIsFetching(false);
+        });
     }
 
     setFields({ ...newFields });

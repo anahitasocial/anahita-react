@@ -2,6 +2,12 @@ import settings from './settings';
 import notifications from './notifications';
 
 export default {
+  apps: {
+    note: 'Notes',
+    photo: 'Photos',
+    article: 'Articles',
+    topic: 'Topics',
+  },
   notifications: {
     cTitle: 'Notifications',
     mTitle: 'Notifications',
@@ -122,13 +128,14 @@ export default {
     support: 'Support',
     report: 'Report Issues',
     guideline: 'Tribes Guideline',
+    privacy: 'Privacy Policy',
   },
   social: {
     cTitle: 'Social Media',
     mTitle: 'Social Media',
     description: 'Like & Follow us',
   },
-  stories: {
+  feed: {
     cTitle: 'Stories',
     mTitle: 'Stories',
     actions: {

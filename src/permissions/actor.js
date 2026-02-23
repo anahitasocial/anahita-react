@@ -1,20 +1,10 @@
 import _ from 'lodash';
 import utils from '../utils';
-import { Person as PERSON } from '../constants';
 
-const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.USERTYPE;
-
-const isAdmin = (person) => {
-  if (person.usertype) {
-    return person.usertype === ADMIN || person.usertype === SUPER_ADMIN;
-  }
-
-  return false;
-};
-
-const isRegistered = (actor) => {
-  return utils.node.isRegistered(actor);
-};
+const {
+  isAdmin,
+  isRegistered,
+} = utils.node;
 
 const canAdd = (viewer) => {
   /*

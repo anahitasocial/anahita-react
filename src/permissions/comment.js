@@ -1,7 +1,5 @@
-import utils from '../utils';
-
 const canAdd = (node) => {
-  return utils.node.isCommentable(node) && utils.node.isCommentable(node);
+  return node.id > 0;
 };
 
 export default {

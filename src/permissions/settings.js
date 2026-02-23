@@ -1,9 +1,11 @@
-import { Person as PERSON } from '../constants';
+import utils from '../utils';
 
-const { SUPER_ADMIN } = PERSON.FIELDS.USERTYPE;
+const {
+  isSuperAdmin,
+} = utils.node;
 
 const canEdit = (viewer) => {
-  return viewer.usertype === SUPER_ADMIN;
+  return isSuperAdmin(viewer);
 };
 
 export default {

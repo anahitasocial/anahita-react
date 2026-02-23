@@ -1,14 +1,17 @@
 import _ from 'lodash';
-import { Person as PERSON } from '../constants';
+import utils from '../utils';
 
-const { ADMIN, SUPER_ADMIN } = PERSON.FIELDS.USERTYPE;
+const {
+  isAdmin,
+  isSuperAdmin,
+} = utils.node;
 
 const canEdit = (viewer, node) => {
   if (node.authorized && node.authorized.edit) {
     return true;
   }
 
-  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
+  if (isSuperAdmin(viewer) || isAdmin(viewer)) {
     return true;
   }
 
@@ -32,12 +35,12 @@ const canEdit = (viewer, node) => {
   return false;
 };
 
-const canAdd = (viewer, owner = null) => {
-  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
+const canAdd = (viewer, node = null) => {
+  if (isSuperAdmin(viewer) || isAdmin(viewer)) {
     return true;
   }
 
-  if (owner && viewer.id === owner.id) {
+  if (node && node.owner && viewer.id === node.owner.id) {
     return true;
   }
 
@@ -49,7 +52,7 @@ const canDelete = (viewer, node) => {
     return true;
   }
 
-  if ([SUPER_ADMIN, ADMIN].includes(viewer.usertype)) {
+  if (isSuperAdmin(viewer) || isAdmin(viewer)) {
     return true;
   }
 
@@ -61,7 +64,7 @@ const canDelete = (viewer, node) => {
 };
 
 const canAdminister = (viewer) => {
-  return [SUPER_ADMIN, ADMIN].includes(viewer.usertype);
+  return isSuperAdmin(viewer) || isAdmin(viewer);
 };
 
 export default {

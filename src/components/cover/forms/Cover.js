@@ -89,7 +89,7 @@ const ActorCoverForm = (props) => {
               disabled={!canEdit || isFetching}
               onChange={handleFieldChange}
             />
-            {i18n.t('actions:Update')}
+            {i18n.t('actions:update')}
           </label>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
