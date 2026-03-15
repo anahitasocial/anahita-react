@@ -15,7 +15,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import IconButton from '@material-ui/core/IconButton';
-// import SearchBox from './search/SearchBox';
+import SearchBox from './search/SearchBox';
 
 import Viewer from '../components/auth/Viewer';
 import ViewerType from '../proptypes/Viewer';
@@ -84,7 +84,6 @@ const App = (props) => {
     isAuthenticated,
     viewer,
     appBarTitle,
-    // location,
     whoami,
   } = props;
 
@@ -145,7 +144,7 @@ const App = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          {/* <SearchBox location={location} /> */}
+          <SearchBox />
           <Hidden xsDown implementation="css">
             {appBarTitle && !open &&
               <Typography
@@ -216,7 +215,6 @@ App.propTypes = {
   logout: PropTypes.func.isRequired,
   whoami: PropTypes.func.isRequired,
   appBarTitle: PropTypes.string.isRequired,
-  // location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {

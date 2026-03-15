@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import queryString from 'query-string';
+import { useSearchParams } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
@@ -46,17 +45,12 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const SearchBox = (props) => {
+const SearchBox = () => {
   const classes = useStyles();
-  const {
-    location: {
-      search,
-    },
-  } = props;
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('q') || '';
 
-  const { q = '' } = queryString.parse(search);
-
-  const [keyword, setKeyword] = useState(q);
+  const [keyword, setKeyword] = useState(query);
 
   const handleOnChange = (event) => {
     const { value } = event.target;
@@ -97,10 +91,6 @@ const SearchBox = (props) => {
       </form>
     </div>
   );
-};
-
-SearchBox.propTypes = {
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default SearchBox;

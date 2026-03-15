@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { geolocated } from 'react-geolocated';
 import queryString from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
@@ -77,12 +78,10 @@ const Search = (props) => {
     coords,
     isGeolocationAvailable,
     isGeolocationEnabled,
-    location: {
-      search,
-    },
   } = props;
 
-  const { q } = queryString.parse(search);
+  const location = useLocation();
+  const { q } = queryString.parse(location.search);
   let coordLong = 0.0;
   let coordLat = 0.0;
 
@@ -230,7 +229,6 @@ const Search = (props) => {
 
 Search.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   coords: PropTypes.objectOf(PropTypes.shape({
     longitude: PropTypes.number,
     latitude: PropTypes.number,
