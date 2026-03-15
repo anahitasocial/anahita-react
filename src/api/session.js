@@ -5,12 +5,12 @@ const OAUTH_CONFIG = {
   clientId: 'anahita-web',
   redirectUri: `${window.location.origin}/oauth/callback`,
   authorizeUrl: 'http://localhost/oauth/authorize',
-  tokenUrl: '/oauth/token',
+  sessionUrl: '/oauth/session',
   userinfoUrl: '/oauth/userinfo',
+  logoutUrl: '/oauth/logout',
   scopes: 'openid profile email',
 };
 
-// Generate random string for state and PKCE
 const generateRandom = (length = 43) => {
   const array = new Uint8Array(length);
   window.crypto.getRandomValues(array);
@@ -20,7 +20,6 @@ const generateRandom = (length = 43) => {
     .replace(/=+$/, '');
 };
 
-// Generate PKCE code challenge from verifier
 const generateCodeChallenge = async (verifier) => {
   const encoder = new TextEncoder();
   const data = encoder.encode(verifier);
@@ -31,13 +30,11 @@ const generateCodeChallenge = async (verifier) => {
     .replace(/=+$/, '');
 };
 
-// Redirect to auth-service login
 const login = async () => {
   const state = generateRandom(32);
   const codeVerifier = generateRandom(43);
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
-  // Store for callback verification
   sessionStorage.setItem('oauth_state', state);
   sessionStorage.setItem('oauth_code_verifier', codeVerifier);
 
@@ -54,13 +51,12 @@ const login = async () => {
   window.location.href = `${OAUTH_CONFIG.authorizeUrl}?${params}`;
 };
 
-// Exchange authorization code for tokens
 const exchangeCode = (code) => {
   const codeVerifier = sessionStorage.getItem('oauth_code_verifier');
   sessionStorage.removeItem('oauth_state');
   sessionStorage.removeItem('oauth_code_verifier');
 
-  return axios.post(OAUTH_CONFIG.tokenUrl,
+  return axios.post(OAUTH_CONFIG.sessionUrl,
     new URLSearchParams({
       grant_type: 'authorization_code',
       code,
@@ -77,44 +73,13 @@ const read = () => {
   return axios.get(OAUTH_CONFIG.userinfoUrl);
 };
 
-// Refresh access token
-const refresh = (refreshToken) => {
-  return axios.post(OAUTH_CONFIG.tokenUrl,
-    new URLSearchParams({
-      grant_type: 'refresh_token',
-      refresh_token: refreshToken,
-      client_id: OAUTH_CONFIG.clientId,
-    }),
-    {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    });
-};
-
-// Revoke token on logout
 const deleteItem = () => {
-  const refreshToken = sessionStorage.getItem('refresh_token');
-  sessionStorage.removeItem('access_token');
-  sessionStorage.removeItem('refresh_token');
-
-  if (refreshToken) {
-    return axios.post('/oauth/revoke',
-      new URLSearchParams({
-        token: refreshToken,
-        token_type_hint: 'refresh_token',
-        client_id: OAUTH_CONFIG.clientId,
-      }),
-      {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      });
-  }
-
-  return Promise.resolve();
+  return axios.post(OAUTH_CONFIG.logoutUrl);
 };
 
 export default {
   read,
   login,
   exchangeCode,
-  refresh,
   deleteItem,
 };

@@ -24,10 +24,8 @@ function handleCallback(code) {
   return (dispatch) => {
     dispatch({ type: SESSION.ADD.REQUEST });
     return api.exchangeCode(code)
-      .then((response) => {
-        const { data } = response;
-        sessionStorage.setItem('access_token', data.accessToken);
-        sessionStorage.setItem('refresh_token', data.refreshToken);
+      .then(() => {
+        // No tokens to store — they're in the httpOnly cookie
         return api.read();
       })
       .then((response) => {
@@ -39,7 +37,6 @@ function handleCallback(code) {
         });
       })
       .catch((error) => {
-        console.log('=== handleCallback error:', error);
         dispatch({
           type: SESSION.ADD.FAILURE,
           error: error.message,
