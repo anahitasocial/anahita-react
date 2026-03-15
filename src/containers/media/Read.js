@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
@@ -46,11 +46,6 @@ const MediaRead = (props) => {
     media: {
       current: medium,
     },
-    match: {
-      params: {
-        id,
-      },
-    },
   } = props;
 
   let formFields = null;
@@ -66,6 +61,7 @@ const MediaRead = (props) => {
     ]);
   }
 
+  const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [fields, setFields] = useState(formFields);
 
@@ -218,7 +214,6 @@ MediaRead.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
-  match: PropTypes.object.isRequired,
   setAppTitle: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
