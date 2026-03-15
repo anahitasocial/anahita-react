@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
@@ -13,8 +13,10 @@ JavascriptTimeAgo.locale(en);
 // JavascriptTimeAgo.locale(fr);
 
 const store = configureStore();
+const container = document.getElementById('root');
+const root = createRoot(container);
 
-render(
+root.render(
   <BrowserRouter>
     <Root store={store} />
   </BrowserRouter>,

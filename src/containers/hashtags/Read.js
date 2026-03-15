@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -29,18 +29,14 @@ const HashtagsRead = (props) => {
     inboundsCount,
     isFetching,
     error,
-    match: {
-      params: {
-        alias,
-      },
-    },
     viewer,
   } = props;
+  const { alias: aliasParam } = useParams();
 
   useEffect(() => {
-    readHashtag(alias);
+    readHashtag(aliasParam);
     setAppTitle(i18n.t('hashtags:cTitle'));
-  }, [alias, setAppTitle]);
+  }, [aliasParam, setAppTitle]);
 
   if (isFetching) {
     return (
@@ -50,7 +46,7 @@ const HashtagsRead = (props) => {
 
   if (error !== '') {
     return (
-      <Redirect push to="/404/" />
+      <Navigate to="/404/" replace />
     );
   }
 
@@ -112,7 +108,6 @@ HashtagsRead.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
   readHashtag: PropTypes.func.isRequired,
   hashtags: HashtagsType.isRequired,
-  match: PropTypes.object.isRequired,
   inboundsCount: PropTypes.number.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,

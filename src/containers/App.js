@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
@@ -15,7 +15,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import IconButton from '@material-ui/core/IconButton';
-import SearchBox from './search/SearchBox';
+// import SearchBox from './search/SearchBox';
 
 import Viewer from '../components/auth/Viewer';
 import ViewerType from '../proptypes/Viewer';
@@ -84,11 +84,11 @@ const App = (props) => {
     isAuthenticated,
     viewer,
     appBarTitle,
-    location,
-    history,
+    // location,
     whoami,
   } = props;
 
+  const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -104,7 +104,7 @@ const App = (props) => {
     const { logout } = props;
     logout()
       .then(() => {
-        history.push('/auth/');
+        navigate('/');
       });
   };
 
@@ -145,7 +145,7 @@ const App = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <SearchBox location={location} />
+          {/* <SearchBox location={location} /> */}
           <Hidden xsDown implementation="css">
             {appBarTitle && !open &&
               <Typography
@@ -216,8 +216,7 @@ App.propTypes = {
   logout: PropTypes.func.isRequired,
   whoami: PropTypes.func.isRequired,
   appBarTitle: PropTypes.string.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
+  // location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -248,7 +247,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(App));
+)(App);

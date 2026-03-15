@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/auth/LoginForm';
 import actions from '../../actions';
@@ -52,7 +52,7 @@ const AuthLogin = (props) => {
 
   if (isAuthenticated && success) {
     return (
-      <Redirect push to="/dashboard/" />
+      <Navigate to="/dashboard/" replace />
     );
   }
 

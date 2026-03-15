@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Tabs from '@material-ui/core/Tabs';
@@ -38,14 +39,12 @@ const ActorsSettings = (props) => {
     alertError,
     namespace,
     selectedTab,
-    computedMatch: {
-      params,
-    },
     isFetching,
     error,
     success,
   } = props;
 
+  const params = useParams();
   const [id] = params.id.split('-');
   const [tab, setTab] = useState(selectedTab);
 
@@ -130,7 +129,6 @@ ActorsSettings.propTypes = {
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
-  computedMatch: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,

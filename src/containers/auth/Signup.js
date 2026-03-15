@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import SignupForm from '../../components/auth/SignupForm';
 import actions from '../../actions';
 import api from '../../api';
@@ -94,7 +94,7 @@ const AuthSignup = (props) => {
 
   if (isAuthenticated) {
     return (
-      <Redirect push to="/dashboard/" />
+      <Navigate to="/dashboard/" replace />
     );
   }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { useParams } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -70,12 +70,9 @@ const LocationsRead = (props) => {
     error,
     success,
     viewer,
-    match: {
-      params: {
-        id,
-      },
-    },
   } = props;
+
+  const { id } = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
   const [fields, setFields] = useState(formFields);
@@ -255,7 +252,6 @@ LocationsRead.propTypes = {
   alertError: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   items: LocationsType.isRequired,
-  match: PropTypes.object.isRequired,
   inboundsCount: PropTypes.number.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,

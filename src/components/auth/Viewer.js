@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ViewerType from '../../proptypes/Viewer';
 import utils from '../../utils';
 import i18n from '../../languages';
+import actions from '../../actions';
 
 const {
   getActorInitials,
@@ -30,6 +32,7 @@ const Viewer = (props) => {
     classes,
     viewer,
     isAuthenticated,
+    login,
   } = props;
 
   const profile = `/people/${viewer.username}/`;
@@ -40,7 +43,9 @@ const Viewer = (props) => {
     <>
       {!isAuthenticated && !viewer.id &&
       <Button
-        href="/auth"
+        onClick={() => {
+          login();
+        }}
         color="inherit"
         variant="outlined"
       >
@@ -70,6 +75,7 @@ Viewer.propTypes = {
   classes: PropTypes.object.isRequired,
   viewer: ViewerType,
   isAuthenticated: PropTypes.bool,
+  login: PropTypes.func.isRequired,
 };
 
 Viewer.defaultProps = {
@@ -77,4 +83,28 @@ Viewer.defaultProps = {
   isAuthenticated: false,
 };
 
-export default withStyles(styles)(Viewer);
+const mapStateToProps = (state) => {
+  const {
+    isAuthenticated,
+    success,
+    error,
+    isFetching,
+  } = state.session;
+
+  return {
+    isAuthenticated,
+    success,
+    error,
+    isFetching,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: () => {
+      return dispatch(actions.session.add());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Viewer));

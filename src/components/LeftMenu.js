@@ -21,21 +21,19 @@ import LabelIcon from '@material-ui/icons/Label';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import i18n from '../languages';
 import PersonType from '../proptypes/Person';
 import permissions from '../permissions';
 
-const LeftMenu = (props) => {
-  const {
-    isAuthenticated,
-    viewer,
-    onLogoutClick,
-    location: {
-      pathname,
-    },
-  } = props;
+const LeftMenu = ({
+  isAuthenticated,
+  viewer,
+  onLogoutClick,
+}) => {
+  const location = useLocation();
+  const { pathname = '/' } = location;
 
   return (
     <List>
@@ -202,11 +200,10 @@ LeftMenu.propTypes = {
   onLogoutClick: PropTypes.func,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 LeftMenu.defaultProps = {
   onLogoutClick: null,
 };
 
-export default withRouter(LeftMenu);
+export default LeftMenu;

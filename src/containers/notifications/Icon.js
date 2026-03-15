@@ -1,11 +1,15 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Badge from '@material-ui/core/Badge';
 import Icon from '@material-ui/icons/Notifications';
 import ErrorIcon from '@material-ui/icons/Error';
-import api from '../../api/notifications';
+import api from '../../api';
 
 let interval = null;
-const PERIOD = 15000; // process.env.REACT_APP_NOTIFICATIONS_CHECK_INTERVAL || 15000;
+const PERIOD = 5000; // process.env.REACT_APP_NOTIFICATIONS_CHECK_INTERVAL || 15000;
+
+console.debug(axios.defaults.headers.common);
 
 const NotificationsIcon = () => {
   const [count, setCount] = useState(0);
@@ -14,7 +18,7 @@ const NotificationsIcon = () => {
   useEffect(() => {
     if (!interval) {
       interval = setInterval(() => {
-        api.count()
+        api.notifications.count()
           .then((response) => {
             const { count: newCount } = response.data;
             setCount(newCount);
@@ -24,6 +28,7 @@ const NotificationsIcon = () => {
       }, PERIOD);
     }
 
+    // eslint-disable-next-line consistent-return
     return () => {
       clearInterval(interval);
     };

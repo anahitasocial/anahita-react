@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import ActorHeader from '../../../components/actor/Header';
 import ActorBody from '../../../components/actor/Body';
@@ -53,15 +53,9 @@ const ActorsRead = (props) => {
     isAuthenticated,
     isFetching,
     error,
-    match: {
-      params: {
-        id: slug,
-        tab,
-        subtab,
-      },
-    },
   } = props;
 
+  const { id: slug, tab, subtab } = useParams();
   const [id] = slug.split('-');
 
   useEffect(() => {
@@ -78,7 +72,7 @@ const ActorsRead = (props) => {
 
     if (error !== '') {
       return (
-        <Redirect push to="/404/" />
+        <Navigate to="/404/" replace />
       );
     }
 
@@ -226,7 +220,6 @@ ActorsRead.propTypes = {
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  match: PropTypes.object.isRequired,
   setAppTitle: PropTypes.func.isRequired,
 };
 

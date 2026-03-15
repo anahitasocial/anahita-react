@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
 import axios from 'axios';
 import { singularize } from 'inflection';
@@ -37,6 +38,83 @@ const convertFormDataKey = (key) => {
   });
 };
 
+// Attach access token to every request
+axios.interceptors.request.use((config) => {
+  const t = sessionStorage.getItem('access_token');
+  console.debug('=== interceptor token:', t ? t.substring(0, 20) : 'null', 'url:', config.url);
+  if (t) {
+    return {
+      ...config,
+      headers: {
+        ...config.headers,
+        Authorization: `Bearer ${t}`,
+      },
+    };
+  }
+  return config;
+});
+
+// Handle 401 responses with token refresh
+let isRefreshing = false;
+let refreshQueue = [];
+
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (!error.response || error.response.status !== 401 || originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    const refreshToken = sessionStorage.getItem('refresh_token');
+    if (!refreshToken) {
+      return Promise.reject(error);
+    }
+
+    if (isRefreshing) {
+      return new Promise((resolve, reject) => {
+        refreshQueue.push({ resolve, reject });
+      }).then((t) => {
+        originalRequest.headers.Authorization = `Bearer ${t}`;
+        return axios(originalRequest);
+      });
+    }
+
+    originalRequest._retry = true;
+    isRefreshing = true;
+
+    try {
+      const res = await session.refresh(refreshToken);
+      const { accessToken, refreshToken: newRefreshToken } = res.data;
+
+      sessionStorage.setItem('access_token', accessToken);
+      sessionStorage.setItem('refresh_token', newRefreshToken);
+
+      refreshQueue.forEach((req) => {
+        return req.resolve(accessToken);
+      });
+      refreshQueue = [];
+
+      originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+      return axios(originalRequest);
+    } catch (refreshError) {
+      refreshQueue.forEach((req) => {
+        return req.reject(refreshError);
+      });
+      refreshQueue = [];
+      sessionStorage.removeItem('access_token');
+      sessionStorage.removeItem('refresh_token');
+      localStorage.removeItem('viewer');
+      window.location.href = '/';
+      return Promise.reject(refreshError);
+    } finally {
+      isRefreshing = false;
+    }
+  },
+);
+
 axios.interceptors.request.use((config) => {
   let { data } = config;
 
@@ -56,14 +134,20 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
   (response) => {
     if (response.data && response.config.baseURL === axios.defaults.baseURL) {
-      return { ...response, data: api.camelCaseKeys(response.data) };
+      return {
+        ...response,
+        data: api.camelCaseKeys(response.data),
+      };
     }
     return response;
   },
   (error) => {
     if (error.response.data && error.config.baseURL === axios.defaults.baseURL) {
       const updatedError = { ...error };
-      updatedError.response = { ...error.response, data: api.camelCaseKeys(error.response.data) };
+      updatedError.response = {
+        ...error.response,
+        data: api.camelCaseKeys(error.response.data),
+      };
       return Promise.reject(updatedError);
     }
     return Promise.reject(error);

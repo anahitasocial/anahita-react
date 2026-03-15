@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 import actions from '../../actions';
@@ -88,7 +87,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ActionsRemoveFollower));
+)(ActionsRemoveFollower);

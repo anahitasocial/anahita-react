@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 function isAvailable(key, value) {
-  return axios.post('/people/person.json', {
+  return axios.post('/people/person', {
     action: 'validate',
     key,
     value,

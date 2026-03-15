@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import ReactGA from 'react-ga';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   Route,
-  Switch,
-  withRouter,
+  Routes,
+  useLocation,
 } from 'react-router-dom';
 import AuthenticatedRoute from './AuthenticatedRoute';
 
@@ -33,6 +32,8 @@ import Media from '../containers/media';
 import MediaRead from '../containers/media/Read';
 
 import Notifications from '../containers/notifications';
+
+import OAuthCallback from '../containers/OAuthCallback';
 
 import People from '../containers/people';
 import PeopleAdd from '../containers/people/Add';
@@ -69,300 +70,183 @@ const PhotosRead = MediaRead('photos');
 const Topics = Media('topics');
 const TopicsRead = MediaRead('topics');
 
-const scrollUp = () => {
-  window.scrollTo(0, 0);
-};
-
-const Routes = (props) => {
-  const { isAuthenticated } = props;
+function AppRoutes() {
+  const isAuthenticated = useSelector((state) => {
+    return state.session.isAuthenticated;
+  });
+  const location = useLocation();
 
   useEffect(() => {
     if (process.env.REACT_APP_GOOGLE_ANALYTICS) {
       ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS, {
         debug: process.env.NODE_ENV === 'development' && false,
       });
-      ReactGA.pageview(window.location.pathname + window.location.search);
     }
-
-    scrollUp();
   }, []);
 
+  useEffect(() => {
+    if (process.env.REACT_APP_GOOGLE_ANALYTICS) {
+      ReactGA.send({ hitType: 'pageview', page: location.pathname + location.search });
+    }
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
-    <Switch>
+    <Routes>
+      <Route path="/oauth/callback" element={<OAuthCallback />} />
+
       <Route
-        exact
         path="/"
-        component={isAuthenticated ? DashboardPage : HomePage}
+        element={isAuthenticated ? <DashboardPage /> : <HomePage />}
       />
-      <AuthenticatedRoute
-        exact
-        path="/about/"
-        component={HomePage}
+
+      <Route
+        path="/about"
+        element={
+          <AuthenticatedRoute>
+            <HomePage />
+          </AuthenticatedRoute>
+        }
+      />
+
+      <Route path="/blogs" element={<Blogs />} />
+
+      <Route path="/explore" element={<ExplorePage />} />
+      <Route path="/explore/:tab" element={<ExplorePage />} />
+
+      <Route path="/search" element={<SearchPage />} />
+
+      <Route
+        path="/token/:token/resetpassword"
+        element={<AuthToken resetPassword />}
+      />
+      <Route path="/token/:token" element={<AuthToken />} />
+
+      <Route path="/auth" element={<AuthPage />} />
+      <Route path="/auth/:tab" element={<AuthPage />} />
+
+      <Route path="/passwordreset" element={<PasswordResetPage />} />
+
+      <Route
+        path="/dashboard"
+        element={
+          <AuthenticatedRoute>
+            <DashboardPage />
+          </AuthenticatedRoute>
+        }
+      />
+
+      {/* People — static paths before parameterized */}
+      <Route path="/people" element={<People />} />
+      <Route
+        path="/people/add"
+        element={
+          <AuthenticatedRoute>
+            <PeopleAdd />
+          </AuthenticatedRoute>
+        }
       />
       <Route
-        exact
-        path="/blogs/"
-        component={Blogs}
-      />
-      <Route
-        exact
-        path="/explore/"
-        component={ExplorePage}
-      />
-      <Route
-        exact
-        path="/explore/:tab/"
-        component={ExplorePage}
-      />
-      <Route
-        exact
-        path="/search/"
-        component={SearchPage}
-      />
-      <Route
-        exact
-        path="/token/:token/resetpassword/"
-        render={(params) => {
-          return (
-            <AuthToken resetPassword {...params} />
-          );
-        }}
-      />
-      <Route
-        exact
-        path="/token/:token/"
-        component={AuthToken}
-      />
-      <Route
-        exact
-        path="/auth/"
-        component={AuthPage}
-      />
-      <Route
-        exact
-        path="/auth/:tab/"
-        component={AuthPage}
-      />
-      <Route
-        exact
-        path="/auth/:tab/"
-        component={AuthPage}
-      />
-      <Route
-        exact
-        path="/passwordreset/"
-        component={PasswordResetPage}
-      />
-      <AuthenticatedRoute
-        path="/dashboard/"
-        component={DashboardPage}
-      />
-      <AuthenticatedRoute
         path="/people/:id/settings/account"
-        exact
-        component={PeopleSettings}
-        selectedTab="account"
-      />
-      <AuthenticatedRoute
-        path="/people/:id/settings/"
-        exact
-        component={PeopleSettings}
-      />
-      <AuthenticatedRoute
-        exact
-        path="/people/:id/notifications/"
-        component={(params) => {
-          return <PeopleNotificationsEdit {...params} />;
-        }}
+        element={
+          <AuthenticatedRoute>
+            <PeopleSettings selectedTab="account" />
+          </AuthenticatedRoute>
+        }
       />
       <Route
-        exact
-        path="/people/"
-        component={People}
-      />
-      <AuthenticatedRoute
-        exact
-        path="/people/add/"
-        component={(params) => {
-          return <PeopleAdd {...params} />;
-        }}
+        path="/people/:id/settings"
+        element={
+          <AuthenticatedRoute>
+            <PeopleSettings />
+          </AuthenticatedRoute>
+        }
       />
       <Route
-        exact
-        path="/people/:id/"
-        component={(params) => {
-          return <PeopleRead {...params} />;
-        }}
+        path="/people/:id/notifications"
+        element={
+          <AuthenticatedRoute>
+            <PeopleNotificationsEdit />
+          </AuthenticatedRoute>
+        }
+      />
+      <Route path="/people/:id/:tab/:subtab" element={<PeopleRead />} />
+      <Route path="/people/:id" element={<PeopleRead />} />
+
+      {/* Groups — static paths before parameterized */}
+      <Route path="/groups" element={<GroupsBrowse />} />
+      <Route
+        path="/groups/add"
+        element={
+          <AuthenticatedRoute>
+            <GroupsAdd />
+          </AuthenticatedRoute>
+        }
       />
       <Route
-        exact
-        path="/people/:id/:tab/:subtab"
-        component={(params) => {
-          return <PeopleRead {...params} />;
-        }}
-      />
-      <AuthenticatedRoute
-        path="/groups/:id/settings/"
-        exact
-        component={GroupsSettings}
+        path="/groups/:id/settings"
+        element={
+          <AuthenticatedRoute>
+            <GroupsSettings />
+          </AuthenticatedRoute>
+        }
       />
       <Route
-        exact
-        path="/groups/"
-        component={GroupsBrowse}
+        path="/groups/:id/notifications"
+        element={
+          <AuthenticatedRoute>
+            <GroupsNotificationsEdit />
+          </AuthenticatedRoute>
+        }
       />
-      <AuthenticatedRoute
-        exact
-        path="/groups/add/"
-        component={(params) => {
-          return <GroupsAdd {...params} />;
-        }}
+      <Route path="/groups/:id/:tab/:subtab" element={<GroupsRead />} />
+      <Route path="/groups/:id" element={<GroupsRead />} />
+
+      <Route
+        path="/notifications"
+        element={
+          <AuthenticatedRoute>
+            <Notifications />
+          </AuthenticatedRoute>
+        }
       />
       <Route
-        exact
-        path="/groups/:id/"
-        component={(params) => {
-          return <GroupsRead {...params} />;
-        }}
+        path="/settings"
+        element={
+          <AuthenticatedRoute>
+            <Settings />
+          </AuthenticatedRoute>
+        }
       />
-      <AuthenticatedRoute
-        exact
-        path="/groups/:id/settings/"
-        component={(params) => {
-          return <GroupsSettings {...params} />;
-        }}
-      />
-      <AuthenticatedRoute
-        exact
-        path="/groups/:id/notifications/"
-        component={(params) => {
-          return <GroupsNotificationsEdit {...params} />;
-        }}
-      />
-      <Route
-        exact
-        path="/groups/:id/:tab/:subtab"
-        component={(params) => {
-          return <GroupsRead {...params} />;
-        }}
-      />
-      <AuthenticatedRoute
-        exact
-        path="/notifications/"
-        component={Notifications}
-      />
-      <AuthenticatedRoute
-        exact
-        path="/settings/"
-        component={Settings}
-      />
-      <Route
-        exact
-        path="/articles/"
-        component={Articles}
-      />
-      <Route
-        exact
-        path="/articles/:id/"
-        component={(params) => {
-          return <ArticlesRead {...params} />;
-        }}
-      />
-      <Route
-        exact
-        path="/documents/"
-        component={Documents}
-      />
-      <Route
-        exact
-        path="/documents/:id/"
-        component={(params) => {
-          return <DocumentsRead {...params} />;
-        }}
-      />
-      <Route
-        exact
-        path="/notes/"
-        component={Notes}
-      />
-      <Route
-        exact
-        path="/notes/:id/"
-        component={(params) => {
-          return <NotesRead {...params} />;
-        }}
-      />
-      <Route
-        exact
-        path="/pages/:alias"
-        component={StaticPage}
-      />
-      <Route
-        exact
-        path="/photos/"
-        component={Photos}
-      />
-      <Route
-        exact
-        path="/photos/:id/"
-        component={(params) => {
-          return <PhotosRead {...params} />;
-        }}
-      />
-      <Route
-        exact
-        path="/topics/"
-        component={Topics}
-      />
-      <Route
-        exact
-        path="/topics/:id/"
-        component={(params) => {
-          return <TopicsRead {...params} />;
-        }}
-      />
-      <Route
-        exact
-        path="/hashtags/"
-        component={Hashtags}
-      />
-      <Route
-        exact
-        path="/hashtags/:alias/"
-        component={HashtagsRead}
-      />
-      <Route
-        exact
-        path="/locations/"
-        component={Locations}
-      />
-      <Route
-        exact
-        path="/locations/:id/"
-        component={LocationsRead}
-      />
-      <Route
-        exact
-        path="/404/"
-        component={NotFoundPage}
-      />
-      <Route component={NotFoundPage} />
-    </Switch>
+
+      {/* Media types */}
+      <Route path="/articles" element={<Articles />} />
+      <Route path="/articles/:id" element={<ArticlesRead />} />
+
+      <Route path="/documents" element={<Documents />} />
+      <Route path="/documents/:id" element={<DocumentsRead />} />
+
+      <Route path="/notes" element={<Notes />} />
+      <Route path="/notes/:id" element={<NotesRead />} />
+
+      <Route path="/photos" element={<Photos />} />
+      <Route path="/photos/:id" element={<PhotosRead />} />
+
+      <Route path="/topics" element={<Topics />} />
+      <Route path="/topics/:id" element={<TopicsRead />} />
+
+      <Route path="/hashtags" element={<Hashtags />} />
+      <Route path="/hashtags/:alias" element={<HashtagsRead />} />
+
+      <Route path="/locations" element={<Locations />} />
+      <Route path="/locations/:id" element={<LocationsRead />} />
+
+      <Route path="/pages/:alias" element={<StaticPage />} />
+
+      <Route path="/404" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
-};
-
-Routes.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-};
-
-function mapStateToProps(state) {
-  const {
-    isAuthenticated,
-  } = state.session;
-
-  return {
-    isAuthenticated,
-  };
 }
 
-export default withRouter(connect(mapStateToProps)(Routes));
+export default AppRoutes;

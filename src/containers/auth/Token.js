@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import api from '../../api';
 import actions from '../../actions';
@@ -43,12 +43,12 @@ const AuthToken = (props) => {
   if (isAuthenticated) {
     if (resetPassword) {
       return (
-        <Redirect push to={`/people/${viewer.alias}/settings/account/`} />
+        <Navigate to={`/people/${viewer.alias}/settings/account/`} replace />
       );
     }
 
     return (
-      <Redirect push to={`/people/${viewer.alias}`} />
+      <Navigate to={`/people/${viewer.alias}`} replace />
     );
   }
 

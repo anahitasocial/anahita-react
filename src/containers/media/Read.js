@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import PersonType from '../../proptypes/Person';
 import MediaType from '../../proptypes/Media';
@@ -129,7 +129,7 @@ const MediaRead = (props) => {
 
     if (error !== '') {
       return (
-        <Redirect push to="/404/" />
+        <Navigate to="/404/" replace />
       );
     }
 

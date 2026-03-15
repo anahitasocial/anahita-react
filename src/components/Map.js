@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   GoogleMap,
@@ -37,7 +37,7 @@ const AnahitaMap = (props) => {
 
   // eslint-disable-next-line no-unused-vars
   const [map, setMap] = useState(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onLoad = useCallback((newMap) => {
     const bounds = getBounds(locations);
@@ -82,7 +82,7 @@ const AnahitaMap = (props) => {
             }}
             title={name}
             onClick={() => {
-              history.push(getURL(location));
+              navigate(getURL(location));
             }}
           />
         );

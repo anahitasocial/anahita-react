@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { withRouter } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
@@ -84,4 +83,4 @@ const HomeHero = () => {
   );
 };
 
-export default withRouter(HomeHero);
+export default HomeHero;

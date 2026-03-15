@@ -1,44 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
-import AuthPage from '../containers/auth';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-const AuthenticatedRoute = ({
-  component: Component,
-  ...props
-}) => {
-  const { isAuthenticated } = props;
-  return (
-    <Route
-      {...props}
-      render={() => {
-        return isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Route component={AuthPage} />
-        );
-      }}
-    />
-  );
+const AuthenticatedRoute = ({ children }) => {
+  const isAuthenticated = useSelector((state) => {
+    return state.session.isAuthenticated;
+  });
+
+  if (!isAuthenticated) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  return children;
 };
 
 AuthenticatedRoute.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  component: PropTypes.oneOfType([
-    PropTypes.func.isRequired,
-    PropTypes.object.isRequired,
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-function mapStateToProps(state) {
-  const {
-    isAuthenticated,
-  } = state.session;
-
-  return {
-    isAuthenticated,
-  };
-}
-
-export default connect(mapStateToProps)(AuthenticatedRoute);
+export default AuthenticatedRoute;

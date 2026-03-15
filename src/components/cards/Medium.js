@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -57,9 +57,9 @@ const MediumCard = ({
   ownerActions,
   menu,
   handleView,
-  history,
   cardProps,
 }) => {
+  const navigate = useNavigate();
   const portrait = getPortraitURL(medium);
   const cover = getCoverURL(medium);
   const url = getURL(medium);
@@ -135,7 +135,7 @@ const MediumCard = ({
               return handleView(e, medium);
             }
 
-            return history.push(url);
+            return navigate(url);
           }}
         >
           <CardMedia
@@ -186,7 +186,6 @@ MediumCard.propTypes = {
   menu: PropTypes.node,
   medium: MediumType.isRequired,
   handleView: PropTypes.func,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   cardProps: PropTypes.objectOf(PropTypes.any),
 };
 
@@ -204,4 +203,4 @@ MediumCard.defaultProps = {
   },
 };
 
-export default withRouter(withStyles(styles)(MediumCard));
+export default withStyles(styles)(MediumCard);

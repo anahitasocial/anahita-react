@@ -15,7 +15,7 @@ import LegalIcon from '@material-ui/icons/Description';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import i18n from '../../../languages';
 import PersonType from '../../../proptypes/Person';
@@ -26,10 +26,9 @@ const LeftMenu = (props) => {
     isAuthenticated,
     viewer,
     onLogoutClick,
-    location: {
-      pathname,
-    },
   } = props;
+  const location = useLocation();
+  const { pathname = '/' } = location;
 
   return (
     <nav>
@@ -156,11 +155,10 @@ LeftMenu.propTypes = {
   onLogoutClick: PropTypes.func,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 LeftMenu.defaultProps = {
   onLogoutClick: null,
 };
 
-export default withRouter(LeftMenu);
+export default LeftMenu;

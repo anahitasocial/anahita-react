@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ActorDeleteForm from '../../../components/actor/forms/Delete';
 import Progress from '../../../components/Progress';
 import actions from '../../../actions';
@@ -20,10 +20,9 @@ const ActorsSettingsDelete = (props) => {
     viewer,
     error,
     isFetching,
-    history,
     namespace,
   } = props;
-
+  const navigate = useNavigate();
   const [fields, setFields] = useState(formFields);
 
   const handleOnChange = (event) => {
@@ -45,7 +44,7 @@ const ActorsSettingsDelete = (props) => {
         if (isViewer) {
           logout();
         }
-        history.push(`/${namespace}/`);
+        navigate(`/${namespace}/`, { replace: true });
       });
     }
 
@@ -79,7 +78,6 @@ ActorsSettingsDelete.propTypes = {
   namespace: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (namespace) => {
@@ -120,8 +118,8 @@ const mapDispatchToProps = (namespace) => {
 };
 
 export default (namespace) => {
-  return withRouter(connect(
+  return connect(
     mapStateToProps(namespace),
     mapDispatchToProps(namespace),
-  )(ActorsSettingsDelete));
+  )(ActorsSettingsDelete);
 };

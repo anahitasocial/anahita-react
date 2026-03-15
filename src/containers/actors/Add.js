@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
@@ -81,7 +81,7 @@ const ActorsAdd = (props) => {
 
   if (success && actor.id) {
     return (
-      <Redirect to={getURL(actor)} />
+      <Navigate to={getURL(actor)} replace />
     );
   }
 

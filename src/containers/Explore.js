@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import { useParams } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -37,12 +38,8 @@ const ExplorePage = (props) => {
   const classes = useStyles();
   const {
     setAppTitle,
-    match: {
-      params: {
-        tab: selectedTab = TABS.GROUPS,
-      },
-    },
   } = props;
+  const { tab: selectedTab = TABS.GROUPS } = useParams();
 
   const [tab, setTab] = useState(selectedTab);
 
@@ -124,7 +121,6 @@ const ExplorePage = (props) => {
 
 ExplorePage.propTypes = {
   setAppTitle: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = () => {
