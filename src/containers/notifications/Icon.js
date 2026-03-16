@@ -1,15 +1,12 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Badge from '@material-ui/core/Badge';
 import Icon from '@material-ui/icons/Notifications';
 import ErrorIcon from '@material-ui/icons/Error';
 import api from '../../api';
 
 let interval = null;
-const PERIOD = 5000; // process.env.REACT_APP_NOTIFICATIONS_CHECK_INTERVAL || 15000;
-
-console.debug(axios.defaults.headers.common);
+const PERIOD = process.env.REACT_APP_NOTIFICATIONS_CHECK_INTERVAL || 15000;
 
 const NotificationsIcon = () => {
   const [count, setCount] = useState(0);

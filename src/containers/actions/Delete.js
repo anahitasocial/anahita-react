@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -14,7 +15,6 @@ const ActionsDelete = React.forwardRef((props, ref) => {
   const {
     deleteItem,
     node,
-    history,
     redirect,
     component,
     alertSuccess,
@@ -25,6 +25,8 @@ const ActionsDelete = React.forwardRef((props, ref) => {
 
   const [waiting, setWaiting] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleDelete = () => {
     setWaiting(true);
     deleteItem(node)
@@ -32,7 +34,7 @@ const ActionsDelete = React.forwardRef((props, ref) => {
         alertSuccess(i18n.t('prompts:deleted.success'));
 
         if (redirect !== '') {
-          history.push(redirect);
+          navigate(redirect);
         }
       }).catch((err) => {
         console.error(err);
@@ -82,7 +84,6 @@ ActionsDelete.propTypes = {
   alertError: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   node: NodeType.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   redirect: PropTypes.string,
   component: PropTypes.oneOf(['button', 'menuitem']),
   confirmTitle: PropTypes.string,
