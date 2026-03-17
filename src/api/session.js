@@ -8,7 +8,25 @@ const OAUTH_CONFIG = {
   sessionUrl: '/oauth/session',
   userinfoUrl: '/oauth/userinfo',
   logoutUrl: '/oauth/logout',
-  scopes: 'openid profile email',
+  scopes: [
+    'openid', 'profile', 'email',
+    'read:actors', 'write:actors',
+    'read:groups', 'write:groups',
+    'read:media', 'write:media',
+    'read:photos', 'write:photos',
+    'read:comments', 'write:comments',
+    'read:likes', 'write:likes',
+    'read:socialgraph', 'write:socialgraph',
+    'read:locations', 'write:locations',
+    'read:hashtags', 'write:hashtags',
+    'read:stories', 'write:stories',
+    'read:notifications', 'write:notifications',
+    'read:feed',
+    'read:search',
+    'write:avatar',
+    'write:cover',
+    'read:mfa', 'write:mfa',
+  ].join(' '),
 };
 
 const generateRandom = (length = 43) => {
