@@ -21,14 +21,16 @@ const styles = (theme) => {
   };
 };
 
-const Player = (props) => {
-  const { text, classes } = props;
+const Player = ({
+  text = '',
+  classes,
+}) => {
   const [playing, setPlaying] = useState(false);
   const urls = text.match(regex);
   const isEmpty = !urls || !urls[0].match(/(youtu|vimeo|soundcloud|dailymotion|mixcloud|twitch)/);
 
   if (isEmpty) {
-    return '';
+    return null;
   }
 
   return (
@@ -60,10 +62,6 @@ const Player = (props) => {
 Player.propTypes = {
   classes: PropTypes.object.isRequired,
   text: PropTypes.string,
-};
-
-Player.defaultProps = {
-  text: '',
 };
 
 export default withStyles(styles)(Player);

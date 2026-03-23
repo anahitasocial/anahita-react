@@ -44,10 +44,10 @@ const useStyles = makeStyles((theme) => {
 
 const FeedCardRepost = ({
   node,
-  stats,
-  actions,
-  menu,
-  showOwner,
+  stats = null,
+  actions = null,
+  menu = null,
+  showOwner = false,
 }) => {
   const classes = useStyles();
   const url = getURL(node.parent);
@@ -102,13 +102,6 @@ FeedCardRepost.propTypes = {
   actions: PropTypes.node,
   node: NodeType.isRequired,
   showOwner: PropTypes.bool,
-};
-
-FeedCardRepost.defaultProps = {
-  showOwner: false,
-  menu: null,
-  stats: null,
-  actions: null,
 };
 
 export default FeedCardRepost;

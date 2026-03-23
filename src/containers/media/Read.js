@@ -30,24 +30,21 @@ const {
   getCoverURL,
 } = utils.node;
 
-const MediaRead = (props) => {
-  const {
-    namespace,
-    readItem,
-    editItem,
-    alertError,
-    alertSuccess,
-    setAppTitle,
-    isFetching,
-    viewer,
-    isAuthenticated,
-    success,
-    error,
-    media: {
-      current: medium,
-    },
-  } = props;
-
+const MediaRead = ({
+  namespace,
+  readItem,
+  editItem,
+  alertError,
+  alertSuccess,
+  setAppTitle,
+  isFetching,
+  viewer,
+  isAuthenticated,
+  success,
+  error,
+  media,
+}) => {
+  const { current: medium } = media;
   let formFields = null;
 
   if (namespace === 'notes') {

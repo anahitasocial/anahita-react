@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -8,9 +8,8 @@ import Login from './Login';
 import Signup from './Signup';
 import i18n from '../../languages';
 
-const Auth = (props) => {
-  const { match: { params } } = props;
-  const defaultTab = params.tab === 'signup' ? 1 : 0;
+const Auth = () => {
+  const defaultTab = useParams().tab === 'signup' ? 1 : 0;
 
   const [tab, setTab] = React.useState(defaultTab);
 
@@ -42,10 +41,6 @@ const Auth = (props) => {
       {tab === 1 && !signupClosed && <Signup />}
     </>
   );
-};
-
-Auth.propTypes = {
-  match: PropTypes.object.isRequired,
 };
 
 export default Auth;

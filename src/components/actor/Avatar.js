@@ -42,14 +42,12 @@ const styles = (theme) => {
   };
 };
 
-const ActorAvatar = (props) => {
-  const {
-    classes,
-    actor,
-    linked,
-    size,
-  } = props;
-
+const ActorAvatar = ({
+  classes,
+  actor,
+  linked = false,
+  size = 'default',
+}) => {
   const url = getURL(actor);
   const avatar = getAvatarURL(actor);
   const initials = getActorInitials(actor);
@@ -87,11 +85,6 @@ ActorAvatar.propTypes = {
   actor: ActorType.isRequired,
   linked: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'large', 'default']),
-};
-
-ActorAvatar.defaultProps = {
-  linked: false,
-  size: 'default',
 };
 
 export default withStyles(styles)(ActorAvatar);

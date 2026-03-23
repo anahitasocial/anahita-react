@@ -10,14 +10,12 @@ import i18n from '../languages';
 
 const CHAR_LIMIT = 280;
 
-const ReadMore = (props) => {
-  const {
-    charLimit,
-    readMoreText,
-    children,
-    contentFilter,
-  } = props;
-
+const ReadMore = ({
+  charLimit = CHAR_LIMIT,
+  readMoreText = i18n.t('commons:readMore'),
+  children,
+  contentFilter = false,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCollapse = () => {
@@ -71,12 +69,6 @@ ReadMore.propTypes = {
   readMoreText: PropTypes.string,
   children: PropTypes.string.isRequired,
   contentFilter: PropTypes.bool,
-};
-
-ReadMore.defaultProps = {
-  charLimit: CHAR_LIMIT,
-  readMoreText: i18n.t('commons:readMore'),
-  contentFilter: false,
 };
 
 export default ReadMore;

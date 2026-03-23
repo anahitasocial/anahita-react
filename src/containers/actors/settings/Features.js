@@ -54,15 +54,13 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const ActorsSettingsAppsBrowse = (props) => {
+const ActorsSettingsAppsBrowse = ({
+  alertError,
+  alertSuccess,
+  actor,
+  namespace,
+}) => {
   const classes = useStyles();
-  const {
-    alertError,
-    alertSuccess,
-    actor,
-    namespace,
-  } = props;
-
   const actorType = utils.node.isPerson(actor) ? 'PERSON' : 'ACTOR';
   const accessOptions = _.values(ACCESS[actorType]);
 

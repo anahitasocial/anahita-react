@@ -15,18 +15,15 @@ import HelpIcon from '@material-ui/icons/Help';
 import { Password as PASSWORD } from '../../constants';
 import i18n from '../../languages';
 
-const PasswordResetForm = (props) => {
-  const {
-    handleOnChange,
-    handleOnSubmit,
-    isFetching,
-    fields: {
-      email,
-    },
-  } = props;
-
+const PasswordResetForm = ({
+  handleOnChange,
+  handleOnSubmit,
+  isFetching,
+  fields: {
+    email,
+  },
+}) => {
   const { EMAIL } = PASSWORD.FIELDS;
-
   const enableSubmit = email.isValid;
 
   return (

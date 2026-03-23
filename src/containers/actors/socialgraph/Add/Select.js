@@ -24,12 +24,11 @@ import actions from '../../../../actions';
 const { getNamespace } = utils.node;
 const { LIMIT } = APP.BROWSE;
 
-const ActorsSocialgraphAddSelect = (props) => {
-  const {
-    actor,
-    alertError,
-    alertSuccess,
-  } = props;
+const ActorsSocialgraphAddSelect = ({
+  actor,
+  alertError,
+  alertSuccess,
+}) => {
   const namespace = getNamespace(actor);
   const addfollowersApi = api[namespace][singularize(namespace)].addfollowers;
 

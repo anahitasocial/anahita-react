@@ -18,15 +18,13 @@ const {
   EXCERPT,
 } = MEDIUM.FIELDS;
 
-const ComposersArticle = (props) => {
-  const {
-    handleOnChange,
-    handleOnSubmit,
-    fields,
-    medium,
-    isFetching,
-  } = props;
-
+const ComposersArticle = ({
+  handleOnChange,
+  handleOnSubmit,
+  fields,
+  medium,
+  isFetching,
+}) => {
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <Card square>

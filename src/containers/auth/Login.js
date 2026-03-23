@@ -8,17 +8,15 @@ import form from '../../utils/form';
 
 const formFields = form.createFormFields(['username', 'password']);
 
-const AuthLogin = (props) => {
-  const {
-    login,
-    reset,
-    alertError,
-    isAuthenticated,
-    isFetching,
-    success,
-    error,
-  } = props;
-
+const AuthLogin = ({
+  login,
+  reset,
+  alertError,
+  isAuthenticated,
+  isFetching,
+  success,
+  error,
+}) => {
   const [fields, setFields] = useState(formFields);
 
   useEffect(() => {

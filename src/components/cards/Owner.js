@@ -10,14 +10,11 @@ import utils from '../../utils';
 
 const { getURL } = utils.node;
 
-const CardOwner = (props) => {
-  const { owner, actions } = props;
-
+const CardOwner = ({ owner, actions }) => {
   if (!owner) {
-    console.debug('CardOwner: No owner provided', props);
+    console.debug('CardOwner: No owner provided', { owner, actions });
     return null;
   }
-
   const url = getURL(owner);
 
   return (
@@ -45,11 +42,6 @@ const CardOwner = (props) => {
 CardOwner.propTypes = {
   owner: NodeType,
   actions: PropTypes.node,
-};
-
-CardOwner.defaultProps = {
-  owner: null,
-  actions: null,
 };
 
 export default CardOwner;

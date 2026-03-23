@@ -21,19 +21,17 @@ import i18n from '../../../languages';
 const { BODY } = MEDIUM.FIELDS;
 const { isPerson } = utils.node;
 
-const ComposersNote = (props) => {
-  const {
-    handleOnChange,
-    handleOnSubmit,
-    fields: {
-      body,
-    },
-    medium,
-    viewer,
-    actor,
-    isFetching,
-  } = props;
-
+const ComposersNote = ({
+  handleOnChange,
+  handleOnSubmit,
+  fields: {
+    body,
+  },
+  medium,
+  viewer,
+  actor,
+  isFetching,
+}) => {
   const placeholder = isPerson(actor) && actor.id !== viewer.id ? i18n.t('notes:composer.bodyPlaceholderPerson', {
     name: actor.name,
   }) : i18n.t('notes:composer.bodyPlaceholder');

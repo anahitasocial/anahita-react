@@ -54,26 +54,22 @@ if (!process.env.REACT_APP_LOCATION_FIXED_COUNTRY) {
 
 const formFields = form.createFormFields(fieldNames);
 
-const LocationsRead = (props) => {
+const LocationsRead = ({
+  readItem,
+  editItem,
+  setAppTitle,
+  alertSuccess,
+  alertError,
+  inboundsCount,
+  isFetching,
+  error,
+  success,
+  viewer,
+  items,
+}) => {
   const classes = useStyles();
-  const {
-    readItem,
-    editItem,
-    setAppTitle,
-    alertSuccess,
-    alertError,
-    items: {
-      current: location,
-    },
-    inboundsCount,
-    isFetching,
-    error,
-    success,
-    viewer,
-  } = props;
-
   const { id } = useParams();
-
+  const { current: location } = items;
   const [isEditing, setIsEditing] = useState(false);
   const [fields, setFields] = useState(formFields);
 

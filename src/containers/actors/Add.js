@@ -28,20 +28,17 @@ const formFields = form.createFormFields([
   'phone',
 ]);
 
-const ActorsAdd = (props) => {
-  const {
-    addItem,
-    alertError,
-    alertSuccess,
-    items: {
-      current: actor,
-    },
-    namespace,
-    isFetching,
-    success,
-    error,
-  } = props;
-
+const ActorsAdd = ({
+  addItem,
+  alertError,
+  alertSuccess,
+  items,
+  namespace,
+  isFetching,
+  success,
+  error,
+}) => {
+  const { current: actor } = items;
   const [fields, setFields] = useState(formFields);
 
   useEffect(() => {

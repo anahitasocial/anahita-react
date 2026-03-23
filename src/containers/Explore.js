@@ -34,11 +34,8 @@ const useStyles = makeStyles({
   },
 });
 
-const ExplorePage = (props) => {
+const ExplorePage = ({ setAppTitle }) => {
   const classes = useStyles();
-  const {
-    setAppTitle,
-  } = props;
   const { tab: selectedTab = TABS.GROUPS } = useParams();
 
   const [tab, setTab] = useState(selectedTab);

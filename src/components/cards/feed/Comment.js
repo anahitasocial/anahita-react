@@ -52,10 +52,10 @@ const useStyles = makeStyles((theme) => {
 
 const FeedCardComment = ({
   node,
-  actions,
-  stats,
-  menu,
-  showOwner,
+  actions = null,
+  stats = null,
+  menu = null,
+  showOwner = false,
 }) => {
   const classes = useStyles();
   const portrait = getPortraitURL(node.parent, 'medium');
@@ -140,13 +140,6 @@ FeedCardComment.propTypes = {
   menu: PropTypes.node,
   node: NodeType.isRequired,
   showOwner: PropTypes.bool,
-};
-
-FeedCardComment.defaultProps = {
-  showOwner: false,
-  stats: null,
-  actions: null,
-  menu: null,
 };
 
 export default FeedCardComment;

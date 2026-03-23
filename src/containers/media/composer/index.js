@@ -12,12 +12,10 @@ import utils from '../../../utils';
 
 const { form } = utils;
 
-const MediaComposer = (props) => {
-  const {
-    actor,
-    namespace,
-  } = props;
-
+const MediaComposer = ({
+  actor,
+  namespace,
+}) => {
   switch (namespace) {
     case 'articles': {
       const formFields = form.createFormFields([

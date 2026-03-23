@@ -20,5 +20,4 @@ root.render(
   <BrowserRouter>
     <Root store={store} />
   </BrowserRouter>,
-  document.getElementById('root'),
 );

@@ -30,20 +30,18 @@ const {
   BODY,
 } = MEDIUM.FIELDS;
 
-const ComposersFile = React.forwardRef((props, ref) => {
+const ComposersFile = React.forwardRef(({
+  handleOnChange,
+  handleOnFileSelect,
+  handleOnSubmit,
+  supportedMimetypes,
+  fields,
+  medium,
+  file,
+  isFetching,
+  namespace,
+}, ref) => {
   const classes = useStyles();
-
-  const {
-    handleOnChange,
-    handleOnFileSelect,
-    handleOnSubmit,
-    supportedMimetypes,
-    fields,
-    medium,
-    file,
-    isFetching,
-    namespace,
-  } = props;
 
   const {
     // acceptedFiles,

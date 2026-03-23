@@ -10,12 +10,10 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
 
-const Alerts = (props) => {
-  const {
-    alerts,
-    deleteItem,
-  } = props;
-
+const Alerts = ({
+  alerts = [],
+  deleteItem,
+}) => {
   const handleClose = (event, id) => {
     deleteItem(id);
   };
@@ -53,10 +51,6 @@ Alerts.propTypes = {
     severity: PropTypes.string,
   })),
   deleteItem: PropTypes.func.isRequired,
-};
-
-Alerts.defaultProps = {
-  alerts: [],
 };
 
 const mapStateToProps = (state) => {

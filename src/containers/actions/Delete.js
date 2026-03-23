@@ -11,18 +11,16 @@ import i18n from '../../languages';
 import utils from '../../utils';
 import DialogConfirm from '../../components/DialogConfirm';
 
-const ActionsDelete = React.forwardRef((props, ref) => {
-  const {
-    deleteItem,
-    node,
-    redirect,
-    component,
-    alertSuccess,
-    alertError,
-    confirmTitle,
-    confirmMessage,
-  } = props;
-
+const ActionsDelete = React.forwardRef(({
+  deleteItem,
+  node,
+  redirect,
+  component,
+  alertSuccess,
+  alertError,
+  confirmTitle,
+  confirmMessage,
+}, ref) => {
   const [waiting, setWaiting] = useState(false);
 
   const navigate = useNavigate();

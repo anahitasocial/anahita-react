@@ -37,7 +37,7 @@ const FeedLeadersBrowse = ({
   resetList,
   alertError,
   items,
-  hasMore,
+  hasMore = true,
   isAuthenticated,
   viewer,
   error,
@@ -261,10 +261,6 @@ FeedLeadersBrowse.propTypes = {
   error: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
-};
-
-FeedLeadersBrowse.defaultProps = {
-  hasMore: true,
 };
 
 const mapStateToProps = (state) => {

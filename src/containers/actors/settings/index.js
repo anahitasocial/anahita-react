@@ -31,19 +31,17 @@ const TABS = {
   DELETE: 'delete',
 };
 
-const ActorsSettings = (props) => {
-  const {
-    readActor,
-    actor,
-    alertSuccess,
-    alertError,
-    namespace,
-    selectedTab,
-    isFetching,
-    error,
-    success,
-  } = props;
-
+const ActorsSettings = ({
+  readActor,
+  actor,
+  alertSuccess,
+  alertError,
+  namespace,
+  selectedTab,
+  isFetching,
+  error,
+  success,
+}) => {
   const params = useParams();
   const [id] = params.id.split('-');
   const [tab, setTab] = useState(selectedTab);

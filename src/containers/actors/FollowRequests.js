@@ -23,19 +23,17 @@ import ActorsType from '../../proptypes/Actors';
 import ActorType from '../../proptypes/Actor';
 import i18n from '../../languages';
 
-const ActorsFollowRequests = React.forwardRef((props, ref) => {
-  const {
-    browseList,
-    resetList,
-    addItem,
-    deleteItem,
-    alertError,
-    alertSuccess,
-    namespace,
-    items,
-    actor,
-  } = props;
-
+const ActorsFollowRequests = React.forwardRef(({
+  browseList,
+  resetList,
+  addItem,
+  deleteItem,
+  alertError,
+  alertSuccess,
+  namespace,
+  items,
+  actor,
+}, ref) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

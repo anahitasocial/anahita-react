@@ -8,16 +8,14 @@ import i18n from '../../languages';
 
 const formFields = form.createFormFields(['email']);
 
-const AuthPasswordReset = (props) => {
-  const {
-    reset,
-    success,
-    isFetching,
-    error,
-    alertError,
-    alertSuccess,
-  } = props;
-
+const AuthPasswordReset = ({
+  reset,
+  success,
+  isFetching,
+  error,
+  alertError,
+  alertSuccess,
+}) => {
   const [fields, setFields] = useState(formFields);
 
   useEffect(() => {

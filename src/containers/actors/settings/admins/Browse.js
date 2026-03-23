@@ -20,21 +20,19 @@ import ActorType from '../../../../proptypes/Actor';
 import actions from '../../../../actions';
 import i18n from '../../../../languages';
 
-const ActorsSettingsAdminsBrowse = (props) => {
-  const {
-    browseList,
-    resetList,
-    removeAdmin,
-    alertError,
-    alertSuccess,
-    actor,
-    admins,
-    isFetching,
-    error,
-    success,
-    namespace,
-  } = props;
-
+const ActorsSettingsAdminsBrowse = ({
+  browseList,
+  resetList,
+  removeAdmin,
+  alertError,
+  alertSuccess,
+  actor,
+  admins,
+  isFetching,
+  error,
+  success,
+  namespace,
+}) => {
   if (admins.allIds.length === 0 && isFetching) {
     return (
       <Progress />

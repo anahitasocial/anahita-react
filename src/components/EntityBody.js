@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
-import gfm from 'remark-gfm';
+import remarkGfm from 'remark-gfm';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -30,15 +30,16 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const EntityBody = (props) => {
+const EntityBody = ({
+  children,
+  size = 'body1',
+  contentFilter = false,
+  filters = [
+    'hashtag',
+    'mention',
+  ],
+}) => {
   const classes = useStyles();
-  const {
-    children,
-    size,
-    contentFilter,
-    filters,
-  } = props;
-
   let body = `${children}`;
 
   if (contentFilter) {
@@ -49,15 +50,11 @@ const EntityBody = (props) => {
   }
 
   return (
-    <ReactMarkdown
-      remarkPlugins={[gfm]}
-      className={classNames(
-        classes.root,
-        classes[size],
-      )}
-    >
-      {body}
-    </ReactMarkdown>
+    <div className={classNames(classes.root, classes[size])}>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {body}
+      </ReactMarkdown>
+    </div>
   );
 };
 
@@ -66,16 +63,6 @@ EntityBody.propTypes = {
   size: PropTypes.oneOf(['body1', 'body2']),
   contentFilter: PropTypes.bool,
   filters: PropTypes.arrayOf(PropTypes.string),
-};
-
-EntityBody.defaultProps = {
-  size: 'body1',
-  contentFilter: false,
-  filters: [
-    'hashtag',
-    'mention',
-    // 'url',
-  ],
 };
 
 export default EntityBody;

@@ -13,12 +13,10 @@ import NodeType from '../../proptypes/Node';
 import utils from '../../utils';
 import i18n from '../../languages';
 
-const Likes = (props) => {
-  const {
-    node,
-    comment,
-  } = props;
-
+const Likes = ({
+  node,
+  comment = null,
+}) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -71,10 +69,6 @@ const Likes = (props) => {
 Likes.propTypes = {
   node: NodeType.isRequired,
   comment: CommentType,
-};
-
-Likes.defaultProps = {
-  comment: null,
 };
 
 export default Likes;

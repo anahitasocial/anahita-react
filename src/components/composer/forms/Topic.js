@@ -17,15 +17,13 @@ const {
   BODY,
 } = MEDIUM.FIELDS;
 
-const ComposersTopic = (props) => {
-  const {
-    handleOnChange,
-    handleOnSubmit,
-    fields,
-    medium,
-    isFetching,
-  } = props;
-
+const ComposersTopic = ({
+  handleOnChange,
+  handleOnSubmit,
+  fields,
+  medium,
+  isFetching,
+}) => {
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <Card square>

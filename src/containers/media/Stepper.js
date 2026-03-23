@@ -47,23 +47,21 @@ const formFields = form.createFormFields([
   'body',
 ]);
 
-const MediaStepper = (props) => {
-  const {
-    editItem,
-    alertError,
-    alertSuccess,
-    handleClose,
-    mediumId,
-    items,
-    namespace,
-    viewer,
-    isAuthenticated,
-    error,
-    success,
-    isFetching,
-    open,
-  } = props;
-
+const MediaStepper = ({
+  editItem,
+  alertError,
+  alertSuccess,
+  handleClose,
+  mediumId,
+  items,
+  namespace,
+  viewer,
+  isAuthenticated,
+  error,
+  success,
+  isFetching,
+  open,
+}) => {
   const nextImage = new Image();
   const prevImage = new Image();
 

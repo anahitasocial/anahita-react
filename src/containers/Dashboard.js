@@ -12,14 +12,12 @@ import i18n from '../languages';
 
 import PersonType from '../proptypes/Person';
 
-const DashboardPage = (props) => {
-  const {
-    setAppTitle,
-    readPerson,
-    viewer,
-    person,
-  } = props;
-
+const DashboardPage = ({
+  setAppTitle,
+  readPerson,
+  viewer,
+  person,
+}) => {
   useEffect(() => {
     setAppTitle(i18n.t('dashboard:cTitle'));
     readPerson(viewer.username);

@@ -11,17 +11,15 @@ import i18n from '../../languages';
 
 import DialogConfirm from '../../components/DialogConfirm';
 
-const ActionsBlockFollower = React.forwardRef((props, ref) => {
-  const {
-    blockfollower,
-    actor,
-    follower,
-    alertSuccess,
-    alertError,
-    confirmTitle,
-    confirmMessage,
-  } = props;
-
+const ActionsBlockFollower = React.forwardRef(({
+  blockfollower,
+  actor,
+  follower,
+  alertSuccess,
+  alertError,
+  confirmTitle,
+  confirmMessage,
+}, ref) => {
   const [waiting, setWaiting] = useState(false);
 
   const handleAction = () => {

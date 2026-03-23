@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { singularize } from 'inflection';
+import { useParams } from 'react-router-dom';
 
 import CardContent from '@material-ui/core/CardContent';
 
@@ -21,23 +22,18 @@ const initEmailSettings = {
   sendEmail: false,
 };
 
-const ActorsNotificationsEdit = (props) => {
-  const {
-    readActor,
-    resetActors,
-    actor,
-    alertSuccess,
-    alertError,
-    namespace,
-    computedMatch: {
-      params,
-    },
-    isFetching,
-    error,
-    success,
-  } = props;
-
-  const [id] = params.id.split('-');
+const ActorsNotificationsEdit = ({
+  readActor,
+  resetActors,
+  actor,
+  alertSuccess,
+  alertError,
+  namespace,
+  isFetching,
+  error,
+  success,
+}) => {
+  const { id } = useParams();
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [emailSettings, setEmailSettings] = useState(initEmailSettings);
 
@@ -141,7 +137,6 @@ ActorsNotificationsEdit.propTypes = {
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
-  computedMatch: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,

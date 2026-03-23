@@ -202,8 +202,4 @@ LeftMenu.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
-LeftMenu.defaultProps = {
-  onLogoutClick: null,
-};
-
 export default LeftMenu;

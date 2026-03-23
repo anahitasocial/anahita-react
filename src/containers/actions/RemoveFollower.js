@@ -10,17 +10,15 @@ import i18n from '../../languages';
 
 import DialogConfirm from '../../components/DialogConfirm';
 
-const ActionsRemoveFollower = React.forwardRef((props, ref) => {
-  const {
-    removefollower,
-    actor,
-    follower,
-    alertSuccess,
-    alertError,
-    confirmTitle,
-    confirmMessage,
-  } = props;
-
+const ActionsRemoveFollower = React.forwardRef(({
+  removefollower,
+  actor,
+  follower,
+  alertSuccess,
+  alertError,
+  confirmTitle,
+  confirmMessage,
+}, ref) => {
   const [waiting, setWaiting] = useState(false);
 
   const handleAction = () => {

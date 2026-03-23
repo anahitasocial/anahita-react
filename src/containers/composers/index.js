@@ -26,13 +26,11 @@ const useStyles = makeStyles({
   },
 });
 
-const Composers = (props) => {
+const Composers = ({
+  actor,
+  viewer,
+}) => {
   const classes = useStyles();
-  const {
-    actor,
-    viewer,
-  } = props;
-
   const composers = utils.node.getComposers(actor, viewer);
   const [tab, setTab] = useState(composers[0]);
 

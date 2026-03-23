@@ -27,14 +27,12 @@ const styles = () => {
   };
 };
 
-const Viewer = (props) => {
-  const {
-    classes,
-    viewer,
-    isAuthenticated,
-    login,
-  } = props;
-
+const Viewer = ({
+  classes,
+  viewer = {},
+  isAuthenticated = false,
+  login,
+}) => {
   const profile = `/people/${viewer.username}/`;
   const initials = getActorInitials(viewer);
   const avatar = getAvatarURL(viewer);
@@ -76,11 +74,6 @@ Viewer.propTypes = {
   viewer: ViewerType,
   isAuthenticated: PropTypes.bool,
   login: PropTypes.func.isRequired,
-};
-
-Viewer.defaultProps = {
-  viewer: {},
-  isAuthenticated: false,
 };
 
 const mapStateToProps = (state) => {

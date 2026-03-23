@@ -53,10 +53,10 @@ const styles = (theme) => {
 const FeedCardDefault = ({
   classes,
   node,
-  stats,
-  actions,
+  stats = null,
+  actions = null,
   menu,
-  showOwner,
+  showOwner = false,
 }) => {
   const authorName = getPersonName(node.author);
   const portrait = getPortraitURL(node, 'medium');
@@ -146,13 +146,6 @@ FeedCardDefault.propTypes = {
   menu: PropTypes.node,
   node: NodeType.isRequired,
   showOwner: PropTypes.bool,
-};
-
-FeedCardDefault.defaultProps = {
-  showOwner: false,
-  actions: null,
-  stats: null,
-  menu: null,
 };
 
 export default withStyles(styles)(FeedCardDefault);

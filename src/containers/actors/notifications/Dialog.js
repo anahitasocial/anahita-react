@@ -27,13 +27,11 @@ const initEmailSettings = {
 
 const { node } = utils;
 
-const ActorsNotificationsDialog = (props) => {
-  const {
-    actor,
-    alertSuccess,
-    alertError,
-  } = props;
-
+const ActorsNotificationsDialog = ({
+  actor,
+  alertSuccess,
+  alertError,
+}) => {
   const namespace = node.getNamespace(actor);
 
   const [open, setOpen] = useState(false);

@@ -16,17 +16,15 @@ const formFields = form.createFormFields([
   'password',
 ]);
 
-const AuthSignup = (props) => {
-  const {
-    signup,
-    success,
-    isFetching,
-    error,
-    isAuthenticated,
-    alertError,
-    alertSuccess,
-  } = props;
-
+const AuthSignup = ({
+  signup,
+  success,
+  isFetching,
+  error,
+  isAuthenticated,
+  alertError,
+  alertSuccess,
+}) => {
   const [fields, setFields] = useState(formFields);
 
   useEffect(() => {

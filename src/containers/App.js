@@ -77,16 +77,15 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const App = (props) => {
+const App = ({
+  children,
+  isAuthenticated,
+  viewer,
+  appBarTitle,
+  whoami,
+  logout,
+}) => {
   const classes = useStyles();
-  const {
-    children,
-    isAuthenticated,
-    viewer,
-    appBarTitle,
-    whoami,
-  } = props;
-
   const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -100,7 +99,6 @@ const App = (props) => {
   };
 
   const handleLogout = () => {
-    const { logout } = props;
     logout()
       .then(() => {
         navigate('/');

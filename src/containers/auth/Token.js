@@ -2,28 +2,23 @@
 
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import api from '../../api';
 import actions from '../../actions';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
-const AuthToken = (props) => {
-  const {
-    read,
-    reset,
-    alertSuccess,
-    alertError,
-    isAuthenticated,
-    viewer,
-    resetPassword,
-    match: {
-      params: {
-        token,
-      },
-    },
-  } = props;
+const AuthToken = ({
+  read,
+  reset,
+  alertSuccess,
+  alertError,
+  isAuthenticated,
+  viewer,
+  resetPassword = false,
+}) => {
+  const { token } = useParams();
 
   useEffect(() => {
     api.token.read(token)
@@ -62,12 +57,7 @@ AuthToken.propTypes = {
   alertError: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
   resetPassword: PropTypes.bool,
-};
-
-AuthToken.defaultProps = {
-  resetPassword: false,
 };
 
 const mapStateToProps = (state) => {

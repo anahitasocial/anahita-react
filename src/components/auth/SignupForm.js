@@ -15,22 +15,20 @@ import SignUpIcon from '@material-ui/icons/PersonAdd';
 import { Signup as SIGNUP } from '../../constants';
 import i18n from '../../languages';
 
-const SignupForm = (props) => {
-  const {
-    handleOnChange,
-    handleOnBlur,
-    handleOnSubmit,
-    fields: {
-      givenName,
-      familyName,
-      username,
-      email,
-      password,
-    },
-    isFetching,
-    success,
-  } = props;
-
+const SignupForm = ({
+  handleOnChange,
+  handleOnBlur,
+  handleOnSubmit,
+  fields: {
+    givenName,
+    familyName,
+    username,
+    email,
+    password,
+  },
+  isFetching,
+  success,
+}) => {
   const {
     GIVEN_NAME,
     FAMILY_NAME,

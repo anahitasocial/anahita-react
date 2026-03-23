@@ -10,22 +10,20 @@ import PersonType from '../../../proptypes/Person';
 import MediumDefault from '../../../proptypes/MediumDefault';
 import i18n from '../../../languages';
 
-const MediaComposerDefault = (props) => {
-  const {
-    actor,
-    viewer,
-    addItem,
-    success,
-    error,
-    isFetching,
-    alertError,
-    alertSuccess,
-    formComponent: FormComponent,
-    formFields,
-    supportedMimetypes,
-    namespace,
-  } = props;
-
+const MediaComposerDefault = ({
+  actor,
+  viewer,
+  addItem,
+  success,
+  error,
+  isFetching,
+  alertError,
+  alertSuccess,
+  formComponent: FormComponent,
+  formFields,
+  supportedMimetypes = [],
+  namespace,
+}) => {
   const [fields, setFields] = useState(formFields);
   const [medium, setMedium] = useState({ ...MediumDefault });
   const [file, setFile] = useState(null);
@@ -130,10 +128,6 @@ MediaComposerDefault.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   namespace: PropTypes.string.isRequired,
-};
-
-MediaComposerDefault.defaultProps = {
-  supportedMimetypes: [],
 };
 
 const mapStateToProps = (namespace) => {

@@ -15,19 +15,16 @@ import LoginIcon from '@material-ui/icons/Person';
 import { Auth as AUTH } from '../../constants';
 import i18n from '../../languages';
 
-const LoginForm = (props) => {
-  const {
-    handleOnChange,
-    handleOnSubmit,
-    fields: {
-      username,
-      password,
-    },
-    isFetching,
-  } = props;
-
+const LoginForm = ({
+  handleOnChange,
+  handleOnSubmit,
+  fields: {
+    username,
+    password,
+  },
+  isFetching,
+}) => {
   const { IDENTIFIER, PASSWORD } = AUTH.FIELDS;
-
   const enableSubmit = username.isValid && password.isValid;
 
   return (
