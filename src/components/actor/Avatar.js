@@ -64,19 +64,19 @@ const ActorAvatar = (props) => {
           <Avatar
             aria-label={actor.name}
             alt={actor.name}
-            src={avatar}
+            src={avatar || undefined}
             className={clsx(classes[`${size}Avatar`], classes.avatar)}
           >
-            {!actor && initials}
+            {initials}
           </Avatar>
         </Link>}
       {!linked &&
         <Avatar
           aria-label={actor.name}
           alt={actor.name}
-          src={avatar}
+          src={avatar || undefined}
         >
-          {!avatar && initials}
+          {initials}
         </Avatar>}
     </>
   );
