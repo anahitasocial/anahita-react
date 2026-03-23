@@ -30,19 +30,21 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const MediaBrowse = (props) => {
+const MediaBrowse = ({
+  browseList,
+  resetList,
+  items,
+  namespace,
+  viewer,
+  isFetching,
+  queryFilters = {
+    q: '',
+    oid: 0,
+    sort: RECENT,
+  },
+  total = 0,
+}) => {
   const classes = useStyles();
-  const {
-    browseList,
-    resetList,
-    items,
-    namespace,
-    viewer,
-    isFetching,
-    queryFilters,
-    total,
-  } = props;
-
   const [start, setStart] = useState(0);
   // eslint-disable-next-line no-unused-vars
   const [current, setCurrent] = useState(items.allIds[0]);
@@ -140,15 +142,6 @@ MediaBrowse.propTypes = {
   items: MediaType.isRequired,
   isFetching: PropTypes.bool.isRequired,
   total: PropTypes.number,
-};
-
-MediaBrowse.defaultProps = {
-  queryFilters: {
-    q: '',
-    oid: 0,
-    sort: RECENT,
-  },
-  total: 0,
 };
 
 const mapStateToProps = (namespace) => {

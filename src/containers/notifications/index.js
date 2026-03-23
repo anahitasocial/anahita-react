@@ -37,19 +37,17 @@ const {
   LIMIT,
 } = APP.BROWSE;
 
-const NotificationsBrowse = (props) => {
-  const {
-    browseList,
-    resetList,
-    editItem,
-    deleteItem,
-    successAlert,
-    alertError,
-    items,
-    error,
-    total,
-  } = props;
-
+const NotificationsBrowse = ({
+  browseList,
+  resetList,
+  editItem,
+  deleteItem,
+  successAlert,
+  alertError,
+  items,
+  error,
+  total = 0,
+}) => {
   const [start, setStart] = useState(0);
   const [selectedItem, setSelectedItem] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -195,10 +193,6 @@ NotificationsBrowse.propTypes = {
   items: NotificationsType.isRequired,
   error: PropTypes.string.isRequired,
   total: PropTypes.number,
-};
-
-NotificationsBrowse.defaultProps = {
-  total: 0,
 };
 
 const mapStateToProps = (state) => {

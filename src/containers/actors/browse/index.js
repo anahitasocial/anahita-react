@@ -36,18 +36,22 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const ActorsBrowse = (props) => {
+const ActorsBrowse = ({
+  browseList,
+  resetList,
+  namespace,
+  viewer,
+  items,
+  isFetching,
+  queryFilters = {
+    q: '',
+    disabled: false,
+    oid: 0,
+    filter: '',
+  },
+  total = 0,
+}) => {
   const classes = useStyles();
-  const {
-    browseList,
-    resetList,
-    namespace,
-    viewer,
-    items,
-    isFetching,
-    queryFilters,
-    total,
-  } = props;
 
   const [start, setStart] = useState(0);
 
@@ -122,16 +126,6 @@ ActorsBrowse.propTypes = {
   items: ActorsType.isRequired,
   isFetching: PropTypes.bool.isRequired,
   total: PropTypes.number,
-};
-
-ActorsBrowse.defaultProps = {
-  queryFilters: {
-    q: '',
-    disabled: false,
-    oid: 0,
-    filter: '',
-  },
-  total: 0,
 };
 
 const mapStateToProps = (namespace) => {

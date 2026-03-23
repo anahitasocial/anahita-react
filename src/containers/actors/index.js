@@ -24,16 +24,14 @@ const useStyles = makeStyles({
   },
 });
 
-const Actors = (props) => {
+const Actors = ({
+  setAppTitle,
+  selectedTab = '',
+  namespace,
+  owner,
+  isAuthenticated,
+}) => {
   const classes = useStyles();
-  const {
-    setAppTitle,
-    selectedTab,
-    namespace,
-    owner,
-    isAuthenticated,
-  } = props;
-
   const [tab, setTab] = useState(selectedTab);
 
   const changeTab = (event, value) => {
@@ -92,10 +90,6 @@ Actors.propTypes = {
   namespace: PropTypes.string.isRequired,
   owner: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-};
-
-Actors.defaultProps = {
-  selectedTab: '',
 };
 
 const mapDispatchToProps = () => {

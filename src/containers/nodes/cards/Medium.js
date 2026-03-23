@@ -8,12 +8,10 @@ import MediumCard from '../../../components/cards/Medium';
 
 import MediumType from '../../../proptypes/Medium';
 
-const MediaCard = (props) => {
-  const {
-    medium,
-    handleView,
-  } = props;
-
+const MediaCard = ({
+  medium,
+  handleView,
+}) => {
   return (
     <MediumCard
       medium={medium}
@@ -31,10 +29,6 @@ const MediaCard = (props) => {
 MediaCard.propTypes = {
   medium: MediumType.isRequired,
   handleView: PropTypes.func,
-};
-
-MediaCard.defaultProps = {
-  handleView: null,
 };
 
 const mapStateToProps = (state) => {

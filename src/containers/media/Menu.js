@@ -29,14 +29,12 @@ const NotificationSubActionWithRef = withRef(NotificationSubAction);
 const CommentStatusActionWithRef = withRef(CommentStatusAction);
 const DeleteActionWithRef = withRef(DeleteAction);
 
-const MediaMenu = (props) => {
-  const {
-    medium,
-    viewer,
-    handleEdit,
-    inline,
-  } = props;
-
+const MediaMenu = ({
+  medium,
+  viewer,
+  handleEdit,
+  inline = false,
+}) => {
   const [menuAnchorEl, setAnchorEl] = React.useState(null);
 
   const handleOpenMenu = (event) => {
@@ -110,11 +108,6 @@ MediaMenu.propTypes = {
   viewer: PersonType.isRequired,
   handleEdit: PropTypes.func,
   inline: PropTypes.bool,
-};
-
-MediaMenu.defaultProps = {
-  handleEdit: null,
-  inline: false,
 };
 
 export default MediaMenu;
