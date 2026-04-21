@@ -34,6 +34,7 @@ import MediaRead from '../containers/media/Read';
 import Notifications from '../containers/notifications';
 
 import OAuthCallback from '../containers/OAuthCallback';
+import OAuthClients from '../containers/oauth/Clients';
 
 import People from '../containers/people';
 import PeopleAdd from '../containers/people/Add';
@@ -240,6 +241,8 @@ function AppRoutes() {
 
       <Route path="/locations" element={<Locations />} />
       <Route path="/locations/:id" element={<LocationsRead />} />
+
+      <Route path="/settings/clients" element={<OAuthClients />} />
 
       <Route path="/pages/:alias" element={<StaticPage />} />
 

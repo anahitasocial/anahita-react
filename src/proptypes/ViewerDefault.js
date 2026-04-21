@@ -2,7 +2,7 @@ export default {
   id: 0,
   username: '',
   email: '',
-  userType: 'registered',
+  usertype: 'registered',
   givenName: '',
   familyName: '',
   avatarURLs: {},

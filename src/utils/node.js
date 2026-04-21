@@ -28,15 +28,15 @@ const isPerson = (node) => {
 };
 
 const isSuperAdmin = (actor) => {
-  return actor.userType === SUPER_ADMIN;
+  return actor.usertype === SUPER_ADMIN;
 };
 
 const isAdmin = (actor) => {
-  return [SUPER_ADMIN, ADMIN].includes(actor.userType);
+  return [SUPER_ADMIN, ADMIN].includes(actor.usertype);
 };
 
 const isRegistered = (actor) => {
-  return [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.userType);
+  return [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.usertype);
 };
 
 const isMedium = (node) => {

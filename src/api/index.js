@@ -17,6 +17,7 @@ import locations from './locations';
 import node from './node';
 import notifications from './notifications';
 import notificationsSub from './notifications/sub';
+import oauthClients from './oauthClients';
 import password from './password';
 import repost from './feed/repost';
 import session from './session';
@@ -112,6 +113,7 @@ const apis = {
   node,
   notifications,
   notificationsSub,
+  oauthClients,
   password,
   repost,
   session,

@@ -14,7 +14,7 @@ export default shape({
   id: number,
   username: string,
   email: string,
-  userType: oneOf([
+  usertype: oneOf([
     USERTYPE.GUEST,
     USERTYPE.REGISTERED,
     USERTYPE.ADMIN,

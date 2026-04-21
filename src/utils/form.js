@@ -6,13 +6,17 @@ const formField = {
   error: '',
   helperText: '',
   required: false,
+  touched: false,
 };
 
-const createFormFields = (fields = []) => {
+const createFormFields = (fields = [], defaults = {}) => {
   const formFields = {};
 
   fields.forEach((field) => {
-    formFields[field] = { ...formField };
+    formFields[field] = {
+      ...formField,
+      value: defaults[field] !== undefined ? defaults[field] : '',
+    };
   });
 
   return formFields;
@@ -20,69 +24,78 @@ const createFormFields = (fields = []) => {
 
 const validateField = (field, fields, trimmed = []) => {
   const { name } = field;
-  const value = trimmed.includes(name) ? field.value.trim() : field.value;
-  const isValid = (!field.required && field.value === '') ? true : field.willValidate && field.checkValidity();
+  const rawValue = field.type === 'checkbox' ? field.checked : field.value;
+  const value = trimmed.includes(name) && typeof rawValue === 'string'
+    ? rawValue.trim()
+    : rawValue;
+
+  const isEmpty = value === '' || value === null || value === undefined;
+  const isValid = (!field.required && isEmpty)
+    ? true
+    : field.willValidate && field.checkValidity();
 
   return {
     ...fields,
     [name]: {
+      ...fields[name],
       value,
       isValid,
-      error: field.validationMessage,
+      error: isValid ? '' : field.validationMessage,
       required: field.required,
+      touched: true,
     },
   };
 };
 
 const validateForm = (form, fields) => {
   const keys = _.keys(fields);
-  const newFields = { ...fields };
+  const newFields = {};
 
   keys.forEach((key) => {
-    const field = form[key] || formField;
-    const isValid = (!field.required && field.value === '') ? true : field.willValidate && field.checkValidity();
+    const field = form[key];
+    if (!field) {
+      newFields[key] = { ...fields[key] };
+      return;
+    }
 
-    console.log(isValid);
+    const rawValue = field.type === 'checkbox' ? field.checked : field.value;
+    const isEmpty = rawValue === '' || rawValue === null || rawValue === undefined;
+    const isValid = (!field.required && isEmpty)
+      ? true
+      : field.willValidate && field.checkValidity();
 
-    newFields[key].value = field.value;
-    newFields[key].isValid = isValid;
-    newFields[key].error = field.validationMessage;
-    newFields[key].required = field.required;
+    newFields[key] = {
+      ...fields[key],
+      value: rawValue,
+      isValid,
+      error: isValid ? '' : field.validationMessage,
+      required: field.required,
+      touched: true,
+    };
   });
 
   return newFields;
 };
 
 const isValid = (fields) => {
-  const keys = _.keys(fields);
-
-  return keys.filter((key) => {
-    return fields[key].isValid === false;
-  }).length === 0;
+  return _.every(fields, (f) => { return f.isValid; });
 };
 
 const fieldsToData = (fields) => {
-  const keys = _.keys(fields);
-  const entity = {};
-
-  keys.forEach((key) => {
-    entity[key] = fields[key].value;
-  });
-
-  return entity;
+  return _.mapValues(fields, 'value');
 };
 
 const dataToFields = (data, fields) => {
-  const newFields = { ...fields };
-  const keys = _.keys(newFields);
+  const newFields = {};
 
-  keys.forEach((key) => {
-    if (data[key]) {
-      newFields[key].value = data[key];
-    }
+  _.keys(fields).forEach((key) => {
+    newFields[key] = {
+      ...fields[key],
+      value: key in data ? data[key] : fields[key].value,
+    };
   });
 
-  return fields;
+  return newFields;
 };
 
 export default {

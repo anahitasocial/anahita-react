@@ -2,6 +2,7 @@ import actor from './actor';
 import comment from './comment';
 import medium from './medium';
 import node from './node';
+import oauthClient from './oauthClient';
 import settings from './settings';
 
 export default {
@@ -9,5 +10,6 @@ export default {
   comment,
   medium,
   node,
+  oauthClient,
   settings,
 };

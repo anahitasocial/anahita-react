@@ -25,6 +25,7 @@ import createMediaReducer from './createMedia';
 import createFeed from './createFeed';
 
 import DEFAULT_NODE from '../proptypes/NodeDefault';
+import DEFAULT_OAUTH_CLIENT from '../proptypes/OAuthClientDefault';
 
 const namespaces = {
   actors: [
@@ -84,5 +85,7 @@ reducers.comments = createCommentReducer('comments');
 
 reducers.feedLeaders = createFeed('feed_leaders');
 reducers.feedActor = createFeed('feed_actor');
+
+reducers.oauthClients = createReducer('oauth_clients', DEFAULT_OAUTH_CLIENT);
 
 export default combineReducers(reducers);

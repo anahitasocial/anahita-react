@@ -107,4 +107,6 @@ actions.notifications = {
   subs: createAction('notifications_sub')(apis.notificationsSub),
 };
 
+actions.oauthClients = createAction('oauth_clients')(apis.oauthClients);
+
 export default actions;
