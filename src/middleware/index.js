@@ -1,6 +1,6 @@
 // should catch any API errors and act accordingly
 // eslint-disable-next-line import/prefer-default-export, arrow-body-style
-export const apiErrorMiddleware = (store) => (next) => (action) => {
+export const apiErrorMiddleware = () => (next) => (action) => {
   const result = next(action);
 
   if (result.payload && result.payload.error) {
