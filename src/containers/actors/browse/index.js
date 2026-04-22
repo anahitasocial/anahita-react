@@ -22,6 +22,13 @@ import { App as APP } from '../../../constants';
 
 const { LIMIT } = APP.BROWSE;
 
+const DEFAULT_FILTERS = {
+  q: '',
+  disabled: false,
+  oid: 0,
+  filter: '',
+};
+
 const useStyles = makeStyles((theme) => {
   return {
     addButton: {
@@ -42,37 +49,46 @@ const ActorsBrowse = ({
   namespace,
   viewer,
   items,
-  isFetching,
-  queryFilters = {
-    q: '',
-    disabled: false,
-    oid: 0,
-    filter: '',
-  },
+  queryFilters = DEFAULT_FILTERS,
   total = 0,
 }) => {
   const classes = useStyles();
 
+  const {
+    q = '',
+    disabled = false,
+    oid = 0,
+    filter = '',
+  } = queryFilters;
+
   const [start, setStart] = useState(0);
 
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       resetList();
     };
   }, []);
 
+  // Reset pagination when filters change
   useEffect(() => {
-    if (!isFetching) {
-      browseList({
-        start,
-        limit: LIMIT,
-        ...queryFilters,
-      }, namespace);
-    }
-  }, [start, queryFilters]);
+    setStart(0);
+  }, [q, disabled, oid, filter, namespace]);
+
+  // Fetch data when pagination or filters change
+  useEffect(() => {
+    browseList({
+      start,
+      limit: LIMIT,
+      q,
+      disabled,
+      oid,
+      filter,
+    }, namespace);
+  }, [start, q, disabled, oid, filter, namespace]);
 
   const fetchList = () => {
-    return setStart(start + LIMIT);
+    setStart(start + LIMIT);
   };
 
   const canAdd = permissions.canAdd(viewer, namespace);
@@ -80,7 +96,7 @@ const ActorsBrowse = ({
 
   return (
     <>
-      {canAdd &&
+      {canAdd && (
         <Fab
           aria-label="Add"
           color="secondary"
@@ -89,7 +105,8 @@ const ActorsBrowse = ({
           to={`/${namespace}/add/`}
         >
           <AddIcon />
-        </Fab>}
+        </Fab>
+      )}
       <InfiniteScroll
         dataLength={items.allIds.length}
         next={fetchList}
@@ -124,7 +141,6 @@ ActorsBrowse.propTypes = {
   viewer: PersonType.isRequired,
   queryFilters: PropTypes.object,
   items: ActorsType.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   total: PropTypes.number,
 };
 
