@@ -50,6 +50,7 @@ export default (state = { ...initState }, action) => {
       };
     case SESSION.READ.SUCCESS:
     case SESSION.ADD.SUCCESS:
+      localStorage.setItem(VIEWER_STORAGE_KEY, JSON.stringify(action.viewer));
       return {
         ...state,
         viewer: action.viewer,
@@ -59,6 +60,15 @@ export default (state = { ...initState }, action) => {
         error: '',
       };
     case SESSION.READ.FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        success: false,
+        error: action.error,
+        // Don't clear viewer or isAuthenticated
+        // The session cookie might still be valid
+        // Let the next request retry
+      };
     case SESSION.ADD.FAILURE:
       return {
         ...state,
@@ -77,6 +87,7 @@ export default (state = { ...initState }, action) => {
         error: '',
       };
     case SESSION.DELETE.SUCCESS:
+      localStorage.removeItem(VIEWER_STORAGE_KEY);
       return {
         ...state,
         viewer: { ...PersonDefault },

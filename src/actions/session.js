@@ -1,39 +1,29 @@
-/* eslint-disable no-undef */
 import apis from '../api';
-import {
-  Session as SESSION,
-  Auth as AUTH,
-} from '../constants';
+import { Session as SESSION } from '../constants';
 
-const { VIEWER_STORAGE_KEY } = AUTH;
 const { session: api } = apis;
 
 function reset() {
   return { type: SESSION.RESET };
 }
 
-// Login redirects to OAuth flow - no dispatch needed
 function add() {
   return () => {
     api.login();
   };
 }
 
-// Called from OAuthCallback component after code exchange
 function handleCallback(code) {
   return (dispatch) => {
     dispatch({ type: SESSION.ADD.REQUEST });
     return api.exchangeCode(code)
       .then(() => {
-        // No tokens to store — they're in the httpOnly cookie
         return api.read();
       })
       .then((response) => {
-        const { data } = response;
-        localStorage.setItem(VIEWER_STORAGE_KEY, JSON.stringify(data));
         dispatch({
           type: SESSION.ADD.SUCCESS,
-          viewer: data,
+          viewer: response.data,
         });
       })
       .catch((error) => {
@@ -45,20 +35,16 @@ function handleCallback(code) {
   };
 }
 
-// Read viewer from userinfo endpoint
 function read() {
   return async (dispatch) => {
     dispatch({ type: SESSION.READ.REQUEST });
     try {
       const response = await api.read();
-      const { data } = response;
-      localStorage.setItem(VIEWER_STORAGE_KEY, JSON.stringify(data));
       dispatch({
         type: SESSION.READ.SUCCESS,
-        viewer: data,
+        viewer: response.data,
       });
     } catch (error) {
-      localStorage.removeItem(VIEWER_STORAGE_KEY);
       dispatch({
         type: SESSION.READ.FAILURE,
         error: error.message,
@@ -67,14 +53,12 @@ function read() {
   };
 }
 
-// Logout
 function deleteItem() {
   return async (dispatch) => {
     dispatch({ type: SESSION.DELETE.REQUEST });
     try {
       await api.deleteItem();
-      localStorage.removeItem(VIEWER_STORAGE_KEY);
-      dispatch({ type: SESSION.DELETE.SUCCESS, viewer: {} });
+      dispatch({ type: SESSION.DELETE.SUCCESS });
     } catch (error) {
       dispatch({
         type: SESSION.DELETE.FAILURE,
