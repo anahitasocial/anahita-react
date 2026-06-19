@@ -5,9 +5,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 
-import PersonType from '../../proptypes/Person';
-import { Person as PERSON } from '../../constants';
-import i18n from '../../languages';
+import PersonType from '../../../proptypes/Person';
+import { Person as PERSON } from '../../../constants';
+import i18n from '../../../languages';
 
 const PersonAccount = (props) => {
   const {

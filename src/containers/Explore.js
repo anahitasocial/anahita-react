@@ -10,7 +10,7 @@ import i18n from '../languages';
 import { App as APP } from '../constants';
 
 import Actors from './actors';
-import People from './people';
+import People from './people/Browse';
 import Hashtags from './hashtags';
 import Locations from './locations';
 import Media from './media';

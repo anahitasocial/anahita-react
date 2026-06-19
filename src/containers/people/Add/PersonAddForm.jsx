@@ -11,9 +11,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
-import PersonType from '../../proptypes/Person';
-import { Person as PERSON } from '../../constants';
-import i18n from '../../languages';
+import PersonType from '../../../proptypes/Person';
+import { Person as PERSON } from '../../../constants';
+import i18n from '../../../languages';
 
 const {
   GIVEN_NAME,
@@ -25,7 +25,7 @@ const {
   TYPE,
 } = PERSON.FIELDS;
 
-const PersonAdd = (props) => {
+const PersonAddForm = (props) => {
   const {
     handleOnChange,
     handleOnBlur,
@@ -39,7 +39,7 @@ const PersonAdd = (props) => {
     },
     person,
     isSuperAdmin,
-    dismissPath,
+    dismissPath = '',
     isFetching,
   } = props;
 
@@ -217,7 +217,7 @@ const PersonAdd = (props) => {
   );
 };
 
-PersonAdd.propTypes = {
+PersonAddForm.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnBlur: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
@@ -228,8 +228,4 @@ PersonAdd.propTypes = {
   isFetching: PropTypes.bool.isRequired,
 };
 
-PersonAdd.defaultProps = {
-  dismissPath: '',
-};
-
-export default PersonAdd;
+export default PersonAddForm;

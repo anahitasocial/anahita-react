@@ -7,17 +7,17 @@ import Typography from '@material-ui/core/Typography';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import actions from '../../actions';
-import NodesType from '../../proptypes/Nodes';
+import actions from '../../../actions';
+import NodesType from '../../../proptypes/Nodes';
 
-import CommentCard from '../../components/cards/Comment';
-import ActorsCard from '../actors/browse/Card';
-import Masonry from '../../components/BreakpointMasonry';
-import MediaCard from '../nodes/cards/Medium';
-import Progress from '../../components/Progress';
-import { App as APP, Search as SEARCH } from '../../constants';
+import CommentCard from '../../../components/cards/Comment';
+import ActorsCard from '../../actors/browse/Card';
+import Masonry from '../../../components/BreakpointMasonry';
+import MediaCard from '../../nodes/cards/Medium';
+import Progress from '../../../components/Progress';
+import { App as APP, Search as SEARCH } from '../../../constants';
 
-import utils from '../../utils/node';
+import utils from '../../../utils/node';
 
 const { LIMIT } = APP.BROWSE;
 
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const SearchBrowse = (props) => {
+const SearchList = (props) => {
   const classes = useStyles();
   const {
     browseList,
@@ -155,7 +155,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-SearchBrowse.propTypes = {
+SearchList.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
@@ -173,7 +173,7 @@ SearchBrowse.propTypes = {
   total: PropTypes.number,
 };
 
-SearchBrowse.defaultProps = {
+SearchList.defaultProps = {
   total: 0,
 };
 
@@ -194,4 +194,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SearchBrowse);
+)(SearchList);

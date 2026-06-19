@@ -6,15 +6,15 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import PersonAddForm from '../../components/person/Add';
-import actions from '../../actions';
-import api from '../../api';
-import { Person as PERSON } from '../../constants';
-import utils from '../../utils';
+import PersonAddForm from './PersonAddForm';
+import actions from '../../../actions';
+import api from '../../../api';
+import { Person as PERSON } from '../../../constants';
+import utils from '../../../utils';
 
-import PersonType from '../../proptypes/Person';
-import PeopleType from '../../proptypes/People';
-import i18n from '../../languages';
+import PersonType from '../../../proptypes/Person';
+import PeopleType from '../../../proptypes/People';
+import i18n from '../../../languages';
 
 const { form } = utils;
 const {

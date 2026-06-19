@@ -21,10 +21,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 
-import SearchBrowse from './Browse';
-import actions from '../../actions';
-import { Search as SEARCH } from '../../constants';
-import i18n from '../../languages';
+import SearchList from './SearchList';
+import actions from '../../../actions';
+import { Search as SEARCH } from '../../../constants';
+import i18n from '../../../languages';
 
 const { SCOPE, SORTING } = SEARCH;
 
@@ -201,7 +201,7 @@ const Search = (props) => {
       </AppBar>
       {useMemo(() => {
         return (
-          <SearchBrowse
+          <SearchList
             key={`${sort}-${scope}-${searchRange}-${searchComments}`}
             queryParams={{
               q,

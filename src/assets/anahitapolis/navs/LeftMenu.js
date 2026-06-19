@@ -25,7 +25,7 @@ const LeftMenu = (props) => {
   const {
     isAuthenticated,
     viewer,
-    onLogoutClick,
+    onLogoutClick = () => {},
   } = props;
   const location = useLocation();
   const { pathname = '/' } = location;
@@ -155,10 +155,6 @@ LeftMenu.propTypes = {
   onLogoutClick: PropTypes.func,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-};
-
-LeftMenu.defaultProps = {
-  onLogoutClick: null,
 };
 
 export default LeftMenu;

@@ -17,7 +17,7 @@ import HomePage from '../containers/home';
 import Actors from '../containers/actors';
 import ActorsRead from '../containers/actors/read';
 import ActorsAdd from '../containers/actors/Add';
-import ActorsSettings from '../containers/actors/settings';
+import ActorsSettings from '../containers/actors/Settings';
 import ActorsNotificationsEdit from '../containers/actors/notifications/Edit';
 
 import Blogs from '../containers/blogs';
@@ -31,17 +31,17 @@ import LocationsRead from '../containers/locations/Read';
 import Media from '../containers/media';
 import MediaRead from '../containers/media/Read';
 
-import Notifications from '../containers/notifications';
+import Notifications from '../containers/notifications/Browse';
 
 import OAuthCallback from '../containers/OAuthCallback';
 import OAuthClients from '../containers/oauth/Clients';
 
-import People from '../containers/people';
+import People from '../containers/people/Browse';
 import PeopleAdd from '../containers/people/Add';
 
 import DashboardPage from '../containers/Dashboard';
 import ExplorePage from '../containers/Explore';
-import SearchPage from '../containers/search';
+import SearchPage from '../containers/search/Browse';
 import Settings from '../containers/settings';
 import StaticPage from '../containers/page';
 import NotFoundPage from '../containers/NotFound';

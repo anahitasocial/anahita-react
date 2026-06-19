@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { singularize } from 'inflected';
 import moment from 'moment';
-
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 
-import InfoForm from './InfoForm';
+import ActorInfoForm from '../../../components/actor/forms/Info';
 import Progress from '../../../components/Progress';
 import actions from '../../../actions';
 import permissions from '../../../permissions';
-import { Person as PERSON } from '../../../constants';
-import PersonType from '../../../proptypes/Person';
 import form from '../../../utils/form';
+
+import ActorType from '../../../proptypes/Actor';
+import PersonType from '../../../proptypes/Person';
 import i18n from '../../../languages';
 
-const { SUPER_ADMIN } = PERSON.FIELDS.USERTYPE;
-
 const formFields = form.createFormFields([
-  'givenName',
-  'familyName',
+  'name',
   'body',
   'website',
   'contact_url',
@@ -29,17 +27,18 @@ const formFields = form.createFormFields([
 
 const { canAdminister } = permissions.actor;
 
-const PersonSettingsInfo = (props) => {
+const ActorsSettingsInfo = (props) => {
   const {
-    editPerson,
-    viewer,
+    editActor,
+    namespace,
     isFetching,
-    person: _Person,
+    viewer,
+    actor: defaultActor,
   } = props;
 
-  const [person, setPerson] = useState({
-    ..._Person,
-    ..._Person.information,
+  const [actor, setActor] = useState({
+    ...defaultActor,
+    ...defaultActor.information,
   });
 
   const [fields, setFields] = useState(formFields);
@@ -49,15 +48,15 @@ const PersonSettingsInfo = (props) => {
     const { name, value, checked } = target;
 
     if (name === 'enabled') {
-      person[name] = Boolean(checked);
+      actor[name] = Boolean(checked);
     } else {
-      person[name] = value;
+      actor[name] = value;
     }
 
     const newFields = form.validateField(target, fields);
 
     setFields({ ...newFields });
-    setPerson({ ...person });
+    setActor({ ...actor });
   };
 
   const handleOnSubmit = (event) => {
@@ -68,45 +67,43 @@ const PersonSettingsInfo = (props) => {
 
     if (form.isValid(newFields)) {
       const formData = form.fieldsToData(newFields);
-      editPerson({
+      editActor({
         ...formData,
-        id: person.id,
-        enabled: person.enabled,
+        id: actor.id,
+        enabled: actor.enabled ? 1 : 0,
       });
     }
 
     setFields({ ...newFields });
   };
 
-  if (!person.id && isFetching) {
+  if (!actor.id && isFetching) {
     return (
       <Progress />
     );
   }
 
-  const isSuperAdmin = viewer.usertype === SUPER_ADMIN;
-  const canAdmin = canAdminister(person) && viewer.id !== person.id;
-  const joinedDate = moment.utc(person.creationTime).format('LLL').toString();
+  const formTitle = `${singularize(namespace)} information`;
+  const created = moment.utc(actor.creationTime).format('LLL').toString();
 
   return (
-    <InfoForm
+    <ActorInfoForm
+      formTitle={formTitle}
+      actor={actor}
       fields={fields}
-      person={person}
       handleOnChange={handleOnChange}
       handleOnSubmit={handleOnSubmit}
       isFetching={isFetching}
-      canChangeUsertype={canAdmin}
-      isSuperAdmin={isSuperAdmin}
-      enabled={canAdmin &&
+      enabled={canAdminister(viewer) &&
         <>
           <Typography variant="caption" display="block">
-            {i18n.t('people:person.joinedDate', { date: joinedDate })}
+            {`Created ${created}`}
           </Typography>
           <FormControlLabel
             control={
               <Switch
                 name="enabled"
-                checked={person.enabled}
+                checked={actor.enabled}
                 onChange={handleOnChange}
               />
             }
@@ -117,41 +114,47 @@ const PersonSettingsInfo = (props) => {
   );
 };
 
-PersonSettingsInfo.propTypes = {
-  editPerson: PropTypes.func.isRequired,
-  person: PersonType.isRequired,
+ActorsSettingsInfo.propTypes = {
+  editActor: PropTypes.func.isRequired,
+  actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
+  namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const {
-    people: {
-      current: person,
-    },
-    isFetching,
-  } = state.people;
+const mapStateToProps = (namespace) => {
+  return (state) => {
+    const {
+      [namespace]: {
+        current: actor,
+      },
+      isFetching,
+    } = state[namespace];
 
-  const {
-    viewer,
-  } = state.session;
+    const { viewer } = state.session;
 
-  return {
-    person,
-    viewer,
-    isFetching,
+    return {
+      viewer,
+      actor,
+      namespace,
+      isFetching,
+    };
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    editPerson: (person) => {
-      dispatch(actions.people.edit(person));
-    },
+const mapDispatchToProps = (namespace) => {
+  return (dispatch) => {
+    return {
+      editActor: (actor) => {
+        return dispatch(actions[namespace].edit(actor));
+      },
+    };
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PersonSettingsInfo);
+export default (namespace) => {
+  return connect(
+    mapStateToProps(namespace),
+    mapDispatchToProps(namespace),
+  )(ActorsSettingsInfo);
+};
