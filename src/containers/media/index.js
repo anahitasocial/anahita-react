@@ -27,15 +27,17 @@ const useStyles = makeStyles({
   },
 });
 
-const Media = (props) => {
+const Media = ({
+  setAppTitle,
+  selectedTab = RECENT,
+  namespace,
+  queryFilters = {
+    q: '',
+    oid: 0,
+    sort: RECENT,
+  },
+}) => {
   const classes = useStyles();
-  const {
-    setAppTitle,
-    selectedTab,
-    namespace,
-    queryFilters,
-  } = props;
-
   const [tab, setTab] = useState(selectedTab);
 
   const changeTab = (event, value) => {
@@ -89,15 +91,6 @@ Media.propTypes = {
   ]),
   namespace: PropTypes.string.isRequired,
   queryFilters: PropTypes.object,
-};
-
-Media.defaultProps = {
-  selectedTab: RECENT,
-  queryFilters: {
-    q: '',
-    oid: 0,
-    sort: RECENT,
-  },
 };
 
 const mapDispatchToProps = () => {

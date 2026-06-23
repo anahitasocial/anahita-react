@@ -1,33 +1,38 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import CommentStats from '../../components/comment/Stats';
-import LikeAction from '../likes/actions/Like';
-import LikesStats from '../likes';
-import MediumCard from '../../components/cards/Medium';
-import EditAccessAction from '../actions/medium/Access';
+import CommentStats from '../../../components/comment/Stats';
+import LikeAction from '../../likes/actions/Like';
+import LikesStats from '../../likes';
+import MediumCard from '../../../components/cards/Medium';
+import EditAccessAction from '../../actions/medium/Access';
 
-import PersonType from '../../proptypes/Person';
-import MediumType from '../../proptypes/Medium';
+import PersonType from '../../../proptypes/Person';
+import MediumType from '../../../proptypes/Medium';
 
-import MediumMenu from './Menu';
-import utils from '../../utils';
-import perms from '../../permissions';
+import MediumMenu from '../MediaMenu';
+import utils from '../../../utils';
+import perms from '../../../permissions';
 
 const { getNamespace } = utils.node;
 
-const MediaCard = (props) => {
-  const {
-    medium,
-    viewer,
-    isAuthenticated,
-    handleView,
-  } = props;
-
+const MediaListItem = ({
+  medium,
+  viewer,
+  isAuthenticated,
+  handleView = null,
+}) => {
   const namespace = getNamespace(medium);
-  const Like = LikeAction(namespace);
-  const Access = EditAccessAction(namespace);
+
+  const Like = useMemo(() => {
+    return LikeAction(namespace);
+  }, [namespace]);
+
+  const Access = useMemo(() => {
+    return EditAccessAction(namespace);
+  }, [namespace]);
+
   const canEditMedium = perms.medium.canEdit(viewer, medium);
 
   return (
@@ -52,22 +57,15 @@ const MediaCard = (props) => {
   );
 };
 
-MediaCard.propTypes = {
+MediaListItem.propTypes = {
   medium: MediumType.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   handleView: PropTypes.func,
 };
 
-MediaCard.defaultProps = {
-  handleView: null,
-};
-
 const mapStateToProps = (state) => {
-  const {
-    viewer,
-    isAuthenticated,
-  } = state.session;
+  const { viewer, isAuthenticated } = state.session;
 
   return {
     viewer,
@@ -75,4 +73,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(MediaCard);
+export default connect(mapStateToProps)(MediaListItem);

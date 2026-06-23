@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 
 import Grid from '@material-ui/core/Grid';
 
-import Composers from './composers';
+import Composers from './media/Composer';
 import FeedBrowse from './feed/Leaders';
 import actions from '../actions';
 import i18n from '../languages';

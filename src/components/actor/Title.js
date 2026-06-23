@@ -11,8 +11,8 @@ const { getURL } = utils.node;
 const ActorTitle = (props) => {
   const {
     actor,
-    linked,
-    typographyProps,
+    linked = false,
+    typographyProps = {},
   } = props;
 
   const url = getURL(actor);
@@ -45,11 +45,6 @@ ActorTitle.propTypes = {
   actor: ActorType.isRequired,
   linked: PropTypes.bool,
   typographyProps: PropTypes.object,
-};
-
-ActorTitle.defaultProps = {
-  linked: false,
-  typographyProps: {},
 };
 
 export default ActorTitle;

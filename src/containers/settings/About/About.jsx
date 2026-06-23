@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -15,11 +13,9 @@ import Typography from '@material-ui/core/Typography';
 
 import AboutIcon from '@material-ui/icons/Info';
 
-import i18n from '../../languages';
-import Progress from '../../components/Progress';
-import actions from '../../actions';
-import AboutType from '../../proptypes/settings/About';
-import packageInfo from '../../../package.json';
+import i18n from '../../../languages';
+import AboutType from '../../../proptypes/settings/About';
+import packageInfo from '../../../../package.json';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -30,29 +26,16 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const SettingsAbout = (props) => {
-  const {
-    readAbout,
-    about: {
-      title,
-      version,
-      logo,
-      license,
-      website,
-    },
-    isFetching,
-  } = props;
+const SettingsAbout = ({
+  about: {
+    title,
+    version,
+    logo,
+    license,
+    website,
+  },
+}) => {
   const classes = useStyles();
-
-  useEffect(() => {
-    readAbout();
-  }, [readAbout]);
-
-  if (isFetching) {
-    return (
-      <Progress />
-    );
-  }
 
   return (
     <Card variant="outlined">
@@ -77,9 +60,7 @@ const SettingsAbout = (props) => {
               className={classes.logo}
             />
           </ListItemAvatar>
-          <ListItemText
-            primary={title}
-          />
+          <ListItemText primary={title} />
         </ListItem>
         <ListItem divider>
           <ListItemText
@@ -97,10 +78,7 @@ const SettingsAbout = (props) => {
           <ListItemText
             primary={i18n.t('settings:about.license')}
             secondary={
-              <Link
-                href={license.url}
-                target="blank"
-              >
+              <Link href={license.url} target="blank">
                 {license.name}
               </Link>
             }
@@ -110,10 +88,7 @@ const SettingsAbout = (props) => {
           <ListItemText
             primary={i18n.t('settings:about.website')}
             secondary={
-              <Link
-                href={website.url}
-                target="blank"
-              >
+              <Link href={website.url} target="blank">
                 {website.name}
               </Link>
             }
@@ -126,33 +101,6 @@ const SettingsAbout = (props) => {
 
 SettingsAbout.propTypes = {
   about: AboutType.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  readAbout: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    readAbout: () => {
-      dispatch(actions.settings.about.read());
-    },
-  };
-};
-
-const mapStateToProps = (state) => {
-  const {
-    settings_about: {
-      current: about,
-    },
-    isFetching,
-  } = state.settingsAbout;
-
-  return {
-    about,
-    isFetching,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SettingsAbout);
+export default SettingsAbout;

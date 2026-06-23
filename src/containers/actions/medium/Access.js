@@ -14,13 +14,11 @@ import utils from '../../../utils';
 import MediumType from '../../../proptypes/Medium';
 import { Access as ACCESS } from '../../../constants';
 
-const ActionsMediumAccess = (props) => {
-  const {
-    medium,
-    editAccess,
-    size,
-  } = props;
-
+const ActionsMediumAccess = ({
+  medium,
+  editAccess,
+  size = 'medium',
+}) => {
   const isMounted = useRef(true);
   const [menuAnchorEl, setAnchorEl] = useState(null);
   const [access, setAccess] = useState(medium.access);
@@ -102,10 +100,6 @@ ActionsMediumAccess.propTypes = {
   medium: MediumType.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
   editAccess: PropTypes.func.isRequired,
-};
-
-ActionsMediumAccess.defaultProps = {
-  size: 'medium',
 };
 
 const mapStateToProps = (namespace) => {

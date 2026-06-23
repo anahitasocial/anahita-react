@@ -8,9 +8,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 
-import { Medium as MEDIUM } from '../../../constants';
-import MediumType from '../../../proptypes/Medium';
-import i18n from '../../../languages';
+import { Medium as MEDIUM } from '../../../../constants';
+import MediumType from '../../../../proptypes/Medium';
+import i18n from '../../../../languages';
 
 const {
   NAME,

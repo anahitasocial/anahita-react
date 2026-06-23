@@ -11,10 +11,10 @@ import i18n from '../languages';
 const DialogConfirm = (props) => {
   const {
     children,
-    title,
-    message,
-    confirm,
-    dismiss,
+    title = i18n.t('prompts:confirm.title'),
+    message = i18n.t('prompts:confirm.message'),
+    confirm = i18n.t('actions:confirm'),
+    dismiss = i18n.t('commons:dismiss'),
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -82,13 +82,6 @@ DialogConfirm.propTypes = {
   message: PropTypes.string,
   confirm: PropTypes.string,
   dismiss: PropTypes.string,
-};
-
-DialogConfirm.defaultProps = {
-  title: i18n.t('prompts:confirm.title'),
-  message: i18n.t('prompts:confirm.message'),
-  confirm: i18n.t('actions:confirm'),
-  dismiss: i18n.t('commons:dismiss'),
 };
 
 export default DialogConfirm;

@@ -10,7 +10,7 @@ import ActorsSocialgraph from '../socialgraph/index';
 import ActorsBrowseFeature from '../browse/Gadget';
 import Admins from '../../../components/actor/body/Admins';
 import Avatar from './Avatar';
-import Composers from '../../composers';
+import Composers from '../../media/Composer';
 import Commands from './Commands';
 import Cover from '../../cover';
 import NotificationsDialog from '../notifications/Dialog';

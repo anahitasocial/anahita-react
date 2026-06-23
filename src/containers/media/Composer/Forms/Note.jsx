@@ -10,13 +10,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
-import ActorType from '../../../proptypes/Actor';
-import PersonType from '../../../proptypes/Person';
-import { Medium as MEDIUM } from '../../../constants';
-import MediumType from '../../../proptypes/Medium';
+import ActorType from '../../../../proptypes/Actor';
+import PersonType from '../../../../proptypes/Person';
+import { Medium as MEDIUM } from '../../../../constants';
+import MediumType from '../../../../proptypes/Medium';
 
-import utils from '../../../utils';
-import i18n from '../../../languages';
+import utils from '../../../../utils';
+import i18n from '../../../../languages';
 
 const { BODY } = MEDIUM.FIELDS;
 const { isPerson } = utils.node;

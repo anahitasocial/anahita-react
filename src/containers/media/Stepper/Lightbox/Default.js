@@ -15,14 +15,14 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import MediumType from '../../../proptypes/Medium';
-import ActorTitle from '../../actor/Title';
-import ActorAvatar from '../../actor/Avatar';
-import CardHeaderOwner from '../../cards/Owner';
-import Player from '../../Player';
-import EntityBody from '../../EntityBody';
-import contentfilter from '../../contentfilter';
-import utils from '../../../utils';
+import MediumType from '../../../../proptypes/Medium';
+import ActorTitle from '../../../../components/actor/Title';
+import ActorAvatar from '../../../../components/actor/Avatar';
+import CardHeaderOwner from '../../../../components/cards/Owner';
+import Player from '../../../../components/Player';
+import EntityBody from '../../../../components/EntityBody';
+import contentfilter from '../../../../components/contentfilter';
+import utils from '../../../../utils';
 
 const {
   getAuthor,
@@ -67,21 +67,19 @@ const TABS = {
   LOCATIONS: 'locations',
 };
 
-const MediumStepperDefault = (props) => {
-  const {
-    classes,
-    medium,
-    actions,
-    menu,
-    stats,
-    locations,
-    comments,
-    editing,
-    form,
-    nextAction,
-    prevAction,
-  } = props;
-
+const MediumStepperLightboxDefault = ({
+  classes,
+  medium,
+  actions,
+  menu,
+  stats,
+  locations,
+  comments,
+  editing,
+  form,
+  nextAction,
+  prevAction,
+}) => {
   const [tab, setTab] = useState(TABS.COMMENTS);
 
   const changeTab = (event, value) => {
@@ -148,7 +146,7 @@ const MediumStepperDefault = (props) => {
       >
         <div className={classes.scrollingItem}>
           <Card variant="outlined" square>
-            {medium.owner.objectType.split('.')[1] !== 'people' && <CardHeaderOwner node={medium} />}
+            {utils.node.getNamespace(medium.owner) !== 'people' && <CardHeaderOwner node={medium} />}
             <CardHeader
               avatar={
                 <ActorAvatar
@@ -224,7 +222,7 @@ const MediumStepperDefault = (props) => {
   );
 };
 
-MediumStepperDefault.propTypes = {
+MediumStepperLightboxDefault.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.node,
   stats: PropTypes.node,
@@ -238,16 +236,4 @@ MediumStepperDefault.propTypes = {
   prevAction: PropTypes.node,
 };
 
-MediumStepperDefault.defaultProps = {
-  actions: null,
-  menu: null,
-  stats: null,
-  locations: null,
-  comments: null,
-  form: null,
-  editing: false,
-  nextAction: null,
-  prevAction: null,
-};
-
-export default withStyles(styles)(MediumStepperDefault);
+export default withStyles(styles)(MediumStepperLightboxDefault);

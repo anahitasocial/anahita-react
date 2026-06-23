@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDropzone } from 'react-dropzone';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -8,38 +10,89 @@ import CardActions from '@material-ui/core/CardActions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 
-import { Medium as MEDIUM } from '../../../constants';
-import MediumType from '../../../proptypes/Medium';
-import i18n from '../../../languages';
+import { Medium as MEDIUM } from '../../../../constants';
+import MediumType from '../../../../proptypes/Medium';
+import i18n from '../../../../languages';
+
+const useStyles = makeStyles((theme) => {
+  return {
+    root: {
+      width: '100%',
+    },
+    button: {
+      padding: theme.spacing(3),
+    },
+  };
+});
 
 const {
   NAME,
   BODY,
-  EXCERPT,
 } = MEDIUM.FIELDS;
 
-const ComposersArticle = ({
+const ComposersFile = React.forwardRef(({
   handleOnChange,
+  handleOnFileSelect,
   handleOnSubmit,
+  supportedMimetypes,
   fields,
   medium,
+  file,
   isFetching,
-}) => {
+  namespace,
+}, ref) => {
+  const classes = useStyles();
+
+  const {
+    // acceptedFiles,
+    getRootProps,
+    getInputProps,
+  } = useDropzone({
+    accept: supportedMimetypes.join(','),
+    onDrop: (files) => {
+      handleOnFileSelect(files[0]);
+    },
+  });
+
+  const { ...rootProps } = getRootProps();
+
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <Card square>
         <CardContent>
+          <Button
+            {...rootProps}
+            ref={ref}
+            disabled={isFetching}
+            fullWidth
+            size="large"
+            className={classes.button}
+            variant="outlined"
+            color="primary"
+          >
+            <input
+              accept={supportedMimetypes.join(',')}
+              style
+              id="addFileAttachment"
+              type="file"
+              name="file"
+              {...getInputProps()}
+              required
+            />
+            {!file && i18n.t(`${namespace}:composer.select`)}
+            {file && file.name}
+          </Button>
           {fields.name &&
             <TextField
               variant="outlined"
               name="name"
               value={medium.name}
               onChange={handleOnChange}
-              label={i18n.t('articles:composer.title')}
+              label={i18n.t(`${namespace}:composer.name`)}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder={i18n.t('articles:composer.titlePlaceholder')}
+              placeholder={i18n.t(`${namespace}:composer.namePlaceholder`)}
               error={fields.name.error !== ''}
               helperText={fields.name.error}
               fullWidth
@@ -57,44 +110,20 @@ const ComposersArticle = ({
               name="body"
               value={medium.body}
               onChange={handleOnChange}
-              label={i18n.t('articles:composer.body')}
+              label={i18n.t(`${namespace}:composer.body`)}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder={i18n.t('articles:composer.bodyPlaceholder')}
+              placeholder={i18n.t(`${namespace}:composer.bodyPlaceholder`)}
               error={fields.body.error !== ''}
               helperText={fields.body.error}
               fullWidth
-              multiline
               margin="normal"
               disabled={isFetching}
               inputProps={{
                 maxLength: BODY.MAX_LENGTH,
               }}
-              minRows={5}
-              maxRows={10}
               required
-            />}
-          {fields.excerpt &&
-            <TextField
-              variant="outlined"
-              name="excerpt"
-              value={medium.excerpt}
-              onChange={handleOnChange}
-              label={i18n.t('articles:composer.excerpt')}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              placeholder={i18n.t('articles:composer.excerptPlaceholder')}
-              error={fields.excerpt.error !== ''}
-              helperText={fields.excerpt.error}
-              fullWidth
-              multiline
-              margin="normal"
-              disabled={isFetching}
-              inputProps={{
-                maxLength: EXCERPT.MAX_LENGTH,
-              }}
             />}
         </CardContent>
         <CardActions>
@@ -105,21 +134,30 @@ const ComposersArticle = ({
             disabled={isFetching}
             fullWidth
           >
-            {!isFetching && i18n.t('actions:publish')}
+            {!isFetching && i18n.t('actions:post')}
             {isFetching && <CircularProgress size={24} />}
           </Button>
         </CardActions>
       </Card>
     </form>
   );
-};
+});
 
-ComposersArticle.propTypes = {
+ComposersFile.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
+  handleOnFileSelect: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   medium: MediumType.isRequired,
+  file: PropTypes.objectOf(PropTypes.any),
   isFetching: PropTypes.bool.isRequired,
+  success: PropTypes.bool.isRequired,
+  supportedMimetypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  namespace: PropTypes.string.isRequired,
 };
 
-export default ComposersArticle;
+ComposersFile.defaultProps = {
+  file: null,
+};
+
+export default ComposersFile;

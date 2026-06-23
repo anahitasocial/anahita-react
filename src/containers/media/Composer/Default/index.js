@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import actions from '../../../actions';
-import utils from '../../../utils';
+import actions from '../../../../actions';
+import utils from '../../../../utils';
 
-import AcctorType from '../../../proptypes/Actor';
-import PersonType from '../../../proptypes/Person';
-import MediumDefault from '../../../proptypes/MediumDefault';
-import i18n from '../../../languages';
+import AcctorType from '../../../../proptypes/Actor';
+import PersonType from '../../../../proptypes/Person';
+import MediumDefault from '../../../../proptypes/MediumDefault';
+import i18n from '../../../../languages';
 
 const MediaComposerDefault = ({
   actor,

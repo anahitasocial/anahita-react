@@ -51,13 +51,17 @@ const styles = (theme) => {
 const MediumCard = ({
   classes,
   medium,
-  stats,
-  actions,
-  access,
-  ownerActions,
-  menu,
-  handleView,
-  cardProps,
+  stats = null,
+  actions = null,
+  access = null,
+  ownerActions = null,
+  menu = null,
+  handleView = null,
+  cardProps = {
+    variant: 'elevation',
+    elevation: 0,
+    component: 'section',
+  },
 }) => {
   const navigate = useNavigate();
   const portrait = getPortraitURL(medium);
@@ -130,11 +134,10 @@ const MediumCard = ({
             width: '100%',
             display: 'inline',
           }}
-          onClick={(e) => {
+          onClick={() => {
             if (handleView) {
-              return handleView(e, medium);
+              return handleView(medium.id);
             }
-
             return navigate(url);
           }}
         >
@@ -187,20 +190,6 @@ MediumCard.propTypes = {
   medium: MediumType.isRequired,
   handleView: PropTypes.func,
   cardProps: PropTypes.objectOf(PropTypes.any),
-};
-
-MediumCard.defaultProps = {
-  actions: null,
-  access: null,
-  ownerActions: null,
-  menu: null,
-  stats: null,
-  handleView: null,
-  cardProps: {
-    variant: 'elevation',
-    elevation: 0,
-    component: 'section',
-  },
 };
 
 export default withStyles(styles)(MediumCard);

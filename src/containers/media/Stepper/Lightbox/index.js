@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MediumType from '../../../proptypes/Medium';
+import MediumType from '../../../../proptypes/Medium';
 
 import Default from './Default';
 
-const Medium = (props) => {
+const MediumStepperLightbox = (props) => {
   const {
     medium: {
       objectType,
@@ -20,7 +20,7 @@ const Medium = (props) => {
   }
 };
 
-Medium.propTypes = {
+MediumStepperLightbox.propTypes = {
   actions: PropTypes.node,
   menu: PropTypes.node,
   medium: MediumType.isRequired,
@@ -28,11 +28,11 @@ Medium.propTypes = {
   comments: PropTypes.node,
 };
 
-Medium.defaultProps = {
+MediumStepperLightbox.defaultProps = {
   actions: null,
   menu: null,
   locations: null,
   comments: null,
 };
 
-export default Medium;
+export default MediumStepperLightbox;

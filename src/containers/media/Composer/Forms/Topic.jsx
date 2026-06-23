@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDropzone } from 'react-dropzone';
-import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -10,89 +8,37 @@ import CardActions from '@material-ui/core/CardActions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 
-import { Medium as MEDIUM } from '../../../constants';
-import MediumType from '../../../proptypes/Medium';
-import i18n from '../../../languages';
-
-const useStyles = makeStyles((theme) => {
-  return {
-    root: {
-      width: '100%',
-    },
-    button: {
-      padding: theme.spacing(3),
-    },
-  };
-});
+import { Medium as MEDIUM } from '../../../../constants';
+import MediumType from '../../../../proptypes/Medium';
+import i18n from '../../../../languages';
 
 const {
   NAME,
   BODY,
 } = MEDIUM.FIELDS;
 
-const ComposersFile = React.forwardRef(({
+const ComposersTopic = ({
   handleOnChange,
-  handleOnFileSelect,
   handleOnSubmit,
-  supportedMimetypes,
   fields,
   medium,
-  file,
   isFetching,
-  namespace,
-}, ref) => {
-  const classes = useStyles();
-
-  const {
-    // acceptedFiles,
-    getRootProps,
-    getInputProps,
-  } = useDropzone({
-    accept: supportedMimetypes.join(','),
-    onDrop: (files) => {
-      handleOnFileSelect(files[0]);
-    },
-  });
-
-  const { ...rootProps } = getRootProps();
-
+}) => {
   return (
     <form onSubmit={handleOnSubmit} noValidate>
       <Card square>
         <CardContent>
-          <Button
-            {...rootProps}
-            ref={ref}
-            disabled={isFetching}
-            fullWidth
-            size="large"
-            className={classes.button}
-            variant="outlined"
-            color="primary"
-          >
-            <input
-              accept={supportedMimetypes.join(',')}
-              style
-              id="addFileAttachment"
-              type="file"
-              name="file"
-              {...getInputProps()}
-              required
-            />
-            {!file && i18n.t(`${namespace}:composer.select`)}
-            {file && file.name}
-          </Button>
           {fields.name &&
             <TextField
               variant="outlined"
               name="name"
               value={medium.name}
               onChange={handleOnChange}
-              label={i18n.t(`${namespace}:composer.name`)}
+              label={i18n.t('topics:composer.title')}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder={i18n.t(`${namespace}:composer.namePlaceholder`)}
+              placeholder={i18n.t('topics:composer.titlePlaceholder')}
               error={fields.name.error !== ''}
               helperText={fields.name.error}
               fullWidth
@@ -110,19 +56,22 @@ const ComposersFile = React.forwardRef(({
               name="body"
               value={medium.body}
               onChange={handleOnChange}
-              label={i18n.t(`${namespace}:composer.body`)}
+              label={i18n.t('topics:composer.body')}
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder={i18n.t(`${namespace}:composer.bodyPlaceholder`)}
+              placeholder={i18n.t('topics:composer.bodyPlaceholder')}
               error={fields.body.error !== ''}
               helperText={fields.body.error}
               fullWidth
+              multiline
               margin="normal"
               disabled={isFetching}
               inputProps={{
                 maxLength: BODY.MAX_LENGTH,
               }}
+              minRows={5}
+              maxRows={10}
               required
             />}
         </CardContent>
@@ -141,23 +90,14 @@ const ComposersFile = React.forwardRef(({
       </Card>
     </form>
   );
-});
+};
 
-ComposersFile.propTypes = {
+ComposersTopic.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
-  handleOnFileSelect: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   medium: MediumType.isRequired,
-  file: PropTypes.objectOf(PropTypes.any),
   isFetching: PropTypes.bool.isRequired,
-  success: PropTypes.bool.isRequired,
-  supportedMimetypes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  namespace: PropTypes.string.isRequired,
 };
 
-ComposersFile.defaultProps = {
-  file: null,
-};
-
-export default ComposersFile;
+export default ComposersTopic;
