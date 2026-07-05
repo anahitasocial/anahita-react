@@ -14,8 +14,8 @@ import Truncate from 'react-truncate';
 
 import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
-import ActorTitle from '../actor/Title';
-import ActorAvatar from '../actor/Avatar';
+import ActorTitle from '../actor/ActorTitle';
+import ActorAvatar from '../actor/ActorAvatar';
 import ReadMore from '../ReadMore';
 import utils from '../../utils';
 import i18n from '../../languages';

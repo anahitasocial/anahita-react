@@ -4,7 +4,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 
-import ActorAvatar from '../actor/Avatar';
+import ActorAvatar from '../actor/ActorAvatar';
 import NodeType from '../../proptypes/Node';
 import utils from '../../utils';
 

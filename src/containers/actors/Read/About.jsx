@@ -14,8 +14,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import PhoneIcon from '@material-ui/icons/Phone';
 
 import i18n from '../../../languages';
-import Player from '../../Player';
-import EntityBody from '../../EntityBody';
+import Player from '../../../components/Player';
+import EntityBody from '../../../components/EntityBody';
 import ActorType from '../../../proptypes/Actor';
 
 const ActorBodyAbout = (props) => {

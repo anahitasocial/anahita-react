@@ -7,11 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import ActorType from '../../proptypes/Actor';
-import PersonType from '../../proptypes/Person';
-import ActorBodyAbout from './body/About';
-import i18n from '../../languages';
-import utils from '../../utils';
+import ActorType from '../../../proptypes/Actor';
+import PersonType from '../../../proptypes/Person';
+import ActorBodyAbout from './About';
+import i18n from '../../../languages';
+import utils from '../../../utils';
 
 const { getNamespace, getActorFeatureTabs } = utils.node;
 

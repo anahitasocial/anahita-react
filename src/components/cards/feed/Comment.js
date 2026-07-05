@@ -9,7 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
 
-import ActorAvatar from '../../actor/Avatar';
+import ActorAvatar from '../../actor/ActorAvatar';
 import ReadMore from '../../ReadMore';
 import CardOwner from '../Owner';
 import Player from '../../Player';

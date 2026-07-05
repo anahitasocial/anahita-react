@@ -9,7 +9,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 
-import ActorAvatar from '../../../../components/actor/Avatar';
+import ActorAvatar from '../../../../components/actor/ActorAvatar';
 import ActorType from '../../../../proptypes/Actor';
 import PersonType from '../../../../proptypes/Person';
 import actions from '../../../../actions';

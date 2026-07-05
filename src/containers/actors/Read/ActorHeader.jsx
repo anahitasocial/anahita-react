@@ -8,8 +8,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 
-import SocialgraphMeta from './socialgraph/Meta';
-import ActorType from '../../proptypes/Actor';
+import SocialgraphMeta from './SocialgraphMeta';
+import ActorType from '../../../proptypes/Actor';
 
 const styles = (theme) => {
   return {

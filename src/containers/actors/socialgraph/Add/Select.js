@@ -13,7 +13,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import ActorAvatar from '../../../../components/actor/Avatar';
+import ActorAvatar from '../../../../components/actor/ActorAvatar';
 import ActorType from '../../../../proptypes/Actor';
 import api from '../../../../api';
 import utils from '../../../../utils';

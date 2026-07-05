@@ -10,7 +10,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
 
 import MediumCard from '../Medium';
-import ActorAvatar from '../../actor/Avatar';
+import ActorAvatar from '../../actor/ActorAvatar';
 import CardOwner from '../Owner';
 import utils from '../../../utils';
 import NodeType from '../../../proptypes/Node';

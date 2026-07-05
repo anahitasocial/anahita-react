@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 
-import ActorHeader from '../../../components/actor/Header';
-import ActorBody from '../../../components/actor/Body';
+import ActorHeader from './ActorHeader';
+import ActorBody from './Body';
 import ActorsFollowRequests from '../FollowRequests';
 import ActorsSocialgraph from '../Socialgraph/index';
 import ActorsBrowseFeature from '../Browse/Gadget';
-import Admins from '../../../components/actor/body/Admins';
+import Admins from './Admins';
 import Avatar from './Avatar';
 import Composers from '../../media/Composer';
 import Commands from './Commands';
@@ -19,7 +19,7 @@ import FollowAction from '../../actions/Follow';
 import LocationsGadget from '../../locations/Gadget';
 import MediaBrowse from '../../media/Browse';
 import Progress from '../../../components/Progress';
-import SocialgraphTabs from '../../../components/actor/socialgraph/Tabs';
+import SocialgraphTabs from './SocialgraphTabs';
 import FeedActorBrowse from '../../feed/Actor';
 import HeaderMeta from '../../../components/HeaderMeta';
 

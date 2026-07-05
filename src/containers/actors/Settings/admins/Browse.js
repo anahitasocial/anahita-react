@@ -12,7 +12,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import RemoveIcon from '@material-ui/icons/Remove';
 
 import Add from './Add';
-import ActorAvatar from '../../../../components/actor/Avatar';
+import ActorAvatar from '../../../../components/actor/ActorAvatar';
 import Progress from '../../../../components/Progress';
 
 import ActorsType from '../../../../proptypes/Actors';

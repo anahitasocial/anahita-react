@@ -7,7 +7,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
-import ActorAvatar from '../Avatar';
+import ActorAvatar from '../../../components/actor/ActorAvatar';
 import ActorType from '../../../proptypes/Actor';
 import utils from '../../../utils';
 import i18n from '../../../languages';

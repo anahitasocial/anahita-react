@@ -40,7 +40,7 @@ const styles = (theme) => {
   };
 };
 
-const ActorCoverForm = (props) => {
+const CoverForm = (props) => {
   const {
     classes,
     node,
@@ -100,7 +100,7 @@ const ActorCoverForm = (props) => {
   );
 };
 
-ActorCoverForm.propTypes = {
+CoverForm.propTypes = {
   classes: PropTypes.object.isRequired,
   node: NodeType.isRequired,
   cover: PropTypes.string,
@@ -113,11 +113,11 @@ ActorCoverForm.propTypes = {
   handleDelete: PropTypes.func.isRequired,
 };
 
-ActorCoverForm.defaultProps = {
+CoverForm.defaultProps = {
   isFetching: false,
   canEdit: false,
   cover: '',
   anchorEl: null,
 };
 
-export default withStyles(styles)(ActorCoverForm);
+export default withStyles(styles)(CoverForm);

@@ -7,8 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
 
-import ActorTitle from '../actor/Title';
-import ActorAvatar from '../actor/Avatar';
+import ActorTitle from '../actor/ActorTitle';
+import ActorAvatar from '../actor/ActorAvatar';
 import EntityBody from '../EntityBody';
 import CommentType from '../../proptypes/Comment';
 import utils from '../../utils';

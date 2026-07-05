@@ -16,7 +16,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import FollowRequestsIcon from '@material-ui/icons/People';
 
-import ActorAvatar from '../../components/actor/Avatar';
+import ActorAvatar from '../../components/actor/ActorAvatar';
 
 import actions from '../../actions';
 import ActorsType from '../../proptypes/Actors';

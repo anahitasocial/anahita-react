@@ -13,8 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
 import MediumType from '../../proptypes/Medium';
-import ActorTitle from '../actor/Title';
-import ActorAvatar from '../actor/Avatar';
+import ActorTitle from '../actor/ActorTitle';
+import ActorAvatar from '../actor/ActorAvatar';
 import CardHeaderOwner from './Owner';
 import Player from '../Player';
 import Progress from '../Progress';
