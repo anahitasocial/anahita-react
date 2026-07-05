@@ -25,7 +25,7 @@ import Likes from '../../likes';
 import CommentStats from '../../../components/comment/Stats';
 import MediaMenu from '../MediaMenu';
 import Lightbox from './Lightbox';
-import MediumForm from '../../../components/medium/forms/Edit';
+import MediumForm from '../EditForm';
 
 import utils from '../../../utils';
 

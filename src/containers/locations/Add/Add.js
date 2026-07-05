@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 
-import LocationForm from '../../../components/location/Form';
+import LocationForm from './AddForm';
 import api from '../../../api';
 import i18n from '../../../languages';
 import form from '../../../utils/form';

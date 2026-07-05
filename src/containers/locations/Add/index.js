@@ -15,7 +15,7 @@ import Tab from '@material-ui/core/Tab';
 import CloseIcon from '@material-ui/icons/Close';
 
 import NodeType from '../../../proptypes/Node';
-import BrowseLocations from './Browse';
+import LocationsList from './List';
 import AddLocation from './Add';
 import i18n from '../../../languages';
 
@@ -110,7 +110,7 @@ const LocationsSelector = (props) => {
           </Tabs>
         </AppBar>
         {tab === TABS.SEARCH &&
-          <BrowseLocations
+          <LocationsList
             node={node}
             queryFilters={{
               nearby_latitude: here.latitude,

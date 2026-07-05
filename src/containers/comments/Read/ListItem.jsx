@@ -8,10 +8,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
-import ActorTitle from '../actor/Title';
-import ActorAvatar from '../actor/Avatar';
-import EntityBody from '../EntityBody';
-import CommentType from '../../proptypes/Comment';
+import ActorTitle from '../../../components/actor/Title';
+import ActorAvatar from '../../../components/actor/Avatar';
+import EntityBody from '../../../components/EntityBody';
+import CommentType from '../../../proptypes/Comment';
 
 const CommentListItem = (props) => {
   const {

@@ -14,12 +14,12 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import MediumType from '../../../proptypes/Medium';
-import ActorTitle from '../../actor/Title';
-import ActorAvatar from '../../actor/Avatar';
-import CardHeaderOwner from '../../cards/Owner';
-import Player from '../../Player';
-import Progress from '../../Progress';
-import EntityBody from '../../EntityBody';
+import ActorTitle from '../../../components/actor/Title';
+import ActorAvatar from '../../../components/actor/Avatar';
+import CardHeaderOwner from '../../../components/cards/Owner';
+import Player from '../../../components/Player';
+import Progress from '../../../components/Progress';
+import EntityBody from '../../../components/EntityBody';
 import utils from '../../../utils';
 
 const {

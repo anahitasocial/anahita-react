@@ -6,14 +6,14 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import permissions from '../../permissions/node';
-import utils from '../../utils';
-import i18n from '../../languages';
+import permissions from '../../../permissions/node';
+import utils from '../../../utils';
+import i18n from '../../../languages';
 
-import DeleteAction from '../actions/Delete';
+import DeleteAction from '../../actions/Delete';
 
-import PersonType from '../../proptypes/Person';
-import LocationType from '../../proptypes/Location';
+import PersonType from '../../../proptypes/Person';
+import LocationType from '../../../proptypes/Location';
 
 const { withRef } = utils.component;
 

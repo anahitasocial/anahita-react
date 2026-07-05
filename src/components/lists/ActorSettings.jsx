@@ -45,8 +45,7 @@ const ActorSettingsList = (props) => {
             <AccountIcon />
           </ListItemIcon>
           <ListItemText primary="Account" />
-        </ListItem>
-        }
+        </ListItem>}
         <ListItem
           button
           component={Link}

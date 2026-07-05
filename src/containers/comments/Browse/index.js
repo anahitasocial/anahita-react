@@ -4,17 +4,17 @@ import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Card from '@material-ui/core/Card';
-import CommentRead from './Read';
-import CommentForm from '../../components/comment/Form';
-import Progress from '../../components/Progress';
+import CommentRead from '../Read';
+import CommentForm from '../Form';
+import Progress from '../../../components/Progress';
 
-import actions from '../../actions';
-import NodeType from '../../proptypes/Node';
-import CommentsType from '../../proptypes/Comments';
-import CommentDefault from '../../proptypes/CommentDefault';
-import PersonType from '../../proptypes/Person';
-import { App as APP } from '../../constants';
-import utils from '../../utils';
+import actions from '../../../actions';
+import NodeType from '../../../proptypes/Node';
+import CommentsType from '../../../proptypes/Comments';
+import CommentDefault from '../../../proptypes/CommentDefault';
+import PersonType from '../../../proptypes/Person';
+import { App as APP } from '../../../constants';
+import utils from '../../../utils';
 
 const { form } = utils;
 const { LIMIT } = APP.BROWSE;

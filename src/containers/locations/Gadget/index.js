@@ -13,16 +13,16 @@ import Typography from '@material-ui/core/Typography';
 
 import AddIcon from '@material-ui/icons/Add';
 
-import api from '../../api';
-import permissions from '../../permissions/node';
-import NodeType from '../../proptypes/Node';
-import PersonType from '../../proptypes/Person';
+import api from '../../../api';
+import permissions from '../../../permissions/node';
+import NodeType from '../../../proptypes/Node';
+import PersonType from '../../../proptypes/Person';
 
-import AnahitaMap from '../../components/Map';
-import Selector from './Selector';
-import Progress from '../../components/Progress';
-import ListItem from './ListItem';
-import DeleteAction from '../actions/tags/location/Delete';
+import AnahitaMap from '../../../components/Map';
+import LocationsAdd from '../Add';
+import Progress from '../../../components/Progress';
+import ListItem from '../Browse/ListItem';
+import DeleteAction from '../../actions/tags/location/Delete';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -81,7 +81,7 @@ const LocationsGadget = (props) => {
   return (
     <>
       {canAdd &&
-        <Selector
+        <LocationsAdd
           node={node}
           isOpen={isOpen}
           handleClose={handleClose}

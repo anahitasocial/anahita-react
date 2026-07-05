@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => {
 
 const { LIMIT } = APP.BROWSE;
 
-const LocationsSelectorBrowse = (props) => {
+const LocationsList = (props) => {
   const classes = useStyles();
   const {
     browseList,
@@ -123,7 +123,7 @@ const LocationsSelectorBrowse = (props) => {
   );
 };
 
-LocationsSelectorBrowse.propTypes = {
+LocationsList.propTypes = {
   browseList: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   queryFilters: PropTypes.object,
@@ -137,7 +137,7 @@ LocationsSelectorBrowse.propTypes = {
   selectedLocations: PropTypes.arrayOf(NodeType),
 };
 
-LocationsSelectorBrowse.defaultProps = {
+LocationsList.defaultProps = {
   queryFilters: {
     q: '',
     nearby_latitude: 0,
@@ -179,4 +179,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LocationsSelectorBrowse);
+)(LocationsList);

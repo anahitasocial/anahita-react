@@ -13,20 +13,20 @@ import withWidth from '@material-ui/core/withWidth';
 
 import LocationIcon from '@material-ui/icons/LocationOn';
 
-import LocationMenu from './Menu';
-import LocationForm from '../../components/location/Form';
-import actions from '../../actions';
-import form from '../../utils/form';
-import i18n from '../../languages';
-import utils from '../../utils';
+import LocationMenu from '../Menu';
+import LocationForm from './EditForm';
+import actions from '../../../actions';
+import form from '../../../utils/form';
+import i18n from '../../../languages';
+import utils from '../../../utils';
 
-import LocationsType from '../../proptypes/Locations';
+import LocationsType from '../../../proptypes/Locations';
 
-import PersonType from '../../proptypes/Person';
-import AnahitaMap from '../../components/Map';
-import Inbounds from '../inbounds';
-import Progress from '../../components/Progress';
-import HeaderMeta from '../../components/HeaderMeta';
+import PersonType from '../../../proptypes/Person';
+import AnahitaMap from '../../../components/Map';
+import Inbounds from '../../inbounds';
+import Progress from '../../../components/Progress';
+import HeaderMeta from '../../../components/HeaderMeta';
 
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 

@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import CommentItem from '../../components/comment/CommentItem';
-import CommentForm from '../../components/comment/Form';
+import CommentItem from '../CommentItem';
+import CommentForm from '../Form';
 
-import actions from '../../actions';
-import NodeType from '../../proptypes/Node';
-import CommentType from '../../proptypes/Comment';
-import PersonType from '../../proptypes/Person';
+import actions from '../../../actions';
+import NodeType from '../../../proptypes/Node';
+import CommentType from '../../../proptypes/Comment';
+import PersonType from '../../../proptypes/Person';
 
-import Likes from '../likes';
+import Likes from '../../likes';
 
-import ActionLikeComment from '../likes/actions/LikeComment';
-import ActionLikeCommentInline from '../likes/actions/LikeCommentInline';
-import CommentMenu from './Menu';
-import CommentDefault from '../../proptypes/CommentDefault';
-import utils from '../../utils';
+import ActionLikeComment from '../../likes/actions/LikeComment';
+import ActionLikeCommentInline from '../../likes/actions/LikeCommentInline';
+import CommentMenu from '../Menu';
+import CommentDefault from '../../../proptypes/CommentDefault';
+import utils from '../../../utils';
 
 const { form } = utils;
 

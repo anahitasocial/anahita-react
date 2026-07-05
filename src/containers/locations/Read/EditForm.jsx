@@ -6,12 +6,12 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 
-import { Locations as LOCATION } from '../../constants';
-import LocationType from '../../proptypes/Location';
-import CountrySelect from '../select/Country';
-import RegionSelect from '../select/Region';
+import { Locations as LOCATION } from '../../../constants';
+import LocationType from '../../../proptypes/Location';
+import CountrySelect from '../../../components/select/Country';
+import RegionSelect from '../../../components/select/Region';
 
-import i18n from '../../languages';
+import i18n from '../../../languages';
 
 const {
   TITLE,
@@ -19,7 +19,7 @@ const {
   CITY,
 } = LOCATION.FIELDS;
 
-const LocationForm = (props) => {
+const LocationEditForm = (props) => {
   const {
     handleOnChange,
     handleOnSubmit,
@@ -136,7 +136,7 @@ const LocationForm = (props) => {
   );
 };
 
-LocationForm.propTypes = {
+LocationEditForm.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
   location: LocationType.isRequired,
@@ -146,7 +146,7 @@ LocationForm.propTypes = {
   requiredFields: PropTypes.arrayOf(PropTypes.string),
 };
 
-LocationForm.defaultProps = {
+LocationEditForm.defaultProps = {
   actions: null,
   requiredFields: [
     'name',
@@ -157,4 +157,4 @@ LocationForm.defaultProps = {
   ],
 };
 
-export default LocationForm;
+export default LocationEditForm;

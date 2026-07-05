@@ -6,11 +6,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import List from '@material-ui/core/List';
 
 import ListItem from './ListItem';
-import Progress from '../../components/Progress';
-import LocationsType from '../../proptypes/Locations';
+import Progress from '../../../components/Progress';
+import LocationsType from '../../../proptypes/Locations';
 
-import actions from '../../actions';
-import { App as APP } from '../../constants';
+import actions from '../../../actions';
+import { App as APP } from '../../../constants';
 
 const {
   LIMIT,

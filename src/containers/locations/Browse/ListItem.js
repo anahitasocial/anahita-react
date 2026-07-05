@@ -8,8 +8,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import LocationIcon from '@material-ui/icons/LocationOn';
 
-import utils from '../../utils';
-import LocationType from '../../proptypes/Location';
+import utils from '../../../utils';
+import LocationType from '../../../proptypes/Location';
 
 const { getAddress } = utils.node;
 
