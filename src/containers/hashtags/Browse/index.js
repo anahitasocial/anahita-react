@@ -9,12 +9,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import Progress from '../../components/Progress';
+import Progress from '../../../components/Progress';
 
-import HashtagsType from '../../proptypes/Hashtags';
+import HashtagsType from '../../../proptypes/Hashtags';
 
-import actions from '../../actions';
-import { App as APP } from '../../constants';
+import actions from '../../../actions';
+import { App as APP } from '../../../constants';
 
 const {
   LIMIT,

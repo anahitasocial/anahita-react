@@ -6,18 +6,18 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import actions from '../../actions';
-import NodeType from '../../proptypes/Node';
-import NodesType from '../../proptypes/Nodes';
+import actions from '../../../actions';
+import NodeType from '../../../proptypes/Node';
+import NodesType from '../../../proptypes/Nodes';
 
-import CommentCard from '../../components/cards/Comment';
-import ActorsCard from '../../components/cards/Actor';
-import Masonry from '../../components/BreakpointMasonry';
-import MediaCard from '../nodes/cards/Medium';
-import Progress from '../../components/Progress';
-import { App as APP } from '../../constants';
+import CommentCard from '../../../components/cards/Comment';
+import ActorsCard from '../../../components/cards/Actor';
+import Masonry from '../../../components/BreakpointMasonry';
+import MediaCard from '../../nodes/cards/Medium';
+import Progress from '../../../components/Progress';
+import { App as APP } from '../../../constants';
 
-import utils from '../../utils/node';
+import utils from '../../../utils/node';
 
 const {
   LIMIT,

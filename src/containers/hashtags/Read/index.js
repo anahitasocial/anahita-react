@@ -8,16 +8,16 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import withWidth from '@material-ui/core/withWidth';
 
-import actions from '../../actions';
-import i18n from '../../languages';
-import permissions from '../../permissions';
-import HashtagDefault from '../../proptypes/HashtagDefault';
-import HashtagsType from '../../proptypes/Hashtags';
-import PersonType from '../../proptypes/Person';
+import actions from '../../../actions';
+import i18n from '../../../languages';
+import permissions from '../../../permissions';
+import HashtagDefault from '../../../proptypes/HashtagDefault';
+import HashtagsType from '../../../proptypes/Hashtags';
+import PersonType from '../../../proptypes/Person';
 
-import HashtagMenu from './Menu';
-import Progress from '../../components/Progress';
-import Inbounds from '../inbounds';
+import HashtagMenu from '../Menu';
+import Progress from '../../../components/Progress';
+import Inbounds from '../../inbounds';
 
 const HashtagsRead = (props) => {
   const {
