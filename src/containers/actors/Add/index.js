@@ -7,12 +7,12 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import Typography from '@material-ui/core/Typography';
-import ActorInfoForm from '../../components/actor/forms/Info';
-import actions from '../../actions';
-import utils from '../../utils';
-import i18n from '../../languages';
+import ActorInfoForm from '../Forms/Info';
+import actions from '../../../actions';
+import utils from '../../../utils';
+import i18n from '../../../languages';
 
-import ActorsType from '../../proptypes/Actors';
+import ActorsType from '../../../proptypes/Actors';
 
 const { form } = utils;
 const {

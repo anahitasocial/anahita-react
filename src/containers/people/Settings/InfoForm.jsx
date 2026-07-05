@@ -11,7 +11,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 
-import ActorsFormsMetadata from '../../../components/actor/forms/Metadata';
+import ActorsFormsMetadata from '../Forms/Metadata';
 
 import PersonType from '../../../proptypes/Person';
 import { Person as PERSON } from '../../../constants';

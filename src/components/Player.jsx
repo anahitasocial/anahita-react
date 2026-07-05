@@ -21,7 +21,7 @@ const styles = (theme) => {
   };
 };
 
-const Player = ({
+const MediaPlayer = ({
   text = '',
   classes,
 }) => {
@@ -59,9 +59,9 @@ const Player = ({
   );
 };
 
-Player.propTypes = {
+MediaPlayer.propTypes = {
   classes: PropTypes.object.isRequired,
   text: PropTypes.string,
 };
 
-export default withStyles(styles)(Player);
+export default withStyles(styles)(MediaPlayer);

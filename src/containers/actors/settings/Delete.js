@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import ActorDeleteForm from '../../../components/actor/forms/Delete';
+import ActorDeleteForm from '../Forms/Delete';
 import Progress from '../../../components/Progress';
 import actions from '../../../actions';
 import form from '../../../utils/form';

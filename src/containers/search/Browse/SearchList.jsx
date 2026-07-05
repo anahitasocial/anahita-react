@@ -11,7 +11,7 @@ import actions from '../../../actions';
 import NodesType from '../../../proptypes/Nodes';
 
 import CommentCard from '../../../components/cards/Comment';
-import ActorsCard from '../../actors/browse/Card';
+import ActorsCard from '../../actors/Browse/Card';
 import Masonry from '../../../components/BreakpointMasonry';
 import MediaCard from '../../nodes/cards/Medium';
 import Progress from '../../../components/Progress';

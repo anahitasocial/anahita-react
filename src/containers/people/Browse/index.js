@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import ActorsBrowse from '../../actors/browse';
+import ActorsBrowse from '../../actors/Browse';
 import actions from '../../../actions';
 import i18n from '../../../languages';
 

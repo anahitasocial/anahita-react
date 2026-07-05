@@ -7,7 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 
-import ActorInfoForm from '../../../components/actor/forms/Info';
+import ActorInfoForm from '../Forms/Info';
 import Progress from '../../../components/Progress';
 import actions from '../../../actions';
 import permissions from '../../../permissions';

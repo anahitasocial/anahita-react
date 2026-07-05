@@ -15,10 +15,10 @@ import PasswordResetPage from '../containers/auth/PasswordReset';
 import HomePage from '../containers/home';
 
 import Actors from '../containers/actors';
-import ActorsRead from '../containers/actors/read';
+import ActorsRead from '../containers/actors/Read';
 import ActorsAdd from '../containers/actors/Add';
 import ActorsSettings from '../containers/actors/Settings';
-import ActorsNotificationsEdit from '../containers/actors/notifications/Edit';
+import ActorsNotificationsEdit from '../containers/actors/Notifications/Edit';
 
 import Blogs from '../containers/blogs';
 
