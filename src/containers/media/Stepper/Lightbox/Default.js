@@ -21,7 +21,6 @@ import ActorAvatar from '../../../../components/actor/ActorAvatar';
 import CardHeaderOwner from '../../../../components/cards/Owner';
 import Player from '../../../../components/Player';
 import EntityBody from '../../../../components/EntityBody';
-import contentfilter from '../../../../components/contentfilter';
 import utils from '../../../../utils';
 
 const {
@@ -183,7 +182,7 @@ const MediumStepperLightboxDefault = ({
                     </Typography>}
                   {medium.body &&
                     <EntityBody>
-                      {contentfilter({
+                      {utils.contentfilter({
                         text: medium.body,
                         filters: [
                           'hashtag',

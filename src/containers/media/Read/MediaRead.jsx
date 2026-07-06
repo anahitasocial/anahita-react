@@ -12,7 +12,7 @@ import Likes from '../../likes';
 import LocationsGadget from '../../locations/Gadget';
 import MediumComments from '../../comments/Browse';
 import Cover from '../../cover';
-import DownloadAction from '../../actions/medium/Download';
+import ControlDownload from '../../controls/medium/Download';
 import MediumMenu from '../MediaMenu';
 import MediumForm from '../EditForm';
 
@@ -70,7 +70,7 @@ const MediaReadView = ({
     actions: [
       isAuthenticated && <Like node={medium} key={`medium-like-${medium.id}`} />,
       namespace === 'documents' && (
-        <DownloadAction
+        <ControlDownload
           node={medium}
           key={`medium-download-${medium.id}`}
         />

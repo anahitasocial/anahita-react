@@ -9,9 +9,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import permissions from '../../permissions/medium';
 import utils from '../../utils';
 
-import NotificationSubAction from '../actions/medium/NotificationSub';
-import CommentStatusAction from '../actions/medium/CommentStatus';
-import DeleteAction from '../actions/Delete';
+import ControlNotificationSub from '../controls/medium/NotificationSub';
+import ControlCommentStatus from '../controls/medium/CommentStatus';
+import ControlDelete from '../controls/Delete';
 
 import PersonType from '../../proptypes/Person';
 import MediumType from '../../proptypes/Medium';
@@ -25,9 +25,9 @@ const {
   isSubscribable,
 } = utils.node;
 
-const NotificationSubActionWithRef = withRef(NotificationSubAction);
-const CommentStatusActionWithRef = withRef(CommentStatusAction);
-const DeleteActionWithRef = withRef(DeleteAction);
+const NotificationSubActionWithRef = withRef(ControlNotificationSub);
+const CommentStatusActionWithRef = withRef(ControlCommentStatus);
+const DeleteActionWithRef = withRef(ControlDelete);
 
 const MediaMenu = ({
   medium,

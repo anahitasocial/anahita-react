@@ -6,12 +6,12 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import utils from '../../utils';
 import i18n from '../../languages';
 
-import DeleteAction from '../actions/Delete';
+import ControlDelete from '../controls/Delete';
 import LocationType from '../../proptypes/Location';
 
 const { withRef } = utils.component;
 
-const DeleteActionWithRef = withRef(DeleteAction);
+const DeleteActionWithRef = withRef(ControlDelete);
 
 const LocationMenu = (props) => {
   const {

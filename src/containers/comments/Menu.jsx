@@ -8,18 +8,18 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import i18n from '../../languages';
 import utils from '../../utils';
 
-import FollowAction from '../actions/Follow';
-import BlockAction from '../actions/Block';
-import DeleteAction from '../actions/comment/Delete';
+import ControlFollow from '../controls/Follow';
+import ControlBlock from '../controls/Block';
+import ControlDelete from '../controls/comment/Delete';
 
 import PersonType from '../../proptypes/Person';
 import CommentType from '../../proptypes/Comment';
 
 const { withRef } = utils.component;
 
-const FollowActionWithRef = withRef(FollowAction);
-const BlockActionActionWithRef = withRef(BlockAction);
-const DeleteActionWithRef = withRef(DeleteAction);
+const FollowActionWithRef = withRef(ControlFollow);
+const BlockActionActionWithRef = withRef(ControlBlock);
+const DeleteActionWithRef = withRef(ControlDelete);
 
 const CommentMenu = (props) => {
   const {

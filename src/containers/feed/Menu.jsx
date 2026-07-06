@@ -7,9 +7,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import utils from '../../utils';
 import i18n from '../../languages';
 
-import NotificationSubAction from '../actions/medium/NotificationSub';
-import DeleteAction from '../actions/Delete';
-import FollowAction from '../actions/Follow';
+import ControlNotificationSub from '../controls/medium/NotificationSub';
+import ControlDelete from '../controls/Delete';
+import ControlFollow from '../controls/Follow';
 
 import PersonType from '../../proptypes/Person';
 import NodeType from '../../proptypes/Node';
@@ -21,9 +21,9 @@ const {
   isSubscribable,
 } = utils.node;
 
-const FollowActionWithRef = withRef(FollowAction);
-const NotificationSubActionWithRef = withRef(NotificationSubAction);
-const DeleteActionWithRef = withRef(DeleteAction);
+const FollowActionWithRef = withRef(ControlFollow);
+const NotificationSubActionWithRef = withRef(ControlNotificationSub);
+const DeleteActionWithRef = withRef(ControlDelete);
 
 const FeedItemMenu = ({
   node,

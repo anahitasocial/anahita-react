@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
 
-import cFilter from './contentfilter';
+import utils from '../utils';
 
 const useStyles = makeStyles((theme) => {
   const { body1, body2 } = theme.typography;
@@ -43,7 +43,7 @@ const EntityBody = ({
   let body = `${children}`;
 
   if (contentFilter) {
-    body = cFilter({
+    body = utils.contentfilter({
       text: children,
       filters,
     });

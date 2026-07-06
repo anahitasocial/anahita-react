@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CommentStats from '../../../components/comment/Stats';
-import LikeAction from '../../likes/actions/Like';
+import ControlLike from '../../likes/controls/Like';
 import LikesStats from '../../likes';
 import MediumCard from '../../../components/cards/Medium';
-import EditAccessAction from '../../actions/medium/Access';
+import ControlEditAccess from '../../controls/medium/Access';
 
 import PersonType from '../../../proptypes/Person';
 import MediumType from '../../../proptypes/Medium';
@@ -26,11 +26,11 @@ const MediaListItem = ({
   const namespace = getNamespace(medium);
 
   const Like = useMemo(() => {
-    return LikeAction(namespace);
+    return ControlLike(namespace);
   }, [namespace]);
 
   const Access = useMemo(() => {
-    return EditAccessAction(namespace);
+    return ControlEditAccess(namespace);
   }, [namespace]);
 
   const canEditMedium = perms.medium.canEdit(viewer, medium);
