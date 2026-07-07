@@ -27,13 +27,8 @@ const useStyles = makeStyles({
   },
 });
 
-const Blogs = (props) => {
+const Blogs = ({ selectedTab = RECENT, setAppTitle }) => {
   const classes = useStyles();
-  const {
-    selectedTab,
-    setAppTitle,
-  } = props;
-
   const [tab, setTab] = useState(selectedTab);
 
   useEffect(() => {
@@ -83,10 +78,6 @@ Blogs.propTypes = {
     UPDATED,
     RECENT,
   ]),
-};
-
-Blogs.defaultProps = {
-  selectedTab: RECENT,
 };
 
 const mapDispatchToProps = () => {

@@ -20,16 +20,14 @@ const styles = (theme) => {
   };
 };
 
-const SocialgraphTabs = (props) => {
-  const {
-    classes,
-    followers,
-    leaders,
-    mutuals,
-    blocks,
-    selectedTab,
-  } = props;
-
+const SocialgraphTabs = ({
+  classes,
+  followers = null,
+  leaders = null,
+  mutuals = null,
+  blocks = null,
+  selectedTab = 'followers',
+}) => {
   const [value, setValue] = React.useState(selectedTab);
 
   const handleChange = (event, newValue) => {
@@ -73,14 +71,6 @@ SocialgraphTabs.propTypes = {
   mutuals: PropTypes.node,
   blocks: PropTypes.node,
   selectedTab: PropTypes.oneOf(['followers', 'leaders', 'mutuals', 'blocks']),
-};
-
-SocialgraphTabs.defaultProps = {
-  followers: null,
-  leaders: null,
-  mutuals: null,
-  blocks: null,
-  selectedTab: 'followers',
 };
 
 export default withStyles(styles)(SocialgraphTabs);

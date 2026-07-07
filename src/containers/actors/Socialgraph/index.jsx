@@ -24,19 +24,19 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const ActorsSocialgraph = (props) => {
+const ActorsSocialgraph = ({
+  browseList,
+  resetList,
+  items,
+  actorNode,
+  total = 0,
+  filter,
+  queryFilters = {
+    q: '',
+  },
+}) => {
   const classes = useStyles();
-  const {
-    browseList,
-    resetList,
-    items,
-    actorNode,
-    total,
-    filter,
-    queryFilters,
-  } = props;
-
-  const { q } = queryFilters;
+  const { q = '' } = queryFilters;
   const [start, setStart] = useState(0);
 
   useEffect(() => {
@@ -104,13 +104,6 @@ ActorsSocialgraph.propTypes = {
   ]).isRequired,
   queryFilters: PropTypes.object,
   total: PropTypes.number,
-};
-
-ActorsSocialgraph.defaultProps = {
-  queryFilters: {
-    q: '',
-  },
-  total: 0,
 };
 
 const mapStateToProps = () => {

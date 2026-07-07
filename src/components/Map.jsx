@@ -27,14 +27,12 @@ const getBounds = (locations) => {
   return bounds;
 };
 
-const AnahitaMap = (props) => {
-  const {
-    locations,
-    width,
-    height,
-    ...other
-  } = props;
-
+const AnahitaMap = ({
+  locations = [],
+  width = '100%',
+  height = 400,
+  ...other
+}) => {
   // eslint-disable-next-line no-unused-vars
   const [map, setMap] = useState(null);
   const navigate = useNavigate();
@@ -101,12 +99,6 @@ AnahitaMap.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-};
-
-AnahitaMap.defaultProps = {
-  locations: [],
-  width: '100%',
-  height: 400,
 };
 
 export default AnahitaMap;

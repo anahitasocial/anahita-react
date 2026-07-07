@@ -12,18 +12,16 @@ import { Comments as COMMENT } from '../../constants';
 
 const { BODY } = COMMENT.FIELDS;
 
-const CommentForm = (props) => {
-  const {
-    handleOnChange,
-    handleOnSubmit,
-    handleCancel,
-    comment,
-    fields: {
-      body,
-    },
-    isFetching,
-  } = props;
-
+const CommentForm = ({
+  handleOnChange,
+  handleOnSubmit,
+  handleCancel = null,
+  comment,
+  fields: {
+    body,
+  },
+  isFetching,
+}) => {
   const { author } = comment;
   const enableSubmit = comment.id > 0 || body.isValid;
 
@@ -91,10 +89,6 @@ CommentForm.propTypes = {
   comment: CommentType.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
-};
-
-CommentForm.defaultProps = {
-  handleCancel: null,
 };
 
 export default CommentForm;

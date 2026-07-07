@@ -70,17 +70,6 @@ StaticPage.propTypes = {
   }),
 };
 
-StaticPage.defaultProps = {
-  match: {
-    params: {
-      chapter: '',
-      section: '',
-      part: '',
-      alias: '',
-    },
-  },
-};
-
 const mapStateToProps = () => {
   return {};
 };

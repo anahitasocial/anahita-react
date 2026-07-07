@@ -16,8 +16,8 @@ const ControlsRemoveFollower = React.forwardRef(({
   follower,
   alertSuccess,
   alertError,
-  confirmTitle,
-  confirmMessage,
+  confirmTitle = i18n.t('prompts:confirm.title'),
+  confirmMessage = i18n.t('prompts:confirm.message'),
 }, ref) => {
   const [waiting, setWaiting] = useState(false);
 
@@ -60,11 +60,6 @@ ControlsRemoveFollower.propTypes = {
   follower: PersonType.isRequired,
   confirmTitle: PropTypes.string,
   confirmMessage: PropTypes.string,
-};
-
-ControlsRemoveFollower.defaultProps = {
-  confirmTitle: i18n.t('prompts:confirm.title'),
-  confirmMessage: i18n.t('prompts:confirm.message'),
 };
 
 const mapStateToProps = () => {

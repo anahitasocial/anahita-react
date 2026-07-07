@@ -8,14 +8,12 @@ import CommentType from '../../../proptypes/Comment';
 import i18n from '../../../languages';
 import DialogConfirm from '../../../components/dialog/Confirm';
 
-const ControlsCommentDelete = React.forwardRef((props, ref) => {
-  const {
-    deleteItem,
-    deleteItemInline,
-    comment,
-    inline,
-  } = props;
-
+const ControlsCommentDelete = React.forwardRef(({
+  deleteItem,
+  deleteItemInline,
+  comment,
+  inline = false,
+}, ref) => {
   const label = i18n.t('actions:delete');
   const deleteFunc = inline ? deleteItemInline : deleteItem;
 
@@ -43,10 +41,6 @@ ControlsCommentDelete.propTypes = {
   deleteItemInline: PropTypes.func.isRequired,
   comment: CommentType.isRequired,
   inline: PropTypes.bool,
-};
-
-ControlsCommentDelete.defaultProps = {
-  inline: false,
 };
 
 const mapStateToProps = () => {

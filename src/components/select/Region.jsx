@@ -19,11 +19,15 @@ const getRegions = (country) => {
   });
 };
 
-const SelectRegion = (props) => {
+const SelectRegion = ({
+  disabled = false,
+  required = false,
+  ...props
+}) => {
   const { country } = props;
   const regions = getRegions(country);
   return (
-    <Select {...props}>
+    <Select {...props} disabled={disabled} required={required}>
       {regions.map((region) => {
         const key = `region_${region[1]}`;
         return (
@@ -43,11 +47,6 @@ SelectRegion.propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
-};
-
-SelectRegion.defaultProps = {
-  disabled: false,
-  required: false,
 };
 
 export default SelectRegion;

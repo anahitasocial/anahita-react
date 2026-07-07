@@ -12,16 +12,14 @@ import ActorsFormsMetadata from './Metadata';
 
 const { NAME, BODY } = ACTOR.FIELDS;
 
-const ActorFormsInfo = (props) => {
-  const {
-    handleOnChange,
-    handleOnSubmit,
-    fields,
-    actor,
-    isFetching,
-    enabled,
-  } = props;
-
+const ActorFormsInfo = ({
+  handleOnChange,
+  handleOnSubmit,
+  fields,
+  actor,
+  isFetching,
+  enabled = null,
+}) => {
   const enableSubmit = actor.id > 0 || (fields.name.isValid && fields.body.isValid);
 
   return (
@@ -87,10 +85,6 @@ ActorFormsInfo.propTypes = {
   actor: ActorType.isRequired,
   isFetching: PropTypes.bool.isRequired,
   enabled: PropTypes.node,
-};
-
-ActorFormsInfo.defaultProps = {
-  enabled: null,
 };
 
 export default ActorFormsInfo;

@@ -17,13 +17,11 @@ const ITEM_HEIGHT = 48;
 
 const { node } = utils;
 
-const ActorsReadControls = (props) => {
-  const {
-    actor,
-    isAuthenticated,
-    viewer,
-  } = props;
-
+const ActorsReadControls = ({
+  actor,
+  isAuthenticated = false,
+  viewer,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClose = () => {
@@ -94,13 +92,6 @@ ActorsReadControls.propTypes = {
   actor: ActorType,
   isAuthenticated: PropTypes.bool,
   viewer: PersonType.isRequired,
-};
-
-ActorsReadControls.defaultProps = {
-  actor: {
-    commands: [],
-  },
-  isAuthenticated: false,
 };
 
 export default ActorsReadControls;

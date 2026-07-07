@@ -47,14 +47,12 @@ const styles = (theme) => {
   };
 };
 
-const ActorCard = (props) => {
-  const {
-    classes,
-    actor,
-    viewer,
-    action,
-  } = props;
-
+const ActorCard = ({
+  classes,
+  actor,
+  viewer = null,
+  action = null,
+}) => {
   const cover = getCoverURL(actor);
   const url = getURL(actor);
   const slug = `@${slugify(actor.alias.toLowerCase())}`;
@@ -139,11 +137,6 @@ ActorCard.propTypes = {
   action: PropTypes.node,
   actor: ActorType.isRequired,
   viewer: PersonType,
-};
-
-ActorCard.defaultProps = {
-  action: null,
-  viewer: null,
 };
 
 export default withStyles(styles)(ActorCard);

@@ -8,17 +8,15 @@ import actions from '../../actions/socialgraph';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
-const ControlsBlock = React.forwardRef((props, ref) => {
-  const {
-    blockPerson,
-    unblockPerson,
-    actor,
-    component,
-    blockLabel,
-    unblockLabel,
-    viewer,
-  } = props;
-
+const ControlsBlock = React.forwardRef(({
+  blockPerson,
+  unblockPerson,
+  actor,
+  component = 'button',
+  blockLabel = i18n.t('actions:block'),
+  unblockLabel = i18n.t('actions:unblock'),
+  viewer,
+}, ref) => {
   const [blocked, setBlocked] = useState(actor.isBlockedByViewer);
   const [waiting, setWaiting] = useState(false);
 
@@ -76,12 +74,6 @@ ControlsBlock.propTypes = {
   blockLabel: PropTypes.string,
   unblockLabel: PropTypes.string,
   viewer: PersonType.isRequired,
-};
-
-ControlsBlock.defaultProps = {
-  component: 'button',
-  blockLabel: i18n.t('actions:block'),
-  unblockLabel: i18n.t('actions:unblock'),
 };
 
 const mapStateToProps = (state) => {

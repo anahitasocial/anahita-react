@@ -27,21 +27,19 @@ const styles = (theme) => {
   };
 };
 
-const ActorBody = (props) => {
-  const {
-    classes,
-    actor,
-    viewer,
-    admins,
-    composers,
-    feed,
-    locations,
-    socialgraph,
-    tabPanels,
-    mentions,
-    selectedTab,
-  } = props;
-
+const ActorBody = ({
+  classes,
+  actor,
+  viewer,
+  admins = null,
+  composers = null,
+  feed = null,
+  locations = null,
+  socialgraph = null,
+  tabPanels = {},
+  mentions = null,
+  selectedTab = null,
+}) => {
   const namespace = getNamespace(actor);
   const featureTabs = getActorFeatureTabs(actor);
   const defaultTab = featureTabs[0] || 'feed';
@@ -150,17 +148,6 @@ ActorBody.propTypes = {
   tabPanels: PropTypes.objectOf(PropTypes.node),
   mentions: PropTypes.node,
   selectedTab: PropTypes.string,
-};
-
-ActorBody.defaultProps = {
-  admins: null,
-  composers: null,
-  feed: null,
-  locations: null,
-  socialgraph: null,
-  mentions: null,
-  tabPanels: {},
-  selectedTab: null,
 };
 
 export default withStyles(styles)(ActorBody);

@@ -16,13 +16,11 @@ const {
   getURL,
 } = utils.node;
 
-const ActorSettingCard = (props) => {
-  const {
-    actor,
-    subheader,
-    children,
-  } = props;
-
+const ActorSettingCard = ({
+  actor,
+  subheader = 'Settings',
+  children,
+}) => {
   const src = getAvatarURL(actor, 'medium');
   const initials = getActorInitials(actor);
   const url = getURL(actor);
@@ -58,10 +56,6 @@ ActorSettingCard.propTypes = {
   actor: PropTypes.object.isRequired,
   subheader: PropTypes.string,
   children: PropTypes.node.isRequired,
-};
-
-ActorSettingCard.defaultProps = {
-  subheader: 'Settings',
 };
 
 export default ActorSettingCard;

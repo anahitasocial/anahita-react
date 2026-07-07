@@ -28,16 +28,14 @@ const { SORTING } = APP.BROWSE;
 
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-const HomeCardMap = (params) => {
-  const {
-    title,
-    subheader,
-    showList,
-    sort,
-    limit,
-    ids,
-  } = params;
-
+const HomeCardMap = ({
+  title = 'Map',
+  subheader = '',
+  showList = false,
+  sort = SORTING.TOP,
+  limit = 10,
+  ids = [],
+}) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -54,7 +52,7 @@ const HomeCardMap = (params) => {
       .catch((err) => {
         return console.error(err);
       });
-  }, []);
+  }, [limit, sort, ids]);
 
   return (
     <Card component="section">
@@ -126,15 +124,6 @@ HomeCardMap.propTypes = {
   ]),
   ids: PropTypes.arrayOf(PropTypes.number),
   showList: PropTypes.bool,
-};
-
-HomeCardMap.defaultProps = {
-  title: 'Map',
-  subheader: '',
-  limit: 10,
-  sort: SORTING.TOP,
-  ids: [],
-  showList: false,
 };
 
 export default HomeCardMap;

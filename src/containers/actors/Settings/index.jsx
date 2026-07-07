@@ -37,7 +37,7 @@ const ActorsSettings = ({
   alertSuccess,
   alertError,
   namespace,
-  selectedTab,
+  selectedTab = TABS.INFO,
   isFetching,
   error,
   success,
@@ -58,7 +58,7 @@ const ActorsSettings = ({
     }
 
     if (success) {
-      alertSuccess(i18n.t('prompts:updated.sucess'));
+      alertSuccess(i18n.t('prompts:updated.success'));
     }
   }, [error, success]);
 
@@ -138,10 +138,6 @@ ActorsSettings.propTypes = {
     TABS.PRIVACY,
     TABS.DELETE,
   ]),
-};
-
-ActorsSettings.defaultProps = {
-  selectedTab: TABS.INFO,
 };
 
 const mapStateToProps = (namespace) => {

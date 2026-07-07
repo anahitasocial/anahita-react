@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -24,18 +25,16 @@ const formFields = form.createFormFields([
   'body',
 ]);
 
-const CommentsRead = (props) => {
-  const {
-    editItemInline,
-    editItem,
-    parent,
-    comment = { ...CommentDefault },
-    isAuthenticated,
-    viewer,
-    inline,
-    isFetching,
-  } = props;
-
+const CommentsRead = ({
+  editItemInline,
+  editItem,
+  parent,
+  comment = { ...CommentDefault },
+  isAuthenticated,
+  viewer,
+  inline = false,
+  isFetching,
+}) => {
   const [oldBody, setOldBody] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [fields, setFields] = useState(formFields);
@@ -150,10 +149,6 @@ CommentsRead.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   inline: PropTypes.bool,
   isFetching: PropTypes.bool.isRequired,
-};
-
-CommentsRead.defaultProps = {
-  inline: false,
 };
 
 export default (connect(

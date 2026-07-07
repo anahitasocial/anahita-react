@@ -54,16 +54,14 @@ const getSubheader = (namespace) => {
   return '';
 };
 
-const HomeCardNodes = (props) => {
-  const {
-    title,
-    subheader,
-    namespace,
-    limit,
-    sort,
-    ids,
-  } = props;
-
+const HomeCardNodes = ({
+  title = '',
+  subheader = '',
+  namespace,
+  limit = 10,
+  sort = SORTING.TOP,
+  ids = [],
+}) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -84,7 +82,7 @@ const HomeCardNodes = (props) => {
     return () => {
       setItems([]);
     };
-  }, [namespace]);
+  }, [namespace, limit, sort, ids]);
 
   return (
     <Card component="section">
@@ -146,14 +144,6 @@ HomeCardNodes.propTypes = {
     SORTING.RECENT,
   ]),
   ids: PropTypes.arrayOf(PropTypes.number),
-};
-
-HomeCardNodes.defaultProps = {
-  title: '',
-  subheader: '',
-  limit: 10,
-  sort: SORTING.TOP,
-  ids: [],
 };
 
 export default HomeCardNodes;

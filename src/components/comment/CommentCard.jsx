@@ -18,16 +18,14 @@ const {
   getAuthor,
 } = utils.node;
 
-const CommentCard = (props) => {
-  const {
-    comment,
-    stats,
-    actions,
-    menu,
-    isEditing,
-    commentForm,
-  } = props;
-
+const CommentCard = ({
+  comment,
+  stats = null,
+  actions = null,
+  menu = null,
+  isEditing = false,
+  commentForm = null,
+}) => {
   const { creationTime } = comment;
   const author = getAuthor(comment);
   const url = getCommentURL(comment);
@@ -90,14 +88,6 @@ CommentCard.propTypes = {
   comment: CommentType.isRequired,
   commentForm: PropTypes.node,
   isEditing: PropTypes.bool,
-};
-
-CommentCard.defaultProps = {
-  actions: null,
-  menu: null,
-  commentForm: null,
-  isEditing: false,
-  stats: null,
 };
 
 export default CommentCard;

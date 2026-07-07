@@ -7,17 +7,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const DialogAlert = (props) => {
-  const {
-    title,
-    content,
-    confirm,
-    dismiss,
-    handleConfirm,
-    handleDismiss,
-    open,
-  } = props;
-
+const DialogAlert = ({
+  title,
+  content,
+  confirm = 'Confirm',
+  dismiss = 'Dismiss',
+  handleConfirm,
+  handleDismiss,
+  open = false,
+}) => {
   return (
     <Dialog
       open={open}
@@ -62,12 +60,6 @@ DialogAlert.propTypes = {
   handleConfirm: PropTypes.func.isRequired,
   handleDismiss: PropTypes.func.isRequired,
   open: PropTypes.bool,
-};
-
-DialogAlert.defaultProps = {
-  confirm: 'Confirm',
-  dismiss: 'Dismiss',
-  open: false,
 };
 
 export default DialogAlert;

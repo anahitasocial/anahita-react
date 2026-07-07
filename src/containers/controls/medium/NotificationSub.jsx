@@ -7,17 +7,15 @@ import actions from '../../../actions';
 import MediumType from '../../../proptypes/Medium';
 import i18n from '../../../languages';
 
-const ControlsMediumNotification = React.forwardRef((props, ref) => {
-  const {
-    subscribe,
-    unsubscribe,
-    medium,
-    isSubscribedByViewer,
-    subscribeLabel,
-    unsubscribeLabel,
-    isFetching,
-  } = props;
-
+const ControlsMediumNotification = React.forwardRef(({
+  subscribe,
+  unsubscribe,
+  medium,
+  isSubscribedByViewer = false,
+  subscribeLabel = i18n.t('actions:subscribe'),
+  unsubscribeLabel = i18n.t('actions:unsubscribe'),
+  isFetching,
+}, ref) => {
   const [subscribed, setSubscribed] = useState(isSubscribedByViewer);
 
   const handleSubscribe = () => {
@@ -54,12 +52,6 @@ ControlsMediumNotification.propTypes = {
   subscribeLabel: PropTypes.string,
   unsubscribeLabel: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
-};
-
-ControlsMediumNotification.defaultProps = {
-  isSubscribedByViewer: false,
-  subscribeLabel: i18n.t('actions:subscribe'),
-  unsubscribeLabel: i18n.t('actions:unsubscribe'),
 };
 
 const mapStateToProps = (state) => {

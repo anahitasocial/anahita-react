@@ -44,16 +44,14 @@ const styles = (theme) => {
   };
 };
 
-const ActorHeader = (props) => {
-  const {
-    classes,
-    cover,
-    avatar,
-    actor,
-    followAction,
-    headerActions,
-  } = props;
-
+const ActorHeader = ({
+  classes,
+  cover,
+  avatar,
+  actor,
+  followAction = null,
+  headerActions = null,
+}) => {
   return (
     <Card
       square
@@ -107,11 +105,6 @@ ActorHeader.propTypes = {
   actor: ActorType.isRequired,
   followAction: PropTypes.node,
   headerActions: PropTypes.node,
-};
-
-ActorHeader.defaultProps = {
-  followAction: null,
-  headerActions: null,
 };
 
 export default withStyles(styles)(ActorHeader);

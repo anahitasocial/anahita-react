@@ -21,14 +21,12 @@ const useStyles = makeStyles({
   },
 });
 
-const ActorsBrowseGadget = (props) => {
+const ActorsBrowseGadget = ({
+  selectedTab = FILTER.FOLLOWING,
+  namespace,
+  owner,
+}) => {
   const classes = useStyles();
-  const {
-    selectedTab,
-    namespace,
-    owner,
-  } = props;
-
   const [tab, setTab] = useState(selectedTab);
 
   const changeTab = (event, value) => {
@@ -81,10 +79,6 @@ ActorsBrowseGadget.propTypes = {
   ]),
   namespace: PropTypes.string.isRequired,
   owner: PersonType.isRequired,
-};
-
-ActorsBrowseGadget.defaultProps = {
-  selectedTab: FILTER.FOLLOWING,
 };
 
 export default ActorsBrowseGadget;

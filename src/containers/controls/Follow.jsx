@@ -13,9 +13,9 @@ const ControlsFollow = React.forwardRef((props, ref) => {
     followActor,
     unfollowActor,
     actor,
-    component,
-    followLabel,
-    unfollowLabel,
+    component = 'button',
+    followLabel = i18n.t('actions:follow'),
+    unfollowLabel = i18n.t('actions:unfollow'),
     viewer,
   } = props;
 
@@ -76,12 +76,6 @@ ControlsFollow.propTypes = {
   followLabel: PropTypes.string,
   unfollowLabel: PropTypes.string,
   viewer: PersonType.isRequired,
-};
-
-ControlsFollow.defaultProps = {
-  component: 'button',
-  followLabel: i18n.t('actions:follow'),
-  unfollowLabel: i18n.t('actions:unfollow'),
 };
 
 const mapStateToProps = (state) => {

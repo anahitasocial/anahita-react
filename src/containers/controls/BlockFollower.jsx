@@ -9,7 +9,7 @@ import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
-import DialogConfirm from '../../components/DialogConfirm';
+import DialogConfirm from '../../components/dialog/Confirm';
 
 const ControlsBlockFollower = React.forwardRef(({
   blockfollower,
@@ -17,8 +17,8 @@ const ControlsBlockFollower = React.forwardRef(({
   follower,
   alertSuccess,
   alertError,
-  confirmTitle,
-  confirmMessage,
+  confirmTitle = i18n.t('prompts:confirm.title'),
+  confirmMessage = i18n.t('prompts:confirm.message'),
 }, ref) => {
   const [waiting, setWaiting] = useState(false);
 
@@ -61,11 +61,6 @@ ControlsBlockFollower.propTypes = {
   follower: PersonType.isRequired,
   confirmTitle: PropTypes.string,
   confirmMessage: PropTypes.string,
-};
-
-ControlsBlockFollower.defaultProps = {
-  confirmTitle: i18n.t('prompts:confirm.title'),
-  confirmMessage: i18n.t('prompts:confirm.message'),
 };
 
 const mapStateToProps = () => {

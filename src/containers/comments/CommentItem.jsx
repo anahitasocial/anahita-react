@@ -18,16 +18,14 @@ const {
   getAuthor,
 } = utils.node;
 
-const CommentItem = (props) => {
-  const {
-    comment,
-    stats,
-    actions,
-    menu,
-    isEditing,
-    commentForm,
-  } = props;
-
+const CommentItem = ({
+  comment = {},
+  stats = null,
+  actions = null,
+  menu = null,
+  isEditing = false,
+  commentForm = null,
+}) => {
   const { creationTime } = comment;
   const author = getAuthor(comment);
   const url = getCommentURL(comment);
@@ -91,14 +89,6 @@ CommentItem.propTypes = {
   comment: CommentType.isRequired,
   commentForm: PropTypes.node,
   isEditing: PropTypes.bool,
-};
-
-CommentItem.defaultProps = {
-  actions: null,
-  menu: null,
-  commentForm: null,
-  isEditing: false,
-  stats: null,
 };
 
 export default CommentItem;

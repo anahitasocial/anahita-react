@@ -27,16 +27,14 @@ import i18n from '../../../languages';
 import PersonType from '../../../proptypes/Person';
 import permissions from '../../../permissions';
 
-const LeftMenu = (props) => {
-  const {
-    isAuthenticated,
-    viewer,
-    onLogoutClick,
-    location: {
-      pathname,
-    },
-  } = props;
-
+const LeftMenu = ({
+  isAuthenticated,
+  viewer,
+  onLogoutClick = null,
+  location: {
+    pathname,
+  },
+}) => {
   return (
     <List>
       <ListItem
@@ -203,10 +201,6 @@ LeftMenu.propTypes = {
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-LeftMenu.defaultProps = {
-  onLogoutClick: null,
 };
 
 export default withRouter(LeftMenu);

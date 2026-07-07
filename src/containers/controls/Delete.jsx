@@ -14,12 +14,12 @@ import DialogConfirm from '../../components/dialog/Confirm';
 const ControlsDelete = React.forwardRef(({
   deleteItem,
   node,
-  redirect,
-  component,
+  redirect = '',
+  component = 'button',
   alertSuccess,
   alertError,
-  confirmTitle,
-  confirmMessage,
+  confirmTitle = i18n.t('prompts:confirm.title'),
+  confirmMessage = i18n.t('prompts:confirm.message'),
 }, ref) => {
   const [waiting, setWaiting] = useState(false);
 
@@ -86,13 +86,6 @@ ControlsDelete.propTypes = {
   component: PropTypes.oneOf(['button', 'menuitem']),
   confirmTitle: PropTypes.string,
   confirmMessage: PropTypes.string,
-};
-
-ControlsDelete.defaultProps = {
-  redirect: '',
-  component: 'button',
-  confirmTitle: i18n.t('prompts:confirm.title'),
-  confirmMessage: i18n.t('prompts:confirm.message'),
 };
 
 const mapStateToProps = () => {

@@ -9,12 +9,10 @@ import api from '../../../api';
 import NodeType from '../../../proptypes/Node';
 import i18n from '../../../languages';
 
-const ControlsMediumDownload = React.forwardRef((props, ref) => {
-  const {
-    node,
-    size,
-  } = props;
-
+const ControlsMediumDownload = React.forwardRef(({
+  node,
+  size = 'medium',
+}, ref) => {
   const [disabled, setDisabled] = useState(false);
 
   const onClick = () => {
@@ -47,10 +45,6 @@ const ControlsMediumDownload = React.forwardRef((props, ref) => {
 ControlsMediumDownload.propTypes = {
   node: NodeType.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
-};
-
-ControlsMediumDownload.defaultProps = {
-  size: 'medium',
 };
 
 export default ControlsMediumDownload;

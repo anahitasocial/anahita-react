@@ -4,9 +4,13 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { CountryRegionData } from 'react-country-region-selector';
 
-const SelectCountry = (props) => {
+const SelectCountry = ({
+  disabled = false,
+  required = false,
+  ...props
+}) => {
   return (
-    <Select {...props}>
+    <Select {...props} disabled={disabled} required={required}>
       {CountryRegionData.map((option) => {
         const key = `country_${option[0]}`;
         return (
@@ -25,11 +29,6 @@ SelectCountry.propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
-};
-
-SelectCountry.defaultProps = {
-  disabled: false,
-  required: false,
 };
 
 export default SelectCountry;

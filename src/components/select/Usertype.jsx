@@ -12,9 +12,14 @@ const usertypes = [
   PERSON.FIELDS.TYPE.SUPER_ADMIN,
 ];
 
-const SelectPersontype = (props) => {
+const SelectPersontype = ({
+  disabled = false,
+  required = false,
+  value = '',
+  ...props
+}) => {
   return (
-    <Select {...props}>
+    <Select {...props} disabled={disabled} required={required} value={value}>
       <MenuItem>
         All
       </MenuItem>
@@ -36,12 +41,6 @@ SelectPersontype.propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
-};
-
-SelectPersontype.defaultProps = {
-  disabled: false,
-  required: false,
-  value: '',
 };
 
 export default SelectPersontype;

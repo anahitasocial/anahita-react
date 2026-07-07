@@ -48,21 +48,19 @@ const styles = (theme) => {
   };
 };
 
-const ActorAvatarForm = (props) => {
-  const {
-    classes,
-    node,
-    avatar,
-    anchorEl,
-    isFetching,
-    canEdit,
-    handleOpen,
-    handleClose,
-    handleFieldChange,
-    handleDelete,
-    size,
-  } = props;
-
+const ActorAvatarForm = ({
+  classes,
+  node,
+  avatar = null,
+  anchorEl = null,
+  isFetching = false,
+  canEdit = false,
+  handleOpen,
+  handleClose,
+  handleFieldChange,
+  handleDelete,
+  size = 'default',
+}) => {
   const initials = getActorInitials(node);
 
   return (
@@ -124,14 +122,6 @@ ActorAvatarForm.propTypes = {
   handleFieldChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['small', 'large', 'default']),
-};
-
-ActorAvatarForm.defaultProps = {
-  isFetching: false,
-  canEdit: false,
-  avatar: null,
-  anchorEl: null,
-  size: 'default',
 };
 
 export default withStyles(styles)(ActorAvatarForm);

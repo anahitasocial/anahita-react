@@ -21,14 +21,12 @@ const FollowActionWithRef = withRef(ControlFollow);
 const BlockActionActionWithRef = withRef(ControlBlock);
 const DeleteActionWithRef = withRef(ControlDelete);
 
-const CommentMenu = (props) => {
-  const {
-    comment,
-    viewer,
-    handleEdit,
-    inline,
-  } = props;
-
+const CommentMenu = ({
+  comment,
+  viewer,
+  handleEdit,
+  inline = false,
+}) => {
   const canEdit = Boolean(comment.authorized.edit);
   const canDelete = Boolean(comment.authorized.delete);
   const { author } = comment;
@@ -106,10 +104,6 @@ CommentMenu.propTypes = {
   viewer: PersonType.isRequired,
   handleEdit: PropTypes.func.isRequired,
   inline: PropTypes.bool,
-};
-
-CommentMenu.defaultProps = {
-  inline: false,
 };
 
 export default CommentMenu;

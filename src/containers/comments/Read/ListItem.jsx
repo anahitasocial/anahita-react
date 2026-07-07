@@ -13,15 +13,13 @@ import ActorAvatar from '../../../components/actor/Avatar';
 import EntityBody from '../../../components/EntityBody';
 import CommentType from '../../../proptypes/Comment';
 
-const CommentListItem = (props) => {
-  const {
-    comment,
-    actions,
-    menu,
-    isEditing,
-    commentForm,
-  } = props;
-
+const CommentListItem = ({
+  comment,
+  actions = null,
+  menu = null,
+  isEditing = false,
+  commentForm = null,
+}) => {
   const { author, creationTime } = comment;
 
   if (isEditing) {
@@ -96,13 +94,6 @@ CommentListItem.propTypes = {
   comment: CommentType.isRequired,
   commentForm: PropTypes.node,
   isEditing: PropTypes.bool,
-};
-
-CommentListItem.defaultProps = {
-  actions: null,
-  menu: null,
-  commentForm: null,
-  isEditing: false,
 };
 
 export default CommentListItem;

@@ -40,20 +40,18 @@ const styles = (theme) => {
   };
 };
 
-const CoverForm = (props) => {
-  const {
-    classes,
-    node,
-    cover,
-    anchorEl,
-    isFetching,
-    canEdit,
-    handleOpen,
-    handleClose,
-    handleFieldChange,
-    handleDelete,
-  } = props;
-
+const CoverForm = ({
+  classes,
+  node,
+  cover = '',
+  anchorEl = null,
+  isFetching = false,
+  canEdit = false,
+  handleOpen,
+  handleClose,
+  handleFieldChange,
+  handleDelete,
+}) => {
   return (
     <>
       <ButtonBase
@@ -111,13 +109,6 @@ CoverForm.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleFieldChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
-};
-
-CoverForm.defaultProps = {
-  isFetching: false,
-  canEdit: false,
-  cover: '',
-  anchorEl: null,
 };
 
 export default withStyles(styles)(CoverForm);

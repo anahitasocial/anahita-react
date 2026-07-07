@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet-async';
 import striptags from 'striptags';
 
-const HeaderMeta = (props) => {
-  const {
-    title,
-    description,
-    image,
-    url,
-    type,
-  } = props;
-
+const HeaderMeta = ({
+  title = '',
+  description = process.env.REACT_APP_DESCRIPTION,
+  image = `${window.location.origin}/statics/media/ogimage.jpg`,
+  url = window.location.href,
+  type = 'website',
+}) => {
   const metaTitle = title ? `${title} - ${process.env.REACT_APP_NAME}` : process.env.REACT_APP_NAME;
   const metaDesc = striptags(description).substring(0, 160);
 
@@ -44,14 +42,6 @@ HeaderMeta.propTypes = {
   image: PropTypes.string,
   url: PropTypes.string,
   type: PropTypes.string,
-};
-
-HeaderMeta.defaultProps = {
-  title: '',
-  description: process.env.REACT_APP_DESCRIPTION,
-  image: `${window.location.origin}/statics/media/ogimage.jpg`,
-  url: window.location.href,
-  type: 'website',
 };
 
 export default HeaderMeta;

@@ -25,13 +25,11 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const ActorsSocialgraphAdd = (props) => {
+const ActorsSocialgraphAdd = ({
+  actor,
+  isOpen: defaultIsOpen = false,
+}) => {
   const classes = useStyles();
-  const {
-    actor,
-    isOpen: defaultIsOpen,
-  } = props;
-
   const [isOpen, setIsOpen] = useState(defaultIsOpen);
 
   const handleClose = () => {
@@ -77,10 +75,6 @@ const ActorsSocialgraphAdd = (props) => {
 ActorsSocialgraphAdd.propTypes = {
   actor: ActorType.isRequired,
   isOpen: PropTypes.bool,
-};
-
-ActorsSocialgraphAdd.defaultProps = {
-  isOpen: false,
 };
 
 export default ActorsSocialgraphAdd;

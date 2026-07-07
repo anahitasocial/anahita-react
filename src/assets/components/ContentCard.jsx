@@ -7,14 +7,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 
-const HomeCardContent = (props) => {
-  const {
-    title,
-    subheader,
-    content,
-    actions,
-  } = props;
-
+const HomeCardContent = ({
+  title = '',
+  subheader = '',
+  content = null,
+  actions = null,
+}) => {
   return (
     <Card component="section">
       <CardHeader
@@ -45,13 +43,6 @@ HomeCardContent.propTypes = {
     PropTypes.node,
   ]),
   actions: PropTypes.node,
-};
-
-HomeCardContent.defaultProps = {
-  title: '',
-  subheader: '',
-  content: null,
-  actions: null,
 };
 
 export default HomeCardContent;

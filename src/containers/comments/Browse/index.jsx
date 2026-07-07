@@ -22,20 +22,18 @@ const formFields = form.createFormFields([
   'body',
 ]);
 
-const CommentsBrowse = (props) => {
-  const {
-    browseList,
-    resetList,
-    addItem,
-    items,
-    canAdd,
-    parent,
-    viewer,
-    isFetching,
-    cardProps,
-    total,
-  } = props;
-
+const CommentsBrowse = ({
+  browseList,
+  resetList,
+  addItem,
+  items,
+  canAdd = false,
+  parent,
+  viewer,
+  isFetching,
+  cardProps = {},
+  total = 0,
+}) => {
   const namespace = utils.node.getNamespace(parent);
 
   const { id, objectType } = parent;
@@ -181,12 +179,6 @@ CommentsBrowse.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   cardProps: PropTypes.objectOf(PropTypes.any),
   total: PropTypes.number,
-};
-
-CommentsBrowse.defaultProps = {
-  canAdd: false,
-  cardProps: {},
-  total: 0,
 };
 
 export default (connect(
