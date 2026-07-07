@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import ActorSettingCard from '../../../components/actor/Setting';
+import ActorSettingCard from '../../../components/ActorSetting';
 
 import Admins from './admins/Browse';
 import Features from './Features';

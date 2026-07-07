@@ -5,7 +5,7 @@ import ControlFollow from '../../controls/Follow';
 import ControlBlock from '../../controls/Block';
 import ControlRemoveFollower from '../../controls/RemoveFollower';
 
-import ActorCard from '../../../components/actor/Card';
+import ActorCard from '../../../components/ActorCard';
 import permissions from '../../../permissions/actor';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';

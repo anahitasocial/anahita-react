@@ -2,10 +2,10 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import CommentStats from '../../../components/comment/Stats';
+import CommentStats from '../../../components/CommentStats';
 import ControlLike from '../../likes/controls/Like';
 import LikesStats from '../../likes';
-import MediumCard from '../../../components/medium/Card';
+import MediumCard from '../../../components/MediumCard';
 import ControlEditAccess from '../../controls/medium/Access';
 
 import PersonType from '../../../proptypes/Person';

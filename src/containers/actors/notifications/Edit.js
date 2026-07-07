@@ -13,7 +13,7 @@ import i18n from '../../../languages';
 import ActorType from '../../../proptypes/Actor';
 // import PersonType from '../../../proptypes/Person';
 
-import ActorSettingCard from '../../../components/actor/Setting';
+import ActorSettingCard from '../../../components/ActorSetting';
 import ActorsFormsNotifications from './Form';
 import Progress from '../../../components/Progress';
 

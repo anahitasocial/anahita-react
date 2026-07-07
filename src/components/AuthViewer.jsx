@@ -6,10 +6,10 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
-import ViewerType from '../../proptypes/Viewer';
-import utils from '../../utils';
-import i18n from '../../languages';
-import actions from '../../actions';
+import ViewerType from '../proptypes/Viewer';
+import utils from '../utils';
+import i18n from '../languages';
+import actions from '../actions';
 
 const {
   getActorInitials,
@@ -27,7 +27,7 @@ const styles = () => {
   };
 };
 
-const Viewer = ({
+const AuthViewer = ({
   classes,
   viewer = {},
   isAuthenticated = false,
@@ -69,7 +69,7 @@ const Viewer = ({
   );
 };
 
-Viewer.propTypes = {
+AuthViewer.propTypes = {
   classes: PropTypes.object.isRequired,
   viewer: ViewerType,
   isAuthenticated: PropTypes.bool,
@@ -100,4 +100,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Viewer));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AuthViewer));

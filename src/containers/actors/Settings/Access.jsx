@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 
-import DialogAlert from '../../../components/dialog/Alert';
+import DialogAlert from '../../../components/DialogAlert';
 
 import ActorType from '../../../proptypes/Actor';
 import actions from '../../../actions';

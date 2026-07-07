@@ -17,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import SearchBox from '../components/SearchBox';
 
-import Viewer from '../components/auth/Viewer';
+import Viewer from '../components/AuthViewer';
 import ViewerType from '../proptypes/Viewer';
 import assets from '../assets';
 import Alerts from './Alerts';

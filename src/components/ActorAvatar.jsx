@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
-import ActorType from '../../proptypes/Actor';
-import utils from '../../utils';
+import ActorType from '../proptypes/Actor';
+import utils from '../utils';
 
 const {
   getURL,

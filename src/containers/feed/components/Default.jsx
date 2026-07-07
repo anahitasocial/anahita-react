@@ -11,9 +11,9 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 import ReadMore from '../../../components/ReadMore';
-import ActorAvatar from '../../../components/actor/Avatar';
+import ActorAvatar from '../../../components/ActorAvatar';
 import NodeType from '../../../proptypes/Node';
-import CardOwner from '../../../components/medium/OwnerCard';
+import CardOwner from '../../../components/MediumOwner';
 import Player from '../../../components/Player';
 import utils from '../../../utils';
 

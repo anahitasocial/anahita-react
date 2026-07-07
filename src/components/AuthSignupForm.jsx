@@ -12,10 +12,10 @@ import TextField from '@material-ui/core/TextField';
 
 import SignUpIcon from '@material-ui/icons/PersonAdd';
 
-import { Signup as SIGNUP } from '../../constants';
-import i18n from '../../languages';
+import { Signup as SIGNUP } from '../constants';
+import i18n from '../languages';
 
-const SignupForm = ({
+const AuthSignupForm = ({
   handleOnChange,
   handleOnBlur,
   handleOnSubmit,
@@ -161,7 +161,7 @@ const SignupForm = ({
   );
 };
 
-SignupForm.propTypes = {
+AuthSignupForm.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnBlur: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
@@ -170,4 +170,4 @@ SignupForm.propTypes = {
   success: PropTypes.bool.isRequired,
 };
 
-export default SignupForm;
+export default AuthSignupForm;

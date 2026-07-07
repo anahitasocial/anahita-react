@@ -12,13 +12,13 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Truncate from 'react-truncate';
 
-import ActorType from '../../proptypes/Actor';
-import PersonType from '../../proptypes/Person';
-import ActorTitle from './Title';
-import ActorAvatar from './Avatar';
-import ReadMore from '../ReadMore';
-import utils from '../../utils';
-import i18n from '../../languages';
+import ActorType from '../proptypes/Actor';
+import PersonType from '../proptypes/Person';
+import ActorTitle from './ActorTitle';
+import ActorAvatar from './ActorAvatar';
+import ReadMore from './ReadMore';
+import utils from '../utils';
+import i18n from '../languages';
 
 const {
   getURL,

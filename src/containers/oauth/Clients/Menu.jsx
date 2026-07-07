@@ -10,7 +10,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import DialogConfirm from '../../../components/dialog/Confirm';
+import DialogConfirm from '../../../components/DialogConfirm';
 
 const useStyles = makeStyles((theme) => {
   return {

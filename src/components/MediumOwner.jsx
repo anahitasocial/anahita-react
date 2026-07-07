@@ -4,9 +4,9 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 
-import ActorAvatar from '../actor/Avatar';
-import NodeType from '../../proptypes/Node';
-import utils from '../../utils';
+import ActorAvatar from './ActorAvatar';
+import NodeType from '../proptypes/Node';
+import utils from '../utils';
 
 const { getURL } = utils.node;
 

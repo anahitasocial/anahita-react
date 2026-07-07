@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../api/cover';
-import CoverForm from '../../components/cover/Form';
+import CoverForm from '../../components/CoverForm';
 import NodeType from '../../proptypes/Node';
 
 const Cover = (props) => {

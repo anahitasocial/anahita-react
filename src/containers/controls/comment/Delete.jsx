@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import actions from '../../../actions';
 import CommentType from '../../../proptypes/Comment';
 import i18n from '../../../languages';
-import DialogConfirm from '../../../components/dialog/Confirm';
+import DialogConfirm from '../../../components/DialogConfirm';
 
 const ControlsCommentDelete = React.forwardRef(({
   deleteItem,

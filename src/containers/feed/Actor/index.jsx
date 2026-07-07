@@ -10,7 +10,7 @@ import actions from '../../../actions';
 import ControlLike from '../../likes/controls/LikeFeed';
 import ControlRepost from '../../controls/Repost';
 import LikesStats from '../../likes';
-import CommentStats from '../../../components/comment/Stats';
+import CommentStats from '../../../components/CommentStats';
 import FeedMenu from '../Menu';
 
 import Progress from '../../../components/Progress';

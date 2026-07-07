@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import _ from 'lodash';
 
-import ActorAvatar from '../../components/actor/Avatar';
+import ActorAvatar from '../../components/ActorAvatar';
 import Progress from '../../components/Progress';
 import { App as APP } from '../../constants';
 import icons from '../../components/AppIcons';

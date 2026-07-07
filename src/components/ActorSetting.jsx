@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 
 import BackIcon from '@material-ui/icons/ArrowBackIos';
 
-import utils from '../../utils';
+import utils from '../utils';
 
 const {
   getActorInitials,

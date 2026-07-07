@@ -9,9 +9,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
 
-import MediumCard from '../../../components/medium/Card';
-import ActorAvatar from '../../../components/actor/Avatar';
-import CardOwner from '../../../components/medium/OwnerCard';
+import MediumCard from '../../../components/MediumCard';
+import ActorAvatar from '../../../components/ActorAvatar';
+import CardOwner from '../../../components/MediumOwner';
 import utils from '../../../utils';
 import NodeType from '../../../proptypes/Node';
 

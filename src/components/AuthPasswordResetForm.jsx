@@ -12,10 +12,10 @@ import Button from '@material-ui/core/Button';
 
 import HelpIcon from '@material-ui/icons/Help';
 
-import { Password as PASSWORD } from '../../constants';
-import i18n from '../../languages';
+import { Password as PASSWORD } from '../constants';
+import i18n from '../languages';
 
-const PasswordResetForm = ({
+const AuthPasswordResetForm = ({
   handleOnChange,
   handleOnSubmit,
   isFetching,
@@ -75,11 +75,11 @@ const PasswordResetForm = ({
   );
 };
 
-PasswordResetForm.propTypes = {
+AuthPasswordResetForm.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
-export default PasswordResetForm;
+export default AuthPasswordResetForm;

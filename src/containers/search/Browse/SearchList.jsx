@@ -10,7 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import actions from '../../../actions';
 import NodesType from '../../../proptypes/Nodes';
 
-import CommentCard from '../../../components/comment/CommentCard';
+import CommentCard from '../../../components/CommentCard';
 import ActorsCard from '../../actors/Browse/Card';
 import Masonry from '../../../components/BreakpointMasonry';
 import MediaCard from '../../nodes/MediumNode';

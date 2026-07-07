@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Truncate from 'react-truncate';
-import ActorType from '../../proptypes/Actor';
-import utils from '../../utils';
+import ActorType from '../proptypes/Actor';
+import utils from '../utils';
 
 const { getURL } = utils.node;
 

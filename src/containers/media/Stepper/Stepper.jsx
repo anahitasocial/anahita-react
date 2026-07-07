@@ -22,7 +22,7 @@ import MediumType from '../../../proptypes/Medium';
 import MediumComments from '../../comments/Browse';
 import LocationsGadget from '../../locations/Gadget';
 import Likes from '../../likes';
-import CommentStats from '../../../components/comment/Stats';
+import CommentStats from '../../../components/CommentStats';
 import MediaMenu from '../MediaMenu';
 import Lightbox from './Lightbox';
 import MediumForm from '../EditForm';

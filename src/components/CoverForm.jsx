@@ -8,8 +8,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CardMedia from '@material-ui/core/CardMedia';
 import Fade from '@material-ui/core/Fade';
 
-import NodeType from '../../proptypes/Node';
-import i18n from '../../languages';
+import NodeType from '../proptypes/Node';
+import i18n from '../languages';
 
 const styles = (theme) => {
   return {

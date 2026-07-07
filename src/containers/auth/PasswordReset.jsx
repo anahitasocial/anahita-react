@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import PasswordResetForm from '../../components/auth/PasswordResetForm';
+import PasswordResetForm from '../../components/AuthPasswordResetForm';
 import actions from '../../actions';
 import form from '../../utils/form';
 import i18n from '../../languages';

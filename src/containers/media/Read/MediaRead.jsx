@@ -6,7 +6,7 @@ import MediumType from '../../../proptypes/Medium';
 
 import Article from './Article';
 import Default from './Default';
-import CommentStats from '../../../components/comment/Stats';
+import CommentStats from '../../../components/CommentStats';
 import HeaderMeta from '../../../components/HeaderMeta';
 import Likes from '../../likes';
 import LocationsGadget from '../../locations/Gadget';

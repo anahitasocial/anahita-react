@@ -1,45 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { makeStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 
-import ActorAvatar from '../../../components/ActorAvatar';
-import ReadMore from '../../../components/ReadMore';
-import CardOwner from '../../../components/MediumOwner';
-import Player from '../../../components/Player';
-import utils from '../../../utils';
-import NodeType from '../../../proptypes/Node';
+import ReadMore from './ReadMore';
+import ActorAvatar from './ActorAvatar';
+import NodeType from '../proptypes/Node';
+import CardOwner from './MediumOwner';
+import Player from './Player';
+import utils from '../utils';
 
 const {
   getURL,
   getPortraitURL,
   getCoverURL,
+  getPersonName,
 } = utils.node;
 
-const useStyles = makeStyles((theme) => {
+const styles = (theme) => {
   return {
-    card: {
+    root: {
       marginBottom: theme.spacing(2),
     },
     cover: {
       height: 0,
       paddingTop: '30%',
     },
+    media: {
+      height: 0,
+      paddingTop: '100%',
+    },
     title: {
       textTransform: 'capitalize',
       marginBottom: theme.spacing(2),
-    },
-    blockquote: {
-      marginLeft: theme.spacing(2),
-      borderLeft: 4,
-      borderColor: theme.palette.background.default,
-      borderLeftStyle: 'solid',
     },
     authorName: {
       fontSize: 16,
@@ -48,56 +48,30 @@ const useStyles = makeStyles((theme) => {
       fontSize: 14,
     },
   };
-});
+};
 
-const FeedCardComment = ({
+const FeedCardDefault = ({
+  classes,
   node,
-  actions = null,
   stats = null,
-  menu = null,
+  actions = null,
+  menu,
   showOwner = false,
 }) => {
-  const classes = useStyles();
-  const portrait = getPortraitURL(node.parent, 'medium');
-  const cover = getCoverURL(node.parent);
-  const {
-    name: parentTitle = '',
-    body: parentBody = '',
-  } = node.parent;
-  const { body } = node;
-  const url = getURL(node.parent);
+  const authorName = getPersonName(node.author);
+  const portrait = getPortraitURL(node, 'medium');
+  const cover = getCoverURL(node, 'medium');
+  const { title, body } = node;
+  const url = getURL(node);
   const creationTime = moment.utc(node.creationTime).local().format('LLL').toString();
   const creationTimeFromNow = moment.utc(node.creationTime).fromNow();
 
   return (
     <Card
-      className={classes.card}
+      className={classes.root}
       component="article"
     >
-      {showOwner && node.parent.owner && <CardOwner owner={node.parent.owner} />}
-      {cover &&
-        <Link href={url}>
-          <CardMedia
-            className={classes.cover}
-            image={cover}
-            title={parentTitle}
-          />
-        </Link>}
-      {portrait &&
-        <Link href={url}>
-          <CardMedia
-            component="img"
-            title={parentTitle}
-            image={portrait}
-          />
-        </Link>}
-      {parentBody && <Player text={parentBody} />}
-      <CardContent className={classes.blockquote} component="blockquote">
-        {parentBody &&
-          <ReadMore contentFilter>
-            {parentBody}
-          </ReadMore>}
-      </CardContent>
+      {showOwner && node.owner && <CardOwner owner={node.owner} />}
       <CardHeader
         avatar={
           <ActorAvatar
@@ -105,7 +79,11 @@ const FeedCardComment = ({
             linked={node.author.id > 0}
           />
         }
-        title={node.author.name}
+        title={node.author.id > 0 ? (
+          <Link href={getURL(node.author)}>
+            {authorName}
+          </Link>
+        ) : authorName}
         subheader={
           <Link
             href={url}
@@ -116,7 +94,34 @@ const FeedCardComment = ({
         }
         action={menu}
       />
+      {cover &&
+        <Link href={url}>
+          <CardMedia
+            className={classes.cover}
+            image={cover}
+            title={title}
+            src="picture"
+          />
+        </Link>}
+      {portrait &&
+        <Link href={url}>
+          <CardMedia
+            component="img"
+            title={title}
+            image={portrait}
+          />
+        </Link>}
+      {body && <Player text={body} />}
       <CardContent>
+        {title &&
+          <Typography
+            variant="h6"
+            className={classes.title}
+          >
+            <Link href={url}>
+              {title}
+            </Link>
+          </Typography>}
         {body &&
           <ReadMore contentFilter>
             {body}
@@ -134,7 +139,8 @@ const FeedCardComment = ({
   );
 };
 
-FeedCardComment.propTypes = {
+FeedCardDefault.propTypes = {
+  classes: PropTypes.object.isRequired,
   stats: PropTypes.node,
   actions: PropTypes.node,
   menu: PropTypes.node,
@@ -142,4 +148,4 @@ FeedCardComment.propTypes = {
   showOwner: PropTypes.bool,
 };
 
-export default FeedCardComment;
+export default withStyles(styles)(FeedCardDefault);

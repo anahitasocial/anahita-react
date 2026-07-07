@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { Person as PERSON } from '../../constants';
-import i18n from '../../languages';
+import { Person as PERSON } from '../constants';
+import i18n from '../languages';
 
 const usertypes = [
   PERSON.FIELDS.TYPE.REGISTERED,

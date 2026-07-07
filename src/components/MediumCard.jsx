@@ -12,14 +12,14 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
-import MediumType from '../../proptypes/Medium';
-import ActorTitle from '../actor/Title';
-import ActorAvatar from '../actor/Avatar';
-import CardHeaderOwner from './OwnerCard';
-import Player from '../Player';
-import Progress from '../Progress';
-import ReadMore from '../ReadMore';
-import utils from '../../utils';
+import MediumType from '../proptypes/Medium';
+import ActorTitle from './ActorTitle';
+import ActorAvatar from './ActorAvatar';
+import CardHeaderOwner from './MediumOwner';
+import Player from './Player';
+import Progress from './Progress';
+import ReadMore from './ReadMore';
+import utils from '../utils';
 
 const {
   getAuthor,

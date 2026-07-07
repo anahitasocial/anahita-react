@@ -10,8 +10,8 @@ import actions from '../../../actions';
 import NodeType from '../../../proptypes/Node';
 import NodesType from '../../../proptypes/Nodes';
 
-import CommentCard from '../../../components/comment/CommentCard';
-import ActorCard from '../../../components/actor/Card';
+import CommentCard from '../../../components/CommentCard';
+import ActorCard from '../../../components/ActorCard';
 import Masonry from '../../../components/BreakpointMasonry';
 import MediumNode from '../../nodes/MediumNode';
 import Progress from '../../../components/Progress';

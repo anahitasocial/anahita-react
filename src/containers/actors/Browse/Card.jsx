@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import ControlDelete from '../../controls/Delete';
 import ControlFollow from '../../controls/Follow';
-import ActorCard from '../../../components/actor/Card';
+import ActorCard from '../../../components/ActorCard';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import utils from '../../../utils';

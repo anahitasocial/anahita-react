@@ -8,8 +8,8 @@ import TextField from '@material-ui/core/TextField';
 
 import { Locations as LOCATION } from '../../../constants';
 import LocationType from '../../../proptypes/Location';
-import CountrySelect from '../../../components/select/Country';
-import RegionSelect from '../../../components/select/Region';
+import CountrySelect from '../../../components/SelectCountry';
+import RegionSelect from '../../../components/SelectRegion';
 
 import i18n from '../../../languages';
 

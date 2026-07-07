@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import SignupForm from '../../components/auth/SignupForm';
+import SignupForm from '../../components/AuthSignupForm';
 import actions from '../../actions';
 import api from '../../api';
 import form from '../../utils/form';

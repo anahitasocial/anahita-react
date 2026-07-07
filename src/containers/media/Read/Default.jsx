@@ -14,9 +14,9 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import MediumType from '../../../proptypes/Medium';
-import ActorTitle from '../../../components/actor/Title';
-import ActorAvatar from '../../../components/actor/Avatar';
-import CardHeaderOwner from '../../../components/medium/OwnerCard';
+import ActorTitle from '../../../components/ActorTitle';
+import ActorAvatar from '../../../components/ActorAvatar';
+import CardHeaderOwner from '../../../components/MediumOwner';
 import Player from '../../../components/Player';
 import Progress from '../../../components/Progress';
 import EntityBody from '../../../components/EntityBody';
