@@ -7,10 +7,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Link from '@material-ui/core/Link';
 
 import StoryMessage from './StoryMessage';
-import ActorAvatar from '../actor/Avatar';
-import StoryType from '../../proptypes/Story';
-import StoryCardOwner from '../medium/OwnerCard';
-import utils from '../../utils';
+import ActorAvatar from '../../../components/actor/Avatar';
+import StoryType from '../../../proptypes/Story';
+import StoryCardOwner from '../../../components/medium/OwnerCard';
+import utils from '../../../utils';
 
 const {
   getURL,
@@ -43,14 +43,12 @@ const styles = (theme) => {
   };
 };
 
-const StoryCardActor = (props) => {
-  const {
-    classes,
-    story,
-    menu,
-    showOwner,
-  } = props;
-
+const StoryCardActor = ({
+  classes,
+  story,
+  menu = null,
+  showOwner = false,
+}) => {
   const subject = getStorySubject(story);
 
   // @Todo add support for array objects
@@ -94,11 +92,6 @@ StoryCardActor.propTypes = {
   menu: PropTypes.node,
   story: StoryType.isRequired,
   showOwner: PropTypes.bool,
-};
-
-StoryCardActor.defaultProps = {
-  showOwner: false,
-  menu: null,
 };
 
 export default withStyles(styles)(StoryCardActor);

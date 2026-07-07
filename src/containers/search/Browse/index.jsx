@@ -71,14 +71,16 @@ const marks = [
   },
 ];
 
-const Search = (props) => {
+const Search = ({
+  setAppTitle,
+  coords = {
+    latitude: 0.0,
+    longitude: 0.0,
+  },
+  isGeolocationAvailable,
+  isGeolocationEnabled,
+}) => {
   const classes = useStyles();
-  const {
-    setAppTitle,
-    coords,
-    isGeolocationAvailable,
-    isGeolocationEnabled,
-  } = props;
 
   const location = useLocation();
   const { q } = queryString.parse(location.search);
@@ -235,13 +237,6 @@ Search.propTypes = {
   })),
   isGeolocationAvailable: PropTypes.bool.isRequired,
   isGeolocationEnabled: PropTypes.bool.isRequired,
-};
-
-Search.defaultProps = {
-  coords: {
-    longitude: 0.0,
-    latitude: 0.0,
-  },
 };
 
 const mapDispatchToProps = (dispatch) => {

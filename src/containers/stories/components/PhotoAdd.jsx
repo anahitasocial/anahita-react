@@ -10,12 +10,12 @@ import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
-import ReadMore from '../ReadMore';
+import ReadMore from '../../../components/ReadMore';
 import StoryMessage from './StoryMessage';
-import ActorAvatar from '../actor/Avatar';
+import ActorAvatar from '../../../components/actor/Avatar';
 import GridList from './GridList';
-import StoryCardOwner from '../medium/OwnerCard';
-import utils from '../../utils';
+import StoryCardOwner from '../../../components/medium/OwnerCard';
+import utils from '../../../utils';
 
 const {
   getURL,
@@ -41,17 +41,15 @@ const styles = (theme) => {
   };
 };
 
-const StoryCardPhotoAdd = (props) => {
-  const {
-    classes,
-    story,
-    stats,
-    actions,
-    menu,
-    showOwner,
-    comments,
-  } = props;
-
+const StoryCardPhotoAdd = ({
+  classes,
+  story,
+  stats = null,
+  actions = null,
+  menu = null,
+  showOwner = false,
+  comments = null,
+}) => {
   const subject = getStorySubject(story);
 
   // @Todo add support for array objects
@@ -151,14 +149,6 @@ StoryCardPhotoAdd.propTypes = {
   comments: PropTypes.node,
   story: PropTypes.object.isRequired,
   showOwner: PropTypes.bool,
-};
-
-StoryCardPhotoAdd.defaultProps = {
-  showOwner: false,
-  actions: null,
-  stats: null,
-  menu: null,
-  comments: null,
 };
 
 export default withStyles(styles)(StoryCardPhotoAdd);

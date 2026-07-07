@@ -7,18 +7,16 @@ import StoryCardComment from './Comment';
 import StoryCardPhotoAdd from './PhotoAdd';
 import StoryCardTodoStatus from './TodoStatus';
 
-import StoryType from '../../proptypes/Story';
+import StoryType from '../../../proptypes/Story';
 
-const StoryCard = (props) => {
-  const {
-    story,
-    stats,
-    actions,
-    menu,
-    comments,
-    showOwner,
-  } = props;
-
+const StoryCard = ({
+  story,
+  stats = null,
+  actions = null,
+  menu = null,
+  comments = null,
+  showOwner = false,
+}) => {
   switch (story.name) {
     case 'actor_follow':
     case 'actor_follower_add':
@@ -92,14 +90,6 @@ StoryCard.propTypes = {
   comments: PropTypes.node,
   story: StoryType.isRequired,
   showOwner: PropTypes.bool,
-};
-
-StoryCard.defaultProps = {
-  showOwner: false,
-  actions: null,
-  stats: null,
-  menu: null,
-  comments: null,
 };
 
 export default StoryCard;

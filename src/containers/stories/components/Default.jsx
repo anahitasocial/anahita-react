@@ -10,13 +10,13 @@ import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
-import ReadMore from '../ReadMore';
+import ReadMore from '../../../components/ReadMore';
 import StoryMessage from './StoryMessage';
-import ActorAvatar from '../actor/Avatar';
-import StoryType from '../../proptypes/Story';
-import StoryCardOwner from '../medium/OwnerCard';
-import Player from '../Player';
-import utils from '../../utils';
+import ActorAvatar from '../../../components/actor/Avatar';
+import StoryType from '../../../proptypes/Story';
+import StoryCardOwner from '../../../components/medium/OwnerCard';
+import Player from '../../../components/Player';
+import utils from '../../../utils';
 
 const {
   getURL,
@@ -51,17 +51,15 @@ const styles = (theme) => {
   };
 };
 
-const StoryCardDefault = (props) => {
-  const {
-    classes,
-    story,
-    stats,
-    actions,
-    menu,
-    comments,
-    showOwner,
-  } = props;
-
+const StoryCardDefault = ({
+  classes,
+  story,
+  stats = null,
+  actions = null,
+  menu = null,
+  comments = null,
+  showOwner = false,
+}) => {
   const subject = getStorySubject(story);
 
   // @Todo add support for array objects
@@ -154,14 +152,6 @@ StoryCardDefault.propTypes = {
   comments: PropTypes.node,
   story: StoryType.isRequired,
   showOwner: PropTypes.bool,
-};
-
-StoryCardDefault.defaultProps = {
-  showOwner: false,
-  actions: null,
-  stats: null,
-  menu: null,
-  comments: null,
 };
 
 export default withStyles(styles)(StoryCardDefault);

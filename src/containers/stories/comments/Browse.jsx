@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CommentRead from '../../comments/Read';
-import CommentForm from '../../../components/comment/Form';
+import CommentForm from '../components/Comment';
 
 import actions from '../../../actions';
 
@@ -20,18 +20,16 @@ const formFields = form.createFormFields([
   'body',
 ]);
 
-const CommentsBrowse = (props) => {
-  const {
-    parent,
-    parents,
-    canAdd,
-    addItem,
-    setList,
-    viewer,
-    isFetching,
-    comments: initComments,
-  } = props;
-
+const CommentsBrowse = ({
+  parent,
+  parents,
+  canAdd = false,
+  addItem,
+  setList,
+  viewer,
+  isFetching,
+  comments: initComments,
+}) => {
   const items = parents.byId[parent.id] || {
     allIds: [],
     byId: {},
@@ -145,10 +143,6 @@ CommentsBrowse.propTypes = {
   addItem: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   isFetching: PropTypes.bool.isRequired,
-};
-
-CommentsBrowse.defaultProps = {
-  canAdd: false,
 };
 
 export default (connect(

@@ -34,25 +34,24 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const SearchList = (props) => {
+const SearchList = ({
+  browseList,
+  resetList,
+  alertError,
+  items,
+  error,
+  total = 0,
+  queryParams: {
+    sort,
+    q,
+    scope,
+    coordLong,
+    coordLat,
+    searchRange,
+    searchComments,
+  },
+}) => {
   const classes = useStyles();
-  const {
-    browseList,
-    resetList,
-    alertError,
-    items,
-    error,
-    total,
-    queryParams: {
-      sort,
-      q,
-      scope,
-      coordLong,
-      coordLat,
-      searchRange,
-      searchComments,
-    },
-  } = props;
 
   const [start, setStart] = useState(0);
 
@@ -171,10 +170,6 @@ SearchList.propTypes = {
   }).isRequired,
   error: PropTypes.string.isRequired,
   total: PropTypes.number,
-};
-
-SearchList.defaultProps = {
-  total: 0,
 };
 
 const mapDispatchToProps = (dispatch) => {

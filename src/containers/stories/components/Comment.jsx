@@ -10,11 +10,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
-import ReadMore from '../ReadMore';
+import ReadMore from '../../../components/ReadMore';
 import StoryMessage from './StoryMessage';
-import StoryCardOwner from '../medium/OwnerCard';
-import Player from '../Player';
-import utils from '../../utils';
+import StoryCardOwner from '../../../components/medium/OwnerCard';
+import Player from '../../../components/Player';
+import utils from '../../../utils';
 
 const {
   getURL,
@@ -50,15 +50,14 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const StoryCardComment = (props) => {
-  const {
-    story,
-    actions,
-    stats,
-    menu,
-    comments,
-    showOwner,
-  } = props;
+const StoryCardComment = ({
+  story,
+  actions = null,
+  stats = null,
+  menu = null,
+  comments = null,
+  showOwner = false,
+}) => {
   const classes = useStyles();
 
   // @Todo add support for array objects
@@ -142,13 +141,6 @@ StoryCardComment.propTypes = {
   comments: PropTypes.node.isRequired,
   story: PropTypes.object.isRequired,
   showOwner: PropTypes.bool,
-};
-
-StoryCardComment.defaultProps = {
-  showOwner: false,
-  stats: null,
-  actions: null,
-  menu: null,
 };
 
 export default StoryCardComment;
