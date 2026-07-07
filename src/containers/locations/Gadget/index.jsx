@@ -36,14 +36,12 @@ const useStyles = makeStyles((theme) => {
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 const GOOGLE_MAP_URL = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`;
 
-const LocationsGadget = (props) => {
+const LocationsGadget = ({
+  node,
+  viewer,
+  cardProps = {},
+}) => {
   const classes = useStyles();
-  const {
-    node,
-    viewer,
-    cardProps,
-  } = props;
-
   const [isOpen, setIsOpen] = useState(false);
   const [locations, setLocations] = useState([]);
   const [waiting, setWaiting] = useState(false);
@@ -141,10 +139,6 @@ LocationsGadget.propTypes = {
   node: NodeType.isRequired,
   viewer: PersonType.isRequired,
   cardProps: PropTypes.objectOf(PropTypes.any),
-};
-
-LocationsGadget.defaultProps = {
-  cardProps: {},
 };
 
 export default LocationsGadget;

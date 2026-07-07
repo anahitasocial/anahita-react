@@ -13,12 +13,10 @@ import LocationType from '../../../proptypes/Location';
 
 const { getAddress } = utils.node;
 
-const LocationsListItem = (props) => {
-  const {
-    location,
-    actions,
-  } = props;
-
+const LocationsListItem = ({
+  location,
+  actions = null,
+}) => {
   return (
     <ListItem
       key={`locations-list-item-${location.id}`}
@@ -47,10 +45,6 @@ const LocationsListItem = (props) => {
 LocationsListItem.propTypes = {
   location: LocationType.isRequired,
   actions: PropTypes.node,
-};
-
-LocationsListItem.defaultProps = {
-  actions: null,
 };
 
 export default LocationsListItem;

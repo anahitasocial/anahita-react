@@ -39,7 +39,7 @@ const FeedActorBrowse = ({
   resetList,
   alertError,
   items,
-  hasMore,
+  hasMore = true,
   isAuthenticated,
   viewer,
   error,
@@ -281,11 +281,6 @@ FeedActorBrowse.propTypes = {
   error: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
-};
-
-FeedActorBrowse.defaultProps = {
-  actor: ActorDefault,
-  hasMore: true,
 };
 
 const mapStateToProps = (state) => {

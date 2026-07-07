@@ -35,17 +35,16 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const LocationsSelector = (props) => {
+const LocationsSelector = ({
+  node,
+  isOpen,
+  handleClose,
+  coords,
+  isGeolocationAvailable,
+  isGeolocationEnabled,
+  selectedLocations = [],
+}) => {
   const classes = useStyles();
-  const {
-    node,
-    isOpen,
-    handleClose,
-    coords,
-    isGeolocationAvailable,
-    isGeolocationEnabled,
-    selectedLocations,
-  } = props;
 
   const [tab, setTab] = useState(TABS.SEARCH);
   const [keyword, setKeyword] = useState('');
@@ -142,10 +141,6 @@ LocationsSelector.propTypes = {
   handleClose: PropTypes.func.isRequired,
   selectedLocations: PropTypes.arrayOf(NodeType),
   ...geoPropTypes,
-};
-
-LocationsSelector.defaultProps = {
-  selectedLocations: [],
 };
 
 export default geolocated({
