@@ -5,7 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 
 import ActorHeader from './ActorHeader';
 import ActorBody from './Body';
-import ActorsFollowRequests from '../FollowRequests';
+import ActorsFollowRequests from './FollowRequests';
 import ActorsSocialgraph from '../Socialgraph/index';
 import ActorsBrowseFeature from '../Browse/Gadget';
 import Admins from './Admins';

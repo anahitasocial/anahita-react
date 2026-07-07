@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Card from '@material-ui/core/Card';
 import CommentRead from '../Read';
-import CommentForm from '../Form';
+import CommentForm from '../components/Form';
 import Progress from '../../../components/Progress';
 
 import actions from '../../../actions';

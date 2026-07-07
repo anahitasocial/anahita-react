@@ -7,11 +7,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 
-import ActorTitle from '../../components/ActorTitle';
-import ActorAvatar from '../../components/ActorAvatar';
-import EntityBody from '../../components/NodeBody';
-import CommentType from '../../proptypes/Comment';
-import utils from '../../utils';
+import ActorTitle from '../../../components/ActorTitle';
+import ActorAvatar from '../../../components/ActorAvatar';
+import EntityBody from '../../../components/NodeBody';
+import CommentType from '../../../proptypes/Comment';
+import utils from '../../../utils';
 
 const {
   getCommentURL,

@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import CommentItem from '../CommentItem';
-import CommentForm from '../Form';
+import CommentItem from '../components/CommentItem';
+import CommentForm from '../components/Form';
 
 import actions from '../../../actions';
 import NodeType from '../../../proptypes/Node';
@@ -15,7 +15,7 @@ import Likes from '../../likes';
 
 import ControlLikeComment from '../../likes/controls/LikeComment';
 import ControlLikeCommentInline from '../../likes/controls/LikeCommentInline';
-import CommentMenu from '../Menu';
+import CommentMenu from '../components/Menu';
 import CommentDefault from '../../../proptypes/CommentDefault';
 import utils from '../../../utils';
 

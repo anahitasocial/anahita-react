@@ -5,10 +5,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 
-import ActorAvatar from '../../components/ActorAvatar';
-import CommentType from '../../proptypes/Comment';
-import i18n from '../../languages';
-import { Comments as COMMENT } from '../../constants';
+import ActorAvatar from '../../../components/ActorAvatar';
+import CommentType from '../../../proptypes/Comment';
+import i18n from '../../../languages';
+import { Comments as COMMENT } from '../../../constants';
 
 const { BODY } = COMMENT.FIELDS;
 

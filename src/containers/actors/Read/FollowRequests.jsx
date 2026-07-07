@@ -16,12 +16,12 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import FollowRequestsIcon from '@material-ui/icons/People';
 
-import ActorAvatar from '../../components/ActorAvatar';
+import ActorAvatar from '../../../components/ActorAvatar';
 
-import actions from '../../actions';
-import ActorsType from '../../proptypes/Actors';
-import ActorType from '../../proptypes/Actor';
-import i18n from '../../languages';
+import actions from '../../../actions';
+import ActorsType from '../../../proptypes/Actors';
+import ActorType from '../../../proptypes/Actor';
+import i18n from '../../../languages';
 
 const ActorsFollowRequests = React.forwardRef(({
   browseList,

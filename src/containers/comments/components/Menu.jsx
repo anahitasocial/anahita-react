@@ -5,15 +5,15 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import i18n from '../../languages';
-import utils from '../../utils';
+import i18n from '../../../languages';
+import utils from '../../../utils';
 
-import ControlFollow from '../controls/Follow';
-import ControlBlock from '../controls/Block';
-import ControlDelete from '../controls/comment/Delete';
+import ControlFollow from '../../controls/Follow';
+import ControlBlock from '../../controls/Block';
+import ControlDelete from '../../controls/comment/Delete';
 
-import PersonType from '../../proptypes/Person';
-import CommentType from '../../proptypes/Comment';
+import PersonType from '../../../proptypes/Person';
+import CommentType from '../../../proptypes/Comment';
 
 const { withRef } = utils.component;
 
