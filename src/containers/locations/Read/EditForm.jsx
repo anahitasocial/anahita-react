@@ -19,17 +19,21 @@ const {
   CITY,
 } = LOCATION.FIELDS;
 
-const LocationEditForm = (props) => {
-  const {
-    handleOnChange,
-    handleOnSubmit,
-    fields,
-    location,
-    isFetching,
-    actions,
-    requiredFields,
-  } = props;
-
+const LocationEditForm = ({
+  handleOnChange,
+  handleOnSubmit,
+  fields,
+  location,
+  isFetching,
+  actions = null,
+  requiredFields = [
+    'name',
+    'address',
+    'city',
+    'state_province',
+    'country',
+  ],
+}) => {
   return (
     <form
       onSubmit={handleOnSubmit}
@@ -144,17 +148,6 @@ LocationEditForm.propTypes = {
   actions: PropTypes.node,
   isFetching: PropTypes.bool.isRequired,
   requiredFields: PropTypes.arrayOf(PropTypes.string),
-};
-
-LocationEditForm.defaultProps = {
-  actions: null,
-  requiredFields: [
-    'name',
-    'address',
-    'city',
-    'state_province',
-    'country',
-  ],
 };
 
 export default LocationEditForm;

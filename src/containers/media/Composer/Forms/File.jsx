@@ -37,7 +37,7 @@ const ComposersFile = React.forwardRef(({
   supportedMimetypes,
   fields,
   medium,
-  file,
+  file = null,
   isFetching,
   namespace,
 }, ref) => {
@@ -154,10 +154,6 @@ ComposersFile.propTypes = {
   success: PropTypes.bool.isRequired,
   supportedMimetypes: PropTypes.arrayOf(PropTypes.string).isRequired,
   namespace: PropTypes.string.isRequired,
-};
-
-ComposersFile.defaultProps = {
-  file: null,
 };
 
 export default ComposersFile;

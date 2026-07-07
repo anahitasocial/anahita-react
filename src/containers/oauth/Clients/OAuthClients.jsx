@@ -59,10 +59,10 @@ const useStyles = makeStyles((theme) => {
 
 const OAuthClients = ({
   items,
-  isFetching,
-  canAdd,
-  canEdit,
-  canDelete,
+  isFetching = false,
+  canAdd = false,
+  canEdit = false,
+  canDelete = false,
   onAdd,
   onEdit,
   onDelete,
@@ -182,13 +182,6 @@ OAuthClients.propTypes = {
   onAdd: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-};
-
-OAuthClients.defaultProps = {
-  isFetching: false,
-  canAdd: false,
-  canEdit: false,
-  canDelete: false,
 };
 
 export default OAuthClients;

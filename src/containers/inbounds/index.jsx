@@ -26,12 +26,11 @@ const useStyles = makeStyles({
   },
 });
 
-const Inbounds = (props) => {
+const Inbounds = ({
+  selectedTab = TOP,
+  tag,
+}) => {
   const classes = useStyles();
-  const {
-    selectedTab,
-    tag,
-  } = props;
 
   const [tab, setTab] = useState(selectedTab);
 
@@ -85,10 +84,6 @@ Inbounds.propTypes = {
     TOP,
     RECENT,
   ]),
-};
-
-Inbounds.defaultProps = {
-  selectedTab: TOP,
 };
 
 export default Inbounds;

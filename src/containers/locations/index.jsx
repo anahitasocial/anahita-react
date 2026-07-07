@@ -28,12 +28,11 @@ const useStyles = makeStyles({
   },
 });
 
-const Locations = (props) => {
+const Locations = ({
+  setAppTitle,
+  selectedTab = TOP,
+}) => {
   const classes = useStyles();
-  const {
-    setAppTitle,
-    selectedTab,
-  } = props;
 
   const [tab, setTab] = useState(selectedTab);
 
@@ -88,10 +87,6 @@ Locations.propTypes = {
     TOP,
     RECENT,
   ]),
-};
-
-Locations.defaultProps = {
-  selectedTab: TOP,
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -92,7 +92,7 @@ const formToClientData = (fieldValues, extras) => {
 
 const OAuthClientForm = ({
   open,
-  client,
+  client = null,
   onClose,
   onSave,
 }) => {
@@ -318,10 +318,6 @@ OAuthClientForm.propTypes = {
   }),
   onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-};
-
-OAuthClientForm.defaultProps = {
-  client: null,
 };
 
 export default OAuthClientForm;

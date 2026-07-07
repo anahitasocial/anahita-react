@@ -28,13 +28,11 @@ const useStyles = makeStyles({
   },
 });
 
-const Hashtags = (props) => {
+const Hashtags = ({
+  setAppTitle,
+  selectedTab = TRENDING,
+}) => {
   const classes = useStyles();
-  const {
-    setAppTitle,
-    selectedTab,
-  } = props;
-
   const [tab, setTab] = useState(selectedTab);
 
   const changeTab = (event, value) => {
@@ -88,10 +86,6 @@ Hashtags.propTypes = {
     TOP,
     RECENT,
   ]),
-};
-
-Hashtags.defaultProps = {
-  selectedTab: TRENDING,
 };
 
 const mapDispatchToProps = (dispatch) => {

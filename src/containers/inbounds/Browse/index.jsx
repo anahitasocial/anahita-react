@@ -35,21 +35,20 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const InboundsBrowse = (props) => {
+const InboundsBrowse = ({
+  browseList,
+  resetList,
+  alertError,
+  tag,
+  items,
+  error,
+  total = 0,
+  isFetching,
+  queryFilters: {
+    sort = TOP,
+  },
+}) => {
   const classes = useStyles();
-  const {
-    browseList,
-    resetList,
-    alertError,
-    tag,
-    items,
-    error,
-    total,
-    isFetching,
-    queryFilters: {
-      sort,
-    },
-  } = props;
 
   const [start, setStart] = useState(0);
 
@@ -140,14 +139,6 @@ InboundsBrowse.propTypes = {
   error: PropTypes.string.isRequired,
   total: PropTypes.number,
   isFetching: PropTypes.bool.isRequired,
-};
-
-InboundsBrowse.defaultProps = {
-  total: 0,
-  queryFilters: {
-    sort: TOP,
-    q: '',
-  },
 };
 
 const mapDispatchToProps = (dispatch) => {

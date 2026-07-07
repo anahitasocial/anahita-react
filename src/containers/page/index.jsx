@@ -32,14 +32,12 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const StaticPage = (props) => {
+const StaticPage = ({
+  match: { params },
+  setAppTitle,
+}) => {
   const classes = useStyles();
   const [source, setSource] = React.useState('');
-  const {
-    match: { params },
-    setAppTitle,
-  } = props;
-
   const alias = _.snakeCase(params.alias);
   const src = assets.pages[alias];
 
@@ -81,17 +79,6 @@ StaticPage.propTypes = {
       alias: PropTypes.string,
     }),
   }),
-};
-
-StaticPage.defaultProps = {
-  match: {
-    params: {
-      chapter: '',
-      section: '',
-      part: '',
-      alias: '',
-    },
-  },
 };
 
 const mapStateToProps = () => {

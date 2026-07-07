@@ -23,17 +23,18 @@ const {
   },
 } = APP.BROWSE;
 
-const HashtagsBrowse = (props) => {
-  const {
-    browseList,
-    resetList,
-    alertError,
-    items,
-    error,
-    queryFilters,
-    total,
-  } = props;
-
+const HashtagsBrowse = ({
+  browseList,
+  resetList,
+  alertError,
+  items,
+  error,
+  queryFilters = {
+    q: '',
+    sort: TRENDING,
+  },
+  total = 0,
+}) => {
   const [start, setStart] = useState(0);
 
   useEffect(() => {
@@ -105,14 +106,6 @@ HashtagsBrowse.propTypes = {
   items: HashtagsType.isRequired,
   error: PropTypes.string.isRequired,
   total: PropTypes.number,
-};
-
-HashtagsBrowse.defaultProps = {
-  queryFilters: {
-    q: '',
-    sort: TRENDING,
-  },
-  total: 0,
 };
 
 const mapStateToProps = (state) => {

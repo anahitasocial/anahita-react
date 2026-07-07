@@ -7,15 +7,13 @@ import FeedCardRepost from './Repost';
 import NodeType from '../../../proptypes/Node';
 import utils from '../../../utils';
 
-const StoryCard = (props) => {
-  const {
-    node,
-    stats,
-    actions,
-    menu,
-    showOwner,
-  } = props;
-
+const StoryCard = ({
+  node,
+  stats = null,
+  actions = null,
+  menu = null,
+  showOwner = false,
+}) => {
   const isComment = utils.node.isComment(node);
   const isRepost = utils.node.isRepost(node);
 
@@ -60,13 +58,6 @@ StoryCard.propTypes = {
   menu: PropTypes.node,
   node: NodeType.isRequired,
   showOwner: PropTypes.bool,
-};
-
-StoryCard.defaultProps = {
-  showOwner: false,
-  actions: null,
-  stats: null,
-  menu: null,
 };
 
 export default StoryCard;

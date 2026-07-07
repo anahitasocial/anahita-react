@@ -28,20 +28,24 @@ const useStyles = makeStyles((theme) => {
 
 const { LIMIT } = APP.BROWSE;
 
-const LocationsList = (props) => {
+const LocationsList = ({
+  browseList,
+  resetList,
+  noResultsCallback = null,
+  items,
+  node,
+  queryFilters = {
+    q: '',
+    nearby_latitude: 0,
+    nearby_longitude: 0,
+    locatable_id: 0,
+  },
+  handleClose,
+  isFetching,
+  cardProps = {},
+  selectedLocations = [],
+}) => {
   const classes = useStyles();
-  const {
-    browseList,
-    resetList,
-    noResultsCallback,
-    items,
-    node,
-    queryFilters,
-    handleClose,
-    isFetching,
-    cardProps,
-    selectedLocations,
-  } = props;
 
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
@@ -135,18 +139,6 @@ LocationsList.propTypes = {
   noResultsCallback: PropTypes.func,
   cardProps: PropTypes.objectOf(PropTypes.any),
   selectedLocations: PropTypes.arrayOf(NodeType),
-};
-
-LocationsList.defaultProps = {
-  queryFilters: {
-    q: '',
-    nearby_latitude: 0,
-    nearby_longitude: 0,
-    locatable_id: 0,
-  },
-  noResultsCallback: null,
-  cardProps: {},
-  selectedLocations: [],
 };
 
 const mapStateToProps = (state) => {

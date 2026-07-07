@@ -19,13 +19,11 @@ const { withRef } = utils.component;
 
 const DeleteActionWithRef = withRef(ControlDelete);
 
-const LocationMenu = (props) => {
-  const {
-    location,
-    viewer,
-    handleEdit,
-  } = props;
-
+const LocationMenu = ({
+  location,
+  viewer,
+  handleEdit = null,
+}) => {
   const canEdit = permissions.canEdit(viewer, location);
   const [menuAnchorEl, setAnchorEl] = React.useState(null);
 
@@ -78,10 +76,6 @@ LocationMenu.propTypes = {
   location: LocationType.isRequired,
   viewer: PersonType.isRequired,
   handleEdit: PropTypes.func,
-};
-
-LocationMenu.defaultProps = {
-  handleEdit: null,
 };
 
 export default LocationMenu;

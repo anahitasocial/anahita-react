@@ -52,20 +52,18 @@ const TABS = {
   LOCATIONS: 'locations',
 };
 
-const MediumReadDefault = (props) => {
-  const {
-    classes,
-    medium,
-    access,
-    actions,
-    menu,
-    locations,
-    comments,
-    editing,
-    form,
-    stats,
-  } = props;
-
+const MediumReadDefault = ({
+  classes,
+  medium,
+  access = null,
+  actions = null,
+  menu = null,
+  locations = null,
+  comments = null,
+  editing = false,
+  form = null,
+  stats = null,
+}) => {
   const [tab, setTab] = useState(TABS.COMMENTS);
 
   const changeTab = (event, value) => {
@@ -196,17 +194,6 @@ MediumReadDefault.propTypes = {
   form: PropTypes.node,
   stats: PropTypes.node,
   editing: PropTypes.bool,
-};
-
-MediumReadDefault.defaultProps = {
-  actions: null,
-  access: null,
-  menu: null,
-  locations: null,
-  comments: null,
-  form: null,
-  editing: false,
-  stats: null,
 };
 
 export default withStyles(styles)(MediumReadDefault);

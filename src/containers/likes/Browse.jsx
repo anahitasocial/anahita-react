@@ -21,20 +21,18 @@ import NodesType from '../../proptypes/Nodes';
 import PersonType from '../../proptypes/Person';
 import ControlFollow from '../controls/Follow';
 
-const LikesBrowse = (props) => {
-  const {
-    browseList,
-    resetList,
-    items,
-    node,
-    comment,
-    isFetching,
-    error,
-    viewer,
-    namespace,
-    isAuthenticated,
-  } = props;
-
+const LikesBrowse = ({
+  browseList,
+  resetList,
+  items,
+  node,
+  comment = null,
+  isFetching,
+  error,
+  viewer,
+  namespace,
+  isAuthenticated,
+}) => {
   useEffect(() => {
     browseList({
       node,
@@ -156,10 +154,6 @@ LikesBrowse.propTypes = {
   namespace: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   viewer: PersonType.isRequired,
-};
-
-LikesBrowse.defaultProps = {
-  comment: null,
 };
 
 export default (namespace) => {

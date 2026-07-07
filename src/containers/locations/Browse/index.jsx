@@ -19,17 +19,18 @@ const {
   },
 } = APP.BROWSE;
 
-const LocationsBrowse = (props) => {
-  const {
-    browseList,
-    resetList,
-    alertError,
-    items,
-    error,
-    queryFilters,
-    total,
-  } = props;
-
+const LocationsBrowse = ({
+  browseList,
+  resetList,
+  alertError,
+  items,
+  error,
+  queryFilters = {
+    q: '',
+    sort: TRENDING,
+  },
+  total = 0,
+}) => {
   const [start, setStart] = useState(0);
 
   useEffect(() => {
@@ -89,14 +90,6 @@ LocationsBrowse.propTypes = {
   items: LocationsType.isRequired,
   error: PropTypes.string.isRequired,
   total: PropTypes.number,
-};
-
-LocationsBrowse.defaultProps = {
-  queryFilters: {
-    q: '',
-    sort: TRENDING,
-  },
-  total: 0,
 };
 
 const mapStateToProps = (state) => {

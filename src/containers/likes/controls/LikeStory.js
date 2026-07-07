@@ -11,15 +11,13 @@ import NodeType from '../../../proptypes/Node';
 import StoryType from '../../../proptypes/Story';
 import i18n from '../../../languages';
 
-const LikesActionLikeStory = React.forwardRef((props, ref) => {
-  const {
-    story,
-    node,
-    likeNode,
-    unlikeNode,
-    size,
-  } = props;
-
+const LikesActionLikeStory = React.forwardRef(({
+  story,
+  node,
+  likeNode,
+  unlikeNode,
+  size = 'medium',
+}, ref) => {
   const { isLikedByViewer: liked } = node;
 
   const handleLike = () => {
@@ -59,10 +57,6 @@ LikesActionLikeStory.propTypes = {
   story: StoryType.isRequired,
   node: NodeType.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
-};
-
-LikesActionLikeStory.defaultProps = {
-  size: 'medium',
 };
 
 const mapStateToProps = () => {

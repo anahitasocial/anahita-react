@@ -12,15 +12,13 @@ import CommentType from '../../../proptypes/Comment';
 import CommentDefault from '../../../proptypes/CommentDefault';
 import i18n from '../../../languages';
 
-const LikesActionCommentInline = React.forwardRef((props, ref) => {
-  const {
-    node,
-    comment,
-    likeNode,
-    unlikeNode,
-    size,
-  } = props;
-
+const LikesActionCommentInline = React.forwardRef(({
+  node,
+  comment = { ...CommentDefault },
+  likeNode,
+  unlikeNode,
+  size = 'medium',
+}, ref) => {
   const { isLikedByViewer: liked } = comment;
 
   const handleLike = () => {
@@ -61,11 +59,6 @@ LikesActionCommentInline.propTypes = {
   node: NodeType.isRequired,
   comment: CommentType,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'inherit']),
-};
-
-LikesActionCommentInline.defaultProps = {
-  comment: CommentDefault,
-  size: 'medium',
 };
 
 const mapStateToProps = () => {

@@ -25,18 +25,16 @@ const {
   USERTYPE,
 } = PERSON.FIELDS;
 
-const PersonInfo = (props) => {
-  const {
-    handleOnChange,
-    handleOnSubmit,
-    fields,
-    person,
-    canChangeUsertype,
-    isSuperAdmin,
-    isFetching,
-    enabled,
-  } = props;
-
+const PersonInfo = ({
+  handleOnChange,
+  handleOnSubmit,
+  fields,
+  person,
+  canChangeUsertype,
+  isSuperAdmin,
+  isFetching = false,
+  enabled = null,
+}) => {
   const isNew = !person.id;
 
   const {
@@ -200,10 +198,6 @@ PersonInfo.propTypes = {
   isSuperAdmin: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   enabled: PropTypes.node,
-};
-
-PersonInfo.defaultProps = {
-  enabled: null,
 };
 
 export default PersonInfo;
