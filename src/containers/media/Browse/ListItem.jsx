@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import CommentStats from '../../../components/comment/Stats';
 import ControlLike from '../../likes/controls/Like';
 import LikesStats from '../../likes';
-import MediumCard from '../../../components/cards/Medium';
+import MediumCard from '../../../components/medium/Card';
 import ControlEditAccess from '../../controls/medium/Access';
 
 import PersonType from '../../../proptypes/Person';

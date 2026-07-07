@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Typography from '@material-ui/core/Typography';
 
-import Avatar from '../../components/actor/ActorAvatar';
+import Avatar from '../../components/actor/Avatar';
 
 import actions from '../../actions';
 import Progress from '../../components/Progress';

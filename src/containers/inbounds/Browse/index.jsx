@@ -10,10 +10,10 @@ import actions from '../../../actions';
 import NodeType from '../../../proptypes/Node';
 import NodesType from '../../../proptypes/Nodes';
 
-import CommentCard from '../../../components/cards/Comment';
-import ActorsCard from '../../../components/cards/Actor';
+import CommentCard from '../../../components/comment/CommentCard';
+import ActorCard from '../../../components/actor/Card';
 import Masonry from '../../../components/BreakpointMasonry';
-import MediaCard from '../../nodes/cards/Medium';
+import MediumNode from '../../nodes/MediumNode';
 import Progress from '../../../components/Progress';
 import { App as APP } from '../../../constants';
 
@@ -98,9 +98,9 @@ const InboundsBrowse = (props) => {
           return (
             <div key={key} className={classes.card}>
               {utils.isActor(node) &&
-                <ActorsCard actor={node} />}
+                <ActorCard actor={node} />}
               {utils.isMedium(node) &&
-                <MediaCard medium={node} />}
+                <MediumNode medium={node} />}
               {utils.isComment(node) &&
                 <CommentCard comment={node} />}
             </div>

@@ -14,7 +14,7 @@ import CommentStats from '../../components/comment/Stats';
 import StoryMenu from './Menu';
 
 import Progress from '../../components/Progress';
-import StoryCard from '../../components/cards/Story';
+import StoryCard from '../components/story';
 import NodesType from '../../proptypes/Nodes';
 import PersonType from '../../proptypes/Person';
 import StoriesType from '../../proptypes/Stories';

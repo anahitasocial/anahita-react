@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 
-import OAuthClientActions from './OAuthClientActions';
+import OAuthMenu from './Menu';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -146,7 +146,7 @@ const OAuthClients = ({
                       {new Date(client.createTime).toLocaleDateString()}
                     </TableCell>
                     <TableCell align="right">
-                      <OAuthClientActions
+                      <OAuthMenu
                         client={client}
                         canEdit={canEdit}
                         canDelete={canDelete}

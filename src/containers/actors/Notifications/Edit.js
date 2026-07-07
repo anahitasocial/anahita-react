@@ -13,8 +13,8 @@ import i18n from '../../../languages';
 import ActorType from '../../../proptypes/Actor';
 // import PersonType from '../../../proptypes/Person';
 
-import ActorSettingCard from '../../../components/cards/ActorSetting';
-import ActorsFormsNotifications from '../Forms/Notifications';
+import ActorSettingCard from '../../../components/actor/Setting';
+import ActorsFormsNotifications from './Form';
 import Progress from '../../../components/Progress';
 
 const initEmailSettings = {

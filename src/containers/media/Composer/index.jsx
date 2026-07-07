@@ -14,7 +14,7 @@ import TopicForm from './Forms/Topic';
 import ComposerDefault from './Default';
 
 import i18n from '../../../languages';
-import appIcons from '../../../components/app/Icons';
+import appIcons from '../../../components/AppIcons';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import utils from '../../../utils';

@@ -9,7 +9,7 @@ import actions from '../../actions';
 import NodeType from '../../proptypes/Node';
 import i18n from '../../languages';
 import utils from '../../utils';
-import DialogConfirm from '../../components/DialogConfirm';
+import DialogConfirm from '../../components/dialog/Confirm';
 
 const ControlsDelete = React.forwardRef(({
   deleteItem,

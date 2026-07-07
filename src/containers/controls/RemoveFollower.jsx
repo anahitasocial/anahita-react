@@ -8,7 +8,7 @@ import ActorType from '../../proptypes/Actor';
 import PersonType from '../../proptypes/Person';
 import i18n from '../../languages';
 
-import DialogConfirm from '../../components/DialogConfirm';
+import DialogConfirm from '../../components/dialog/Confirm';
 
 const ControlsRemoveFollower = React.forwardRef(({
   removefollower,

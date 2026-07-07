@@ -14,9 +14,9 @@ import CommentStats from '../../../components/comment/Stats';
 import FeedMenu from '../Menu';
 
 import Progress from '../../../components/Progress';
-import FeedCardDefault from '../../../components/cards/feed/Default';
-import FeedCardComment from '../../../components/cards/feed/Comment';
-import FeedCardRepost from '../../../components/cards/feed/Repost';
+import FeedCardDefault from '../components/Default';
+import FeedCardComment from '../components/Comment';
+import FeedCardRepost from '../components/Repost';
 import NodesType from '../../../proptypes/Nodes';
 import PersonType from '../../../proptypes/Person';
 import commentPerms from '../../../permissions/comment';

@@ -18,7 +18,7 @@ import i18n from '../../../languages';
 import ActorType from '../../../proptypes/Actor';
 import utils from '../../../utils';
 
-import ActorsFormsNotifications from '../Forms/Notifications';
+import ActorsFormsNotifications from './Form';
 
 const initEmailSettings = {
   emailMutedGlobally: false,

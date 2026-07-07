@@ -13,8 +13,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import ActorAvatar from '../../../components/actor/ActorAvatar';
-import NotificationMessage from '../../../components/cards/NotificationMessage';
+import ActorAvatar from '../../../components/actor/Avatar';
+import NotificationMessage from './NotificationMessage';
 
 import NotificationType from '../../../proptypes/Notification';
 

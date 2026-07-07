@@ -10,10 +10,10 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import actions from '../../../actions';
 import NodesType from '../../../proptypes/Nodes';
 
-import CommentCard from '../../../components/cards/Comment';
+import CommentCard from '../../../components/comment/CommentCard';
 import ActorsCard from '../../actors/Browse/Card';
 import Masonry from '../../../components/BreakpointMasonry';
-import MediaCard from '../../nodes/cards/Medium';
+import MediaCard from '../../nodes/MediumNode';
 import Progress from '../../../components/Progress';
 import { App as APP, Search as SEARCH } from '../../../constants';
 
