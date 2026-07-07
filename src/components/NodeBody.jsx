@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const EntityBody = ({
+const NodeBody = ({
   children,
   size = 'body1',
   contentFilter = false,
@@ -58,11 +58,11 @@ const EntityBody = ({
   );
 };
 
-EntityBody.propTypes = {
+NodeBody.propTypes = {
   children: PropTypes.string.isRequired,
   size: PropTypes.oneOf(['body1', 'body2']),
   contentFilter: PropTypes.bool,
   filters: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default EntityBody;
+export default NodeBody;

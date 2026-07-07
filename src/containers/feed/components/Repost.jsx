@@ -11,7 +11,7 @@ import Link from '@material-ui/core/Link';
 
 import MediumCard from '../../../components/MediumCard';
 import ActorAvatar from '../../../components/ActorAvatar';
-import CardOwner from '../../../components/MediumOwner';
+import CardOwner from '../../../components/MediumOwnerCardHeader';
 import utils from '../../../utils';
 import NodeType from '../../../proptypes/Node';
 

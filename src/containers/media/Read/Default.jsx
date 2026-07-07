@@ -16,10 +16,10 @@ import Typography from '@material-ui/core/Typography';
 import MediumType from '../../../proptypes/Medium';
 import ActorTitle from '../../../components/ActorTitle';
 import ActorAvatar from '../../../components/ActorAvatar';
-import CardHeaderOwner from '../../../components/MediumOwner';
+import CardHeaderOwner from '../../../components/MediumOwnerCardHeader';
 import Player from '../../../components/Player';
 import Progress from '../../../components/Progress';
-import EntityBody from '../../../components/EntityBody';
+import EntityBody from '../../../components/NodeBody';
 import utils from '../../../utils';
 
 const {

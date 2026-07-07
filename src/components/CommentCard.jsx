@@ -9,7 +9,7 @@ import Link from '@material-ui/core/Link';
 
 import ActorTitle from './ActorTitle';
 import ActorAvatar from './ActorAvatar';
-import EntityBody from './EntityBody';
+import EntityBody from './NodeBody';
 import CommentType from '../proptypes/Comment';
 import utils from '../utils';
 

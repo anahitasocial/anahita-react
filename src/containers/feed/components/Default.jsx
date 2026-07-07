@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import ReadMore from '../../../components/ReadMore';
 import ActorAvatar from '../../../components/ActorAvatar';
 import NodeType from '../../../proptypes/Node';
-import CardOwner from '../../../components/MediumOwner';
+import CardOwner from '../../../components/MediumOwnerCardHeader';
 import Player from '../../../components/Player';
 import utils from '../../../utils';
 

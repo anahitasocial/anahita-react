@@ -15,7 +15,7 @@ import Link from '@material-ui/core/Link';
 import MediumType from '../proptypes/Medium';
 import ActorTitle from './ActorTitle';
 import ActorAvatar from './ActorAvatar';
-import CardHeaderOwner from './MediumOwner';
+import CardHeaderOwner from './MediumOwnerCardHeader';
 import Player from './Player';
 import Progress from './Progress';
 import ReadMore from './ReadMore';

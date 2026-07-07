@@ -9,7 +9,7 @@ import Divider from '@material-ui/core/Divider';
 
 import ActorTitle from '../../components/ActorTitle';
 import ActorAvatar from '../../components/ActorAvatar';
-import EntityBody from '../../components/EntityBody';
+import EntityBody from '../../components/NodeBody';
 import CommentType from '../../proptypes/Comment';
 import utils from '../../utils';
 

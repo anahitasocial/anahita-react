@@ -15,7 +15,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 
 import i18n from '../../../languages';
 import Player from '../../../components/Player';
-import EntityBody from '../../../components/EntityBody';
+import EntityBody from '../../../components/NodeBody';
 import ActorType from '../../../proptypes/Actor';
 
 const ActorBodyAbout = (props) => {
