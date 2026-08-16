@@ -28,6 +28,10 @@ const { getURL, getNamespace, isActor } = utils.node;
 
 const { SORTING } = APP.BROWSE;
 
+// Shared empty default: a literal [] in the parameter list would be a
+// new array on every render.
+const NO_IDS = [];
+
 const getAvatar = (node) => {
   if (isActor(node)) {
     return <ActorAvatar actor={node} />;
@@ -60,9 +64,17 @@ const HomeCardNodes = ({
   namespace,
   limit = 10,
   sort = SORTING.TOP,
-  ids = [],
+  ids = NO_IDS,
 }) => {
   const [items, setItems] = useState([]);
+
+  // Depend on the ids by value, not by reference. `ids` is an array, so
+  // it is a new object on every render — the `ids = []` default most of
+  // all, since the default is evaluated fresh each time. Listing it
+  // directly makes this effect re-run after its own setItems, which
+  // re-renders, which allocates another array, which re-runs the
+  // effect: an endless request loop for any card that omits `ids`.
+  const idsKey = ids.join(',');
 
   useEffect(() => {
     api[namespace].browse({
@@ -82,7 +94,7 @@ const HomeCardNodes = ({
     return () => {
       setItems([]);
     };
-  }, [namespace, limit, sort, ids]);
+  }, [namespace, limit, sort, idsKey]);
 
   return (
     <Card component="section">

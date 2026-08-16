@@ -28,15 +28,24 @@ const { SORTING } = APP.BROWSE;
 
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
+// Shared empty default: a literal [] in the parameter list would be a
+// new array on every render.
+const NO_IDS = [];
+
 const HomeCardMap = ({
   title = 'Map',
   subheader = '',
   showList = false,
   sort = SORTING.TOP,
   limit = 10,
-  ids = [],
+  ids = NO_IDS,
 }) => {
   const [items, setItems] = useState([]);
+
+  // Depend on the ids by value, not by reference — see NodesCard for the
+  // same fix. A fresh `ids = []` on every render makes this effect
+  // re-run after its own setItems, looping requests forever.
+  const idsKey = ids.join(',');
 
   useEffect(() => {
     api.locations.browse({
@@ -52,7 +61,7 @@ const HomeCardMap = ({
       .catch((err) => {
         return console.error(err);
       });
-  }, [limit, sort, ids]);
+  }, [limit, sort, idsKey]);
 
   return (
     <Card component="section">

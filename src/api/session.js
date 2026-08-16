@@ -1,14 +1,23 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
 
+// Endpoints the browser must *navigate* to (they redirect, and in the
+// case of logout across hosts) need an absolute URL. Endpoints called
+// over XHR stay relative and pick up axios.defaults.baseURL.
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const OAUTH_CONFIG = {
   clientId: 'anahita-web',
   redirectUri: `${window.location.origin}/oauth/callback`,
-  authorizeUrl: 'http://localhost/oauth/authorize',
+  authorizeUrl: `${API_BASE_URL}/oauth/authorize`,
+  logoutUrl: `${API_BASE_URL}/oauth/logout`,
   sessionUrl: '/oauth/session',
   userinfoUrl: '/oauth/userinfo',
-  logoutUrl: '/oauth/logout',
-  scopes: 'openid',
+  // `openid` alone gets you a userinfo response containing nothing but
+  // `sub`. The profile claims the app reads off the viewer — id, name,
+  // username — are gated behind `profile`, and the address behind
+  // `email`.
+  scopes: 'openid profile email',
 };
 
 const generateRandom = (length = 43) => {
@@ -73,8 +82,16 @@ const read = () => {
   return axios.get(OAUTH_CONFIG.userinfoUrl);
 };
 
+// Logout is a GET that answers with a chain of redirects, not an API
+// call: the session cookie and the IdP cookie live on different hosts,
+// so each one has to be cleared by a request the browser makes itself.
+// An XHR cannot do that — it would follow the redirects same-origin and
+// leave the IdP session intact — so hand the browser the URL and let it
+// navigate. auth-service bounces back to return_to when it is done.
 const deleteItem = () => {
-  return axios.post(OAUTH_CONFIG.logoutUrl);
+  const returnTo = encodeURIComponent(window.location.origin);
+  window.location.href = `${OAUTH_CONFIG.logoutUrl}?return_to=${returnTo}`;
+  return Promise.resolve();
 };
 
 export default {
