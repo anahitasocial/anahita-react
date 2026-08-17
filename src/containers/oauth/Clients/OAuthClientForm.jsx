@@ -243,7 +243,7 @@ const OAuthClientForm = ({
             value={scopes.value}
             onChange={handleOnChange}
             error={Boolean(scopes.error)}
-            helperText={scopes.error || 'One per line, e.g. openid, profile, read:actors'}
+            helperText={scopes.error || 'One per line, e.g. openid, profile, actors:read'}
             fullWidth
             multiline
             minRows={3}

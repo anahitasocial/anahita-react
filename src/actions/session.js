@@ -48,6 +48,10 @@ function read() {
       dispatch({
         type: SESSION.READ.FAILURE,
         error: error.message,
+        // The reducer only clears the cached viewer on a 401 — every
+        // other failure leaves the session alone — so it needs the
+        // status, not just the message.
+        status: error.response && error.response.status,
       });
     }
   };

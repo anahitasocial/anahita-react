@@ -11,7 +11,7 @@ export default {
   username: '',
   email: '',
   password: '',
-  usertype: USERTYPE.PUBLIC,
+  usertype: USERTYPE.GUEST,
   givenName: '',
   familyName: '',
   body: '',

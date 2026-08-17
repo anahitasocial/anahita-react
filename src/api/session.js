@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
+import { Auth as AUTH } from '../constants';
 
 // Endpoints the browser must *navigate* to (they redirect, and in the
 // case of logout across hosts) need an absolute URL. Endpoints called
@@ -13,11 +14,12 @@ const OAUTH_CONFIG = {
   logoutUrl: `${API_BASE_URL}/oauth/logout`,
   sessionUrl: '/oauth/session',
   userinfoUrl: '/oauth/userinfo',
-  // `openid` alone gets you a userinfo response containing nothing but
-  // `sub`. The profile claims the app reads off the viewer — id, name,
-  // username — are gated behind `profile`, and the address behind
-  // `email`.
-  scopes: 'openid profile email',
+  // Space-delimited per RFC 6749 §3.3. `openid` alone gets you a
+  // userinfo response containing nothing but `sub` — the profile claims
+  // the app reads off the viewer (id, name, username, usertype) are
+  // gated behind `profile`, and the address behind `email`. See
+  // constants/auth for why the role-gated scopes are safe to ask for.
+  scopes: AUTH.SCOPES.join(' '),
 };
 
 const generateRandom = (length = 43) => {
