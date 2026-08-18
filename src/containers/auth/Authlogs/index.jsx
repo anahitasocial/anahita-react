@@ -48,11 +48,11 @@ const Authlogs = (props) => {
       .then((response) => {
         if (response.status === 200) {
           handleBrowse(person);
-          alertSuccess(i18n.t('common:alerts.deleted'));
+          alertSuccess(i18n.t('prompts:deleted.success'));
         }
       }).catch((err) => {
         console.error(err);
-        alertError(i18n.t('common:alerts.error'));
+        alertError(i18n.t('prompts:deleted.error'));
       }).finally(() => {
         setLoading(false);
       });
@@ -68,7 +68,7 @@ const Authlogs = (props) => {
 };
 
 Authlogs.propTypes = {
-  personId: PropTypes.string.isRequired,
+  personId: PropTypes.number.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
 };

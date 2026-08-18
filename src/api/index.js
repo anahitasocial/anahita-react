@@ -28,6 +28,7 @@ import inbounds from './inbounds';
 import tagGraph from './tag_graph';
 import token from './token';
 import api from '../utils/api';
+import webauthn from './webauthn';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -124,6 +125,7 @@ const apis = {
   inbounds,
   tagGraph,
   token,
+  webauthn,
 };
 
 namespaces.actors.forEach((ns) => {

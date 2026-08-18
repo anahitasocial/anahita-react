@@ -10,6 +10,7 @@ import ActorSettingCard from '../../../components/ActorSetting';
 
 import Admins from './admins/Browse';
 import AuthLogs from '../../auth/Authlogs';
+import WebAuthn from '../../auth/WebAuthn';
 import Features from './Features';
 import Delete from './Delete';
 import Info from './Info';
@@ -21,6 +22,7 @@ import Progress from '../../../components/Progress';
 import actions from '../../../actions';
 import permissions from '../../../permissions/actor';
 import ActorType from '../../../proptypes/Actor';
+import PersonType from '../../../proptypes/Person';
 import i18n from '../../../languages';
 
 const TABS = {
@@ -31,11 +33,13 @@ const TABS = {
   INFO: 'info',
   ACCESS: 'access',
   DELETE: 'delete',
+  WEBAUTHN: 'webauthn',
 };
 
 const ActorsSettings = ({
   readActor,
   actor,
+  viewer,
   alertSuccess,
   alertError,
   namespace,
@@ -78,6 +82,11 @@ const ActorsSettings = ({
 
   const canDelete = permissions.canDelete(actor);
 
+  // WebAuthn credentials belong to the current session's own account —
+  // the endpoints are viewer-scoped and take no actor id — so the tab
+  // only makes sense on the viewer's own profile.
+  const isViewer = namespace === 'people' && actor.id === viewer.id;
+
   if (!actor.id) {
     return (
       <></>
@@ -96,6 +105,8 @@ const ActorsSettings = ({
         aria-label={i18n.t('commons:settings')}
       >
         <Tab label={i18n.t(`${namespace}:settings.authlogs`)} value={TABS.AUTHLOGS} />
+        {isViewer &&
+          <Tab label={i18n.t(`${namespace}:settings.webauthn`)} value={TABS.WEBAUTHN} />}
         <Tab label={i18n.t(`${namespace}:settings.info`)} value={TABS.INFO} />
         {namespace === 'people' &&
           <Tab label={i18n.t(`${namespace}:settings.account`)} value={TABS.ACCOUNT} />}
@@ -113,6 +124,8 @@ const ActorsSettings = ({
       >
         {namespace === 'people' && tab === TABS.AUTHLOGS &&
           <AuthLogs personId={actor.id} />}
+        {isViewer && tab === TABS.WEBAUTHN &&
+          <WebAuthn />}
         {namespace === 'people' && tab === TABS.INFO &&
           <PersonInfo />}
         {namespace !== 'people' && tab === TABS.INFO &&
@@ -135,6 +148,7 @@ const ActorsSettings = ({
 ActorsSettings.propTypes = {
   readActor: PropTypes.func.isRequired,
   actor: ActorType.isRequired,
+  viewer: PersonType.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   namespace: PropTypes.string.isRequired,
@@ -161,8 +175,11 @@ const mapStateToProps = (namespace) => {
       success,
     } = state[namespace];
 
+    const { viewer } = state.session;
+
     return {
       actor,
+      viewer,
       namespace,
       isFetching,
       error,

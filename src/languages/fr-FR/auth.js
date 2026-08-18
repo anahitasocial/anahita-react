@@ -1,0 +1,93 @@
+export default {
+  cTitle: 'Veuillez vous connecter',
+  mTitle: 'Connexion',
+  logout: 'Déconnexion',
+  login: 'Veuillez vous connecter',
+  username: "E-mail ou nom d'utilisateur",
+  password: 'Mot de passe',
+  forgotPassword: 'Mot de passe oublié ?',
+  passwordResetEmail: 'Quelle est votre adresse e-mail ?',
+  actions: {
+    resetPassword: 'Réinitialiser le mot de passe',
+  },
+  signup: {
+    cTitle: 'Veuillez vous inscrire',
+    mTitle: 'Inscription',
+    firstName: 'Prénom',
+    lastName: 'Nom',
+    username: "Nom d'utilisateur",
+    email: 'E-mail',
+    password: 'Mot de passe',
+    actions: {
+      signup: "S'inscrire",
+    },
+  },
+  authLogs: {
+    cTitle: 'Authentifications',
+    cDesc: '{{ name }} sur un {{ device }} sous {{ os }} depuis {{ city }} {{ country }}',
+    cActive: 'Session active',
+    actions: {
+      forceLogout: 'Forcer la déconnexion',
+    },
+  },
+  webauthn: {
+    cTitle: 'Passkeys',
+    cDesc: 'Connectez-vous avec votre empreinte, votre visage ou le code PIN de votre appareil au lieu de votre mot de passe',
+    add: 'Ajouter une passkey',
+    adding: 'En attente de votre appareil…',
+    empty: {
+      platform: 'Ajoutez une passkey pour vous connecter avec votre empreinte, votre visage ou le code PIN de votre appareil — sans mot de passe, sans code de vérification.',
+      roaming: 'Ajoutez une passkey pour vous connecter sans votre mot de passe. Vous pouvez utiliser une clé de sécurité ou scanner un code avec votre téléphone.',
+      fallback: 'Votre mot de passe et votre code de vérification continueront de fonctionner, vous pourrez donc toujours vous connecter autrement.',
+    },
+    credential: {
+      lastUsed: 'Dernière utilisation {{ when }}',
+      neverUsed: 'Jamais utilisée',
+      added: 'Ajoutée le {{ date }}',
+      synced: 'Synchronisée entre les appareils',
+      deviceOnly: 'Cet appareil uniquement',
+      cloneWarning: 'Cette passkey a signalé une activité inattendue. Supprimez-la et ajoutez-en une nouvelle.',
+      actions: {
+        rename: 'Renommer {{ name }}',
+        remove: 'Supprimer {{ name }}',
+      },
+    },
+    renameDialog: {
+      title: 'Renommer la passkey',
+      message: 'Donnez à cette passkey un nom qui vous indique sur quel appareil elle se trouve.',
+    },
+    removeDialog: {
+      title: 'Supprimer cette passkey ?',
+      message: 'Vous ne pourrez plus vous connecter avec {{ name }}. Votre mot de passe et votre code de vérification continueront de fonctionner.',
+    },
+    nickname: {
+      label: 'Nom',
+      counter: '{{ count }}/{{ max }}',
+    },
+    alerts: {
+      added: '{{ name }} est prête à être utilisée.',
+      removed: '{{ name }} a été supprimée.',
+      atLimit: 'Vous avez atteint le maximum de {{ max }} passkeys. Supprimez-en une pour en ajouter une autre.',
+      unsupported: 'Ce navigateur ne peut pas utiliser les passkeys. Vous pouvez toujours vous connecter avec votre mot de passe et votre code de vérification.',
+      browseError: 'Nous n\'avons pas pu charger vos passkeys. Actualisez la page pour réessayer.',
+      renameError: 'Nous n\'avons pas pu renommer cette passkey. Réessayez.',
+      removeError: 'Nous n\'avons pas pu supprimer cette passkey. Réessayez.',
+    },
+    ceremonyErrors: {
+      alreadyRegistered: 'Cet appareil possède déjà une passkey pour votre compte.',
+      cancelled: 'La configuration a été annulée. Réessayez quand vous serez prêt.',
+      insecureContext: 'Cette page ne peut pas créer de passkeys. Contactez l\'assistance si cela continue.',
+      atLimit: 'Vous avez atteint le nombre maximum de passkeys. Supprimez-en d\'abord une.',
+      expired: 'Cela a pris trop de temps. Réessayez.',
+      generic: 'Nous n\'avons pas pu ajouter cette passkey. Réessayez.',
+    },
+  },
+  prompts: {
+    error: 'Une erreur est survenue !',
+    errorSignupUsernameTaken: "Ce nom d'utilisateur est déjà pris !",
+    errorSignupEmailTaken: 'Cette adresse e-mail est déjà utilisée dans notre système !',
+    errorTokenInvalid: 'Ce jeton est invalide !',
+    passwordResetEmailSuccess: 'Nous vous avons envoyé un lien par e-mail. Veuillez cliquer sur ce lien et suivre les instructions !',
+    signupEmailSuccess: "Merci ! Nous venons de vous envoyer un lien d'activation de compte par e-mail.",
+  },
+};

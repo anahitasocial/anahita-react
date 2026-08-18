@@ -1,0 +1,66 @@
+export default {
+  cTitle: 'Personnes',
+  mTitle: 'Personnes',
+  add: {
+    cTitle: 'Ajouter une personne',
+    mTitle: 'Ajouter une personne',
+  },
+  settings: {
+    authlogs: 'Authentifications',
+    webauthn: 'Clés d’accès',
+    info: 'Infos',
+    account: 'Compte',
+    features: 'Fonctionnalités',
+    permissions: 'Autorisations',
+    access: 'Accès',
+    delete: 'Supprimer',
+    notifications: 'Paramètres de notification',
+    followRequests: "Demandes d'abonnement",
+  },
+  notifications: {
+    cTitle: 'Notifications',
+    cDescription: 'Modifiez vos paramètres de notification',
+    mTitle: 'Notifications',
+    email: 'Recevoir les notifications par e-mail',
+    optionsTitle: 'Recevoir des notifications pour',
+    options: {
+      all: 'Toutes les publications',
+      following: 'Uniquement les publications que vous suivez',
+    },
+  },
+  person: {
+    givenName: 'Prénom',
+    familyName: 'Nom',
+    username: "Nom d'utilisateur",
+    email: 'E-mail',
+    newPassword: 'Nouveau mot de passe',
+    body: 'Bio',
+    pronouns: 'Pronoms',
+    whatPronouns: 'Quels pronoms utilisez-vous ?',
+    pronounOptions: {
+      feminine: 'Féminin',
+      masculine: 'Masculin',
+      nonbinary: 'Non binaire',
+    },
+    usertype: "Type d'utilisateur",
+    usertypeOptions: {
+      guest: 'Invité',
+      registered: 'Inscrit',
+      administrator: 'Administrateur',
+      'super-administrator': 'Super administrateur',
+    },
+    joinedDate: 'Membre depuis le {{ date }}',
+    lastVisitOn: 'Dernière visite le {{ date }}',
+  },
+  confirm: {
+    delete: 'Voulez-vous supprimer le profil de {{ name }} ?',
+    block: 'Voulez-vous bloquer le profil de {{ name }} ?',
+  },
+  account: {
+    prompts: {
+      error: 'Une erreur est survenue !',
+      errorUsernameTaken: "Ce nom d'utilisateur est déjà pris !",
+      errorEmailTaken: 'Cette adresse e-mail est déjà utilisée dans notre système !',
+    },
+  },
+};

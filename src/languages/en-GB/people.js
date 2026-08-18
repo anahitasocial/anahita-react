@@ -1,0 +1,66 @@
+export default {
+  cTitle: 'People',
+  mTitle: 'People',
+  add: {
+    cTitle: 'Add person',
+    mTitle: 'Add person',
+  },
+  settings: {
+    authlogs: 'Authentications',
+    webauthn: 'Pass keys',
+    info: 'Info',
+    account: 'Account',
+    features: 'Features',
+    permissions: 'Permissions',
+    access: 'Access',
+    delete: 'Delete',
+    notifications: 'Notification settings',
+    followRequests: 'Follow requests',
+  },
+  notifications: {
+    cTitle: 'Notifications',
+    cDescription: 'Edit your notification settings',
+    mTitle: 'Notifications',
+    email: 'Recieve email notifications',
+    optionsTitle: 'Get notifications for',
+    options: {
+      all: 'All the posts',
+      following: 'Only the posts that you are following',
+    },
+  },
+  person: {
+    givenName: 'First name',
+    familyName: 'Last name',
+    username: 'Username',
+    email: 'Email',
+    newPassword: 'New password',
+    body: 'Bio',
+    pronouns: 'Pronouns',
+    whatPronouns: 'What pronouns do you use?',
+    pronounOptions: {
+      feminine: 'Femminine',
+      masculine: 'Masculine',
+      nonbinary: 'Nonbinary',
+    },
+    usertype: 'User type',
+    usertypeOptions: {
+      guest: 'Guest',
+      registered: 'Registered',
+      administrator: 'Admin',
+      'super-administrator': 'Super Admin',
+    },
+    joinedDate: 'Joined on {{ date }}',
+    lastVisitOn: 'Last visit on {{ date }}',
+  },
+  confirm: {
+    delete: "Do you want to delete {{ name }}'s profile?",
+    block: "Do you want to block {{ name }}'s profile?",
+  },
+  account: {
+    prompts: {
+      error: 'Something went wrong!',
+      errorUsernameTaken: 'Username is already taken!',
+      errorEmailTaken: 'Email is already available in our system!',
+    },
+  },
+};

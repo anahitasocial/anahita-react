@@ -1,4 +1,6 @@
 export default {
+  cTitle: 'Settings',
+  mTitle: 'Settings',
   about: {
     mTitle: 'About',
     cTitle: 'About',

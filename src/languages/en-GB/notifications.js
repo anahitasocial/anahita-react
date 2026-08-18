@@ -1,4 +1,6 @@
 export default {
+  cTitle: 'Notifications',
+  mTitle: 'Notifications',
   articleAdd: '<0>{{subject}}</0> published an <1>article</1>',
   documentAdd: '<0>{{subject}}</0> posted a <1>document</1>',
   noteAdd: '<0>{{subject}}</0> posted a <1>note</1>',
