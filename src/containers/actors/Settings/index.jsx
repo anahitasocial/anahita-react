@@ -9,6 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import ActorSettingCard from '../../../components/ActorSetting';
 
 import Admins from './admins/Browse';
+import AuthLogs from '../../auth/Authlogs';
 import Features from './Features';
 import Delete from './Delete';
 import Info from './Info';
@@ -25,6 +26,7 @@ import i18n from '../../../languages';
 const TABS = {
   ADMINS: 'admins',
   ACCOUNT: 'account',
+  AUTHLOGS: 'authlogs',
   FEATURES: 'features',
   INFO: 'info',
   ACCESS: 'access',
@@ -37,7 +39,7 @@ const ActorsSettings = ({
   alertSuccess,
   alertError,
   namespace,
-  selectedTab = TABS.INFO,
+  selectedTab = TABS.AUTHLOGS,
   isFetching,
   error,
   success,
@@ -76,6 +78,12 @@ const ActorsSettings = ({
 
   const canDelete = permissions.canDelete(actor);
 
+  if (!actor.id) {
+    return (
+      <></>
+    );
+  }
+
   return (
     <>
       <Tabs
@@ -87,6 +95,7 @@ const ActorsSettings = ({
         }}
         aria-label={i18n.t('commons:settings')}
       >
+        <Tab label={i18n.t(`${namespace}:settings.authlogs`)} value={TABS.AUTHLOGS} />
         <Tab label={i18n.t(`${namespace}:settings.info`)} value={TABS.INFO} />
         {namespace === 'people' &&
           <Tab label={i18n.t(`${namespace}:settings.account`)} value={TABS.ACCOUNT} />}
@@ -102,6 +111,8 @@ const ActorsSettings = ({
         actor={actor}
         subheader={i18n.t(`${namespace}:settings.${tab}`)}
       >
+        {namespace === 'people' && tab === TABS.AUTHLOGS &&
+          <AuthLogs personId={actor.id} />}
         {namespace === 'people' && tab === TABS.INFO &&
           <PersonInfo />}
         {namespace !== 'people' && tab === TABS.INFO &&
@@ -133,9 +144,8 @@ ActorsSettings.propTypes = {
   selectedTab: PropTypes.oneOf([
     TABS.ADMINS,
     TABS.ACCOUNT,
-    TABS.APPS,
+    TABS.AUTHLOGS,
     TABS.INFO,
-    TABS.PRIVACY,
     TABS.DELETE,
   ]),
 };

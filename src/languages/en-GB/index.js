@@ -184,6 +184,14 @@ export default {
         signup: 'Signup',
       },
     },
+    authLogs: {
+      cTitle: 'Authentications',
+      cDesc: '{{ name }} on a {{ device }} running {{ os }} from {{ city }} {{ country }}',
+      cActive: 'Active now',
+      actions: {
+        forceLogout: 'Force Logout',
+      },
+    },
     prompts: {
       error: 'Something went wrong!',
       errorSignupUsernameTaken: 'Username is already taken!',
@@ -295,6 +303,7 @@ export default {
       mTitle: 'Add person',
     },
     settings: {
+      authlogs: 'Authentications',
       info: 'Info',
       account: 'Account',
       features: 'Features',

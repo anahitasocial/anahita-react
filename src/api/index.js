@@ -5,6 +5,7 @@ import { singularize } from 'inflection';
 import createApi from './create';
 import createActor from './actor';
 
+import authlogs from './authlogs';
 import avatar from './avatar';
 import comments from './comments';
 import commentStatus from './commentsStatus';
@@ -100,6 +101,7 @@ const namespaces = {
 };
 
 const apis = {
+  authlogs,
   avatar,
   comments,
   commentStatus,
