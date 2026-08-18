@@ -135,9 +135,18 @@ const mapDispatchToProps = (namespace) => {
   };
 };
 
+// Callers invoke this from inside their render bodies. Returning a new
+// component type each time would make React unmount and remount the list — and
+// therefore reset and refetch it — on every unrelated re-render of the parent.
+const connectedByNamespace = {};
+
 export default (namespace) => {
-  return connect(
-    mapStateToProps(namespace),
-    mapDispatchToProps(namespace),
-  )(MediaBrowse);
+  if (!connectedByNamespace[namespace]) {
+    connectedByNamespace[namespace] = connect(
+      mapStateToProps(namespace),
+      mapDispatchToProps(namespace),
+    )(MediaBrowse);
+  }
+
+  return connectedByNamespace[namespace];
 };

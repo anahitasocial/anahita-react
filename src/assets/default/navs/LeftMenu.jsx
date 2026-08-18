@@ -6,10 +6,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import DocumentsIcon from '@material-ui/icons/PictureAsPdf';
 import BlogsIcon from '@material-ui/icons/RssFeedOutlined';
 import HomeIcon from '@material-ui/icons/Home';
-import ExploreIcon from '@material-ui/icons/Explore';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupsIcon from '@material-ui/icons/GroupWork';
 import NotesIcon from '@material-ui/icons/Note';
@@ -21,7 +19,7 @@ import LabelIcon from '@material-ui/icons/Label';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import i18n from '../../../languages';
 import PersonType from '../../../proptypes/Person';
@@ -31,10 +29,10 @@ const LeftMenu = ({
   isAuthenticated,
   viewer,
   onLogoutClick = null,
-  location: {
-    pathname,
-  },
 }) => {
+  const location = useLocation();
+  const { pathname = '/' } = location;
+
   return (
     <List>
       <ListItem
@@ -47,17 +45,6 @@ const LeftMenu = ({
           <HomeIcon />
         </ListItemIcon>
         <ListItemText primary={isAuthenticated ? i18n.t('dashboard:cTitle') : i18n.t('home:cTitle')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/explore/"
-        selected={pathname === '/explore/'}
-      >
-        <ListItemIcon>
-          <ExploreIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('explore:cTitle')} />
       </ListItem>
       <ListItem
         button
@@ -128,17 +115,6 @@ const LeftMenu = ({
       <ListItem
         button
         component={Link}
-        to="/documents/"
-        selected={pathname === '/documents/'}
-      >
-        <ListItemIcon>
-          <DocumentsIcon />
-        </ListItemIcon>
-        <ListItemText primary={i18n.t('documents:cTitle')} />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
         to="/hashtags/"
         selected={pathname === '/hashtags/'}
       >
@@ -200,7 +176,6 @@ LeftMenu.propTypes = {
   onLogoutClick: PropTypes.func,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default withRouter(LeftMenu);
+export default LeftMenu;

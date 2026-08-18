@@ -108,8 +108,8 @@ const ActorsRead = (props) => {
       tabPanels[tab] = (
         <ActorsBrowseFeature
           key={`actor-browse-${tab}`}
+          namespace={tab}
           owner={actor}
-          queryFilters={{ oid: actor.id }}
         />
       );
     }

@@ -1,25 +1,38 @@
 import { normalize, schema } from 'normalizr';
 import stories from './stories';
 
+// Monotonic id stamped on every browse request and every reset, so the reducer
+// can drop responses that were issued before the most recent reset. A single
+// counter across namespaces is enough — each reducer only ever sees its own
+// namespace's actions, and all we need is uniqueness plus dispatch ordering.
+let requestSeq = 0;
+
+const nextRequestId = () => {
+  requestSeq += 1;
+  return requestSeq;
+};
+
 // -- Reset
 
 const reset = (namespace) => {
   return () => {
     return {
       type: `${namespace.toUpperCase()}_BROWSE_RESET`,
+      resetId: nextRequestId(),
     };
   };
 };
 
 // -- Browse
 
-const browseRequest = (namespace) => {
+const browseRequest = (namespace, requestId) => {
   return {
     type: `${namespace.toUpperCase()}_BROWSE_REQUEST`,
+    requestId,
   };
 };
 
-const browseSuccess = (results, namespace) => {
+const browseSuccess = (results, namespace, requestId) => {
   const { data } = results;
   const paginationDefault = {
     limit: 20,
@@ -27,7 +40,7 @@ const browseSuccess = (results, namespace) => {
     total: 0,
   };
 
-  const pagination = { paginationDefault, ...data.pagination };
+  const pagination = { ...paginationDefault, ...data.pagination };
 
   const limit = pagination.limit || 20;
   const start = pagination.offset || 0;
@@ -36,35 +49,44 @@ const browseSuccess = (results, namespace) => {
   const node = new schema.Entity(namespace);
   const nodes = [node];
   const normalized = normalize(data.data || [], nodes);
+  const ids = normalized.result || [];
+
+  // Endpoints that report a total give an exact answer; the rest fall back to
+  // the "a full page probably means there is another one" heuristic.
+  const hasMore = total > 0 ? (start + ids.length) < total : ids.length >= limit;
 
   return {
     type: `${namespace.toUpperCase()}_BROWSE_SUCCESS`,
     [namespace]: normalized.entities[namespace] || {},
-    ids: normalized.result || [],
+    ids,
     total,
     limit,
     start,
+    hasMore,
+    requestId,
   };
 };
 
-const browseFailure = (response, namespace) => {
+const browseFailure = (response, namespace, requestId) => {
   return {
     type: `${namespace.toUpperCase()}_BROWSE_FAILURE`,
     error: response.message,
+    requestId,
   };
 };
 
 const browse = (namespace, api) => {
   return (params) => {
     return (dispatch) => {
-      dispatch(browseRequest(namespace));
+      const requestId = nextRequestId();
+      dispatch(browseRequest(namespace, requestId));
       return new Promise((resolve, reject) => {
         return api.browse(params)
           .then((results) => {
-            dispatch(browseSuccess(results, namespace));
+            dispatch(browseSuccess(results, namespace, requestId));
             return resolve();
           }, (response) => {
-            dispatch(browseFailure(response, namespace));
+            dispatch(browseFailure(response, namespace, requestId));
             return reject(response);
           }).catch((error) => {
             console.error(error);

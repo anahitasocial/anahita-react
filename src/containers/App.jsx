@@ -74,6 +74,14 @@ const useStyles = makeStyles((theme) => {
       overflow: 'auto',
       paddingBottom: theme.spacing(2),
     },
+    // Below lg the page runs edge to edge; from lg up the Container's own
+    // maxWidth and gutters take over.
+    container: {
+      [theme.breakpoints.down('md')]: {
+        paddingLeft: 0,
+        paddingRight: 0,
+      },
+    },
   };
 });
 
@@ -193,14 +201,16 @@ const App = ({
       </nav>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Hidden mdDown implementation="css">
-          <Container fixed maxWidth={false}>
-            {children}
-          </Container>
-        </Hidden>
-        <Hidden lgUp implementation="css">
+        {/*
+          `children` must be rendered exactly once. Selecting the layout with
+          two `Hidden implementation="css"` branches mounted the entire routed
+          page twice — only hiding one copy with CSS — so every page fetched
+          its data twice, each copy kept its own tab state, and every
+          window-bound InfiniteScroll in the hidden copy went on paginating.
+        */}
+        <Container maxWidth="lg" className={classes.container}>
           {children}
-        </Hidden>
+        </Container>
       </main>
     </div>
   );

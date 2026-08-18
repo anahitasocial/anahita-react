@@ -27,4 +27,4 @@ const global = (params) => {
 
 export default {
   global,
-}
+};

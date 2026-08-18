@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -19,19 +19,34 @@ const {
   },
 } = APP.BROWSE;
 
+const DEFAULT_FILTERS = {
+  q: '',
+  sort: TRENDING,
+};
+
 const LocationsBrowse = ({
   browseList,
   resetList,
   alertError,
   items,
   error,
-  queryFilters = {
-    q: '',
-    sort: TRENDING,
-  },
+  queryFilters = DEFAULT_FILTERS,
   total = 0,
+  isFetching = false,
 }) => {
-  const [start, setStart] = useState(0);
+  const {
+    q = '',
+    sort = TRENDING,
+  } = queryFilters;
+
+  const queryKey = `${q}|${sort}`;
+
+  // `start` is derived during render so it can never lag behind a query
+  // change — see the note in containers/actors/Browse/index.jsx.
+  const [page, setPage] = useState({ key: queryKey, start: 0 });
+  const start = page.key === queryKey ? page.start : 0;
+
+  const isMounted = useRef(false);
 
   useEffect(() => {
     return () => {
@@ -39,14 +54,26 @@ const LocationsBrowse = ({
     };
   }, []);
 
+  // Discard the previous sort's items when the query changes. Declared before
+  // the fetch effect so the reset is always dispatched ahead of the new
+  // request, which also marks any still in-flight response as stale.
+  useEffect(() => {
+    if (isMounted.current) {
+      resetList();
+      setPage({ key: queryKey, start: 0 });
+    } else {
+      isMounted.current = true;
+    }
+  }, [queryKey]);
+
   useEffect(() => {
     browseList({
       start,
       limit: LIMIT,
-      time_window: queryFilters.sort === TRENDING ? 'weekly' : undefined,
+      time_window: sort === TRENDING ? 'weekly' : undefined,
       ...queryFilters,
     });
-  }, [start, queryFilters.q, queryFilters.sort]);
+  }, [start, queryKey]);
 
   useEffect(() => {
     if (error) {
@@ -54,11 +81,17 @@ const LocationsBrowse = ({
     }
   }, [error]);
 
-  const fetchList = () => {
-    return setStart(start + LIMIT);
-  };
-
   const hasMore = total > items.allIds.length;
+
+  const fetchList = () => {
+    // InfiniteScroll listens on the window, so a scroll event can arrive while
+    // a page is still in flight.
+    if (isFetching || !hasMore) {
+      return;
+    }
+
+    setPage({ key: queryKey, start: start + LIMIT });
+  };
 
   return (
     <InfiniteScroll
@@ -90,6 +123,7 @@ LocationsBrowse.propTypes = {
   items: LocationsType.isRequired,
   error: PropTypes.string.isRequired,
   total: PropTypes.number,
+  isFetching: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
@@ -97,12 +131,14 @@ const mapStateToProps = (state) => {
     locations: items,
     error,
     total,
+    isFetching,
   } = state.locations;
 
   return {
     items,
     error,
     total,
+    isFetching,
   };
 };
 

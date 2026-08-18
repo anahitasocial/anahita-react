@@ -40,7 +40,6 @@ import People from '../containers/people/Browse';
 import PeopleAdd from '../containers/people/Add';
 
 import DashboardPage from '../containers/Dashboard';
-import ExplorePage from '../containers/Explore';
 import SearchPage from '../containers/search/Browse';
 import Settings from '../containers/settings';
 import StaticPage from '../containers/page';
@@ -58,9 +57,6 @@ const PeopleNotificationsEdit = ActorsNotificationsEdit('people');
 
 const Articles = Media('articles');
 const ArticlesRead = MediaRead('articles');
-
-const Documents = Media('documents');
-const DocumentsRead = MediaRead('documents');
 
 const Notes = Media('notes');
 const NotesRead = MediaRead('notes');
@@ -111,10 +107,6 @@ function AppRoutes() {
       />
 
       <Route path="/blogs" element={<Blogs />} />
-
-      <Route path="/explore" element={<ExplorePage />} />
-      <Route path="/explore/:tab" element={<ExplorePage />} />
-
       <Route path="/search" element={<SearchPage />} />
 
       <Route
@@ -223,9 +215,6 @@ function AppRoutes() {
       {/* Media types */}
       <Route path="/articles" element={<Articles />} />
       <Route path="/articles/:id" element={<ArticlesRead />} />
-
-      <Route path="/documents" element={<Documents />} />
-      <Route path="/documents/:id" element={<DocumentsRead />} />
 
       <Route path="/notes" element={<Notes />} />
       <Route path="/notes/:id" element={<NotesRead />} />

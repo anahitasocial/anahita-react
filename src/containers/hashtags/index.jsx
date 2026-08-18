@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -19,6 +20,8 @@ const {
   },
 } = APP.BROWSE;
 
+const SORT_OPTIONS = [TRENDING, TOP, RECENT];
+
 const useStyles = makeStyles({
   root: {
     marginBottom: 8 * 2,
@@ -33,10 +36,25 @@ const Hashtags = ({
   selectedTab = TRENDING,
 }) => {
   const classes = useStyles();
-  const [tab, setTab] = useState(selectedTab);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // The URL is the only source of truth for the selected sort, so it is
+  // shareable and works with the back button. Navigating also scrolls the page
+  // back to the top, which keeps the freshly mounted list from immediately
+  // paginating from a deep scroll position.
+  const requested = searchParams.get('sort') || selectedTab;
+  const tab = SORT_OPTIONS.includes(requested) ? requested : selectedTab;
 
   const changeTab = (event, value) => {
-    setTab(value);
+    const params = new URLSearchParams(searchParams);
+
+    if (value === selectedTab) {
+      params.delete('sort');
+    } else {
+      params.set('sort', value);
+    }
+
+    setSearchParams(params);
   };
 
   useEffect(() => {

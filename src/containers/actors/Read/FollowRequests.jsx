@@ -195,9 +195,16 @@ const mapDispatchToProps = (namespace) => {
   };
 };
 
+// Invoked from inside a render body — see the note in actors/Browse/index.jsx.
+const connectedByNamespace = {};
+
 export default (namespace) => {
-  return connect(
-    mapStateToProps(namespace),
-    mapDispatchToProps(namespace),
-  )(ActorsFollowRequests);
+  if (!connectedByNamespace[namespace]) {
+    connectedByNamespace[namespace] = connect(
+      mapStateToProps(namespace),
+      mapDispatchToProps(namespace),
+    )(ActorsFollowRequests);
+  }
+
+  return connectedByNamespace[namespace];
 };
