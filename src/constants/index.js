@@ -20,6 +20,7 @@ import Socialgraph from './socialgraph';
 import Signup from './signup';
 import Storage from './storage';
 import Stories from './stories';
+import Totp from './totp';
 
 export {
   Access,
@@ -44,4 +45,5 @@ export {
   Socialgraph,
   Storage,
   Stories,
+  Totp,
 };

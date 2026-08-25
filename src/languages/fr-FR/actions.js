@@ -15,6 +15,7 @@ export default {
   save: 'Enregistrer',
   done: 'Terminé',
   cancel: 'Annuler',
+  continue: 'Continuer',
   confirm: 'Confirmer',
   create: 'Créer',
   post: 'Publier',

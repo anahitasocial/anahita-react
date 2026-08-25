@@ -27,6 +27,7 @@ import socialgraph from './socialgraph';
 import inbounds from './inbounds';
 import tagGraph from './tag_graph';
 import token from './token';
+import totp from './totp';
 import api from '../utils/api';
 import webauthn from './webauthn';
 
@@ -125,6 +126,7 @@ const apis = {
   inbounds,
   tagGraph,
   token,
+  totp,
   webauthn,
 };
 

@@ -82,6 +82,67 @@ export default {
       generic: 'Nous n\'avons pas pu ajouter cette passkey. Réessayez.',
     },
   },
+  totp: {
+    cTitle: 'Authentification à deux facteurs',
+    cDesc: 'Activez l’authentification à deux facteurs et associez votre compte à l’application d’authentification de votre choix sur votre appareil mobile.',
+    disableDialog: {
+      title: 'Êtes-vous sûr ? ',
+      message: 'Vous êtes sur le point de désactiver votre authentification à deux facteurs. Cette action réduira la sécurité de votre compte. Voulez-vous toujours continuer ?',
+    },
+    steps: {
+      cTitle: 'Configurer l’authentification à deux facteurs',
+      pairDevice: 'Associer l’appareil',
+      downloadRecoveryCodes: 'Codes de récupération',
+      enabled: 'Activée',
+    },
+    password: {
+      title: 'Confirmez votre mot de passe',
+      label: 'Mot de passe',
+    },
+    pairing: {
+      cTitle: 'Configurer une application d’authentification',
+      cDesc: 'Utilisez une application mobile comme Authy, Google Authenticator ou Microsoft Authenticator pour obtenir des codes 2FA lors de la connexion.',
+    },
+    qrCode: {
+      cTitle: 'Scanner le code QR',
+      cDesc: 'Utilisez votre application d’authentification pour scanner le code QR et l’associer à votre compte',
+      passcode: {
+        title: 'Vérifier le code',
+        label: 'Saisissez le code actuel affiché dans votre application d’authentification',
+      },
+    },
+    recoveryCodes: {
+      cTitle: 'Téléchargez vos codes de récupération',
+      cDesc: 'Vous pouvez utiliser les codes de récupération comme second facteur d’authentification si vous perdez l’accès à votre appareil. Nous vous recommandons de les enregistrer dans un gestionnaire de mots de passe sécurisé comme 1Password ou Keeper.',
+      warning: 'Conservez vos codes de récupération en lieu sûr. Si vous perdez votre appareil et ne retrouvez pas vos codes de récupération, vous perdrez l’accès à votre compte.',
+      content: 'CODES DE RÉCUPÉRATION\n\nService : {{ service }}\nCompte : {{ account }}\n\n*Vous ne pouvez utiliser chaque code qu’une seule fois !*\n\n',
+      prompts: {
+        copySuccess: 'Copie réussie !',
+        copyCodes: 'Copier les codes',
+        enableTotp: 'J’ai enregistré mes codes de récupération',
+      },
+    },
+    enable: {
+      cDesc: 'Vous avez activé l’authentification à deux facteurs avec une application d’authentification.',
+    },
+    verify: {
+      cTitle: 'Authentification à deux facteurs',
+      cDesc: 'Saisissez le code actuel affiché dans votre application d’authentification pour terminer la connexion.',
+      passcode: 'Code de vérification',
+    },
+    widget: {
+      cTitle: 'Rappel de sécurité',
+      cSubTitle: 'La 2FA n’est pas activée !',
+      cDesc: 'Activer l’authentification à deux facteurs (2FA) et utiliser une application d’authentification renforcera considérablement la sécurité de votre compte.',
+      action: 'Configurer la 2FA',
+    },
+    errors: {
+      wrongPassword: 'Ce mot de passe est incorrect. Réessayez.',
+      passwordInvalid: 'Nous n’avons pas pu vérifier votre mot de passe. Réessayez.',
+      invalidPasscode: 'Ce code n’est pas valide. Vérifiez votre application d’authentification et réessayez.',
+      enableFailed: 'Nous n’avons pas pu activer l’authentification à deux facteurs. Réessayez.',
+    },
+  },
   prompts: {
     error: 'Une erreur est survenue !',
     errorSignupUsernameTaken: "Ce nom d'utilisateur est déjà pris !",

@@ -10,7 +10,9 @@ import ActorSettingCard from '../../../components/ActorSetting';
 
 import Admins from './admins/Browse';
 import AuthLogs from '../../auth/Authlogs';
+import Password from '../../auth/Password';
 import WebAuthn from '../../auth/WebAuthn';
+import Totp from '../../auth/Totp';
 import Features from './Features';
 import Delete from './Delete';
 import Info from './Info';
@@ -34,6 +36,8 @@ const TABS = {
   ACCESS: 'access',
   DELETE: 'delete',
   WEBAUTHN: 'webauthn',
+  TOTP: 'totp',
+  PASSWORD: 'password',
 };
 
 const ActorsSettings = ({
@@ -104,16 +108,17 @@ const ActorsSettings = ({
         }}
         aria-label={i18n.t('commons:settings')}
       >
-        <Tab label={i18n.t(`${namespace}:settings.authlogs`)} value={TABS.AUTHLOGS} />
-        {isViewer &&
-          <Tab label={i18n.t(`${namespace}:settings.webauthn`)} value={TABS.WEBAUTHN} />}
+        {isViewer && <Tab label={i18n.t(`${namespace}:settings.authlogs`)} value={TABS.AUTHLOGS} />}
+        {isViewer && <Tab label={i18n.t(`${namespace}:settings.webauthn`)} value={TABS.WEBAUTHN} />}
+        {isViewer && <Tab label={i18n.t(`${namespace}:settings.totp`)} value={TABS.TOTP} />}
         <Tab label={i18n.t(`${namespace}:settings.info`)} value={TABS.INFO} />
         {namespace === 'people' &&
           <Tab label={i18n.t(`${namespace}:settings.account`)} value={TABS.ACCOUNT} />}
         {namespace !== 'people' &&
           <Tab label={i18n.t(`${namespace}:settings.admins`)} value={TABS.ADMINS} />}
         <Tab label={i18n.t(`${namespace}:settings.access`)} value={TABS.ACCESS} />
-        <Tab label={i18n.t(`${namespace}:settings.features`)} value={TABS.FEATURES} />
+        {isViewer && tab === TABS.PASSWORD && <Password />}
+        {isViewer && <Tab label={i18n.t(`${namespace}:settings.password`)} value={TABS.PASSWORD} />}
         {canDelete &&
           <Tab label={i18n.t(`${namespace}:settings.delete`)} value={TABS.DELETE} />}
       </Tabs>
@@ -122,10 +127,10 @@ const ActorsSettings = ({
         actor={actor}
         subheader={i18n.t(`${namespace}:settings.${tab}`)}
       >
-        {namespace === 'people' && tab === TABS.AUTHLOGS &&
-          <AuthLogs personId={actor.id} />}
-        {isViewer && tab === TABS.WEBAUTHN &&
-          <WebAuthn />}
+        {namespace === 'people' && tab === TABS.AUTHLOGS && <AuthLogs personId={actor.id} />}
+        {isViewer && tab === TABS.WEBAUTHN && <WebAuthn />}
+        {isViewer && tab === TABS.TOTP && <Totp viewer={viewer} />}
+        {isViewer && tab === TABS.PASSWORD && <Password />}
         {namespace === 'people' && tab === TABS.INFO &&
           <PersonInfo />}
         {namespace !== 'people' && tab === TABS.INFO &&

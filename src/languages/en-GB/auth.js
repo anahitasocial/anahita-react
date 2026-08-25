@@ -82,6 +82,67 @@ export default {
       generic: 'We couldn\'t add that passkey. Try again.',
     },
   },
+  totp: {
+    cTitle: 'Two-Factor Auth',
+    cDesc: 'Enable two-factor authentication and pair your account with an authenticator app of your choice on your mobile device.',
+    disableDialog: {
+      title: 'Are you sure?',
+      message: 'You are about to disable your Two-Factor authentication. This action will reduce the security of your account. Do you still want to proceed?',
+    },
+    steps: {
+      cTitle: 'Set up two-factor authentication',
+      pairDevice: 'Pair device',
+      downloadRecoveryCodes: 'Recovery codes',
+      enabled: 'Enabled',
+    },
+    password: {
+      title: 'Confirm your password',
+      label: 'Password',
+    },
+    pairing: {
+      cTitle: 'Setup authenticator app',
+      cDesc: 'Use a phone app like Authy, Google Authenticator, or Microsoft Authenticator, etc. to get 2FA codes when prompted during sign-in.',
+    },
+    qrCode: {
+      cTitle: 'Scan the QR code',
+      cDesc: 'Use your authenticator app to scan the QR code and pair it with your account',
+      passcode: {
+        title: 'Verify the code',
+        label: 'Enter the current code from your authenticator app',
+      },
+    },
+    recoveryCodes: {
+      cTitle: 'Download your recovery codes',
+      cDesc: 'You can use recovery codes as a second factor to authenticate in case you lose access to your device. We recommend saving them with a secure password manager such as 1Password or Keeper.',
+      warning: 'Keep your recovery codes in a safe spot. If you lose your device and cannot find your recovery codes, you will lose access to your account.',
+      content: 'RECOVERY CODES\n\nService: {{ service }}\nAccount: {{ account }}\n\n*You can only use each code ONCE!*\n\n',
+      prompts: {
+        copySuccess: 'Copy Success!',
+        copyCodes: 'Copy codes',
+        enableTotp: 'I have saved my recovery codes',
+      },
+    },
+    enable: {
+      cDesc: 'You have enabled two-factor authentication using authenticator app.',
+    },
+    verify: {
+      cTitle: 'Two-Factor Auth',
+      cDesc: 'Enter the current code from your authenticator app to finish signing in.',
+      passcode: 'Verification code',
+    },
+    widget: {
+      cTitle: 'Security Reminder',
+      cSubTitle: '2FA is not enabled!',
+      cDesc: 'Enabling Two-Factor Auth (2FA) and using an Authenticator app will make your account a lot more secure.',
+      action: 'Setup 2FA',
+    },
+    errors: {
+      wrongPassword: 'That password is not correct. Try again.',
+      passwordInvalid: 'We couldn\'t verify your password. Try again.',
+      invalidPasscode: 'That code is not valid. Check your authenticator app and try again.',
+      enableFailed: 'We couldn\'t enable two-factor authentication. Try again.',
+    },
+  },
   prompts: {
     error: 'Something went wrong!',
     errorSignupUsernameTaken: 'Username is already taken!',

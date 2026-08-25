@@ -5,16 +5,13 @@ import MediumType from '../../../../proptypes/Medium';
 
 import Default from './Default';
 
-const MediumStepperLightbox = ({
-  medium: {
-    objectType,
-  },
-  ...props
-}) => {
+const MediumStepperLightbox = ({ medium, ...props }) => {
+  const { objectType } = medium;
+
   switch (objectType) {
     default:
       return (
-        <Default {...props} />
+        <Default medium={medium} {...props} />
       );
   }
 };

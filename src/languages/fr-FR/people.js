@@ -8,6 +8,7 @@ export default {
   settings: {
     authlogs: 'Authentifications',
     webauthn: 'Clés d’accès',
+    totp: '2FA',
     info: 'Infos',
     account: 'Compte',
     features: 'Fonctionnalités',
