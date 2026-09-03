@@ -28,6 +28,7 @@ const {
 const PersonInfo = ({
   handleOnChange,
   handleOnSubmit,
+  handleOnCancel,
   fields,
   person,
   canChangeUsertype,
@@ -174,7 +175,17 @@ const PersonInfo = ({
           actor={person}
         />
       </CardContent>
+      {/* Cancel then Save, both full width — the same CardActions row every
+          other card in this section uses. Save was a hardcoded English
+          string; actions:save is the key the rest of the app uses for it. */}
       <CardActions>
+        <Button
+          onClick={handleOnCancel}
+          disabled={isFetching}
+          fullWidth
+        >
+          {i18n.t('actions:cancel')}
+        </Button>
         <Button
           type="submit"
           variant="contained"
@@ -182,7 +193,7 @@ const PersonInfo = ({
           disabled={isFetching || !enableSubmit}
           fullWidth
         >
-          Save
+          {i18n.t('actions:save')}
         </Button>
       </CardActions>
     </form>
@@ -192,6 +203,7 @@ const PersonInfo = ({
 PersonInfo.propTypes = {
   handleOnChange: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
+  handleOnCancel: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   person: PersonType.isRequired,
   canChangeUsertype: PropTypes.bool.isRequired,

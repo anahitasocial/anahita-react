@@ -106,7 +106,7 @@ const RenameDialog = ({
           disabled={isBusy}
           fullWidth
         >
-          {t('common:cancel')}
+          {t('actions:cancel')}
         </Button>
         <Button
           color="primary"
@@ -116,7 +116,7 @@ const RenameDialog = ({
           startIcon={isBusy ? <CircularProgress size={16} color="inherit" /> : null}
           fullWidth
         >
-          {t('common:save')}
+          {t('actions:save')}
         </Button>
       </DialogActions>
     </Dialog>

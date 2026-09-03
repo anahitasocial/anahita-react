@@ -10,13 +10,24 @@ export default {
     webauthn: 'Clés d’accès',
     totp: '2FA',
     info: 'Infos',
-    account: 'Compte',
     features: 'Fonctionnalités',
     permissions: 'Autorisations',
     access: 'Accès',
     delete: 'Supprimer',
     notifications: 'Paramètres de notification',
     followRequests: "Demandes d'abonnement",
+    // These three were missing while en-GB had them, so the password, email
+    // and username cards rendered their raw key names in French.
+    password: 'Mot de passe',
+    email: 'E-mail',
+    username: "Nom d'utilisateur",
+    // Section labels for the grouped person settings page.
+    sections: {
+      account: 'Compte',
+      security: 'Sécurité',
+      privacy: 'Confidentialité',
+      danger: 'Zone de danger',
+    },
   },
   notifications: {
     cTitle: 'Notifications',
@@ -34,7 +45,6 @@ export default {
     familyName: 'Nom',
     username: "Nom d'utilisateur",
     email: 'E-mail',
-    newPassword: 'Nouveau mot de passe',
     body: 'Bio',
     pronouns: 'Pronoms',
     whatPronouns: 'Quels pronoms utilisez-vous ?',

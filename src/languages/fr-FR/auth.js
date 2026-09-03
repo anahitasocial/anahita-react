@@ -124,6 +124,10 @@ export default {
     },
     enable: {
       cDesc: 'Vous avez activé l’authentification à deux facteurs avec une application d’authentification.',
+      action: 'Activer la 2FA',
+      on: 'L’authentification à deux facteurs est activée',
+      onDesc: 'Un code de votre application d’authentification vous sera demandé lors de la connexion.',
+      off: 'L’authentification à deux facteurs est désactivée',
     },
     verify: {
       cTitle: 'Authentification à deux facteurs',

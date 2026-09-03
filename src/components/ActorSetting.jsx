@@ -16,10 +16,16 @@ const {
   getURL,
 } = utils.node;
 
+// Settings page chrome: the actor's name, avatar and a way back to the profile.
+//
+// children is optional. The person settings page stacks several cards under one
+// section and passes none, using this purely as a header — nesting those cards
+// inside this one would draw a card border around a column of card borders. The
+// notifications editor still passes children and is unaffected.
 const ActorSettingCard = ({
   actor,
   subheader = 'Settings',
-  children,
+  children = null,
 }) => {
   const src = getAvatarURL(actor, 'medium');
   const initials = getActorInitials(actor);
@@ -46,7 +52,9 @@ const ActorSettingCard = ({
         title={actor.name}
         subheader={subheader}
       />
-      <Divider />
+      {/* Only when there is something to divide it from. Without the guard a
+          header-only card ends on a rule with nothing under it. */}
+      {children && <Divider />}
       {children}
     </Card>
   );
@@ -55,7 +63,7 @@ const ActorSettingCard = ({
 ActorSettingCard.propTypes = {
   actor: PropTypes.object.isRequired,
   subheader: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 export default ActorSettingCard;

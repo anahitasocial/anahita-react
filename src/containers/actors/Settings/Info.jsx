@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { singularize } from 'inflected';
 import moment from 'moment';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 
 import ActorInfoForm from '../Forms/Info';
+import InfoRead from './InfoRead';
 import Progress from '../../../components/Progress';
 import actions from '../../../actions';
 import permissions from '../../../permissions';
@@ -30,7 +30,6 @@ const { canAdminister } = permissions.actor;
 const ActorsSettingsInfo = (props) => {
   const {
     editActor,
-    namespace,
     isFetching,
     viewer,
     actor: defaultActor,
@@ -42,6 +41,21 @@ const ActorsSettingsInfo = (props) => {
   });
 
   const [fields, setFields] = useState(formFields);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  // Cancel re-seeds from the store rather than just hiding the form.
+  // handleOnChange writes straight onto local `actor` state as you type, so
+  // hiding the form alone would leave the discarded values on screen in the
+  // read view as though they had been saved.
+  const handleCancel = () => {
+    setActor({ ...defaultActor, ...defaultActor.information });
+    setFields(formFields);
+    setIsEditing(false);
+  };
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -72,6 +86,11 @@ const ActorsSettingsInfo = (props) => {
         id: actor.id,
         enabled: actor.enabled ? 1 : 0,
       });
+
+      // Collapse on submit, like the other settings cards. The result comes
+      // back as a page-level alert from containers/actors/Settings rather than
+      // through here, so there is nothing to wait on.
+      setIsEditing(false);
     }
 
     setFields({ ...newFields });
@@ -83,21 +102,32 @@ const ActorsSettingsInfo = (props) => {
     );
   }
 
-  const formTitle = `${singularize(namespace)} information`;
-  const created = moment.utc(actor.creationTime).format('LLL').toString();
+  const created = `Created ${moment.utc(actor.creationTime).format('LLL').toString()}`;
+  const canAdmin = canAdminister(viewer);
+
+  if (!isEditing) {
+    return (
+      <InfoRead
+        actor={actor}
+        canAdmin={canAdmin}
+        created={created}
+        onEdit={handleEdit}
+      />
+    );
+  }
 
   return (
     <ActorInfoForm
-      formTitle={formTitle}
       actor={actor}
       fields={fields}
       handleOnChange={handleOnChange}
       handleOnSubmit={handleOnSubmit}
+      handleOnCancel={handleCancel}
       isFetching={isFetching}
-      enabled={canAdminister(viewer) &&
+      enabled={canAdmin &&
         <>
           <Typography variant="caption" display="block">
-            {`Created ${created}`}
+            {created}
           </Typography>
           <FormControlLabel
             control={
@@ -118,7 +148,6 @@ ActorsSettingsInfo.propTypes = {
   editActor: PropTypes.func.isRequired,
   actor: ActorType.isRequired,
   viewer: PersonType.isRequired,
-  namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 

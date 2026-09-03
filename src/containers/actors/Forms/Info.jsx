@@ -19,6 +19,7 @@ const ActorFormsInfo = ({
   actor,
   isFetching,
   enabled = null,
+  handleOnCancel = null,
 }) => {
   const enableSubmit = actor.id > 0 || (fields.name.isValid && fields.body.isValid);
 
@@ -63,7 +64,19 @@ const ActorFormsInfo = ({
           actor={actor}
         />
       </CardContent>
+      {/* Cancel only when a handler is supplied. The settings card opens
+          this form from a read view and needs a way back; actors/Add renders
+          it as the whole page for creating an actor, where there is nothing
+          to cancel back to. */}
       <CardActions>
+        {handleOnCancel &&
+          <Button
+            onClick={handleOnCancel}
+            disabled={isFetching}
+            fullWidth
+          >
+            {i18n.t('actions:cancel')}
+          </Button>}
         <Button
           type="submit"
           variant="contained"
@@ -85,6 +98,7 @@ ActorFormsInfo.propTypes = {
   actor: ActorType.isRequired,
   isFetching: PropTypes.bool.isRequired,
   enabled: PropTypes.node,
+  handleOnCancel: PropTypes.func,
 };
 
 export default ActorFormsInfo;

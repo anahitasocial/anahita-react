@@ -3,6 +3,19 @@ import utils from '../utils';
 
 const { constructFormData } = utils.api;
 
+// read reports whether the viewer has TOTP enrolled, and whether that
+// enrolment has aged out: { data: { enabled, expired } }.
+//
+// The viewer's own status only — the endpoint takes no identifier, so
+// there is nothing to pass. Use is.totp for the unauthenticated
+// login-page check, which is keyed by email.
+//
+// Path is 'totp', no trailing slash. The route is registered literally
+// and 'totp/' answers 404; nginx is equally literal about it.
+function read() {
+  return axios.get('totp');
+}
+
 function edit() {
   return axios.patch('totp');
 }
@@ -45,6 +58,7 @@ function verify(passcode) {
 }
 
 export default {
+  read,
   edit,
   add,
   addRecoveryCodes,

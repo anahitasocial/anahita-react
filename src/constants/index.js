@@ -12,7 +12,9 @@ import Locations from './locations';
 import Medium from './medium';
 import Node from './node';
 import OAuthClients from './oauth_clients';
+import Email from './email';
 import Password from './password';
+import Username from './username';
 import Person from './person';
 import Search from './search';
 import Session from './session';
@@ -37,7 +39,9 @@ export {
   Medium,
   Node,
   OAuthClients,
+  Email,
   Password,
+  Username,
   Person,
   Search,
   Signup,

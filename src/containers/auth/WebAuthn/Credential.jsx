@@ -142,7 +142,7 @@ const Credential = ({
         }
       />
       <ListItemSecondaryAction className={classes.actions}>
-        <Tooltip title={t('common:edit')}>
+        <Tooltip title={t('actions:edit')}>
           {/* The span is load-bearing: a disabled MUI button fires no
               pointer events, so Tooltip never hears about the hover
               and the label becomes unreachable exactly when someone
@@ -160,7 +160,7 @@ const Credential = ({
             </IconButton>
           </span>
         </Tooltip>
-        <Tooltip title={t('common:remove')}>
+        <Tooltip title={t('actions:remove')}>
           <span>
             <IconButton
               edge="end"

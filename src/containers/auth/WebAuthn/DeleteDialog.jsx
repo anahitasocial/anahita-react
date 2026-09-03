@@ -55,7 +55,7 @@ const DeleteDialog = ({
           disabled={isBusy}
           fullWidth
         >
-          {t('common:cancel')}
+          {t('actions:cancel')}
         </Button>
         <Button
           color="secondary"
@@ -64,7 +64,7 @@ const DeleteDialog = ({
           disabled={isBusy}
           fullWidth
         >
-          {t('common:remove')}
+          {t('actions:remove')}
         </Button>
       </DialogActions>
     </Dialog>

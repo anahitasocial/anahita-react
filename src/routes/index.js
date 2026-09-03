@@ -2,10 +2,13 @@ import React, { useEffect } from 'react';
 import ReactGA from 'react-ga';
 import { useSelector } from 'react-redux';
 import {
+  Navigate,
   Route,
   Routes,
   useLocation,
+  useParams,
 } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import AuthenticatedRoute from './AuthenticatedRoute';
 
 import AuthPage from '../containers/auth';
@@ -54,6 +57,18 @@ const GroupsNotificationsEdit = ActorsNotificationsEdit('groups');
 const PeopleRead = ActorsRead('people');
 const PeopleSettings = ActorsSettings('people');
 const PeopleNotificationsEdit = ActorsNotificationsEdit('people');
+
+// Sends an old per-card settings URL to the section that card now lives in,
+// keeping the :id it arrived with. replace, so the back button skips the
+// redirect instead of bouncing off it.
+const SettingsSectionRedirect = ({ section }) => {
+  const { id } = useParams();
+  return <Navigate to={`/people/${id}/settings/${section}`} replace />;
+};
+
+SettingsSectionRedirect.propTypes = {
+  section: PropTypes.string.isRequired,
+};
 
 const Articles = Media('articles');
 const ArticlesRead = MediaRead('articles');
@@ -139,11 +154,32 @@ function AppRoutes() {
           </AuthenticatedRoute>
         }
       />
+      {/* The password card now lives inside the Security section, so this
+          redirects rather than selecting a tab. The URL is not ours to
+          retire: it is in the username-change notification email and is
+          where the password-reset token flow lands people — see
+          containers/auth/Token. Password is the first card in that
+          section, so the redirect arrives on it without scrolling. */}
       <Route
-        path="/people/:id/settings/account"
+        path="/people/:id/settings/password"
         element={
           <AuthenticatedRoute>
-            <PeopleSettings selectedTab="account" />
+            <SettingsSectionRedirect section="security" />
+          </AuthenticatedRoute>
+        }
+      />
+      {/* One route for every section — account, security, privacy, danger.
+          The section is in the path rather than local state so it survives
+          a reload, can be shared, and works with the back button.
+
+          /settings/account is covered by this and needs no alias: it was a
+          legacy landing after the old Account tab was split up, and it is
+          a real section again. */}
+      <Route
+        path="/people/:id/settings/:section"
+        element={
+          <AuthenticatedRoute>
+            <PeopleSettings />
           </AuthenticatedRoute>
         }
       />

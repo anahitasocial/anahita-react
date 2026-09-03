@@ -1,21 +1,14 @@
 import axios from 'axios';
-import utils from '../utils';
 
-const { constructFormData } = utils.api;
-
-// Kicks off the reset mail. auth-service replaced the monolith's
-// /people/token.json with /password/forgot.
-//
-// Note this endpoint belongs to the server-rendered password flow, so a
-// success answers with an HTML page rather than JSON — treat the 2xx as
-// the signal and ignore the body. The link in the mail lands the person
-// on auth-service's own /password/reset page, which completes the reset
-// outside this app.
-function reset(person) {
-  const { email } = person;
-  return axios.post('/password/forgot', constructFormData({ email }));
+// No currentPassword. requests.PasswordEdit has no such field — proof
+// travels as the step-up marker the server checks, not in this body.
+function edit(params) {
+  const { password } = params;
+  return axios.patch('password/change', {
+    password,
+  });
 }
 
 export default {
-  reset,
+  edit,
 };

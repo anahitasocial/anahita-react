@@ -29,11 +29,36 @@ function email(value) {
   return availability(axios.get('/auth/is/email', { params: { email: value } }));
 }
 
+// totp reports whether an account has TOTP enrolled, by email.
+//
+// Not wrapped in `availability`: that helper inverts 200/404 into
+// taken/free for the signup checks, and this question has no such
+// polarity — 200 means enrolled, 404 means not. Returning a boolean
+// keeps the inversion out of the call sites.
+//
+// Unauthenticated, because the login page has to know whether to ask
+// for a passcode before a session exists. Behind a session, use
+// totp.read instead: it takes no identifier and so cannot be used to
+// ask about anybody else.
+function totp(value) {
+  return axios.get('/auth/is/totp', { params: { email: value } })
+    .then(() => {
+      return true;
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 404) {
+        return false;
+      }
+      return Promise.reject(error);
+    });
+}
+
 function username(value) {
   return availability(axios.get(`/people/${encodeURIComponent(value)}`));
 }
 
 export default {
   email,
+  totp,
   username,
 };

@@ -16,6 +16,8 @@ import home from './home';
 import documents from './documents';
 import settings from './settings';
 import groups from './groups';
+import password from './password';
+import username from './username';
 import people from './people';
 import notes from './notes';
 import photos from './photos';
@@ -29,6 +31,7 @@ import locations from './locations';
 import search from './search';
 import inbounds from './inbounds';
 import commons from './commons';
+import email from './email';
 
 export default {
   apps,
@@ -50,6 +53,8 @@ export default {
   settings,
   groups,
   people,
+  password,
+  username,
   notes,
   photos,
   media,
@@ -61,5 +66,6 @@ export default {
   locations,
   search,
   inbounds,
+  email,
   commons,
 };

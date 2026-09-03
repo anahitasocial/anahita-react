@@ -10,6 +10,7 @@ import avatar from './avatar';
 import comments from './comments';
 import commentStatus from './commentsStatus';
 import cover from './cover';
+import email from './email';
 import feed from './feed';
 import hashtags from './hashtags';
 import is from './is';
@@ -20,6 +21,7 @@ import notifications from './notifications';
 import notificationsSub from './notifications/sub';
 import oauthClients from './oauthClients';
 import password from './password';
+import reauth from './reauth';
 import repost from './feed/repost';
 import session from './session';
 import signup from './signup';
@@ -119,6 +121,7 @@ const apis = {
   notificationsSub,
   oauthClients,
   password,
+  reauth,
   repost,
   session,
   signup,
@@ -128,6 +131,7 @@ const apis = {
   token,
   totp,
   webauthn,
+  email,
 };
 
 namespaces.actors.forEach((ns) => {

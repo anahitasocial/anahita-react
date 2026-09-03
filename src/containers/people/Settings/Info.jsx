@@ -8,6 +8,7 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 
 import InfoForm from './InfoForm';
+import InfoRead from './InfoRead';
 import Progress from '../../../components/Progress';
 import actions from '../../../actions';
 import permissions from '../../../permissions';
@@ -43,6 +44,22 @@ const PersonSettingsInfo = (props) => {
   });
 
   const [fields, setFields] = useState(formFields);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  // Cancel discards the edits by re-seeding from the store, not by remembering
+  // what changed. Everything typed since Edit was pressed has been written
+  // straight onto local `person` state by handleOnChange, so simply hiding the
+  // form would leave those values on screen in the read view as though they
+  // had been saved.
+  const handleCancel = () => {
+    setPerson({ ..._Person, ..._Person.information });
+    setFields(formFields);
+    setIsEditing(false);
+  };
 
   const handleOnChange = (event) => {
     const { target } = event;
@@ -73,6 +90,12 @@ const PersonSettingsInfo = (props) => {
         id: person.id,
         enabled: person.enabled,
       });
+
+      // Collapse on submit, like the other cards in this section. The result
+      // arrives as a page-level alert from containers/actors/Settings rather
+      // than back through here, so there is nothing to wait for; on failure
+      // the alert says so and the values are still in local state to re-open.
+      setIsEditing(false);
     }
 
     setFields({ ...newFields });
@@ -88,12 +111,24 @@ const PersonSettingsInfo = (props) => {
   const canAdmin = canAdminister(person) && viewer.id !== person.id;
   const joinedDate = moment.utc(person.creationTime).format('LLL').toString();
 
+  if (!isEditing) {
+    return (
+      <InfoRead
+        person={person}
+        canAdmin={canAdmin}
+        joinedDate={joinedDate}
+        onEdit={handleEdit}
+      />
+    );
+  }
+
   return (
     <InfoForm
       fields={fields}
       person={person}
       handleOnChange={handleOnChange}
       handleOnSubmit={handleOnSubmit}
+      handleOnCancel={handleCancel}
       isFetching={isFetching}
       canChangeUsertype={canAdmin}
       isSuperAdmin={isSuperAdmin}

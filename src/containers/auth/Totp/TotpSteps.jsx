@@ -7,7 +7,6 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import { Link } from 'react-router-dom';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -19,7 +18,6 @@ import DownloadIcon from '@material-ui/icons/CloudDownload';
 
 import i18n from '../../../languages';
 import { Totp as TOTP } from '../../../constants';
-import PersonType from '../../../proptypes/Person';
 
 import FormPassword from './FormPassword';
 import FormPairing from './FormPairing';
@@ -43,6 +41,7 @@ const TotpSteps = ({
   handleDownloadRecoveryCodes,
   handleCopyRecoveryCodes,
   handleEnableTOTP,
+  handleDone,
   activeStep = STEPS.PAIR_DEVICE,
   passwordFields,
   pairingFields,
@@ -50,7 +49,6 @@ const TotpSteps = ({
   recoveryCodes = [],
   codesCopySuccess = false,
   enableError = '',
-  viewer,
 }) => {
   const classes = useStyles();
 
@@ -95,7 +93,12 @@ const TotpSteps = ({
               handleOnChange={handleOnChangePassword}
             />
           </CardContent>
+          {/* A way out. Enable 2FA opened this wizard, and without a cancel
+              the only exits were finishing it or leaving the page. */}
           <CardActions>
+            <Button onClick={handleDone} fullWidth>
+              {i18n.t('actions:cancel')}
+            </Button>
             <Button
               type="submit"
               color="primary"
@@ -115,7 +118,13 @@ const TotpSteps = ({
               qrCodeImage={qrCodeImage}
             />
           </CardContent>
+          {/* A secret exists by this point but 2FA is not enabled, and the
+              next enrolment overwrites it — so backing out here costs
+              nothing and stranding somebody on a QR code would. */}
           <CardActions>
+            <Button onClick={handleDone} fullWidth>
+              {i18n.t('actions:cancel')}
+            </Button>
             <Button
               type="submit"
               color="primary"
@@ -174,10 +183,14 @@ const TotpSteps = ({
               {i18n.t('auth:totp.enable.cDesc')}
             </Typography>
           </CardContent>
+          {/* Returns to the collapsed card rather than linking to the
+              profile. This wizard used to be the whole 2FA settings page, so
+              leaving it meant leaving; now it is one card in the Security
+              section and navigating away would abandon the page the person
+              was working on. */}
           <CardActions>
             <Button
-              component={Link}
-              to={`/people/${viewer.id}/`}
+              onClick={handleDone}
               fullWidth
               color="primary"
               variant="contained"
@@ -198,6 +211,7 @@ TotpSteps.propTypes = {
   handleDownloadRecoveryCodes: PropTypes.func.isRequired,
   handleCopyRecoveryCodes: PropTypes.func.isRequired,
   handleEnableTOTP: PropTypes.func.isRequired,
+  handleDone: PropTypes.func.isRequired,
   activeStep: PropTypes.oneOf([
     STEPS.PAIR_DEVICE,
     STEPS.DOWNLOAD_RECOVERY_CODES,
@@ -209,7 +223,6 @@ TotpSteps.propTypes = {
   recoveryCodes: PropTypes.arrayOf(PropTypes.string),
   codesCopySuccess: PropTypes.bool,
   enableError: PropTypes.string,
-  viewer: PersonType.isRequired,
 };
 
 export default TotpSteps;

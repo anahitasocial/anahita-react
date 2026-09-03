@@ -124,6 +124,13 @@ export default {
     },
     enable: {
       cDesc: 'You have enabled two-factor authentication using authenticator app.',
+      // Collapsed state of the 2FA card. The wizard is a multi-step commitment
+      // — password, pairing, recovery codes — so it stays behind a button
+      // rather than opening on a settings page somebody came to read.
+      action: 'Enable 2FA',
+      on: 'Two-factor authentication is on',
+      onDesc: 'You will be asked for a code from your authenticator app when you sign in.',
+      off: 'Two-factor authentication is off',
     },
     verify: {
       cTitle: 'Two-Factor Auth',
@@ -141,6 +148,33 @@ export default {
       passwordInvalid: 'We couldn\'t verify your password. Try again.',
       invalidPasscode: 'That code is not valid. Check your authenticator app and try again.',
       enableFailed: 'We couldn\'t enable two-factor authentication. Try again.',
+    },
+  },
+  reauth: {
+    cTitle: 'Confirm it\'s you',
+    label: 'For your security, confirm your identity before changing this.',
+    usePasskey: 'Use a passkey',
+    usePassword: 'Use your password instead',
+    submit: 'Confirm',
+    fields: {
+      currentPassword: 'Current password',
+      totpPasscode: 'Authentication code',
+      totpHelper: '6-digit code from your authenticator app, or a recovery code.',
+    },
+    errors: {
+      passwordRequired: 'Enter your current password.',
+      wrongPassword: 'Current password is incorrect.',
+      totpRequired: 'Enter the code from your authenticator app.',
+      invalidPasscode: 'That code is not valid. Try the current code from your authenticator app.',
+      passkeyFailed: 'That passkey wasn\'t accepted. Try again, or use your password.',
+      forbidden: 'Too many failed attempts; please try again in 30 minutes!',
+      generic: 'Could not confirm your identity. Please try again.',
+      noMethod: 'This needs a passkey or two-factor authentication. Add one from your security settings, then try again.',
+    },
+  },
+  expired: {
+    alerts: {
+      info: 'Your login session has expired!',
     },
   },
   prompts: {

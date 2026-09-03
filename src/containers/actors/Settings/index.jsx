@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
@@ -11,15 +12,17 @@ import ActorSettingCard from '../../../components/ActorSetting';
 import Admins from './admins/Browse';
 import AuthLogs from '../../auth/Authlogs';
 import Password from '../../auth/Password';
+import Username from '../../auth/Username';
 import WebAuthn from '../../auth/WebAuthn';
+import Email from '../../auth/Email';
 import Totp from '../../auth/Totp';
-import Features from './Features';
 import Delete from './Delete';
 import Info from './Info';
-import PersonAccount from '../../people/Settings/Account';
 import PersonInfo from '../../people/Settings/Info';
 import Access from './Access';
 import Progress from '../../../components/Progress';
+import SettingsItem from './SettingsItem';
+import { getPersonSections, resolveSection, ITEMS } from './sections';
 
 import actions from '../../../actions';
 import permissions from '../../../permissions/actor';
@@ -27,17 +30,14 @@ import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import i18n from '../../../languages';
 
+// Tabs for the GROUPS namespace, which stays flat. See sections.js for why
+// people are grouped and groups are not: a group has no account or security
+// items, so there is nothing here to group.
 const TABS = {
   ADMINS: 'admins',
-  ACCOUNT: 'account',
-  AUTHLOGS: 'authlogs',
-  FEATURES: 'features',
   INFO: 'info',
   ACCESS: 'access',
   DELETE: 'delete',
-  WEBAUTHN: 'webauthn',
-  TOTP: 'totp',
-  PASSWORD: 'password',
 };
 
 const ActorsSettings = ({
@@ -47,13 +47,19 @@ const ActorsSettings = ({
   alertSuccess,
   alertError,
   namespace,
-  selectedTab = TABS.AUTHLOGS,
+  selectedTab = TABS.INFO,
   isFetching,
   error,
   success,
 }) => {
   const params = useParams();
+  const navigate = useNavigate();
   const [id] = params.id.split('-');
+  const isPerson = namespace === 'people';
+
+  // Groups only. People take their section from the URL below, which is what
+  // makes it shareable and back-buttonable; this local state is the older
+  // behaviour, kept for the namespace that is not being regrouped.
   const [tab, setTab] = useState(selectedTab);
 
   useEffect(() => {
@@ -79,7 +85,6 @@ const ActorsSettings = ({
   }
 
   const ActorAdmins = Admins(namespace);
-  const ActorFeatures = Features(namespace);
   const ActorInfo = Info(namespace);
   const ActorAccess = Access(namespace);
   const ActorDelete = Delete(namespace);
@@ -97,6 +102,73 @@ const ActorsSettings = ({
     );
   }
 
+  if (isPerson) {
+    const sections = getPersonSections({ isViewer, canDelete });
+    const section = resolveSection(params.section, sections);
+
+    // What each item key renders. Built here rather than in sections.js so that
+    // module stays JSX-free and testable, and so the props these components
+    // need — which differ per item — live next to the components.
+    const panels = {
+      [ITEMS.INFO]: <PersonInfo />,
+      [ITEMS.EMAIL]: <Email />,
+      [ITEMS.USERNAME]: <Username />,
+      [ITEMS.PASSWORD]: <Password />,
+      [ITEMS.TOTP]: <Totp viewer={viewer} />,
+      [ITEMS.WEBAUTHN]: <WebAuthn />,
+      [ITEMS.AUTHLOGS]: <AuthLogs personId={actor.id} />,
+      [ITEMS.ACCESS]: <ActorAccess />,
+      [ITEMS.DELETE]: <ActorDelete />,
+    };
+
+    return (
+      <>
+        <Tabs
+          variant="scrollable"
+          scrollButtons="on"
+          value={section.key}
+          onChange={(e, newSection) => {
+            // push, not replace: the back button should walk the sections the
+            // person visited rather than leaving the page entirely.
+            navigate(`/people/${params.id}/settings/${newSection}`);
+          }}
+          aria-label={i18n.t('commons:settings')}
+        >
+          {sections.map((entry) => {
+            return (
+              <Tab
+                key={entry.key}
+                label={i18n.t(`people:settings.sections.${entry.key}`)}
+                value={entry.key}
+              />
+            );
+          })}
+        </Tabs>
+        {/* Header only — the section's cards stack underneath rather than
+            inside, or every card would sit within another card's border.
+            Matching the gap SettingsItem puts below each card, so the header
+            does not sit flush against the first one. */}
+        <Box mb={2}>
+          <ActorSettingCard
+            actor={actor}
+            subheader={i18n.t(`people:settings.sections.${section.key}`)}
+          />
+        </Box>
+        {section.items.map((item) => {
+          return (
+            <SettingsItem
+              key={item.key}
+              bare={item.bare}
+              title={i18n.t(`people:settings.${item.key}`)}
+            >
+              {panels[item.key]}
+            </SettingsItem>
+          );
+        })}
+      </>
+    );
+  }
+
   return (
     <>
       <Tabs
@@ -108,41 +180,22 @@ const ActorsSettings = ({
         }}
         aria-label={i18n.t('commons:settings')}
       >
-        {isViewer && <Tab label={i18n.t(`${namespace}:settings.authlogs`)} value={TABS.AUTHLOGS} />}
-        {isViewer && <Tab label={i18n.t(`${namespace}:settings.webauthn`)} value={TABS.WEBAUTHN} />}
-        {isViewer && <Tab label={i18n.t(`${namespace}:settings.totp`)} value={TABS.TOTP} />}
         <Tab label={i18n.t(`${namespace}:settings.info`)} value={TABS.INFO} />
-        {namespace === 'people' &&
-          <Tab label={i18n.t(`${namespace}:settings.account`)} value={TABS.ACCOUNT} />}
-        {namespace !== 'people' &&
-          <Tab label={i18n.t(`${namespace}:settings.admins`)} value={TABS.ADMINS} />}
+        <Tab label={i18n.t(`${namespace}:settings.admins`)} value={TABS.ADMINS} />
         <Tab label={i18n.t(`${namespace}:settings.access`)} value={TABS.ACCESS} />
-        {isViewer && tab === TABS.PASSWORD && <Password />}
-        {isViewer && <Tab label={i18n.t(`${namespace}:settings.password`)} value={TABS.PASSWORD} />}
         {canDelete &&
           <Tab label={i18n.t(`${namespace}:settings.delete`)} value={TABS.DELETE} />}
       </Tabs>
       <ActorSettingCard
-        namespace={namespace}
         actor={actor}
         subheader={i18n.t(`${namespace}:settings.${tab}`)}
       >
-        {namespace === 'people' && tab === TABS.AUTHLOGS && <AuthLogs personId={actor.id} />}
-        {isViewer && tab === TABS.WEBAUTHN && <WebAuthn />}
-        {isViewer && tab === TABS.TOTP && <Totp viewer={viewer} />}
-        {isViewer && tab === TABS.PASSWORD && <Password />}
-        {namespace === 'people' && tab === TABS.INFO &&
-          <PersonInfo />}
-        {namespace !== 'people' && tab === TABS.INFO &&
+        {tab === TABS.INFO &&
           <ActorInfo />}
-        {namespace === 'people' && tab === TABS.ACCOUNT &&
-          <PersonAccount />}
-        {namespace !== 'people' && tab === TABS.ADMINS &&
+        {tab === TABS.ADMINS &&
           <ActorAdmins />}
         {tab === TABS.ACCESS &&
           <ActorAccess />}
-        {tab === TABS.FEATURES &&
-          <ActorFeatures />}
         {canDelete && tab === TABS.DELETE &&
           <ActorDelete />}
       </ActorSettingCard>
@@ -160,11 +213,13 @@ ActorsSettings.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
+  // Groups only. People no longer take a tab as a prop — their section comes
+  // from the URL, so it survives a reload and the back button, which a value
+  // read once into useState never did.
   selectedTab: PropTypes.oneOf([
     TABS.ADMINS,
-    TABS.ACCOUNT,
-    TABS.AUTHLOGS,
     TABS.INFO,
+    TABS.ACCESS,
     TABS.DELETE,
   ]),
 };

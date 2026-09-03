@@ -184,6 +184,12 @@ const register = async () => {
   await protocolClient.post('webauthn/credentials/register/finish', payload);
 };
 
+// Named exports so api/reauth.js can run an assertion ceremony without
+// a second copy of the base64url conversions. One implementation, so a
+// fix to the padding logic cannot land in one ceremony and miss the
+// other.
+export { fromBase64Url, toBase64Url };
+
 export default {
   browse,
   edit,

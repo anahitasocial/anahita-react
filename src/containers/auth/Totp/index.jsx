@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
+import TotpCard from './TotpCard';
 import TotpSteps from './TotpSteps';
 import { Totp as TOTP } from '../../../constants';
 import form from '../../../utils/form';
@@ -27,6 +28,35 @@ const pairingFormFields = form.createFormFields([
 
 const Totp = ({ viewer }) => {
   const [activeStep, setActiveStep] = useState(null);
+
+  // Collapsed by default. The wizard is three steps deep and opening it
+  // unprompted on a settings page is a lot of screen for something most
+  // visits do not need — same reasoning as the password and email cards.
+  const [isEnrolling, setIsEnrolling] = useState(false);
+
+  // null until the server answers, which is what TotpCard renders as loading.
+  // Reading enrolment from GET /totp rather than from the session viewer:
+  // viewer.totpEnabled does not exist anywhere in this app, which is the bug
+  // that left the step-up dialog unable to ask a TOTP user for a passcode.
+  const [enabled, setEnabled] = useState(null);
+
+  const readStatus = () => {
+    return api.totp.read()
+      .then((response) => {
+        setEnabled(Boolean(response.data && response.data.data && response.data.data.enabled));
+      })
+      .catch(() => {
+        // Degrade to "off". The card then offers enrolment, and a person who
+        // is already enrolled finds out at the password step rather than being
+        // told, wrongly and permanently, that the request failed.
+        setEnabled(false);
+      });
+  };
+
+  useEffect(() => {
+    readStatus();
+  }, []);
+
   const [passwordFields, setPasswordFields] = useState(passwordFormFields);
   const [pairingFields, setPairingFields] = useState(pairingFormFields);
   const [qrImage, setQrImage] = useState(null);
@@ -35,6 +65,20 @@ const Totp = ({ viewer }) => {
   // The final step has no form field to hang an error off, so it gets
   // its own message slot.
   const [enableError, setEnableError] = useState('');
+
+  const handleEnable = () => {
+    setActiveStep(null);
+    setIsEnrolling(true);
+  };
+
+  // Leaving the wizard re-reads the status instead of assuming it. Done is
+  // reachable from the final step, where enrolment did complete, but also
+  // after a cancel partway through, where it did not.
+  const handleDone = () => {
+    setIsEnrolling(false);
+    setActiveStep(null);
+    readStatus();
+  };
 
   const handleOnChangePassword = (event) => {
     const { target } = event;
@@ -180,8 +224,19 @@ const Totp = ({ viewer }) => {
       });
   };
 
+  if (!isEnrolling) {
+    return (
+      <TotpCard
+        loading={enabled === null}
+        enabled={enabled === true}
+        onEnable={handleEnable}
+      />
+    );
+  }
+
   return (
     <TotpSteps
+      handleDone={handleDone}
       handleOnSubmitPassword={handleOnSubmitPassword}
       handleOnChangePassword={handleOnChangePassword}
       handleOnSubmitPasscode={handleOnSubmitPasscode}
@@ -196,7 +251,6 @@ const Totp = ({ viewer }) => {
       recoveryCodes={recoveryCodes}
       codesCopySuccess={copySuccess}
       enableError={enableError}
-      viewer={viewer}
     />
   );
 };

@@ -36,9 +36,12 @@ const AuthToken = ({
   }, [token]);
 
   if (isAuthenticated) {
+    // The password card, not the old Account tab — that tab is gone,
+    // and landing somebody who came here to set a password on the
+    // sessions list would leave them hunting for it.
     if (resetPassword) {
       return (
-        <Navigate to={`/people/${viewer.alias}/settings/account/`} replace />
+        <Navigate to={`/people/${viewer.alias}/settings/password`} replace />
       );
     }
 

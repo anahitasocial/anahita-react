@@ -10,13 +10,23 @@ export default {
     webauthn: 'Pass keys',
     totp: '2FA',
     info: 'Info',
-    account: 'Account',
     features: 'Features',
     permissions: 'Permissions',
     access: 'Access',
     delete: 'Delete',
     notifications: 'Notification settings',
     followRequests: 'Follow requests',
+    password: 'Password',
+    email: 'Email',
+    username: 'Username',
+    // Section labels for the grouped person settings page. The keys above
+    // are still used as the per-card titles inside a section.
+    sections: {
+      account: 'Account',
+      security: 'Security',
+      privacy: 'Privacy',
+      danger: 'Danger zone',
+    },
   },
   notifications: {
     cTitle: 'Notifications',
@@ -34,7 +44,6 @@ export default {
     familyName: 'Last name',
     username: 'Username',
     email: 'Email',
-    newPassword: 'New password',
     body: 'Bio',
     pronouns: 'Pronouns',
     whatPronouns: 'What pronouns do you use?',
