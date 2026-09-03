@@ -128,6 +128,8 @@ export default {
       // — password, pairing, recovery codes — so it stays behind a button
       // rather than opening on a settings page somebody came to read.
       action: 'Enable 2FA',
+      disable: 'Disable 2FA',
+      disabled: 'Two-factor authentication has been turned off. A confirmation email has been sent.',
       on: 'Two-factor authentication is on',
       onDesc: 'You will be asked for a code from your authenticator app when you sign in.',
       off: 'Two-factor authentication is off',
@@ -148,6 +150,8 @@ export default {
       passwordInvalid: 'We couldn\'t verify your password. Try again.',
       invalidPasscode: 'That code is not valid. Check your authenticator app and try again.',
       enableFailed: 'We couldn\'t enable two-factor authentication. Try again.',
+      disableFailed: 'We couldn\'t turn off two-factor authentication. Try again.',
+      disableForbidden: 'You do not have permission to change this account\'s two-factor authentication.',
     },
   },
   reauth: {

@@ -10,6 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
+import DialogConfirm from '../../../components/DialogConfirm';
 import i18n from '../../../languages';
 
 // Collapsed state of the two-factor card.
@@ -26,7 +27,9 @@ import i18n from '../../../languages';
 const TotpCard = ({
   loading,
   enabled,
+  submitting,
   onEnable,
+  onDisable,
 }) => {
   return (
     <Card>
@@ -48,10 +51,6 @@ const TotpCard = ({
           </Typography>}
       </CardContent>
 
-      {/* No button once it is on. Turning 2FA back off is a destructive action
-          with its own confirmation dialog (auth:totp.disableDialog) and no
-          route wired to it yet, so this card does not offer one rather than
-          offering one that does nothing. */}
       {!loading && !enabled &&
         <CardActions>
           <Button
@@ -63,6 +62,28 @@ const TotpCard = ({
             {i18n.t('auth:totp.enable.action')}
           </Button>
         </CardActions>}
+
+      {/* Turning 2FA off is the one action here that leaves the account
+          easier to open than it found it, so it sits behind a confirmation
+          and, on the server, behind a step-up. DialogConfirm intercepts the
+          button's onClick and calls it again once confirmed. */}
+      {!loading && enabled &&
+        <CardActions>
+          <DialogConfirm
+            title={i18n.t('auth:totp.disableDialog.title')}
+            message={i18n.t('auth:totp.disableDialog.message')}
+          >
+            <Button
+              onClick={onDisable}
+              color="secondary"
+              variant="outlined"
+              disabled={submitting}
+              fullWidth
+            >
+              {i18n.t('auth:totp.enable.disable')}
+            </Button>
+          </DialogConfirm>
+        </CardActions>}
     </Card>
   );
 };
@@ -70,7 +91,9 @@ const TotpCard = ({
 TotpCard.propTypes = {
   loading: PropTypes.bool.isRequired,
   enabled: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired,
   onEnable: PropTypes.func.isRequired,
+  onDisable: PropTypes.func.isRequired,
 };
 
 export default TotpCard;

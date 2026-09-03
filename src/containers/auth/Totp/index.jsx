@@ -1,11 +1,14 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import TotpCard from './TotpCard';
 import TotpSteps from './TotpSteps';
+import StepUp from '../StepUp';
 import { Totp as TOTP } from '../../../constants';
 import form from '../../../utils/form';
+import actions from '../../../actions';
 import api from '../../../api';
 import PersonType from '../../../proptypes/Person';
 import i18n from '../../../languages';
@@ -26,7 +29,7 @@ const pairingFormFields = form.createFormFields([
   'passcode',
 ]);
 
-const Totp = ({ viewer }) => {
+const Totp = ({ viewer, alertSuccess, alertError }) => {
   const [activeStep, setActiveStep] = useState(null);
 
   // Collapsed by default. The wizard is three steps deep and opening it
@@ -66,9 +69,48 @@ const Totp = ({ viewer }) => {
   // its own message slot.
   const [enableError, setEnableError] = useState('');
 
+  const [disabling, setDisabling] = useState(false);
+  const [stepUpOpen, setStepUpOpen] = useState(false);
+
   const handleEnable = () => {
     setActiveStep(null);
     setIsEnrolling(true);
+  };
+
+  // Separate from the button handler so the step-up dialog can replay it
+  // after a successful re-authentication, the same shape the password, email
+  // and username cards use.
+  const disable = () => {
+    setDisabling(true);
+
+    api.totp.deleteItem({ id: viewer.id })
+      .then(() => {
+        setDisabling(false);
+        alertSuccess(i18n.t('auth:totp.enable.disabled'));
+        return readStatus();
+      })
+      .catch((err) => {
+        setDisabling(false);
+
+        const status = err && err.response && err.response.status;
+        const body = err && err.response && err.response.data;
+
+        // A bare 403 means no recent step-up; one carrying `error` means the
+        // caller may not act on this account at all. The server splits them
+        // by body rather than by status because 403 is already the step-up
+        // contract across /password, /email and /username.
+        if (status === 403 && !(body && body.error)) {
+          setStepUpOpen(true);
+          return;
+        }
+
+        if (status === 403) {
+          alertError(i18n.t('auth:totp.errors.disableForbidden'));
+          return;
+        }
+
+        alertError(i18n.t('auth:totp.errors.disableFailed'));
+      });
   };
 
   // Leaving the wizard re-reads the status instead of assuming it. Done is
@@ -226,11 +268,25 @@ const Totp = ({ viewer }) => {
 
   if (!isEnrolling) {
     return (
-      <TotpCard
-        loading={enabled === null}
-        enabled={enabled === true}
-        onEnable={handleEnable}
-      />
+      <>
+        <TotpCard
+          loading={enabled === null}
+          enabled={enabled === true}
+          submitting={disabling}
+          onEnable={handleEnable}
+          onDisable={disable}
+        />
+        <StepUp
+          open={stepUpOpen}
+          onVerified={() => {
+            setStepUpOpen(false);
+            disable();
+          }}
+          onCancel={() => {
+            return setStepUpOpen(false);
+          }}
+        />
+      </>
     );
   }
 
@@ -257,6 +313,8 @@ const Totp = ({ viewer }) => {
 
 Totp.propTypes = {
   viewer: PersonType.isRequired,
+  alertSuccess: PropTypes.func.isRequired,
+  alertError: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -269,8 +327,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-function mapDispatchToProps() {
-  return {};
+function mapDispatchToProps(dispatch) {
+  return {
+    alertSuccess: (message) => {
+      return dispatch(actions.app.alert.success(message));
+    },
+    alertError: (message) => {
+      return dispatch(actions.app.alert.error(message));
+    },
+  };
 }
 
 export default (connect(
