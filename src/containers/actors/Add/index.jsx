@@ -23,9 +23,6 @@ const {
 const formFields = form.createFormFields([
   'name',
   'body',
-  'website',
-  'contact_url',
-  'phone',
 ]);
 
 const ActorsAdd = ({

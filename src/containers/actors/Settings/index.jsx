@@ -22,7 +22,12 @@ import PersonInfo from '../../people/Settings/Info';
 import Access from './Access';
 import Progress from '../../../components/Progress';
 import SettingsItem from './SettingsItem';
-import { getPersonSections, resolveSection, ITEMS } from './sections';
+import {
+  getPersonSections,
+  getGroupTabs,
+  resolveSection,
+  ITEMS,
+} from './sections';
 
 import actions from '../../../actions';
 import permissions from '../../../permissions/actor';
@@ -38,6 +43,17 @@ const TABS = {
   INFO: 'info',
   ACCESS: 'access',
   DELETE: 'delete',
+};
+
+// The Delete tab reads "Danger zone", matching the person page, while the card
+// inside it still reads "Delete" — the section names the risk, the card names
+// the action. Every other tab is labelled by its own key.
+const tabLabelKey = (namespace, key) => {
+  if (key === TABS.DELETE) {
+    return `${namespace}:settings.sections.danger`;
+  }
+
+  return `${namespace}:settings.${key}`;
 };
 
 const ActorsSettings = ({
@@ -169,36 +185,57 @@ const ActorsSettings = ({
     );
   }
 
+  // Falls back rather than trusting the stored value. The default used to be a
+  // tab groups never render, which handed MUI a Tabs value it could not match —
+  // a console warning and an empty body on every /groups/:id/settings load.
+  const groupTabs = getGroupTabs({ canDelete });
+  const activeTab = groupTabs.find((entry) => {
+    return entry.key === tab;
+  }) || groupTabs[0];
+
+  const groupPanels = {
+    [ITEMS.INFO]: <ActorInfo />,
+    [ITEMS.ADMINS]: <ActorAdmins />,
+    [ITEMS.ACCESS]: <ActorAccess />,
+    [ITEMS.DELETE]: <ActorDelete />,
+  };
+
   return (
     <>
       <Tabs
         variant="scrollable"
         scrollButtons="on"
-        value={tab}
+        value={activeTab.key}
         onChange={(e, newTab) => {
           setTab(newTab);
         }}
         aria-label={i18n.t('commons:settings')}
       >
-        <Tab label={i18n.t(`${namespace}:settings.info`)} value={TABS.INFO} />
-        <Tab label={i18n.t(`${namespace}:settings.admins`)} value={TABS.ADMINS} />
-        <Tab label={i18n.t(`${namespace}:settings.access`)} value={TABS.ACCESS} />
-        {canDelete &&
-          <Tab label={i18n.t(`${namespace}:settings.delete`)} value={TABS.DELETE} />}
+        {groupTabs.map((entry) => {
+          return (
+            <Tab
+              key={entry.key}
+              label={i18n.t(tabLabelKey(namespace, entry.key))}
+              value={entry.key}
+            />
+          );
+        })}
       </Tabs>
-      <ActorSettingCard
-        actor={actor}
-        subheader={i18n.t(`${namespace}:settings.${tab}`)}
+      {/* Header only, with the panel stacked underneath — the same layout the
+          person page uses, so a group's Danger zone looks like a person's
+          rather than like a different application. */}
+      <Box mb={2}>
+        <ActorSettingCard
+          actor={actor}
+          subheader={i18n.t(tabLabelKey(namespace, activeTab.key))}
+        />
+      </Box>
+      <SettingsItem
+        bare={activeTab.bare}
+        title={i18n.t(`${namespace}:settings.${activeTab.key}`)}
       >
-        {tab === TABS.INFO &&
-          <ActorInfo />}
-        {tab === TABS.ADMINS &&
-          <ActorAdmins />}
-        {tab === TABS.ACCESS &&
-          <ActorAccess />}
-        {canDelete && tab === TABS.DELETE &&
-          <ActorDelete />}
-      </ActorSettingCard>
+        {groupPanels[activeTab.key]}
+      </SettingsItem>
     </>
   );
 };

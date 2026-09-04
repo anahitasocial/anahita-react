@@ -5,7 +5,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ControlBlock from '../../controls/Block';
-import ControlDelete from '../../controls/Delete';
 
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
@@ -33,10 +32,8 @@ const ActorsReadControls = ({
     setAnchorEl(currentTarget);
   };
 
-  const namespace = node.getNamespace(actor);
   const showBlock = isAuthenticated && perms.canBlock(actor, viewer);
   const showEdit = perms.canEdit(actor);
-  const showDelete = perms.canDelete(actor);
 
   return (
     <>
@@ -74,15 +71,11 @@ const ActorsReadControls = ({
           >
             {i18n.t('commons:settings')}
           </MenuItem>}
-        {showDelete &&
-          <ControlDelete
-            key={`actor-delete-${actor.id}`}
-            node={actor}
-            component="menuitem"
-            confirmMessage={i18n.t(`${namespace}:confirm.delete`, {
-              name: actor.name,
-            })}
-          />}
+        {/* No delete here. It deleted a whole profile behind a generic
+            "Are you sure?", routing around the Danger zone card that states
+            what is destroyed, what is recoverable and by when — so the
+            ceremony there was decorative while this existed. Deleting a
+            profile is now a deliberate trip to settings. */}
       </Menu>
     </>
   );

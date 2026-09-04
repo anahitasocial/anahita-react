@@ -71,29 +71,6 @@ const InfoRead = ({
           />
         </ListItem>
 
-        {/* The same metadata the form collects. Without these rows the only
-            way to see a website or phone number already on the profile would
-            be to open the editor, which is the state this card exists to
-            avoid. */}
-        <ListItem>
-          <ListItemText
-            primary={i18n.t('actor:meta.website')}
-            secondary={person.website || EMPTY}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemText
-            primary={i18n.t('actor:meta.contactUrl')}
-            secondary={person.contact_url || EMPTY}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemText
-            primary={i18n.t('actor:meta.phone')}
-            secondary={person.phone || EMPTY}
-          />
-        </ListItem>
-
         {/* Administrator-only, and read-only here. The edit form carries a
             live switch for these; showing an interactive control in a view
             whose Save button is not on screen would let somebody toggle an

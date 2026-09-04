@@ -23,9 +23,6 @@ const formFields = form.createFormFields([
   'givenName',
   'familyName',
   'body',
-  'website',
-  'contact_url',
-  'phone',
 ]);
 
 const { canAdminister } = permissions.actor;

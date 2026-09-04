@@ -312,10 +312,37 @@ const deleteItem = (namespace, api) => {
   };
 };
 
+// Undo a deletion within the grace period.
+//
+// Deliberately does NOT reuse the delete/edit action pair. Reusing DELETE_*
+// would leave the reducer believing the actor had just been removed, and EDIT_*
+// would have it merge a stale copy over the store. This dispatches nothing but
+// its own request/failure; the caller re-reads the actor on success, which is
+// the only way the rest of the page learns the group is back.
+const restore = (namespace, api) => {
+  return (node) => {
+    return (dispatch) => {
+      dispatch(deleteRequest(node, namespace));
+      return new Promise((resolve, reject) => {
+        return api.restore(node)
+          .then(() => {
+            return resolve();
+          }, (response) => {
+            dispatch(deleteFailure(response, namespace));
+            return reject(response);
+          }).catch((error) => {
+            console.error(error);
+          });
+      });
+    };
+  };
+};
+
 export default (namespace) => {
   return (api) => {
     return {
       reset: reset(namespace),
+      restore: restore(namespace, api),
       browse: browse(namespace, api),
       read: read(namespace, api),
       edit: edit(namespace, api),

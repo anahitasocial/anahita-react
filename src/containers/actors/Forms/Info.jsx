@@ -8,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import i18n from '../../../languages';
 import ActorType from '../../../proptypes/Actor';
 import { Actor as ACTOR } from '../../../constants';
-import ActorsFormsMetadata from './Metadata';
 
 const { NAME, BODY } = ACTOR.FIELDS;
 
@@ -58,11 +57,10 @@ const ActorFormsInfo = ({
           }}
           required
         />
-        <ActorsFormsMetadata
-          handleOnChange={handleOnChange}
-          fields={fields}
-          actor={actor}
-        />
+        {/* Website, contact URL and phone were here. They wrote nowhere:
+            ActorEditRequest declares name, body and enabled only, so the
+            server dropped them on every submit. Coming back as a proper list
+            of links rather than three fixed fields. */}
       </CardContent>
       {/* Cancel only when a handler is supplied. The settings card opens
           this form from a read view and needs a way back; actors/Add renders

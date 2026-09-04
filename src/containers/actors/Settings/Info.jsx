@@ -20,9 +20,6 @@ import i18n from '../../../languages';
 const formFields = form.createFormFields([
   'name',
   'body',
-  'website',
-  'contact_url',
-  'phone',
 ]);
 
 const { canAdminister } = permissions.actor;

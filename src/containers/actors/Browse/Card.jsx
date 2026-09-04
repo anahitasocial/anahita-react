@@ -2,16 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ControlDelete from '../../controls/Delete';
 import ControlFollow from '../../controls/Follow';
 import ActorCard from '../../../components/ActorCard';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
-import utils from '../../../utils';
-import i18n from '../../../languages';
 import permissions from '../../../permissions/actor';
-
-const { node } = utils;
 
 const ActorsCard = (props) => {
   const {
@@ -20,9 +15,7 @@ const ActorsCard = (props) => {
     isAuthenticated,
   } = props;
 
-  const namespace = node.getNamespace(actor);
   const showFollow = isAuthenticated && permissions.canFollow(actor, viewer);
-  const showDelete = node.isSuperAdmin(viewer) && viewer.id !== actor.id;
 
   return (
     <ActorCard
@@ -33,13 +26,11 @@ const ActorsCard = (props) => {
           actor={actor}
           key={`actor-action-follow-${actor.id}`}
         />,
-        showDelete && <ControlDelete
-          node={actor}
-          key={`actor-action-delete-${actor.id}`}
-          confirmMessage={i18n.t(`${namespace}:confirm.delete`, {
-            name: actor.name,
-          })}
-        />,
+        // No delete on a browse card. One click and one generic dialog, on a
+        // list where the cards look alike — the easiest place in the app to
+        // destroy the wrong profile, and it bypassed every disclosure in the
+        // Danger zone. Admins delete from settings, where the tier decides
+        // how much ceremony the account warrants.
       ]}
     />
   );

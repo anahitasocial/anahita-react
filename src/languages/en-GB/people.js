@@ -13,7 +13,16 @@ export default {
     features: 'Features',
     permissions: 'Permissions',
     access: 'Access',
+    // Deletion copy, namespace-specific — groups carry their own in groups.js,
+    // because the sign-in and passkey lines here are meaningless for a group.
     delete: 'Delete',
+    deletePrompts: {
+      description: 'Deleting removes this profile and everything on it: posts, comments, photos, followers and group memberships. Comments other people left on this content go with it.',
+      reversible: 'This is not immediate. The profile is hidden straight away and permanently erased after {{ count }} days. Signing in before then will offer to restore it.',
+      revoked: 'Sessions on every device end now, and any passkeys are removed. Restoring does not bring those back.',
+      handle: 'The handle {{ alias }} stays reserved afterwards, so nobody else can take it.',
+      scheduled: 'This profile is scheduled for deletion. Sign in before {{ date }} to restore it.',
+    },
     notifications: 'Notification settings',
     followRequests: 'Follow requests',
     password: 'Password',

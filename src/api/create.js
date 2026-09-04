@@ -52,6 +52,19 @@ const deleteItem = (namespace) => {
   };
 };
 
+// Undo a deletion, within the 30-day grace period.
+//
+// Groups only in practice. A deleted person cannot sign in, so they never reach
+// their own settings — they are offered restore at the login screen instead,
+// which is the only place they can be. A group has no login, so its
+// administrators restore it from the group's settings page, which stays
+// reachable while the group is merely marked deleted.
+const restore = (namespace) => {
+  return (node) => {
+    return axios.post(`/${namespace}/${node.id}/restore`);
+  };
+};
+
 const download = (namespace) => {
   return (id) => {
     return axios.get(`/${namespace}/${id}/download`, { responseType: 'blob' });
@@ -66,6 +79,7 @@ export default (namespace) => {
     editAccess: editAccess(namespace),
     add: add(namespace),
     deleteItem: deleteItem(namespace),
+    restore: restore(namespace),
     download: download(namespace),
   };
 };

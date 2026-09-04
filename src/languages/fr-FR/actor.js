@@ -1,6 +1,7 @@
 export default {
   about: 'À propos',
   name: 'Nom',
+  alias: 'Alias',
   body: 'Description',
   unknown: 'Inconnu',
   delete: {
@@ -8,9 +9,12 @@ export default {
       challenge: "Saisissez l'alias exact : {{ alias }}",
       inProgress: 'Suppression en cours ...',
     },
+    errors: {
+      generic: 'Impossible de supprimer ce profil. Veuillez réessayer.',
+      forbidden: 'Vous n\'avez pas la permission de supprimer ce profil.',
+    },
   },
   access: {
-    title: "Alerte d'accès",
     content: 'Ce profil sera visible publiquement. Voulez-vous continuer ?',
     labels: {
       whoCanSee: 'Qui peut voir ce profil ?',

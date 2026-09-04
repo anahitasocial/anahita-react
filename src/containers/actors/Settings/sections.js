@@ -5,9 +5,10 @@
 // management, profile fields and account deletion in one undifferentiated row.
 // These four sections restore the distinction.
 //
-// PEOPLE ONLY. containers/actors/Settings is curried by namespace and also
-// serves /groups/:id/settings, which keeps its flat tabs — groups have none of
-// the account or security items, so there is nothing there to group.
+// People get SECTIONS; groups keep flat tabs, because a group has none of the
+// account or security items and there is nothing there to group. Both render
+// through the same stacked-card layout though — see getGroupTabs — so a group's
+// Danger zone looks exactly like a person's rather than like a different app.
 //
 // Keys, not elements. This module stays free of JSX so the page owns rendering
 // and this owns what exists and when. Same split as utils.node's
@@ -26,6 +27,7 @@ export const DEFAULT_SECTION = SECTIONS.ACCOUNT;
 // Item keys. These double as i18n lookups and as React keys.
 export const ITEMS = {
   INFO: 'info',
+  ADMINS: 'admins',
   EMAIL: 'email',
   USERNAME: 'username',
   PASSWORD: 'password',
@@ -145,3 +147,24 @@ export const resolveSection = (requested, sections) => {
 };
 
 export default getPersonSections;
+
+// getGroupTabs returns the flat tabs for the groups namespace.
+//
+// Not sections: four tabs do not need grouping. The shape matches a section's
+// items so both namespaces can share one renderer, which is what makes a
+// group's Danger zone identical to a person's — the alternative was one tab on
+// the page drawn differently from its neighbours, which reads as a bug.
+//
+// `bare` follows the same rule as everywhere else: true when the component does
+// not render its own Card. Verified per component — Access brings one, Info,
+// Admins and Delete do not.
+export const getGroupTabs = ({ canDelete }) => {
+  return [
+    { key: ITEMS.INFO, bare: true },
+    { key: ITEMS.ADMINS, bare: true },
+    { key: ITEMS.ACCESS, bare: false },
+    { key: ITEMS.DELETE, bare: true, requiresDelete: true },
+  ].filter((item) => {
+    return !item.requiresDelete || canDelete;
+  });
+};

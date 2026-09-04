@@ -11,8 +11,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 
-import ActorsFormsMetadata from '../Forms/Metadata';
-
 import PersonType from '../../../proptypes/Person';
 import { Person as PERSON } from '../../../constants';
 import i18n from '../../../languages';
@@ -42,18 +40,12 @@ const PersonInfo = ({
     givenName,
     familyName,
     body,
-    website,
-    contact_url: contactUrl,
-    phone,
   } = fields;
 
   const enableSubmit = !isNew || (
     givenName.isValid &&
     familyName.isValid &&
-    body.isValid &&
-    website.isValid &&
-    contactUrl.isValid &&
-    phone.isValid
+    body.isValid
   );
 
   return (
@@ -169,11 +161,10 @@ const PersonInfo = ({
               />}
           </RadioGroup>
         </FormControl>}
-        <ActorsFormsMetadata
-          handleOnChange={handleOnChange}
-          fields={fields}
-          actor={person}
-        />
+        {/* Website, contact URL and phone were here. They wrote nowhere:
+            PersonEditRequest declares given_name, family_name, body and gender
+            only, so the server dropped them on every submit. Coming back as a
+            proper list of links rather than three fixed fields. */}
       </CardContent>
       {/* Cancel then Save, both full width — the same CardActions row every
           other card in this section uses. Save was a hardcoded English
