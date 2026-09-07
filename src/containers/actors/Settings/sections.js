@@ -35,6 +35,8 @@ export const ITEMS = {
   WEBAUTHN: 'webauthn',
   AUTHLOGS: 'authlogs',
   ACCESS: 'access',
+  DISABLE: 'disable',
+  ARCHIVE: 'archive',
   DELETE: 'delete',
 };
 
@@ -78,7 +80,30 @@ const ALL_SECTIONS = [
   },
   {
     key: SECTIONS.DANGER,
+    // Ordered by how reversible each one is, NOT by how severe it sounds.
+    //
+    // Disable first because it is a switch you can flip back. Archive and
+    // delete are both one-way doors and belong together at the bottom; the
+    // choice between them is what happens to the content, not how serious you
+    // are. Copy that presented archive as the gentler option would be the
+    // single worst thing this section could do — somebody reaching for it
+    // because it sounds softer has still done something permanent.
     items: [
+      {
+        key: ITEMS.DISABLE,
+        bare: true,
+        viewerOnly: false,
+        // Administrators only, and never your own profile — disabling
+        // yourself is just locking yourself out. Enforced in the component,
+        // which is where the viewer's user type is available.
+        requiresAdmin: true,
+      },
+      {
+        key: ITEMS.ARCHIVE,
+        bare: true,
+        viewerOnly: false,
+        requiresDelete: true,
+      },
       {
         key: ITEMS.DELETE,
         bare: true,
@@ -101,7 +126,7 @@ const ALL_SECTIONS = [
 // applying it uniformly is what closes the sign-in-activity hole the flat
 // layout had: its Tab was gated on the viewer but its panel only on the
 // namespace, so loading somebody else's settings requested their session list.
-export const getPersonSections = ({ isViewer, canDelete }) => {
+export const getPersonSections = ({ isViewer, canDelete, isAdmin }) => {
   return ALL_SECTIONS
     .map((section) => {
       const items = section.items.filter((item) => {
@@ -110,6 +135,10 @@ export const getPersonSections = ({ isViewer, canDelete }) => {
         }
 
         if (item.requiresDelete && !canDelete) {
+          return false;
+        }
+
+        if (item.requiresAdmin && !isAdmin) {
           return false;
         }
 
@@ -158,13 +187,26 @@ export default getPersonSections;
 // `bare` follows the same rule as everywhere else: true when the component does
 // not render its own Card. Verified per component — Access brings one, Info,
 // Admins and Delete do not.
-export const getGroupTabs = ({ canDelete }) => {
+export const getGroupTabs = ({ canDelete, isAdmin }) => {
   return [
     { key: ITEMS.INFO, bare: true },
     { key: ITEMS.ADMINS, bare: true },
     { key: ITEMS.ACCESS, bare: false },
+    // Groups have no Danger section — they are flat tabs — so the three
+    // lifecycle actions sit at the end in the same order the person page puts
+    // them: the reversible one, then the two that are not.
+    { key: ITEMS.DISABLE, bare: true, requiresAdmin: true },
+    { key: ITEMS.ARCHIVE, bare: true, requiresDelete: true },
     { key: ITEMS.DELETE, bare: true, requiresDelete: true },
   ].filter((item) => {
-    return !item.requiresDelete || canDelete;
+    if (item.requiresDelete && !canDelete) {
+      return false;
+    }
+
+    if (item.requiresAdmin && !isAdmin) {
+      return false;
+    }
+
+    return true;
   });
 };

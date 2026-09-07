@@ -16,6 +16,41 @@ export default {
     // Deletion copy, namespace-specific — groups carry their own in groups.js,
     // because the sign-in and passkey lines here are meaningless for a group.
     delete: 'Delete',
+    // Archive. The copy does the work here: archive sits next to delete and
+    // must never read as the gentler option. Permanence first, then what is
+    // preserved — which is the reason to choose it, not a softener.
+    archive: 'Archive',
+    archivePrompts: {
+      permanent: 'Archiving cannot be undone. There is no way to bring this profile back.',
+      personDescription: 'Nothing is deleted. Every post, comment and photo stays exactly where it is and keeps its address, so links people have saved will keep working. What stops is the account being active: it leaves feeds and suggestions, and it can no longer be signed in to.',
+      selfSignIn: 'You will not be able to sign in again after this, and neither will anyone else — the email address and username stay reserved so nobody can take them.',
+      confirmLabel: 'Type {{ alias }} to confirm',
+      action: 'Archive permanently',
+      archived: 'This profile has been archived.',
+      errors: {
+        nothingToArchive: 'Nothing to archive — this profile is already archived or scheduled for deletion.',
+        forbidden: 'You do not have permission to archive this profile.',
+        lastSuperAdmin: 'This is the only super administrator. Promote someone else before archiving this account.',
+        generic: 'Could not archive this profile. Please try again.',
+      },
+    },
+    // Disable. Deliberately light — it is a switch, and dressing it up like
+    // the two below trains people to type confirmations without reading.
+    disable: 'Disable',
+    disablePrompts: {
+      description: 'Disabling hides this profile and signs the person out. They will not be able to sign in while it is disabled.',
+      descriptionDisabled: 'This profile is disabled. The person cannot sign in, and it does not appear anywhere.',
+      reversible: 'This can be undone at any time, and nothing is deleted. To remove a profile permanently, archive or delete it instead.',
+      action: 'Disable',
+      actionEnable: 'Enable',
+      disabled: 'This profile has been disabled.',
+      enabled: 'This profile has been enabled.',
+      errors: {
+        forbidden: 'You do not have permission to change this.',
+        lastSuperAdmin: 'This is the only super administrator and cannot be disabled.',
+        generic: 'Could not change this. Please try again.',
+      },
+    },
     deletePrompts: {
       counts: {
         intro: 'On this profile right now:',

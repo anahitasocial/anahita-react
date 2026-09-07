@@ -15,6 +15,40 @@ export default {
     // group administrators to "sign in to restore", which a group cannot do,
     // and that their passkeys would be removed, which a group has none of.
     delete: 'Delete',
+    // Archive. The copy does the work here: archive sits next to delete and
+    // must never read as the gentler option. Permanence first, then what is
+    // preserved — which is the reason to choose it, not a softener.
+    archive: 'Archive',
+    archivePrompts: {
+      permanent: 'Archiving cannot be undone. There is no way to bring this group back.',
+      groupDescription: 'Nothing is deleted. Every post, photo and discussion stays exactly where it is and keeps its address, so links people have saved will keep working. What stops is the group being active: it leaves feeds, suggestions and search, and nobody can post to it again.',
+      confirmLabel: 'Type {{ alias }} to confirm',
+      action: 'Archive permanently',
+      archived: 'This group has been archived.',
+      errors: {
+        nothingToArchive: 'Nothing to archive — this group is already archived or scheduled for deletion.',
+        forbidden: 'You do not have permission to archive this group.',
+        lastSuperAdmin: 'This is the only super administrator. Promote someone else before archiving this group.',
+        generic: 'Could not archive this group. Please try again.',
+      },
+    },
+    // Disable. Deliberately light — it is a switch, and dressing it up like
+    // the two below trains people to type confirmations without reading.
+    disable: 'Disable',
+    disablePrompts: {
+      description: 'Disabling hides this group from everyone. Its members cannot post to it or find it while it is disabled.',
+      descriptionDisabled: 'This group is disabled. It does not appear anywhere and nobody can post to it.',
+      reversible: 'This can be undone at any time, and nothing is deleted. To remove a profile permanently, archive or delete it instead.',
+      action: 'Disable',
+      actionEnable: 'Enable',
+      disabled: 'This group has been disabled.',
+      enabled: 'This group has been enabled.',
+      errors: {
+        forbidden: 'You do not have permission to change this.',
+        lastSuperAdmin: 'This is the only super administrator and cannot be disabled.',
+        generic: 'Could not change this. Please try again.',
+      },
+    },
     deletePrompts: {
       counts: {
         intro: 'In this group right now:',

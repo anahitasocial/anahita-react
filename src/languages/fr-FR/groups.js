@@ -12,6 +12,35 @@ export default {
     permissions: 'Autorisations',
     access: 'Accès',
     delete: 'Supprimer',
+    archive: 'Archiver',
+    archivePrompts: {
+      permanent: 'L\'archivage est irréversible. Il n\'y a aucun moyen de restaurer ce groupe.',
+      groupDescription: 'Rien n\'est supprimé. Chaque publication, commentaire et photo reste exactement où il est et conserve son adresse, donc les liens enregistrés continueront de fonctionner. Ce qui s\'arrête, c\'est l\'activité du compte : il quitte les fils et les suggestions, et il n\'est plus possible de s\'y connecter.',
+      confirmLabel: 'Tapez {{ alias }} pour confirmer',
+      action: 'Archiver définitivement',
+      archived: 'Ce groupe a été archivé.',
+      errors: {
+        nothingToArchive: 'Rien à archiver — ce groupe est déjà archivé ou programmé pour suppression.',
+        forbidden: 'Vous n\'avez pas la permission d\'archiver ce groupe.',
+        lastSuperAdmin: 'Il s\'agit du seul super administrateur. Promouvez quelqu\'un d\'autre avant d\'archiver ce compte.',
+        generic: 'Impossible d\'archiver ce groupe. Veuillez réessayer.',
+      },
+    },
+    disable: 'Désactiver',
+    disablePrompts: {
+      description: 'La désactivation masque ce groupe et déconnecte la personne. Elle ne pourra pas se connecter tant qu\'il est désactivé.',
+      descriptionDisabled: 'Ce groupe est désactivé. La personne ne peut pas se connecter et il n\'apparaît nulle part.',
+      reversible: 'Cela peut être annulé à tout moment et rien n\'est supprimé. Pour retirer un profil définitivement, archivez-le ou supprimez-le.',
+      action: 'Désactiver',
+      actionEnable: 'Activer',
+      disabled: 'Ce groupe a été désactivé.',
+      enabled: 'Ce groupe a été activé.',
+      errors: {
+        forbidden: 'Vous n\'avez pas la permission de modifier cela.',
+        lastSuperAdmin: 'Il s\'agit du seul super administrateur et il ne peut pas être désactivé.',
+        generic: 'Impossible de modifier cela. Veuillez réessayer.',
+      },
+    },
     deletePrompts: {
       counts: {
         intro: 'Dans ce groupe actuellement :',

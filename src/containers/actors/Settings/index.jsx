@@ -17,6 +17,8 @@ import WebAuthn from '../../auth/WebAuthn';
 import Email from '../../auth/Email';
 import Totp from '../../auth/Totp';
 import Delete from './Delete';
+import Archive from './Archive';
+import Disable from './Disable';
 import Info from './Info';
 import PersonInfo from '../../people/Settings/Info';
 import Access from './Access';
@@ -31,6 +33,7 @@ import {
 
 import actions from '../../../actions';
 import permissions from '../../../permissions/actor';
+import utils from '../../../utils';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import i18n from '../../../languages';
@@ -112,8 +115,17 @@ const ActorsSettings = ({
   const ActorInfo = Info(namespace);
   const ActorAccess = Access(namespace);
   const ActorDelete = Delete(namespace);
+  const ActorArchive = Archive(namespace);
+  const ActorDisable = Disable(namespace);
 
   const canDelete = permissions.canDelete(actor);
+
+  // Site administrator, from the VIEWER rather than from the actor's
+  // authorized block. Disabling is a moderation action taken against somebody,
+  // so it is the viewer's standing that decides it — actor.authorized answers
+  // "may this viewer act on this actor", which a group's own administrators
+  // satisfy and who should not be able to suspend it.
+  const isAdmin = utils.node.isAdmin(viewer);
 
   // WebAuthn credentials belong to the current session's own account —
   // the endpoints are viewer-scoped and take no actor id — so the tab
@@ -127,7 +139,7 @@ const ActorsSettings = ({
   }
 
   if (isPerson) {
-    const sections = getPersonSections({ isViewer, canDelete });
+    const sections = getPersonSections({ isViewer, canDelete, isAdmin });
     const section = resolveSection(params.section, sections);
 
     // What each item key renders. Built here rather than in sections.js so that
@@ -142,6 +154,10 @@ const ActorsSettings = ({
       [ITEMS.WEBAUTHN]: <WebAuthn />,
       [ITEMS.AUTHLOGS]: <AuthLogs personId={actor.id} />,
       [ITEMS.ACCESS]: <ActorAccess />,
+      [ITEMS.DISABLE]: <ActorDisable />,
+      [ITEMS.ARCHIVE]: <ActorArchive />,
+      [ITEMS.DISABLE]: <ActorDisable />,
+      [ITEMS.ARCHIVE]: <ActorArchive />,
       [ITEMS.DELETE]: <ActorDelete />,
     };
 
@@ -196,7 +212,7 @@ const ActorsSettings = ({
   // Falls back rather than trusting the stored value. The default used to be a
   // tab groups never render, which handed MUI a Tabs value it could not match —
   // a console warning and an empty body on every /groups/:id/settings load.
-  const groupTabs = getGroupTabs({ canDelete });
+  const groupTabs = getGroupTabs({ canDelete, isAdmin });
   const activeTab = groupTabs.find((entry) => {
     return entry.key === tab;
   }) || groupTabs[0];
