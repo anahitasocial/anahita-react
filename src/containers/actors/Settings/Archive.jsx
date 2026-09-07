@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 
 import StepUp from '../../auth/StepUp';
 import api from '../../../api';
+import utils from '../../../utils';
 import actions from '../../../actions';
 import i18n from '../../../languages';
 import ActorType from '../../../proptypes/Actor';
@@ -68,7 +69,7 @@ const ActorsSettingsArchive = (props) => {
         }
 
         alertSuccess(copy('archived'));
-        return readActor(actor.id, namespace);
+        return readActor(utils.node.readIdentifier(actor, namespace), namespace);
       })
       .catch((err) => {
         const status = err && err.response && err.response.status;

@@ -198,6 +198,28 @@ const getStorySubject = (story) => {
   };
 };
 
+// readIdentifier is what a namespace's READ endpoint expects in the path.
+//
+// People are addressed by their username — person-service registers
+// GET /people/:username — while a group is addressed by its numeric id.
+// Passing an id for a person 404s from a lookup that searched for a username
+// spelled "51".
+//
+// Not hypothetical: re-reading an actor after a successful enable/disable did
+// exactly this. The PATCH returned 200 and the change was written, then the
+// refresh 404ed and the card reported a failure for something that had worked.
+//
+// A person's alias IS their username — EditUsername writes both together — so
+// the alias is the right value rather than a second field to keep in step.
+// getURL below encodes the same split for links; this is the API half of it.
+const readIdentifier = (node, namespace) => {
+  if (!node) {
+    return undefined;
+  }
+
+  return namespace === 'people' ? node.alias : node.id;
+};
+
 const getURL = (node) => {
   if (node && node.id && node.type) {
     const service = pluralize(node.type.split('.')[3]);
@@ -371,6 +393,7 @@ export default {
   getStorySubject,
   getSupportedMimetypes,
   getURL,
+  readIdentifier,
   getNamespace,
   getComposers,
   getEnabledNodeTypes,

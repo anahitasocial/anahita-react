@@ -9,6 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 
 import api from '../../../api';
+import utils from '../../../utils';
 import actions from '../../../actions';
 import i18n from '../../../languages';
 import ActorType from '../../../proptypes/Actor';
@@ -52,11 +53,11 @@ const ActorsSettingsDisable = (props) => {
       .then((response) => {
         if (response.status === 204) {
           // Already in that state. Nothing to celebrate and nothing wrong.
-          return readActor(actor.id, namespace);
+          return readActor(utils.node.readIdentifier(actor, namespace), namespace);
         }
 
         alertSuccess(copy(isEnabled ? 'disabled' : 'enabled'));
-        return readActor(actor.id, namespace);
+        return readActor(utils.node.readIdentifier(actor, namespace), namespace);
       })
       .catch((err) => {
         const status = err && err.response && err.response.status;
