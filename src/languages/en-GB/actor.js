@@ -10,7 +10,7 @@ export default {
     // reversible, or when it takes effect — it offered one text field and a
     // red button. These strings are the disclosure.
     prompts: {
-      challenge: 'Type the exact alias: {{ alias }}',
+      challenge: 'Type {{ alias }} to confirm',
       inProgress: 'Deleting in progress ...',
     },
     errors: {

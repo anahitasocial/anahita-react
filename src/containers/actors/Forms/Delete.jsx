@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
@@ -203,10 +202,19 @@ const ActorDeleteForm = (props) => {
       <Divider />
 
       <CardContent>
+        {/* The instruction is the LABEL, matching the archive card.
+            It used to be the field's name ("Alias") with the instruction in
+            helper text underneath — so the thing telling you what to type sat
+            below the box, and floated away the moment you started typing,
+            leaving a field labelled "Alias" and no reminder of which one.
+            As the label it stays visible above the text for the whole time it
+            is being followed. */}
         <TextField
           name="alias"
           onChange={handleOnChange}
-          label={i18n.t('actor:alias')}
+          label={i18n.t('actor:delete.prompts.challenge', {
+            alias: actor.alias,
+          })}
           error={alias.error !== ''}
           helperText={alias.error}
           margin="normal"
@@ -220,11 +228,6 @@ const ActorDeleteForm = (props) => {
           }}
           required
         />
-        <FormHelperText>
-          {i18n.t('actor:delete.prompts.challenge', {
-            alias: actor.alias,
-          })}
-        </FormHelperText>
       </CardContent>
       <CardActions>
         <Button

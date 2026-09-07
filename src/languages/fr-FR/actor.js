@@ -7,7 +7,7 @@ export default {
   unknown: 'Inconnu',
   delete: {
     prompts: {
-      challenge: "Saisissez l'alias exact : {{ alias }}",
+      challenge: 'Tapez {{ alias }} pour confirmer',
       inProgress: 'Suppression en cours ...',
     },
     errors: {
