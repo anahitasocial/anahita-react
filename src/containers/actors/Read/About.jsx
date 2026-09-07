@@ -10,8 +10,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 import WebsiteIcon from '@material-ui/icons/Web';
-import MailIcon from '@material-ui/icons/Mail';
-import PhoneIcon from '@material-ui/icons/Phone';
 
 import i18n from '../../../languages';
 import Player from '../../../components/Player';
@@ -22,7 +20,7 @@ const ActorBodyAbout = (props) => {
   const { actor } = props;
   const {
     body,
-    information = {},
+    websiteUrl,
   } = actor;
 
   return (
@@ -48,74 +46,38 @@ const ActorBodyAbout = (props) => {
             </EntityBody>
           </CardContent>
         </>}
-      <List>
-        {information && information.website &&
+      {websiteUrl &&
+        <List>
           <ListItem
             button
             component="a"
-            href={information.website}
+            href={websiteUrl}
             target="_blank"
+            /*
+              nofollow because an arbitrary person-supplied link on a public
+              profile is an SEO-spam magnet; noopener/noreferrer because
+              target="_blank" otherwise hands the opened page a handle on this
+              one. rel="me" is the Mastodon convention for a profile link and
+              is what would let a site verify itself back to us later.
+            */
+            rel="me nofollow noopener noreferrer"
           >
             <ListItemIcon>
               <WebsiteIcon />
             </ListItemIcon>
             <ListItemText
-              primary={i18n.t('actor:meta.website')}
+              primary={i18n.t('actor:website')}
               secondary={
                 <Typography
                   variant="body1"
                   noWrap
                 >
-                  {information.website}
+                  {websiteUrl}
                 </Typography>
               }
             />
-          </ListItem>}
-        {information && information.contact_url &&
-          <ListItem
-            button
-            component="a"
-            href={information.contact_url}
-            target="_blank"
-          >
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary={i18n.t('actor:meta.contact')}
-              secondary={
-                <Typography
-                  variant="body1"
-                  noWrap
-                >
-                  {information.contact_url}
-                </Typography>
-              }
-            />
-          </ListItem>}
-        {information && information.phone &&
-          <ListItem
-            button
-            component="a"
-            href={`tel:${information.phone}`}
-            target="_blank"
-          >
-            <ListItemIcon>
-              <PhoneIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary={i18n.t('actor:meta.phone')}
-              secondary={
-                <Typography
-                  variant="body1"
-                  noWrap
-                >
-                  {information.phone}
-                </Typography>
-              }
-            />
-          </ListItem>}
-      </List>
+          </ListItem>
+        </List>}
     </Card>
   );
 };

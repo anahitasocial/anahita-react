@@ -23,6 +23,7 @@ const formFields = form.createFormFields([
   'givenName',
   'familyName',
   'body',
+  'websiteUrl',
 ]);
 
 const { canAdminister } = permissions.actor;
@@ -37,7 +38,6 @@ const PersonSettingsInfo = (props) => {
 
   const [person, setPerson] = useState({
     ..._Person,
-    ..._Person.information,
   });
 
   const [fields, setFields] = useState(formFields);
@@ -53,7 +53,7 @@ const PersonSettingsInfo = (props) => {
   // form would leave those values on screen in the read view as though they
   // had been saved.
   const handleCancel = () => {
-    setPerson({ ..._Person, ..._Person.information });
+    setPerson({ ..._Person });
     setFields(formFields);
     setIsEditing(false);
   };

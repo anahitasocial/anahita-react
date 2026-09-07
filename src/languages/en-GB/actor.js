@@ -2,6 +2,7 @@ export default {
   about: 'About',
   name: 'Name',
   alias: 'Alias',
+  website: 'Website',
   body: 'Description',
   unknown: 'Unknown',
   delete: {
@@ -25,11 +26,5 @@ export default {
       othersCanRequestToFollow: 'Others can request to follow',
       whoCanAddFollowers: 'Who can can add followers?',
     },
-  },
-  meta: {
-    website: 'Website',
-    contact: 'Contact',
-    contactUrl: 'Contact URL',
-    phone: 'Phone',
   },
 };

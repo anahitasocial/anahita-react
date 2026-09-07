@@ -57,10 +57,24 @@ const ActorFormsInfo = ({
           }}
           required
         />
-        {/* Website, contact URL and phone were here. They wrote nowhere:
-            ActorEditRequest declares name, body and enabled only, so the
-            server dropped them on every submit. Coming back as a proper list
-            of links rather than three fixed fields. */}
+        <TextField
+          name="websiteUrl"
+          value={actor.websiteUrl || ''}
+          onChange={handleOnChange}
+          error={fields.websiteUrl.error !== ''}
+          helperText={fields.websiteUrl.error}
+          label={i18n.t('actor:website')}
+          placeholder="example.com"
+          margin="normal"
+          fullWidth
+          // Deliberately not type="url". Validation here runs through the
+          // DOM's checkValidity, and a url input rejects a bare
+          // "example.com" — which the server accepts and normalises to
+          // https://example.com. A stricter client than server would refuse
+          // the most natural thing anyone types. inputMode still gets the
+          // URL keyboard on mobile.
+          inputProps={{ maxLength: 255, inputMode: 'url' }}
+        />
       </CardContent>
       {/* Cancel only when a handler is supplied. The settings card opens
           this form from a read view and needs a way back; actors/Add renders

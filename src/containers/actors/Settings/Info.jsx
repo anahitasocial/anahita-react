@@ -20,6 +20,7 @@ import i18n from '../../../languages';
 const formFields = form.createFormFields([
   'name',
   'body',
+  'websiteUrl',
 ]);
 
 const { canAdminister } = permissions.actor;
@@ -34,7 +35,6 @@ const ActorsSettingsInfo = (props) => {
 
   const [actor, setActor] = useState({
     ...defaultActor,
-    ...defaultActor.information,
   });
 
   const [fields, setFields] = useState(formFields);
@@ -49,7 +49,7 @@ const ActorsSettingsInfo = (props) => {
   // hiding the form alone would leave the discarded values on screen in the
   // read view as though they had been saved.
   const handleCancel = () => {
-    setActor({ ...defaultActor, ...defaultActor.information });
+    setActor({ ...defaultActor });
     setFields(formFields);
     setIsEditing(false);
   };

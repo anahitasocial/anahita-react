@@ -64,6 +64,12 @@ const InfoRead = ({
         </ListItem>
         <ListItem>
           <ListItemText
+            primary={i18n.t('actor:website')}
+            secondary={person.websiteUrl || EMPTY}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemText
             primary={i18n.t('people:person.pronouns')}
             secondary={pronounKey
               ? i18n.t(`people:person.pronounOptions.${pronounKey}`)

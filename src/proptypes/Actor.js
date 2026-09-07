@@ -4,10 +4,7 @@ import {
   string,
   oneOf,
   arrayOf,
-  objectOf,
-  oneOfType,
   bool,
-  any,
 } from 'prop-types';
 
 import personType from './Person';
@@ -46,8 +43,5 @@ export default shape({
   updateTime: string,
   isAdministrated: bool,
   isLeader: bool,
-  information: oneOfType([
-    objectOf(any),
-    arrayOf(any),
-  ]),
+  websiteUrl: string,
 });

@@ -21,5 +21,5 @@ export default {
   updateTime: '0000-00-00 00:00:00',
   isAdministrated: false,
   isLeader: false,
-  information: null,
+  websiteUrl: '',
 };

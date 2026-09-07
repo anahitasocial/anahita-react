@@ -46,6 +46,12 @@ const InfoRead = ({
             secondary={actor.body || EMPTY}
           />
         </ListItem>
+        <ListItem>
+          <ListItemText
+            primary={i18n.t('actor:website')}
+            secondary={actor.websiteUrl || EMPTY}
+          />
+        </ListItem>
 
         {/* Administrator-only, and read-only here. The edit form carries a
             live switch for this; an interactive control in a view with no
