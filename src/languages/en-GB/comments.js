@@ -1,4 +1,5 @@
 export default {
+  cTitle: 'Comments',
   comment: {
     placeholder: 'Add a comment ...',
     bodyErrorHelperText: 'Comment box is empty!',

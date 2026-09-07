@@ -1,4 +1,5 @@
 export default {
+  cTitle: 'Commentaires',
   comment: {
     placeholder: 'Ajouter un commentaire ...',
     bodyErrorHelperText: 'Le champ de commentaire est vide !',
