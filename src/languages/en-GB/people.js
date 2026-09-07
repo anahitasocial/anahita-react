@@ -25,6 +25,8 @@ export default {
         comments_plural: '{{ count }} comments',
         followers: '{{ count }} follower',
         followers_plural: '{{ count }} followers',
+        admins: '{{ count }} administrator',
+        admins_plural: '{{ count }} administrators',
         following: 'following {{ count }} person',
         following_plural: 'following {{ count }} people',
         groupsAdministered: 'administrator of {{ count }} group',

@@ -149,6 +149,11 @@ const ActorDeleteForm = (props) => {
                 ['posts', counts.posts],
                 ['comments', counts.comments],
                 ['followers', counts.followers],
+                // A group has administrators; a person administers groups.
+                // Both come back on the same edge read from opposite ends, so
+                // whichever is meaningless for this actor arrives absent or
+                // zero and is dropped below.
+                ['admins', counts.admins],
                 ['following', counts.following],
                 ['groupsAdministered', counts.groupsAdministered],
               ]
@@ -249,6 +254,7 @@ ActorDeleteForm.propTypes = {
     comments: PropTypes.number,
     followers: PropTypes.number,
     following: PropTypes.number,
+    admins: PropTypes.number,
     groupsAdministered: PropTypes.number,
     memberSince: PropTypes.string,
   }),

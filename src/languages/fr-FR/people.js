@@ -23,6 +23,8 @@ export default {
         comments_plural: '{{ count }} commentaires',
         followers: '{{ count }} abonné',
         followers_plural: '{{ count }} abonnés',
+        admins: '{{ count }} administrateur',
+        admins_plural: '{{ count }} administrateurs',
         following: 'abonné à {{ count }} personne',
         following_plural: 'abonné à {{ count }} personnes',
         groupsAdministered: 'administrateur de {{ count }} groupe',

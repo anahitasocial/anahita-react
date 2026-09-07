@@ -21,6 +21,8 @@ export default {
         comments_plural: '{{ count }} commentaires',
         followers: '{{ count }} abonné',
         followers_plural: '{{ count }} abonnés',
+        admins: '{{ count }} administrateur',
+        admins_plural: '{{ count }} administrateurs',
         memberSince: 'Créé en {{ date }}.',
       },
       description: 'La suppression retire ce groupe et tout ce qu\'il contient : publications, photos, commentaires et la liste des membres. Le contenu apporté par les autres membres est également supprimé.',

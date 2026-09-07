@@ -24,6 +24,8 @@ export default {
         comments_plural: '{{ count }} comments',
         followers: '{{ count }} follower',
         followers_plural: '{{ count }} followers',
+        admins: '{{ count }} administrator',
+        admins_plural: '{{ count }} administrators',
         memberSince: 'Created {{ date }}.',
       },
       description: 'Deleting removes this group and everything in it: posts, photos, comments and the membership list. Content other members contributed goes with it.',
