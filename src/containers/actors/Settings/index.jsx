@@ -70,8 +70,16 @@ const ActorsSettings = ({
 }) => {
   const params = useParams();
   const navigate = useNavigate();
-  const [id] = params.id.split('-');
   const isPerson = namespace === 'people';
+
+  // People are addressed by their username, everything else by `<id>-<slug>`
+  // — see utils/node.getURL, which builds the two differently.
+  //
+  // Splitting on the first hyphen is right for a group (`42-my-group` -> 42)
+  // and wrong for a person: the username validator allows hyphens, so
+  // `john-doe` resolved as `john` and anyone with a hyphen in their handle
+  // could not open their own settings.
+  const id = isPerson ? params.id : params.id.split('-')[0];
 
   // Groups only. People take their section from the URL below, which is what
   // makes it shareable and back-buttonable; this local state is the older
