@@ -22,6 +22,10 @@ MediumStepperLightbox.propTypes = {
   medium: MediumType.isRequired,
   locations: PropTypes.node,
   comments: PropTypes.node,
+  hasNext: PropTypes.bool,
+  hasPrev: PropTypes.bool,
+  handleNext: PropTypes.func,
+  handlePrev: PropTypes.func,
 };
 
 export default MediumStepperLightbox;

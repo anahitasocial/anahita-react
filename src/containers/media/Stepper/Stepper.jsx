@@ -1,17 +1,16 @@
-/* eslint-disable no-undef */
 import React from 'react';
 import PropTypes from 'prop-types';
 import striptags from 'striptags';
 import { Helmet } from 'react-helmet-async';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 
-import NextIcon from '@material-ui/icons/NavigateNext';
-import PrevIcon from '@material-ui/icons/NavigateBefore';
 import CloseIcon from '@material-ui/icons/Close';
 import HomeIcon from '@material-ui/icons/Home';
 import LinkIcon from '@material-ui/icons/Link';
@@ -27,11 +26,41 @@ import MediaMenu from '../MediaMenu';
 import Lightbox from './Lightbox';
 import MediumForm from '../EditForm';
 
+import i18n from '../../../languages';
 import utils from '../../../utils';
 
 const { getURL } = utils.node;
 
+const styles = (theme) => {
+  return {
+    toolbar: {
+      flexShrink: 0,
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+    },
+    title: {
+      flexGrow: 1,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+    },
+    position: {
+      flexShrink: 0,
+      marginRight: theme.spacing(1),
+      color: theme.palette.text.secondary,
+      fontVariantNumeric: 'tabular-nums',
+    },
+  };
+};
+
+const getTitle = (medium) => {
+  return medium.name || striptags(medium.body || '').substring(0, 60);
+};
+
 const MediaStepperView = ({
+  classes,
   open,
   handleClose,
   medium,
@@ -44,6 +73,8 @@ const MediaStepperView = ({
   isAuthenticated,
   isFetching,
   isEditing,
+  hasNext,
+  hasPrev,
   Like = null,
   handleNext,
   handlePrev,
@@ -53,36 +84,60 @@ const MediaStepperView = ({
   handleOnSubmit,
 }) => {
   const url = getURL(medium);
+  const title = getTitle(medium);
 
   return (
     <Dialog
       open={open}
       onClose={handleClose}
       fullScreen
+      aria-labelledby="medium-stepper-title"
     >
       <Helmet>
         <title>
-          {medium.name || striptags(medium.body).substring(0, 60)}
+          {title}
         </title>
-        <meta name="description" content={striptags(medium.body)} />
+        <meta name="description" content={striptags(medium.body || '')} />
       </Helmet>
-      <DialogTitle disableTypography>
-        <IconButton aria-label="close" onClick={handleClose} edge="start">
-          <CloseIcon />
-        </IconButton>
-        <IconButton aria-label="home" component="a" href="/">
-          <HomeIcon />
-        </IconButton>
-        <IconButton aria-label="link" component="a" href={url}>
-          <LinkIcon />
-        </IconButton>
-      </DialogTitle>
+      <Toolbar className={classes.toolbar} variant="dense">
+        <Tooltip title={i18n.t('commons:close')}>
+          <IconButton aria-label={i18n.t('commons:close')} onClick={handleClose} edge="start">
+            <CloseIcon />
+          </IconButton>
+        </Tooltip>
+        <Typography
+          id="medium-stepper-title"
+          variant="subtitle1"
+          className={classes.title}
+        >
+          {title}
+        </Typography>
+        {itemCount > 1 && index > -1 &&
+          <Typography variant="body2" className={classes.position}>
+            {i18n.t('media:stepper.position', {
+              index: index + 1,
+              total: itemCount,
+            })}
+          </Typography>}
+        <Tooltip title={i18n.t('media:stepper.permalink')}>
+          <IconButton aria-label={i18n.t('media:stepper.permalink')} component="a" href={url}>
+            <LinkIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title={i18n.t('media:stepper.home')}>
+          <IconButton aria-label={i18n.t('media:stepper.home')} component="a" href="/" edge="end">
+            <HomeIcon />
+          </IconButton>
+        </Tooltip>
+      </Toolbar>
       <Divider />
       <Lightbox
         medium={medium}
-        steps={itemCount}
-        activeStep={medium.id}
         editing={isEditing}
+        hasNext={hasNext}
+        hasPrev={hasPrev}
+        handleNext={handleNext}
+        handlePrev={handlePrev}
         form={
           <MediumForm
             medium={current}
@@ -125,32 +180,13 @@ const MediaStepperView = ({
             key={`${namespace}-locations-${medium.id}`}
           />
         }
-        nextAction={
-          <Button
-            onClick={handleNext}
-            disabled={index >= itemCount - 1}
-            fullWidth
-            variant="outlined"
-          >
-            <NextIcon />
-          </Button>
-        }
-        prevAction={
-          <Button
-            onClick={handlePrev}
-            disabled={index === 0}
-            fullWidth
-            variant="outlined"
-          >
-            <PrevIcon />
-          </Button>
-        }
       />
     </Dialog>
   );
 };
 
 MediaStepperView.propTypes = {
+  classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   medium: MediumType.isRequired,
@@ -163,6 +199,8 @@ MediaStepperView.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
+  hasNext: PropTypes.bool.isRequired,
+  hasPrev: PropTypes.bool.isRequired,
   Like: PropTypes.elementType,
   handleNext: PropTypes.func.isRequired,
   handlePrev: PropTypes.func.isRequired,
@@ -172,4 +210,4 @@ MediaStepperView.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
 };
 
-export default MediaStepperView;
+export default withStyles(styles)(MediaStepperView);

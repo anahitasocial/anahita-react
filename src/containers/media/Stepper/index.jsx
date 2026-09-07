@@ -22,6 +22,14 @@ const { getPortraitURL, getNamespace } = utils.node;
 
 const formFields = form.createFormFields(['name', 'body']);
 
+// Arrow keys belong to whatever the viewer is typing in — a comment box, the
+// edit form — before they belong to the stepper.
+const isTypingTarget = (target) => {
+  if (!target) return false;
+  if (target.isContentEditable) return true;
+  return ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName);
+};
+
 const MediaStepper = ({
   editItem,
   alertError,
@@ -48,55 +56,60 @@ const MediaStepper = ({
   const currentIndex = items.allIds.indexOf(currentId);
   const medium = items.byId[currentId];
 
+  // The browse list reuses one mounted stepper, so a second thumbnail click
+  // only changes this prop.
+  useEffect(() => {
+    setCurrentId(String(mediumId));
+  }, [mediumId]);
+
   useEffect(() => {
     if (error) alertError('Something went wrong!');
     if (success) alertSuccess('Updated successfully.');
   }, [error, success]);
 
-  const preloadImages = useCallback(() => {
-    const nextId = items.allIds[currentIndex + 1];
-    const prevId = items.allIds[currentIndex - 1];
-
-    if (nextId) {
-      nextImageRef.current.src = getPortraitURL(items.byId[nextId], 'large');
-    }
-    if (prevId) {
-      prevImageRef.current.src = getPortraitURL(items.byId[prevId], 'large');
-    }
-  }, [currentIndex, items]);
+  const hasNext = currentIndex > -1 && currentIndex < items.allIds.length - 1;
+  const hasPrev = currentIndex > 0;
 
   const handleNext = useCallback(() => {
     const nextId = items.allIds[currentIndex + 1];
-    if (nextId) {
-      setCurrentId(nextId);
-      preloadImages();
-    }
-  }, [currentIndex, items, preloadImages]);
+    if (nextId) setCurrentId(nextId);
+  }, [currentIndex, items]);
 
   const handlePrev = useCallback(() => {
     const prevId = items.allIds[currentIndex - 1];
-    if (prevId) {
-      setCurrentId(prevId);
-      preloadImages();
-    }
-  }, [currentIndex, items, preloadImages]);
+    if (prevId) setCurrentId(prevId);
+  }, [currentIndex, items]);
 
   const handleKeydown = useCallback((event) => {
     if (isEditing) return;
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (isTypingTarget(event.target)) return;
     if (event.code === 'ArrowRight') handleNext();
     if (event.code === 'ArrowLeft') handlePrev();
   }, [isEditing, handleNext, handlePrev]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeydown);
-    preloadImages();
-
     return () => {
       window.removeEventListener('keydown', handleKeydown);
-      nextImageRef.current.src = '';
-      prevImageRef.current.src = '';
     };
-  }, [handleKeydown, preloadImages]);
+  }, [handleKeydown]);
+
+  // Warm the neighbours so stepping through a gallery does not flash a spinner.
+  useEffect(() => {
+    const nextImage = nextImageRef.current;
+    const prevImage = prevImageRef.current;
+    const nextId = items.allIds[currentIndex + 1];
+    const prevId = items.allIds[currentIndex - 1];
+
+    if (nextId) nextImage.src = getPortraitURL(items.byId[nextId], 'large');
+    if (prevId) prevImage.src = getPortraitURL(items.byId[prevId], 'large');
+
+    return () => {
+      nextImage.src = '';
+      prevImage.src = '';
+    };
+  }, [currentIndex, items]);
 
   const handleEdit = useCallback(() => {
     setCurrent({ ...items.byId[currentId] });
@@ -107,6 +120,12 @@ const MediaStepper = ({
     setCurrent({ ...MEDIUM_DEFAULT });
     setIsEditing(false);
   }, []);
+
+  // Stepping away from a medium mid-edit would submit the change against the
+  // one now on screen.
+  useEffect(() => {
+    handleCancel();
+  }, [currentId, handleCancel]);
 
   const handleOnChange = useCallback((event) => {
     const { name, value } = event.target;
@@ -149,6 +168,8 @@ const MediaStepper = ({
       isAuthenticated={isAuthenticated}
       isFetching={isFetching}
       isEditing={isEditing}
+      hasNext={hasNext}
+      hasPrev={hasPrev}
       Like={Like}
       handleNext={handleNext}
       handlePrev={handlePrev}
