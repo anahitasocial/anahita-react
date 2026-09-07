@@ -75,7 +75,7 @@ const MediaComposerDefault = ({
 
     if (form.isValid(newFields)) {
       const formData = {
-        ...form.fieldsToData(fields),
+        ...form.fieldsToData(newFields),
         file,
       };
 

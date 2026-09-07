@@ -52,9 +52,19 @@ const validateForm = (form, fields) => {
   const newFields = {};
 
   keys.forEach((key) => {
-    const field = form[key];
+    // namedItem() only ever looks at the form's controls, unlike form[key],
+    // which falls back to HTMLFormElement's own properties (name, method, ...).
+    const field = form.elements.namedItem(key);
+
+    // A declared field with no control in the form carries no constraint to
+    // violate: keep its value and treat it as valid, or the form can never
+    // be submitted.
     if (!field) {
-      newFields[key] = { ...fields[key] };
+      newFields[key] = {
+        ...fields[key],
+        isValid: true,
+        error: '',
+      };
       return;
     }
 
