@@ -35,6 +35,7 @@ const ActorDeleteForm = (props) => {
       alias,
     },
     actor,
+    counts,
     namespace,
     isFetching,
   } = props;
@@ -131,6 +132,53 @@ const ActorDeleteForm = (props) => {
           {copy('description')}
         </Typography>
 
+        {/* The figures, when we have them. This is the gate that makes
+            somebody stop: "your posts will be removed" reads as boilerplate,
+            while "4,826 posts" is a number they recognise as theirs.
+
+            Rendered only when the counts arrived. A slow or refused request
+            must not stand between somebody and a decision they are entitled
+            to make, so its absence costs the emphasis and nothing else. */}
+        {counts && (
+          <>
+            <Typography variant="body2" color="textSecondary">
+              {copy('counts.intro')}
+            </Typography>
+            <ul>
+              {[
+                ['posts', counts.posts],
+                ['comments', counts.comments],
+                ['followers', counts.followers],
+                ['following', counts.following],
+                ['groupsAdministered', counts.groupsAdministered],
+              ]
+                // Zeroes are dropped rather than listed. "0 comments" is
+                // noise in a list whose whole job is weight, and a person
+                // with no comments is not reassured by being told so.
+                .filter(([, value]) => { return value > 0; })
+                .map(([key, value]) => {
+                  return (
+                    <li key={key}>
+                      <Typography variant="body2" color="textSecondary">
+                        {copy(`counts.${key}`, { count: value })}
+                      </Typography>
+                    </li>
+                  );
+                })}
+            </ul>
+            {counts.memberSince && (
+              <Typography variant="body2" color="textSecondary" paragraph>
+                {copy('counts.memberSince', {
+                  date: new Date(counts.memberSince).toLocaleDateString(undefined, {
+                    year: 'numeric',
+                    month: 'long',
+                  }),
+                })}
+              </Typography>
+            )}
+          </>
+        )}
+
         {/* And what is not. Naming the grace period is the point of this card
             existing at all — without it the recovery path we built is
             invisible to the only person who needs it. */}
@@ -194,8 +242,22 @@ ActorDeleteForm.propTypes = {
   handleOnRestore: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   actor: ActorType.isRequired,
+  // null until the counts arrive, and null forever if the request failed —
+  // the card renders without them rather than blocking.
+  counts: PropTypes.shape({
+    posts: PropTypes.number,
+    comments: PropTypes.number,
+    followers: PropTypes.number,
+    following: PropTypes.number,
+    groupsAdministered: PropTypes.number,
+    memberSince: PropTypes.string,
+  }),
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
+};
+
+ActorDeleteForm.defaultProps = {
+  counts: null,
 };
 
 export default ActorDeleteForm;

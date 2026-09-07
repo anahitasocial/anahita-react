@@ -16,6 +16,9 @@ export default {
     errors: {
       generic: 'Could not delete this profile. Please try again.',
       forbidden: 'You do not have permission to delete this profile.',
+      // Fallback only. The server sends a message naming the way out, and
+      // it is more specific than this can be.
+      lastSuperAdmin: 'This is the only super administrator. Promote someone else, or change this account to administrator, before deleting it.',
     },
   },
   access: {

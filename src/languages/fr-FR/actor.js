@@ -13,6 +13,7 @@ export default {
     errors: {
       generic: 'Impossible de supprimer ce profil. Veuillez réessayer.',
       forbidden: 'Vous n\'avez pas la permission de supprimer ce profil.',
+      lastSuperAdmin: 'Il s\'agit du seul super administrateur. Promouvez quelqu\'un d\'autre, ou changez ce compte en administrateur, avant de le supprimer.',
     },
   },
   access: {

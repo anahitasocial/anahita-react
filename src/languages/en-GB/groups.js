@@ -16,6 +16,16 @@ export default {
     // and that their passkeys would be removed, which a group has none of.
     delete: 'Delete',
     deletePrompts: {
+      counts: {
+        intro: 'In this group right now:',
+        posts: '{{ count }} post',
+        posts_plural: '{{ count }} posts',
+        comments: '{{ count }} comment',
+        comments_plural: '{{ count }} comments',
+        followers: '{{ count }} follower',
+        followers_plural: '{{ count }} followers',
+        memberSince: 'Created {{ date }}.',
+      },
       description: 'Deleting removes this group and everything in it: posts, photos, comments and the membership list. Content other members contributed goes with it.',
       reversible: 'This is not immediate. The group is hidden straight away and permanently erased after {{ count }} days. Any administrator can restore it from this page before then.',
       revoked: 'Members lose access immediately, and the group disappears from their profiles and feeds.',

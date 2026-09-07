@@ -13,6 +13,16 @@ export default {
     access: 'Accès',
     delete: 'Supprimer',
     deletePrompts: {
+      counts: {
+        intro: 'Dans ce groupe actuellement :',
+        posts: '{{ count }} publication',
+        posts_plural: '{{ count }} publications',
+        comments: '{{ count }} commentaire',
+        comments_plural: '{{ count }} commentaires',
+        followers: '{{ count }} abonné',
+        followers_plural: '{{ count }} abonnés',
+        memberSince: 'Créé en {{ date }}.',
+      },
       description: 'La suppression retire ce groupe et tout ce qu\'il contient : publications, photos, commentaires et la liste des membres. Le contenu apporté par les autres membres est également supprimé.',
       reversible: 'Ce n\'est pas immédiat. Le groupe est masqué aussitôt puis définitivement effacé après {{ count }} jours. Tout administrateur peut le restaurer depuis cette page avant cette date.',
       revoked: 'Les membres perdent l\'accès immédiatement et le groupe disparaît de leurs profils et de leurs fils.',

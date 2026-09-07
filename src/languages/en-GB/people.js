@@ -17,6 +17,20 @@ export default {
     // because the sign-in and passkey lines here are meaningless for a group.
     delete: 'Delete',
     deletePrompts: {
+      counts: {
+        intro: 'On this profile right now:',
+        posts: '{{ count }} post',
+        posts_plural: '{{ count }} posts',
+        comments: '{{ count }} comment',
+        comments_plural: '{{ count }} comments',
+        followers: '{{ count }} follower',
+        followers_plural: '{{ count }} followers',
+        following: 'following {{ count }} person',
+        following_plural: 'following {{ count }} people',
+        groupsAdministered: 'administrator of {{ count }} group',
+        groupsAdministered_plural: 'administrator of {{ count }} groups',
+        memberSince: 'A member since {{ date }}.',
+      },
       description: 'Deleting removes this profile and everything on it: posts, comments, photos, followers and group memberships. Comments other people left on this content go with it.',
       reversible: 'This is not immediate. The profile is hidden straight away and permanently erased after {{ count }} days. Signing in before then will offer to restore it.',
       revoked: 'Sessions on every device end now, and any passkeys are removed. Restoring does not bring those back.',
