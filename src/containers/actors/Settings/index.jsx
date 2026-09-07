@@ -156,8 +156,6 @@ const ActorsSettings = ({
       [ITEMS.ACCESS]: <ActorAccess />,
       [ITEMS.DISABLE]: <ActorDisable />,
       [ITEMS.ARCHIVE]: <ActorArchive />,
-      [ITEMS.DISABLE]: <ActorDisable />,
-      [ITEMS.ARCHIVE]: <ActorArchive />,
       [ITEMS.DELETE]: <ActorDelete />,
     };
 
@@ -217,10 +215,14 @@ const ActorsSettings = ({
     return entry.key === tab;
   }) || groupTabs[0];
 
+  // Every key getGroupTabs can return needs an entry here, or selecting that
+  // tab renders undefined — a tab that opens onto nothing, with no error.
   const groupPanels = {
     [ITEMS.INFO]: <ActorInfo />,
     [ITEMS.ADMINS]: <ActorAdmins />,
     [ITEMS.ACCESS]: <ActorAccess />,
+    [ITEMS.DISABLE]: <ActorDisable />,
+    [ITEMS.ARCHIVE]: <ActorArchive />,
     [ITEMS.DELETE]: <ActorDelete />,
   };
 
