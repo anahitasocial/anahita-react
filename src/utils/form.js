@@ -22,6 +22,26 @@ const createFormFields = (fields = [], defaults = {}) => {
   return formFields;
 };
 
+// checkedValidity reports whether a control satisfies its constraints.
+//
+// The subtlety is willValidate === false, which the DOM sets for hidden
+// inputs, disabled inputs, and anything else barred from constraint
+// validation. That means "there is nothing to check", NOT "this failed" —
+// and reading it as a failure is what silently jams a form: isValid comes
+// back false, form.isValid() is false, and the submit handler quietly does
+// nothing with no error anywhere to explain it.
+const checkedValidity = (control) => {
+  if (!control || control.willValidate === false) {
+    return true;
+  }
+
+  if (typeof control.checkValidity !== 'function') {
+    return true;
+  }
+
+  return control.checkValidity();
+};
+
 const validateField = (field, fields, trimmed = []) => {
   const { name } = field;
   const rawValue = field.type === 'checkbox' ? field.checked : field.value;
@@ -32,7 +52,7 @@ const validateField = (field, fields, trimmed = []) => {
   const isEmpty = value === '' || value === null || value === undefined;
   const isValid = (!field.required && isEmpty)
     ? true
-    : field.willValidate && field.checkValidity();
+    : checkedValidity(field);
 
   return {
     ...fields,
@@ -52,14 +72,32 @@ const validateForm = (form, fields) => {
   const newFields = {};
 
   keys.forEach((key) => {
-    // namedItem() only ever looks at the form's controls, unlike form[key],
-    // which falls back to HTMLFormElement's own properties (name, method, ...).
-    const field = form.elements.namedItem(key);
+    // Collect every control with this name, rather than asking namedItem for
+    // "the" one.
+    //
+    // Several controls share a name whenever there is a radio group, and what
+    // namedItem hands back for that is not consistent: browsers return a
+    // RadioNodeList, which has .value but none of the constraint API, while
+    // jsdom returns the first element. Reading validity off the browser's
+    // RadioNodeList yields undefined — falsy — so the submit was quietly
+    // refused; reading the value off jsdom's first element gives whichever
+    // radio happens to be first rather than the one that is checked.
+    //
+    // That is what jammed the person settings form: touching the usertype
+    // radios adds "usertype" to the field list, and from then on every save
+    // did nothing, with no error anywhere to explain it.
+    //
+    // Filtering form.elements ourselves sidesteps both. It also skips
+    // HTMLFormElement's own properties — name, method, action — which the
+    // original form[key] lookup could return instead of an input.
+    const controls = _.filter(form.elements, (element) => {
+      return element.name === key;
+    });
 
     // A declared field with no control in the form carries no constraint to
     // violate: keep its value and treat it as valid, or the form can never
     // be submitted.
-    if (!field) {
+    if (controls.length === 0) {
       newFields[key] = {
         ...fields[key],
         isValid: true,
@@ -68,18 +106,34 @@ const validateForm = (form, fields) => {
       return;
     }
 
-    const rawValue = field.type === 'checkbox' ? field.checked : field.value;
+    // A group: the value is whichever member is checked, and '' when none is —
+    // never the first member's, which is nobody's answer. Validity comes from
+    // a member, since that is where the constraints live.
+    const isGroup = controls.length > 1;
+    const checkedControl = _.find(controls, (member) => { return member.checked; });
+    const control = isGroup ? (checkedControl || controls[0]) : controls[0];
+
+    let rawValue;
+    if (isGroup) {
+      rawValue = checkedControl ? checkedControl.value : '';
+    } else if (control.type === 'checkbox') {
+      rawValue = control.checked;
+    } else {
+      rawValue = control.value;
+    }
+
     const isEmpty = rawValue === '' || rawValue === null || rawValue === undefined;
-    const isValid = (!field.required && isEmpty)
+    const required = Boolean(control && control.required);
+    const isValid = (!required && isEmpty)
       ? true
-      : field.willValidate && field.checkValidity();
+      : checkedValidity(control);
 
     newFields[key] = {
       ...fields[key],
       value: rawValue,
       isValid,
-      error: isValid ? '' : field.validationMessage,
-      required: field.required,
+      error: isValid ? '' : (control && control.validationMessage) || '',
+      required,
       touched: true,
     };
   });
