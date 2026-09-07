@@ -35,6 +35,7 @@ export const ITEMS = {
   WEBAUTHN: 'webauthn',
   AUTHLOGS: 'authlogs',
   ACCESS: 'access',
+  DANGER: 'danger',
   DISABLE: 'disable',
   ARCHIVE: 'archive',
   DELETE: 'delete',
@@ -192,9 +193,33 @@ export const getGroupTabs = ({ canDelete, isAdmin }) => {
     { key: ITEMS.INFO, bare: true },
     { key: ITEMS.ADMINS, bare: true },
     { key: ITEMS.ACCESS, bare: false },
-    // Groups have no Danger section — they are flat tabs — so the three
-    // lifecycle actions sit at the end in the same order the person page puts
-    // them: the reversible one, then the two that are not.
+    // ONE Danger zone tab holding the three lifecycle actions, rather than
+    // three tabs of their own.
+    //
+    // A tab strip reads as a list of equals, so "Disable" sitting between
+    // "Access" and "Archive" made a suspension look like another setting. It
+    // also spread the three actions that need comparing across three places:
+    // choosing between disable, archive and delete means weighing what each
+    // does to the content, and you cannot weigh things you cannot see at once.
+    //
+    // Matches the person page, which has had a Danger section from the start.
+    { key: ITEMS.DANGER, bare: true, requiresDanger: true },
+  ].filter((item) => {
+    // The Danger tab earns its place if ANY of the actions inside it does.
+    // Hiding it when only one applies would leave that action unreachable.
+    if (item.requiresDanger && !canDelete && !isAdmin) {
+      return false;
+    }
+
+    return true;
+  });
+};
+
+// The lifecycle actions inside a group's Danger zone, in the same order and by
+// the same rules as the person page: the reversible one first, then the two
+// that are not.
+export const getGroupDangerItems = ({ canDelete, isAdmin }) => {
+  return [
     { key: ITEMS.DISABLE, bare: true, requiresAdmin: true },
     { key: ITEMS.ARCHIVE, bare: true, requiresDelete: true },
     { key: ITEMS.DELETE, bare: true, requiresDelete: true },

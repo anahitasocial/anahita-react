@@ -27,6 +27,7 @@ import SettingsItem from './SettingsItem';
 import {
   getPersonSections,
   getGroupTabs,
+  getGroupDangerItems,
   resolveSection,
   ITEMS,
 } from './sections';
@@ -38,21 +39,19 @@ import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import i18n from '../../../languages';
 
-// Tabs for the GROUPS namespace, which stays flat. See sections.js for why
-// people are grouped and groups are not: a group has no account or security
-// items, so there is nothing here to group.
-const TABS = {
-  ADMINS: 'admins',
-  INFO: 'info',
-  ACCESS: 'access',
-  DELETE: 'delete',
-};
-
-// The Delete tab reads "Danger zone", matching the person page, while the card
-// inside it still reads "Delete" — the section names the risk, the card names
-// the action. Every other tab is labelled by its own key.
+// Tabs for the GROUPS namespace, which stays flat apart from the Danger zone.
+// See sections.js: a group has no account or security items, so there is
+// nothing else to group — but the three lifecycle actions belong together,
+// because choosing between them means comparing them.
+// The Danger tab reads "Danger zone" while the cards inside it read "Disable",
+// "Archive" and "Delete" — the section names the risk, each card names its
+// action. Every other tab is labelled by its own key.
+//
+// It used to be the Delete tab wearing that label, back when deletion was the
+// only thing in it. Now that three actions share the tab, the label belongs to
+// the section rather than to one of them.
 const tabLabelKey = (namespace, key) => {
-  if (key === TABS.DELETE) {
+  if (key === ITEMS.DANGER) {
     return `${namespace}:settings.sections.danger`;
   }
 
@@ -66,7 +65,7 @@ const ActorsSettings = ({
   alertSuccess,
   alertError,
   namespace,
-  selectedTab = TABS.INFO,
+  selectedTab = ITEMS.INFO,
   isFetching,
   error,
   success,
@@ -215,15 +214,37 @@ const ActorsSettings = ({
     return entry.key === tab;
   }) || groupTabs[0];
 
+  const groupDangerItems = getGroupDangerItems({ canDelete, isAdmin });
+
   // Every key getGroupTabs can return needs an entry here, or selecting that
   // tab renders undefined — a tab that opens onto nothing, with no error.
+  //
+  // The Danger tab is the one that is not a single panel: it stacks its
+  // actions the way the person page stacks a section's items, so the three can
+  // be compared rather than hunted for.
   const groupPanels = {
     [ITEMS.INFO]: <ActorInfo />,
     [ITEMS.ADMINS]: <ActorAdmins />,
     [ITEMS.ACCESS]: <ActorAccess />,
-    [ITEMS.DISABLE]: <ActorDisable />,
-    [ITEMS.ARCHIVE]: <ActorArchive />,
-    [ITEMS.DELETE]: <ActorDelete />,
+    [ITEMS.DANGER]: (
+      <>
+        {groupDangerItems.map((item) => {
+          return (
+            <SettingsItem
+              key={item.key}
+              bare={item.bare}
+              title={i18n.t(`${namespace}:settings.${item.key}`)}
+            >
+              {{
+                [ITEMS.DISABLE]: <ActorDisable />,
+                [ITEMS.ARCHIVE]: <ActorArchive />,
+                [ITEMS.DELETE]: <ActorDelete />,
+              }[item.key]}
+            </SettingsItem>
+          );
+        })}
+      </>
+    ),
   };
 
   return (
@@ -256,12 +277,17 @@ const ActorsSettings = ({
           subheader={i18n.t(tabLabelKey(namespace, activeTab.key))}
         />
       </Box>
-      <SettingsItem
-        bare={activeTab.bare}
-        title={i18n.t(`${namespace}:settings.${activeTab.key}`)}
-      >
-        {groupPanels[activeTab.key]}
-      </SettingsItem>
+      {/* The Danger panel supplies its own SettingsItem per action, so
+          wrapping it in another would put three cards inside a fourth. Every
+          other tab is a single panel that needs the wrapper. */}
+      {activeTab.key === ITEMS.DANGER ? groupPanels[activeTab.key] : (
+        <SettingsItem
+          bare={activeTab.bare}
+          title={i18n.t(`${namespace}:settings.${activeTab.key}`)}
+        >
+          {groupPanels[activeTab.key]}
+        </SettingsItem>
+      )}
     </>
   );
 };
@@ -279,11 +305,15 @@ ActorsSettings.propTypes = {
   // Groups only. People no longer take a tab as a prop — their section comes
   // from the URL, so it survives a reload and the back button, which a value
   // read once into useState never did.
+  // Drawn from ITEMS rather than a second list beside it. The local TABS
+  // constant this replaced named `delete` as a tab, which stopped being true
+  // when the three lifecycle actions moved inside one Danger tab — so the prop
+  // still advertised a value the page could no longer render.
   selectedTab: PropTypes.oneOf([
-    TABS.ADMINS,
-    TABS.INFO,
-    TABS.ACCESS,
-    TABS.DELETE,
+    ITEMS.ADMINS,
+    ITEMS.INFO,
+    ITEMS.ACCESS,
+    ITEMS.DANGER,
   ]),
 };
 
