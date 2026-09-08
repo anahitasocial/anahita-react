@@ -5,7 +5,7 @@ import { normalize, schema } from 'normalizr';
 const reset = (namespace) => {
   return () => {
     return {
-      type: `${namespace.toUpperCase()}_BROWSE_RESET`,
+      type: `${namespace.toUpperCase()}_GRAPH_BROWSE_RESET`,
     };
   };
 };
@@ -15,7 +15,7 @@ const reset = (namespace) => {
 const browseRequest = (namespace) => {
   return (parent) => {
     return {
-      type: `${namespace.toUpperCase()}_BROWSE_REQUEST`,
+      type: `${namespace.toUpperCase()}_GRAPH_BROWSE_REQUEST`,
       parent,
     };
   };
@@ -95,10 +95,13 @@ const addRequest = (namespace) => {
 
 const addSuccess = (namespace) => {
   return (parent) => {
-    return (result) => {
+    // The tag that was added, not the response body: tagging answers 201 with
+    // no content, so `result.data` was an empty string and the reducer filed
+    // it under byId[undefined]. Delete already reports the node this way.
+    return (node) => {
       return {
         type: `${namespace.toUpperCase()}_GRAPH_ADD_SUCCESS`,
-        node: result.data,
+        node,
         parent,
       };
     };
@@ -124,8 +127,8 @@ const add = (namespace, api) => {
         dispatch(addRequest(namespace)(parent));
         return new Promise((resolve, reject) => {
           return api(parent).add(node)
-            .then((result) => {
-              dispatch(addSuccess(namespace)(parent)(result));
+            .then(() => {
+              dispatch(addSuccess(namespace)(parent)(node));
               return resolve();
             }, (response) => {
               dispatch(addFailure(namespace)(parent)(response));
