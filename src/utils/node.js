@@ -167,6 +167,36 @@ const getPortraitURL = (node, size = 'medium') => {
   return '';
 };
 
+// Descending by pixel width. 'square' is left out: it is a centre crop, so it
+// is not a stand-in for a size that is missing. 'original' is the untouched
+// upload — measured between 1MB and 7.7MB on live photos — so it sits last as
+// a guaranteed-present last resort, not as a size worth reaching for.
+const PORTRAIT_SIZE_LADDER = [
+  'xxlarge',
+  'xlarge',
+  'large',
+  'medium',
+  'small',
+  'original',
+];
+
+// The API advertises every size for every photo — it formats each URL from the
+// filename and never checks that the derivative was actually generated — so an
+// advertised size can still 404. Nothing short of requesting one tells us which
+// are real, so return the wanted size followed by the smaller ones and let the
+// caller step down as the img element reports each failure.
+const getPortraitURLs = (node, size = 'medium') => {
+  const start = PORTRAIT_SIZE_LADDER.indexOf(size);
+  const fallbacks = start > -1 ? PORTRAIT_SIZE_LADDER.slice(start + 1) : [];
+  const urls = [size, ...fallbacks].map((candidate) => {
+    return getPortraitURL(node, candidate);
+  });
+
+  return urls.filter((url, index) => {
+    return url && urls.indexOf(url) === index;
+  });
+};
+
 const getAvatarURL = (node, size = 'medium') => {
   const path = node.avatarUrls && node.avatarUrls[size] && node.avatarUrls[size].url;
 
@@ -400,6 +430,7 @@ export default {
   getCoverURL,
   getOwnerName,
   getPortraitURL,
+  getPortraitURLs,
   getStoryObjectName,
   getStorySubject,
   getSupportedMimetypes,

@@ -37,3 +37,50 @@ describe('readIdentifier', () => {
     expect(node.readIdentifier(undefined, 'groups')).toBeUndefined();
   });
 });
+
+// The photo service lists all seven sizes for every photo — it formats each
+// URL from the filename without checking the derivative was ever written — so
+// an advertised size can 404. Callers need somewhere to fall back to.
+describe('getPortraitURLs', () => {
+  const withSizes = (sizes) => {
+    return {
+      portraitUrls: sizes.reduce((urls, size) => {
+        return { ...urls, [size]: { url: `https://cdn.test/photo_${size}.jpg` } };
+      }, {}),
+    };
+  };
+
+  it('leads with the size that was asked for', () => {
+    const photo = withSizes(['large', 'medium', 'small']);
+    expect(node.getPortraitURLs(photo, 'large')[0]).toBe('https://cdn.test/photo_large.jpg');
+  });
+
+  it('follows it with the smaller sizes, largest first', () => {
+    const photo = withSizes(['xxlarge', 'xlarge', 'large', 'medium', 'small', 'original']);
+    expect(node.getPortraitURLs(photo, 'large')).toEqual([
+      'https://cdn.test/photo_large.jpg',
+      'https://cdn.test/photo_medium.jpg',
+      'https://cdn.test/photo_small.jpg',
+      'https://cdn.test/photo_original.jpg',
+    ]);
+  });
+
+  // Falling back upwards would hand a lightbox a bigger file than the one that
+  // just failed, and a centre-cropped square is not a stand-in for any of them.
+  it('never falls back to a larger size or to the square crop', () => {
+    const photo = withSizes(['xxlarge', 'square', 'medium', 'small']);
+    expect(node.getPortraitURLs(photo, 'medium')).toEqual([
+      'https://cdn.test/photo_medium.jpg',
+      'https://cdn.test/photo_small.jpg',
+    ]);
+  });
+
+  it('drops sizes the photo does not list at all', () => {
+    const photo = withSizes(['medium']);
+    expect(node.getPortraitURLs(photo, 'large')).toEqual(['https://cdn.test/photo_medium.jpg']);
+  });
+
+  it('returns nothing for a node with no portrait', () => {
+    expect(node.getPortraitURLs({}, 'large')).toEqual([]);
+  });
+});
