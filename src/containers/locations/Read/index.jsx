@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -28,14 +27,7 @@ import Inbounds from '../../inbounds';
 import Progress from '../../../components/Progress';
 import HeaderMeta from '../../../components/HeaderMeta';
 
-const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
-const useStyles = makeStyles({
-  mapContainer: {
-    height: 320,
-    width: '100%',
-  },
-});
+const MAP_HEIGHT = 320;
 
 const { getAddress } = utils.node;
 const fieldNames = ['name', 'address'];
@@ -67,7 +59,6 @@ const LocationsRead = ({
   viewer,
   items,
 }) => {
-  const classes = useStyles();
   const { id } = useParams();
   const { current: location } = items;
   const [isEditing, setIsEditing] = useState(false);
@@ -198,10 +189,7 @@ const LocationsRead = ({
         {location.id &&
           <AnahitaMap
             locations={[location]}
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
-            loadingElement={<div style={{ height: '100%' }} />}
-            containerElement={<div className={classes.mapContainer} />}
-            mapElement={<div style={{ height: '100%' }} />}
+            height={MAP_HEIGHT}
           />}
         <CardContent>
           <Typography variant="caption">

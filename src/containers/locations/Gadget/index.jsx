@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -24,24 +21,13 @@ import Progress from '../../../components/Progress';
 import ListItem from '../Browse/ListItem';
 import ControlDelete from '../../controls/tags/location/Delete';
 
-const useStyles = makeStyles((theme) => {
-  return {
-    mapContainer: {
-      height: theme.spacing(40),
-      width: '100%',
-    },
-  };
-});
-
-const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-const GOOGLE_MAP_URL = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`;
+const MAP_HEIGHT = 320;
 
 const LocationsGadget = ({
   node,
   viewer,
   cardProps = {},
 }) => {
-  const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const [locations, setLocations] = useState([]);
   const [waiting, setWaiting] = useState(false);
@@ -115,10 +101,7 @@ const LocationsGadget = ({
         {locations.length !== 0 &&
           <AnahitaMap
             locations={locations}
-            googleMapURL={GOOGLE_MAP_URL}
-            loadingElement={<Box style={{ height: '100%' }} />}
-            containerElement={<Box className={classes.mapContainer} />}
-            mapElement={<Box style={{ height: '100%' }} />}
+            height={MAP_HEIGHT}
           />}
         <List>
           {locations.map((location) => {

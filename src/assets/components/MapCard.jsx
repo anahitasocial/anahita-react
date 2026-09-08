@@ -26,8 +26,6 @@ import i18n from '../../languages';
 const { getURL } = utils.node;
 const { SORTING } = APP.BROWSE;
 
-const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
 // Shared empty default: a literal [] in the parameter list would be a
 // new array on every render.
 const NO_IDS = [];
@@ -77,9 +75,6 @@ const HomeCardMap = ({
       {items.length > 0 &&
         <AnahitaMap
           locations={items}
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`}
-          loadingElement={<div style={{ height: '100%' }} />}
-          mapElement={<div style={{ height: '100%' }} />}
           height={295}
         />}
       {showList &&

@@ -1257,11 +1257,6 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@googlemaps/js-api-loader@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.6.0.tgz#351c904ca31bcc7d961aa115373d5cd411ebee80"
-  integrity sha512-amuilneCf7q5A/jDUE3ml83c9NjW/3DzIqiBDFIKZcraD0JSKbetkEQa5s57Z6QY7jxcequXgoL9CKJUY1xZ5A==
-
 "@humanwhocodes/config-array@^0.13.0":
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.13.0.tgz#fb907624df3256d04b9aa2df50d7aa97ec648748"
@@ -1677,25 +1672,10 @@
     schema-utils "^4.2.0"
     source-map "^0.7.3"
 
-"@react-google-maps/api@^1.13.0":
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/@react-google-maps/api/-/api-1.13.0.tgz#9fb25e9f8f0e54d9ed2bb5e5e0cf49bb717db7ab"
-  integrity sha512-mKwXziG5MbOvvcWG53FyZVZ8zjAuPNYkcS/+nYX9STMFNrI96AFq5l/zUn2QifRJnPzE8iO4V1vyMM+Ie9LpGg==
-  dependencies:
-    "@googlemaps/js-api-loader" "1.6.0"
-    "@react-google-maps/infobox" "1.12.1"
-    "@react-google-maps/marker-clusterer" "1.12.1"
-    invariant "2.2.4"
-
-"@react-google-maps/infobox@1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@react-google-maps/infobox/-/infobox-1.12.1.tgz#6c0354b6cfc52c8689f99ee5ce1fb5668fa78697"
-  integrity sha512-tD/xijqRtKK/LNRzuerzuyvybnRaD8SLgCA064len4/enTo1abhQN215ZYqwbTOn7RgYt9qMgNnwoX//u3xoWw==
-
-"@react-google-maps/marker-clusterer@1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@react-google-maps/marker-clusterer/-/marker-clusterer-1.12.1.tgz#fcf8df395a102b56258601c9b85d671dcd03d7cf"
-  integrity sha512-JBSO5VJuouP/boBnSdRDCWq0UKO7jr3HvZVhis3ew+VGJ/BoCPu3lpU0HDsjjulfng+xwqLfVOIzP3QnvBPdCA==
+"@react-leaflet/core@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@react-leaflet/core/-/core-2.1.0.tgz#383acd31259d7c9ae8fb1b02d5e18fe613c2a13d"
+  integrity sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==
 
 "@rollup/plugin-babel@^5.2.0":
   version "5.3.1"
@@ -5608,7 +5588,7 @@ internal-slot@^1.1.0:
     hasown "^2.0.2"
     side-channel "^1.1.0"
 
-invariant@2.2.4, invariant@^2.2.4:
+invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -6800,6 +6780,11 @@ launch-editor@^2.6.0:
   dependencies:
     picocolors "^1.1.1"
     shell-quote "^1.8.3"
+
+leaflet@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.9.4.tgz#23fae724e282fa25745aff82ca4d394748db7d8d"
+  integrity sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==
 
 leven@^3.1.0:
   version "3.1.0"
@@ -8953,6 +8938,13 @@ react-jss@^10.0.0:
     theming "^3.3.0"
     tiny-warning "^1.0.2"
 
+react-leaflet@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-4.2.1.tgz#c300e9eccaf15cb40757552e181200aa10b94780"
+  integrity sha512-p9chkvhcKrWn/H/1FFeVSqLdReGwn2qmiobOQGO3BifX+/vV/39qhY8dGqbdcPh1e6jxh/QHriLXr7a4eLFK4Q==
+  dependencies:
+    "@react-leaflet/core" "^2.1.0"
+
 react-markdown@^10.1.0:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-10.1.0.tgz#e22bc20faddbc07605c15284255653c0f3bad5ca"
@@ -10639,10 +10631,6 @@ tsparticles-preset-links@^2.3.2:
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/tsparticles-preset-links/-/tsparticles-preset-links-2.12.0.tgz#d91e663a0b189d29a86df5f7c99a65519064d1e5"
   integrity sha512-ZWr4oDUVt+166lEmgjNCzysOXmyYAMH2ZD9dGIbqxamXK2TRt1/2JOj4edExiA3Qjml1zIu8TJ24yGRFF+FFMA==
-  dependencies:
-    tsparticles-basic "^2.12.0"
-    tsparticles-engine "^2.12.0"
-    tsparticles-interaction-particles-links "^2.12.0"
 
 tsparticles-shape-circle@^2.12.0:
   version "2.12.0"

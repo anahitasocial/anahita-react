@@ -1,30 +1,75 @@
-import React, { useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  GoogleMap,
+  MapContainer,
   Marker,
-} from '@react-google-maps/api';
+  TileLayer,
+  useMap,
+} from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import LocationType from '../proptypes/Location';
 import utils from '../utils';
 
 const { getURL } = utils.node;
 
-const center = {
-  lat: -3.745,
-  lng: -38.523,
+// Leaflet points its default marker at image paths relative to the stylesheet,
+// which the bundler rewrites — hand it the imported assets instead.
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
+const TILE_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const TILE_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+const DEFAULT_CENTER = [-3.745, -38.523];
+const DEFAULT_ZOOM = 13;
+
+// A single location fits to a bounding box of zero size, which would zoom all
+// the way in — cap it the way the Google map used to.
+const MAX_FIT_ZOOM = 16;
+
+const hasCoordinates = (location) => {
+  return Number.isFinite(Number(location.latitude)) &&
+    Number.isFinite(Number(location.longitude));
 };
 
-const getBounds = (locations) => {
-  const { maps } = window.google;
-  const bounds = new maps.LatLngBounds();
-
-  locations.forEach((loc) => {
-    const latLng = new maps.LatLng(loc.latitude, loc.longitude);
-    bounds.extend(latLng);
+const getPoints = (locations) => {
+  return locations.filter(hasCoordinates).map((location) => {
+    return [Number(location.latitude), Number(location.longitude)];
   });
+};
 
-  return bounds;
+const FitBounds = ({ locations }) => {
+  const map = useMap();
+  const points = getPoints(locations);
+
+  // Depend on the coordinates by value: `locations` is a fresh array on every
+  // render, and re-fitting on each one would fight the user's panning.
+  const pointsKey = points.join('|');
+
+  useEffect(() => {
+    if (points.length === 0) {
+      return;
+    }
+
+    map.fitBounds(L.latLngBounds(points), {
+      maxZoom: MAX_FIT_ZOOM,
+      padding: [24, 24],
+    });
+  }, [map, pointsKey]);
+
+  return null;
+};
+
+FitBounds.propTypes = {
+  locations: PropTypes.arrayOf(LocationType).isRequired,
 };
 
 const AnahitaMap = ({
@@ -33,59 +78,42 @@ const AnahitaMap = ({
   height = 400,
   ...other
 }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [map, setMap] = useState(null);
   const navigate = useNavigate();
 
-  const onLoad = useCallback((newMap) => {
-    const bounds = getBounds(locations);
-    newMap.fitBounds(bounds);
-
-    const { maps } = window.google;
-    const listener = maps.event.addListener(newMap, 'idle', () => {
-      if (newMap.getZoom() > 16) {
-        newMap.setZoom(16);
-      }
-
-      maps.event.removeListener(listener);
-    });
-
-    setMap(newMap);
-  }, [locations]);
-
-  const onUnmount = useCallback(() => {
-    setMap(null);
-  }, []);
-
   return (
-    <GoogleMap
-      mapContainerStyle={{
+    <MapContainer
+      style={{
         width,
         height,
       }}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-      center={center}
+      center={DEFAULT_CENTER}
+      zoom={DEFAULT_ZOOM}
+      scrollWheelZoom={false}
       {...other}
     >
-      {locations.map((location) => {
+      <TileLayer
+        url={TILE_URL}
+        attribution={TILE_ATTRIBUTION}
+      />
+      <FitBounds locations={locations} />
+      {locations.filter(hasCoordinates).map((location) => {
         const key = `map-marker-${location.id}`;
         const { name, longitude, latitude } = location;
         return (
           <Marker
             key={key}
-            position={{
-              lng: longitude,
-              lat: latitude,
-            }}
+            position={[Number(latitude), Number(longitude)]}
             title={name}
-            onClick={() => {
-              navigate(getURL(location));
+            alt={name}
+            eventHandlers={{
+              click: () => {
+                navigate(getURL(location));
+              },
             }}
           />
         );
       })}
-    </GoogleMap>
+    </MapContainer>
   );
 };
 
