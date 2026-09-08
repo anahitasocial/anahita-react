@@ -50,16 +50,21 @@ const MediaStepper = ({
 
   const [isEditing, setIsEditing] = useState(false);
   const [fields, setFields] = useState(formFields);
-  const [currentId, setCurrentId] = useState(String(mediumId));
+  const [currentId, setCurrentId] = useState(mediumId);
   const [current, setCurrent] = useState({ ...MEDIUM_DEFAULT });
 
-  const currentIndex = items.allIds.indexOf(currentId);
+  // byId is a plain object, so its keys are strings while allIds holds whatever
+  // the API sent — numbers, here. Compare as strings so the index resolves
+  // either way; a -1 would send Next to the top of the list.
+  const currentIndex = items.allIds.findIndex((id) => {
+    return String(id) === String(currentId);
+  });
   const medium = items.byId[currentId];
 
   // The browse list reuses one mounted stepper, so a second thumbnail click
   // only changes this prop.
   useEffect(() => {
-    setCurrentId(String(mediumId));
+    setCurrentId(mediumId);
   }, [mediumId]);
 
   useEffect(() => {
