@@ -10,6 +10,7 @@ import MEDIUM_DEFAULT from '../../../proptypes/MediumDefault';
 import ControlLike from '../../likes/controls/Like';
 import ControlEditAccess from '../../controls/medium/Access';
 import Progress from '../../../components/Progress';
+import MediumStepper from '../Stepper';
 import MediaReadView from './MediaRead';
 
 import actions from '../../../actions';
@@ -41,7 +42,14 @@ const MediaRead = ({
   }, [namespace]);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isStepperOpen, setIsStepperOpen] = useState(false);
   const [fields, setFields] = useState(formFields);
+
+  // Same lightbox the browse list opens. Here the slice holds only the medium
+  // that was read, so it opens on a list of one and steps nowhere.
+  const Stepper = useMemo(() => {
+    return MediumStepper(namespace);
+  }, [namespace]);
 
   // The form edits a draft, not the medium in the store. Binding the inputs
   // straight to the store's copy is what froze them: nothing wrote back to it
@@ -61,6 +69,14 @@ const MediaRead = ({
       alertSuccess(i18n.t('prompts:updated.success'));
     }
   }, [error, success]);
+
+  const handleView = () => {
+    setIsStepperOpen(true);
+  };
+
+  const handleCloseStepper = () => {
+    setIsStepperOpen(false);
+  };
 
   const handleEdit = () => {
     setCurrent({ ...medium });
@@ -117,23 +133,32 @@ const MediaRead = ({
   const canEdit = perms.medium.canEdit(viewer, medium);
 
   return (
-    <MediaReadView
-      medium={medium}
-      current={current}
-      namespace={namespace}
-      viewer={viewer}
-      isAuthenticated={isAuthenticated}
-      isEditing={isEditing}
-      isFetching={isFetching}
-      fields={fields}
-      Like={Like}
-      Access={Access}
-      canEdit={canEdit}
-      handleEdit={handleEdit}
-      handleCancel={handleCancel}
-      handleOnChange={handleOnChange}
-      handleOnSubmit={handleOnSubmit}
-    />
+    <>
+      {isStepperOpen &&
+        <Stepper
+          mediumId={medium.id}
+          open={isStepperOpen}
+          handleClose={handleCloseStepper}
+        />}
+      <MediaReadView
+        medium={medium}
+        current={current}
+        namespace={namespace}
+        viewer={viewer}
+        isAuthenticated={isAuthenticated}
+        isEditing={isEditing}
+        isFetching={isFetching}
+        fields={fields}
+        Like={Like}
+        Access={Access}
+        canEdit={canEdit}
+        handleView={handleView}
+        handleEdit={handleEdit}
+        handleCancel={handleCancel}
+        handleOnChange={handleOnChange}
+        handleOnSubmit={handleOnSubmit}
+      />
+    </>
   );
 };
 

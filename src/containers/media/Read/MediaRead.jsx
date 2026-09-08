@@ -32,6 +32,7 @@ const MediaReadView = ({
   Like,
   Access,
   canEdit,
+  handleView,
   handleEdit,
   handleCancel,
   handleOnChange,
@@ -43,6 +44,7 @@ const MediaReadView = ({
 
   const mediumProps = {
     medium,
+    handleView: portrait ? handleView : null,
     access: canEdit && medium.access && <Access medium={medium} size="small" />,
     editing: isEditing,
     cover: (
@@ -123,6 +125,7 @@ MediaReadView.propTypes = {
   Like: PropTypes.elementType.isRequired,
   Access: PropTypes.elementType.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  handleView: PropTypes.func.isRequired,
   handleEdit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
   handleOnChange: PropTypes.func.isRequired,

@@ -6,6 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
@@ -19,31 +20,14 @@ import ActorAvatar from '../../../components/ActorAvatar';
 import CardHeaderOwner from '../../../components/MediumOwnerCardHeader';
 import Player from '../../../components/Player';
 import EntityBody from '../../../components/NodeBody';
+import i18n from '../../../languages';
 import utils from '../../../utils';
+import styles from './styles';
 
 const {
   getAuthor,
   getPortraitURL,
 } = utils.node;
-
-const styles = (theme) => {
-  return {
-    cover: {
-      height: 0,
-      paddingTop: '30%',
-    },
-    title: {
-      fontSize: 36,
-      marginBottom: theme.spacing(2),
-    },
-    authorName: {
-      fontSize: 16,
-    },
-    ownerName: {
-      fontSize: 12,
-    },
-  };
-};
 
 const TABS = {
   COMMENTS: 'comments',
@@ -61,6 +45,7 @@ const MediumReadArticle = ({
   editing = false,
   form = null,
   stats = null,
+  handleView = null,
   cover = null,
 }) => {
   const [tab, setTab] = useState(TABS.COMMENTS);
@@ -73,6 +58,15 @@ const MediumReadArticle = ({
   const author = getAuthor(medium);
   const creationTime = moment.utc(medium.creationTime).local().format('LLL').toString();
 
+  const portraitMedia = (
+    <CardMedia
+      component="img"
+      title={medium.name}
+      alias={medium.name}
+      image={portrait}
+    />
+  );
+
   return (
     <Grid
       container
@@ -83,13 +77,15 @@ const MediumReadArticle = ({
           {medium.owner.objectType.split('.')[1] !== 'people' &&
             <CardHeaderOwner node={medium} />}
           {cover}
-          {portrait &&
-            <CardMedia
-              component="img"
-              title={medium.name}
-              alias={medium.name}
-              image={portrait}
-            />}
+          {portrait && handleView &&
+            <ButtonBase
+              className={classes.portraitButton}
+              onClick={handleView}
+              aria-label={i18n.t('media:stepper.open')}
+            >
+              {portraitMedia}
+            </ButtonBase>}
+          {portrait && !handleView && portraitMedia}
           <CardHeader
             avatar={
               <ActorAvatar
@@ -167,6 +163,7 @@ MediumReadArticle.propTypes = {
   form: PropTypes.node,
   stats: PropTypes.node,
   editing: PropTypes.bool,
+  handleView: PropTypes.func,
   cover: PropTypes.node,
 };
 
