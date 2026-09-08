@@ -17,7 +17,15 @@
 export const SECTIONS = {
   ACCOUNT: 'account',
   SECURITY: 'security',
-  PRIVACY: 'privacy',
+  // "Access", not "Privacy". The card inside it edits a field called access,
+  // the API calls it access, and the options are access levels — one word for
+  // one concept, so nobody has to work out whether they are the same thing.
+  //
+  // The key is in the URL (/people/:id/settings/access). An old
+  // /settings/privacy link now falls through resolveSection to the default
+  // section rather than erroring, which is the right way for a renamed tab to
+  // age.
+  ACCESS: 'access',
   DANGER: 'danger',
 };
 
@@ -74,7 +82,7 @@ const ALL_SECTIONS = [
     ],
   },
   {
-    key: SECTIONS.PRIVACY,
+    key: SECTIONS.ACCESS,
     items: [
       { key: ITEMS.ACCESS, bare: false, viewerOnly: false },
     ],

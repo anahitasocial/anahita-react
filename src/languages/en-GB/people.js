@@ -84,7 +84,7 @@ export default {
     sections: {
       account: 'Account',
       security: 'Security',
-      privacy: 'Privacy',
+      access: 'Access',
       danger: 'Danger zone',
     },
   },
