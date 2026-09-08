@@ -27,8 +27,11 @@ const read = (cid, node) => {
 };
 
 const edit = (comment) => {
-  const { id, parentId, body } = comment;
-  const path = `/comments/${parentId}/${id}`;
+  const { id, parent, body } = comment;
+  // parent.id, the way add and deleteItem below already build their paths.
+  // `parentId` is not a field on any comment response, so this always sent
+  // /comments/undefined/<id>.
+  const path = `/comments/${parent.id}/${id}`;
   return axios.patch(path, constructFormData({
     body,
   }));

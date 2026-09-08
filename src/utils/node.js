@@ -137,13 +137,6 @@ const getAuthor = (node) => {
   };
 };
 
-const getCommentURL = (comment) => {
-  const { id, parentId, type } = comment;
-  const service = type.split('.')[2];
-
-  return `/${pluralize(service)}/${parentId}/#${id}`;
-};
-
 const getCoverURL = (node, size = 'medium') => {
   return node.coverUrls && node.coverUrls[size] && node.coverUrls[size].url;
 };
@@ -246,6 +239,20 @@ const getServiceName = (node) => {
 const getNamespace = (node) => {
   const entityName = node.type.split('.')[3];
   return pluralize(entityName);
+};
+
+const getCommentURL = (comment) => {
+  const { parent } = comment;
+
+  // A comment permalink points at the node the comment is on. Both halves
+  // were wrong: `parentId` is not a field any comment response carries, and
+  // splitting the COMMENT's own type gave `comment-service`, which is not a
+  // route — every permalink read /comment-services/undefined/#<id>.
+  if (!parent || !parent.type) {
+    return '';
+  }
+
+  return `/${getNamespace(parent)}/${parent.id}/#${comment.id}`;
 };
 
 const getSupportedMimetypes = (namespace) => {
