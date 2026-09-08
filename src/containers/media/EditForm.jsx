@@ -32,7 +32,7 @@ const MediumFormEdit = (props) => {
         {fields.name &&
           <TextField
             name="name"
-            value={medium.name}
+            value={medium.name || ''}
             onChange={handleOnChange}
             label={i18n.t('media:medium.title')}
             error={fields.name.error !== ''}
@@ -50,7 +50,7 @@ const MediumFormEdit = (props) => {
         {fields.body &&
           <TextField
             name="body"
-            value={medium.body}
+            value={medium.body || ''}
             onChange={handleOnChange}
             label={i18n.t('media:medium.description')}
             error={fields.body.error !== ''}

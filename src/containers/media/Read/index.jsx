@@ -5,6 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 
 import PersonType from '../../../proptypes/Person';
 import MediaType from '../../../proptypes/Media';
+import MEDIUM_DEFAULT from '../../../proptypes/MediumDefault';
 
 import ControlLike from '../../likes/controls/Like';
 import ControlEditAccess from '../../controls/medium/Access';
@@ -42,6 +43,11 @@ const MediaRead = ({
   const [isEditing, setIsEditing] = useState(false);
   const [fields, setFields] = useState(formFields);
 
+  // The form edits a draft, not the medium in the store. Binding the inputs
+  // straight to the store's copy is what froze them: nothing wrote back to it
+  // on change, so every keystroke was rendered away.
+  const [current, setCurrent] = useState({ ...MEDIUM_DEFAULT });
+
   useEffect(() => {
     readItem(id, namespace);
     setAppTitle(i18n.t(`${namespace}:cTitle`));
@@ -57,16 +63,23 @@ const MediaRead = ({
   }, [error, success]);
 
   const handleEdit = () => {
+    setCurrent({ ...medium });
+    setFields(utils.form.dataToFields(medium, formFields));
     setIsEditing(true);
   };
 
   const handleCancel = () => {
+    setCurrent({ ...MEDIUM_DEFAULT });
+    setFields(formFields);
     setIsEditing(false);
   };
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
     const newFields = utils.form.validateField(event.target, fields);
+    setCurrent((prev) => {
+      return { ...prev, [name]: value };
+    });
     setFields({ ...newFields, [name]: { ...newFields[name], value } });
   };
 
@@ -78,8 +91,11 @@ const MediaRead = ({
     if (utils.form.isValid(newFields)) {
       const formData = utils.form.fieldsToData(newFields);
       editItem({
-        id: medium.id,
+        id: current.id,
         ...formData,
+      }).then(handleCancel).catch(() => {
+        // The error alert already reports the failure; leave the form open so
+        // the edit is not thrown away.
       });
     }
 
@@ -103,6 +119,7 @@ const MediaRead = ({
   return (
     <MediaReadView
       medium={medium}
+      current={current}
       namespace={namespace}
       viewer={viewer}
       isAuthenticated={isAuthenticated}

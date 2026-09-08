@@ -22,6 +22,7 @@ const { getPortraitURL, getCoverURL } = utils.node;
 
 const MediaReadView = ({
   medium,
+  current,
   namespace,
   viewer,
   isAuthenticated,
@@ -52,7 +53,7 @@ const MediaReadView = ({
     ),
     form: (
       <MediumForm
-        medium={medium}
+        medium={current}
         fields={fields}
         handleOnChange={handleOnChange}
         handleOnSubmit={handleOnSubmit}
@@ -112,6 +113,7 @@ const MediaReadView = ({
 
 MediaReadView.propTypes = {
   medium: MediumType.isRequired,
+  current: PropTypes.object.isRequired,
   namespace: PropTypes.string.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
