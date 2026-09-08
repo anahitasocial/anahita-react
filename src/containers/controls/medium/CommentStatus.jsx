@@ -23,7 +23,10 @@ const ControlsMediumCommentStatus = React.forwardRef((props, ref) => {
     const payload = { ...medium };
     const namespace = utils.node.getNamespace(medium);
 
-    payload.openToComment = !medium.openToComment;
+    // commentStatus is the API's comment_status. This used to read and write
+    // openToComment, a field no medium has ever carried, so the flag was always
+    // undefined and every toggle asked to open.
+    payload.commentStatus = !medium.commentStatus;
 
     setIsFetching(true);
 
@@ -36,7 +39,7 @@ const ControlsMediumCommentStatus = React.forwardRef((props, ref) => {
     });
   };
 
-  const label = medium.openToComment ? i18n.t('actions:closeComments') : i18n.t('actions:openComments');
+  const label = medium.commentStatus ? i18n.t('actions:closeComments') : i18n.t('actions:openComments');
 
   return (
     <MenuItem

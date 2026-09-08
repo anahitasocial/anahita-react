@@ -3,12 +3,13 @@ import utils from '../utils';
 
 const { constructFormData } = utils.api;
 
+// Comment status has its own route, like access: PATCH /{namespace}/{id}/commentstatus.
+// The monolith's POST /{namespace}/{id} with action=commentstatus has no route
+// in the services stack and answered 405.
 const edit = (namespace) => {
   return (node) => {
-    const { openToComment } = node;
-    return axios.post(`/${namespace}/${node.id}`, constructFormData({
-      action: 'commentstatus',
-      status: openToComment ? 1 : 0,
+    return axios.patch(`/${namespace}/${node.id}/commentstatus`, constructFormData({
+      status: node.commentStatus ? 1 : 0,
     }));
   };
 };

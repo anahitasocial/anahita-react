@@ -169,7 +169,7 @@ const MediaStepperView = ({
         comments={
           <MediumComments
             parent={medium}
-            canAdd={isAuthenticated && medium.openToComment}
+            canAdd={isAuthenticated && medium.commentStatus}
             key={`${namespace}-comments-${medium.id}`}
             cardProps={{ variant: 'outlined' }}
           />
