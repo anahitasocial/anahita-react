@@ -27,16 +27,20 @@ const isPerson = (node) => {
   return node.type && node.type.includes('person');
 };
 
+// Guarded against a missing actor: nobody is not an administrator. A caller
+// that forgets to pass the viewer should lose the privilege, not take down
+// the page it is rendering — the locations tab in the stepper did exactly
+// that, dying on `undefined.usertype` before it drew anything.
 const isSuperAdmin = (actor) => {
-  return actor.usertype === SUPER_ADMIN;
+  return Boolean(actor) && actor.usertype === SUPER_ADMIN;
 };
 
 const isAdmin = (actor) => {
-  return [SUPER_ADMIN, ADMIN].includes(actor.usertype);
+  return Boolean(actor) && [SUPER_ADMIN, ADMIN].includes(actor.usertype);
 };
 
 const isRegistered = (actor) => {
-  return [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.usertype);
+  return Boolean(actor) && [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.usertype);
 };
 
 const isMedium = (node) => {

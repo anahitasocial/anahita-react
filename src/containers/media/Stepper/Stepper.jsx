@@ -177,6 +177,7 @@ const MediaStepperView = ({
         locations={
           <LocationsGadget
             node={medium}
+            viewer={viewer}
             key={`${namespace}-locations-${medium.id}`}
           />
         }
