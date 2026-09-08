@@ -44,6 +44,7 @@ const LocationsList = ({
   isFetching,
   cardProps = {},
   selectedLocations = [],
+  onChange = null,
 }) => {
   const classes = useStyles();
 
@@ -83,9 +84,15 @@ const LocationsList = ({
     return location.id;
   });
 
-  if (keyword !== '' && !isFetching && items.allIds.length === 0 && noResultsCallback) {
-    noResultsCallback(keyword);
-  }
+  // A search that finds nothing offers to create the location instead. This
+  // ran during render and called setState on the parent from there, which
+  // React refuses to do quietly — it warned and could re-enter the render it
+  // was already in, switching tabs out from under whoever was typing.
+  useEffect(() => {
+    if (keyword !== '' && !isFetching && items.allIds.length === 0 && noResultsCallback) {
+      noResultsCallback(keyword);
+    }
+  }, [keyword, isFetching, items.allIds.length]);
 
   return (
     <Card
@@ -117,7 +124,12 @@ const LocationsList = ({
                 <ControlAdd
                   tag={location}
                   node={node}
-                  callback={handleClose}
+                  callback={() => {
+                    if (onChange) {
+                      onChange();
+                    }
+                    handleClose();
+                  }}
                 />}
             />
           );
@@ -139,6 +151,7 @@ LocationsList.propTypes = {
   noResultsCallback: PropTypes.func,
   cardProps: PropTypes.objectOf(PropTypes.any),
   selectedLocations: PropTypes.arrayOf(NodeType),
+  onChange: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {

@@ -15,6 +15,7 @@ const ControlsTagsLocationDelete = React.forwardRef((props, ref) => {
     deleteTag,
     node,
     tag,
+    callback = null,
   } = props;
 
   const [isWaiting, setIsWaiting] = useState(false);
@@ -29,6 +30,9 @@ const ControlsTagsLocationDelete = React.forwardRef((props, ref) => {
         deleteTag(node, tag)
           .then(() => {
             setIsWaiting(false);
+            if (callback) {
+              callback();
+            }
           })
           .catch((err) => {
             setIsWaiting(false);
@@ -46,6 +50,7 @@ ControlsTagsLocationDelete.propTypes = {
   deleteTag: PropTypes.func.isRequired,
   node: NodeType.isRequired,
   tag: TagType.isRequired,
+  callback: PropTypes.func,
 };
 
 const mapStateToProps = () => {

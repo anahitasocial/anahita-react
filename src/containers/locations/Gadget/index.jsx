@@ -46,6 +46,18 @@ const LocationsGadget = ({
   const [locations, setLocations] = useState([]);
   const [waiting, setWaiting] = useState(false);
 
+  // This list is component state, not redux — so a tag added or removed
+  // elsewhere in the tree cannot reach it on its own. Bumping this re-runs
+  // the browse below, which is what the add and delete controls now do once
+  // their request has come back.
+  const [revision, setRevision] = useState(0);
+
+  const handleChanged = () => {
+    setRevision((current) => {
+      return current + 1;
+    });
+  };
+
   useEffect(() => {
     setWaiting(true);
     api.locations.browse({
@@ -61,7 +73,7 @@ const LocationsGadget = ({
       .catch((error) => {
         console.error(error);
       });
-  }, [node.id]);
+  }, [node.id, revision]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -85,6 +97,7 @@ const LocationsGadget = ({
           handleClose={handleClose}
           cardProps={cardProps}
           selectedLocations={locations}
+          onChange={handleChanged}
         />}
       <Card {...cardProps}>
         <CardHeader
@@ -113,7 +126,12 @@ const LocationsGadget = ({
               <ListItem
                 key={`location-graph-list-item-${location.id}`}
                 location={location}
-                actions={canDelete && <ControlDelete tag={location} node={node} />}
+                actions={canDelete &&
+                  <ControlDelete
+                    tag={location}
+                    node={node}
+                    callback={handleChanged}
+                  />}
               />
             );
           })}

@@ -43,6 +43,7 @@ const LocationsSelector = ({
   isGeolocationAvailable,
   isGeolocationEnabled,
   selectedLocations = [],
+  onChange = null,
 }) => {
   const classes = useStyles();
 
@@ -56,6 +57,14 @@ const LocationsSelector = ({
 
   const changeTab = (event, value) => {
     setTab(value);
+  };
+
+  // Tell the gadget that opened this dialog to re-read its list. Both tabs
+  // end in a tag being created, and neither could reach that list before.
+  const handleChanged = () => {
+    if (onChange) {
+      onChange();
+    }
   };
 
   if (node.longitude && node.latitude) {
@@ -121,12 +130,14 @@ const LocationsSelector = ({
               setTab(TABS.ADD);
             }}
             selectedLocations={selectedLocations}
+            onChange={handleChanged}
           />}
         {tab === TABS.ADD &&
           <AddLocation
             node={node}
             name={keyword}
             callback={() => {
+              handleChanged();
               handleClose();
             }}
           />}
@@ -140,6 +151,7 @@ LocationsSelector.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   selectedLocations: PropTypes.arrayOf(NodeType),
+  onChange: PropTypes.func,
   ...geoPropTypes,
 };
 
