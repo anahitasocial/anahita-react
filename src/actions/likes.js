@@ -74,13 +74,26 @@ const addSuccess = (namespace) => {
     const {
       results,
       child,
+      node,
+      comment = null,
     } = params;
 
     const { data } = results;
 
+    // Merge over what is already in the store rather than replacing it. The
+    // like endpoint answers with its own narrower view of the node, which
+    // carries no `authorized` block — so replacing the comment wholesale left
+    // CommentMenu reading `.edit` on undefined. Unlike has always merged
+    // locally; liking was the one that threw the rest of the node away.
+    const newNode = {
+      ...(comment || node),
+      ...data,
+      isLikedByViewer: true,
+    };
+
     return {
       type: `${namespace.toUpperCase()}_LIKES_ADD_SUCCESS`,
-      node: data,
+      node: newNode,
       child,
     };
   };
