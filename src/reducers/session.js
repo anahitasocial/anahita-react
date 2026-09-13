@@ -12,10 +12,15 @@ const { VIEWER_STORAGE_KEY } = AUTH;
 
 // Keyed on having an identity that isn't the guest role, rather than on
 // an allowlist of privileged roles. An allowlist reads any viewer whose
-// cached profile is missing `usertype` as signed out — which is exactly
+// cached profile is missing its role as signed out — which is exactly
 // what happened when /oauth/userinfo stopped returning that claim.
+//
+// `personType`, camelCase, like every other actor. The claim itself was
+// renamed from `usertype` to `person_type`, and api/session.js now camel-cases
+// the response — so a viewer cached under the old spelling reads as a guest
+// once and is replaced by the fetch that follows.
 const isViewerAuthenticated = (item) => {
-  return Boolean(item.id) && item.usertype !== GUEST;
+  return Boolean(item.id) && item.personType !== GUEST;
 };
 
 const viewer = localStorage.getItem(VIEWER_STORAGE_KEY) ?

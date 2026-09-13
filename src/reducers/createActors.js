@@ -6,7 +6,7 @@ import { Person as PERSON } from '../constants';
 export default (namespace) => {
   const { REGISTERED } = PERSON.FIELDS.USERTYPE;
   const DEFAULT_NODE = namespace === 'people' ?
-    { ...PERSON_DEFAULT, usertype: REGISTERED } :
+    { ...PERSON_DEFAULT, personType: REGISTERED } :
     ACTOR_DEFAULT;
 
   return (state, action) => {

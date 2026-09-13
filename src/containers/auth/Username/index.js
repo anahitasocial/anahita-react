@@ -51,7 +51,7 @@ const Username = ({
   // session viewer is not refreshed by this request, so after a
   // successful change the store still carries the old handle and the
   // card would claim nothing had happened.
-  const [currentUsername, setCurrentUsername] = useState(viewer.username || '');
+  const [currentUsername, setCurrentUsername] = useState(viewer.alias || '');
 
   const resetForm = () => {
     setFields(formFields);

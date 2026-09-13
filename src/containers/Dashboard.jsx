@@ -20,8 +20,8 @@ const DashboardPage = ({
 }) => {
   useEffect(() => {
     setAppTitle(i18n.t('dashboard:cTitle'));
-    readPerson(viewer.username);
-  }, [setAppTitle, readPerson, viewer.username]);
+    readPerson(viewer.alias);
+  }, [setAppTitle, readPerson, viewer.alias]);
 
   return (
     <>

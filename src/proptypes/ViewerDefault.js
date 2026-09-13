@@ -1,6 +1,6 @@
 export default {
   id: 0,
-  username: '',
+  alias: '',
   email: '',
   personType: 'registered',
   avatarURLs: {},

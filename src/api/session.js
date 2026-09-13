@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
 import { Auth as AUTH } from '../constants';
+import utils from '../utils/api';
 
 // Endpoints the browser must *navigate* to (they redirect, and in the
 // case of logout across hosts) need an absolute URL. Endpoints called
@@ -16,7 +17,7 @@ const OAUTH_CONFIG = {
   userinfoUrl: '/oauth/userinfo',
   // Space-delimited per RFC 6749 §3.3. `openid` alone gets you a
   // userinfo response containing nothing but `sub` — the profile claims
-  // the app reads off the viewer (id, name, username, usertype) are
+  // the app reads off the viewer (id, name, alias, personType) are
   // gated behind `profile`, and the address behind `email`. See
   // constants/auth for why the role-gated scopes are safe to ask for.
   scopes: AUTH.SCOPES.join(' '),
@@ -80,8 +81,25 @@ const exchangeCode = (code) => {
     });
 };
 
+// Camel-cased on the way in, so the viewer is shaped like every other actor
+// in the app.
+//
+// This module talks to axios directly rather than through the interceptor in
+// api/index.js — it has to, because the OAuth endpoints are the one place that
+// must not have its request keys snake-cased — and the side effect was that
+// the viewer was the ONE object arriving in its raw wire spelling. Everything
+// else in the app had been taught the camelCase rule; the viewer had not, so
+// `person_type` never became `personType`, every permission helper read
+// undefined, and administration controls were off for everybody.
+//
+// Only the response is converted. The request side stays untouched.
 const read = () => {
-  return axios.get(OAUTH_CONFIG.userinfoUrl);
+  return axios.get(OAUTH_CONFIG.userinfoUrl).then((response) => {
+    return {
+      ...response,
+      data: utils.camelCaseKeys(response.data),
+    };
+  });
 };
 
 // Logout is a GET that answers with a chain of redirects, not an API

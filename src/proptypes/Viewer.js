@@ -12,7 +12,7 @@ const { USERTYPE } = PERSON.FIELDS;
 
 export default shape({
   id: number,
-  username: string,
+  alias: string,
   email: string,
   personType: oneOf([
     USERTYPE.GUEST,

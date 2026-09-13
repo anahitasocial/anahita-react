@@ -33,7 +33,7 @@ const AuthViewer = ({
   isAuthenticated = false,
   login,
 }) => {
-  const profile = `/people/${viewer.username}/`;
+  const profile = `/people/${viewer.alias}/`;
   const initials = getActorInitials(viewer);
   const avatar = getAvatarURL(viewer);
 
@@ -57,7 +57,7 @@ const AuthViewer = ({
         >
           <div className={classes.avatarContent}>
             <Avatar
-              alt={viewer.username}
+              alt={viewer.alias}
               src={avatar || undefined}
               className={classes.avatar}
             >
