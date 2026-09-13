@@ -12,6 +12,9 @@ const OAUTH_CONFIG = {
   redirectUri: `${window.location.origin}/oauth/callback`,
   authorizeUrl: `${API_BASE_URL}/oauth/authorize`,
   logoutUrl: `${API_BASE_URL}/oauth/logout`,
+  // Signup is a page on auth-service, not something this app renders. Like
+  // authorize and logout, the browser NAVIGATES here — it does not fetch.
+  signupUrl: `${API_BASE_URL}/signup`,
   sessionUrl: '/oauth/session',
   userinfoUrl: '/oauth/userinfo',
   // Space-delimited per RFC 6749 §3.3. `openid` alone gets you a
@@ -106,9 +109,18 @@ const deleteItem = () => {
   return Promise.resolve();
 };
 
+// signup sends the browser to auth-service's signup page.
+//
+// A navigation rather than an XHR, for the same reason login is: the page sets
+// its own CSRF-bound form and its own session cookie, on its own host.
+const signup = () => {
+  window.location.href = OAUTH_CONFIG.signupUrl;
+};
+
 export default {
   read,
   login,
+  signup,
   exchangeCode,
   deleteItem,
 };

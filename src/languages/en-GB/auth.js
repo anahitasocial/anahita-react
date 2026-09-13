@@ -13,6 +13,7 @@ export default {
   signup: {
     cTitle: 'Please signup',
     mTitle: 'Signup',
+    invitation: 'New here? Create an account, or sign in if you already have one.',
     closed: 'This site is not open for registration. You need an invitation to join.',
     displayName: 'Display name',
     displayNameHelp: 'This is how your name appears to other people.',

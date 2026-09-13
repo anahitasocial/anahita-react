@@ -1,30 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
-import Signup from './Signup';
+import LockIcon from '@material-ui/icons/LockOutlined';
+
 import api from '../../api';
 import i18n from '../../languages';
 
-// Whether this site takes registrations is the SERVER's answer, read from
-// NodeInfo.
+// Where somebody lands when they are not signed in.
 //
-// It used to be REACT_APP_SIGNUP_CLOSED, a build-time variable in the browser.
-// That hid the tab and nothing else: POST /signups stayed open to anybody who
-// noticed it existed, so "signups are closed" was true of the interface and
-// false of the service. The flag is gone.
+// THIS APP NO LONGER SIGNS ANYBODY UP. Signing in and creating an account both
+// happen on auth-service, on server-rendered pages, and this page is two
+// buttons that navigate there.
 //
-// Starts as null — not-yet-known, which is different from open and from
-// closed. Rendering the tab before the answer arrives shows a form that may be
-// about to be refused; rendering nothing shows a bare page to somebody on a
-// site that is open. So neither is shown until it is known.
+// The form used to be here, posting to a JSON endpoint. That was wrong in
+// three ways at once: a password travelled through a bundle with hundreds of
+// packages behind it, "registration is closed" was a build-time flag the
+// browser held while the endpoint stayed open, and the anti-bot measures worth
+// having — a honeypot, submission timing, a CSRF-bound form — cannot be done
+// in code an attacker reads.
+//
+// What is left here is the one question this app still has to answer: whether
+// to offer the create-account button at all. That comes from NodeInfo, which
+// is the server's own answer and the one the signup page itself enforces.
 const Auth = () => {
-  const defaultTab = useParams().tab === 'signup' ? 1 : 0;
-
-  const [tab, setTab] = useState(defaultTab);
+  // null is a third state — not yet known — and it is why neither button is
+  // drawn until the answer arrives. Offering an account that is about to be
+  // refused, or withholding one on a site that is open, are both worse than a
+  // moment of nothing.
   const [signupOpen, setSignupOpen] = useState(null);
 
   useEffect(() => {
@@ -37,10 +47,8 @@ const Auth = () => {
         }
       })
       .catch(() => {
-        // A NodeInfo this client cannot read means the answer is unknown, and
-        // unknown is treated as closed. Offering a form that is about to be
-        // refused is a worse failure than not offering one — somebody who was
-        // invited still has their link, and it does not come through here.
+        // Unknown is treated as closed. Somebody who was invited still has
+        // their link, and it does not come through this page.
         if (!cancelled) {
           setSignupOpen(false);
         }
@@ -51,44 +59,55 @@ const Auth = () => {
     };
   }, []);
 
-  const handleChangeTab = (event, newTab) => {
-    setTab(newTab);
-  };
-
   if (signupOpen === null) {
     return null;
   }
 
   return (
-    <>
-      <AppBar
-        position="sticky"
-        color="inherit"
-      >
-        <Tabs
-          value={tab}
-          onChange={handleChangeTab}
-          centered
-          variant="fullWidth"
-          indicatorColor="primary"
-          textColor="primary"
-        >
-          {signupOpen && <Tab label={i18n.t('auth:signup.mTitle')} />}
-        </Tabs>
-      </AppBar>
-      {tab === 1 && signupOpen && <Signup />}
-      {/* Said rather than left blank. A page with a sign-in tab and nothing
-          else reads as broken; this reads as a decision, which it is. */}
-      {!signupOpen &&
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          align="center"
-          style={{ padding: 16 }}
-        >
-          {i18n.t('auth:signup.closed')}
-        </Typography>}
-    </>
+    <Container maxWidth="sm">
+      <Card>
+        <CardHeader
+          avatar={
+            <Avatar>
+              <LockIcon />
+            </Avatar>
+          }
+          title={
+            <Typography variant="h6">
+              {i18n.t('auth:cTitle')}
+            </Typography>
+          }
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary">
+            {signupOpen
+              ? i18n.t('auth:signup.invitation')
+              : i18n.t('auth:signup.closed')}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={() => { return api.session.login(); }}
+          >
+            {i18n.t('actions:login')}
+          </Button>
+        </CardActions>
+        {signupOpen &&
+          <CardActions>
+            <Button
+              variant="outlined"
+              color="primary"
+              fullWidth
+              onClick={() => { return api.session.signup(); }}
+            >
+              {i18n.t('auth:signup.mTitle')}
+            </Button>
+          </CardActions>}
+      </Card>
+    </Container>
   );
 };
 

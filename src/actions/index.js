@@ -10,7 +10,6 @@ import commentsInline from './commentsInline';
 import likes from './likes';
 import password from './password';
 import session from './session';
-import signup from './signup';
 import socialgraph from './socialgraph';
 import stories from './stories';
 import inbounds from './inbound';
@@ -47,7 +46,6 @@ const actions = {
   likes,
   password,
   session,
-  signup,
   socialgraph,
   stories,
   inbounds,

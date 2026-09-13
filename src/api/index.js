@@ -26,7 +26,6 @@ import password from './password';
 import reauth from './reauth';
 import repost from './feed/repost';
 import session from './session';
-import signup from './signup';
 import socialgraph from './socialgraph';
 import inbounds from './inbounds';
 import tagGraph from './tag_graph';
@@ -128,7 +127,6 @@ const apis = {
   reauth,
   repost,
   session,
-  signup,
   socialgraph,
   inbounds,
   tagGraph,

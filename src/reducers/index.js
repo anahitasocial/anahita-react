@@ -11,7 +11,6 @@ import password from './password';
 import search from './search';
 import settingsAbout from './settings/about';
 import session from './session';
-import signup from './signup';
 import socialgraph from './socialgraph';
 import stories from './stories';
 
@@ -56,7 +55,6 @@ const reducers = {
   search,
   settingsAbout,
   session,
-  signup,
   socialgraph,
   stories,
 };
