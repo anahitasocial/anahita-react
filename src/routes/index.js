@@ -24,6 +24,7 @@ import ActorsSettings from '../containers/actors/Settings';
 import ActorsNotificationsEdit from '../containers/actors/Notifications/Edit';
 
 import Blogs from '../containers/blogs';
+import SupportPage from '../containers/support';
 
 import Hashtags from '../containers/hashtags';
 import HashtagsRead from '../containers/hashtags/Read';
@@ -122,6 +123,10 @@ function AppRoutes() {
       />
 
       <Route path="/blogs" element={<Blogs />} />
+      {/* Public on purpose. The emails that link here go to somebody who
+          cannot sign in, so gating it would make it reachable only by the
+          people who do not need it. */}
+      <Route path="/support" element={<SupportPage />} />
       <Route path="/search" element={<SearchPage />} />
 
       <Route

@@ -15,6 +15,7 @@ import dashboard from './dashboard';
 import home from './home';
 import documents from './documents';
 import settings from './settings';
+import support from './support';
 import groups from './groups';
 import people from './people';
 import notes from './notes';
@@ -48,6 +49,7 @@ export default {
   home,
   documents,
   settings,
+  support,
   groups,
   people,
   notes,
