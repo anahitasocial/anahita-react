@@ -18,6 +18,7 @@ import is from './is';
 import likes from './likes';
 import locations from './locations';
 import node from './node';
+import nodeinfo from './nodeinfo';
 import notifications from './notifications';
 import notificationsSub from './notifications/sub';
 import oauthClients from './oauthClients';
@@ -119,6 +120,7 @@ const apis = {
   likes,
   locations,
   node,
+  nodeinfo,
   notifications,
   notificationsSub,
   oauthClients,

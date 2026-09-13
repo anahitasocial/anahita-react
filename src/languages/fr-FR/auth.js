@@ -13,6 +13,7 @@ export default {
   signup: {
     cTitle: 'Veuillez vous inscrire',
     mTitle: 'Inscription',
+    closed: "Ce site n'est pas ouvert aux inscriptions. Une invitation est nécessaire pour nous rejoindre.",
     displayName: "Nom d'affichage",
     displayNameHelp: 'Voici comment votre nom apparaît aux autres.',
     username: "Nom d'utilisateur",
