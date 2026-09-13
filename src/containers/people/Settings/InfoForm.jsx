@@ -4,12 +4,8 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 
 import PersonType from '../../../proptypes/Person';
@@ -20,7 +16,6 @@ import i18n from '../../../languages';
 const {
   NAME,
   BODY,
-  USERTYPE,
 } = PERSON.FIELDS;
 
 const PersonInfo = ({
@@ -29,8 +24,6 @@ const PersonInfo = ({
   handleOnCancel,
   fields,
   person,
-  canChangeUsertype,
-  isSuperAdmin,
   isFetching = false,
   enabled = null,
 }) => {
@@ -48,12 +41,6 @@ const PersonInfo = ({
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
-      {!canChangeUsertype &&
-        <input
-          type="hidden"
-          name="personType"
-          value={person.personType}
-        />}
       <CardContent>
         {enabled}
         <TextField
@@ -99,35 +86,22 @@ const PersonInfo = ({
             onChange={handleOnChange}
           />
         </FormControl>
-        {canChangeUsertype &&
-        <FormControl margin="normal" fullWidth>
-          <FormLabel component="legend">
-            {i18n.t('people:person.usertype')}
-          </FormLabel>
-          <RadioGroup
-            aria-label="usertype"
-            name="usertype"
-            value={person.usertype}
-            onChange={handleOnChange}
-          >
-            <FormControlLabel
-              value={USERTYPE.REGISTERED}
-              control={<Radio />}
-              label={i18n.t('people:person.usertypeOptions.registered')}
-            />
-            <FormControlLabel
-              value={USERTYPE.ADMIN}
-              control={<Radio />}
-              label={i18n.t('people:person.usertypeOptions.administrator')}
-            />
-            {isSuperAdmin &&
-              <FormControlLabel
-                value={USERTYPE.SUPER_ADMIN}
-                control={<Radio />}
-                label={i18n.t('people:person.usertypeOptions.super-administrator')}
-              />}
-          </RadioGroup>
-        </FormControl>}
+        {/* The role radio group was removed here.
+
+            It read `person.usertype` while the API sends `person_type`, which
+            camel-cases to `personType` — so nothing was ever selected — and it
+            submitted `usertype`, which no request binds. There is no
+            promote/demote endpoint at all: `person_type` is written by signup
+            and by the first-super-administrator seed, and nowhere else.
+
+            So the control could not show a role and could not change one. An
+            administrator using it believed they had, which is worse than it
+            not being there. It comes back when a deliberate promote/demote
+            flow exists — super-admin only, guarded against removing the last
+            super administrator, audited — not before.
+
+            InfoRead.jsx still DISPLAYS the role, correctly, off personType.
+            Reading it was never the broken half. */}
         <TextField
           name="websiteUrl"
           value={person.websiteUrl || ''}
@@ -178,8 +152,6 @@ PersonInfo.propTypes = {
   handleOnCancel: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   person: PersonType.isRequired,
-  canChangeUsertype: PropTypes.bool.isRequired,
-  isSuperAdmin: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   enabled: PropTypes.node,
 };

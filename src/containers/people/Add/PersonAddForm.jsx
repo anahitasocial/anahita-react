@@ -2,12 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
@@ -22,7 +18,6 @@ const {
   USERNAME,
   EMAIL,
   BODY,
-  TYPE,
 } = PERSON.FIELDS;
 
 const PersonAddForm = (props) => {
@@ -37,7 +32,6 @@ const PersonAddForm = (props) => {
       email,
     },
     person,
-    isSuperAdmin,
     dismissPath = '',
     isFetching,
   } = props;
@@ -131,34 +125,19 @@ const PersonAddForm = (props) => {
             onChange={handleOnChange}
           />
         </FormControl>
-        <FormControl component="fieldset" margin="normal" fullWidth>
-          <FormLabel component="legend">
-            {i18n.t('people:person.usertype')}
-          </FormLabel>
-          <RadioGroup
-            aria-label="usertype"
-            name="usertype"
-            value={person.usertype}
-            onChange={handleOnChange}
-          >
-            <FormControlLabel
-              value={TYPE.REGISTERED}
-              control={<Radio />}
-              label={i18n.t('people:person.usertypeOptions.registered')}
-            />
-            <FormControlLabel
-              value={TYPE.ADMIN}
-              control={<Radio />}
-              label={i18n.t('people:person.usertypeOptions.administrator')}
-            />
-            {isSuperAdmin &&
-            <FormControlLabel
-              value={TYPE.SUPER_ADMIN}
-              control={<Radio />}
-              label={i18n.t('people:person.usertypeOptions.super-administrator')}
-            />}
-          </RadioGroup>
-        </FormControl>
+        {/* The role radio group was removed here.
+
+            It read `person.usertype` while the API sends `person_type`, which
+            camel-cases to `personType` — so nothing was ever selected — and it
+            submitted `usertype`, which no request binds. There is no
+            promote/demote endpoint at all: `person_type` is written by signup
+            and by the first-super-administrator seed, and nowhere else.
+
+            So the control could not show a role and could not change one. An
+            administrator using it believed they had, which is worse than it
+            not being there. It comes back when a deliberate promote/demote
+            flow exists — super-admin only, guarded against removing the last
+            super administrator, audited — not before. */}
       </CardContent>
       <CardActions>
         {dismissPath &&
@@ -190,7 +169,6 @@ PersonAddForm.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
   person: PersonType.isRequired,
-  isSuperAdmin: PropTypes.bool.isRequired,
   dismissPath: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
 };

@@ -9,10 +9,8 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonAddForm from './PersonAddForm';
 import actions from '../../../actions';
 import api from '../../../api';
-import { Person as PERSON } from '../../../constants';
 import utils from '../../../utils';
 
-import PersonType from '../../../proptypes/Person';
 import PeopleType from '../../../proptypes/People';
 import i18n from '../../../languages';
 
@@ -23,14 +21,11 @@ const {
   getPersonName,
 } = utils.node;
 
-const { TYPE } = PERSON.FIELDS;
-
 const formFields = form.createFormFields([
   'name',
   'body',
   'username',
   'email',
-  'personType',
 ]);
 
 const PeopleAdd = (props) => {
@@ -38,7 +33,6 @@ const PeopleAdd = (props) => {
     addItem,
     alertError,
     alertSuccess,
-    viewer,
     items: {
       current: person,
     },
@@ -117,8 +111,6 @@ const PeopleAdd = (props) => {
     setFields({ ...newFields });
   };
 
-  const isSuperAdmin = viewer.personType === TYPE.SUPER_ADMIN;
-
   if (success && person.id) {
     return (
       <Navigate to={getURL(person)} replace />
@@ -144,7 +136,6 @@ const PeopleAdd = (props) => {
           }
         />
         <PersonAddForm
-          isSuperAdmin={isSuperAdmin}
           fields={fields}
           person={person}
           handleOnChange={handleOnChange}
@@ -162,7 +153,6 @@ PeopleAdd.propTypes = {
   addItem: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
-  viewer: PersonType.isRequired,
   items: PeopleType.isRequired,
   success: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,

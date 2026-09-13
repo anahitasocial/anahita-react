@@ -12,12 +12,9 @@ import InfoRead from './InfoRead';
 import Progress from '../../../components/Progress';
 import actions from '../../../actions';
 import permissions from '../../../permissions';
-import { Person as PERSON } from '../../../constants';
 import PersonType from '../../../proptypes/Person';
 import form from '../../../utils/form';
 import i18n from '../../../languages';
-
-const { SUPER_ADMIN } = PERSON.FIELDS.USERTYPE;
 
 const formFields = form.createFormFields([
   'name',
@@ -103,7 +100,6 @@ const PersonSettingsInfo = (props) => {
     );
   }
 
-  const isSuperAdmin = viewer.personType === SUPER_ADMIN;
   const canAdmin = canAdminister(person) && viewer.id !== person.id;
   const joinedDate = moment.utc(person.creationTime).format('LLL').toString();
 
@@ -126,8 +122,6 @@ const PersonSettingsInfo = (props) => {
       handleOnSubmit={handleOnSubmit}
       handleOnCancel={handleCancel}
       isFetching={isFetching}
-      canChangeUsertype={canAdmin}
-      isSuperAdmin={isSuperAdmin}
       enabled={canAdmin &&
         <>
           <Typography variant="caption" display="block">
