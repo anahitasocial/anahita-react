@@ -6,13 +6,17 @@ export default {
   VALIDATE_EMAIL: person('validate_email'),
   VALIDATE_USERNAME: person('validate_USERNAME'),
   FIELDS: {
-    GIVEN_NAME: {
-      MAX_LENGTH: 20,
-      MIN_LENGTH: 2,
+    // One name, matching the API. given/family assumed a Western name
+    // structure and capped each half at 20 characters, so plenty of real
+    // names did not fit even before the validator rejected the space between
+    // them.
+    NAME: {
+      MAX_LENGTH: 100,
+      MIN_LENGTH: 1,
     },
-    FAMILY_NAME: {
-      MAX_LENGTH: 20,
-      MIN_LENGTH: 2,
+    PRONOUNS: {
+      MAX_LENGTH: 50,
+      MIN_LENGTH: 0,
     },
     BODY: {
       MAX_LENGTH: 500,

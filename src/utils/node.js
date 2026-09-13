@@ -27,20 +27,28 @@ const isPerson = (node) => {
   return node.type && node.type.includes('person');
 };
 
+// `person_type`, not `usertype`. The field is named for the node now: the graph
+// owns the person, and "user" is kept for protocol surface an external
+// specification names that way.
+//
+// Renaming it here is not cosmetic — an undefined field compares false against
+// every level, so reading the old name did not raise anything, it just made
+// everybody an ordinary member and quietly removed the administration UI.
+//
 // Guarded against a missing actor: nobody is not an administrator. A caller
 // that forgets to pass the viewer should lose the privilege, not take down
 // the page it is rendering — the locations tab in the stepper did exactly
-// that, dying on `undefined.usertype` before it drew anything.
+// that, dying on `undefined.person_type` before it drew anything.
 const isSuperAdmin = (actor) => {
-  return Boolean(actor) && actor.usertype === SUPER_ADMIN;
+  return Boolean(actor) && actor.person_type === SUPER_ADMIN;
 };
 
 const isAdmin = (actor) => {
-  return Boolean(actor) && [SUPER_ADMIN, ADMIN].includes(actor.usertype);
+  return Boolean(actor) && [SUPER_ADMIN, ADMIN].includes(actor.person_type);
 };
 
 const isRegistered = (actor) => {
-  return Boolean(actor) && [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.usertype);
+  return Boolean(actor) && [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.person_type);
 };
 
 const isMedium = (node) => {
@@ -75,26 +83,32 @@ const isLeadable = (actor) => {
   return isPerson(actor);
 };
 
+// Initials from the one name an actor has.
+//
+// The given/family branch is gone with the fields. It also assumed the first
+// two words are a first and last name, which is wrong for most of the world —
+// taking the first letter of the first two words is no worse and no more
+// presumptuous.
 const getActorInitials = (actor) => {
   if (!actor) {
     return '??';
   }
 
-  if (actor.givenName && actor.familyName) {
-    return `${actor.givenName.charAt(0).toUpperCase()}${actor.familyName.charAt(0).toUpperCase()}`;
-  }
-
   if (actor.name) {
+    const words = actor.name.trim().split(/\s+/).filter(Boolean);
+    if (words.length > 1) {
+      return `${words[0].charAt(0)}${words[1].charAt(0)}`.toUpperCase();
+    }
     return actor.name.substring(0, 2).toUpperCase();
   }
 
   return '??';
 };
 
+// A person is an actor; there is nothing person-specific about initials any
+// more now that the name is one field.
 const getPersonInitials = (person) => {
-  const givenName = person.givenName.charAt(0);
-  const familyName = person.familyName.charAt(0);
-  return `${givenName}${familyName}`;
+  return getActorInitials(person);
 };
 
 const getPersonName = (person) => {
@@ -102,10 +116,7 @@ const getPersonName = (person) => {
     return i18n.t('actor:unknown');
   }
 
-  if (person.name) {
-    return person.name;
-  }
-  return `${person.givenName} ${person.familyName}`.trim();
+  return person.name || i18n.t('actor:unknown');
 };
 
 const getAddress = (node) => {
@@ -134,8 +145,6 @@ const getAuthor = (node) => {
   return node.author || {
     id: null,
     name: i18n.t('actor:unknown'),
-    givenName: '?',
-    familyName: '?',
     type: TYPES.ACTOR.PERSON,
     imageURL: {},
   };
@@ -218,8 +227,6 @@ const getStorySubject = (story) => {
   return story.subject || {
     id: null,
     name: i18n.t('actor:unknown'),
-    givenName: '?',
-    familyName: '?',
     type: TYPES.ACTOR.PERSON,
     imageURL: {},
   };

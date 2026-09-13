@@ -20,8 +20,7 @@ const AuthSignupForm = ({
   handleOnBlur,
   handleOnSubmit,
   fields: {
-    givenName,
-    familyName,
+    name,
     username,
     email,
     password,
@@ -30,15 +29,13 @@ const AuthSignupForm = ({
   success,
 }) => {
   const {
-    GIVEN_NAME,
-    FAMILY_NAME,
+    NAME,
     USERNAME,
     EMAIL,
     PASSWORD,
   } = SIGNUP.FIELDS;
 
-  const canSubmit = givenName.isValid &&
-  familyName.isValid &&
+  const canSubmit = name.isValid &&
   username.isValid &&
   email.isValid &&
   password.isValid;
@@ -60,35 +57,19 @@ const AuthSignupForm = ({
         />
         <CardContent>
           <TextField
-            name="givenName"
-            value={givenName.value}
+            name="name"
+            value={name.value}
             onChange={handleOnChange}
-            label={i18n.t('auth:signup.firstName')}
-            error={givenName.error !== ''}
-            helperText={givenName.error}
+            label={i18n.t('auth:signup.displayName')}
+            error={name.error !== ''}
+            helperText={name.error}
             autoFocus
             fullWidth
             margin="normal"
             disabled={success}
             inputProps={{
-              maxLength: GIVEN_NAME.MAX_LENGTH,
-              minLength: GIVEN_NAME.MIN_LENGTH,
-            }}
-            required
-          />
-          <TextField
-            name="familyName"
-            value={familyName.value}
-            onChange={handleOnChange}
-            label={i18n.t('auth:signup.lastName')}
-            error={familyName.error !== ''}
-            helperText={familyName.error}
-            fullWidth
-            margin="normal"
-            disabled={success}
-            inputProps={{
-              maxLength: FAMILY_NAME.MAX_LENGTH,
-              minLength: FAMILY_NAME.MIN_LENGTH,
+              maxLength: NAME.MAX_LENGTH,
+              minLength: NAME.MIN_LENGTH,
             }}
             required
           />

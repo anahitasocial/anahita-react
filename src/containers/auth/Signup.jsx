@@ -9,8 +9,7 @@ import form from '../../utils/form';
 import i18n from '../../languages';
 
 const formFields = form.createFormFields([
-  'givenName',
-  'familyName',
+  'name',
   'username',
   'email',
   'password',

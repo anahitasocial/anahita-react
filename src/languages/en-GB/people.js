@@ -100,18 +100,22 @@ export default {
     },
   },
   person: {
-    givenName: 'First name',
-    familyName: 'Last name',
+    displayName: 'Display name',
     username: 'Username',
     email: 'Email',
     body: 'Bio',
     pronouns: 'Pronouns',
-    whatPronouns: 'What pronouns do you use?',
-    pronounOptions: {
-      feminine: 'Femminine',
-      masculine: 'Masculine',
-      nonbinary: 'Nonbinary',
-    },
+    pronounsUnset: 'Prefer not to say',
+    // The set that makes sense in THIS language. Other locales ship their own;
+    // a language with no gendered third-person pronoun ships an empty list and
+    // the field offers only "prefer not to say".
+    pronounOptions: [
+      'he/him',
+      'she/her',
+      'they/them',
+      'he/they',
+      'she/they',
+    ],
     usertype: 'User type',
     usertypeOptions: {
       guest: 'Guest',

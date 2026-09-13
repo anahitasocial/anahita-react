@@ -4,6 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -13,15 +14,14 @@ import { Link } from 'react-router-dom';
 
 import PersonType from '../../../proptypes/Person';
 import { Person as PERSON } from '../../../constants';
+import SelectPronouns from '../../../components/SelectPronouns';
 import i18n from '../../../languages';
 
 const {
-  GIVEN_NAME,
-  FAMILY_NAME,
+  NAME,
   USERNAME,
   EMAIL,
   BODY,
-  GENDER,
   TYPE,
 } = PERSON.FIELDS;
 
@@ -31,8 +31,7 @@ const PersonAddForm = (props) => {
     handleOnBlur,
     handleOnSubmit,
     fields: {
-      givenName,
-      familyName,
+      name,
       body,
       username,
       email,
@@ -46,8 +45,7 @@ const PersonAddForm = (props) => {
   const isNew = !person.id;
 
   const enableSubmit = !isNew || (
-    givenName.isValid &&
-    familyName.isValid &&
+    name.isValid &&
     body.isValid &&
     email.isValid
   );
@@ -57,33 +55,18 @@ const PersonAddForm = (props) => {
       <CardContent>
         <FormControl component="fieldset" margin="normal" fullWidth>
           <TextField
-            name="givenName"
-            value={person.givenName}
+            name="name"
+            value={person.name || ''}
             onChange={handleOnChange}
-            label={i18n.t('people:person.givenName')}
-            error={givenName.error !== ''}
-            helperText={givenName.error}
+            label={i18n.t('people:person.displayName')}
+            error={name.error !== ''}
+            helperText={name.error}
             autoFocus
             fullWidth
             margin="normal"
             inputProps={{
-              maxLength: GIVEN_NAME.MAX_LENGTH,
-              minLength: GIVEN_NAME.MIN_LENGTH,
-            }}
-            required
-          />
-          <TextField
-            name="familyName"
-            value={person.familyName}
-            onChange={handleOnChange}
-            label={i18n.t('people:person.familyName')}
-            error={familyName.error !== ''}
-            helperText={familyName.error}
-            fullWidth
-            margin="normal"
-            inputProps={{
-              maxLength: FAMILY_NAME.MAX_LENGTH,
-              minLength: FAMILY_NAME.MIN_LENGTH,
+              maxLength: NAME.MAX_LENGTH,
+              minLength: NAME.MIN_LENGTH,
             }}
             required
           />
@@ -137,32 +120,16 @@ const PersonAddForm = (props) => {
             required
           />
         </FormControl>
-        <FormControl component="fieldset" margin="normal" fullWidth>
-          <FormLabel component="legend">
+        <FormControl margin="normal" fullWidth>
+          <InputLabel id="pronouns-label" shrink>
             {i18n.t('people:person.pronouns')}
-          </FormLabel>
-          <RadioGroup
-            aria-label="gender"
-            name="gender"
-            value={person.gender}
+          </InputLabel>
+          <SelectPronouns
+            labelId="pronouns-label"
+            name="person_pronouns"
+            value={person.person_pronouns || ''}
             onChange={handleOnChange}
-          >
-            <FormControlLabel
-              value={GENDER.FEMALE}
-              control={<Radio />}
-              label={i18n.t('people:person.pronounOptions.feminine')}
-            />
-            <FormControlLabel
-              value={GENDER.MALE}
-              control={<Radio />}
-              label={i18n.t('people:person.pronounOptions.masculine')}
-            />
-            <FormControlLabel
-              value={GENDER.NEUTRAL}
-              control={<Radio />}
-              label={i18n.t('people:person.pronounOptions.nonbinary')}
-            />
-          </RadioGroup>
+          />
         </FormControl>
         <FormControl component="fieldset" margin="normal" fullWidth>
           <FormLabel component="legend">

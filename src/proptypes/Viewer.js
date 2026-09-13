@@ -14,13 +14,11 @@ export default shape({
   id: number,
   username: string,
   email: string,
-  usertype: oneOf([
+  person_type: oneOf([
     USERTYPE.GUEST,
     USERTYPE.REGISTERED,
     USERTYPE.ADMIN,
     USERTYPE.SUPER_ADMIN,
   ]),
-  givenName: string,
-  familyName: string,
   avatarURLs: ImageUrls,
 });

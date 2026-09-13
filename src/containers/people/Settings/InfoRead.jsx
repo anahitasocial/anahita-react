@@ -9,19 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 import PersonType from '../../../proptypes/Person';
-import { Person as PERSON } from '../../../constants';
 import i18n from '../../../languages';
-
-const { GENDER } = PERSON.FIELDS;
-
-// Pronouns are stored as a gender value; the form offers three radio options
-// and this is the read-side of the same mapping. Anything else — an empty
-// value, or 'other', which the form cannot set — falls through to the dash.
-const PRONOUN_KEYS = {
-  [GENDER.FEMALE]: 'feminine',
-  [GENDER.MALE]: 'masculine',
-  [GENDER.NEUTRAL]: 'nonbinary',
-};
 
 // An unset field renders as a dash rather than an empty row. A blank
 // ListItemText collapses to nothing and the row silently disappears, which
@@ -39,21 +27,13 @@ const InfoRead = ({
   joinedDate,
   onEdit,
 }) => {
-  const name = [person.givenName, person.familyName]
-    .filter((part) => {
-      return Boolean(part);
-    })
-    .join(' ');
-
-  const pronounKey = PRONOUN_KEYS[person.gender];
-
   return (
     <>
       <List>
         <ListItem>
           <ListItemText
-            primary={i18n.t('people:person.givenName')}
-            secondary={name || EMPTY}
+            primary={i18n.t('people:person.displayName')}
+            secondary={person.name || EMPTY}
           />
         </ListItem>
         <ListItem>
@@ -71,9 +51,7 @@ const InfoRead = ({
         <ListItem>
           <ListItemText
             primary={i18n.t('people:person.pronouns')}
-            secondary={pronounKey
-              ? i18n.t(`people:person.pronounOptions.${pronounKey}`)
-              : EMPTY}
+            secondary={person.person_pronouns || EMPTY}
           />
         </ListItem>
 
@@ -85,7 +63,7 @@ const InfoRead = ({
           <ListItem>
             <ListItemText
               primary={i18n.t('people:person.usertype')}
-              secondary={i18n.t(`people:person.usertypeOptions.${person.usertype}`)}
+              secondary={i18n.t(`people:person.usertypeOptions.${person.person_type}`)}
             />
           </ListItem>}
         {canAdmin &&

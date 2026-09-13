@@ -13,8 +13,7 @@ export default {
   signup: {
     cTitle: 'Veuillez vous inscrire',
     mTitle: 'Inscription',
-    firstName: 'Prénom',
-    lastName: 'Nom',
+    displayName: "Nom d'affichage",
     username: "Nom d'utilisateur",
     email: 'E-mail',
     password: 'Mot de passe',

@@ -9,31 +9,25 @@ import {
 import PERSON from '../constants/person';
 import ImageUrls from './ImageUrls';
 
-const { USERTYPE, GENDER } = PERSON.FIELDS;
+const { USERTYPE } = PERSON.FIELDS;
 
 export default shape({
   id: number,
   type: oneOf(['node.actor.person-service.person.v1']),
   name: string,
   alias: string,
-  username: string,
-  email: string,
-  password: string,
-  usertype: oneOf([
+  // `username` is gone: it WAS the alias, sent twice under two names. email
+  // and password are gone from the person shape too — they are credentials,
+  // and the API no longer returns either on a profile.
+  person_type: oneOf([
     USERTYPE.GUEST,
     USERTYPE.REGISTERED,
     USERTYPE.ADMIN,
     USERTYPE.SUPER_ADMIN,
   ]),
-  givenName: string,
-  familyName: string,
-  gender: oneOf([
-    GENDER.NEUTRAL,
-    GENDER.FEMALE,
-    GENDER.MALE,
-    GENDER.OTHER,
-    '',
-  ]),
+  // Free text. The gender enum it replaces hard-coded English grammar and was
+  // meaningless in a language with no gendered third-person pronoun.
+  person_pronouns: string,
   body: string,
   gadgets: arrayOf(string),
   composers: arrayOf(string),

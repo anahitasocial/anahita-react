@@ -20,8 +20,7 @@ import i18n from '../../../languages';
 const { SUPER_ADMIN } = PERSON.FIELDS.USERTYPE;
 
 const formFields = form.createFormFields([
-  'givenName',
-  'familyName',
+  'name',
   'body',
   'websiteUrl',
 ]);
@@ -104,7 +103,7 @@ const PersonSettingsInfo = (props) => {
     );
   }
 
-  const isSuperAdmin = viewer.usertype === SUPER_ADMIN;
+  const isSuperAdmin = viewer.person_type === SUPER_ADMIN;
   const canAdmin = canAdminister(person) && viewer.id !== person.id;
   const joinedDate = moment.utc(person.creationTime).format('LLL').toString();
 

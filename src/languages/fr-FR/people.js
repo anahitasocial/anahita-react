@@ -94,18 +94,17 @@ export default {
     },
   },
   person: {
-    givenName: 'Prénom',
-    familyName: 'Nom',
+    displayName: "Nom d'affichage",
     username: "Nom d'utilisateur",
     email: 'E-mail',
     body: 'Bio',
     pronouns: 'Pronoms',
-    whatPronouns: 'Quels pronoms utilisez-vous ?',
-    pronounOptions: {
-      feminine: 'Féminin',
-      masculine: 'Masculin',
-      nonbinary: 'Non binaire',
-    },
+    pronounsUnset: 'Je préfère ne pas le dire',
+    pronounOptions: [
+      'il',
+      'elle',
+      'iel',
+    ],
     usertype: "Type d'utilisateur",
     usertypeOptions: {
       guest: 'Invité',

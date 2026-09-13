@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -13,13 +14,12 @@ import TextField from '@material-ui/core/TextField';
 
 import PersonType from '../../../proptypes/Person';
 import { Person as PERSON } from '../../../constants';
+import SelectPronouns from '../../../components/SelectPronouns';
 import i18n from '../../../languages';
 
 const {
-  GIVEN_NAME,
-  FAMILY_NAME,
+  NAME,
   BODY,
-  GENDER,
   USERTYPE,
 } = PERSON.FIELDS;
 
@@ -37,14 +37,12 @@ const PersonInfo = ({
   const isNew = !person.id;
 
   const {
-    givenName,
-    familyName,
+    name,
     body,
   } = fields;
 
   const enableSubmit = !isNew || (
-    givenName.isValid &&
-    familyName.isValid &&
+    name.isValid &&
     body.isValid
   );
 
@@ -53,39 +51,24 @@ const PersonInfo = ({
       {!canChangeUsertype &&
         <input
           type="hidden"
-          name="usertype"
-          value={person.usertype}
+          name="person_type"
+          value={person.person_type}
         />}
       <CardContent>
         {enabled}
         <TextField
-          name="givenName"
-          value={person.givenName}
+          name="name"
+          value={person.name || ''}
           onChange={handleOnChange}
-          label={i18n.t('people:person.givenName')}
-          error={givenName.error !== ''}
-          helperText={givenName.error}
+          label={i18n.t('people:person.displayName')}
+          error={name.error !== ''}
+          helperText={name.error}
           autoFocus
           fullWidth
           margin="normal"
           inputProps={{
-            maxLength: GIVEN_NAME.MAX_LENGTH,
-            minLength: GIVEN_NAME.MIN_LENGTH,
-          }}
-          required
-        />
-        <TextField
-          name="familyName"
-          value={person.familyName}
-          onChange={handleOnChange}
-          label={i18n.t('people:person.familyName')}
-          error={familyName.error !== ''}
-          helperText={familyName.error}
-          fullWidth
-          margin="normal"
-          inputProps={{
-            maxLength: FAMILY_NAME.MAX_LENGTH,
-            minLength: FAMILY_NAME.MIN_LENGTH,
+            maxLength: NAME.MAX_LENGTH,
+            minLength: NAME.MIN_LENGTH,
           }}
           required
         />
@@ -106,31 +89,15 @@ const PersonInfo = ({
           required
         />
         <FormControl margin="normal" fullWidth>
-          <FormLabel component="legend">
-            {i18n.t('people:person.whatPronouns')}
-          </FormLabel>
-          <RadioGroup
-            aria-label="gender"
-            name="gender"
-            value={person.gender}
+          <InputLabel id="pronouns-label" shrink>
+            {i18n.t('people:person.pronouns')}
+          </InputLabel>
+          <SelectPronouns
+            labelId="pronouns-label"
+            name="person_pronouns"
+            value={person.person_pronouns || ''}
             onChange={handleOnChange}
-          >
-            <FormControlLabel
-              value={GENDER.FEMALE}
-              control={<Radio />}
-              label={i18n.t('people:person.pronounOptions.feminine')}
-            />
-            <FormControlLabel
-              value={GENDER.MALE}
-              control={<Radio />}
-              label={i18n.t('people:person.pronounOptions.masculine')}
-            />
-            <FormControlLabel
-              value={GENDER.NEUTRAL}
-              control={<Radio />}
-              label={i18n.t('people:person.pronounOptions.nonbinary')}
-            />
-          </RadioGroup>
+          />
         </FormControl>
         {canChangeUsertype &&
         <FormControl margin="normal" fullWidth>

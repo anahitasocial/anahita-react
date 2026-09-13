@@ -13,8 +13,7 @@ export default {
   signup: {
     cTitle: 'Please signup',
     mTitle: 'Signup',
-    firstName: 'First name',
-    lastName: 'Last name',
+    displayName: 'Display name',
     username: 'Username',
     email: 'Email',
     password: 'Password',
