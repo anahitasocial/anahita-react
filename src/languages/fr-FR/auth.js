@@ -14,9 +14,13 @@ export default {
     cTitle: 'Veuillez vous inscrire',
     mTitle: 'Inscription',
     displayName: "Nom d'affichage",
+    displayNameHelp: 'Voici comment votre nom apparaît aux autres.',
     username: "Nom d'utilisateur",
     email: 'E-mail',
     password: 'Mot de passe',
+    passwordHelp: "Au moins 15 caractères. Utilisez une phrase secrète que vous n'utilisez nulle part ailleurs.",
+    tos: "J'accepte les <0>conditions d'utilisation</0>.",
+    privacy: "J'ai lu la <0>politique de confidentialité</0>.",
     actions: {
       signup: "S'inscrire",
     },

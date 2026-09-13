@@ -14,9 +14,13 @@ export default {
     cTitle: 'Please signup',
     mTitle: 'Signup',
     displayName: 'Display name',
+    displayNameHelp: 'This is how your name appears to other people.',
     username: 'Username',
     email: 'Email',
     password: 'Password',
+    passwordHelp: 'At least 15 characters. Use a unique passphrase you do not use elsewhere.',
+    tos: 'I agree to the <0>Terms of Service</0>.',
+    privacy: 'I have read the <0>Privacy Policy</0>.',
     actions: {
       signup: 'Signup',
     },

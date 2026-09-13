@@ -13,7 +13,17 @@ const formFields = form.createFormFields([
   'username',
   'email',
   'password',
+  'tos_accepted',
+  'pp_accepted',
 ]);
+
+// Until /agreements answers, there is no version to accept. The form keeps
+// its submit button disabled while this is empty rather than sending an
+// acceptance that cannot name what was accepted — the server refuses those.
+const noAgreements = {
+  tos: { version: '', url: '' },
+  privacy: { version: '', url: '' },
+};
 
 const AuthSignup = ({
   signup,
@@ -25,6 +35,30 @@ const AuthSignup = ({
   alertSuccess,
 }) => {
   const [fields, setFields] = useState(formFields);
+  const [agreements, setAgreements] = useState(noAgreements);
+
+  // The versions in force, fetched once. They ride along with the
+  // acceptance so the record says which text the person was actually shown;
+  // the server refuses a submission whose versions have moved on since.
+  useEffect(() => {
+    let cancelled = false;
+
+    api.agreements.read()
+      .then(({ data }) => {
+        if (!cancelled) {
+          setAgreements(data);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          alertError(i18n.t('auth:prompts.error'));
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -84,8 +118,11 @@ const AuthSignup = ({
     const newFields = form.validateForm(target, fields);
 
     if (form.isValid(newFields)) {
-      const formData = form.fieldsToData(newFields);
-      signup(formData);
+      signup({
+        ...form.fieldsToData(newFields),
+        tos_version: agreements.tos.version,
+        pp_version: agreements.privacy.version,
+      });
     }
   };
 
@@ -98,6 +135,7 @@ const AuthSignup = ({
   return (
     <SignupForm
       fields={fields}
+      agreements={agreements}
       handleOnChange={handleOnChange}
       handleOnBlur={handleOnBlur}
       handleOnSubmit={handleOnSubmit}

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from 'react-i18next';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -7,6 +8,9 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
@@ -24,7 +28,12 @@ const AuthSignupForm = ({
     username,
     email,
     password,
+    // eslint-disable-next-line camelcase
+    tos_accepted: tosAccepted,
+    // eslint-disable-next-line camelcase
+    pp_accepted: ppAccepted,
   },
+  agreements,
   isFetching,
   success,
 }) => {
@@ -35,10 +44,18 @@ const AuthSignupForm = ({
     PASSWORD,
   } = SIGNUP.FIELDS;
 
+  // The agreement versions have to be in hand before anything can be
+  // submitted: an acceptance that cannot say which text it accepted is
+  // refused by the server, so submitting without them would only produce a
+  // confusing 409.
   const canSubmit = name.isValid &&
   username.isValid &&
   email.isValid &&
-  password.isValid;
+  password.isValid &&
+  tosAccepted.value === true &&
+  ppAccepted.value === true &&
+  Boolean(agreements.tos.version) &&
+  Boolean(agreements.privacy.version);
 
   return (
     <form onSubmit={handleOnSubmit} noValidate>
@@ -125,6 +142,59 @@ const AuthSignupForm = ({
             }}
             required
           />
+          <Typography variant="caption" color="textSecondary">
+            {i18n.t('auth:signup.passwordHelp')}
+          </Typography>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="tos_accepted"
+                checked={tosAccepted.value === true}
+                onChange={handleOnChange}
+                color="primary"
+                disabled={success}
+                required
+              />
+            }
+            label={
+              <Typography variant="body2">
+                <Trans i18nKey="auth:signup.tos">
+                  <Link
+                    href={agreements.tos.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Terms of Service
+                  </Link>
+                </Trans>
+              </Typography>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="pp_accepted"
+                checked={ppAccepted.value === true}
+                onChange={handleOnChange}
+                color="primary"
+                disabled={success}
+                required
+              />
+            }
+            label={
+              <Typography variant="body2">
+                <Trans i18nKey="auth:signup.privacy">
+                  <Link
+                    href={agreements.privacy.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Privacy Policy
+                  </Link>
+                </Trans>
+              </Typography>
+            }
+          />
         </CardContent>
         <CardActions>
           <Button
@@ -147,6 +217,7 @@ AuthSignupForm.propTypes = {
   handleOnBlur: PropTypes.func.isRequired,
   handleOnSubmit: PropTypes.func.isRequired,
   fields: PropTypes.objectOf(PropTypes.any).isRequired,
+  agreements: PropTypes.objectOf(PropTypes.any).isRequired,
   isFetching: PropTypes.bool.isRequired,
   success: PropTypes.bool.isRequired,
 };
