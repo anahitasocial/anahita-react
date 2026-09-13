@@ -30,7 +30,7 @@ const formFields = form.createFormFields([
   'body',
   'username',
   'email',
-  'person_type',
+  'personType',
 ]);
 
 const PeopleAdd = (props) => {
@@ -117,7 +117,7 @@ const PeopleAdd = (props) => {
     setFields({ ...newFields });
   };
 
-  const isSuperAdmin = viewer.person_type === TYPE.SUPER_ADMIN;
+  const isSuperAdmin = viewer.personType === TYPE.SUPER_ADMIN;
 
   if (success && person.id) {
     return (

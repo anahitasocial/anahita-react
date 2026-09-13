@@ -27,28 +27,35 @@ const isPerson = (node) => {
   return node.type && node.type.includes('person');
 };
 
-// `person_type`, not `usertype`. The field is named for the node now: the graph
-// owns the person, and "user" is kept for protocol surface an external
-// specification names that way.
+// `personType`, camelCase, NOT the `person_type` the API sends.
 //
-// Renaming it here is not cosmetic — an undefined field compares false against
-// every level, so reading the old name did not raise anything, it just made
-// everybody an ordinary member and quietly removed the administration UI.
+// api/index.js camel-cases every response key on the way in and snake-cases
+// every request key on the way out, so what the server calls person_type is
+// personType by the time it reaches here.
+//
+// Easy to get wrong, and it was: the old name survived the transform untouched
+// because camelCase('usertype') is 'usertype' — one word, nothing to convert —
+// so nothing in the client ever had to know the rule. The first multi-word
+// field to arrive broke it.
+//
+// And it breaks silently. An undefined field compares false against every
+// level, so reading the wrong name raises nothing; it just makes everybody an
+// ordinary member and removes the administration UI.
 //
 // Guarded against a missing actor: nobody is not an administrator. A caller
 // that forgets to pass the viewer should lose the privilege, not take down
 // the page it is rendering — the locations tab in the stepper did exactly
-// that, dying on `undefined.person_type` before it drew anything.
+// that, dying on `undefined.personType` before it drew anything.
 const isSuperAdmin = (actor) => {
-  return Boolean(actor) && actor.person_type === SUPER_ADMIN;
+  return Boolean(actor) && actor.personType === SUPER_ADMIN;
 };
 
 const isAdmin = (actor) => {
-  return Boolean(actor) && [SUPER_ADMIN, ADMIN].includes(actor.person_type);
+  return Boolean(actor) && [SUPER_ADMIN, ADMIN].includes(actor.personType);
 };
 
 const isRegistered = (actor) => {
-  return Boolean(actor) && [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.person_type);
+  return Boolean(actor) && [SUPER_ADMIN, ADMIN, REGISTERED].includes(actor.personType);
 };
 
 const isMedium = (node) => {

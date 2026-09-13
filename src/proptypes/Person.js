@@ -19,7 +19,7 @@ export default shape({
   // `username` is gone: it WAS the alias, sent twice under two names. email
   // and password are gone from the person shape too — they are credentials,
   // and the API no longer returns either on a profile.
-  person_type: oneOf([
+  personType: oneOf([
     USERTYPE.GUEST,
     USERTYPE.REGISTERED,
     USERTYPE.ADMIN,
@@ -27,7 +27,7 @@ export default shape({
   ]),
   // Free text. The gender enum it replaces hard-coded English grammar and was
   // meaningless in a language with no gendered third-person pronoun.
-  person_pronouns: string,
+  personPronouns: string,
   body: string,
   gadgets: arrayOf(string),
   composers: arrayOf(string),

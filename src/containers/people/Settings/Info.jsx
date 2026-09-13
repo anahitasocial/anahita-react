@@ -103,7 +103,7 @@ const PersonSettingsInfo = (props) => {
     );
   }
 
-  const isSuperAdmin = viewer.person_type === SUPER_ADMIN;
+  const isSuperAdmin = viewer.personType === SUPER_ADMIN;
   const canAdmin = canAdminister(person) && viewer.id !== person.id;
   const joinedDate = moment.utc(person.creationTime).format('LLL').toString();
 

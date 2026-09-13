@@ -51,8 +51,8 @@ const PersonInfo = ({
       {!canChangeUsertype &&
         <input
           type="hidden"
-          name="person_type"
-          value={person.person_type}
+          name="personType"
+          value={person.personType}
         />}
       <CardContent>
         {enabled}
@@ -94,8 +94,8 @@ const PersonInfo = ({
           </InputLabel>
           <SelectPronouns
             labelId="pronouns-label"
-            name="person_pronouns"
-            value={person.person_pronouns || ''}
+            name="personPronouns"
+            value={person.personPronouns || ''}
             onChange={handleOnChange}
           />
         </FormControl>

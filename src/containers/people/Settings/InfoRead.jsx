@@ -51,7 +51,7 @@ const InfoRead = ({
         <ListItem>
           <ListItemText
             primary={i18n.t('people:person.pronouns')}
-            secondary={person.person_pronouns || EMPTY}
+            secondary={person.personPronouns || EMPTY}
           />
         </ListItem>
 
@@ -63,7 +63,7 @@ const InfoRead = ({
           <ListItem>
             <ListItemText
               primary={i18n.t('people:person.usertype')}
-              secondary={i18n.t(`people:person.usertypeOptions.${person.person_type}`)}
+              secondary={i18n.t(`people:person.usertypeOptions.${person.personType}`)}
             />
           </ListItem>}
         {canAdmin &&

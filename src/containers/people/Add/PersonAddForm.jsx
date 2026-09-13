@@ -126,8 +126,8 @@ const PersonAddForm = (props) => {
           </InputLabel>
           <SelectPronouns
             labelId="pronouns-label"
-            name="person_pronouns"
-            value={person.person_pronouns || ''}
+            name="personPronouns"
+            value={person.personPronouns || ''}
             onChange={handleOnChange}
           />
         </FormControl>

@@ -84,3 +84,45 @@ describe('getPortraitURLs', () => {
     expect(node.getPortraitURLs({}, 'large')).toEqual([]);
   });
 });
+
+// The authority checks read `personType`, camelCase — api/index.js camel-cases
+// every response key, so the server's person_type arrives renamed.
+//
+// This is worth a test because getting it wrong is silent. An undefined field
+// compares false against every level, so the wrong name raises nothing: it
+// makes everybody an ordinary member and removes the administration UI, with
+// no error anywhere to say so. That is exactly what happened when the API
+// renamed usertype — a single word, which survived the camelCase transform
+// untouched, so nothing in the client had ever had to know the rule.
+describe('authority checks', () => {
+  const superAdmin = { personType: 'super-administrator' };
+  const admin = { personType: 'administrator' };
+  const registered = { personType: 'registered' };
+
+  it('recognises a super administrator', () => {
+    expect(node.isSuperAdmin(superAdmin)).toBe(true);
+    expect(node.isAdmin(superAdmin)).toBe(true);
+  });
+
+  it('does not promote an ordinary member', () => {
+    expect(node.isSuperAdmin(registered)).toBe(false);
+    expect(node.isAdmin(registered)).toBe(false);
+    expect(node.isRegistered(registered)).toBe(true);
+  });
+
+  it('recognises an administrator but not a super administrator', () => {
+    expect(node.isAdmin(admin)).toBe(true);
+    expect(node.isSuperAdmin(admin)).toBe(false);
+  });
+
+  // The regression itself: the snake_case the API sends must NOT be what the
+  // client reads, or every check answers false.
+  it('does not read the snake_case key the API sends', () => {
+    expect(node.isSuperAdmin({ person_type: 'super-administrator' })).toBe(false);
+  });
+
+  it('treats a missing actor as nobody rather than throwing', () => {
+    expect(node.isSuperAdmin(undefined)).toBe(false);
+    expect(node.isAdmin(null)).toBe(false);
+  });
+});
