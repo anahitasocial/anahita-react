@@ -11,6 +11,7 @@ import BackIcon from '@material-ui/icons/ArrowBackIos';
 import utils from '../utils';
 
 const {
+  getActorName,
   getActorInitials,
   getAvatarURL,
   getURL,
@@ -41,15 +42,15 @@ const ActorSettingCard = ({
             startIcon={<BackIcon />}
           >
             <Avatar
-              aria-label={actor.name}
-              alt={actor.name}
+              aria-label={getActorName(actor)}
+              alt={getActorName(actor)}
               src={src}
             >
               {!src && initials}
             </Avatar>
           </Button>
         }
-        title={actor.name}
+        title={getActorName(actor)}
         subheader={subheader}
       />
       {/* Only when there is something to divide it from. Without the guard a

@@ -6,7 +6,7 @@ import Truncate from 'react-truncate';
 import ActorType from '../proptypes/Actor';
 import utils from '../utils';
 
-const { getURL } = utils.node;
+const { getActorName, getURL } = utils.node;
 
 const ActorTitle = (props) => {
   const {
@@ -25,7 +25,7 @@ const ActorTitle = (props) => {
         >
           <Link href={url}>
             <Truncate width={300}>
-              {actor.name}
+              {getActorName(actor)}
             </Truncate>
           </Link>
         </Typography>}
@@ -34,7 +34,7 @@ const ActorTitle = (props) => {
           {...typographyProps}
         >
           <Truncate>
-            {actor.name}
+            {getActorName(actor)}
           </Truncate>
         </Typography>}
     </>

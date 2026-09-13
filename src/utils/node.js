@@ -90,26 +90,56 @@ const isLeadable = (actor) => {
   return isPerson(actor);
 };
 
-// Initials from the one name an actor has.
+// What to call an actor, and what to put in their avatar when there is no
+// picture.
+//
+// AN EMPTY NAME IS A NORMAL STATE, not a missing one. Signup does not ask for
+// a display name — neither Mastodon nor Bluesky does — so a new account has
+// only a handle until onboarding offers one, and both federation protocols
+// expect exactly this: an ActivityPub consumer falls back from `name` to
+// `preferredUsername`, ATProto from `displayName` to the handle.
+//
+// So does this. "Unknown" and "??" are reserved for an actor that genuinely
+// is not there — a deleted author, a caller that passed nothing — which is a
+// different thing and should not look the same.
+//
+// The alias is always present: it is the handle, it is NOT NULL in spirit, and
+// it is what the profile URL is keyed on, so a person with neither is not
+// addressable at all.
+const getActorName = (actor) => {
+  if (!actor) {
+    return i18n.t('actor:unknown');
+  }
+
+  const name = (actor.name || '').trim();
+  if (name) {
+    return name;
+  }
+
+  return actor.alias || i18n.t('actor:unknown');
+};
+
+// Initials for an avatar placeholder.
 //
 // The given/family branch is gone with the fields. It also assumed the first
 // two words are a first and last name, which is wrong for most of the world —
 // taking the first letter of the first two words is no worse and no more
 // presumptuous.
 const getActorInitials = (actor) => {
-  if (!actor) {
+  const name = getActorName(actor);
+
+  // The fallback of the fallback. Only reached for an actor that is not
+  // there, since getActorName returns the handle otherwise.
+  if (!actor || name === i18n.t('actor:unknown')) {
     return '??';
   }
 
-  if (actor.name) {
-    const words = actor.name.trim().split(/\s+/).filter(Boolean);
-    if (words.length > 1) {
-      return `${words[0].charAt(0)}${words[1].charAt(0)}`.toUpperCase();
-    }
-    return actor.name.substring(0, 2).toUpperCase();
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length > 1) {
+    return `${words[0].charAt(0)}${words[1].charAt(0)}`.toUpperCase();
   }
 
-  return '??';
+  return name.substring(0, 2).toUpperCase();
 };
 
 // A person is an actor; there is nothing person-specific about initials any
@@ -118,12 +148,10 @@ const getPersonInitials = (person) => {
   return getActorInitials(person);
 };
 
+// A person is an actor. Kept as its own name because call sites read better
+// for it, not because the behaviour differs.
 const getPersonName = (person) => {
-  if (!person) {
-    return i18n.t('actor:unknown');
-  }
-
-  return person.name || i18n.t('actor:unknown');
+  return getActorName(person);
 };
 
 const getAddress = (node) => {
@@ -435,6 +463,7 @@ export default {
   isLeadable,
   getServiceName,
   getPersonInitials,
+  getActorName,
   getPersonName,
   getActorInitials,
   getAddress,

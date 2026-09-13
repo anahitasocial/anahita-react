@@ -11,7 +11,7 @@ import NodeType from '../../../proptypes/Node';
 import utils from '../../../utils';
 import i18n from '../../../languages';
 
-const { getActorInitials } = utils.node;
+const { getActorName, getActorInitials } = utils.node;
 
 const styles = (theme) => {
   return {
@@ -73,9 +73,9 @@ const ActorAvatarForm = ({
         onClick={handleOpen}
       >
         <Avatar
-          aria-label={node.name}
+          aria-label={getActorName(node)}
           className={clsx(classes[`${size}Avatar`], classes.avatar)}
-          alt={node.name}
+          alt={getActorName(node)}
           src={isFetching ? '' : avatar}
         >
           {!isFetching && !avatar && initials}

@@ -12,7 +12,7 @@ import ActorType from '../../../proptypes/Actor';
 import utils from '../../../utils';
 import i18n from '../../../languages';
 
-const { getURL } = utils.node;
+const { getActorName, getURL } = utils.node;
 
 const ActorBodyAdmins = (props) => {
   const {
@@ -51,7 +51,7 @@ const ActorBodyAdmins = (props) => {
                 <ActorAvatar actor={admin} />
               </ListItemAvatar>
               <ListItemText
-                primary={admin.name}
+                primary={getActorName(admin)}
               />
             </ListItem>
           );

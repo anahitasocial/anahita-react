@@ -21,6 +21,7 @@ import utils from '../utils';
 import i18n from '../languages';
 
 const {
+  getActorName,
   getURL,
   getCoverURL,
   isAdmin,
@@ -68,7 +69,7 @@ const ActorCard = ({
         <Link href={url}>
           <CardMedia
             component="img"
-            title={actor.name}
+            title={getActorName(actor)}
             alias={actor.name}
             image={cover}
           />

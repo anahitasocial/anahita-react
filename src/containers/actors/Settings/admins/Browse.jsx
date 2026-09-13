@@ -19,6 +19,9 @@ import ActorsType from '../../../../proptypes/Actors';
 import ActorType from '../../../../proptypes/Actor';
 import actions from '../../../../actions';
 import i18n from '../../../../languages';
+import utils from '../../../../utils';
+
+const { getActorName } = utils.node;
 
 const ActorsSettingsAdminsBrowse = ({
   browseList,
@@ -80,7 +83,7 @@ const ActorsSettingsAdminsBrowse = ({
                 <ActorAvatar actor={admin} linked />
               </ListItemAvatar>
               <ListItemText
-                primary={admin.name}
+                primary={getActorName(admin)}
               />
               <ListItemSecondaryAction>
                 <IconButton

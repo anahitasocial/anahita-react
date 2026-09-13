@@ -22,7 +22,7 @@ import utils from '../../../utils';
 import permissions from '../../../permissions';
 import * as api from '../../../api';
 
-const { getURL } = utils.node;
+const { getActorName, getURL } = utils.node;
 
 const ActorsGadget = (props) => {
   const {
@@ -87,7 +87,7 @@ const ActorsGadget = (props) => {
               <ListItemText
                 primary={
                   <Truncate>
-                    {actor.name}
+                    {getActorName(actor)}
                   </Truncate>
                 }
                 secondary={

@@ -10,6 +10,9 @@ import Typography from '@material-ui/core/Typography';
 
 import SocialgraphMeta from './SocialgraphMeta';
 import ActorType from '../../../proptypes/Actor';
+import utils from '../../../utils';
+
+const { getActorName } = utils.node;
 
 const styles = (theme) => {
   return {
@@ -72,7 +75,7 @@ const ActorHeader = ({
             className={classes.title}
             align="center"
           >
-            {actor.name}
+            {getActorName(actor)}
           </Typography>
         }
         subheader={

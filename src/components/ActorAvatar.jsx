@@ -8,6 +8,7 @@ import ActorType from '../proptypes/Actor';
 import utils from '../utils';
 
 const {
+  getActorName,
   getURL,
   getAvatarURL,
   getActorInitials,
@@ -60,8 +61,8 @@ const ActorAvatar = ({
           className={classes.link}
         >
           <Avatar
-            aria-label={actor.name}
-            alt={actor.name}
+            aria-label={getActorName(actor)}
+            alt={getActorName(actor)}
             src={avatar || undefined}
             className={clsx(classes[`${size}Avatar`], classes.avatar)}
           >
@@ -70,8 +71,8 @@ const ActorAvatar = ({
         </Link>}
       {!linked &&
         <Avatar
-          aria-label={actor.name}
-          alt={actor.name}
+          aria-label={getActorName(actor)}
+          alt={getActorName(actor)}
           src={avatar || undefined}
         >
           {initials}

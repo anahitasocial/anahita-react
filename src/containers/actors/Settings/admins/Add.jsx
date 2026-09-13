@@ -14,6 +14,9 @@ import ActorType from '../../../../proptypes/Actor';
 import PersonType from '../../../../proptypes/Person';
 import actions from '../../../../actions';
 import api from '../../../../utils/api';
+import utils from '../../../../utils';
+
+const { getActorName } = utils.node;
 
 const ActorsSettingsAdminsAdd = (props) => {
   const {
@@ -89,7 +92,7 @@ const ActorsSettingsAdminsAdd = (props) => {
               />
             </ListItemAvatar>
             <ListItemText
-              primary={admin.name}
+              primary={getActorName(admin)}
             />
           </>
         );

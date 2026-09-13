@@ -10,6 +10,9 @@ import Fade from '@material-ui/core/Fade';
 
 import NodeType from '../proptypes/Node';
 import i18n from '../languages';
+import utils from '../utils';
+
+const { getActorName } = utils.node;
 
 const styles = (theme) => {
   return {
@@ -63,7 +66,7 @@ const CoverForm = ({
           <Fade in>
             <CardMedia
               className={classes.cover}
-              title={node.name}
+              title={getActorName(node)}
               image={cover}
               src="picture"
             />

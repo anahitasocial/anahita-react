@@ -20,6 +20,9 @@ import NodeType from '../../proptypes/Node';
 import NodesType from '../../proptypes/Nodes';
 import PersonType from '../../proptypes/Person';
 import ControlFollow from '../controls/Follow';
+import utils from '../../utils';
+
+const { getActorName } = utils.node;
 
 const LikesBrowse = ({
   browseList,
@@ -85,7 +88,7 @@ const LikesBrowse = ({
               />
             </ListItemAvatar>
             <ListItemText
-              primary={actor.name}
+              primary={getActorName(actor)}
             />
             {isAuthenticated &&
             <ListItemSecondaryAction>
