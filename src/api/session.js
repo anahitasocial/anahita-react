@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
 import { Auth as AUTH } from '../constants';
-import utils from '../utils/api';
 
 // Endpoints the browser must *navigate* to (they redirect, and in the
 // case of logout across hosts) need an absolute URL. Endpoints called
@@ -81,25 +80,18 @@ const exchangeCode = (code) => {
     });
 };
 
-// Camel-cased on the way in, so the viewer is shaped like every other actor
-// in the app.
+// The viewer arrives camelCase like every other response: the interceptor in
+// api/index.js is registered on the DEFAULT axios instance and keyed on
+// baseURL, so a relative request from this module is covered too.
 //
-// This module talks to axios directly rather than through the interceptor in
-// api/index.js — it has to, because the OAuth endpoints are the one place that
-// must not have its request keys snake-cased — and the side effect was that
-// the viewer was the ONE object arriving in its raw wire spelling. Everything
-// else in the app had been taught the camelCase rule; the viewer had not, so
-// `person_type` never became `personType`, every permission helper read
-// undefined, and administration controls were off for everybody.
-//
-// Only the response is converted. The request side stays untouched.
+// Worth saying because it is easy to assume otherwise — this module calls
+// axios directly rather than going through create() — and because the rule
+// hid a bug for a long time. `usertype` camel-cases to itself, being one word,
+// so the claim passed through looking converted while every permission helper
+// in the app read `personType`. The server sends `person_type` now and the
+// conversion is real. See api/__tests__/camelCase.test.js.
 const read = () => {
-  return axios.get(OAUTH_CONFIG.userinfoUrl).then((response) => {
-    return {
-      ...response,
-      data: utils.camelCaseKeys(response.data),
-    };
-  });
+  return axios.get(OAUTH_CONFIG.userinfoUrl);
 };
 
 // Logout is a GET that answers with a chain of redirects, not an API

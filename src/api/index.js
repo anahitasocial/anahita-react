@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable no-undef */
+import _ from 'lodash';
 import axios from 'axios';
 import { singularize } from 'inflection';
 import createApi from './create';

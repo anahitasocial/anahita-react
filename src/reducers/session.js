@@ -15,10 +15,13 @@ const { VIEWER_STORAGE_KEY } = AUTH;
 // cached profile is missing its role as signed out — which is exactly
 // what happened when /oauth/userinfo stopped returning that claim.
 //
-// `personType`, camelCase, like every other actor. The claim itself was
-// renamed from `usertype` to `person_type`, and api/session.js now camel-cases
-// the response — so a viewer cached under the old spelling reads as a guest
-// once and is replaced by the fetch that follows.
+// `personType`, camelCase, like every other actor. The claim was renamed from
+// `usertype` to `person_type` server-side, which is what makes the response
+// interceptor produce `personType` — as one word, `usertype` camel-cased to
+// itself and arrived unconverted.
+//
+// A viewer cached under the old spelling therefore reads as a guest once, and
+// is replaced by the fetch that follows.
 const isViewerAuthenticated = (item) => {
   return Boolean(item.id) && item.personType !== GUEST;
 };

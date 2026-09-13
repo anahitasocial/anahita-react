@@ -1,4 +1,5 @@
-/* eslint-disable no-undef */
+import _ from 'lodash';
+
 const constructURLSearchParams = (urlParams) => {
   const params = new URLSearchParams();
   const keys = Object.keys(urlParams);
