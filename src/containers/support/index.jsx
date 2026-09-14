@@ -19,7 +19,7 @@ import SupportIcon from '@material-ui/icons/ContactSupport';
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
 import WebsiteIcon from '@material-ui/icons/Language';
-import GavelIcon from '@material-ui/icons/Gavel';
+import TermsIcon from '@material-ui/icons/Description';
 import PolicyIcon from '@material-ui/icons/Policy';
 
 import HeaderMeta from '../../components/HeaderMeta';
@@ -148,7 +148,7 @@ const SupportPage = ({ setAppTitle }) => {
               their data, so the two documents that answer those belong on it. */}
           <List>
             <ListItem button component={RouterLink} to="/legal/tos">
-              <ListItemIcon><GavelIcon /></ListItemIcon>
+              <ListItemIcon><TermsIcon /></ListItemIcon>
               <ListItemText primary={i18n.t('legal:tos')} />
             </ListItem>
             <ListItem button component={RouterLink} to="/legal/privacy">
