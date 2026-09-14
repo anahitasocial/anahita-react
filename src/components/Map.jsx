@@ -89,6 +89,7 @@ const AnahitaMap = ({
       center={DEFAULT_CENTER}
       zoom={DEFAULT_ZOOM}
       scrollWheelZoom={false}
+      attributionControl={false}
       {...other}
     >
       <TileLayer
