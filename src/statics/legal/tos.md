@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Version 1.0**
+**Version 1.0.0**
 
 > **This is boilerplate.** It ships with Anahita as a starting point so a new
 > installation has something coherent on this page from day one. It is not
@@ -8,8 +8,8 @@
 > placeholders, adapt the text to what you actually do, and have somebody
 > qualified look at it before you take real sign-ups.
 >
-> If you change this document, raise `TOS_VERSION` in auth-service — that
-> setting, not this file, is what decides who is asked to accept again. Everyone
+> If you change this document, raise its `version` in
+> `src/statics/legal/index.js` — that is what asks people to accept again. Everyone
 > who accepted an earlier version is then asked again; leaving the version
 > alone means the change applies to people who never saw it.
 

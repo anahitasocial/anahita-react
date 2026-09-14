@@ -26,6 +26,8 @@ import ActorsNotificationsEdit from '../containers/actors/Notifications/Edit';
 import Blogs from '../containers/blogs';
 import SupportPage from '../containers/support';
 import LegalPage from '../containers/legal';
+import AgreementsPage from '../containers/agreements';
+import AgreementsGate from './AgreementsGate';
 
 import Hashtags from '../containers/hashtags';
 import HashtagsRead from '../containers/hashtags/Read';
@@ -106,190 +108,202 @@ function AppRoutes() {
   }, [location]);
 
   return (
-    <Routes>
-      <Route path="/oauth/callback" element={<OAuthCallback />} />
+    <AgreementsGate>
+      <Routes>
+        <Route path="/oauth/callback" element={<OAuthCallback />} />
 
-      <Route
-        path="/"
-        element={isAuthenticated ? <DashboardPage /> : <HomePage />}
-      />
+        <Route
+          path="/"
+          element={isAuthenticated ? <DashboardPage /> : <HomePage />}
+        />
 
-      <Route
-        path="/about"
-        element={
-          <AuthenticatedRoute>
-            <HomePage />
-          </AuthenticatedRoute>
+        <Route
+          path="/about"
+          element={
+            <AuthenticatedRoute>
+              <HomePage />
+            </AuthenticatedRoute>
         }
-      />
+        />
 
-      <Route path="/blogs" element={<Blogs />} />
-      {/* Public on purpose. The emails that link here go to somebody who
+        <Route path="/blogs" element={<Blogs />} />
+        {/* Public on purpose. The emails that link here go to somebody who
           cannot sign in, so gating it would make it reachable only by the
           people who do not need it. */}
-      <Route path="/support" element={<SupportPage />} />
-      <Route path="/search" element={<SearchPage />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/search" element={<SearchPage />} />
 
-      <Route
-        path="/token/:token/resetpassword"
-        element={<AuthToken resetPassword />}
-      />
-      <Route path="/token/:token" element={<AuthToken />} />
+        <Route
+          path="/token/:token/resetpassword"
+          element={<AuthToken resetPassword />}
+        />
+        <Route path="/token/:token" element={<AuthToken />} />
 
-      <Route path="/auth" element={<AuthPage />} />
-      <Route path="/auth/:tab" element={<AuthPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth/:tab" element={<AuthPage />} />
 
-      <Route path="/passwordreset" element={<PasswordResetPage />} />
+        <Route path="/passwordreset" element={<PasswordResetPage />} />
 
-      <Route
-        path="/dashboard"
-        element={
-          <AuthenticatedRoute>
-            <DashboardPage />
-          </AuthenticatedRoute>
+        <Route
+          path="/dashboard"
+          element={
+            <AuthenticatedRoute>
+              <DashboardPage />
+            </AuthenticatedRoute>
         }
-      />
+        />
 
-      {/* People — static paths before parameterized */}
-      <Route path="/people" element={<People />} />
-      <Route
-        path="/people/add"
-        element={
-          <AuthenticatedRoute>
-            <PeopleAdd />
-          </AuthenticatedRoute>
+        {/* People — static paths before parameterized */}
+        <Route path="/people" element={<People />} />
+        <Route
+          path="/people/add"
+          element={
+            <AuthenticatedRoute>
+              <PeopleAdd />
+            </AuthenticatedRoute>
         }
-      />
-      {/* The password card now lives inside the Security section, so this
+        />
+        {/* The password card now lives inside the Security section, so this
           redirects rather than selecting a tab. The URL is not ours to
           retire: it is in the username-change notification email and is
           where the password-reset token flow lands people — see
           containers/auth/Token. Password is the first card in that
           section, so the redirect arrives on it without scrolling. */}
-      <Route
-        path="/people/:id/settings/password"
-        element={
-          <AuthenticatedRoute>
-            <SettingsSectionRedirect section="security" />
-          </AuthenticatedRoute>
+        <Route
+          path="/people/:id/settings/password"
+          element={
+            <AuthenticatedRoute>
+              <SettingsSectionRedirect section="security" />
+            </AuthenticatedRoute>
         }
-      />
-      {/* One route for every section — account, security, privacy, danger.
+        />
+        {/* One route for every section — account, security, privacy, danger.
           The section is in the path rather than local state so it survives
           a reload, can be shared, and works with the back button.
 
           /settings/account is covered by this and needs no alias: it was a
           legacy landing after the old Account tab was split up, and it is
           a real section again. */}
-      <Route
-        path="/people/:id/settings/:section"
-        element={
-          <AuthenticatedRoute>
-            <PeopleSettings />
-          </AuthenticatedRoute>
+        <Route
+          path="/people/:id/settings/:section"
+          element={
+            <AuthenticatedRoute>
+              <PeopleSettings />
+            </AuthenticatedRoute>
         }
-      />
-      <Route
-        path="/people/:id/settings"
-        element={
-          <AuthenticatedRoute>
-            <PeopleSettings />
-          </AuthenticatedRoute>
+        />
+        <Route
+          path="/people/:id/settings"
+          element={
+            <AuthenticatedRoute>
+              <PeopleSettings />
+            </AuthenticatedRoute>
         }
-      />
-      <Route
-        path="/people/:id/notifications"
-        element={
-          <AuthenticatedRoute>
-            <PeopleNotificationsEdit />
-          </AuthenticatedRoute>
+        />
+        <Route
+          path="/people/:id/notifications"
+          element={
+            <AuthenticatedRoute>
+              <PeopleNotificationsEdit />
+            </AuthenticatedRoute>
         }
-      />
-      <Route path="/people/:id/:tab/:subtab" element={<PeopleRead />} />
-      <Route path="/people/:id" element={<PeopleRead />} />
+        />
+        <Route path="/people/:id/:tab/:subtab" element={<PeopleRead />} />
+        <Route path="/people/:id" element={<PeopleRead />} />
 
-      {/* Groups — static paths before parameterized */}
-      <Route path="/groups" element={<GroupsBrowse />} />
-      <Route
-        path="/groups/add"
-        element={
-          <AuthenticatedRoute>
-            <GroupsAdd />
-          </AuthenticatedRoute>
+        {/* Groups — static paths before parameterized */}
+        <Route path="/groups" element={<GroupsBrowse />} />
+        <Route
+          path="/groups/add"
+          element={
+            <AuthenticatedRoute>
+              <GroupsAdd />
+            </AuthenticatedRoute>
         }
-      />
-      <Route
-        path="/groups/:id/settings"
-        element={
-          <AuthenticatedRoute>
-            <GroupsSettings />
-          </AuthenticatedRoute>
+        />
+        <Route
+          path="/groups/:id/settings"
+          element={
+            <AuthenticatedRoute>
+              <GroupsSettings />
+            </AuthenticatedRoute>
         }
-      />
-      <Route
-        path="/groups/:id/notifications"
-        element={
-          <AuthenticatedRoute>
-            <GroupsNotificationsEdit />
-          </AuthenticatedRoute>
+        />
+        <Route
+          path="/groups/:id/notifications"
+          element={
+            <AuthenticatedRoute>
+              <GroupsNotificationsEdit />
+            </AuthenticatedRoute>
         }
-      />
-      <Route path="/groups/:id/:tab/:subtab" element={<GroupsRead />} />
-      <Route path="/groups/:id" element={<GroupsRead />} />
+        />
+        <Route path="/groups/:id/:tab/:subtab" element={<GroupsRead />} />
+        <Route path="/groups/:id" element={<GroupsRead />} />
 
-      <Route
-        path="/notifications"
-        element={
-          <AuthenticatedRoute>
-            <Notifications />
-          </AuthenticatedRoute>
+        <Route
+          path="/notifications"
+          element={
+            <AuthenticatedRoute>
+              <Notifications />
+            </AuthenticatedRoute>
         }
-      />
-      <Route
-        path="/settings"
-        element={
-          <AuthenticatedRoute>
-            <Settings />
-          </AuthenticatedRoute>
+        />
+        <Route
+          path="/settings"
+          element={
+            <AuthenticatedRoute>
+              <Settings />
+            </AuthenticatedRoute>
         }
-      />
+        />
 
-      {/* Media types */}
-      <Route path="/articles" element={<Articles />} />
-      <Route path="/articles/:id" element={<ArticlesRead />} />
+        {/* Media types */}
+        <Route path="/articles" element={<Articles />} />
+        <Route path="/articles/:id" element={<ArticlesRead />} />
 
-      <Route path="/notes" element={<Notes />} />
-      <Route path="/notes/:id" element={<NotesRead />} />
+        <Route path="/notes" element={<Notes />} />
+        <Route path="/notes/:id" element={<NotesRead />} />
 
-      <Route path="/photos" element={<Photos />} />
-      <Route path="/photos/:id" element={<PhotosRead />} />
+        <Route path="/photos" element={<Photos />} />
+        <Route path="/photos/:id" element={<PhotosRead />} />
 
-      <Route path="/topics" element={<Topics />} />
-      <Route path="/topics/:id" element={<TopicsRead />} />
+        <Route path="/topics" element={<Topics />} />
+        <Route path="/topics/:id" element={<TopicsRead />} />
 
-      <Route path="/hashtags" element={<Hashtags />} />
-      <Route path="/hashtags/:alias" element={<HashtagsRead />} />
+        <Route path="/hashtags" element={<Hashtags />} />
+        <Route path="/hashtags/:alias" element={<HashtagsRead />} />
 
-      <Route path="/locations" element={<Locations />} />
-      <Route path="/locations/:id" element={<LocationsRead />} />
+        <Route path="/locations" element={<Locations />} />
+        <Route path="/locations/:id" element={<LocationsRead />} />
 
-      <Route path="/settings/clients" element={<OAuthClients />} />
+        <Route path="/settings/clients" element={<OAuthClients />} />
 
-      {/* Legal documents. Public — people read the terms before they have an
+        {/* Legal documents. Public — people read the terms before they have an
           account, which is why the signup form links to them.
 
           The two /pages URLs redirect because every document anybody has
           accepted so far was linked from there, and a link in a sent email
           cannot be updated after the fact. */}
-      <Route path="/legal" element={<Navigate to="/legal/tos" replace />} />
-      <Route path="/legal/:tab" element={<LegalPage />} />
-      <Route path="/pages/tos" element={<Navigate to="/legal/tos" replace />} />
-      <Route path="/pages/privacy" element={<Navigate to="/legal/privacy" replace />} />
-      <Route path="/pages/:alias" element={<StaticPage />} />
+        {/* Where somebody behind on either legal document is sent. Signed-in
+          only — there is nobody to record an acceptance for otherwise. */}
+        <Route
+          path="/agreements"
+          element={
+            <AuthenticatedRoute>
+              <AgreementsPage />
+            </AuthenticatedRoute>
+        }
+        />
+        <Route path="/legal" element={<Navigate to="/legal/tos" replace />} />
+        <Route path="/legal/:tab" element={<LegalPage />} />
+        <Route path="/pages/tos" element={<Navigate to="/legal/tos" replace />} />
+        <Route path="/pages/privacy" element={<Navigate to="/legal/privacy" replace />} />
+        <Route path="/pages/:alias" element={<StaticPage />} />
 
-      <Route path="/404" element={<NotFoundPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+        <Route path="/404" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </AgreementsGate>
   );
 }
 
