@@ -4,9 +4,11 @@ export default {
   email: {
     title: 'Écrivez-nous',
   },
-  help: {
-    title: 'Aide et documentation',
-    desc: 'Guides et réponses aux questions fréquentes',
+  phone: {
+    title: 'Appelez-nous',
+  },
+  website: {
+    title: "Site d'assistance",
   },
   unconfigured: 'Aucun contact d’assistance n’a encore été configuré pour ce site.',
 };

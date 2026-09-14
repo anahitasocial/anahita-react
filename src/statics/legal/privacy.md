@@ -8,14 +8,15 @@
 > placeholders, check every claim below against what your deployment actually
 > does, and have somebody qualified look at it before you take real sign-ups.
 >
-> If you change this document, raise `PRIVACY_VERSION` in auth-service.
+> If you change this document, raise `PRIVACY_VERSION` in auth-service — that
+> setting, not this file, is what decides who is asked to accept again.
 > Everyone who accepted an earlier version is then asked again.
 
 ## Who we are
 
 This site is operated by **[Your Organisation]**. For anything in this policy,
-including the requests described under *Your rights*, write to
-**[privacy contact email]**.
+including the requests described under *Your rights*, see the
+[support page](/support) or write to **[privacy contact email]**.
 
 **[If you are in the EU/UK and required to have one, name your Data Protection
 Officer and your representative here.]**

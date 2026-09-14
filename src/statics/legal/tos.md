@@ -8,7 +8,8 @@
 > placeholders, adapt the text to what you actually do, and have somebody
 > qualified look at it before you take real sign-ups.
 >
-> If you change this document, raise `TOS_VERSION` in auth-service. Everyone
+> If you change this document, raise `TOS_VERSION` in auth-service — that
+> setting, not this file, is what decides who is asked to accept again. Everyone
 > who accepted an earlier version is then asked again; leaving the version
 > alone means the change applies to people who never saw it.
 

@@ -18,6 +18,8 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LabelIcon from '@material-ui/icons/Label';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import SettingsIcon from '@material-ui/icons/Settings';
+import LegalIcon from '@material-ui/icons/Gavel';
+import SupportIcon from '@material-ui/icons/ContactSupport';
 
 import { Link, useLocation } from 'react-router-dom';
 
@@ -156,6 +158,32 @@ const LeftMenu = ({
           <BlogsIcon />
         </ListItemIcon>
         <ListItemText primary={i18n.t('blogs:cTitle')} />
+      </ListItem>
+      {/* Public, for everybody signed in or not. Support is where somebody
+          who cannot sign in is sent, and the terms are read before an account
+          exists — hiding either behind authentication hides it from the
+          people it is for. */}
+      <ListItem
+        button
+        component={Link}
+        to="/support"
+        selected={pathname === '/support'}
+      >
+        <ListItemIcon>
+          <SupportIcon />
+        </ListItemIcon>
+        <ListItemText primary={i18n.t('pages:support')} />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/legal/tos"
+        selected={pathname.startsWith('/legal')}
+      >
+        <ListItemIcon>
+          <LegalIcon />
+        </ListItemIcon>
+        <ListItemText primary={i18n.t('legal:mTitle')} />
       </ListItem>
       {isAuthenticated &&
         <ListItem

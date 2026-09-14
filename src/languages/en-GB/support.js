@@ -4,9 +4,11 @@ export default {
   email: {
     title: 'Email us',
   },
-  help: {
-    title: 'Help and documentation',
-    desc: 'Guides and answers to common questions',
+  phone: {
+    title: 'Call us',
+  },
+  website: {
+    title: 'Support website',
   },
   // Shown when neither a support address nor a help site is configured.
   // Saying so is better than an empty card, which reads as a broken page.

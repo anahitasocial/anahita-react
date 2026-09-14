@@ -25,6 +25,7 @@ import ActorsNotificationsEdit from '../containers/actors/Notifications/Edit';
 
 import Blogs from '../containers/blogs';
 import SupportPage from '../containers/support';
+import LegalPage from '../containers/legal';
 
 import Hashtags from '../containers/hashtags';
 import HashtagsRead from '../containers/hashtags/Read';
@@ -274,6 +275,16 @@ function AppRoutes() {
 
       <Route path="/settings/clients" element={<OAuthClients />} />
 
+      {/* Legal documents. Public — people read the terms before they have an
+          account, which is why the signup form links to them.
+
+          The two /pages URLs redirect because every document anybody has
+          accepted so far was linked from there, and a link in a sent email
+          cannot be updated after the fact. */}
+      <Route path="/legal" element={<Navigate to="/legal/tos" replace />} />
+      <Route path="/legal/:tab" element={<LegalPage />} />
+      <Route path="/pages/tos" element={<Navigate to="/legal/tos" replace />} />
+      <Route path="/pages/privacy" element={<Navigate to="/legal/privacy" replace />} />
       <Route path="/pages/:alias" element={<StaticPage />} />
 
       <Route path="/404" element={<NotFoundPage />} />

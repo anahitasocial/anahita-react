@@ -26,6 +26,7 @@ import articles from './articles';
 import explore from './explore';
 import socialgraph from './socialgraph';
 import hashtags from './hashtags';
+import legal from './legal';
 import locations from './locations';
 import search from './search';
 import inbounds from './inbounds';
@@ -60,6 +61,7 @@ export default {
   explore,
   socialgraph,
   hashtags,
+  legal,
   locations,
   search,
   inbounds,
