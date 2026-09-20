@@ -153,7 +153,7 @@ const mapStateToProps = (namespace) => {
     } = state[namespace];
 
     const {
-      [`${namespace}_followrequests`]: items,
+      [`${namespace}_follow_requests`]: items,
       isFetching,
       error,
       success,

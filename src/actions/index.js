@@ -3,7 +3,7 @@ import apis from '../api';
 
 import createAction from './create';
 import createGraphAction from './createGraph';
-import createActorFollowRequests from './actor/followrequests';
+import createActorFollowRequests from './actor/followRequests';
 import createActorAdminsAction from './actor/admins';
 import app from './app';
 import commentsInline from './commentsInline';
@@ -55,7 +55,7 @@ namespaces.actors.forEach((namespace) => {
   const api = apis[namespace][singularize(namespace)];
   actions[namespace] = {
     ...createAction(namespace)(apis[namespace]),
-    followRequests: createActorFollowRequests(namespace)(api.followrequests),
+    followRequests: createActorFollowRequests(namespace)(api.followRequests),
     settings: {
       access: createAction(`${namespace}_access`)(api.access),
       admins: createActorAdminsAction(`${namespace}_admins`)(api.admins),

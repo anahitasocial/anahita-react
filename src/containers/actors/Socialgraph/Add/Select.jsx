@@ -30,7 +30,7 @@ const ActorsSocialgraphAddSelect = ({
   alertSuccess,
 }) => {
   const namespace = getNamespace(actor);
-  const addfollowersApi = api[namespace][singularize(namespace)].addfollowers;
+  const addFollowersApi = api[namespace][singularize(namespace)].addFollowers;
 
   const [isFetching, setIsFetching] = useState(false);
   const [people, setPeople] = useState([]);
@@ -38,7 +38,7 @@ const ActorsSocialgraphAddSelect = ({
 
   const fetchList = (q) => {
     setIsFetching(true);
-    addfollowersApi.browse({
+    addFollowersApi.browse({
       start: 0,
       limit: LIMIT,
       actor,
@@ -55,7 +55,7 @@ const ActorsSocialgraphAddSelect = ({
 
   const handleAdd = () => {
     followers.forEach((follower) => {
-      addfollowersApi.add({ actor, follower })
+      addFollowersApi.add({ actor, follower })
         .then(() => {
           alertSuccess(i18n.t('prompts:added.success'));
         }).catch((err) => {

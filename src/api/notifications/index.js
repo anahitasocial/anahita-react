@@ -15,7 +15,7 @@ function deleteItem(item) {
 }
 
 function count() {
-  return axios.get('/notifications/unreadcount');
+  return axios.get('/notifications/unread-count');
 }
 
 export default {

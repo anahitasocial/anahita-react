@@ -6,7 +6,7 @@ export default {
     mTitle: 'Add person',
   },
   settings: {
-    authlogs: 'Authentications',
+    authLogs: 'Authentications',
     webauthn: 'Pass keys',
     totp: '2FA',
     info: 'Info',

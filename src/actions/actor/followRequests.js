@@ -5,21 +5,21 @@ import createAction from '../create';
 const addRequest = (params, namespace) => {
   const { followRequest: node } = params;
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_CONFIRM_REQUEST`,
+    type: `${namespace.toUpperCase()}_FOLLOW_REQUESTS_CONFIRM_REQUEST`,
     node,
   };
 };
 
 const addSuccess = (result, namespace) => {
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_CONFIRM_SUCCESS`,
+    type: `${namespace.toUpperCase()}_FOLLOW_REQUESTS_CONFIRM_SUCCESS`,
     node: result.data,
   };
 };
 
 const addFailure = (response, namespace) => {
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_CONFIRM_FAILURE`,
+    type: `${namespace.toUpperCase()}_FOLLOW_REQUESTS_CONFIRM_FAILURE`,
     error: response.message,
   };
 };
@@ -49,7 +49,7 @@ const add = (namespace, api) => {
 const deleteRequest = (params, namespace) => {
   const { followRequest: node } = params;
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_IGNORE_REQUEST`,
+    type: `${namespace.toUpperCase()}_FOLLOW_REQUESTS_IGNORE_REQUEST`,
     node,
   };
 };
@@ -57,14 +57,14 @@ const deleteRequest = (params, namespace) => {
 const deleteSuccess = (params, namespace) => {
   const { followRequest: node } = params;
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_IGNORE_SUCCESS`,
+    type: `${namespace.toUpperCase()}_FOLLOW_REQUESTS_IGNORE_SUCCESS`,
     node,
   };
 };
 
 const deleteFailure = (response, namespace) => {
   return {
-    type: `${namespace.toUpperCase()}_FOLLOWREQUESTS_IGNORE_FAILURE`,
+    type: `${namespace.toUpperCase()}_FOLLOW_REQUESTS_IGNORE_FAILURE`,
     error: response.message,
   };
 };
@@ -92,7 +92,7 @@ const deleteItem = (namespace, api) => {
 export default (namespace) => {
   return (api) => {
     return {
-      ...createAction(`${namespace}_followrequests`)(api),
+      ...createAction(`${namespace}_follow_requests`)(api),
       add: add(namespace, api),
       deleteItem: deleteItem(namespace, api),
     };

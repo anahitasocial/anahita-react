@@ -121,7 +121,7 @@ function removefollower({ actor, follower }) {
     dispatch(removefollowerRequest(actor));
     return new Promise((resolve, reject) => {
       const namespace = utils.node.getNamespace(actor);
-      return apis[namespace][singularize(namespace)].addfollowers.deleteItem({ actor, follower })
+      return apis[namespace][singularize(namespace)].addFollowers.deleteItem({ actor, follower })
         .then(() => {
           dispatch(removefollowerSuccess(follower));
           return resolve();
@@ -245,7 +245,7 @@ function blockfollower({ actor, follower }) {
     dispatch(blockfollowerRequest(actor));
     return new Promise((resolve, reject) => {
       const namespace = utils.node.getNamespace(actor);
-      return apis[namespace][singularize(namespace)].addfollowers.block({ actor, follower })
+      return apis[namespace][singularize(namespace)].addFollowers.block({ actor, follower })
         .then(() => {
           dispatch(blockfollowerSuccess(follower));
           return resolve();

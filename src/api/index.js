@@ -6,7 +6,7 @@ import createApi from './create';
 import createActor from './actor';
 
 import agreements from './agreements';
-import authlogs from './authlogs';
+import authLogs from './authLogs';
 import avatar from './avatar';
 import comments from './comments';
 import commentStatus from './commentsStatus';
@@ -18,7 +18,7 @@ import is from './is';
 import likes from './likes';
 import locations from './locations';
 import node from './node';
-import nodeinfo from './nodeinfo';
+import nodeInfo from './nodeInfo';
 import notifications from './notifications';
 import notificationsSub from './notifications/sub';
 import oauthClients from './oauthClients';
@@ -106,7 +106,7 @@ const namespaces = {
 };
 
 const apis = {
-  authlogs,
+  authLogs,
   avatar,
   agreements,
   comments,
@@ -119,7 +119,7 @@ const apis = {
   likes,
   locations,
   node,
-  nodeinfo,
+  nodeInfo,
   notifications,
   notificationsSub,
   oauthClients,

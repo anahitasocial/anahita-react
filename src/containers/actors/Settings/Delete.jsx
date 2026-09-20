@@ -69,7 +69,7 @@ const ActorsSettingsDelete = (props) => {
     let live = true;
 
     if (actor.id) {
-      api[namespace][singularize(namespace)].deletioncounts.read(actor)
+      api[namespace][singularize(namespace)].deletionCounts.read(actor)
         .then((response) => {
           if (live) {
             setCounts(response.data);

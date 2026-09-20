@@ -41,7 +41,7 @@ export const ITEMS = {
   PASSWORD: 'password',
   TOTP: 'totp',
   WEBAUTHN: 'webauthn',
-  AUTHLOGS: 'authlogs',
+  AUTHLOGS: 'authLogs',
   ACCESS: 'access',
   DANGER: 'danger',
   DISABLE: 'disable',
@@ -55,7 +55,7 @@ export const ITEMS = {
 //
 //   own Card — auth/Password, auth/Email, auth/Username, auth/WebAuthn,
 //              auth/Totp (via TotpSteps), actors/Settings/Access
-//   bare     — auth/Authlogs, people/Settings/Info, actors/Settings/Delete
+//   bare     — auth/AuthLogs, people/Settings/Info, actors/Settings/Delete
 //
 // Access is a Card with no CardHeader, so it reads as untitled next to the
 // others. Left as-is here: giving it a header is a change to a shared component

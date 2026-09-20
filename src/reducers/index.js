@@ -17,7 +17,7 @@ import stories from './stories';
 // creators
 import createActorAdmins from './actor/admins';
 import createActorApps from './actor/apps';
-import createActorFollowRequests from './actor/followrequests';
+import createActorFollowRequests from './actor/followRequests';
 import createActorsReducer from './createActors';
 import createCommentReducer from './createComment';
 import createMediaReducer from './createMedia';
@@ -68,7 +68,7 @@ namespaces.actors.forEach((ns) => {
     reducers[`${ns}Admins`] = createActorAdmins(`${ns}_admins`);
   }
   reducers[`${ns}Apps`] = createActorApps(`${ns}_apps`);
-  reducers[`${ns}FollowRequests`] = createActorFollowRequests(`${ns}_followrequests`);
+  reducers[`${ns}FollowRequests`] = createActorFollowRequests(`${ns}_follow_requests`);
 });
 
 namespaces.media.forEach((ns) => {

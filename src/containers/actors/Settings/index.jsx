@@ -10,7 +10,7 @@ import Tab from '@material-ui/core/Tab';
 import ActorSettingCard from '../../../components/ActorSetting';
 
 import Admins from './admins/Browse';
-import AuthLogs from '../../auth/Authlogs';
+import AuthLogs from '../../auth/AuthLogs';
 import Password from '../../auth/Password';
 import Username from '../../auth/Username';
 import WebAuthn from '../../auth/WebAuthn';

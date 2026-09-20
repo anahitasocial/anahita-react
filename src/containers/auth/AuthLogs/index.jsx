@@ -4,27 +4,27 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import api from '../../../api';
-import AuthlogsCard from './AuthlogsCard';
+import AuthLogsCard from './AuthLogsCard';
 import actions from '../../../actions';
 import i18n from '../../../languages';
 
-const { authlogs: authlogsApi } = api;
+const { authLogs: authLogsApi } = api;
 
-const Authlogs = (props) => {
+const AuthLogs = (props) => {
   const {
     personId,
     alertSuccess,
     alertError,
   } = props;
 
-  const [authlogs, setAuthlogs] = useState([]);
+  const [authLogs, setAuthLogs] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleBrowse = (person) => {
-    authlogsApi.browse(person)
+    authLogsApi.browse(person)
       .then((response) => {
         if (response.status === 200) {
-          setAuthlogs(response.data || []);
+          setAuthLogs(response.data || []);
         }
       }).catch((err) => {
         console.error(err);
@@ -39,12 +39,12 @@ const Authlogs = (props) => {
     handleBrowse(person);
   }, []);
 
-  const handleDelete = (authlog) => {
+  const handleDelete = (authLog) => {
     const person = {
       id: personId,
     };
     setLoading(true);
-    authlogsApi.deleteItem(person, authlog)
+    authLogsApi.deleteItem(person, authLog)
       .then((response) => {
         if (response.status === 200) {
           handleBrowse(person);
@@ -59,15 +59,15 @@ const Authlogs = (props) => {
   };
 
   return (
-    <AuthlogsCard
-      items={authlogs}
+    <AuthLogsCard
+      items={authLogs}
       handleDelete={handleDelete}
       loading={loading}
     />
   );
 };
 
-Authlogs.propTypes = {
+AuthLogs.propTypes = {
   personId: PropTypes.number.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
@@ -91,4 +91,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Authlogs);
+)(AuthLogs);

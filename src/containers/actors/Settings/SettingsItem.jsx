@@ -32,7 +32,7 @@ const SettingsItem = ({
           The bare items are not uniform underneath: InfoForm and Forms/Delete
           bring their own CardContent AND CardActions, so an extra CardContent
           here would double their padding and nest the action row inside the
-          body; Authlogs renders a list of its own cards. Ending at the divider
+          body; AuthLogs renders a list of its own cards. Ending at the divider
           reproduces exactly how ActorSettingCard used to host all three, so
           they render as before and only gain a title of their own. */}
       {bare &&

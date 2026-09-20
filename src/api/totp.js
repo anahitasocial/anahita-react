@@ -38,7 +38,7 @@ function add(password) {
 // out of the enrolment wizard. The server returns 403 for this now, so
 // the flag is belt-and-braces.
 function addRecoveryCodes(passcode) {
-  return axios.post('totp/recoverycodes', constructFormData({
+  return axios.post('totp/recovery-codes', constructFormData({
     passcode,
   }), { skipAuthRedirect: true });
 }

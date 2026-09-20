@@ -40,7 +40,7 @@ const Auth = () => {
   useEffect(() => {
     let cancelled = false;
 
-    api.nodeinfo.read()
+    api.nodeInfo.read()
       .then(({ data }) => {
         if (!cancelled) {
           setSignupOpen(Boolean(data.openRegistrations));

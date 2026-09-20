@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => {
   });
 });
 
-const AuthlogsCard = ({
+const AuthLogsCard = ({
   items = [],
   handleDelete,
   loading,
@@ -50,19 +50,19 @@ const AuthlogsCard = ({
     return (<></>);
   }
 
-  const getIcon = (authlog) => {
-    const color = authlog.isActive === true ? 'primary' : 'disabled';
+  const getIcon = (authLog) => {
+    const color = authLog.isActive === true ? 'primary' : 'disabled';
 
-    if (authlog.device === 'mobile') {
+    if (authLog.device === 'mobile') {
       return <MobileIcon color={color} />;
     }
 
-    if (authlog.device === 'tablet') {
+    if (authLog.device === 'tablet') {
       return <TabletIcon color={color} />;
     }
 
-    if (authlog.device === 'desktop') {
-      if (authlog.os === 'macOS') {
+    if (authLog.device === 'desktop') {
+      if (authLog.os === 'macOS') {
         return <DesktopMacIcon color={color} />;
       }
 
@@ -78,12 +78,12 @@ const AuthlogsCard = ({
         title={i18n.t('auth:authLogs.cTitle')}
       />
       <List>
-        {items.map((authlog, index) => {
-          const key = `authlog-${index}`;
-          const createdAt = moment.utc(authlog.createdAt).local().format('LLL').toString();
-          const avatarIcon = getIcon(authlog);
-          const canDelete = authlog.isActive === true && authlog.isViewer === false;
-          const clientName = clientDisplayName(authlog.clientId);
+        {items.map((authLog, index) => {
+          const key = `authLog-${index}`;
+          const createdAt = moment.utc(authLog.createdAt).local().format('LLL').toString();
+          const avatarIcon = getIcon(authLog);
+          const canDelete = authLog.isActive === true && authLog.isViewer === false;
+          const clientName = clientDisplayName(authLog.clientId);
           return (
             <div key={key}>
               <ListItem>
@@ -94,14 +94,14 @@ const AuthlogsCard = ({
                 </ListItemAvatar>
                 <ListItemText
                   secondary={i18n.t('auth:authLogs.cDesc', {
-                    ...authlog,
+                    ...authLog,
                   })}
                   primary={
                     <>
                       <span>
                         {clientName ? `${createdAt} · ${clientName}` : createdAt}
                       </span>
-                      {authlog.isActive && (
+                      {authLog.isActive && (
                         <Chip
                           label={i18n.t('auth:authLogs.cActive')}
                           size="small"
@@ -118,7 +118,7 @@ const AuthlogsCard = ({
                       variant="contained"
                       color="secondary"
                       onClick={() => {
-                        handleDelete(authlog);
+                        handleDelete(authLog);
                       }}
                       disabled={loading}
                     >
@@ -135,10 +135,10 @@ const AuthlogsCard = ({
   );
 };
 
-AuthlogsCard.propTypes = {
+AuthLogsCard.propTypes = {
   items: PropTypes.arrayOf(PropTypes.any),
   handleDelete: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
 
-export default AuthlogsCard;
+export default AuthLogsCard;

@@ -1,21 +1,21 @@
 import access from './access';
-import addfollowers from './addfollowers';
+import addFollowers from './addFollowers';
 import admins from './admins';
-import deletioncounts from './deletioncounts';
+import deletionCounts from './deletionCounts';
 import features from './features';
 import lifecycle from './lifecycle';
-import followrequests from './followrequests';
+import followRequests from './followRequests';
 import notifications from './notifications';
 
 export default (namespace) => {
   return {
     access: access(namespace),
-    addfollowers,
+    addFollowers,
     admins: admins(namespace),
-    deletioncounts: deletioncounts(namespace),
+    deletionCounts: deletionCounts(namespace),
     features: features(namespace),
     lifecycle: lifecycle(namespace),
-    followrequests,
+    followRequests,
     notifications: notifications(namespace),
   };
 };

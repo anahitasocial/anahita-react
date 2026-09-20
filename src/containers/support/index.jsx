@@ -60,7 +60,7 @@ const SupportPage = ({ setAppTitle }) => {
   useEffect(() => {
     let cancelled = false;
 
-    api.nodeinfo.read()
+    api.nodeInfo.read()
       .then(({ data }) => {
         if (!cancelled) {
           const metadata = (data && data.metadata) || {};
