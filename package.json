@@ -1,7 +1,11 @@
 {
   "name": "anahita-react",
   "description": "Front-end React application for Anahita",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anahitasocial/anahita-react"
+  },
   "private": true,
   "main": "index.js",
   "keywords": [
