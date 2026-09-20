@@ -82,7 +82,12 @@ describe('settings tabs and panels agree', () => {
   // component in that map too — a missing one is the same empty body, one
   // level down.
   it('every Danger zone action has a component', () => {
-    const start = indexSource.indexOf('[ITEMS.DANGER]:');
+    // Anchored inside groupPanels rather than at the first [ITEMS.DANGER] in
+    // the file. ITEM_ICONS carries that key too and is declared above, so a
+    // search from the top sliced the icon map — a one-line block naming a
+    // component for none of the three actions.
+    const mapStart = indexSource.indexOf('const groupPanels = {');
+    const start = indexSource.indexOf('[ITEMS.DANGER]:', mapStart);
     const end = indexSource.indexOf('};', start);
     const dangerBlock = indexSource.slice(start, end);
 
