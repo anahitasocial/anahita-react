@@ -184,6 +184,24 @@ const register = async () => {
   await protocolClient.post('webauthn/credentials/register/finish', payload);
 };
 
+// How many passkeys somebody else holds, and revoking all of them.
+//
+// A COUNT, not a list, and the asymmetry is the server's design rather
+// than an omission here: listing would reveal which devices a person
+// carries and when each was last used, which is device profiling that
+// buys nothing operationally. Revoking needs no enumeration.
+//
+// Administrator or super administrator — people administration, not
+// system configuration. Revoking also needs a step-up, which the server
+// asks for with a 403 carrying step_up_required.
+const countForPerson = (personId) => {
+  return axios.get(`webauthn/credentials/user/${personId}`);
+};
+
+const deleteAllForPerson = (personId) => {
+  return axios.delete(`webauthn/credentials/user/${personId}`);
+};
+
 // Named exports so api/reauth.js can run an assertion ceremony without
 // a second copy of the base64url conversions. One implementation, so a
 // fix to the padding logic cannot land in one ceremony and miss the
@@ -192,6 +210,8 @@ export { fromBase64Url, toBase64Url };
 
 export default {
   browse,
+  countForPerson,
+  deleteAllForPerson,
   edit,
   deleteItem,
   register,

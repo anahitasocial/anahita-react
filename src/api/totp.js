@@ -16,6 +16,13 @@ function read() {
   return axios.get('totp');
 }
 
+// readForPerson is the admin counterpart to read above, which answers
+// for the viewer and takes no id. An administration card offering to
+// remove somebody's second factor needs to know whether they have one.
+function readForPerson(personId) {
+  return axios.get(`totp/${personId}`);
+}
+
 function edit() {
   return axios.patch('totp');
 }
@@ -59,6 +66,7 @@ function verify(passcode) {
 
 export default {
   read,
+  readForPerson,
   edit,
   add,
   addRecoveryCodes,

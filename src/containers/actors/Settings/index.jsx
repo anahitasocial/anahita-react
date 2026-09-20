@@ -7,6 +7,12 @@ import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import InfoIcon from '@material-ui/icons/Info';
+import AdminsIcon from '@material-ui/icons/SupervisorAccount';
+import DisableIcon from '@material-ui/icons/Block';
+import ArchiveIcon from '@material-ui/icons/Archive';
+import DeleteIcon from '@material-ui/icons/DeleteForever';
+import DangerIcon from '@material-ui/icons/Warning';
 import ActorSettingCard from '../../../components/ActorSetting';
 
 import Admins from './admins/Browse';
@@ -23,6 +29,11 @@ import Info from './Info';
 import PersonInfo from '../../people/Settings/Info';
 import Access from './Access';
 import Progress from '../../../components/Progress';
+import PersonAgreements from '../../people/Settings/Agreements';
+import PersonMetadata from '../../people/Settings/Metadata';
+import PersonRevokePasskeys from '../../people/Settings/RevokePasskeys';
+import PersonRevokeTotp from '../../people/Settings/RevokeTotp';
+
 import SettingsItem from './SettingsItem';
 import {
   getPersonSections,
@@ -38,6 +49,23 @@ import utils from '../../../utils';
 import ActorType from '../../../proptypes/Actor';
 import PersonType from '../../../proptypes/Person';
 import i18n from '../../../languages';
+
+// The avatar for each item whose header SettingsItem supplies.
+//
+// Only the bare ones need an entry: a component that brings its own Card
+// brings its own avatar with it, and a key missing here renders a header
+// with no avatar rather than breaking.
+//
+// Separate from sections.js on purpose — that module is JSX-free so it can
+// be read and tested as plain data, and an icon is JSX.
+const ITEM_ICONS = {
+  [ITEMS.INFO]: <InfoIcon />,
+  [ITEMS.ADMINS]: <AdminsIcon />,
+  [ITEMS.DISABLE]: <DisableIcon />,
+  [ITEMS.ARCHIVE]: <ArchiveIcon />,
+  [ITEMS.DELETE]: <DeleteIcon />,
+  [ITEMS.DANGER]: <DangerIcon />,
+};
 
 // Tabs for the GROUPS namespace, which stays flat apart from the Danger zone.
 // See sections.js: a group has no account or security items, so there is
@@ -153,6 +181,14 @@ const ActorsSettings = ({
       [ITEMS.WEBAUTHN]: <WebAuthn />,
       [ITEMS.AUTHLOGS]: <AuthLogs personId={actor.id} />,
       [ITEMS.ACCESS]: <ActorAccess />,
+      // Administration. Every one of these takes the actor being looked
+      // at rather than the viewer — the endpoints behind them are the
+      // admin counterparts of the viewer-scoped ones in Security, and
+      // sections.js keeps them off the viewer's own profile.
+      [ITEMS.AGREEMENTS]: <PersonAgreements personId={actor.id} />,
+      [ITEMS.METADATA]: <PersonMetadata person={actor} />,
+      [ITEMS.REVOKE_PASSKEYS]: <PersonRevokePasskeys person={actor} />,
+      [ITEMS.REVOKE_TOTP]: <PersonRevokeTotp person={actor} />,
       [ITEMS.DISABLE]: <ActorDisable />,
       [ITEMS.ARCHIVE]: <ActorArchive />,
       [ITEMS.DELETE]: <ActorDelete />,
@@ -196,6 +232,7 @@ const ActorsSettings = ({
             <SettingsItem
               key={item.key}
               bare={item.bare}
+              icon={ITEM_ICONS[item.key]}
               title={i18n.t(`people:settings.${item.key}`)}
             >
               {panels[item.key]}
@@ -233,6 +270,7 @@ const ActorsSettings = ({
             <SettingsItem
               key={item.key}
               bare={item.bare}
+              icon={ITEM_ICONS[item.key]}
               title={i18n.t(`${namespace}:settings.${item.key}`)}
             >
               {{
@@ -283,6 +321,7 @@ const ActorsSettings = ({
       {activeTab.key === ITEMS.DANGER ? groupPanels[activeTab.key] : (
         <SettingsItem
           bare={activeTab.bare}
+          icon={ITEM_ICONS[activeTab.key]}
           title={i18n.t(`${namespace}:settings.${activeTab.key}`)}
         >
           {groupPanels[activeTab.key]}

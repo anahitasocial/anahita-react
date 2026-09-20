@@ -85,6 +85,7 @@ export default {
       account: 'Account',
       security: 'Security',
       access: 'Access',
+      administration: 'Administration',
       danger: 'Danger zone',
     },
   },
@@ -135,6 +136,65 @@ export default {
       error: 'Something went wrong!',
       errorUsernameTaken: 'Username is already taken!',
       errorEmailTaken: 'Email is already available in our system!',
+    },
+  },
+
+  // The Administration section: an administrator looking at somebody
+  // else's account. Never the viewer's own — see containers/actors/
+  // Settings/sections.js.
+  agreements: {
+    cTitle: 'Agreements',
+    tos: 'Terms of service',
+    privacy: 'Privacy policy',
+    acceptedOn: 'Accepted {{date}}',
+    never: 'Never accepted',
+    version: 'v{{version}}',
+    unavailable: 'The agreements could not be loaded.',
+  },
+  metadata: {
+    cTitle: 'Account',
+    joined: 'Joined',
+    lastSignIn: 'Last sign-in',
+    unknown: 'Unknown',
+  },
+  revokePasskeys: {
+    cTitle: 'Passkeys',
+    cDescription: 'Remove every passkey on this account.',
+    count: 'This account holds {{count}} passkey(s).',
+    unknown: 'The number of passkeys could not be read.',
+    actions: {
+      revoke: 'Revoke all passkeys',
+    },
+    confirm: {
+      cTitle: 'Revoke every passkey?',
+      cDescription: '{{name}} will no longer be able to sign in with a passkey. They can still use their password, and you will be asked to prove who you are first.',
+    },
+    alerts: {
+      revoked: 'Every passkey on {{name}} was revoked',
+    },
+    errors: {
+      revoke: 'The passkeys could not be revoked.',
+    },
+  },
+  revokeTotp: {
+    cTitle: 'Two-factor authentication',
+    cDescription: 'Remove the authenticator on this account.',
+    enabled: 'An authenticator is set up on this account.',
+    disabled: 'No authenticator is set up on this account.',
+    unknown: 'The authenticator status could not be read.',
+    expired: 'Not verified recently',
+    actions: {
+      revoke: 'Remove authenticator',
+    },
+    confirm: {
+      cTitle: 'Remove the authenticator?',
+      cDescription: '{{name}} will sign in without a second factor until they set up a new one. Do this when somebody has lost their device and their recovery codes.',
+    },
+    alerts: {
+      revoked: "{{name}}'s authenticator was removed",
+    },
+    errors: {
+      revoke: 'The authenticator could not be removed.',
     },
   },
 };

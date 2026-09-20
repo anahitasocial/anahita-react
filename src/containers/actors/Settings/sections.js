@@ -26,6 +26,9 @@ export const SECTIONS = {
   // section rather than erroring, which is the right way for a renamed tab to
   // age.
   ACCESS: 'access',
+  // Looking at somebody else's account as an administrator. Never the
+  // viewer's own — see the notViewer flag below.
+  ADMINISTRATION: 'administration',
   DANGER: 'danger',
 };
 
@@ -43,6 +46,10 @@ export const ITEMS = {
   WEBAUTHN: 'webauthn',
   AUTHLOGS: 'authLogs',
   ACCESS: 'access',
+  AGREEMENTS: 'agreements',
+  METADATA: 'metadata',
+  REVOKE_PASSKEYS: 'revokePasskeys',
+  REVOKE_TOTP: 'revokeTotp',
   DANGER: 'danger',
   DISABLE: 'disable',
   ARCHIVE: 'archive',
@@ -67,6 +74,12 @@ const ALL_SECTIONS = [
       { key: ITEMS.INFO, bare: true, viewerOnly: false },
       { key: ITEMS.EMAIL, bare: false, viewerOnly: true },
       { key: ITEMS.USERNAME, bare: false, viewerOnly: true },
+      // What you agreed to, and when. Yours to see without asking an
+      // administrator — it is a record of your own consent, and the
+      // one person who should never need permission for it is its
+      // subject. Administrators see the same card about somebody else
+      // in the Administration section.
+      { key: ITEMS.AGREEMENTS, bare: false, viewerOnly: true },
     ],
   },
   {
@@ -78,13 +91,45 @@ const ALL_SECTIONS = [
       { key: ITEMS.PASSWORD, bare: false, viewerOnly: true },
       { key: ITEMS.TOTP, bare: false, viewerOnly: true },
       { key: ITEMS.WEBAUTHN, bare: false, viewerOnly: true },
-      { key: ITEMS.AUTHLOGS, bare: true, viewerOnly: true },
+      // NOT bare: AuthLogsCard renders its own Card and header.
+      // Marked bare, SettingsItem wrapped it in a second one and the
+      // section showed 'Authentications' twice, nested.
+      { key: ITEMS.AUTHLOGS, bare: false, viewerOnly: true },
     ],
   },
   {
     key: SECTIONS.ACCESS,
     items: [
       { key: ITEMS.ACCESS, bare: false, viewerOnly: false },
+    ],
+  },
+  {
+    key: SECTIONS.ADMINISTRATION,
+    // Administrators only, and NEVER your own profile.
+    //
+    // Not tidiness. The server exempts self from every check on these
+    // actions — CanDeleteAll returns early when the target is the actor,
+    // skipping both the role test and the step-up — so a revoke button
+    // here on your own account would be a WEAKER path to the same thing
+    // than the per-passkey delete already in Security. Adding a softer
+    // door to a room that already has a locked one.
+    //
+    // Everything here exists for yourself elsewhere and better: TOTP and
+    // passkeys have their own cards with proper enrolment flows, and
+    // agreements sit in Account above.
+    items: [
+      {
+        key: ITEMS.AGREEMENTS, bare: false, requiresAdmin: true, notViewer: true,
+      },
+      {
+        key: ITEMS.METADATA, bare: false, requiresAdmin: true, notViewer: true,
+      },
+      {
+        key: ITEMS.REVOKE_PASSKEYS, bare: false, requiresAdmin: true, notViewer: true,
+      },
+      {
+        key: ITEMS.REVOKE_TOTP, bare: false, requiresAdmin: true, notViewer: true,
+      },
     ],
   },
   {
@@ -148,6 +193,14 @@ export const getPersonSections = ({ isViewer, canDelete, isAdmin }) => {
         }
 
         if (item.requiresAdmin && !isAdmin) {
+          return false;
+        }
+
+        // The mirror of viewerOnly: an item that only makes sense when
+        // looking at SOMEBODY ELSE. Without it the Administration
+        // section would appear on an admin's own profile offering
+        // actions the server deliberately treats as self-service.
+        if (item.notViewer && isViewer) {
           return false;
         }
 

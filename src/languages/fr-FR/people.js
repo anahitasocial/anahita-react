@@ -79,6 +79,7 @@ export default {
       account: 'Compte',
       security: 'Sécurité',
       access: 'Accès',
+      administration: 'Administration',
       danger: 'Zone de danger',
     },
   },
@@ -124,6 +125,62 @@ export default {
       error: 'Une erreur est survenue !',
       errorUsernameTaken: "Ce nom d'utilisateur est déjà pris !",
       errorEmailTaken: 'Cette adresse e-mail est déjà utilisée dans notre système !',
+    },
+  },
+
+  agreements: {
+    cTitle: 'Accords',
+    tos: "Conditions d'utilisation",
+    privacy: 'Politique de confidentialité',
+    acceptedOn: 'Acceptées le {{date}}',
+    never: 'Jamais acceptées',
+    version: 'v{{version}}',
+    unavailable: "Les accords n'ont pas pu être chargés.",
+  },
+  metadata: {
+    cTitle: 'Compte',
+    joined: 'Inscription',
+    lastSignIn: 'Dernière connexion',
+    unknown: 'Inconnue',
+  },
+  revokePasskeys: {
+    cTitle: 'Clés d’accès',
+    cDescription: 'Supprimer toutes les clés d’accès de ce compte.',
+    count: 'Ce compte possède {{count}} clé(s) d’accès.',
+    unknown: "Le nombre de clés d’accès n'a pas pu être lu.",
+    actions: {
+      revoke: 'Révoquer toutes les clés d’accès',
+    },
+    confirm: {
+      cTitle: 'Révoquer toutes les clés d’accès ?',
+      cDescription: '{{name}} ne pourra plus se connecter avec une clé d’accès. Son mot de passe reste utilisable, et il vous sera demandé de prouver votre identité au préalable.',
+    },
+    alerts: {
+      revoked: 'Toutes les clés d’accès de {{name}} ont été révoquées',
+    },
+    errors: {
+      revoke: "Les clés d’accès n'ont pas pu être révoquées.",
+    },
+  },
+  revokeTotp: {
+    cTitle: 'Authentification à deux facteurs',
+    cDescription: "Supprimer l'authentificateur de ce compte.",
+    enabled: 'Un authentificateur est configuré sur ce compte.',
+    disabled: "Aucun authentificateur n'est configuré sur ce compte.",
+    unknown: "L'état de l'authentificateur n'a pas pu être lu.",
+    expired: 'Non vérifié récemment',
+    actions: {
+      revoke: "Supprimer l'authentificateur",
+    },
+    confirm: {
+      cTitle: "Supprimer l'authentificateur ?",
+      cDescription: '{{name}} se connectera sans second facteur jusqu’à en configurer un nouveau. À faire lorsque la personne a perdu son appareil et ses codes de secours.',
+    },
+    alerts: {
+      revoked: "L'authentificateur de {{name}} a été supprimé",
+    },
+    errors: {
+      revoke: "L'authentificateur n'a pas pu être supprimé.",
     },
   },
 };
