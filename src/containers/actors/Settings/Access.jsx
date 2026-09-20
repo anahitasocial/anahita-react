@@ -6,27 +6,33 @@ import _ from 'lodash';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
-import CardActions from '@material-ui/core/CardActions';
-
-import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import Switch from '@material-ui/core/Switch';
 
 import AccessIcon from '@material-ui/icons/Visibility';
-
-import DialogAlert from '../../../components/DialogAlert';
 
 import ActorType from '../../../proptypes/Actor';
 import actions from '../../../actions';
 import i18n from '../../../languages';
 import utils from '../../../utils';
 import { Access as ACCESS } from '../../../constants';
+
+// The access levels where asking to follow is a meaningful thing to
+// offer. Public and registered profiles are already visible to the
+// person asking, so there is nothing for a request to unlock.
+const OPEN_TO_EVERYONE = [
+  ACCESS.ACTORS.PUBLIC,
+  ACCESS.ACTORS.REGISTERED,
+];
 
 const ActorsSettingsAccess = (props) => {
   const {
@@ -40,131 +46,147 @@ const ActorsSettingsAccess = (props) => {
   const actorType = utils.node.isPerson(actor) ? 'PEOPLE' : 'ACTORS';
   const accessOptions = _.values(ACCESS[actorType]);
 
-  const [showDialog, setShowDialog] = useState(false);
-  const [access, setAccess] = useState(actor.access);
-  const [allowFollowRequest, setAllowFollowRequest] = useState(actor.allowFollowRequest);
+  const [access, setAccess] = useState(actor.access || ACCESS.ACTORS.PUBLIC);
+
+  // Defaulted rather than taken raw. The server omitted this field
+  // whenever it was false — omitempty on a bool — so it arrived
+  // undefined, made the Switch uncontrolled, and was posted as the
+  // string "undefined", which cannot bind to a bool and took the whole
+  // request down with a 400. The response no longer omits it; this
+  // keeps the card working against a server that has not been updated.
+  const [allowFollowRequest, setAllowFollowRequest] = useState(
+    Boolean(actor.allowFollowRequest),
+  );
   const [waiting, setWaiting] = useState(false);
 
-  const handleOnChange = (event) => {
-    const { name, value, checked } = event.target;
-
-    if (name === 'access') {
-      setAccess(value);
-      setShowDialog(true);
-    } else if (name === 'allowFollowRequest') {
-      setAllowFollowRequest(checked);
-    }
-  };
-
+  // No confirmation step.
+  //
+  // There was one, and it asked a question the page already answers:
+  // every level is on screen with a sentence saying who it admits, and
+  // the choice is a radio button next to that sentence. A dialog
+  // repeating "are you sure" after somebody has read six options and
+  // picked one teaches them to dismiss dialogs, which is worse than
+  // not having asked.
+  //
+  // It is also reversible in one click, unlike the Danger zone
+  // actions, which is where confirmation earns its place.
   const handleOnSubmit = (event) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
 
     setWaiting(true);
-    editAccess({
+
+    return editAccess({
       ...actor,
       access,
       allowFollowRequest,
     }).then(() => {
       alertSuccess(i18n.t('actor:access.alerts.success'));
-      setWaiting(false);
-    }).catch((error) => {
-      alertError(i18n.t('actor:access.alerts.error', { error }));
+    }).catch(() => {
+      alertError(i18n.t('actor:access.alerts.error'));
+    }).finally(() => {
       setWaiting(false);
     });
-    setShowDialog(false);
   };
 
-  const handleDismiss = () => {
-    setShowDialog(false);
-  };
+  const followRequestDisabled = OPEN_TO_EVERYONE.includes(access);
 
   return (
-    <>
-      <DialogAlert
-        title={i18n.t('actor:access.title')}
-        content={i18n.t('actor:access.content')}
-        handleDismiss={handleDismiss}
-        handleConfirm={handleOnSubmit}
-        open={showDialog}
-      />
-      <form onSubmit={handleOnSubmit}>
-        <Card variant="outlined">
-          {/* This card had no header at all, so it read as untitled
-              beside its neighbours — sections.js carried a note saying
-              so and leaving it, because the component is shared with
-              the groups page. It is shared, and the heading is right
-              for both: who can see this profile. */}
-          <CardHeader
-            avatar={
-              <Avatar>
-                <AccessIcon />
-              </Avatar>
-            }
-            titleTypographyProps={{ variant: 'h5' }}
-            title={i18n.t('actor:access.title')}
-          />
-          <Divider />
-          <CardContent>
-            <FormControl
-              fullWidth
-              margin="normal"
-            >
-              <InputLabel
-                id={`${namespace}-access-label-id`}
-              >
-                {i18n.t('actor:access.labels.whoCanSee')}
-              </InputLabel>
-              <Select
-                id={`${namespace}-access-id`}
-                labelId={`${namespace}-access-label-id`}
-                name="access"
-                value={access}
-                onChange={handleOnChange}
-                label={i18n.t('actor:access.labels.whoCanSee')}
-              >
-                {accessOptions.map((option) => {
-                  const optionKey = `access-${option}`;
-                  return (
-                    <MenuItem
-                      key={optionKey}
+    <form onSubmit={handleOnSubmit}>
+      <Card variant="outlined">
+        <CardHeader
+          avatar={
+            <Avatar>
+              <AccessIcon />
+            </Avatar>
+          }
+          titleTypographyProps={{ variant: 'h5' }}
+          title={i18n.t('actor:access.title')}
+          subheader={i18n.t('actor:access.cDescription')}
+        />
+        <Divider />
+
+        {/* A radio list rather than a select.
+            Each level needs a sentence to be chosen sensibly —
+            "Mutuals" does not tell somebody who that is — and a
+            dropdown can only show a sentence once it has been
+            opened, one option at a time. Laid out as rows, they can
+            be compared, which is the whole task. */}
+        <RadioGroup
+          // Namespaced, so the person and group forms cannot share a
+          // radio group name if both are ever on one page.
+          name={`${namespace}-access`}
+          aria-label={i18n.t('actor:access.labels.whoCanSee')}
+          value={access}
+          onChange={(event) => {
+            setAccess(event.target.value);
+          }}
+        >
+          <List disablePadding>
+            {accessOptions.map((option) => {
+              return (
+                <ListItem
+                  key={`access-${option}`}
+                  button
+                  divider
+                  onClick={() => {
+                    setAccess(option);
+                  }}
+                >
+                  <ListItemIcon>
+                    <Radio
+                      checked={access === option}
                       value={option}
-                    >
-                      {i18n.t(`access:${option}`)}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={allowFollowRequest}
-                  onChange={handleOnChange}
-                  name="allowFollowRequest"
-                  disabled={[
-                    ACCESS.ACTORS.PUBLIC,
-                    ACCESS.ACTORS.REGISTERED,
-                  ].includes(access)}
-                />
-              }
-              label={i18n.t('actor:access.labels.othersCanRequestToFollow')}
-            />
-          </CardContent>
-          <CardActions>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={waiting}
-              fullWidth
-              onClick={handleOnSubmit}
-            >
-              {i18n.t('actions:update')}
-            </Button>
-          </CardActions>
-        </Card>
-      </form>
-    </>
+                      color="primary"
+                      inputProps={{
+                        'aria-label': i18n.t(`access:${option}`),
+                      }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={i18n.t(`access:${option}`)}
+                    secondary={i18n.t(`actor:access.descriptions.${option}`)}
+                  />
+                </ListItem>
+              );
+            })}
+          </List>
+        </RadioGroup>
+
+        <ListItem>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={allowFollowRequest}
+                onChange={(event) => {
+                  setAllowFollowRequest(event.target.checked);
+                }}
+                name="allowFollowRequest"
+                color="primary"
+                // Nothing to unlock when the profile is already
+                // visible to whoever would be asking.
+                disabled={followRequestDisabled}
+              />
+            }
+            label={i18n.t('actor:access.labels.othersCanRequestToFollow')}
+          />
+        </ListItem>
+
+        <Divider />
+        <CardActions>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={waiting}
+            fullWidth
+          >
+            {i18n.t('actions:update')}
+          </Button>
+        </CardActions>
+      </Card>
+    </form>
   );
 };
 

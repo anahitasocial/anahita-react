@@ -22,12 +22,28 @@ export default {
     },
   },
   access: {
-    title: 'Access Alert',
-    content: 'This profile will be publicly visible. Would you like to proceed?',
+    title: 'Access',
+    cDescription: 'Who can see this profile.',
+    // One sentence per level, because the label alone does not say who
+    // it means — "Mutuals" and "Leaders" are the site's words, not
+    // everybody's.
+    descriptions: {
+      public: 'Anyone, signed in or not.',
+      registered: 'Anyone with an account here.',
+      followers: 'People who follow this profile.',
+      leaders: 'People this profile follows.',
+      mutuals: 'People who follow this profile and are followed back.',
+      admins: 'Administrators of this group.',
+      myself: 'Nobody else.',
+    },
     labels: {
       whoCanSee: 'Who can see this profile?',
       othersCanRequestToFollow: 'Others can request to follow',
-      whoCanAddFollowers: 'Who can can add followers?',
+      whoCanAddFollowers: 'Who can add followers?',
+    },
+    alerts: {
+      success: 'Access was updated',
+      error: 'Access could not be updated.',
     },
   },
 };
