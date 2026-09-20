@@ -93,6 +93,5 @@ export default {
   },
   confirm: {
     delete: "Do you want to delete {{ name }}'s profile?",
-    block: "Do you want to block {{ name }}'s profile?",
   },
 };

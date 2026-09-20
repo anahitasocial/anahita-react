@@ -85,6 +85,5 @@ export default {
   },
   confirm: {
     delete: 'Voulez-vous supprimer le profil de {{ name }} ?',
-    block: 'Voulez-vous bloquer le profil de {{ name }} ?',
   },
 };

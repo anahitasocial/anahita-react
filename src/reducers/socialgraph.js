@@ -48,7 +48,6 @@ export default (state = {
         error: '',
       };
     case SOCIALGRAPH.REMOVE_FOLLOWER.REQUEST:
-    case SOCIALGRAPH.BLOCK_FOLLOWER.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -81,7 +80,6 @@ export default (state = {
         success: true,
       };
     case SOCIALGRAPH.REMOVE_FOLLOWER.SUCCESS:
-    case SOCIALGRAPH.BLOCK_FOLLOWER.SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -94,7 +92,6 @@ export default (state = {
     case SOCIALGRAPH.BLOCK.FAILURE:
     case SOCIALGRAPH.UNBLOCK.FAILURE:
     case SOCIALGRAPH.REMOVE_FOLLOWER.FAILURE:
-    case SOCIALGRAPH.BLOCK_FOLLOWER.FAILURE:
       return {
         ...state,
         isFetching: false,

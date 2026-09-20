@@ -12,5 +12,4 @@ export default {
   REMOVE_FOLLOWER: socialgraph('remove_follower'),
   BLOCK: socialgraph('block'),
   UNBLOCK: socialgraph('unblock'),
-  BLOCK_FOLLOWER: socialgraph('block_follower'),
 };

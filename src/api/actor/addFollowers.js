@@ -21,14 +21,8 @@ const deleteItem = (params) => {
   return axios.delete(`/socialgraph/${actor.id}/followers/${follower.id}`);
 };
 
-const block = (params) => {
-  const { follower, actor } = params;
-  return axios.post(`/socialgraph/${actor.id}/blocks/${follower.id}`);
-};
-
 export default {
   browse,
   add,
   deleteItem,
-  block,
 };

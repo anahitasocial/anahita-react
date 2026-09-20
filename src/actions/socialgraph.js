@@ -217,48 +217,6 @@ function unblock({ actor, viewer }) {
   };
 }
 
-// -- Block Follower
-
-function blockfollowerRequest(follower) {
-  return {
-    type: SOCIALGRAPH.BLOCK_FOLLOWER.REQUEST,
-    follower,
-  };
-}
-
-function blockfollowerSuccess(follower) {
-  return {
-    type: SOCIALGRAPH.BLOCK_FOLLOWER.SUCCESS,
-    actor: follower,
-  };
-}
-
-function blockfollowerFailure(error) {
-  return {
-    type: SOCIALGRAPH.REMOVE_FOLLOWER.FAILURE,
-    error: error.message,
-  };
-}
-
-function blockfollower({ actor, follower }) {
-  return (dispatch) => {
-    dispatch(blockfollowerRequest(actor));
-    return new Promise((resolve, reject) => {
-      const namespace = utils.node.getNamespace(actor);
-      return apis[namespace][singularize(namespace)].addFollowers.block({ actor, follower })
-        .then(() => {
-          dispatch(blockfollowerSuccess(follower));
-          return resolve();
-        }, (response) => {
-          dispatch(blockfollowerFailure(response));
-          return reject(response);
-        }).catch((error) => {
-          throw new Error(error);
-        });
-    });
-  };
-}
-
 export default {
   reset: () => {
     return sgActions.reset();
@@ -271,5 +229,4 @@ export default {
   removefollower,
   block,
   unblock,
-  blockfollower,
 };
