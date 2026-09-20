@@ -20,9 +20,18 @@ const {
   getActorInitials,
 } = utils.node;
 
+// Every field ActorInfoForm reads, which is what this list has to be rather
+// than the fields somebody filling the form cares about. The form reaches
+// straight into fields.websiteUrl.error to decide whether to mark the input,
+// so a name missing here is not an absent input — it is undefined.error, and
+// the page throws before it renders anything.
+//
+// websiteUrl was added to the form and to actors/Settings/Info, and this list
+// was not, which is exactly how /groups/add broke.
 const formFields = form.createFormFields([
   'name',
   'body',
+  'websiteUrl',
 ]);
 
 const ActorsAdd = ({
