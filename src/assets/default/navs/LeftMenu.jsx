@@ -14,7 +14,14 @@ import NotesIcon from '@material-ui/icons/Note';
 import PhotosIcon from '@material-ui/icons/Photo';
 import TopicsIcon from '@material-ui/icons/QuestionAnswer';
 import ArticlesIcon from '@material-ui/icons/LibraryBooks';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+// ExitToApp, not LockOpen.
+//
+// An open padlock pictures an account that is NOT secured, which is the
+// opposite of what signing out does — and it sat two entries from a
+// Password card whose icon is a closed Lock, so the pair read as a
+// state toggle between secure and insecure rather than as an action.
+// A door with an arrow through it says leave.
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import LabelIcon from '@material-ui/icons/Label';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -250,7 +257,7 @@ const LeftMenu = ({
           onClick={onLogoutClick}
         >
           <ListItemIcon>
-            <LockOpenIcon />
+            <ExitToAppIcon />
           </ListItemIcon>
           <ListItemText primary={i18n.t('auth:logout')} />
         </ListItem>}
