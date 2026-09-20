@@ -22,6 +22,10 @@ import nodeInfo from './nodeInfo';
 import notifications from './notifications';
 import notificationsSub from './notifications/sub';
 import oauthClients from './oauthClients';
+import oauthSigningKeys from './oauthSigningKeys';
+import openidConfiguration from './openidConfiguration';
+import invites from './invites';
+import signupRequests from './signupRequests';
 import password from './password';
 import reauth from './reauth';
 import repost from './feed/repost';
@@ -123,6 +127,10 @@ const apis = {
   notifications,
   notificationsSub,
   oauthClients,
+  oauthSigningKeys,
+  openidConfiguration,
+  invites,
+  signupRequests,
   password,
   reauth,
   repost,

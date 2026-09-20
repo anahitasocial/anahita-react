@@ -5,7 +5,6 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
@@ -101,62 +100,61 @@ const SupportPage = ({ setAppTitle }) => {
           }
           subheader={i18n.t('support:cDesc', { site: SITE_NAME })}
         />
-        <CardContent>
-          {contact &&
-            <List>
-              {contact.email &&
-                <ListItem button component="a" href={`mailto:${contact.email}`}>
-                  <ListItemIcon><EmailIcon /></ListItemIcon>
-                  <ListItemText
-                    primary={i18n.t('support:email.title')}
-                    secondary={contact.email}
-                  />
-                </ListItem>}
-              {contact.phone &&
-                <ListItem button component="a" href={telHref(contact.phone)}>
-                  <ListItemIcon><PhoneIcon /></ListItemIcon>
-                  <ListItemText
-                    primary={i18n.t('support:phone.title')}
-                    secondary={contact.phone}
-                  />
-                </ListItem>}
-              {contact.website &&
-                <ListItem
-                  button
-                  component="a"
-                  href={contact.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ListItemIcon><WebsiteIcon /></ListItemIcon>
-                  <ListItemText
-                    primary={i18n.t('support:website.title')}
-                    secondary={contact.website}
-                  />
-                </ListItem>}
-              {/* Nothing configured is a real state and says so, rather than
-                  an empty card that reads as a broken page. */}
-              {!hasAny &&
-                <ListItem>
-                  <ListItemText secondary={i18n.t('support:unconfigured')} />
-                </ListItem>}
-            </List>}
-
-          <Divider />
-
-          {/* Somebody on a support page is often here about their account or
-              their data, so the two documents that answer those belong on it. */}
+        <Divider />
+        {contact &&
           <List>
-            <ListItem button component={RouterLink} to="/legal/tos">
-              <ListItemIcon><TermsIcon /></ListItemIcon>
-              <ListItemText primary={i18n.t('legal:tos')} />
-            </ListItem>
-            <ListItem button component={RouterLink} to="/legal/privacy">
-              <ListItemIcon><PolicyIcon /></ListItemIcon>
-              <ListItemText primary={i18n.t('legal:privacy')} />
-            </ListItem>
-          </List>
-        </CardContent>
+            {contact.email &&
+              <ListItem button component="a" href={`mailto:${contact.email}`}>
+                <ListItemIcon><EmailIcon /></ListItemIcon>
+                <ListItemText
+                  primary={i18n.t('support:email.title')}
+                  secondary={contact.email}
+                />
+              </ListItem>}
+            {contact.phone &&
+              <ListItem button component="a" href={telHref(contact.phone)}>
+                <ListItemIcon><PhoneIcon /></ListItemIcon>
+                <ListItemText
+                  primary={i18n.t('support:phone.title')}
+                  secondary={contact.phone}
+                />
+              </ListItem>}
+            {contact.website &&
+              <ListItem
+                button
+                component="a"
+                href={contact.website}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ListItemIcon><WebsiteIcon /></ListItemIcon>
+                <ListItemText
+                  primary={i18n.t('support:website.title')}
+                  secondary={contact.website}
+                />
+              </ListItem>}
+            {/* Nothing configured is a real state and says so, rather than
+                an empty card that reads as a broken page. */}
+            {!hasAny &&
+              <ListItem>
+                <ListItemText secondary={i18n.t('support:unconfigured')} />
+              </ListItem>}
+          </List>}
+
+        <Divider />
+
+        {/* Somebody on a support page is often here about their account or
+            their data, so the two documents that answer those belong on it. */}
+        <List>
+          <ListItem button component={RouterLink} to="/legal/tos">
+            <ListItemIcon><TermsIcon /></ListItemIcon>
+            <ListItemText primary={i18n.t('legal:tos')} />
+          </ListItem>
+          <ListItem button component={RouterLink} to="/legal/privacy">
+            <ListItemIcon><PolicyIcon /></ListItemIcon>
+            <ListItemText primary={i18n.t('legal:privacy')} />
+          </ListItem>
+        </List>
       </Card>
     </Container>
   );

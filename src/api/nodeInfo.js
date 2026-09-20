@@ -1,4 +1,4 @@
-import axios from 'axios';
+import publicClient from './publicClient';
 
 // NodeInfo — what this installation says about itself.
 //
@@ -17,7 +17,7 @@ import axios from 'axios';
 const SCHEMA_2_1 = 'http://nodeinfo.diaspora.software/ns/schema/2.1';
 
 const read = () => {
-  return axios.get('/.well-known/nodeinfo').then((response) => {
+  return publicClient.get('/.well-known/nodeinfo').then((response) => {
     const links = (response.data && response.data.links) || [];
     const link = links.find((candidate) => {
       return candidate.rel === SCHEMA_2_1;
@@ -27,7 +27,7 @@ const read = () => {
       throw new Error('no NodeInfo 2.1 document is published');
     }
 
-    return axios.get(link.href);
+    return publicClient.get(link.href);
   });
 };
 

@@ -19,6 +19,7 @@ import SearchBox from '../components/SearchBox';
 
 import Viewer from '../components/AuthViewer';
 import ViewerType from '../proptypes/Viewer';
+import NodeInfoType from '../proptypes/NodeInfo';
 import assets from '../assets';
 import Alerts from './Alerts';
 import MenuLogo from '../components/Logo';
@@ -90,7 +91,9 @@ const App = ({
   isAuthenticated,
   viewer,
   appBarTitle,
+  nodeInfo,
   whoami,
+  readNodeInfo,
   logout,
 }) => {
   const classes = useStyles();
@@ -100,6 +103,7 @@ const App = ({
 
   useEffect(() => {
     whoami();
+    readNodeInfo();
   }, []);
 
   const handleDrawerToggle = () => {
@@ -124,6 +128,7 @@ const App = ({
           onLogoutClick={handleLogout}
           viewer={viewer}
           isAuthenticated={isAuthenticated}
+          nodeInfo={nodeInfo}
           classNames={classes}
         />
         <Divider />
@@ -222,12 +227,15 @@ App.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   whoami: PropTypes.func.isRequired,
+  readNodeInfo: PropTypes.func.isRequired,
   appBarTitle: PropTypes.string.isRequired,
+  nodeInfo: NodeInfoType.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
     appBarTitle,
+    nodeInfo,
   } = state.app;
 
   const {
@@ -237,6 +245,7 @@ const mapStateToProps = (state) => {
 
   return {
     appBarTitle,
+    nodeInfo,
     isAuthenticated,
     viewer,
   };
@@ -246,6 +255,9 @@ function mapDispatchToProps(dispatch) {
   return {
     whoami: () => {
       return dispatch(actions.session.read());
+    },
+    readNodeInfo: () => {
+      return dispatch(actions.app.readNodeInfo());
     },
     logout: () => {
       return dispatch(actions.session.deleteItem());

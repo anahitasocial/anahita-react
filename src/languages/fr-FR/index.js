@@ -14,7 +14,10 @@ import blogs from './blogs';
 import dashboard from './dashboard';
 import home from './home';
 import documents from './documents';
+import about from './about';
 import settings from './settings';
+import signupRequests from './signupRequests';
+import invites from './invites';
 import support from './support';
 import groups from './groups';
 import people from './people';
@@ -50,7 +53,10 @@ export default {
   dashboard,
   home,
   documents,
+  about,
   settings,
+  signupRequests,
+  invites,
   support,
   groups,
   people,
