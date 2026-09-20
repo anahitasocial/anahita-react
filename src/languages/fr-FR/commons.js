@@ -7,6 +7,8 @@ export default {
   dismiss: 'Masquer',
   enabled: 'Activé',
   disabled: 'Désactivé',
+  yes: 'Oui',
+  no: 'Non',
   sortBy: 'Trier par',
   sortByOptions: {
     element: 'Élément',

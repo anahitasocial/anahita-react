@@ -1,145 +1,113 @@
 export default {
-  cTitle: 'Settings',
+  cTitle: 'Site Settings',
   mTitle: 'Settings',
-  about: {
-    mTitle: 'About',
-    cTitle: 'About',
-    apiVersion: 'API Version',
-    clientVersion: 'Client Version',
-    license: 'License',
-    website: 'Website',
+  restricted: {
+    cTitle: 'Site settings are restricted',
+    cDescription: 'Super administrators only.',
   },
-  appAssignments: {
-    mTitle: 'App Assignments',
-    cTitle: 'App Assignments',
-    cDescription: 'Manage items of apps to actors',
-  },
-  apps: {
-    mTitle: 'Apps',
-    cTitle: 'Apps',
-  },
-  app: {
-    blogs: {
-      ownerIds: 'Owner Ids',
-      createdByIds: 'Created by Ids',
+  oauthClients: {
+    mTitle: 'OAuth Clients',
+    cTitle: 'OAuth Clients',
+    cDescription: 'Applications that can sign people in to this site.',
+    empty: 'No applications registered.',
+    confidential: 'Confidential',
+    public: 'Public',
+    skipConsent: 'Skips consent',
+    skipConsentHint: 'Granted access without asking the person.',
+    fields: {
+      clientId: 'Client ID',
+      name: 'Name',
+      redirectUris: 'Redirect URIs',
+      grantTypes: 'Grant types',
+      scopes: 'Scopes',
+      tokenExpiry: 'Token expiry (seconds)',
+      confidential: 'Confidential client',
+      skipConsent: 'Skip the consent screen',
+      active: 'Active',
     },
-    documents: {
-      uploadlimit: 'Upload Limit',
-      uploadlimitOptions: {
-        '2Mb': '2 MB',
-        '4Mb': '4 MB',
-        '8Mb': '8 MB',
-      },
+    registeredOn: 'Registered {{date}}',
+    actions: {
+      add: 'Register application',
+      edit: 'Edit',
+      delete: 'Delete',
+      rotate: 'Rotate secret',
+      save: 'Save',
+      menu: 'Actions',
     },
-    groups: {
-      canPublish: 'Can publish',
-      canPublishOptions: {
-        siteAdmins: 'Site Admins',
-        siteAdminsRegisteredMembers: 'Site Admins, Registered Members',
-      },
+    form: {
+      addTitle: 'Register an application',
+      editTitle: 'Edit application',
+      clientIdHint: 'Lower case, numbers, dashes and underscores. Permanent.',
+      nameHint: 'Shown on the consent screen.',
+      redirectUrisHint: 'One per line. Only these addresses can be returned to.',
+      grantTypesRequired: 'Choose at least one grant type.',
+      scopesRequired: 'Choose at least one scope.',
+      scopesUnavailable: 'This site did not return its scopes. Try again shortly.',
+      tokenExpiryHint: 'How long an access token lasts. 300 to 86400.',
+      confidentialHint: 'For servers that can keep a secret. Leave off for devices and browsers.',
+      skipConsentHint: 'Only for applications you publish yourself.',
     },
-    locations: {
-      service: 'Service',
-      apiKeyGeocoding: 'Geocoding API Key',
-      apiKeyMaps: 'Maps API Key',
+    confirmDelete: {
+      cTitle: 'Delete this application?',
+      // The consequence is the whole reason to ask, so it stays.
+      cDescription: 'Everyone signed in through "{{name}}" is signed out and its tokens stop working. This cannot be undone.',
     },
-    notifications: {
-      useCron: 'Use Cron',
-      useCronOptions: {
-        no: 'No',
-        yes: 'Yes',
-      },
-      muteEmail: 'Mute Email Notifications',
-      muteEmailOptions: {
-        no: 'No',
-        yes: 'Yes',
-      },
+    confirmRotate: {
+      cTitle: 'Rotate this secret?',
+      cDescription: 'A new secret for "{{name}}" is shown once. Anything using the old one stops working.',
     },
-    mailer: {
-      debug: 'Debug Mailer',
-      redirectEmail: 'Redirect Email',
-      debugOptions: {
-        no: 'No',
-        yes: 'Yes',
-      },
+    secret: {
+      createdTitle: 'Application registered',
+      rotatedTitle: 'New secret generated',
+      cDescription: 'Shown once and never again. If it is lost, rotate it.',
+      label: 'Client secret',
+      copy: 'Copy',
+      copied: 'Copied',
+      done: 'I have saved it',
+      rotatedWarning: 'Existing tokens were revoked. Update anything using the old secret.',
     },
-    pages: {
-      contentPath: 'Content path',
+    alerts: {
+      added: '{{name}} was registered',
+      edited: '{{name}} was saved',
+      deleted: '{{name}} was deleted',
     },
-    people: {
-      allowRegistration: 'Allow guest users to sign up',
-      allowRegistrationOptions: {
-        no: 'No',
-        yes: 'Yes',
-      },
-      access: 'Default Access',
-      accessOptions: {
-        libAnPrivacylabelPublic: 'Public',
-        libAnPrivacylabelRegistered: 'Registered',
-      },
-    },
-    photos: {
-      uploadlimit: 'Upload Limit',
-      uploadlimitOptions: {
-        '2Mb': '2 MB',
-        '4Mb': '4 MB',
-        '8Mb': '8 MB',
-        '10Mb': '10 MB',
-      },
-    },
-    subscriptions: {
-      login: 'Paypal Login',
-      password: 'Paypal Password',
+    errors: {
+      browse: 'The applications could not be loaded.',
+      add: 'The application could not be registered.',
+      edit: 'The application could not be saved.',
+      delete: 'The application could not be deleted.',
+      rotate: 'The secret could not be rotated.',
+      forbidden: 'You are not allowed to do that.',
+      invalidScope: 'This site does not recognise one of the scopes.',
     },
   },
-  assignment: {
-    options: {
-      always: 'Always',
-      optional: 'Optional',
-      never: 'Never',
+  oauthSigningKeys: {
+    mTitle: 'OAuth Keys',
+    cTitle: 'OAuth Signing Keys',
+    // "Created at deployment" is doing work: it explains why there is
+    // no add button, which is otherwise a conspicuous absence.
+    cDescription: "Keys that sign this site's tokens. Created at deployment.",
+    empty: 'No signing keys. This site cannot issue tokens.',
+    expired: 'Expired',
+    expiringSoon: 'Expires soon',
+    lastActiveHint: 'The only active key. Switch another on before turning this off.',
+    published: {
+      yes: 'Published',
+      no: 'Not published',
+      unknown: 'Unknown',
     },
-  },
-  plugins: {
-    mTitle: 'Plugins',
-    cTitle: 'Plugins',
-  },
-  plugin: {
-    local: {
-      storage: {
-        folder: 'Local storage folder',
-      },
+    fields: {
+      active: 'Active',
     },
-    s3: {
-      storage: {
-        folder: 'S3 storage folder',
-        region: 'Region',
-        regionOptions: {
-          asiaPacificHongKong: 'Asia Pacific, Hong Kong',
-          asiaPacificMumbai: 'Asia Pacific, Mumbai',
-          asiaPacificOsakaLocal: 'Asia Pacific, Osaka Local',
-          asiaPacificSeoul: 'Asia Pacific, Seoul',
-          asiaPacificSingapore: 'Asia Pacific, Singapore',
-          asiaPacificSydney: 'Asia Pacific, Sydney',
-          asiaPacificTokyo: 'Asia Pacific, Tokyo',
-          canadaCentral: 'Canada, Central',
-          chinaBeijing: 'China, Beijing',
-          chinaNingxia: 'China, Ningxia',
-          euFrankfurt: 'EU, Frankfurt',
-          euIreland: 'EU, Ireland',
-          euLondon: 'EU, London',
-          euParis: 'EU, Paris',
-          euStockholm: 'EU, Stockholm',
-          middleEastBahrain: 'Middle East, Bahrain',
-          southAmericaSaoPaulo: 'South America, Sao Paulo',
-          usEastNVirginiaAwsDefault: 'US East, N. Virginia (AWS Default)',
-          usEastOhio: 'US East, Ohio',
-          usWestNCalifornia: 'US West, N. California',
-          usWestOregon: 'US West, Oregon',
-        },
-        bucket: 'Bucket',
-        accessKey: 'Access Key',
-        secretKey: 'Secret Key',
-      },
+    expiresOn: 'expires {{date}}',
+    alerts: {
+      activated: 'The key was switched on',
+      deactivated: 'The key was switched off',
+    },
+    errors: {
+      edit: 'The key could not be changed.',
+      forbidden: 'You are not allowed to do that.',
+      lastActiveKey: 'The only active key. Switch another on first.',
     },
   },
 };

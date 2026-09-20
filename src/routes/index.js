@@ -41,14 +41,16 @@ import MediaRead from '../containers/media/Read';
 import Notifications from '../containers/notifications/Browse';
 
 import OAuthCallback from '../containers/OAuthCallback';
-import OAuthClients from '../containers/oauth/Clients';
 
 import People from '../containers/people/Browse';
 import PeopleAdd from '../containers/people/Add';
 
 import DashboardPage from '../containers/Dashboard';
 import SearchPage from '../containers/search/Browse';
+import About from '../containers/about';
 import Settings from '../containers/settings';
+import SignupRequests from '../containers/auth/SignupRequests';
+import Invites from '../containers/auth/Invites';
 import StaticPage from '../containers/page';
 import NotFoundPage from '../containers/NotFound';
 
@@ -117,14 +119,15 @@ function AppRoutes() {
           element={isAuthenticated ? <DashboardPage /> : <HomePage />}
         />
 
-        <Route
-          path="/about"
-          element={
-            <AuthenticatedRoute>
-              <HomePage />
-            </AuthenticatedRoute>
-        }
-        />
+        {/* Public, like /support and /legal below. Everything on it is
+          already world-readable in /nodeinfo/2.1, and the people who
+          most need it — deciding whether to join — are the ones with no
+          account to sign in with.
+
+          It rendered HomePage behind AuthenticatedRoute before this: a
+          placeholder that showed signed-in people the dashboard-or-home
+          split and showed everybody else the login screen. */}
+        <Route path="/about" element={<About />} />
 
         <Route path="/blogs" element={<Blogs />} />
         {/* Public on purpose. The emails that link here go to somebody who
@@ -257,6 +260,30 @@ function AppRoutes() {
         }
         />
 
+        {/* Administrator-level, and separate from /settings for that
+          reason. auth-service gates both on IsAdminOrSuperAdmin while
+          settings is super-admin-only, so folding them in would have
+          hidden them from the administrators they are for.
+
+          Each page checks the permission itself; AuthenticatedRoute
+          only establishes that somebody is signed in. */}
+        <Route
+          path="/signup-requests"
+          element={
+            <AuthenticatedRoute>
+              <SignupRequests />
+            </AuthenticatedRoute>
+        }
+        />
+        <Route
+          path="/invites"
+          element={
+            <AuthenticatedRoute>
+              <Invites />
+            </AuthenticatedRoute>
+        }
+        />
+
         {/* Media types */}
         <Route path="/articles" element={<Articles />} />
         <Route path="/articles/:id" element={<ArticlesRead />} />
@@ -275,8 +302,6 @@ function AppRoutes() {
 
         <Route path="/locations" element={<Locations />} />
         <Route path="/locations/:id" element={<LocationsRead />} />
-
-        <Route path="/settings/clients" element={<OAuthClients />} />
 
         {/* Legal documents. Public — people read the terms before they have an
           account, which is why the signup form links to them.

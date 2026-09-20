@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import BlogsIcon from '@material-ui/icons/RssFeedOutlined';
+// import BlogsIcon from '@material-ui/icons/RssFeedOutlined';
 import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupsIcon from '@material-ui/icons/GroupWork';
@@ -18,22 +18,33 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LabelIcon from '@material-ui/icons/Label';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import SettingsIcon from '@material-ui/icons/Settings';
+import SignupRequestsIcon from '@material-ui/icons/HowToReg';
+import InvitesIcon from '@material-ui/icons/MailOutline';
 import LegalIcon from '@material-ui/icons/MenuBook';
 import SupportIcon from '@material-ui/icons/ContactSupport';
+import AboutIcon from '@material-ui/icons/Info';
 
 import { Link, useLocation } from 'react-router-dom';
 
 import i18n from '../../../languages';
 import PersonType from '../../../proptypes/Person';
+import NodeInfoType from '../../../proptypes/NodeInfo';
 import permissions from '../../../permissions';
 
 const LeftMenu = ({
   isAuthenticated,
   viewer,
+  nodeInfo = null,
   onLogoutClick = null,
 }) => {
   const location = useLocation();
   const { pathname = '/' } = location;
+
+  // Who may invite is a server setting, published through NodeInfo.
+  // Undefined until that answers, which ranks as "nobody" — so the
+  // entry appears once the answer arrives rather than flashing in and
+  // out for somebody who cannot use it.
+  const invitesFrom = nodeInfo && nodeInfo.metadata && nodeInfo.metadata.invitesFrom;
 
   return (
     <List>
@@ -136,7 +147,42 @@ const LeftMenu = ({
         </ListItemIcon>
         <ListItemText primary={i18n.t('locations:cTitle')} />
       </ListItem>
-      {isAuthenticated && permissions.settings.canEdit(viewer) &&
+      {/* Three separate gates, not one, because the three pages answer
+          to three different rules. The queue is administrator-level,
+          settings is super admin, and invites is whatever INVITES_FROM
+          says — which is why that one is the only gate here that needs
+          an answer from the server.
+
+          Invites is gated on canAdd rather than canBrowse. Anybody
+          registered may READ their own list, but a page that can only
+          ever be empty is not worth a permanent menu entry; somebody
+          who still has invitations from before a tightening can reach
+          /invites directly. */}
+      {isAuthenticated && permissions.signupRequest.canBrowse(viewer) &&
+        <ListItem
+          button
+          component={Link}
+          to="/signup-requests"
+          selected={pathname === '/signup-requests'}
+        >
+          <ListItemIcon>
+            <SignupRequestsIcon />
+          </ListItemIcon>
+          <ListItemText primary={i18n.t('signupRequests:mTitle')} />
+        </ListItem>}
+      {isAuthenticated && permissions.invite.canAdd(viewer, invitesFrom) &&
+        <ListItem
+          button
+          component={Link}
+          to="/invites"
+          selected={pathname === '/invites'}
+        >
+          <ListItemIcon>
+            <InvitesIcon />
+          </ListItemIcon>
+          <ListItemText primary={i18n.t('invites:mTitle')} />
+        </ListItem>}
+      {isAuthenticated && permissions.settings.canBrowse(viewer) &&
         <ListItem
           button
           component={Link}
@@ -148,7 +194,7 @@ const LeftMenu = ({
           </ListItemIcon>
           <ListItemText primary={i18n.t('settings:mTitle')} />
         </ListItem>}
-      <ListItem
+      {/* <ListItem
         button
         component={Link}
         to="/blogs/"
@@ -158,11 +204,23 @@ const LeftMenu = ({
           <BlogsIcon />
         </ListItemIcon>
         <ListItemText primary={i18n.t('blogs:cTitle')} />
-      </ListItem>
+      </ListItem> */}
       {/* Public, for everybody signed in or not. Support is where somebody
-          who cannot sign in is sent, and the terms are read before an account
-          exists — hiding either behind authentication hides it from the
-          people it is for. */}
+          who cannot sign in is sent, the terms are read before an account
+          exists, and About is how a stranger decides whether to ask for one
+          — hiding any of them behind authentication hides them from the
+          people they are for. */}
+      <ListItem
+        button
+        component={Link}
+        to="/about"
+        selected={pathname === '/about'}
+      >
+        <ListItemIcon>
+          <AboutIcon />
+        </ListItemIcon>
+        <ListItemText primary={i18n.t('about:mTitle')} />
+      </ListItem>
       <ListItem
         button
         component={Link}
@@ -204,6 +262,7 @@ LeftMenu.propTypes = {
   onLogoutClick: PropTypes.func,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  nodeInfo: NodeInfoType,
 };
 
 export default LeftMenu;

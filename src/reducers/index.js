@@ -9,7 +9,6 @@ import hashtags from './hashtags';
 import notifications from './notifications';
 import password from './password';
 import search from './search';
-import settingsAbout from './settings/about';
 import session from './session';
 import socialgraph from './socialgraph';
 import stories from './stories';
@@ -24,7 +23,6 @@ import createMediaReducer from './createMedia';
 import createFeed from './createFeed';
 
 import DEFAULT_NODE from '../proptypes/NodeDefault';
-import DEFAULT_OAUTH_CLIENT from '../proptypes/OAuthClientDefault';
 
 const namespaces = {
   actors: [
@@ -53,7 +51,6 @@ const reducers = {
   notifications,
   password,
   search,
-  settingsAbout,
   session,
   socialgraph,
   stories,
@@ -84,6 +81,16 @@ reducers.comments = createCommentReducer('comments');
 reducers.feedLeaders = createFeed('feed_leaders');
 reducers.feedActor = createFeed('feed_actor');
 
-reducers.oauthClients = createReducer('oauth_clients', DEFAULT_OAUTH_CLIENT);
+// No oauthClients entry, and no settingsAbout.
+//
+// Both were store slices nothing dispatched into. settingsAbout was fed
+// by actions.settings.about.read(), which has never existed — the
+// About tab threw on mount trying to call it. oauthClients went through
+// createReducer, which normalises node-shaped browse payloads with
+// pagination; OAuth clients are a short unpaginated list and the screen
+// read them straight from the api instead.
+//
+// The settings tabs hold their lists in local state, the way the
+// account screens hold passkeys, TOTP status and auth logs.
 
 export default combineReducers(reducers);

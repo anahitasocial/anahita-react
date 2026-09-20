@@ -1,145 +1,110 @@
 export default {
-  cTitle: 'Paramètres',
+  cTitle: 'Paramètres du site',
   mTitle: 'Paramètres',
-  about: {
-    mTitle: 'À propos',
-    cTitle: 'À propos',
-    apiVersion: "Version de l'API",
-    clientVersion: 'Version du client',
-    license: 'Licence',
-    website: 'Site web',
+  restricted: {
+    cTitle: 'Les paramètres du site sont réservés',
+    cDescription: 'Super administrateurs uniquement.',
   },
-  appAssignments: {
-    mTitle: "Attributions d'applications",
-    cTitle: "Attributions d'applications",
-    cDescription: "Gérer l'attribution des applications aux profils",
-  },
-  apps: {
-    mTitle: 'Applications',
-    cTitle: 'Applications',
-  },
-  app: {
-    blogs: {
-      ownerIds: 'Identifiants des propriétaires',
-      createdByIds: 'Identifiants des créateurs',
+  oauthClients: {
+    mTitle: 'Clients OAuth',
+    cTitle: 'Clients OAuth',
+    cDescription: 'Applications pouvant connecter des personnes à ce site.',
+    empty: 'Aucune application enregistrée.',
+    confidential: 'Confidentielle',
+    public: 'Publique',
+    skipConsent: 'Sans consentement',
+    skipConsentHint: 'Accès accordé sans demander à la personne.',
+    fields: {
+      clientId: 'Identifiant du client',
+      name: 'Nom',
+      redirectUris: 'URI de redirection',
+      grantTypes: "Types d'autorisation",
+      scopes: 'Portées',
+      tokenExpiry: 'Expiration du jeton (secondes)',
+      confidential: 'Client confidentiel',
+      skipConsent: "Passer l'écran de consentement",
+      active: 'Active',
     },
-    documents: {
-      uploadlimit: 'Limite de téléversement',
-      uploadlimitOptions: {
-        '2Mb': '2 Mo',
-        '4Mb': '4 Mo',
-        '8Mb': '8 Mo',
-      },
+    registeredOn: 'Enregistrée le {{date}}',
+    actions: {
+      add: 'Enregistrer une application',
+      edit: 'Modifier',
+      delete: 'Supprimer',
+      rotate: 'Renouveler le secret',
+      save: 'Enregistrer',
+      menu: 'Actions',
     },
-    groups: {
-      canPublish: 'Peut publier',
-      canPublishOptions: {
-        siteAdmins: 'Administrateurs du site',
-        siteAdminsRegisteredMembers: 'Administrateurs du site, membres inscrits',
-      },
+    form: {
+      addTitle: 'Enregistrer une application',
+      editTitle: "Modifier l'application",
+      clientIdHint: 'Minuscules, chiffres, tirets et tirets bas. Définitif.',
+      nameHint: "Affiché sur l'écran de consentement.",
+      redirectUrisHint: 'Une par ligne. Seules ces adresses peuvent être utilisées au retour.',
+      grantTypesRequired: "Choisissez au moins un type d'autorisation.",
+      scopesRequired: 'Choisissez au moins une portée.',
+      scopesUnavailable: "Ce site n'a pas renvoyé ses portées. Réessayez dans un instant.",
+      tokenExpiryHint: "Durée de validité d'un jeton d'accès. De 300 à 86400.",
+      confidentialHint: 'Pour les serveurs capables de garder un secret. Laissez désactivé pour les appareils et les navigateurs.',
+      skipConsentHint: 'Réservé aux applications que vous publiez vous-même.',
     },
-    locations: {
-      service: 'Service',
-      apiKeyGeocoding: 'Clé API de géocodage',
-      apiKeyMaps: 'Clé API Maps',
+    confirmDelete: {
+      cTitle: 'Supprimer cette application ?',
+      cDescription: 'Toutes les personnes connectées via « {{name}} » sont déconnectées et ses jetons cessent de fonctionner. Action définitive.',
     },
-    notifications: {
-      useCron: 'Utiliser Cron',
-      useCronOptions: {
-        no: 'Non',
-        yes: 'Oui',
-      },
-      muteEmail: 'Désactiver les notifications par e-mail',
-      muteEmailOptions: {
-        no: 'Non',
-        yes: 'Oui',
-      },
+    confirmRotate: {
+      cTitle: 'Renouveler ce secret ?',
+      cDescription: "Un nouveau secret pour « {{name}} » est affiché une seule fois. Tout ce qui utilise l'ancien cessera de fonctionner.",
     },
-    mailer: {
-      debug: 'Déboguer le service de messagerie',
-      redirectEmail: 'Rediriger les e-mails',
-      debugOptions: {
-        no: 'Non',
-        yes: 'Oui',
-      },
+    secret: {
+      createdTitle: 'Application enregistrée',
+      rotatedTitle: 'Nouveau secret généré',
+      cDescription: "Affiché une seule fois. S'il est perdu, renouvelez-le.",
+      label: 'Secret du client',
+      copy: 'Copier',
+      copied: 'Copié',
+      done: "Je l'ai enregistré",
+      rotatedWarning: "Les jetons existants ont été révoqués. Mettez à jour ce qui utilise l'ancien secret.",
     },
-    pages: {
-      contentPath: 'Chemin du contenu',
+    alerts: {
+      added: '{{name}} a été enregistrée',
+      edited: '{{name}} a été enregistrée',
+      deleted: '{{name}} a été supprimée',
     },
-    people: {
-      allowRegistration: "Autoriser les visiteurs à s'inscrire",
-      allowRegistrationOptions: {
-        no: 'Non',
-        yes: 'Oui',
-      },
-      access: 'Accès par défaut',
-      accessOptions: {
-        libAnPrivacylabelPublic: 'Public',
-        libAnPrivacylabelRegistered: 'Membres inscrits',
-      },
-    },
-    photos: {
-      uploadlimit: 'Limite de téléversement',
-      uploadlimitOptions: {
-        '2Mb': '2 Mo',
-        '4Mb': '4 Mo',
-        '8Mb': '8 Mo',
-        '10Mb': '10 Mo',
-      },
-    },
-    subscriptions: {
-      login: 'Identifiant Paypal',
-      password: 'Mot de passe Paypal',
+    errors: {
+      browse: "Les applications n'ont pas pu être chargées.",
+      add: "L'application n'a pas pu être enregistrée.",
+      edit: "L'application n'a pas pu être enregistrée.",
+      delete: "L'application n'a pas pu être supprimée.",
+      rotate: "Le secret n'a pas pu être renouvelé.",
+      forbidden: "Vous n'êtes pas autorisé à faire cela.",
+      invalidScope: "Ce site ne reconnaît pas l'une des portées.",
     },
   },
-  assignment: {
-    options: {
-      always: 'Toujours',
-      optional: 'Facultatif',
-      never: 'Jamais',
+  oauthSigningKeys: {
+    mTitle: 'Clés OAuth',
+    cTitle: 'Clés de signature OAuth',
+    cDescription: 'Clés qui signent les jetons de ce site. Créées au déploiement.',
+    empty: 'Aucune clé de signature. Ce site ne peut émettre aucun jeton.',
+    expired: 'Expirée',
+    expiringSoon: 'Expire bientôt',
+    lastActiveHint: 'Seule clé active. Activez-en une autre avant de la désactiver.',
+    published: {
+      yes: 'Publiée',
+      no: 'Non publiée',
+      unknown: 'Inconnu',
     },
-  },
-  plugins: {
-    mTitle: 'Extensions',
-    cTitle: 'Extensions',
-  },
-  plugin: {
-    local: {
-      storage: {
-        folder: 'Dossier de stockage local',
-      },
+    fields: {
+      active: 'Active',
     },
-    s3: {
-      storage: {
-        folder: 'Dossier de stockage S3',
-        region: 'Région',
-        regionOptions: {
-          asiaPacificHongKong: 'Asie-Pacifique, Hong Kong',
-          asiaPacificMumbai: 'Asie-Pacifique, Mumbai',
-          asiaPacificOsakaLocal: 'Asie-Pacifique, Osaka Local',
-          asiaPacificSeoul: 'Asie-Pacifique, Séoul',
-          asiaPacificSingapore: 'Asie-Pacifique, Singapour',
-          asiaPacificSydney: 'Asie-Pacifique, Sydney',
-          asiaPacificTokyo: 'Asie-Pacifique, Tokyo',
-          canadaCentral: 'Canada, Centre',
-          chinaBeijing: 'Chine, Pékin',
-          chinaNingxia: 'Chine, Ningxia',
-          euFrankfurt: 'UE, Francfort',
-          euIreland: 'UE, Irlande',
-          euLondon: 'UE, Londres',
-          euParis: 'UE, Paris',
-          euStockholm: 'UE, Stockholm',
-          middleEastBahrain: 'Moyen-Orient, Bahreïn',
-          southAmericaSaoPaulo: 'Amérique du Sud, São Paulo',
-          usEastNVirginiaAwsDefault: 'États-Unis Est, Virginie du Nord (par défaut AWS)',
-          usEastOhio: 'États-Unis Est, Ohio',
-          usWestNCalifornia: 'États-Unis Ouest, Californie du Nord',
-          usWestOregon: 'États-Unis Ouest, Oregon',
-        },
-        bucket: 'Bucket',
-        accessKey: "Clé d'accès",
-        secretKey: 'Clé secrète',
-      },
+    expiresOn: 'expire le {{date}}',
+    alerts: {
+      activated: 'La clé a été activée',
+      deactivated: 'La clé a été désactivée',
+    },
+    errors: {
+      edit: "La clé n'a pas pu être modifiée.",
+      forbidden: "Vous n'êtes pas autorisé à faire cela.",
+      lastActiveKey: "Seule clé active. Activez-en une autre d'abord.",
     },
   },
 };
