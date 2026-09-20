@@ -1,18 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(npm test:*)",
-      "Bash(npm run build:*)",
-      "Bash(npm run lint:*)",
-      "Bash(npx eslint:*)",
-      "Bash(git status)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)",
-      "Bash(docker exec *)",
-      "Bash(break)",
-      "Bash(ls auth-service/cmd/api/)",
-      "Bash(grep -rn \"event_listener\\\\|Consumer\\\\|Subscribe\" auth-service/cmd/api/*.go)"
-    ],
     "deny": [
       "Bash(npm run eject)",
       "Read(**/.npmrc)"
