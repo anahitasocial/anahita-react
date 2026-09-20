@@ -24,7 +24,6 @@ import FeedActorBrowse from '../../feed/Actor';
 import HeaderMeta from '../../../components/HeaderMeta';
 
 import actions from '../../../actions';
-import i18n from '../../../languages';
 import permissions from '../../../permissions/actor';
 import utils from '../../../utils';
 import { Actor as ACTOR } from '../../../constants';
@@ -45,7 +44,6 @@ const ActorsRead = (props) => {
   const {
     namespace,
     readItem,
-    setAppTitle,
     items: {
       current: actor,
     },
@@ -59,7 +57,6 @@ const ActorsRead = (props) => {
   const [id] = slug.split('-');
 
   useEffect(() => {
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
     readItem(id);
   }, [id, namespace]);
 
@@ -220,7 +217,6 @@ ActorsRead.propTypes = {
   namespace: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  setAppTitle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (namespace) => {
@@ -251,9 +247,6 @@ const mapDispatchToProps = (namespace) => {
     return {
       readItem: (id) => {
         return dispatch(actions[namespace].read(id, namespace));
-      },
-      setAppTitle: (title) => {
-        return dispatch(actions.app.setAppTitle(title));
       },
     };
   };

@@ -50,7 +50,18 @@ export default shape({
     // Signup Requests tab ever has anything in it.
     registrationMode: string,
     approvalRequired: bool,
+    // Whether invitations are being issued at all. False whenever the
+    // registration mode is `closed`, which suspends them site-wide — see
+    // auth-service Config.AllowsInvitations.
     invitationsAccepted: bool,
+    // The minimum role that may issue one: registered, administrators or
+    // super-administrators. Read alongside invitationsAccepted, never on its
+    // own — clearing the level means nothing while the site is locked down.
+    invitesFrom: string,
+    // The minimum role that may create a group: registered, administrators or
+    // super-administrators. GROUP-SERVICE enforces it; this document reports
+    // it so the web app knows whether to offer a + on the groups page.
+    groupsFrom: string,
     supportEmail: string,
     supportPhone: string,
     supportWebsite: string,

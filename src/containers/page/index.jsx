@@ -8,7 +8,6 @@ import Container from '@material-ui/core/Container';
 import _ from 'lodash';
 
 import HeaderMeta from '../../components/HeaderMeta';
-import actions from '../../actions';
 import i18n from '../../languages';
 import assets from '../../assets';
 
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme) => {
 
 const StaticPage = ({
   match: { params },
-  setAppTitle,
 }) => {
   const classes = useStyles();
   const [source, setSource] = React.useState('');
@@ -42,8 +40,6 @@ const StaticPage = ({
   const src = assets.pages[alias];
 
   useEffect(() => {
-    setAppTitle(i18n.t(`pages:${params.alias}`));
-
     fetch(src).then((response) => {
       return response.text();
     }).then((text) => {
@@ -51,7 +47,7 @@ const StaticPage = ({
     }).catch((err) => {
       console.error(err);
     });
-  }, [setAppTitle, params.alias]);
+  }, [params.alias]);
 
   const title = `${i18n.t(`pages:${params.alias}`)} - ${process.env.REACT_APP_NAME}`;
 
@@ -70,7 +66,6 @@ const StaticPage = ({
 };
 
 StaticPage.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       chapter: PropTypes.string,
@@ -85,15 +80,6 @@ const mapStateToProps = () => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(StaticPage);

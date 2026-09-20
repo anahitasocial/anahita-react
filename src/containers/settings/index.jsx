@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
+import SettingsIcon from '@material-ui/icons/Settings';
+
 import HeaderMeta from '../../components/HeaderMeta';
-import actions from '../../actions';
 import i18n from '../../languages';
 import permissions from '../../permissions';
 import PersonType from '../../proptypes/Person';
@@ -41,15 +45,10 @@ const TAB_ORDER = [
 // hid the link from everybody else, and anybody who typed the URL got
 // in. Hiding a link is presentation; this is the check.
 const Settings = ({
-  setAppTitle,
   viewer,
 }) => {
   const canBrowse = permissions.settings.canBrowse(viewer);
   const [tab, setTab] = useState(TABS.OAUTH_CLIENTS);
-
-  useEffect(() => {
-    setAppTitle(i18n.t('settings:cTitle'));
-  }, [setAppTitle]);
 
   // No second-factor check here, and nothing passed down about one.
   //
@@ -83,32 +82,50 @@ const Settings = ({
   return (
     <>
       <HeaderMeta title={`${i18n.t('settings:cTitle')} - ${SITE_NAME}`} />
-      <AppBar
-        position="sticky"
-        color="inherit"
-        elevation={1}
-      >
-        <Tabs
-          variant="scrollable"
-          scrollButtons="on"
-          value={tab}
-          onChange={(event, newTab) => {
-            setTab(newTab);
-          }}
-          aria-label={i18n.t('settings:cTitle')}
-          centered
-        >
-          {TAB_ORDER.map((value) => {
-            return (
-              <Tab
-                key={value}
-                value={value}
-                label={i18n.t(`settings:${value}.mTitle`)}
-              />
-            );
-          })}
-        </Tabs>
-      </AppBar>
+      {/* The header and the tabs share a card; the panels stack below it.
+          Putting the panels inside too would draw a card border around a
+          column of card borders — every tab renders its own cards — which
+          is the same nesting ActorSetting avoids by being a header only.
+
+          The tabs sat in a sticky AppBar before, with nothing naming the
+          page: a bar of two labels and no title, which is what sent
+          anybody landing on /settings looking for context. Stickiness is
+          what the card costs, and it buys little across two tabs — the
+          actor settings page has never had it either. */}
+      <Box mb={2}>
+        <Card variant="outlined">
+          <CardHeader
+            avatar={
+              <Avatar>
+                <SettingsIcon />
+              </Avatar>
+            }
+            titleTypographyProps={{ variant: 'h5' }}
+            title={i18n.t('settings:cTitle')}
+            subheader={i18n.t('settings:cDescription')}
+          />
+          <Divider />
+          <Tabs
+            variant="scrollable"
+            scrollButtons="on"
+            value={tab}
+            onChange={(event, newTab) => {
+              setTab(newTab);
+            }}
+            aria-label={i18n.t('settings:cTitle')}
+          >
+            {TAB_ORDER.map((value) => {
+              return (
+                <Tab
+                  key={value}
+                  value={value}
+                  label={i18n.t(`settings:${value}.mTitle`)}
+                />
+              );
+            })}
+          </Tabs>
+        </Card>
+      </Box>
       {tab === TABS.OAUTH_CLIENTS &&
         <SettingsOAuthClients />}
       {tab === TABS.OAUTH_SIGNING_KEYS &&
@@ -118,7 +135,6 @@ const Settings = ({
 };
 
 Settings.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
 };
 
@@ -127,15 +143,6 @@ const mapStateToProps = (state) => {
   return { viewer };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Settings);

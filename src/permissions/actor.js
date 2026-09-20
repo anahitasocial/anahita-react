@@ -1,17 +1,28 @@
 import _ from 'lodash';
 import utils from '../utils';
+import meetsRoleLevel from './roleLevel';
 
 const {
-  isAdmin,
   isRegistered,
 } = utils.node;
 
-const canAdd = (viewer) => {
-  /*
-  * @TODO we need a field in viewer to decide this one
-  * right now, only the admins can create new actors
-  */
-  return isAdmin(viewer);
+// Whether the viewer may create an actor — a group, today.
+//
+// Mirrors anahita-libs ActorsPermissions.CanAdd and group-service's
+// Config.MayCreateGroup. Who may create one is a SERVER SETTING, GROUPS_FROM,
+// naming a minimum role of registered, administrators or super-administrators,
+// so it cannot be derived from the viewer alone. It arrives through NodeInfo
+// as metadata.groupsFrom.
+//
+// This used to be a bare isAdmin with a @TODO saying a field was needed to
+// decide it properly. The field is groupsFrom, and it is compared by rank with
+// no administrator shortcut above it — one would make `super-administrators` a
+// level that does nothing.
+//
+// Absent until NodeInfo answers, which ranks above every role, so nothing
+// offers to create a group before the server has said who may.
+const canAdd = (viewer, { groupsFrom = '' } = {}) => {
+  return meetsRoleLevel(viewer, groupsFrom);
 };
 
 const canEdit = (actor) => {

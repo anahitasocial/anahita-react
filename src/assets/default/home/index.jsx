@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -12,9 +11,6 @@ import GithubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import WebsiteIcon from '@material-ui/icons/Web';
 
-import actions from '../../../actions';
-import i18n from '../../../languages';
-
 import HeaderMeta from '../../../components/HeaderMeta';
 import Hero from './Hero';
 
@@ -26,14 +22,9 @@ function getWindowDimensions() {
   };
 }
 
-const Home = (props) => {
+const Home = () => {
   const theme = useTheme();
-  const { setAppTitle } = props;
   const { width: winWidth } = getWindowDimensions();
-
-  useEffect(() => {
-    setAppTitle(i18n.t('home:cTitle'));
-  }, [setAppTitle]);
 
   return (
     <>
@@ -111,23 +102,10 @@ const Home = (props) => {
   );
 };
 
-Home.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = () => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Home);

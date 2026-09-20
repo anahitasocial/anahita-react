@@ -49,7 +49,6 @@ const formFields = form.createFormFields(fieldNames);
 const LocationsRead = ({
   readItem,
   editItem,
-  setAppTitle,
   alertSuccess,
   alertError,
   inboundsCount,
@@ -66,8 +65,7 @@ const LocationsRead = ({
 
   useEffect(() => {
     readItem(id);
-    setAppTitle(i18n.t('locations:cTitle'));
-  }, [readItem, id, setAppTitle]);
+  }, [readItem, id]);
 
   useEffect(() => {
     if (error) {
@@ -230,7 +228,6 @@ const mapStateToProps = (state) => {
 };
 
 LocationsRead.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   readItem: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
@@ -251,9 +248,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     editItem: (node) => {
       return dispatch(actions.locations.edit(node));
-    },
-    setAppTitle: (title) => {
-      dispatch(actions.app.setAppTitle(title));
     },
     alertSuccess: (message) => {
       return dispatch(actions.app.alert.success(message));

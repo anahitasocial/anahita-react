@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -22,7 +22,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 
 import SearchList from './SearchList';
-import actions from '../../../actions';
 import { Search as SEARCH } from '../../../constants';
 import i18n from '../../../languages';
 
@@ -72,7 +71,6 @@ const marks = [
 ];
 
 const Search = ({
-  setAppTitle,
   coords = {
     latitude: 0.0,
     longitude: 0.0,
@@ -95,10 +93,6 @@ const Search = ({
   const changeScope = (event, value) => {
     setScope(value);
   };
-
-  useEffect(() => {
-    setAppTitle(i18n.t('search:cTitle'));
-  }, []);
 
   if (
     isGeolocationAvailable &&
@@ -230,21 +224,12 @@ const Search = ({
 };
 
 Search.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   coords: PropTypes.objectOf(PropTypes.shape({
     longitude: PropTypes.number,
     latitude: PropTypes.number,
   })),
   isGeolocationAvailable: PropTypes.bool.isRequired,
   isGeolocationEnabled: PropTypes.bool.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      dispatch(actions.app.setAppTitle(title));
-    },
-  };
 };
 
 const mapStateToProps = () => {
@@ -258,5 +243,4 @@ export default geolocated({
   userDecisionTimeout: 5000,
 })(connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Search));

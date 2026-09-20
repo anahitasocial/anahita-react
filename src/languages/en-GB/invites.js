@@ -15,8 +15,8 @@ export default {
     expired: 'Expired',
   },
   actions: {
-    add: 'Invite someone',
-    send: 'Send invite',
+    add: 'Add',
+    send: 'Send',
     revoke: 'Revoke',
     // The icon button carries no text, so the accessible name has to
     // say which invite it revokes — there is one per row.

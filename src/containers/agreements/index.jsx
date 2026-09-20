@@ -49,7 +49,6 @@ const useDocument = (file) => {
 
 const Agreements = ({
   viewer,
-  setAppTitle,
   refreshSession,
   alertError,
 }) => {
@@ -60,10 +59,6 @@ const Agreements = ({
   // Which document is being submitted, so its button can disable while the
   // request is out and a double click does not record it twice.
   const [pending, setPending] = useState('');
-
-  useEffect(() => {
-    setAppTitle(i18n.t('agreements:cTitle'));
-  }, [setAppTitle]);
 
   const tosOutdated = agreementsUtil.hasOutdatedTos(viewer);
   const privacyOutdated = agreementsUtil.hasOutdatedPrivacy(viewer);
@@ -150,7 +145,6 @@ const Agreements = ({
 
 Agreements.propTypes = {
   viewer: ViewerType.isRequired,
-  setAppTitle: PropTypes.func.isRequired,
   refreshSession: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
 };
@@ -161,7 +155,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setAppTitle: (title) => { return dispatch(actions.app.setAppTitle(title)); },
     refreshSession: () => { return dispatch(actions.session.read()); },
     alertError: (message) => { return dispatch(actions.app.alert.error(message)); },
   };

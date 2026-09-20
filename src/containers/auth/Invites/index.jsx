@@ -64,11 +64,10 @@ const errorMessage = (err, fallbackKey) => {
 // anybody's screen. That scoping is also what makes it safe to show
 // this page to somebody who is not an administrator at all.
 const InvitesPage = ({
-  setAppTitle,
   alertError,
   alertSuccess,
   viewer,
-  invitesFrom = '',
+  inviteSettings = {},
 }) => {
   const [items, setItems] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
@@ -77,18 +76,14 @@ const InvitesPage = ({
   // Reading your own list is self-service; issuing depends on the
   // server's INVITES_FROM, which arrives through NodeInfo.
   const canBrowse = permissions.invite.canBrowse(viewer);
-  const canAdd = permissions.invite.canAdd(viewer, invitesFrom);
+  const canAdd = permissions.invite.canAdd(viewer, inviteSettings);
 
   // canDeleteOwn, not canDelete: every row here was issued by the
   // viewer, and withdrawing your own invitation is your own action.
   // Gating the button on canDelete would leave somebody able to send
   // an invitation and not take it back — and the cap only frees when
   // they can.
-  const canDelete = permissions.invite.canDeleteOwn(viewer, invitesFrom);
-
-  useEffect(() => {
-    setAppTitle(i18n.t('invites:cTitle'));
-  }, [setAppTitle]);
+  const canDelete = permissions.invite.canDeleteOwn(viewer, inviteSettings);
 
   const fetchList = useCallback(() => {
     if (!canBrowse) {
@@ -189,11 +184,10 @@ const InvitesPage = ({
 };
 
 InvitesPage.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
-  invitesFrom: PropTypes.string,
+  inviteSettings: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
@@ -202,15 +196,12 @@ const mapStateToProps = (state) => {
 
   return {
     viewer,
-    invitesFrom: (nodeInfo && nodeInfo.metadata && nodeInfo.metadata.invitesFrom) || '',
+    inviteSettings: (nodeInfo && nodeInfo.metadata) || {},
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
     alertError: (message) => {
       return dispatch(actions.app.alert.error(message));
     },

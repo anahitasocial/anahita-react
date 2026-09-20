@@ -126,9 +126,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
     browseList: (params) => {
       return dispatch(actions.notifications.browse(params));
     },

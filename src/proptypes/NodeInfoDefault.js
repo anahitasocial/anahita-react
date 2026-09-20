@@ -32,6 +32,8 @@ export default {
     registrationMode: '',
     approvalRequired: false,
     invitationsAccepted: false,
+    invitesFrom: '',
+    groupsFrom: '',
     supportEmail: '',
     supportPhone: '',
     supportWebsite: '',

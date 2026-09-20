@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import HeaderMeta from '../../components/HeaderMeta';
 import Progress from '../../components/Progress';
-import actions from '../../actions';
 import api from '../../api';
 import i18n from '../../languages';
 
@@ -32,16 +30,12 @@ const SITE_NAME = process.env.REACT_APP_NAME;
 // the left menu, but this page wants it fresh on arrival and wants to
 // distinguish "not answered yet" from "answered with nothing" — which
 // the store's empty default cannot express.
-const AboutPage = ({ setAppTitle }) => {
+const AboutPage = () => {
   // null is "not answered yet". Distinguishing that from an answered
   // request keeps the page from flashing an error before NodeInfo has
   // had a chance to reply.
   const [nodeInfo, setNodeInfo] = useState(null);
   const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    setAppTitle(i18n.t('about:cTitle'));
-  }, [setAppTitle]);
 
   useEffect(() => {
     let cancelled = false;
@@ -76,19 +70,6 @@ const AboutPage = ({ setAppTitle }) => {
   );
 };
 
-AboutPage.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
-  };
-};
-
 export default connect(
   null,
-  mapDispatchToProps,
 )(AboutPage);

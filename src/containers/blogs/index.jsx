@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,7 +8,6 @@ import Tab from '@material-ui/core/Tab';
 
 import BlogsBrowse from './Browse';
 import { App as APP } from '../../constants';
-import actions from '../../actions/app';
 import i18n from '../../languages';
 
 const {
@@ -27,13 +26,9 @@ const useStyles = makeStyles({
   },
 });
 
-const Blogs = ({ selectedTab = RECENT, setAppTitle }) => {
+const Blogs = ({ selectedTab = RECENT }) => {
   const classes = useStyles();
   const [tab, setTab] = useState(selectedTab);
-
-  useEffect(() => {
-    setAppTitle(i18n.t('blogs:cTitle'));
-  }, []);
 
   const changeTab = (event, value) => {
     setTab(value);
@@ -73,21 +68,10 @@ const Blogs = ({ selectedTab = RECENT, setAppTitle }) => {
 };
 
 Blogs.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   selectedTab: PropTypes.oneOf([
     UPDATED,
     RECENT,
   ]),
-};
-
-const mapDispatchToProps = () => {
-  return (dispatch) => {
-    return {
-      setAppTitle: (title) => {
-        return dispatch(actions.setAppTitle(title));
-      },
-    };
-  };
 };
 
 const mapStateToProps = () => {
@@ -98,5 +82,4 @@ const mapStateToProps = () => {
 
 export default connect(
   mapStateToProps(),
-  mapDispatchToProps(),
 )(Blogs);

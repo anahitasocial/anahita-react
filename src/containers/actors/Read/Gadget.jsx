@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -29,6 +30,7 @@ const ActorsGadget = (props) => {
     admin,
     viewer,
     namespace,
+    actorSettings = {},
   } = props;
   const [actors, setActors] = useState([]);
   const [waiting, setWaiting] = useState(false);
@@ -53,7 +55,10 @@ const ActorsGadget = (props) => {
       });
   }, [admin.id]);
 
-  const canAdd = permissions.actor.canAdd(admin, namespace) && admin.id === viewer.id;
+  // Was passing `namespace` as the second argument, which canAdd ignored —
+  // it now carries the GROUPS_FROM level the server enforces.
+  const canAdd = permissions.actor.canAdd(admin, actorSettings)
+    && admin.id === viewer.id;
 
   return (
     <Card variant="outlined">
@@ -119,10 +124,23 @@ ActorsGadget.propTypes = {
   admin: PersonType.isRequired,
   viewer: PersonType.isRequired,
   namespace: PropTypes.string.isRequired,
+  actorSettings: PropTypes.object,
 };
+
+const mapStateToProps = (state) => {
+  const { nodeInfo } = state.app;
+
+  return {
+    // Connected only for this: who may create a group is a server setting,
+    // and the gadget offers the button that depends on it.
+    actorSettings: (nodeInfo && nodeInfo.metadata) || {},
+  };
+};
+
+const ConnectedActorsGadget = connect(mapStateToProps)(ActorsGadget);
 
 export default (namespace) => {
   return (props) => {
-    return (<ActorsGadget namespace={namespace} {...props} />);
+    return (<ConnectedActorsGadget namespace={namespace} {...props} />);
   };
 };

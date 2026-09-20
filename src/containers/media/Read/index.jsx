@@ -24,7 +24,6 @@ const MediaRead = ({
   editItem,
   alertError,
   alertSuccess,
-  setAppTitle,
   isFetching,
   viewer,
   isAuthenticated,
@@ -58,8 +57,7 @@ const MediaRead = ({
 
   useEffect(() => {
     readItem(id, namespace);
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
-  }, [readItem, id, namespace, setAppTitle]);
+  }, [readItem, id, namespace]);
 
   useEffect(() => {
     if (error) {
@@ -172,7 +170,6 @@ MediaRead.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
-  setAppTitle: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
@@ -203,9 +200,6 @@ const mapDispatchToProps = (namespace) => {
       },
       editItem: (node) => {
         return dispatch(actions[namespace].edit(node));
-      },
-      setAppTitle: (title) => {
-        return dispatch(actions.app.setAppTitle(title));
       },
       alertSuccess: (message) => {
         return dispatch(actions.app.alert.success(message));

@@ -3,7 +3,6 @@ import { App as APP } from '../constants';
 import NODE_INFO_DEFAULT from '../proptypes/NodeInfoDefault';
 
 export default (state = {
-  appBarTitle: '',
   alerts: [],
   // Seeded with the empty document rather than null, so a consumer can
   // reach through metadata.invitesFrom before the request has answered
@@ -16,11 +15,6 @@ export default (state = {
       return {
         ...state,
         nodeInfo: action.nodeInfo,
-      };
-    case APP.TITLE.UPDATE:
-      return {
-        ...state,
-        appBarTitle: action.title,
       };
     case APP.ALERT.ADD:
       return {

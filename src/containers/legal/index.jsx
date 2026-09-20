@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactMarkdown from 'react-markdown';
@@ -12,7 +10,6 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
 import HeaderMeta from '../../components/HeaderMeta';
-import actions from '../../actions';
 import i18n from '../../languages';
 import legal from '../../statics/legal';
 
@@ -47,7 +44,7 @@ const DOCUMENTS = ['tos', 'privacy'];
 
 // Public, deliberately. People read the terms BEFORE they have an account —
 // that is the point of linking them from the signup form.
-const LegalPage = ({ setAppTitle }) => {
+const LegalPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const { tab } = useParams();
@@ -58,10 +55,6 @@ const LegalPage = ({ setAppTitle }) => {
   const index = DOCUMENTS.indexOf(alias);
 
   const [source, setSource] = useState('');
-
-  useEffect(() => {
-    setAppTitle(i18n.t('legal:cTitle'));
-  }, [setAppTitle]);
 
   useEffect(() => {
     let cancelled = false;
@@ -118,16 +111,4 @@ const LegalPage = ({ setAppTitle }) => {
   );
 };
 
-LegalPage.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
-  };
-};
-
-export default connect(null, mapDispatchToProps)(LegalPage);
+export default LegalPage;

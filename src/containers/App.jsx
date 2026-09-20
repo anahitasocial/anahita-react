@@ -12,7 +12,6 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 
 import IconButton from '@material-ui/core/IconButton';
 import SearchBox from '../components/SearchBox';
@@ -90,7 +89,6 @@ const App = ({
   children,
   isAuthenticated,
   viewer,
-  appBarTitle,
   nodeInfo,
   whoami,
   readNodeInfo,
@@ -156,16 +154,6 @@ const App = ({
             <MenuIcon />
           </IconButton>
           <SearchBox />
-          <Hidden xsDown implementation="css">
-            {appBarTitle && !open &&
-              <Typography
-                variant="h6"
-                color="inherit"
-                noWrap
-              >
-                {appBarTitle}
-              </Typography>}
-          </Hidden>
           <div className={classes.grow} />
           {isAuthenticated && <NotificationButton viewer={viewer} />}
           <Viewer
@@ -228,13 +216,11 @@ App.propTypes = {
   logout: PropTypes.func.isRequired,
   whoami: PropTypes.func.isRequired,
   readNodeInfo: PropTypes.func.isRequired,
-  appBarTitle: PropTypes.string.isRequired,
   nodeInfo: NodeInfoType.isRequired,
 };
 
 const mapStateToProps = (state) => {
   const {
-    appBarTitle,
     nodeInfo,
   } = state.app;
 
@@ -244,7 +230,6 @@ const mapStateToProps = (state) => {
   } = state.session;
 
   return {
-    appBarTitle,
     nodeInfo,
     isAuthenticated,
     viewer,

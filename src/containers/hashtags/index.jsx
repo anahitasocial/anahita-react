@@ -1,14 +1,17 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import HashtagsIcon from '@material-ui/icons/Label';
+
 import HashtagsBrowse from './Browse';
-import actions from '../../actions';
+import BrowseHeader from '../../components/BrowseHeader';
 import { App as APP } from '../../constants';
 import i18n from '../../languages';
 
@@ -32,7 +35,6 @@ const useStyles = makeStyles({
 });
 
 const Hashtags = ({
-  setAppTitle,
   selectedTab = TRENDING,
 }) => {
   const classes = useStyles();
@@ -57,12 +59,16 @@ const Hashtags = ({
     setSearchParams(params);
   };
 
-  useEffect(() => {
-    setAppTitle(i18n.t('hashtags:cTitle'));
-  }, []);
-
   return (
     <>
+      {/* No action. A hashtag is not created here — it comes into being when
+          somebody uses it in a post — so there is nothing for a + to open. */}
+      <Box mb={2}>
+        <BrowseHeader
+          icon={<HashtagsIcon />}
+          title={i18n.t('hashtags:cTitle')}
+        />
+      </Box>
       <AppBar
         position="sticky"
         color="inherit"
@@ -98,20 +104,11 @@ const Hashtags = ({
 };
 
 Hashtags.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   selectedTab: PropTypes.oneOf([
     TRENDING,
     TOP,
     RECENT,
   ]),
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      dispatch(actions.app.setAppTitle(title));
-    },
-  };
 };
 
 const mapStateToProps = () => {
@@ -120,5 +117,4 @@ const mapStateToProps = () => {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Hashtags);

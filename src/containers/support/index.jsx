@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -22,7 +20,6 @@ import TermsIcon from '@material-ui/icons/Description';
 import PolicyIcon from '@material-ui/icons/Policy';
 
 import HeaderMeta from '../../components/HeaderMeta';
-import actions from '../../actions';
 import api from '../../api';
 import i18n from '../../languages';
 
@@ -47,14 +44,10 @@ const telHref = (phone) => {
   return `tel:${phone.replace(/[^\d+]/g, '')}`;
 };
 
-const SupportPage = ({ setAppTitle }) => {
+const SupportPage = () => {
   // null until NodeInfo answers — a third state, distinct from "nothing is
   // configured", so the page does not flash the empty message first.
   const [contact, setContact] = useState(null);
-
-  useEffect(() => {
-    setAppTitle(i18n.t('pages:support'));
-  }, [setAppTitle]);
 
   useEffect(() => {
     let cancelled = false;
@@ -160,16 +153,4 @@ const SupportPage = ({ setAppTitle }) => {
   );
 };
 
-SupportPage.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
-  };
-};
-
-export default connect(null, mapDispatchToProps)(SupportPage);
+export default SupportPage;

@@ -129,7 +129,6 @@ export default {
   },
   confirm: {
     delete: "Do you want to delete {{ name }}'s profile?",
-    block: "Do you want to block {{ name }}'s profile?",
   },
   account: {
     prompts: {
@@ -163,7 +162,7 @@ export default {
     count: 'This account holds {{count}} passkey(s).',
     unknown: 'The number of passkeys could not be read.',
     actions: {
-      revoke: 'Revoke all passkeys',
+      revoke: 'Revoke',
     },
     confirm: {
       cTitle: 'Revoke every passkey?',
@@ -184,7 +183,7 @@ export default {
     unknown: 'The authenticator status could not be read.',
     expired: 'Not verified recently',
     actions: {
-      revoke: 'Remove authenticator',
+      revoke: 'Remove',
     },
     confirm: {
       cTitle: 'Remove the authenticator?',

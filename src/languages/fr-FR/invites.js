@@ -15,8 +15,8 @@ export default {
     expired: 'Expirée',
   },
   actions: {
-    add: 'Inviter quelqu’un',
-    send: "Envoyer l'invitation",
+    add: 'Ajouter',
+    send: 'Envoyer',
     revoke: 'Révoquer',
     revokeFor: "Révoquer l'invitation envoyée à {{email}}",
   },

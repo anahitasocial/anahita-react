@@ -118,7 +118,6 @@ export default {
   },
   confirm: {
     delete: 'Voulez-vous supprimer le profil de {{ name }} ?',
-    block: 'Voulez-vous bloquer le profil de {{ name }} ?',
   },
   account: {
     prompts: {
@@ -149,7 +148,7 @@ export default {
     count: 'Ce compte possède {{count}} clé(s) d’accès.',
     unknown: "Le nombre de clés d’accès n'a pas pu être lu.",
     actions: {
-      revoke: 'Révoquer toutes les clés d’accès',
+      revoke: 'Révoquer',
     },
     confirm: {
       cTitle: 'Révoquer toutes les clés d’accès ?',
@@ -170,7 +169,7 @@ export default {
     unknown: "L'état de l'authentificateur n'a pas pu être lu.",
     expired: 'Non vérifié récemment',
     actions: {
-      revoke: "Supprimer l'authentificateur",
+      revoke: 'Supprimer',
     },
     confirm: {
       cTitle: "Supprimer l'authentificateur ?",

@@ -13,15 +13,13 @@ import i18n from '../languages';
 import PersonType from '../proptypes/Person';
 
 const DashboardPage = ({
-  setAppTitle,
   readPerson,
   viewer,
   person,
 }) => {
   useEffect(() => {
-    setAppTitle(i18n.t('dashboard:cTitle'));
     readPerson(viewer.alias);
-  }, [setAppTitle, readPerson, viewer.alias]);
+  }, [readPerson, viewer.alias]);
 
   return (
     <>
@@ -56,7 +54,6 @@ const DashboardPage = ({
 };
 
 DashboardPage.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   readPerson: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
   person: PersonType.isRequired,
@@ -81,9 +78,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setAppTitle: (title) => {
-      dispatch(actions.app.setAppTitle(title));
-    },
     sessionRead: () => {
       return dispatch(actions.session.read());
     },

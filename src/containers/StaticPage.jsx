@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,13 +26,8 @@ const StaticPage = (props) => {
   const [source, setSource] = React.useState('');
   const {
     match: { params },
-    setAppTitle,
   } = props;
   const src = path.join(__dirname, `statics/pages/${_.snakeCase(params.alias)}.md`);
-
-  useEffect(() => {
-    setAppTitle(i18n.t(`pages:${params.alias}`));
-  }, [setAppTitle, params.alias]);
 
   fetch(src).then((response) => {
     return response.text();
@@ -59,7 +54,6 @@ const StaticPage = (props) => {
 };
 
 StaticPage.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       chapter: PropTypes.string,
@@ -74,15 +68,6 @@ const mapStateToProps = () => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(StaticPage);

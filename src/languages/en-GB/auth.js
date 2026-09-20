@@ -38,7 +38,7 @@ export default {
   webauthn: {
     cTitle: 'Passkeys',
     cDesc: 'Sign in with your fingerprint, face, or device PIN instead of your password',
-    add: 'Add a passkey',
+    add: 'Add',
     adding: 'Waiting for your device…',
     empty: {
       platform: 'Add a passkey to sign in with your fingerprint, face, or device PIN — no password, no verification code.',
@@ -132,8 +132,8 @@ export default {
       // Collapsed state of the 2FA card. The wizard is a multi-step commitment
       // — password, pairing, recovery codes — so it stays behind a button
       // rather than opening on a settings page somebody came to read.
-      action: 'Enable 2FA',
-      disable: 'Disable 2FA',
+      action: 'Enable',
+      disable: 'Disable',
       disabled: 'Two-factor authentication has been turned off. A confirmation email has been sent.',
       on: 'Two-factor authentication is on',
       onDesc: 'You will be asked for a code from your authenticator app when you sign in.',

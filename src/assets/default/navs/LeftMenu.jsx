@@ -47,11 +47,12 @@ const LeftMenu = ({
   const location = useLocation();
   const { pathname = '/' } = location;
 
-  // Who may invite is a server setting, published through NodeInfo.
-  // Undefined until that answers, which ranks as "nobody" — so the
-  // entry appears once the answer arrives rather than flashing in and
-  // out for somebody who cannot use it.
-  const invitesFrom = nodeInfo && nodeInfo.metadata && nodeInfo.metadata.invitesFrom;
+  // Whether invitations are being issued at all, and who may issue one.
+  // Both are server settings published through NodeInfo, and both are
+  // absent until that answers — which ranks as "nobody", so the entry
+  // appears once the answer arrives rather than flashing in and out for
+  // somebody who cannot use it.
+  const inviteSettings = (nodeInfo && nodeInfo.metadata) || {};
 
   return (
     <List>
@@ -177,7 +178,7 @@ const LeftMenu = ({
           </ListItemIcon>
           <ListItemText primary={i18n.t('signupRequests:mTitle')} />
         </ListItem>}
-      {isAuthenticated && permissions.invite.canAdd(viewer, invitesFrom) &&
+      {isAuthenticated && permissions.invite.canAdd(viewer, inviteSettings) &&
         <ListItem
           button
           component={Link}

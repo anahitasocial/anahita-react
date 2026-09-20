@@ -4,13 +4,9 @@ import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Link } from 'react-router-dom';
 
 import actions from '../../../actions';
-import permissions from '../../../permissions/actor';
 
 import PersonType from '../../../proptypes/Person';
 import ActorsType from '../../../proptypes/Actors';
@@ -31,12 +27,6 @@ const DEFAULT_FILTERS = {
 
 const useStyles = makeStyles((theme) => {
   return {
-    addButton: {
-      position: 'fixed',
-      bottom: theme.spacing(3),
-      right: theme.spacing(3),
-      zIndex: 10,
-    },
     card: {
       marginBottom: theme.spacing(2),
     },
@@ -106,7 +96,6 @@ const ActorsBrowse = ({
     }, namespace);
   }, [start, queryKey]);
 
-  const canAdd = permissions.canAdd(viewer, namespace);
   const hasMore = total > items.allIds.length;
 
   const fetchList = () => {
@@ -122,17 +111,6 @@ const ActorsBrowse = ({
 
   return (
     <>
-      {canAdd && (
-        <Fab
-          aria-label="Add"
-          color="secondary"
-          className={classes.addButton}
-          component={Link}
-          to={`/${namespace}/add/`}
-        >
-          <AddIcon />
-        </Fab>
-      )}
       <InfiniteScroll
         dataLength={items.allIds.length}
         next={fetchList}

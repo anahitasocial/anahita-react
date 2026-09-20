@@ -1,14 +1,17 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import LocationsIcon from '@material-ui/icons/LocationOn';
+
 import LocationsBrowse from './Browse';
-import appActions from '../../actions/app';
+import BrowseHeader from '../../components/BrowseHeader';
 import { App as APP } from '../../constants';
 import i18n from '../../languages';
 
@@ -32,7 +35,6 @@ const useStyles = makeStyles({
 });
 
 const Locations = ({
-  setAppTitle,
   selectedTab = TOP,
 }) => {
   const classes = useStyles();
@@ -57,12 +59,16 @@ const Locations = ({
     setSearchParams(params);
   };
 
-  useEffect(() => {
-    setAppTitle(i18n.t('locations:cTitle'));
-  }, [setAppTitle]);
-
   return (
     <>
+      {/* No action. A location is attached to a post rather than created on
+          its own, so there is nothing here for a + to open. */}
+      <Box mb={2}>
+        <BrowseHeader
+          icon={<LocationsIcon />}
+          title={i18n.t('locations:cTitle')}
+        />
+      </Box>
       <AppBar
         position="sticky"
         color="inherit"
@@ -98,20 +104,11 @@ const Locations = ({
 };
 
 Locations.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   selectedTab: PropTypes.oneOf([
     TRENDING,
     TOP,
     RECENT,
   ]),
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      dispatch(appActions.setAppTitle(title));
-    },
-  };
 };
 
 const mapStateToProps = () => {
@@ -120,5 +117,4 @@ const mapStateToProps = () => {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Locations);

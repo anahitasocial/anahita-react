@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router-dom';
@@ -15,7 +14,6 @@ import Hashtags from './hashtags';
 import Locations from './locations';
 import Media from './media';
 import HeaderMeta from '../components/HeaderMeta';
-import actions from '../actions';
 
 const { EXPLORE: TABS } = APP.TABS;
 
@@ -34,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ExplorePage = ({ setAppTitle }) => {
+const ExplorePage = () => {
   const classes = useStyles();
   const { tab: selectedTab = TABS.GROUPS } = useParams();
 
@@ -43,10 +41,6 @@ const ExplorePage = ({ setAppTitle }) => {
   const changeTab = (event, value) => {
     setTab(value);
   };
-
-  useEffect(() => {
-    setAppTitle(i18n.t('explore:cTitle'));
-  });
 
   let NodeBrowse = null;
 
@@ -116,23 +110,10 @@ const ExplorePage = ({ setAppTitle }) => {
   );
 };
 
-ExplorePage.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = () => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAppTitle: (title) => {
-      dispatch(actions.app.setAppTitle(title));
-    },
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(ExplorePage);

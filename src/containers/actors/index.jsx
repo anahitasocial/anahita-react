@@ -1,17 +1,22 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import GroupsIcon from '@material-ui/icons/GroupWork';
+import PeopleIcon from '@material-ui/icons/People';
+
 import Browse from './Browse';
+import BrowseHeader from '../../components/BrowseHeader';
 
 import { Actor as ACTOR } from '../../constants';
+import permissions from '../../permissions';
 import PersonType from '../../proptypes/Person';
-import actions from '../../actions';
 import i18n from '../../languages';
 
 const { FILTER } = ACTOR;
@@ -30,12 +35,19 @@ const useStyles = makeStyles({
   },
 });
 
+// The avatar each namespace wears in its header, matching the left menu so the
+// same thing is the same shape in both places.
+const BROWSE_ICONS = {
+  groups: <GroupsIcon />,
+  people: <PeopleIcon />,
+};
+
 const Actors = ({
-  setAppTitle,
   selectedTab = ALL,
   namespace,
   owner,
   isAuthenticated,
+  actorSettings = {},
 }) => {
   const classes = useStyles();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,14 +71,31 @@ const Actors = ({
     setSearchParams(params);
   };
 
-  useEffect(() => {
-    setAppTitle(i18n.t(`${namespace}:cTitle`));
-  }, []);
-
   const ActorsBrowse = Browse(namespace);
+
+  // Only /groups routes here today — /people has its own browse container —
+  // so the add action is the group one. The icon and title come from the
+  // namespace either way, so nothing here assumes which one arrived.
+  //
+  // Gated on GROUPS_FROM rather than on being signed in, which is all the
+  // route itself requires. group-service enforces the same setting on the
+  // write, so offering a + without asking would lead people to a form the
+  // server refuses.
+  const canAddGroup = namespace === 'groups'
+    && permissions.actor.canAdd(owner, actorSettings);
 
   return (
     <>
+      {/* Above the filters, not inside them: the header says what the page is,
+          the tabs narrow it, and the tabs are the half worth pinning. */}
+      <Box mb={2}>
+        <BrowseHeader
+          icon={BROWSE_ICONS[namespace]}
+          title={i18n.t(`${namespace}:cTitle`)}
+          actionTo={canAddGroup ? '/groups/add' : ''}
+          actionLabel={i18n.t('groups:add.cTitle')}
+        />
+      </Box>
       <AppBar
         position="sticky"
         color="inherit"
@@ -102,7 +131,6 @@ const Actors = ({
 };
 
 Actors.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   selectedTab: PropTypes.oneOf([
     ALL,
     FILTER.ADMINISTERING,
@@ -111,16 +139,7 @@ Actors.propTypes = {
   namespace: PropTypes.string.isRequired,
   owner: PersonType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-};
-
-const mapDispatchToProps = () => {
-  return (dispatch) => {
-    return {
-      setAppTitle: (title) => {
-        return dispatch(actions.app.setAppTitle(title));
-      },
-    };
-  };
+  actorSettings: PropTypes.object,
 };
 
 const mapStateToProps = (namespace) => {
@@ -130,10 +149,16 @@ const mapStateToProps = (namespace) => {
       isAuthenticated,
     } = state.session;
 
+    const { nodeInfo } = state.app;
+
     return {
       namespace,
       owner,
       isAuthenticated,
+      // Empty until NodeInfo answers. An absent level ranks above every role,
+      // so the + arrives with the document rather than flashing for somebody
+      // who turns out not to qualify.
+      actorSettings: (nodeInfo && nodeInfo.metadata) || {},
     };
   };
 };
@@ -141,6 +166,5 @@ const mapStateToProps = (namespace) => {
 export default (namespace) => {
   return connect(
     mapStateToProps(namespace),
-    mapDispatchToProps(),
   )(Actors);
 };

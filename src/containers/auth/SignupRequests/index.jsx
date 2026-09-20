@@ -55,7 +55,6 @@ const errorMessage = (err, fallbackKey) => {
 // for the record and never returned here, so the queue is the work
 // outstanding rather than a history to page through.
 const SignupRequestsPage = ({
-  setAppTitle,
   alertError,
   alertSuccess,
   viewer,
@@ -68,10 +67,6 @@ const SignupRequestsPage = ({
   const canBrowse = permissions.signupRequest.canBrowse(viewer);
   const canApprove = permissions.signupRequest.canApprove(viewer);
   const canReject = permissions.signupRequest.canReject(viewer);
-
-  useEffect(() => {
-    setAppTitle(i18n.t('signupRequests:cTitle'));
-  }, [setAppTitle]);
 
   const fetchList = useCallback(() => {
     if (!canBrowse) {
@@ -182,7 +177,6 @@ const SignupRequestsPage = ({
 };
 
 SignupRequestsPage.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   alertError: PropTypes.func.isRequired,
   alertSuccess: PropTypes.func.isRequired,
   viewer: PersonType.isRequired,
@@ -195,9 +189,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setAppTitle: (title) => {
-      return dispatch(actions.app.setAppTitle(title));
-    },
     alertError: (message) => {
       return dispatch(actions.app.alert.error(message));
     },

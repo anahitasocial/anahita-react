@@ -33,13 +33,6 @@ const readNodeInfo = () => {
   };
 };
 
-const setAppTitle = (title) => {
-  return {
-    type: APP.TITLE.UPDATE,
-    title,
-  };
-};
-
 const addAlert = (body, severity) => {
   return {
     type: APP.ALERT.ADD,
@@ -74,7 +67,6 @@ const deleteAlert = (id) => {
 
 export default {
   readNodeInfo,
-  setAppTitle,
   alert: {
     error: addError,
     warning: addWarning,

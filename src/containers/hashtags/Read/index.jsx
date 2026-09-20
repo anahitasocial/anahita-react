@@ -22,7 +22,6 @@ import Inbounds from '../../inbounds';
 const HashtagsRead = (props) => {
   const {
     readHashtag,
-    setAppTitle,
     hashtags: {
       current: hashtag = { ...HashtagDefault },
     },
@@ -35,8 +34,7 @@ const HashtagsRead = (props) => {
 
   useEffect(() => {
     readHashtag(aliasParam);
-    setAppTitle(i18n.t('hashtags:cTitle'));
-  }, [aliasParam, setAppTitle]);
+  }, [aliasParam]);
 
   if (isFetching) {
     return (
@@ -105,7 +103,6 @@ const mapStateToProps = (state) => {
 };
 
 HashtagsRead.propTypes = {
-  setAppTitle: PropTypes.func.isRequired,
   readHashtag: PropTypes.func.isRequired,
   hashtags: HashtagsType.isRequired,
   inboundsCount: PropTypes.number.isRequired,
@@ -118,9 +115,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     readHashtag: (alias) => {
       return dispatch(actions.hashtags.read(alias));
-    },
-    setAppTitle: (title) => {
-      dispatch(actions.app.setAppTitle(title));
     },
   };
 };
