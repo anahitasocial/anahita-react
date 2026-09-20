@@ -9,7 +9,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -40,7 +39,15 @@ const UsernameEdit = ({
 }) => {
   return (
     <Card>
-      <CardHeader title={i18n.t('username:title')} />
+      <CardHeader
+        avatar={
+          <Avatar>
+            <AlternateEmailIcon />
+          </Avatar>
+        }
+        titleTypographyProps={{ variant: 'h5' }}
+        title={i18n.t('username:title')}
+      />
       <Divider />
 
       {/* Shown in both states. Collapsed it answers "what is my
@@ -48,11 +55,6 @@ const UsernameEdit = ({
           against. */}
       <List>
         <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <AlternateEmailIcon />
-            </Avatar>
-          </ListItemAvatar>
           <ListItemText
             primary={i18n.t('username:fields.current')}
             secondary={currentUsername}

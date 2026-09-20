@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import Divider from '@material-ui/core/Divider';
 import CardActions from '@material-ui/core/CardActions';
 
 import FormControl from '@material-ui/core/FormControl';
@@ -14,6 +17,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
+
+import AccessIcon from '@material-ui/icons/Visibility';
 
 import DialogAlert from '../../../components/DialogAlert';
 
@@ -84,6 +89,21 @@ const ActorsSettingsAccess = (props) => {
       />
       <form onSubmit={handleOnSubmit}>
         <Card variant="outlined">
+          {/* This card had no header at all, so it read as untitled
+              beside its neighbours — sections.js carried a note saying
+              so and leaving it, because the component is shared with
+              the groups page. It is shared, and the heading is right
+              for both: who can see this profile. */}
+          <CardHeader
+            avatar={
+              <Avatar>
+                <AccessIcon />
+              </Avatar>
+            }
+            titleTypographyProps={{ variant: 'h5' }}
+            title={i18n.t('actor:access.title')}
+          />
+          <Divider />
           <CardContent>
             <FormControl
               fullWidth

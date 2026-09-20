@@ -20,6 +20,7 @@ import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 import MobileIcon from '@material-ui/icons/Smartphone';
 import TabletIcon from '@material-ui/icons/Tablet';
 import BotIcon from '@material-ui/icons/Warning';
+import AuthLogsIcon from '@material-ui/icons/History';
 
 import i18n from '../../../languages';
 import { OAuthClients as OAUTH_CLIENTS } from '../../../constants';
@@ -75,6 +76,12 @@ const AuthLogsCard = ({
   return (
     <Card>
       <CardHeader
+        avatar={
+          <Avatar>
+            <AuthLogsIcon />
+          </Avatar>
+        }
+        titleTypographyProps={{ variant: 'h5' }}
         title={i18n.t('auth:authLogs.cTitle')}
       />
       <List>

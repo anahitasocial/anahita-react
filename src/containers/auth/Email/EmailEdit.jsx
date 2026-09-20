@@ -9,7 +9,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -41,7 +40,15 @@ const EmailEdit = ({
 }) => {
   return (
     <Card>
-      <CardHeader title={i18n.t('email:title')} />
+      <CardHeader
+        avatar={
+          <Avatar>
+            <EmailIcon />
+          </Avatar>
+        }
+        titleTypographyProps={{ variant: 'h5' }}
+        title={i18n.t('email:title')}
+      />
       <Divider />
 
       {/* Shown in both states. Collapsed it answers "what is my
@@ -49,11 +56,6 @@ const EmailEdit = ({
           new address against before confirming. */}
       <List>
         <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <EmailIcon />
-            </Avatar>
-          </ListItemAvatar>
           <ListItemText
             primary={i18n.t('email:fields.current')}
             secondary={currentEmail}

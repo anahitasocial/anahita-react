@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -24,6 +25,7 @@ import Divider from '@material-ui/core/Divider';
 const SettingsItem = ({
   bare,
   title,
+  icon = null,
   children,
 }) => {
   return (
@@ -37,7 +39,11 @@ const SettingsItem = ({
           they render as before and only gain a title of their own. */}
       {bare &&
         <Card>
-          <CardHeader title={title} />
+          <CardHeader
+            avatar={icon ? <Avatar>{icon}</Avatar> : null}
+            titleTypographyProps={{ variant: 'h5' }}
+            title={title}
+          />
           <Divider />
           {children}
         </Card>}
@@ -51,8 +57,11 @@ SettingsItem.propTypes = {
   // this per item alongside the item itself.
   bare: PropTypes.bool.isRequired,
   // Only read when bare — a child that brings its own Card brings its own
-  // heading with it.
+  // heading with it, and its own avatar.
   title: PropTypes.string,
+  // Likewise. Supplied by the page rather than by sections.js, which stays
+  // free of JSX so it can be read and tested as data.
+  icon: PropTypes.node,
   children: PropTypes.node.isRequired,
 };
 

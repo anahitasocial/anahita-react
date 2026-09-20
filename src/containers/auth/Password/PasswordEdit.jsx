@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,6 +16,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import PasswordIcon from '@material-ui/icons/Lock';
 
 import i18n from '../../../languages';
 import { Password as PASSWORD } from '../../../constants';
@@ -41,6 +43,12 @@ const PasswordEdit = ({
           the Two-Factor Auth, Passkeys, and Authentications cards this
           now sits alongside in the Security tab. */}
       <CardHeader
+        avatar={
+          <Avatar>
+            <PasswordIcon />
+          </Avatar>
+        }
+        titleTypographyProps={{ variant: 'h5' }}
         title={i18n.t('password:cTitle')}
         subheader={i18n.t('password:cDesc')}
       />
