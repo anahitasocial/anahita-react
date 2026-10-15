@@ -1,3 +1,7 @@
+> [!WARNING]
+> **This repository is no longer maintained.** Development of the Anahita web client has moved to [anahitasocial/anahita-web](https://github.com/anahitasocial/anahita-web), the client for **Anahita Services**, the new microservices platform built in Go with Fediverse support (ActivityPub and the AT Protocol), rolling out by the end of 2026. This React client was written for the PHP version of Anahita, which is being retired.
+
+
 ![Anahita social networking platform and framework](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/logos/homepage_logo.png)
 
 # Anahita React
